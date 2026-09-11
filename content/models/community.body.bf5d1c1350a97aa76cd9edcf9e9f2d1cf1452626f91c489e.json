@@ -1,0 +1,17 @@
+{
+  "id": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "malphite_idle1",
+    "run": "malphite_run",
+    "attack": "malphite_attack1",
+    "cast": "malphite_spell1",
+    "hurt": "malphite_idle1",
+    "death": "malphite_death"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

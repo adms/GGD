@@ -1,0 +1,17 @@
+{
+  "id": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "velkoz_idle1v2",
+    "run": "velkoz_run",
+    "attack": "velkoz_attack1",
+    "cast": "velkoz_spell1",
+    "hurt": "velkoz_idle1v2",
+    "death": "velkoz_death"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

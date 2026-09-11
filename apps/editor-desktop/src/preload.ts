@@ -7,6 +7,17 @@ contextBridge.exposeInMainWorld("ggdSetup", {
   cancel: () => ipcRenderer.invoke("ggd-setup:cancel"),
 });
 
+contextBridge.exposeInMainWorld("ggdAi", {
+  getStatus: () => ipcRenderer.invoke("ggd-ai:get-status"),
+  setPreference: (mode: unknown) => ipcRenderer.invoke("ggd-ai:set-preference", { mode }),
+  controlModel: (action: unknown) => ipcRenderer.invoke("ggd-ai:model-control", { action }),
+  onStatus: (listener: (status: unknown) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, status: unknown) => listener(status);
+    ipcRenderer.on("ggd-ai:status", handler);
+    return () => ipcRenderer.removeListener("ggd-ai:status", handler);
+  },
+});
+
 let resolveDraftReady: () => void;
 let draftReady = new Promise<void>((resolve) => { resolveDraftReady = resolve; });
 let draftListeners = 0;

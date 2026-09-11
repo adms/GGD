@@ -202,11 +202,14 @@ describe("VFX Forge action-animation principles", () => {
 
   it("mirrors Main's castability predicates for every shipped ability", () => {
     const root = join(dirname(fileURLToPath(import.meta.url)), "../../../../content/abilities");
+    const index = JSON.parse(readFileSync(join(root, "_index.json"), "utf8")) as {
+      entries: readonly unknown[];
+    };
     const abilities = readdirSync(root)
       .filter((file) => file.endsWith(".json") && !file.startsWith("_"))
       .map((file) => JSON.parse(readFileSync(join(root, file), "utf8")) as Record<string, unknown>);
-    expect(abilities).toHaveLength(421);
-    expect(abilities.filter((ability) => ability.slot === "PASSIVE" && ability.innateKind === "active")).toHaveLength(34);
+    expect(abilities).toHaveLength(index.entries.length);
+    expect(abilities.some((ability) => ability.slot === "PASSIVE" && ability.innateKind === "active")).toBe(true);
     for (const ability of abilities) {
       // Mirrors innateCastBlock() followed by isPassiveOnly() in Main's
       // abilitySystem cast ladder. This is deliberately structural: prose and

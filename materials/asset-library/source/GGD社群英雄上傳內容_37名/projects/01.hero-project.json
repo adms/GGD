@@ -225,37 +225,38 @@
       "E": {
         "slot": "E",
         "name": "神聖彗星・反射力量",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-01-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。\n【待補機制】目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
+        "purpose": "【目前模板可執行】自身獲得 120 點護盾，持續 3 秒。\n【目標設計】設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。\n【待補機制】目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-01-20260907.e.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-01-20260907-e-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-01-20260907.e.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

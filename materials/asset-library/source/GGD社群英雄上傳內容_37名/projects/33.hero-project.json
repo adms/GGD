@@ -273,34 +273,35 @@
       "R": {
         "slot": "R",
         "name": "〔不死者的再起〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n【待補機制】目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
+        "purpose": "【目前模板可執行】自身回復 100 點生命。\n【目標設計】短時間準備再起；首次致死傷害被攔截，經明顯恢復動作後回復有限生命。每回合一次。\n【待補機制】目前立即回復；需主動再起窗口、首次致死截取與每回合一次。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
           "manaCostTier": "大",
-          "castTimeTier": "大",
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100,
-                "ratios": []
-              },
-              "applyTo": "self"
-            }
-          ]
+          "castTimeTier": "大"
         },
         "products": [
           {
             "instanceId": "community-review-33-20260907-r-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 100,
+                      "ratios": []
+                    },
+                    "applyTo": "self"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

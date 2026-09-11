@@ -1,0 +1,17 @@
+{
+  "id": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "Idle",
+    "run": "Run",
+    "attack": "NekoPunch_Loop",
+    "cast": "FarSkill_Action",
+    "hurt": "Damage",
+    "death": "Damage"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

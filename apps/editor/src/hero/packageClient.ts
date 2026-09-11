@@ -60,8 +60,11 @@ export async function checkedResponse(response: Response): Promise<Response> {
   throw new Error(error?.diagnostics?.map((row) => row.message).join("；") || error?.message || `服務回應 ${response.status}`);
 }
 
-export async function inspectHeroZip(zip: Blob): Promise<HeroPackageInspection> {
-  const response = heroPlatform.hasSession ? await heroPlatform.binaryResponse("/hero-import/inspect", zip, { contentType: "application/zip" }) : await checkedResponse(await fetch(`${BASE}/inspect-hero-package`, { method: "POST", headers: { "content-type": "application/zip" }, body: zip }));
+export async function inspectHeroZip(zip: Blob, canonicalTakeoverId?: string): Promise<HeroPackageInspection> {
+  if (canonicalTakeoverId && !heroPlatform.hasSession) throw new Error("接管既有正式英雄需要管理員登入。");
+  const response = heroPlatform.hasSession
+    ? await heroPlatform.binaryResponse(canonicalTakeoverId ? "/admin/hero-import/inspect" : "/hero-import/inspect", zip, { contentType: "application/zip", ...(canonicalTakeoverId ? { headers: { "x-ggd-work-id": canonicalTakeoverId } } : {}) })
+    : await checkedResponse(await fetch(`${BASE}/inspect-hero-package`, { method: "POST", headers: { "content-type": "application/zip" }, body: zip }));
   const result = zHeroInspection.parse(await response.json());
   await rememberHeroInspectionIcons(result);
   return result;
@@ -77,7 +80,7 @@ export async function rememberHeroInspectionIcons(result: HeroPackageInspection)
   }
 }
 
-export async function prepareHeroZip(value: HeroDraftPayload): Promise<{ zip: Blob; inspection: HeroPackageInspection }> {
+export async function prepareHeroZip(value: HeroDraftPayload, canonicalTakeover = false): Promise<{ zip: Blob; inspection: HeroPackageInspection }> {
   const project = value.project;
   const profile = heroPlatform.hasSession ? await heroPlatform.request("/hero-import/target-profile") : await (await checkedResponse(await fetch(`${BASE}/active/target-profile`))).json();
   const facts = readTargetProfileFacts(profile);
@@ -102,9 +105,12 @@ export async function prepareHeroZip(value: HeroDraftPayload): Promise<{ zip: Bl
   const source = buildHeroSourcePackage(project, icons, { gameRevision: facts.gameRevision, contentVersion: facts.contentVersion, migrationFingerprint: facts.migrationFingerprint, processorFingerprint: facts.authoringProcessorFingerprint }, modelBytes);
   const upload = await buildRuntimePackageZip(packageZipInput(source, project.projectId));
   const sourceZip = new Blob([Uint8Array.from(upload.bytes)], { type: "application/zip" });
-  const response = heroPlatform.hasSession ? await heroPlatform.binaryResponse("/hero-import/build", sourceZip, { contentType: "application/zip" }) : await checkedResponse(await fetch(`${BASE}/hero-package`, { method: "POST", headers: { "content-type": "application/zip" }, body: sourceZip }));
+  if (canonicalTakeover && !heroPlatform.hasSession) throw new Error("接管既有正式英雄需要管理員登入。");
+  const response = heroPlatform.hasSession
+    ? await heroPlatform.binaryResponse(canonicalTakeover ? "/admin/hero-import/build" : "/hero-import/build", sourceZip, { contentType: "application/zip", ...(canonicalTakeover ? { headers: { "x-ggd-work-id": project.projectId } } : {}) })
+    : await checkedResponse(await fetch(`${BASE}/hero-package`, { method: "POST", headers: { "content-type": "application/zip" }, body: sourceZip }));
   const zip = await response.blob();
-  return { zip, inspection: await inspectHeroZip(zip) };
+  return { zip, inspection: await inspectHeroZip(zip, canonicalTakeover ? project.projectId : undefined) };
 }
 
 export function downloadHeroFile(blob: Blob, filename: string): void {

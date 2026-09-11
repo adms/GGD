@@ -229,37 +229,38 @@
       "E": {
         "slot": "E",
         "name": "〔重新振作〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-22-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n【待補機制】需自己及附近一名友軍。",
+        "purpose": "【目前模板可執行】自身獲得 120 點護盾，持續 3 秒。\n【目標設計】提供自己與附近一名友軍小額護盾，協助重新進入戰鬥。\n【待補機制】需自己及附近一名友軍。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-22-20260907.e.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-22-20260907-e-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-22-20260907.e.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
@@ -278,34 +279,35 @@
       "R": {
         "slot": "R",
         "name": "死亡回歸",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":100,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n【待補機制】目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
+        "purpose": "【目前模板可執行】自身回復 100 點生命。\n【目標設計】施放時保存自己的位置與生命，存檔有效五秒。期間首次致死傷害被攔截，返回合法存檔位置，恢復到存檔生命但不超過既定上限。每回合最多成功一次。其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\n【待補機制】目前立即恢復 100 生命；需五秒位置生命快照、致死回溯與合法落點。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
           "manaCostTier": "大",
-          "castTimeTier": "大",
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100,
-                "ratios": []
-              },
-              "applyTo": "self"
-            }
-          ]
+          "castTimeTier": "大"
         },
         "products": [
           {
             "instanceId": "community-review-22-20260907-r-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 100,
+                      "ratios": []
+                    },
+                    "applyTo": "self"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
@@ -324,34 +326,35 @@
       "EX": {
         "slot": "EX",
         "name": "〔重新選擇〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"heal\",\"amount\":{\"flat\":80,\"ratios\":[]},\"applyTo\":\"self\"}]。\n【目標設計】R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。\n【待補機制】目前立即恢復 80 生命；需主動消耗 R 同一快照且不得重置冷卻。",
+        "purpose": "【目前模板可執行】自身回復 80 點生命。\n【目標設計】R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。\n【待補機制】目前立即恢復 80 生命；需主動消耗 R 同一快照且不得重置冷卻。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
           "manaCostTier": "大",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 80,
-                "ratios": []
-              },
-              "applyTo": "self"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-22-20260907-ex-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 80,
+                      "ratios": []
+                    },
+                    "applyTo": "self"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

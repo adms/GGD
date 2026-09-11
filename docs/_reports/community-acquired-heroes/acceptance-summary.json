@@ -1,0 +1,945 @@
+{
+  "schema": "ggd-acquired-heroes-check@1",
+  "scope": "Local factory/schema compilation, source dependency and manifest-verified asset checks, existing package SimWorld/ZIP/inspection. No service, production, model appearance, design-fidelity or publication acceptance.",
+  "startedAt": "2026-09-10T19:46:40.258Z",
+  "finishedAt": "2026-09-10T19:47:59.948Z",
+  "status": "passed",
+  "sourceSha256": "sha256:228ca17d6c6cf5e69a6bfa3c0cf24e013d2517b630aecfe687c641e4b9097e55",
+  "catalogSha256": "sha256:310c2990327f885ca0f90d9e10b94359e4ce5083dbc5c2852f1897faada2ff4f",
+  "target": {
+    "gameRevision": "local-authoring-check",
+    "contentVersion": "sha256:310c2990327f885ca0f90d9e10b94359e4ce5083dbc5c2852f1897faada2ff4f",
+    "migrationFingerprint": "local-authoring-check",
+    "processorFingerprint": "7fa275f09510"
+  },
+  "counts": {
+    "heroes": 34,
+    "compiled": 34,
+    "slots": 204,
+    "packages": 34,
+    "passed": 34,
+    "blocked": 0,
+    "failed": 0,
+    "warnings": 0
+  },
+  "heroes": [
+    {
+      "id": "acquired-jetragon",
+      "name": "空渦龍",
+      "status": "passed",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "sourceSha256": "sha256:1fd31127af8f4396654a50b4eb040849b0c3576dda2baad34ddde458e78673c6",
+      "compiled": true,
+      "slots": [
+        "acquired-jetragon.passive",
+        "acquired-jetragon.q",
+        "acquired-jetragon.w",
+        "acquired-jetragon.e",
+        "acquired-jetragon.r",
+        "acquired-jetragon.ex"
+      ],
+      "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:84b1dea79a541683b5153a905430f0a4430875dd97c7f8214aa5c6df50265bd8",
+        "zipSha256": "sha256:da0d1c6cf8efecb67529d5b591010a1cdc84e64ca3108640cbfc13ab53862c9c",
+        "zipBytes": 6288197,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-astralym",
+      "name": "枯星龍",
+      "status": "passed",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "sourceSha256": "sha256:a9982c91c92b7db4643c4cb37e1c1e6d6af677111ad2b0287e81b42b6b8a7928",
+      "compiled": true,
+      "slots": [
+        "acquired-astralym.passive",
+        "acquired-astralym.q",
+        "acquired-astralym.w",
+        "acquired-astralym.e",
+        "acquired-astralym.r",
+        "acquired-astralym.ex"
+      ],
+      "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:13a19721d27e385506a7e438eec19fc6fc2eec18fa4b72605ab318d18387feb0",
+        "zipSha256": "sha256:fd2a4e3f7d9e7bdd068e76ffa3850ceb2eff6574bb094dd19437fe9d9e2907a9",
+        "zipBytes": 6865837,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-cattiva",
+      "name": "搗蛋貓",
+      "status": "passed",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "sourceSha256": "sha256:1d988cf53901b1b8a223b7442db4474cd3e6f23a21bfe77c547a922ce41f232a",
+      "compiled": true,
+      "slots": [
+        "acquired-cattiva.passive",
+        "acquired-cattiva.q",
+        "acquired-cattiva.w",
+        "acquired-cattiva.e",
+        "acquired-cattiva.r",
+        "acquired-cattiva.ex"
+      ],
+      "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:ac1ca4471d85f4c14c4cb06c69d6c50e99e08844f1659f6c02f48a7ba57c55ba",
+        "zipSha256": "sha256:2987e0e35772e17af11c356de9e419dfd113bf7da875be5ff94058374ba525f1",
+        "zipBytes": 4398337,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-dio",
+      "name": "DIO",
+      "status": "passed",
+      "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+      "sourceSha256": "sha256:48f4b244b4ccaa8416d5251df9f1d2876c9614e85e990269a75db7ee5dc418ca",
+      "compiled": true,
+      "slots": [
+        "acquired-dio.passive",
+        "acquired-dio.q",
+        "acquired-dio.w",
+        "acquired-dio.e",
+        "acquired-dio.r",
+        "acquired-dio.ex"
+      ],
+      "mechanicsSha256": "sha256:7447307d477a5552c0459be92729d89b6684157c5c3b806f83df624c3e58ad59",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:cdb41d877890be2cb91aed5ead3f6f0728d7bfee280f7f3e8504f6a28581c2c0",
+        "zipSha256": "sha256:e5820897cee1af704e6df26e07e1fcff01e2bea66d9a20f0af3e2e18f18d0b92",
+        "zipBytes": 3649849,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-morgiana",
+      "name": "摩尔迦娜",
+      "status": "passed",
+      "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+      "sourceSha256": "sha256:43e0d9aa63d6bc035c41752f156a7818341f53d2eb99428ba302abfa52da7b77",
+      "compiled": true,
+      "slots": [
+        "acquired-morgiana.passive",
+        "acquired-morgiana.q",
+        "acquired-morgiana.w",
+        "acquired-morgiana.e",
+        "acquired-morgiana.r",
+        "acquired-morgiana.ex"
+      ],
+      "mechanicsSha256": "sha256:c2be4e07e269ad88203ba686aed82f075018cb621008ef60782b4be3dcb69f43",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:bfeb2c7de856735de9515b57dde36c4addda1f251e8d00833e8d79b0ba010720",
+        "zipSha256": "sha256:a57a8f50a5084cb9839ae7b3edbdd99bbbe13078b06ea8f21882c795ed28d934",
+        "zipBytes": 3769845,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-zero",
+      "name": "Zero",
+      "status": "passed",
+      "modelKey": "imported.herosephiroth",
+      "sourceSha256": "sha256:5ebb3aaaf0c1356eed999e33dd4dbfeef4921915268d6715a1b182de00b44da5",
+      "compiled": true,
+      "slots": [
+        "acquired-zero.passive",
+        "acquired-zero.q",
+        "acquired-zero.w",
+        "acquired-zero.e",
+        "acquired-zero.r",
+        "acquired-zero.ex"
+      ],
+      "mechanicsSha256": "sha256:afc4ddc4d0a8c8d24b870d2e129a096eba911e8668eb5673fd96a1f8f99306f1",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:ff0612c135dbe00bc4c330c16bee9b5b5c48c382c5724b8c4adbe07b3783b9b5",
+        "zipSha256": "sha256:8b87e947f9de451aaab3beebad24948a52926e4d09edd14756137bfff6bb70e5",
+        "zipBytes": 3345921,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-emilia",
+      "name": "愛蜜莉雅",
+      "status": "passed",
+      "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+      "sourceSha256": "sha256:32c3023c4be2bb4afa49b4db08fb69ce1809f08de43ac19b0b813a07a2adf848",
+      "compiled": true,
+      "slots": [
+        "acquired-emilia.passive",
+        "acquired-emilia.q",
+        "acquired-emilia.w",
+        "acquired-emilia.e",
+        "acquired-emilia.r",
+        "acquired-emilia.ex"
+      ],
+      "mechanicsSha256": "sha256:effd47e129303c33b1a164fe14a31e3cdabbfeb7adb4d28f9bd275ba8c01496c",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:32fc5738142ebec7759a23e95fd8a57d93e86895a8f4709c21c8b2cd633e8bd8",
+        "zipSha256": "sha256:39f1aa06e32577f61db4118e5a631551f8a8084feea48a1ac9e4747e168c8df1",
+        "zipBytes": 4093876,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-ram",
+      "name": "拉姆",
+      "status": "passed",
+      "modelKey": "imported.herooichi",
+      "sourceSha256": "sha256:a0a655f0e7295d1021b317adf3bf85a6c88b592bbd8372417fd019928e02efbf",
+      "compiled": true,
+      "slots": [
+        "acquired-ram.passive",
+        "acquired-ram.q",
+        "acquired-ram.w",
+        "acquired-ram.e",
+        "acquired-ram.r",
+        "acquired-ram.ex"
+      ],
+      "mechanicsSha256": "sha256:6ef24e7d2544d634d0d06826cb494003af59414df38b71feeb65a81367e09219",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:bcfccd8e63e4ed2291ddec5229ba00c098585508bdab6635c5f1daaaa128caad",
+        "zipSha256": "sha256:796b7b6d9297e991d3c9f2d3e57022930822ae195951e18e031a7db49eec1448",
+        "zipBytes": 3215563,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-beatrice",
+      "name": "碧翠絲",
+      "status": "passed",
+      "modelKey": "champ.sela",
+      "sourceSha256": "sha256:967707f894c9efcaac845061c2f77e4c61e2fa0edaf97f831658e4f6ce63617e",
+      "compiled": true,
+      "slots": [
+        "acquired-beatrice.passive",
+        "acquired-beatrice.q",
+        "acquired-beatrice.w",
+        "acquired-beatrice.e",
+        "acquired-beatrice.r",
+        "acquired-beatrice.ex"
+      ],
+      "mechanicsSha256": "sha256:a320fb717d8886b0f3e76f5815bda9617faa3db1cf28333fca0736f6c55e1d6a",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:4757eaabd3c64466507421bc9e377eba8ec673d2a2aa34a8404df72083e481fe",
+        "zipSha256": "sha256:fb310170898c74d07dd9de662bcdda8d7cabace6d7bc9055ff96dbaca249710a",
+        "zipBytes": 3106078,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-mario",
+      "name": "Mario",
+      "status": "passed",
+      "modelKey": "imported.linkstik",
+      "sourceSha256": "sha256:f088883a0b2aa59d50ccc006c8fb4ae2d96c2e1542cda5e05205dc733ba7767a",
+      "compiled": true,
+      "slots": [
+        "acquired-mario.passive",
+        "acquired-mario.q",
+        "acquired-mario.w",
+        "acquired-mario.e",
+        "acquired-mario.r",
+        "acquired-mario.ex"
+      ],
+      "mechanicsSha256": "sha256:d505c1bd463f956a4cbac59b16511e53c30832ef6381d09af37978a933cdbe51",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:84cdd9a6ba41527a913558e34562bebb5ab3bbbd706e9a025b2d1f942e2c2510",
+        "zipSha256": "sha256:e152a6c276b8593aff137fd37e16e8ceed57b6f6fad79e33869b33add1e3e19c",
+        "zipBytes": 3235572,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-mewtwo",
+      "name": "Mewtwo",
+      "status": "passed",
+      "modelKey": "imported.herobuu",
+      "sourceSha256": "sha256:95cbd4f376645fbe68f673778679b508bae4a9d5e5b44d11573af289a9ba9ab7",
+      "compiled": true,
+      "slots": [
+        "acquired-mewtwo.passive",
+        "acquired-mewtwo.q",
+        "acquired-mewtwo.w",
+        "acquired-mewtwo.e",
+        "acquired-mewtwo.r",
+        "acquired-mewtwo.ex"
+      ],
+      "mechanicsSha256": "sha256:36e27a65618dd6752ffc7902c8e71782498b93c4018d1057f3659d8eb7f12142",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:11ce197ad822ef946659addcd5da3ca71284f0cfa304c3c490795c585c097eb8",
+        "zipSha256": "sha256:83432d8884714d55b6710c03cff48f023c267af105a82a6b96e358bc9ebd7b7a",
+        "zipBytes": 3284122,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-pokemon-trainer",
+      "name": "Pokémon Trainer",
+      "status": "passed",
+      "modelKey": "imported.heropikachu",
+      "sourceSha256": "sha256:2ca0c8f750b45619450104ace30cf357521343938a3ac31e1de3de281c059537",
+      "compiled": true,
+      "slots": [
+        "acquired-pokemon-trainer.passive",
+        "acquired-pokemon-trainer.q",
+        "acquired-pokemon-trainer.w",
+        "acquired-pokemon-trainer.e",
+        "acquired-pokemon-trainer.r",
+        "acquired-pokemon-trainer.ex"
+      ],
+      "mechanicsSha256": "sha256:8486200f893379726fcf4ab73c7126dea6a0a1ab04aad591b274f8db34478fa1",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:ba8e6fed8b7fac0ca9c82d7ea74badbc1cd7535df24925b884343e6bdb6d0de6",
+        "zipSha256": "sha256:4dacb66611981f71c3179c212bb06bd87b5dff7758837bb5ab0fbeb10944d0cb",
+        "zipBytes": 3157559,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-ryu",
+      "name": "Ryu",
+      "status": "passed",
+      "modelKey": "imported.herokyo",
+      "sourceSha256": "sha256:11864c5a69d697ee5f2fd40428fbad7854a9672bbec3eacc1153f7d58ab3783f",
+      "compiled": true,
+      "slots": [
+        "acquired-ryu.passive",
+        "acquired-ryu.q",
+        "acquired-ryu.w",
+        "acquired-ryu.e",
+        "acquired-ryu.r",
+        "acquired-ryu.ex"
+      ],
+      "mechanicsSha256": "sha256:d39a96dba8c5417ec6263f287d3ab7489751ff3ddf6dabca355af0f4c4fe803b",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:36c0dd930eec7cf9742d211756f1cc7ba81a81ea0d9634e225dcf2b328bd37b9",
+        "zipSha256": "sha256:720095ebeed0eeaf224a750ddc6e39b8165f77cfbf39873b4d64c54c859f4263",
+        "zipBytes": 3342952,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-minecraft",
+      "name": "Steve／Alex",
+      "status": "passed",
+      "modelKey": "champ.thorne",
+      "sourceSha256": "sha256:fe53adbc6a04c2219c4b4ffe0fecd8a12958bdf2bf58bceaf697dfffd782fa77",
+      "compiled": true,
+      "slots": [
+        "acquired-minecraft.passive",
+        "acquired-minecraft.q",
+        "acquired-minecraft.w",
+        "acquired-minecraft.e",
+        "acquired-minecraft.r",
+        "acquired-minecraft.ex"
+      ],
+      "mechanicsSha256": "sha256:5a3be2d3f827895a2b9dde1122bdd504242f2f41648352e4fc07edccf25b472e",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:8cb75662e23ffa96be0843d1414f0e5ba5406d8b446c54213c2e852171936d04",
+        "zipSha256": "sha256:b3d70a3f98cfab2883a302b2dc3c2758a06df4d71bef0a69f119b4ef96b9536e",
+        "zipBytes": 3032854,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-kita-kita",
+      "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+      "status": "passed",
+      "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+      "sourceSha256": "sha256:6d773884a1519b389c3113fcbeacd738916ad031a936d61cd9d1ae0375cc4107",
+      "compiled": true,
+      "slots": [
+        "acquired-kita-kita.passive",
+        "acquired-kita-kita.q",
+        "acquired-kita-kita.w",
+        "acquired-kita-kita.e",
+        "acquired-kita-kita.r",
+        "acquired-kita-kita.ex"
+      ],
+      "mechanicsSha256": "sha256:d0df98a3cb01950559cb418dc96084f514955207ea5b5c4a5b87f9675a75b6c0",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:583fbdc2c70653139936fa1fd403883cb36968a1df04bc8eafcd7d79b9be8f66",
+        "zipSha256": "sha256:39ad186b235de41bc9ce13572e4ee4f42ac3165a003b18f4daf3f16cd3ed996e",
+        "zipBytes": 3369709,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-wargreymon",
+      "name": "戰鬥暴龍獸",
+      "status": "passed",
+      "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+      "sourceSha256": "sha256:f78723094304795e5514f99363f9e5a5e2728dd8a92a20bc6a3d5d2d8f9a854a",
+      "compiled": true,
+      "slots": [
+        "acquired-wargreymon.passive",
+        "acquired-wargreymon.q",
+        "acquired-wargreymon.w",
+        "acquired-wargreymon.e",
+        "acquired-wargreymon.r",
+        "acquired-wargreymon.ex"
+      ],
+      "mechanicsSha256": "sha256:a749b3a2983eb92dfb782b3394f7c73e47d2de6ac3799d2fc07ab0bb1b8967fe",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:58ac883036e90d1d68377f252fed10e6f79ddc8e6e4e277aebe53c817e688d65",
+        "zipSha256": "sha256:f2f28ee0d93f9ba8a44788acd5e8f5641b661e559ec69656d2f8a39596b572d4",
+        "zipBytes": 3690090,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-saya",
+      "name": "沙耶",
+      "status": "passed",
+      "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+      "sourceSha256": "sha256:2c1b0c34a1663f8f41d4a7bbcaa54cd32a697bbb3f97f57540a30cf8459bd877",
+      "compiled": true,
+      "slots": [
+        "acquired-saya.passive",
+        "acquired-saya.q",
+        "acquired-saya.w",
+        "acquired-saya.e",
+        "acquired-saya.r",
+        "acquired-saya.ex"
+      ],
+      "mechanicsSha256": "sha256:ee2c5aca62d2bae9be230478b6d6b4a6ca4996057f18221f39300e426e5b47d9",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:d1c9f8b50265de3a0662478e2450207526300b4ed1610ade39993541cfd87883",
+        "zipSha256": "sha256:3fd136357128eb91b2b39c6418539de3de73e5e5d12d40cdad188a2f84b8e170",
+        "zipBytes": 3834514,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-naruto",
+      "name": "漩渦鳴人",
+      "status": "passed",
+      "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+      "sourceSha256": "sha256:63c6020db07a1db0145e839beea7c0f1439574ec1ad18c097a68178a5de3f83d",
+      "compiled": true,
+      "slots": [
+        "acquired-naruto.passive",
+        "acquired-naruto.q",
+        "acquired-naruto.w",
+        "acquired-naruto.e",
+        "acquired-naruto.r",
+        "acquired-naruto.ex"
+      ],
+      "mechanicsSha256": "sha256:f4188304a8c8093713e735788da449fd731bb4a9ba2f87e76aa017793190d4d1",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:2d2a037f6b1beb74fd8ffbab9197492a5ef5a50812cd38d27e2fef7c8e1bdc82",
+        "zipSha256": "sha256:74d50d4df5841df13d2e1084ab58cf0e1825e3aad5b95ccf680af436d557768c",
+        "zipBytes": 3538756,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-lord-nightmares",
+      "name": "金色魔王／惡夢之王",
+      "status": "passed",
+      "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+      "sourceSha256": "sha256:b98cd005d0a5bfb78f6983162c39472afecbe993498e6ffb9c397c828f672b15",
+      "compiled": true,
+      "slots": [
+        "acquired-lord-nightmares.passive",
+        "acquired-lord-nightmares.q",
+        "acquired-lord-nightmares.w",
+        "acquired-lord-nightmares.e",
+        "acquired-lord-nightmares.r",
+        "acquired-lord-nightmares.ex"
+      ],
+      "mechanicsSha256": "sha256:3dfad3e38704b815b55a61ac66513cf12b658b7da23276ca0631fea7e6e98752",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:22a8811ae626eb886270794631829e0d08514e0a4d0ac178cc27f48c61ff900e",
+        "zipSha256": "sha256:79d5c21919ef4bd39470fadbbdb7d36496151252994e9e6710fb8272cf4adac3",
+        "zipBytes": 3730134,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-rim",
+      "name": "莉姆（Rim；粉紅魔龍）",
+      "status": "passed",
+      "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+      "sourceSha256": "sha256:7c5a8422f726dc592f7ebb77149bc5db5515744df36beca64c528e3087bf5306",
+      "compiled": true,
+      "slots": [
+        "acquired-rim.passive",
+        "acquired-rim.q",
+        "acquired-rim.w",
+        "acquired-rim.e",
+        "acquired-rim.r",
+        "acquired-rim.ex"
+      ],
+      "mechanicsSha256": "sha256:f9e70c5c67f7948b5aee23709a5915be8d883b0c3baa3b9ebe5324d6933f2910",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:5963604bc8772f3273e190283a3711008760d7466314e2f9af923d0d08e2673f",
+        "zipSha256": "sha256:30bc1cac925865306491efe369e39bbcdd49718c55b1fed151b5d3c30d93a11b",
+        "zipBytes": 3847959,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-xiaodangjia",
+      "name": "小當家",
+      "status": "passed",
+      "modelKey": "ou99.498407",
+      "sourceSha256": "sha256:d48608094479a3dbd9b0191e77cd0fe30158f71284c8d01dd0d9fdbc1bff2d6f",
+      "compiled": true,
+      "slots": [
+        "acquired-xiaodangjia.passive",
+        "acquired-xiaodangjia.q",
+        "acquired-xiaodangjia.w",
+        "acquired-xiaodangjia.e",
+        "acquired-xiaodangjia.r",
+        "acquired-xiaodangjia.ex"
+      ],
+      "mechanicsSha256": "sha256:4facddd78540972cb0491e8f62e3d6ac6ed7e0ab78d184fc58c80bfe5d59db5b",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:fce9172e17a3f186524d6cf72369acd34229f215b4e1379270a2db5c25fae855",
+        "zipSha256": "sha256:7e3739b637fd59f5436123c79e2d7d1e509c63c53568d4590b1fe275e65d525a",
+        "zipBytes": 3566082,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-inuyasha",
+      "name": "犬夜叉",
+      "status": "passed",
+      "modelKey": "ou99.452782",
+      "sourceSha256": "sha256:367cc94cbd4a5d2e7da5e026f7f74b60ebf1ae8ae894de78d81d1042187d64bf",
+      "compiled": true,
+      "slots": [
+        "acquired-inuyasha.passive",
+        "acquired-inuyasha.q",
+        "acquired-inuyasha.w",
+        "acquired-inuyasha.e",
+        "acquired-inuyasha.r",
+        "acquired-inuyasha.ex"
+      ],
+      "mechanicsSha256": "sha256:b4fd24f0cd7668a5eab50a63efaa9c282093d72e3f1895b499e7131ff9665c81",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:d5bcea2af6fd16e029db1e4b1489b58c4d99d160d4f035056cd93681df6e007a",
+        "zipSha256": "sha256:839327111c9bd97f72cbcfd9f48905e550833b964801d757731001f316ef6802",
+        "zipBytes": 4201155,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-asuna",
+      "name": "亞絲娜／結城明日奈",
+      "status": "passed",
+      "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+      "sourceSha256": "sha256:7218c6fe486852105cba0140ee6c3dbcc8119dd44db48c3b15841f958e311221",
+      "compiled": true,
+      "slots": [
+        "acquired-asuna.passive",
+        "acquired-asuna.q",
+        "acquired-asuna.w",
+        "acquired-asuna.e",
+        "acquired-asuna.r",
+        "acquired-asuna.ex"
+      ],
+      "mechanicsSha256": "sha256:f1b6dee8c893cfe959ee7b75106c9a4bdfa7f77f24c5d33507aa50d4db4ecd71",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:e736b343e650e66e6141f74ccf12b2639a890957b64404d5f6f170263d4cf59b",
+        "zipSha256": "sha256:71d877bffd5c73f8d4f6094d9ab274b5147778a1fc7c0589ad2711f808d79d5b",
+        "zipBytes": 3888129,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-alice",
+      "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+      "status": "passed",
+      "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+      "sourceSha256": "sha256:c62c6ee404d1e46e01361125bff1f916afd2071a3cf43753d5a07017d21d9f61",
+      "compiled": true,
+      "slots": [
+        "acquired-alice.passive",
+        "acquired-alice.q",
+        "acquired-alice.w",
+        "acquired-alice.e",
+        "acquired-alice.r",
+        "acquired-alice.ex"
+      ],
+      "mechanicsSha256": "sha256:561593a5f8f20d079fa451c260e786414d9a9fa169744760ba2dc17100ccf52f",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:cb3431d725e64fbd9a03bedaae4e8e1c6e558b88e3763cf826527dcce1d9699c",
+        "zipSha256": "sha256:bedeb2d8f303d810a381fcd5343d9ac7d530c5ac2657e5eaa5bdf32dc6b11010",
+        "zipBytes": 4453565,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-leafa",
+      "name": "莉法",
+      "status": "passed",
+      "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+      "sourceSha256": "sha256:bfe2ed64f91e51c17ef47747ba8c77a8601043e8db4f3226376afe1073eee679",
+      "compiled": true,
+      "slots": [
+        "acquired-leafa.passive",
+        "acquired-leafa.q",
+        "acquired-leafa.w",
+        "acquired-leafa.e",
+        "acquired-leafa.r",
+        "acquired-leafa.ex"
+      ],
+      "mechanicsSha256": "sha256:59557f1bb19486d6fa9e3aa4e4a9a9fdc207fb33c96dd217d4a0c7dff0a790de",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:b9a1f1aaf7f878ea6718412c0bd41a9eb7b644d800d050375337f18282cf2b26",
+        "zipSha256": "sha256:befd979398c14094dfd76bd2746ba673d5282fc29e96525157e03ee94e16f18b",
+        "zipBytes": 4163918,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "acquired-kuroyukihime",
+      "name": "黑雪姬",
+      "status": "passed",
+      "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+      "sourceSha256": "sha256:0a50ec099025043050575135ba9c7fcd105e5d85d3d7114ca43ae36604ca94ea",
+      "compiled": true,
+      "slots": [
+        "acquired-kuroyukihime.passive",
+        "acquired-kuroyukihime.q",
+        "acquired-kuroyukihime.w",
+        "acquired-kuroyukihime.e",
+        "acquired-kuroyukihime.r",
+        "acquired-kuroyukihime.ex"
+      ],
+      "mechanicsSha256": "sha256:e3c15a46537705fb6c4876ee00e4415a581e937915b69de7e3432e99bafafb88",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:c3e4c7c65be477598d767379ddc5139aeb788402ac37e0195566b46720671738",
+        "zipSha256": "sha256:22cac8f967ad9f063c4dc530c796bedc926cc88db6fd001919a87002e138ee71",
+        "zipBytes": 3532523,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-hlgr",
+      "name": "鋼彈",
+      "status": "passed",
+      "modelKey": "ou99.472273",
+      "sourceSha256": "sha256:b6bc49814e9a3b52d8e4c1e50d27e86aabc6c6123abf8d0f53abbc9f78dbe5e8",
+      "compiled": true,
+      "slots": [
+        "godie-hlgr.passive",
+        "godie-hlgr.q",
+        "godie-hlgr.w",
+        "godie-hlgr.e",
+        "godie-hlgr.r",
+        "godie-hlgr.ex"
+      ],
+      "mechanicsSha256": "sha256:64decdf486a0c02c7d454de6ef817826c851c55d306cb8d28e0ef2ceff831d68",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:ab4cb892246558932cbe8aa6398454a8595e3f53928efbc26570e5e793e2ebc4",
+        "zipSha256": "sha256:9c32b303bcbe9db7132a6dcf0a302682866b6d7d0bb4f0a367d93d2d8b708e8e",
+        "zipBytes": 4961402,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-eevi",
+      "name": "劍心拔刀齋",
+      "status": "passed",
+      "modelKey": "ou99.470351",
+      "sourceSha256": "sha256:6e5c68a0da6e36c69270b9d9bbf97234fc1f1f6a10109e48e5df8aa26ff2fa51",
+      "compiled": true,
+      "slots": [
+        "godie-eevi.passive",
+        "godie-eevi.q",
+        "godie-eevi.w",
+        "godie-eevi.e",
+        "godie-eevi.r",
+        "godie-eevi.ex"
+      ],
+      "mechanicsSha256": "sha256:5904d5afeef6b24cd16ce258967aa9fbe8c3ceb1b660ac6e43933169dc49069b",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:ef7dbb9d21fbee0a3a9c9c880c79c86ac9c1f35bb76e219308604ae2ed3f25a5",
+        "zipSha256": "sha256:952d756bea282125e30b3679c8a95b1b52ea9af32f8b2a463c4e63567d6d52b2",
+        "zipBytes": 3988456,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-e00q",
+      "name": "黑化Saber英靈亞瑟王",
+      "status": "passed",
+      "modelKey": "ou99.466278",
+      "sourceSha256": "sha256:7f47bc67a87f0ee4f64203a16eb4f7239344fff82753214328633b5431a6019a",
+      "compiled": true,
+      "slots": [
+        "godie-e00q.passive",
+        "godie-e00q.q",
+        "godie-e00q.w",
+        "godie-e00q.e",
+        "godie-e00q.r",
+        "godie-e00q.ex"
+      ],
+      "mechanicsSha256": "sha256:f1051bb2f59a4453fac0b3db548eae8c3bd7ecbbccbab90d04b9c605c914483d",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:2a44cfea6503fb876662a8e91a52f43db52a85888c10f62ce93de98070954466",
+        "zipSha256": "sha256:04179daae9fa17d138362f5408770863173ec09052179bd171fff75aace6c81f",
+        "zipBytes": 4359878,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-usyl",
+      "name": "異形殺戮之牙",
+      "status": "passed",
+      "modelKey": "ou99.312479",
+      "sourceSha256": "sha256:37ce4389211e0cd9a1fc39372980e84a85767bc1ebc41d690cb4d0b97a4e0eb5",
+      "compiled": true,
+      "slots": [
+        "godie-usyl.passive",
+        "godie-usyl.q",
+        "godie-usyl.w",
+        "godie-usyl.e",
+        "godie-usyl.r",
+        "godie-usyl.ex"
+      ],
+      "mechanicsSha256": "sha256:9db7c61ac8329f822c0ae9c3e5fb5545d571d8deae681a48bdfe6f1c778fd424",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:f7cbafe8b5b280e8409b84ad4c7895eaab1779f0f9cb51dc7cdd39ea3141f7bd",
+        "zipSha256": "sha256:e330f9afdfb22eb5a7e124bd49c1751fb68e942707b34e35d07bf4a563600789",
+        "zipBytes": 3502378,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-nbst",
+      "name": "瘋狂假面變態正義",
+      "status": "passed",
+      "modelKey": "ou99.455144",
+      "sourceSha256": "sha256:a714b4411555346e0ea5e5cead8637895914bbd65de0b253df20a5d09d7bc67c",
+      "compiled": true,
+      "slots": [
+        "godie-nbst.passive",
+        "godie-nbst.q",
+        "godie-nbst.w",
+        "godie-nbst.e",
+        "godie-nbst.r",
+        "godie-nbst.ex"
+      ],
+      "mechanicsSha256": "sha256:d40398fb40786c33ee56054a82e83f6622147296508a96c6e53f639db18d39ca",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:0e8819247ae264e693f92f372bc6573977811059a6031c5b9963d22d41f73b67",
+        "zipSha256": "sha256:ac6840cde1e4f930707b60ac211bde479ad063bd810a2ba0ee908e22d355b21b",
+        "zipBytes": 3548774,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-nman",
+      "name": "胖虎地獄歌神",
+      "status": "passed",
+      "modelKey": "ou99.496746",
+      "sourceSha256": "sha256:d83f136c1a51915c1e82a7f6e9335598be8abe82b2c14b4bb071dc68db8e8119",
+      "compiled": true,
+      "slots": [
+        "godie-nman.passive",
+        "godie-nman.q",
+        "godie-nman.w",
+        "godie-nman.e",
+        "godie-nman.r",
+        "godie-nman.ex"
+      ],
+      "mechanicsSha256": "sha256:6ea8109bac4898cbb51c6d32872af6a47974e0524050c0d9a097a43b124625e8",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:b6330572ab5c8f7ad8fdce03b0a49d740ca534ac86c042859beacb5502c68ad5",
+        "zipSha256": "sha256:004a4790b1e4df5ad4bb9409318cdfd57d4104628d69c5c593dfe323bbde42d6",
+        "zipBytes": 3776133,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-e00t",
+      "name": "貞子七夜怪談",
+      "status": "passed",
+      "modelKey": "ou99.480489",
+      "sourceSha256": "sha256:4ea0e2179b24a407d0aebc1052b5ab5faac5aaa273b54e10056b01addfc4d2e8",
+      "compiled": true,
+      "slots": [
+        "godie-e00t.passive",
+        "godie-e00t.q",
+        "godie-e00t.w",
+        "godie-e00t.e",
+        "godie-e00t.r",
+        "godie-e00t.ex"
+      ],
+      "mechanicsSha256": "sha256:12032033e179a28f699d45be52e311c67618621fd240ec4ea268125b1f64fdce",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:783de598ed1e1a1f753f366140132606584d69a1df670d9bbd5925413456bf6e",
+        "zipSha256": "sha256:c70cdbbbd3ca57099ef0e5b41ee047037575867e108e7c4e4974bf46bb0ba040",
+        "zipBytes": 3424988,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    },
+    {
+      "id": "godie-h021",
+      "name": "阿強一號破銅爛鐵",
+      "status": "passed",
+      "modelKey": "ou99.485012",
+      "sourceSha256": "sha256:bb0fef1edd4eaf10cab4bc310cca208014a55266d75e8809cf35ae77a0dcb270",
+      "compiled": true,
+      "slots": [
+        "godie-h021.passive",
+        "godie-h021.q",
+        "godie-h021.w",
+        "godie-h021.e",
+        "godie-h021.r",
+        "godie-h021.ex"
+      ],
+      "mechanicsSha256": "sha256:5403d7be21c6e091a68d5da6c189670f70d64eb0621a80da52f213a4e5c49c2a",
+      "errors": [],
+      "warnings": [],
+      "package": {
+        "status": "passed",
+        "digest": "sha256:9ee6dd24f9f83bb6e83f4e7be3ccad727619a603936eeb72d3d70f1444fb8d42",
+        "zipSha256": "sha256:c35fc44b8043f1ece48a122bb558686166ded778b262cf69024f5c929770d28a",
+        "zipBytes": 4017208,
+        "exactSource": true,
+        "inspection": "validateHeroImportPackage: passed; no service request"
+      }
+    }
+  ]
+}

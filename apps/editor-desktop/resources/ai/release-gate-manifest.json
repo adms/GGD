@@ -1,0 +1,33 @@
+{
+  "schema": "ggd-local-ai-release-gate-manifest@1",
+  "released": false,
+  "reasonCode": "LOCAL_AI_E8_GATE_PENDING",
+  "model": {
+    "id": "qwen3-14b-q4-k-m",
+    "sha256": "500a8806e85ee9c83f3ae08420295592451379b4f8cf2d0f41c15dffeb6b81f0",
+    "bytes": 9001752960
+  },
+  "corpus": {
+    "version": "hero-forge-2026-09-04-v4",
+    "sha256": "8f81decb3e23e29026554947d0e22c0cd34a7625f397964133835e3c88ae01bb",
+    "cases": 216,
+    "minimumScorePct": 95,
+    "maximumCriticalErrors": 0
+  },
+  "promptSha256": "148e47ecab74944813b504e476ef3e50aa7d94566e697826f93efb67a68123d1",
+  "grammarSha256": "478cc0ab6944367ee1a3bc8a9288191171cdd08801581e143f8ab92e7caa7b41",
+  "inputContractSha256": "c9973fcbe270638496e369734a18864372bc285c68f50ea6197d03c4cda92527",
+  "scorerSha256": "3d111f34381576a068f57e95ac9204a1f2f21f223d154e191d870384f3c03b0a",
+  "requiredQualityTargets": ["darwin-arm64-metal", "win32-x64-cuda"],
+  "requiredRuntimeTargets": ["darwin-arm64-metal", "darwin-x64-cpu", "win32-x64-cuda", "win32-x64-vulkan", "win32-x64-cpu"],
+  "performance": {
+    "maximumWarmSectionP95Ms": 10000,
+    "maximumColdStartMs": 30000,
+    "minimumWindowsGpuMemoryBytes": 16106127360,
+    "maximumWindowsPeakVramBytes": 15032385536,
+    "minimumMacSystemMemoryBytes": 25769803776,
+    "maximumMacPeakRssBytes": 19327352832
+  },
+  "requiredChecks": ["context-4k", "context-8k", "editor-3d-concurrent", "cancellation", "oom-recovery", "offline", "clean-install"],
+  "verifiedReceiptDigests": []
+}

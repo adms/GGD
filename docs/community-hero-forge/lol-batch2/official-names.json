@@ -1,0 +1,138 @@
+{
+  "version": "16.18.1",
+  "evidence": "Names extracted from official Data Dragon response in this run; raw JSON and image fields were not retained.",
+  "champions": {
+    "Sett": {
+      "ownerName": "賽特",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/sett/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Sett.json",
+      "names": {
+        "PASSIVE": "恆毅之泉",
+        "Q": "懾人猛拳",
+        "W": "獸魂轟拳",
+        "E": "碎顱猛擊",
+        "R": "嘆為觀止"
+      }
+    },
+    "Fiddlesticks": {
+      "ownerName": "稻草人",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/fiddlesticks/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Fiddlesticks.json",
+      "names": {
+        "PASSIVE": "無害稻草人",
+        "Q": "恐懼",
+        "W": "豐收之魘",
+        "E": "駭懼收割",
+        "R": "群鴉風暴"
+      }
+    },
+    "Ornn": {
+      "ownerName": "鄂爾",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/ornn/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Ornn.json",
+      "names": {
+        "PASSIVE": "活火爐",
+        "Q": "火山脈動",
+        "W": "熾焰吹息",
+        "E": "熔岩俯衝",
+        "R": "鑄火者的呼喚"
+      }
+    },
+    "Chogath": {
+      "ownerName": "科加斯",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/chogath/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Chogath.json",
+      "names": {
+        "PASSIVE": "肉食者",
+        "Q": "破裂",
+        "W": "野性尖嘯",
+        "E": "恐懼尖刺",
+        "R": "饗宴"
+      }
+    },
+    "Ashe": {
+      "ownerName": "艾希",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/ashe/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Ashe.json",
+      "names": {
+        "PASSIVE": "冰霜射擊",
+        "Q": "專注射擊",
+        "W": "萬箭齊發",
+        "E": "鷹擊長空",
+        "R": "魔法水晶箭"
+      }
+    },
+    "Blitzcrank": {
+      "ownerName": "布里姿",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/blitzcrank/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Blitzcrank.json",
+      "names": {
+        "PASSIVE": "法力屏障",
+        "Q": "火箭抓取",
+        "W": "過載運轉",
+        "E": "充能一擊",
+        "R": "靜電力場"
+      }
+    },
+    "Ahri": {
+      "ownerName": "阿璃",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/ahri/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Ahri.json",
+      "names": {
+        "PASSIVE": "銷魂",
+        "Q": "幻玉",
+        "W": "魅火",
+        "E": "傾城",
+        "R": "飛仙"
+      }
+    },
+    "Thresh": {
+      "ownerName": "瑟雷西",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/thresh/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Thresh.json",
+      "names": {
+        "PASSIVE": "靈魂饗宴",
+        "Q": "死亡宣告",
+        "W": "鬼影燈籠",
+        "E": "懾魂掃蕩",
+        "R": "惡靈領域"
+      }
+    },
+    "Velkoz": {
+      "ownerName": "威寇茲",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/velkoz/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Velkoz.json",
+      "names": {
+        "PASSIVE": "結構毀滅",
+        "Q": "分裂電漿",
+        "W": "虛空裂痕",
+        "E": "反物質瓦解",
+        "R": "生化射線"
+      }
+    },
+    "Malphite": {
+      "ownerName": "墨菲特",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/malphite/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Malphite.json",
+      "names": {
+        "PASSIVE": "花崗岩護盾",
+        "Q": "地震碎片",
+        "W": "震雷之擊",
+        "E": "大地震顫",
+        "R": "勢不可擋"
+      }
+    },
+    "Garen": {
+      "ownerName": "蓋倫",
+      "officialPage": "https://www.leagueoflegends.com/zh-tw/champions/garen/",
+      "dataDragonUrl": "https://ddragon.leagueoflegends.com/cdn/16.18.1/data/zh_TW/champion/Garen.json",
+      "names": {
+        "PASSIVE": "堅韌",
+        "Q": "致命打擊",
+        "W": "勇氣",
+        "E": "審判",
+        "R": "蒂瑪西亞制裁"
+      }
+    }
+  }
+}

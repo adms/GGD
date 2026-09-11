@@ -1,7 +1,7 @@
 import type { SkillTypePreset } from "./skillTypePresets";
 import acceptanceEight from "../../../../docs/_acceptance/ggd-acceptance-eight.json";
 
-export type SkillAcceptanceGroup = "owner-union" | "runtime-coverage";
+export type SkillAcceptanceGroup = "owner-union" | "runtime-coverage" | "capability-coverage";
 
 /** Main's machine contract is the only authority for the strict eight themes. */
 export const STRICT_VISUAL_ACCEPTANCE = acceptanceEight.eight.map((theme) => ({
@@ -51,13 +51,17 @@ const runtime = (
   candidate: Omit<SkillAcceptanceCandidate, "group">,
 ): SkillAcceptanceCandidate => ({ ...candidate, group: "runtime-coverage" });
 
+const capability = (
+  candidate: Omit<SkillAcceptanceCandidate, "group">,
+): SkillAcceptanceCandidate => ({ ...candidate, group: "capability-coverage" });
+
 /**
  * Existing shipped abilities used to prove that Forge can rebuild real content.
  *
  * This is deliberately an Editor-owned acceptance catalogue, not game content:
  * it never writes the listed documents and it does not make them promotable.
  * The first 25 rows are the Owner's VFX set + the 14 Forge archetypes + explicit
- * additions. The remaining 21 rows close every effect/hook/condition currently
+ * additions. The remaining 34 rows close every effect/hook/condition currently
  * exercised by shipped ability documents.
  */
 export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = [
@@ -299,22 +303,98 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
     requiredHooks: ["onDamageTaken"], requiredEffectKinds: ["extendBuff"],
     acceptance: "攻速與吸血依四級提升；每承受5%最大生命傷害延長兩秒，同一門檻只能延長一次。",
   }),
+  capability({
+    id: "b2-rin.w", name: "刷卡成功請簽名",
+    requiredEffectKinds: ["consumeStatus"],
+    acceptance: "結算攻擊後消耗自身全部念力存款，每次成功消耗只回復1%最大魔力；空存款不得重複退款。",
+  }),
+  capability({
+    id: "b2-bojji.q", name: "王子縮成迷你問號",
+    requiredEffectKinds: ["evasion"],
+    acceptance: "自身在1.8秒內必定閃避普通攻擊，但技能仍可命中；效果準時結束且不得越過迴避上限。",
+  }),
+  capability({
+    id: "b2-fushi.q", name: "請溫柔敲擊測試",
+    requiredEffectKinds: ["spendHealth"],
+    acceptance: "施法支付8%最大生命且至少保留1點，再取得兩秒護盾；支付生命不是受傷事件，不能觸發受傷連鎖。",
+  }),
+  capability({
+    id: "b2-goblin.w", name: "把客人拉進施工區",
+    requiredEffectKinds: ["pull"],
+    acceptance: "將指定敵人以20速度拉向施法者並在一單位外停止；不得穿過施法者或退化成瞬移。",
+  }),
+  capability({
+    id: "b2-aladdin.passive", name: "吹錯音先喘口氣",
+    requiredHooks: ["onUltimateCast"],
+    acceptance: "施放終極技能時回復自身8%最大魔力，四秒內置冷卻生效；普通技能與終極命中事件不得誤觸。",
+  }),
+  capability({
+    id: "b2-goblin.passive", name: "工安控制換安全帽",
+    requiredHooks: ["onCrowdControlApplied"],
+    acceptance: "對敵人成功施加控制後取得兩秒護盾，三秒內置冷卻生效；未成功控制時不得產生護盾。",
+  }),
+  capability({
+    id: "b2-keyaru.passive", name: "病歷影印需要工本費",
+    requiredHooks: ["onHeal"],
+    acceptance: "完成一次有效治療後對自身套用四秒狂怒，兩秒內置冷卻生效；溢補與回魔不得冒充治療事件。",
+  }),
+  capability({
+    id: "b2-makoto.passive", name: "大單成交順便回血",
+    requiredHooks: ["onUltimateHit"],
+    acceptance: "終極技能實際命中時治療自身80點，三秒內置冷卻生效；只施放未命中時不得回復。",
+  }),
+  capability({
+    id: "b2-misery.passive", name: "異界店主不包售後",
+    requiredHooks: ["onCrowdControlReceived"],
+    acceptance: "自身受到控制後回復8%最大魔力，四秒內置冷卻生效；免疫或未套用成功的控制不得觸發。",
+  }),
+  capability({
+    id: "b2-naofumi.passive", name: "隊友受傷我先回魔",
+    requiredHooks: ["onAllyDamaged"],
+    acceptance: "友軍實際受傷時回復自身3%最大魔力，三秒內置冷卻生效；自身受傷與友軍護盾吸收不得誤觸。",
+  }),
+  capability({
+    id: "b2-ned.passive", name: "我真的是劍士不是坐騎",
+    requiredHooks: ["onDashOrBlink"],
+    acceptance: "自身衝刺或瞬移後獲得兩秒25點護甲，三秒內置冷卻生效；一般移動不得觸發。",
+  }),
+  capability({
+    id: "b2-uncle.passive", name: "結界客服退通話費",
+    requiredHooks: ["onShieldGained"],
+    acceptance: "自身實際取得護盾後回復3%最大魔力，三秒內置冷卻生效；護盾刷新失敗時不得回魔。",
+  }),
+  capability({
+    id: "lol-leesin.passive", name: "回響拳",
+    requiredHooks: ["onBasicAttack"], requiredConditionKinds: ["chance"],
+    acceptance: "每次普通攻擊以100%機率進入分支並追加極小物理傷害，兩秒內置冷卻生效；技能傷害不得誤觸。",
+  }),
 ] as const;
 
 export const SKILL_ACCEPTANCE_THEME_IDS = new Set(
   SKILL_ACCEPTANCE_CANDIDATES.map(skillAcceptanceThemeId),
 );
 
+/**
+ * Framebuffer evidence stays on the reviewed 43-theme / 47-document baseline.
+ * Newly shipped vocabulary is verified by schema, authoring and Sim gates and
+ * does not silently expand the separate human image-review workload.
+ */
+export const SKILL_VISUAL_ACCEPTANCE_CANDIDATES = SKILL_ACCEPTANCE_CANDIDATES.filter(
+  (candidate) => candidate.group !== "capability-coverage",
+);
+export const SKILL_VISUAL_ACCEPTANCE_THEME_IDS = new Set(
+  SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map(skillAcceptanceThemeId),
+);
+
 export const CAPABILITY_ONLY_EFFECT_KINDS = [
-  "spendHealth", "carry", "consumeStatus", "convertTeam", "evasion", "pull", "revive", "shieldBreak",
+  "carry", "convertTeam", "revive", "shieldBreak", "spawnObstacle", "spawnThresholds",
 ] as const;
 
 export const CAPABILITY_ONLY_HOOK_EVENTS = [
-  "onAllyDamaged", "onAllyDeath", "onBossSpawn", "onBoundaryTouch",
-  "onCrowdControlApplied", "onCrowdControlReceived", "onDashOrBlink", "onDeath",
-  "onFireRingIgnite", "onGuardianDown", "onHeal", "onLethalDamage", "onOverheal",
+  "onAllyDeath", "onBossSpawn", "onBoundaryTouch", "onDeath",
+  "onFireRingIgnite", "onGuardianDown", "onLethalDamage", "onOverheal",
   "onProjectileExpire", "onRevive", "onRoundEnd", "onRoundStart", "onShieldBroken",
-  "onShieldGained", "onStatCapReached", "onStatusApplied", "onUltimateCast", "onUltimateHit",
+  "onStatCapReached", "onStatusApplied",
 ] as const;
 
-export const CAPABILITY_ONLY_CONDITION_KINDS = ["chance", "equipment", "facing"] as const;
+export const CAPABILITY_ONLY_CONDITION_KINDS = ["equipment", "facing"] as const;

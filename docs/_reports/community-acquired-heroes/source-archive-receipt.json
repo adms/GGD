@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-acquired-source-archive-receipt@1",
+  "localArchiveName": "intake-sources-v3.tar.gz",
+  "bytes": 767053567,
+  "sha256": "5870ce25922d1490dabee36741f90b95788ae54838e01586ea8135205b58b56d",
+  "sourceFiles": 3458,
+  "uniqueMembers": 3454,
+  "sourceBytes": 1310246706,
+  "intakeSha256": "57a52e0f18acad3683d3dc87b5202444e66c119cb1cf7c342852d7172b1bbac5",
+  "s3": {
+    "bucket": "ggd-390630837668-ap-east-2-an",
+    "key": "community-hero-forge/acquired-heroes-20260911/sources/intake-sources-5870ce25922d1490dabee36741f90b95788ae54838e01586ea8135205b58b56d.tar.gz",
+    "region": "ap-east-2",
+    "contentLength": 767053567,
+    "serverSideEncryption": "AES256",
+    "headVerifiedAt": "2026-09-11T03:26:00+08:00"
+  }
+}

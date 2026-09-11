@@ -1,0 +1,447 @@
+{
+  "schema": "ggd-lol-batch2-model-versions@1",
+  "models": [
+    {
+      "name": "賽特",
+      "nativeId": "Sett",
+      "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+      "gitModelDocument": "content/models/community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7.json",
+      "gitBody": "content/assets/models/community/35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf.glb",
+      "gitModelSha256": "cd729f479a6c32d8db96ffb7a4428189a7aa10d078dbca36567e0cc5e71308c2",
+      "clipMap": {
+        "idle": "sett_idle",
+        "run": "sett_run",
+        "attack": "sett_attack1",
+        "cast": "sett_spell1_a",
+        "hurt": "sett_idle",
+        "death": "sett_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "sett_idle",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [
+        "單段動作通道 411 高於警戒值 300，送審時需檢查演出負載。"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf",
+      "bodyBytes": 4566192,
+      "sourceArchiveSha256": "61e28a37b3d62ba750ec3ea4ded0753d8a6ae90df7531e5304b8799cbd406734",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "稻草人",
+      "nativeId": "FiddleSticks",
+      "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+      "gitModelDocument": "content/models/community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99.json",
+      "gitBody": "content/assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+      "gitModelSha256": "ab064e2eb970a9aea1758f5d950e6d98c377100d49aef108c2f1bfccca8ee9f5",
+      "clipMap": {
+        "idle": "fiddlesticks_idle1",
+        "run": "fiddlesticks_run",
+        "attack": "fiddlesticks_attack1_a",
+        "cast": "fiddlesticks_spell1",
+        "hurt": "fiddlesticks_idle1",
+        "death": "fiddlesticks_death_v2"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "fiddlesticks_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [
+        "單段動作通道 378 高於警戒值 300，送審時需檢查演出負載。"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40",
+      "bodyBytes": 3459856,
+      "sourceArchiveSha256": "41a9b25f07c3940e9c1c7adac3bfa102d006d3429accb55c6c1820d2b0141fb3",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "鄂爾",
+      "nativeId": "Ornn",
+      "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+      "gitModelDocument": "content/models/community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa.json",
+      "gitBody": "content/assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+      "gitModelSha256": "199e33ae95b8144588bc06330f7bec727183d06734db609771da0c31cbb7f8bc",
+      "clipMap": {
+        "idle": "ornn_idle1",
+        "run": "ornn_run",
+        "attack": "ornn_attack1",
+        "cast": "ornn_spell1",
+        "hurt": "ornn_idle1",
+        "death": "ornn_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "ornn_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [
+        "已把畫法相同的網格合併：draw call 3 → 1。",
+        "單段動作通道 351 高於警戒值 300，送審時需檢查演出負載。"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5",
+      "bodyBytes": 3759304,
+      "sourceArchiveSha256": "6ac1e3a212a2bb245475d20311b9a1b188e7c1df7c438b650c83271407032269",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "科加斯",
+      "nativeId": "Chogath",
+      "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+      "gitModelDocument": "content/models/community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9.json",
+      "gitBody": "content/assets/models/community/75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20.glb",
+      "gitModelSha256": "1663e72f1b7b5cf2ebccc1d6f546a658a9909ca9e12ea82dee715ab9b54842b6",
+      "clipMap": {
+        "idle": "chogath_idle1",
+        "run": "chogath_run",
+        "attack": "chogath_attack1",
+        "cast": "chogath_spell1",
+        "hurt": "chogath_idle1",
+        "death": "chogath_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "chogath_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter",
+        "Unrendered attachment motion omitted by the existing compact-ggd policy; full original clips remain preserved."
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20",
+      "bodyBytes": 523132,
+      "sourceArchiveSha256": "959c5f6b3305bd91b3587d384a4987a250fae1e97613b5eb41d6118d972fdfdf",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "艾希",
+      "nativeId": "Ashe",
+      "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+      "gitModelDocument": "content/models/community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70.json",
+      "gitBody": "content/assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
+      "gitModelSha256": "be922b76c43d68214512fcdfc310fa915d05d4e4ea41b7f175ede9c7ad3ae060",
+      "clipMap": {
+        "idle": "ashe_idle1",
+        "run": "ashe_run",
+        "attack": "ashe_attack1",
+        "cast": "ashe_spell1",
+        "hurt": "ashe_idle1",
+        "death": "ashe_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "ashe_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter",
+        "Unrendered attachment motion omitted by the existing compact-ggd policy; full original clips remain preserved."
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06",
+      "bodyBytes": 1279552,
+      "sourceArchiveSha256": "8a133dc7054ccec42294840505e57fad747d43e96c84cc6ded9b9e3915c25946",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "布里姿",
+      "nativeId": "Blitzcrank",
+      "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+      "gitModelDocument": "content/models/community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc.json",
+      "gitBody": "content/assets/models/community/e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce.glb",
+      "gitModelSha256": "32e1bd991c1ac47ccd0358ecad7d52ead43013f6becd2a5c0a4284e549a6cbe4",
+      "clipMap": {
+        "idle": "blitzcrank_idle1",
+        "run": "blitzcrank_run",
+        "attack": "blitzcrank_attack1",
+        "cast": "blitzcrank_spell1",
+        "hurt": "blitzcrank_idle1",
+        "death": "blitzcrank_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "blitzcrank_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter",
+        "Unrendered attachment motion omitted by the existing compact-ggd policy; full original clips remain preserved."
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce",
+      "bodyBytes": 425584,
+      "sourceArchiveSha256": "9a834968b8c563188d6f7df7dfd083ba4643c0fafa8ffc2e8b6111c2e6dbdced",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "阿璃",
+      "nativeId": "Ahri",
+      "modelKey": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+      "gitModelDocument": "content/models/community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc.json",
+      "gitBody": "content/assets/models/community/5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4.glb",
+      "gitModelSha256": "5157580907538306d2962cd73af22c8f5f21ab2db31fe24ae948f50e75a97700",
+      "clipMap": {
+        "idle": "idle1",
+        "run": "run",
+        "attack": "attack1",
+        "cast": "spell1",
+        "hurt": "idle1",
+        "death": "death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [
+        "三角面 21062 高於警戒值 16000，送審時需檢查演出負載。",
+        "單段動作通道 353 高於警戒值 300，送審時需檢查演出負載。"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter",
+        "Unrendered attachment motion omitted by the existing compact-ggd policy; full original clips remain preserved."
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4",
+      "bodyBytes": 2552760,
+      "sourceArchiveSha256": "28c2f99b99b4519e208b6b1b9069d9f80a5416e31b37132ccdc3597e90e86a37",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "瑟雷西",
+      "nativeId": "Thresh",
+      "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+      "gitModelDocument": "content/models/community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488.json",
+      "gitBody": "content/assets/models/community/c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d.glb",
+      "gitModelSha256": "52cbf4992210e83cacfbf2ea3f442f583c14636ffd3c779c86462e4dfa4dc9ba",
+      "clipMap": {
+        "idle": "thresh_idle1",
+        "run": "thresh_run",
+        "attack": "thresh_attack1_long",
+        "cast": "thresh_spell1_in",
+        "hurt": "thresh_idle1",
+        "death": "thresh_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "thresh_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [
+        "單段動作通道 345 高於警戒值 300，送審時需檢查演出負載。"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d",
+      "bodyBytes": 4518760,
+      "sourceArchiveSha256": "60e73355d19cab0bb6a8b6b148a91bf27e13dc4e679ee05330a6fcdbdb12311d",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0,
+      "replacedUnpublishedCandidate": {
+        "modelKey": "community.body.ef3ab2e0012ef6267e1203b6b76161ecff30551c37740c1c",
+        "body": "assets/models/community/73c7d2745836e8224c7ebb103e329477f6764c804956a784ff7f2f42e8c5081e.glb",
+        "reason": "Transparent atlas incorrectly OPAQUE; existing alpha repair only, geometry/animation/image buffers unchanged."
+      }
+    },
+    {
+      "name": "威寇茲",
+      "nativeId": "Velkoz",
+      "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+      "gitModelDocument": "content/models/community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399.json",
+      "gitBody": "content/assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+      "gitModelSha256": "4bb405b4c8858fd16d475ca56f27e84ae24d44f180515aaf5b52c15a15db9dee",
+      "clipMap": {
+        "idle": "velkoz_idle1v2",
+        "run": "velkoz_run",
+        "attack": "velkoz_attack1",
+        "cast": "velkoz_spell1",
+        "hurt": "velkoz_idle1v2",
+        "death": "velkoz_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "velkoz_idle1v2",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1",
+      "bodyBytes": 4523524,
+      "sourceArchiveSha256": "2de8837128bbe3a8261bf933e1ad6ce43ccaa66d0efbee98407116dfb4602261",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "墨菲特",
+      "nativeId": "Malphite",
+      "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+      "gitModelDocument": "content/models/community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e.json",
+      "gitBody": "content/assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+      "gitModelSha256": "9f952bc6253e4f8f23243ce3b898a68e8604c1d4554f0d686c7ab60e146a57b9",
+      "clipMap": {
+        "idle": "malphite_idle1",
+        "run": "malphite_run",
+        "attack": "malphite_attack1",
+        "cast": "malphite_spell1",
+        "hurt": "malphite_idle1",
+        "death": "malphite_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "malphite_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter",
+        "Unrendered attachment motion omitted by the existing compact-ggd policy; full original clips remain preserved."
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9",
+      "bodyBytes": 414708,
+      "sourceArchiveSha256": "cdd2fab9b4246bd10267fd72ec119b969aa959f1bbf5b66530996f63204b45c9",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    },
+    {
+      "name": "蓋倫",
+      "nativeId": "Garen",
+      "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+      "gitModelDocument": "content/models/community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13.json",
+      "gitBody": "content/assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+      "gitModelSha256": "f0d64d615a0f28134ed31a0bc08ad07e7574f81a771e572adaa3f5ee31df4061",
+      "clipMap": {
+        "idle": "garen_2013_idle1",
+        "run": "garen_2013_run",
+        "attack": "garen_2013_attack_01",
+        "cast": "garen_2013_spell1",
+        "hurt": "garen_2013_idle1",
+        "death": "garen_2013_death"
+      },
+      "bindings": 6,
+      "uniqueSourceClips": 5,
+      "fallbacks": [
+        {
+          "state": "hurt",
+          "clip": "garen_2013_idle1",
+          "reason": "No dedicated native hurt ANM in the baseline; existing LoL workflow reuses native idle. Not an original hurt animation."
+        }
+      ],
+      "warnings": [],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ],
+      "readiness": "shared-model-contract-verified; visual-acceptance-pending",
+      "publicationState": "unused model option; hero release pending core mechanics and visual acceptance",
+      "bodySha256": "09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22",
+      "bodyBytes": 2041452,
+      "sourceArchiveSha256": "1629c0529ed2a24cfc1ecbed417aa4892b0f977574d9bb253e98b55d09385896",
+      "modelContractErrors": 0,
+      "motionCheckExit": 0
+    }
+  ],
+  "rawPreparationReceipts": "See storage.json prepared archive: ready/<id>/receipt.json and motion.json",
+  "visualAcceptance": "pending"
+}

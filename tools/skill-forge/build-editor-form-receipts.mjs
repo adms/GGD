@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// ggd:writes docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle.json
 
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -10,7 +11,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const BRICKS = join(ROOT, "docs/editor-contract/ggd-bricks.json");
 const TYPE_CATALOG = join(ROOT, "docs/editor-contract/ggd-type-catalog.json");
-const OUTPUT = join(ROOT, "docs/editor-contract/coordination/claim.editor-form-receipts.json");
+const OUTPUT = join(ROOT, "docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle.json");
 const CHECK = process.argv.includes("--check");
 
 function option(name) {
@@ -69,15 +70,16 @@ const missing = receipts.length - renderable;
 // The census consumes these receipts. Hash only its measurement inputs,
 // otherwise regenerating editorForm creates a self-referential freshness loop.
 const brickInput = contract.bricks.map(({ id, layer }) => ({ id, layer })).sort((a, b) => a.layer.localeCompare(b.layer) || a.id.localeCompare(b.id));
+const typeCatalogSha256 = sha256(TYPE_CATALOG);
 
 const packet = {
   schema: "ggd-coord-packet@1",
-  dedupeKey: "claim.editor-form-receipts",
+  dedupeKey: "claim.editor-form-receipts-spawn-obstacle",
   kind: "claim",
   from: "codex",
   to: "main",
   baseCommit,
-  contractFingerprint: sha256(TYPE_CATALOG).slice(0, 16),
+  contractFingerprint: typeCatalogSha256.slice(0, 16),
   title: `Editor ${receipts.length} 顆積木的 React 操作與回讀：${renderable} 通過、${missing} 不可用`,
   claims: [
     {
@@ -104,7 +106,7 @@ const packet = {
     brickInputSha256: createHash("sha256").update(JSON.stringify(brickInput)).digest("hex"),
     capabilityFingerprint: contract.capabilityFingerprint,
     typeCatalog: relative(ROOT, TYPE_CATALOG),
-    typeCatalogSha256: sha256(TYPE_CATALOG),
+    typeCatalogSha256,
   },
   summary: {
     total: receipts.length,

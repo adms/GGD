@@ -1,0 +1,87 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.lol-batch2-source-core",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "b6686109a2946664827e8e59529de670b844d7c6",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "第四批 LoL 11 名編輯草稿、基本演出與模型接入；14 槽核心操作待 Main",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "11 名／66 槽以真 Editor UUID 長度經 factory→generate→compile 通過；基本演出依成功事件接入，賽特 W/R 與稻草人 R 的窄修有 Sim 驗證；舊七名 factory 相容。這不代表尚缺的來源核心完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRecipe.test.ts packages/shared/src/content/heroForge/communityLolBatch2.test.ts packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts packages/shared/src/content/heroForge/communityLolBatch2Presentation.test.ts --maxWorkers=2 --minWorkers=2",
+        "expectedExit": 0
+      },
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
+      "evidence": [
+        "packages/shared/src/content/heroForge/communityLolBatch2.test.ts",
+        "packages/shared/src/content/heroForge/communityRecipe.test.ts",
+        "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts",
+        "packages/shared/src/content/heroForge/communityLolBatch2Presentation.test.ts",
+        "docs/community-hero-forge/lol-batch2/validation.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "11 份固定 SHA GLB 及 model doc 已納入 Git，模型收據保留原生來源、通道警戒與 hurt 沿用 idle；尚未聲稱完成畫面或正式發布驗收。",
+      "repro": {
+        "command": "pnpm assets:manifest:check",
+        "expectedExit": 0
+      },
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
+      "evidence": [
+        "docs/community-hero-forge/lol-batch2/models.json",
+        "docs/community-hero-forge/lol-batch2/storage.json",
+        "content/assets-manifest.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "候選 HeroProject 與編輯器備份可由同一配方重建；新批次提供明示限制的獨立草稿入口，Main 待接入項目為 5 張票／14 槽，尚未正式發布。",
+      "repro": {
+        "command": "pnpm exec tsx tools/community-hero-forge/lol-batch2.mts --check",
+        "expectedExit": 0
+      },
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
+      "evidence": [
+        "docs/community-hero-forge/lol-batch2/authoring-manifest.json",
+        "docs/community-hero-forge/lol-batch2/main-requirements.json",
+        "apps/editor/src/hero/CommunityHeroExamples.tsx"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "11 名草稿的實際下載、file input 匯入與重新開啟保留出身、技能、模板快照、演出與模型；invalid 作品不能建 ZIP。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/hero/CommunityHeroExamples.test.tsx --maxWorkers=2 --minWorkers=2",
+        "expectedExit": 0
+      },
+      "commit": "88101d5c2f1082ceb5baedddbb4b6849cde3f551",
+      "evidence": [
+        "apps/editor/src/hero/CommunityHeroExamples.test.tsx"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-10",
+      "text": "LOL的QWER可以保留比照來源盡量不修改 讓玩家親切容易上手"
+    },
+    {
+      "date": "2026-09-10",
+      "text": "如果是一些特色關鍵機制 像是 二段施放 你可以跟我溝通開票讓MAIN實作"
+    },
+    {
+      "date": "2026-09-11",
+      "text": "艾希遠端偵察 在這個地圖全開的情境沒用 請你轉換一下效果 可以走惡搞路線"
+    }
+  ],
+  "asks": [
+    "請 Main 實作並在同票記錄 #1187（重施放）、#1189（隊友自選燈籠）、#1190（技能地形／撞地形）、#1191（持續引導）、#1197（其餘六槽來源核心）；提供可用 schema／模板契約後，Codex 接回 #1185 並走投稿发布。",
+    "請按草稿 PR 審查來源、成品與驗證；本 PR 不授權把候選簡化槽視為正式原設計，也不宣稱完成投稿或上架。",
+    "本機 in-app 的共用 3D 預覽在 PBR 光照貼圖預載失敗；技能／模型已進編輯資料，但畫面尚未通過。本 PR 不以基本 VFX schema、CPU 動作或 ZIP 結果代替畫面驗收。"
+  ]
+}
