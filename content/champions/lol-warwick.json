@@ -355,7 +355,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "claw"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-warwick.webp"
 }

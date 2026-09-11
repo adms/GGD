@@ -158,11 +158,6 @@
       "cooldownTier": "小",
       "effects": [
         {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
-        {
           "kind": "shield",
           "amount": {
             "flat": 120,
@@ -370,6 +365,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "sword"
+  ],
   "schema": "champion@1"
 }

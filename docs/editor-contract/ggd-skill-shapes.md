@@ -39,10 +39,10 @@ owner 技能模板群組 **⑨** 逐字：
 
 | # | 形狀（軸的組合） | 支數 | 已接模板 | 實測產出這個形狀的模板 | 建議 |
 |---:|---|---:|---:|---|---|
-| 1 | 持續＋續效特效 | **178** | 139 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010・tpl-apply-status・tpl-buff-self・tpl-instant-blast・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（39 支還沒接） |
+| 1 | 持續＋續效特效 | **177** | 139 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010・tpl-apply-status・tpl-buff-self・tpl-instant-blast・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（38 支還沒接） |
 | 2 | 持續 | **150** | 101 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-buff-self・tpl-proxy-cast・tpl-single-strike・tpl-transform | 沿用（49 支還沒接） |
 | 3 | （無時序形狀） | **126** | 81 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71・hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68・hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4・hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77・tpl-area-strike・tpl-blink・tpl-blink-strike・tpl-heal・tpl-instant-blast・tpl-single-strike | ⛔ 逐支確認是**真的沒有**還是**沒實作**（見第 2 節差集） |
-| 4 | 續效特效 | **119** | 67 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-apply-status・tpl-area-strike・tpl-ground-nova・tpl-proxy-fanout・tpl-single-strike | 沿用（52 支還沒接） |
+| 4 | 續效特效 | **120** | 67 | hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8・hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・tpl-apply-status・tpl-area-strike・tpl-ground-nova・tpl-proxy-fanout・tpl-single-strike | 沿用（53 支還沒接） |
 | 5 | 持續＋續效特效＋路徑 | **40** | 31 | hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52・tpl-buff-self・tpl-leap-strike・tpl-line-strike・tpl-pull-throw・tpl-single-strike | 沿用（9 支還沒接） |
 | 6 | 續效特效＋路徑 | **37** | 35 | hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71・hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4・tpl-line-strike・tpl-projectile-strike・tpl-single-strike | 沿用（2 支還沒接） |
 | 7 | 等待＋持續＋續效特效＋路徑 | **32** | 27 | hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b・hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550・hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368・tpl-charge-push・tpl-projectile-strike・tpl-teleport | 沿用（5 支還沒接） |
@@ -95,7 +95,7 @@ owner 技能模板群組 **⑨** 逐字：
 |---|---:|---:|---:|---|
 | 等待 | 42 | 141 | **24** | 延遲結算／吟唱／飛行時間 —— 躲不躲得掉 |
 | 迴圈 | 110 | 142 | **50** | 每隔 T 秒重複 —— 排程與終止條件 |
-| 持續 | 169 | 529 | **26** | 有期間的狀態，到期自己收掉 |
+| 持續 | 169 | 528 | **26** | 有期間的狀態，到期自己收掉 |
 | 續效特效 | 22 | 538 | **0** | 特效自己的壽命／掛載／分層（⚠️ 宣稱側很弱，差集不計） |
 | 多段 | 18 | 156 | **8** | 一次施放拆成多下（連段／連鎖） |
 | 路徑 | 126 | 245 | **35** | 效果沿著空間移動 |

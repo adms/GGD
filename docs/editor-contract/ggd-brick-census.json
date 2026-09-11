@@ -11,8 +11,8 @@
     "terminal": 1,
     "handWritten": 159,
     "distinctShapes": 87,
-    "singletonShapes": 57,
-    "top8Coverage": 56
+    "singletonShapes": 56,
+    "top8Coverage": 54
   },
   "demand": [
     {
@@ -36,16 +36,6 @@
       ]
     },
     {
-      "shape": "applyBuff + shield",
-      "count": 9,
-      "examples": [
-        "community-review-09-20260907.ex",
-        "community-review-12-20260907.ex",
-        "community-review-15-20260907.ex",
-        "community-review-21-20260907.ex"
-      ]
-    },
-    {
       "shape": "applyStatus + damage",
       "count": 7,
       "examples": [
@@ -53,6 +43,16 @@
         "community-review-23-20260907.ex",
         "community-review-27-20260907.ex",
         "godie-e007.q"
+      ]
+    },
+    {
+      "shape": "shield",
+      "count": 7,
+      "examples": [
+        "community-review-09-20260907.ex",
+        "community-review-12-20260907.ex",
+        "community-review-21-20260907.ex",
+        "community-review-29-20260907.ex"
       ]
     },
     {
@@ -82,6 +82,15 @@
         "godie-e00x.e",
         "godie-emfr.w",
         "godie-h00l.r"
+      ]
+    },
+    {
+      "shape": "applyBuff + shield",
+      "count": 3,
+      "examples": [
+        "community-review-15-20260907.ex",
+        "sela.w",
+        "thorne.w"
       ]
     },
     {
@@ -213,14 +222,6 @@
       "examples": [
         "godie-u010.e",
         "godie-uvng.e"
-      ]
-    },
-    {
-      "shape": "damage + spawnVfx",
-      "count": 2,
-      "examples": [
-        "godie-h01n.w",
-        "godie-h01o.w"
       ]
     }
   ],

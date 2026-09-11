@@ -135,11 +135,6 @@
       "cooldownTier": "小",
       "effects": [
         {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
-        {
           "kind": "restore",
           "manaPct": 0.1,
           "applyTo": "self"
@@ -188,11 +183,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -311,7 +301,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "modelVersions": [
     {

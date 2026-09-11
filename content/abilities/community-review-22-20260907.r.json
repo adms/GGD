@@ -20,11 +20,6 @@
   "range": 0.0,
   "effects": [
     {
-      "kind": "applyBuff",
-      "modifiers": [],
-      "duration": 3
-    },
-    {
       "kind": "heal",
       "amount": {
         "flat": 100,

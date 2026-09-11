@@ -49,7 +49,6 @@ const OUTLIER_K = 10;
 const REGEN_ORIGIN: Readonly<Record<string, string>> = {
   // ── 忠於原作地圖（OBJECTS.json 的 heroes 那一節，逐位元組相符）──────────────
   "godie-huth": "魔人普烏 — 地圖 `Huth.hp_regen = 12.0`；匯入器原封抄，⛔ 沒有換算",
-  "godie-u00k": "死之王 — 地圖 `U00K.hp_regen = 8.0` / `mana_regen = 3.0`",
   "godie-h020": "莉娜因巴斯 — 地圖 `H020.mana_regen = 1000.0`（maxMana 5000 ⇒ 5 秒回滿，原作就是這樣的法師）",
   // ── owner 2026-07-26 的平衡裁決（commit 79704a0f3）：實測被榨乾的七位 +2 ─────
   // 「5 場真對戰 113,640 個 champion-tick」⇒ 地圖值 0.1 + 2 = 2.1。
@@ -59,7 +58,6 @@ const REGEN_ORIGIN: Readonly<Record<string, string>> = {
   "godie-udre": "索隆 — owner 2026-07-26 裁決 `79704a0f3`（~59% ⇒ 0.1 + 2）",
   "godie-u01u": "索隆（武裝色霸氣變身態）— 同 `godie-udre` 的那一則裁決",
   // ── GGD 原創，⛔ 不在 w3x 母體 ──────────────────────────────────────────────
-  "godie-zombiex": "喪標麥可 — `attributes.source: authored`（GGD 原創），地圖裡沒有這個 rawcode",
 };
 
 interface Doc {

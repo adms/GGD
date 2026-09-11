@@ -22,6 +22,11 @@
               "kind": "blink",
               "onArrive": [
                 {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.arcane.pulse",
+                  "at": "point"
+                },
+                {
                   "amount": {
                     "damageTier": "極小"
                   },
@@ -71,6 +76,11 @@
                   "applyTo": "self",
                   "kind": "blink",
                   "onArrive": [
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.arcane.pulse",
+                      "at": "point"
+                    },
                     {
                       "amount": {
                         "damageTier": "極小"
@@ -207,6 +217,11 @@
                       "kind": "blink",
                       "onArrive": [
                         {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.void.nova",
+                          "at": "point"
+                        },
+                        {
                           "duration": 5,
                           "kind": "applyStatus",
                           "missChance": 0.5,
@@ -240,6 +255,11 @@
                       "kind": "blink",
                       "onArrive": [
                         {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.void.nova",
+                          "at": "point"
+                        },
+                        {
                           "duration": 5,
                           "kind": "applyStatus",
                           "missChance": 0.5,
@@ -272,6 +292,11 @@
                       "distanceUnits": 16,
                       "kind": "blink",
                       "onArrive": [
+                        {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.void.nova",
+                          "at": "point"
+                        },
                         {
                           "duration": 5,
                           "kind": "applyStatus",
@@ -346,6 +371,11 @@
                           "kind": "blink",
                           "onArrive": [
                             {
+                              "kind": "spawnVfx",
+                              "vfxId": "fx.prim.void.nova",
+                              "at": "point"
+                            },
+                            {
                               "duration": 5,
                               "kind": "applyStatus",
                               "missChance": 0.5,
@@ -379,6 +409,11 @@
                           "kind": "blink",
                           "onArrive": [
                             {
+                              "kind": "spawnVfx",
+                              "vfxId": "fx.prim.void.nova",
+                              "at": "point"
+                            },
+                            {
                               "duration": 5,
                               "kind": "applyStatus",
                               "missChance": 0.5,
@@ -411,6 +446,11 @@
                           "distanceUnits": 16,
                           "kind": "blink",
                           "onArrive": [
+                            {
+                              "kind": "spawnVfx",
+                              "vfxId": "fx.prim.void.nova",
+                              "at": "point"
+                            },
                             {
                               "duration": 5,
                               "kind": "applyStatus",
@@ -614,6 +654,8 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "thrown"
+  ],
   "icon": "assets/icons/champions/b2-kisaragi.webp"
 }

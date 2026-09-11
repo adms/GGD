@@ -35,7 +35,7 @@ capability 指紋：`e9023124`
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 134 |
+| `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 93 |
 | `applyStatus` | 25 | 0 | 0 | ✅ | ✅ | 134 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 33 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
@@ -79,7 +79,7 @@ capability 指紋：`e9023124`
 | `spawnObstacle` | 5 | 0 | 0 | ✅ | ✅ | 0 |
 | `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnThresholds` | 5 | 0 | 0 | ✅ | ✅ | 0 |
-| `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 56 |
+| `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 60 |
 | `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 4 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 6 |
 | `summon` | 23 | 0 | 0 | ✅ | ✅ | 8 |

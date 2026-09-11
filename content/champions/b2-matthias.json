@@ -106,6 +106,7 @@
               "value": -35
             }
           ],
+          "polarity": "debuff",
           "statusId": "armor-break"
         }
       ],
@@ -141,6 +142,7 @@
                   "value": -35
                 }
               ],
+              "polarity": "debuff",
               "statusId": "armor-break"
             }
           ],
@@ -334,7 +336,9 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "icon": "assets/icons/champions/b2-matthias.webp",
   "modelVersions": [
     {

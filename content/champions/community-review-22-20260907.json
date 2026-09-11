@@ -214,11 +214,6 @@
       "cooldownTier": "小",
       "effects": [
         {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
-        {
           "kind": "shield",
           "amount": {
             "flat": 120,
@@ -278,11 +273,6 @@
       "cooldownTier": "大",
       "effects": [
         {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
-        {
           "kind": "heal",
           "amount": {
             "flat": 100,
@@ -327,7 +317,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "schema": "champion@1",
   "modelVersions": [
     {

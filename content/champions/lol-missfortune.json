@@ -319,7 +319,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "gun"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-missfortune.webp"
 }
