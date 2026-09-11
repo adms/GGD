@@ -247,6 +247,11 @@ def prepare(repo: Path, final_root: Path, rebuild_root: Path):
         return git_pin((evidence_root / name).as_posix(), files[name])
 
     glb_path = final_root / "body.glb"
+    evidence_note = (
+        "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. "
+        "Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, "
+        "and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions."
+    )
     candidate = {
         "id": COMPONENT_ID,
         "conversionCandidateId": CONVERSION_ID,
@@ -289,6 +294,7 @@ def prepare(repo: Path, final_root: Path, rebuild_root: Path):
         "jointCount": 75,
         "textureCount": 4,
         "readiness": "accepted-independent-static-skinned-component-actions-missing",
+        "auditEvidence": evidence_note,
         "limitations": delivery["gaps"],
         "deliveryEvidence": evidence("delivery.json"),
         "acceptanceEvidence": evidence("acceptance.json"),
@@ -440,14 +446,9 @@ def prepare(repo: Path, final_root: Path, rebuild_root: Path):
     existing_backlog = [item for item in row.setdefault("modelCandidates", []) if item.get("id") == COMPONENT_ID]
     require(len(existing_backlog) <= 1, "Duplicate Zero backlog component")
     if existing_backlog:
-        require(existing_backlog[0] == backlog_candidate, "Existing Zero backlog component differs")
+        require(all(existing_backlog[0].get(key) == value for key, value in backlog_candidate.items()), "Existing Zero backlog component differs")
     else:
         row["modelCandidates"].append(backlog_candidate)
-    evidence_note = (
-        "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. "
-        "Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, "
-        "and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions."
-    )
     if evidence_note not in row.setdefault("evidence", []):
         row["evidence"].append(evidence_note)
 

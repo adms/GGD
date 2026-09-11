@@ -6054,6 +6054,7 @@
         "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dependencies/blender-4.5.13/latest-receipt.json",
         "backupReceiptSha256": "7d23602b384626dcc727dcddb25ae3402c52093ff26fa2c66d8721453e4a87c3"
       },
+      "auditEvidence": "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions.",
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb"
     },
     {
@@ -6767,10 +6768,10 @@
   "modelComponentCount": 12,
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "a8b497bc361ec513e87eca763087f01607d3c0b6b83293527c4746d99b5ea3b2"
+    "sha256": "2de32aa74a403efce3b65aee4b3f3fd3c95cd2dac5915e121725d40fc23238d3"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "5e2939577c0663fc2be21d29be3ed45b8b45400178a0073ef8ed2aa70ecabd4f"
+    "sha256": "15a29e742cd3a212890455abd1982fd8559803e79f5735e4a4555e7d82f2a4d0"
   }
 }

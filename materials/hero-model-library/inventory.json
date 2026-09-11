@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-12T04:50:06+08:00",
-  "inputsSha256": "9f171086e8fee99fadfb9b9e70310896eb120581c0075d56abb8d9af5c0d65e2",
+  "generatedAt": "2026-09-12T05:38:54+08:00",
+  "inputsSha256": "d715a9e2008e1bb0b1d284a67c4175e19fbff0d16e7e46447acdb5ded7aaebe2",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -89936,7 +89936,8 @@
               "s3Use": "backup-only-not-runtime-entry",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dependencies/blender-4.5.13/latest-receipt.json",
               "backupReceiptSha256": "7d23602b384626dcc727dcddb25ae3402c52093ff26fa2c66d8721453e4a87c3"
-            }
+            },
+            "auditEvidence": "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions."
           }
         ]
       },

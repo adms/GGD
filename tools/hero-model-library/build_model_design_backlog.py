@@ -18,6 +18,38 @@ def norm(value):return re.sub(r'[^\w]','',unicodedata.normalize('NFKC',str(value
 def text(value):return str(value).replace('|','／').replace('\n',' ')
 def encoded(value):return (json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode()
 
+def candidate_role(candidate):
+    role=str(candidate.get('resourceRole',''))
+    if role in {'character-body','character-body-costume','character-body-mesh-source'}:return 'body'
+    if role=='shared-source-container':return 'shared-container'
+    if role in {'model-component-or-prop','independent-static-skinned-model-component'} or 'component' in role or 'prop' in role:return 'component'
+    return 'other'
+
+CLASSIFIED_ROLES={'character-body','character-body-costume','character-body-mesh-source','model-component-or-prop','shared-source-container','independent-static-skinned-model-component'}
+
+def has_classified_roles(candidates):return any(candidate.get('resourceRole') in CLASSIFIED_ROLES for candidate in candidates)
+
+def candidate_breakdown(candidates):
+    counts={'characterBodySources':0,'standaloneCharacterBodies':0,'componentsOrProps':0,'sharedContainers':0,'otherCandidateFiles':0}
+    for candidate in candidates:
+        role=candidate_role(candidate)
+        if role=='body':
+            counts['characterBodySources']+=1
+            if candidate.get('isStandaloneModelCandidate') is True or candidate.get('resourceRole') in {'character-body','character-body-costume'}:counts['standaloneCharacterBodies']+=1
+        elif role=='component':counts['componentsOrProps']+=1
+        elif role=='shared-container':counts['sharedContainers']+=1
+        else:counts['otherCandidateFiles']+=1
+    return counts
+
+def candidate_summary(candidates):
+    if not has_classified_roles(candidates):return f'{len(candidates)} 份'
+    counts=candidate_breakdown(candidates);parts=[]
+    if counts['characterBodySources']:parts.append(f"角色本體來源 {counts['characterBodySources']}")
+    if counts['componentsOrProps']:parts.append(f"元件／配件 {counts['componentsOrProps']}")
+    if counts['sharedContainers']:parts.append(f"共享容器 {counts['sharedContainers']}")
+    if counts['otherCandidateFiles']:parts.append(f"其他候選檔 {counts['otherCandidateFiles']}")
+    return '；'.join(parts) if parts else '無可用候選檔'
+
 def build():
     files=[DATA/'sources-300-mba.json',DATA/'sources-community.json',DATA/'hero-design-coverage.json']
     inputs=[dict(path=p.relative_to(ROOT).as_posix(),sha256=sha(p)) for p in files]
@@ -76,6 +108,7 @@ def build():
                 c['localSizeMatches']=c['existsLocal'] and (c.get('bytes') is None or p.stat().st_size==c['bytes'])
                 candidates.append(c)
             row['modelCandidates']=candidates
+            if has_classified_roles(candidates):row['candidateBreakdown']=candidate_breakdown([c for c in candidates if c['localSizeMatches']])
             ids=sorted(set(aliases.get(i,i) for i in row.get('identityHeroIds',row.get('mappedHeroIds',[]))))
             row['mappedHeroIds']=ids
             checks=[]
@@ -157,11 +190,12 @@ def render(data):
             libs=sorted({{'300heroes':'300英雄','mba':'MBA','community':'社群／MOD／遊戲來源','ou99':'OU99 論壇'}.get(c.get('library'),c.get('library','來源見JSON')) for c in cs});states=sorted({friendly_stage(c.get('readiness','待核')) for c in cs})
             if r['resources']['sourceLabels']:libs=r['resources']['sourceLabels']
             links=[]
-            for c in cs[:2]:links.append(f"[{text(Path(c['absolutePath']).name)}](<{c['absolutePath']}>)")
+            ordered=sorted(cs,key=lambda c:({'body':0,'component':1,'shared-container':2,'other':3}[candidate_role(c)],c['absolutePath'])) if has_classified_roles(cs) else cs
+            for c in ordered[:2]:links.append(f"[{text(Path(c['absolutePath']).name)}](<{c['absolutePath']}>)")
             if len(cs)>2:links.append(f"另 {len(cs)-2} 份見同名 JSON：`{text(r['id'])}`")
             checks=r.get('currentHeroChecks',[])
             evidence='；'.join(hero_check_label(c) for c in checks) if checks else ('未建立對應英雄；保留來源原生 ID' if status=='not-defined' else '身份或同名對應尚未確認，暫不列為確定新英雄')
-            lines.append('| '+' | '.join([text(r['displayName']),text(r['displayWork']),text('／'.join(libs)+f' · {len(cs)} 份'),resource_cell(r['resources']),text('／'.join(states)),text(evidence),'<br>'.join(links)])+' |')
+            lines.append('| '+' | '.join([text(r['displayName']),text(r['displayWork']),text('／'.join(libs)+' · '+candidate_summary(cs)),resource_cell(r['resources']),text('／'.join(states)),text(evidence),'<br>'.join(links)])+' |')
         lines+=['']
     lines+=audio_reserve_section(data['resourceCoverage'])
     lines+=['## 完整性與限制','',

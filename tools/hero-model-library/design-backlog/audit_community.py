@@ -5,6 +5,7 @@ parser.add_argument('--repo',type=pathlib.Path,default=pathlib.Path.cwd(),help='
 parser.add_argument('--workspace',type=pathlib.Path,default=None,help='Workspace containing GGD-Asset-Library and outputs (default: parent of --repo); does not choose the checkout')
 parser.add_argument('--output',type=pathlib.Path,default=pathlib.Path('/private/tmp/ggd-undesigned-community.json'))
 parser.add_argument('--generated-at',default=None,help='Optional fixed ISO timestamp when reproducing a pinned snapshot')
+parser.add_argument('--output-repo-path',type=pathlib.Path,default=None,help='Optional stable checkout path to write into evidence while inspecting --repo (useful from an isolated worktree)')
 args=parser.parse_args()
 REPO=args.repo.resolve()
 if not (REPO/'content/champions').is_dir():
@@ -81,6 +82,11 @@ def add(key,name,work,s,paths,heroes=None,unknown=False,evidence=None,aliases=No
   if not p.is_absolute():p=BASE/s['localPath']/p
   e=file_evidence(p,item.get('sha256'))
   e.update({'id':(cid or key+':'+sid)+(f':{n}' if len(paths)>1 else ''),'library':'community' if not sid.startswith('ou99:') else 'ou99','sourceId':sid,'sourceUrl':s.get('url',s.get('canonicalUrl')),'readiness':readiness or s.get('readiness','native-source-reserve'),'converted':p.suffix.lower() in ['.glb','.gltf']})
+  # Candidate roles are source evidence, not display-only labels. Preserve them
+  # so downstream indexes can distinguish a complete body from a prop, a
+  # shared bundle, or an independently accepted component.
+  for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence']:
+   if field in item:e[field]=item[field]
   e['identityReviewRequired']=unknown
   if parts:e['sourceScope']=parts
   if item.get('bytes') is not None:e['recordedBytes']=item['bytes'];e['sizeMatchesManifest']=e.get('bytes')==item['bytes']
@@ -179,7 +185,10 @@ s=bysrc['thunderstore-rezero'];handled.add(s['id'])
 for u,o,p in unity_meshes(s):
  nm=o.get('name',''); mm={'felix':('felix','菲利克斯／菲莉絲',[]),'emiliashuiyi':('emilia','愛蜜莉雅',[]),'ram':('ram','拉姆',[]),'beatrice':('beatrice','碧翠絲',[]),'rem':('rem','蕾姆',['b2-rem']),'ZHS002_Natsuki_Subaru':('subaru','菜月昴',['community-review-22-20260907'])}.get(nm)
  if not mm:continue
- key,name,hh=mm;add(key,name,'Re:Zero',s,[p,{'path':u['bundle']}],hh,False,'Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.',[nm],cid=s['id']+':'+nm,readiness='native-mesh-and-rig-parsed')
+ key,name,hh=mm
+ p.update(resourceRole='character-body-mesh-source')
+ bundle={'path':u['bundle'],'resourceRole':'shared-source-container'}
+ add(key,name,'Re:Zero',s,[p,bundle],hh,False,'Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.',[nm],cid=s['id']+':'+nm,readiness='native-mesh-and-rig-parsed')
 s=bysrc['thunderstore-hokuto-lr'];handled.add(s['id'])
 pref={'HYM':('hanayama','花山薰','刃牙',[]),'YUJ':('yujiro','範馬勇次郎','刃牙',[]),'BAK':('baki','範馬刃牙','刃牙',[]),'FUDa':('fudoh','山之不動','北斗神拳',[]),'YURe':('yuria','尤莉亞','北斗神拳',[]),'JYU':('juza','雲之修烏','北斗神拳',[]),'AMIi':('amiba','阿米巴','北斗神拳',[]),'SAUm':('souther','沙烏剎','北斗神拳',[]),'KEN':('kenshiro','拳四郎','北斗神拳',['godie-umal','godie-u00l']),'SHUnr':('shu','舒烏','北斗神拳',[]),'RAYnr':('rei-hokuto','雷伊','北斗神拳',[]),'KYS':('kuroyasha','黑夜叉','北斗神拳',[]),'YUD':('yuda','猶大','北斗神拳',[]),'SIN':('shin-hokuto','希恩','北斗神拳',[]),'AKI_vf1':('akira-yuki','結城晶','Virtua Fighter',[]),'TOK':('toki','托席','北斗神拳',[])}
 for u,o,p in unity_meshes(s):
@@ -299,9 +308,29 @@ for native,fs in sorted(groups.items()):
   key,hh=fmap.get(nm,('ssbu-'+nm,[]));name=fn[nm];unknown=False;work='Super Smash Bros. Ultimate'
  elif kind=='assist' and nm in assist_names:key,name,work=assist_names[nm];unknown=False
  # Body path alone is not enough to identify an unknown native group; keep those separate.
- paths=[{'path':str(root/'source-repository'/f['name']),'bytes':f['size'],'sha256':f['oid']} for f in fs]
+ paths=[]
+ for f in fs:
+  rel=f['name'];segments=rel.split('/')
+  body=('/model/body/' in '/'+rel) or (native=='fighter/ptrainer' and '/model/ptrainer/' in '/'+rel)
+  item={'path':str(root/'source-repository'/rel),'bytes':f['size'],'sha256':f['oid'],
+      'resourceRole':'character-body-costume' if body else 'model-component-or-prop'}
+  if body and len(segments)>4 and re.fullmatch(r'c\d+',segments[4]):item['variantSlot']=segments[4]
+  paths.append(item)
  add(key,name,work,s,paths,hh,unknown,'Pinned SSBU exported repository '+s['commit']+'; Blender ME datablock checks establish mesh. nativeGroup='+native+'. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.',[native],cid=s['id']+':'+native,readiness='native-Blender-source-reserve')
  rows[key].setdefault('nativeGroups',[]).append(native)
+
+# Converted SSBU components are stored on the source record by the conversion
+# workflow. Re-attach them from that durable source metadata so regenerating the
+# audit never discards a validated delivery.
+for c in s.get('componentCandidates',[]):
+ for identity_id in c.get('identityIds',[]):
+  row=rows.get(identity_id)
+  if row is None:continue
+  item={field:c[field] for field in ['path','bytes','sha256','resourceRole','nativeId','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence'] if field in c}
+  item['format']='glTF Binary' if pathlib.Path(c['path']).suffix.lower()=='.glb' else c.get('format')
+  add(identity_id,row['name'],row['work'],s,[item],row.get('mappedHeroIds',[]),False,
+      c.get('auditEvidence') or 'Converted component retained from download-sources componentCandidates; validation and limitations remain attached to the candidate.',
+      cid=c['id'],readiness=c.get('readiness'))
 
 # Source coverage is explicit: audio/texture/tool-only and unparsed containers are not models.
 for s in sources:
@@ -377,5 +406,13 @@ for r in out['characters']:
    historical_mismatches.append({'id':c['id'],'path':c['path'],'actualBytes':c['bytes'],'recordedBytes':c['recordedBytes'],'actualSha256':c['sha256'],'recordedSha256':c['recordedSha256'],'classification':'historical mutable-path manifest mismatch; actual GLB header and mesh valid; no central edit'})
 out['historicalManifestMismatches']=historical_mismatches
 out['summary']['historicalMutableManifestMismatchCount']=len(historical_mismatches)
+if args.output_repo_path:
+ source_prefix=str(REPO);output_prefix=str(args.output_repo_path.resolve())
+ def rewrite_repo_paths(value):
+  if isinstance(value,str) and (value==source_prefix or value.startswith(source_prefix+'/')):return output_prefix+value[len(source_prefix):]
+  if isinstance(value,list):return [rewrite_repo_paths(item) for item in value]
+  if isinstance(value,dict):return {key:rewrite_repo_paths(item) for key,item in value.items()}
+  return value
+ out=rewrite_repo_paths(out)
 path=args.output;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({'path':str(path),'sha256':sha(path),'bytes':path.stat().st_size,'summary':out['summary'],'issues':issues},ensure_ascii=False))
