@@ -1,0 +1,43 @@
+{
+  "schema": "ggd.ssbu-zero-source-rebuild@1",
+  "componentId": "ssbu-zero-c00-static-skinned-v1",
+  "sourceSha256": "e9ef80e0f910453a09c43d7b42282a65bbe9ecd45a9dae76be0a0c07dae26a21",
+  "outputSha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/body.glb",
+    "bytes": 596332,
+    "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v5-rebuild/body.glb",
+    "bytes": 596332,
+    "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1"
+  },
+  "firstDerivedTexture": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/derived-textures/asf_zero_body_col.png.ggd-256.png",
+    "bytes": 95963,
+    "sha256": "0f2660975e4a04352a5627cf43c6db4f5b1a27f56cbf1977e3d06aef37867316"
+  },
+  "secondDerivedTexture": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v5-rebuild/derived-textures/asf_zero_body_col.png.ggd-256.png",
+    "bytes": 95963,
+    "sha256": "0f2660975e4a04352a5627cf43c6db4f5b1a27f56cbf1977e3d06aef37867316"
+  },
+  "byteIdenticalRebuild": true,
+  "derivedTextureByteIdenticalRebuild": true,
+  "bothValidationsPassed": true,
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "f5652b4db8fce114d1e8b1aa39706b9a400e3c8b51aebb10251838289f76275a"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "sha256": "aab79bf6ff8a3328d8eb06b89e0dfcc41b488a732be5ab91e564787463acae6e"
+    }
+  ],
+  "limitations": [
+    "Absolute paths and candidate labels differ between receipts; delivered GLB and derived texture bytes are identical.",
+    "Source contains no actions, so deterministic output does not establish gameplay animation readiness."
+  ]
+}

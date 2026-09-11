@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "ssbu-zero-c00-static-skinned-v1",
+      "variant": "c00",
+      "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Blender contains zero actions; attack, death, locomotion and idle animation remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Zero identity.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+        "Hidden damage mesh remains preserved only in the original Blender source and is excluded from c00 visible appearance.",
+        "Exporter emitted NumPy overflow/divide warnings for one mesh transform; all 64,788 exported float values were finite in both validations and the WebGL render was visually intact."
+      ]
+    }
+  ]
+}

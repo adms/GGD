@@ -36330,12 +36330,51 @@
           "identityReviewRequired": false,
           "recordedBytes": 2387720,
           "sizeMatchesManifest": true
+        },
+        {
+          "id": "ssbu-zero-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "assist/zero",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/body.glb",
+          "gitPath": "content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
+          "existsLocal": true,
+          "bytes": 596332,
+          "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/validation.json",
+            "bytes": 13370,
+            "sha256": "4ca69a03265cf252c43fac3b4823371dfb1d064bda2c48136e0e14c738630b26"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/visual-review.json",
+            "bytes": 1950,
+            "sha256": "3fadc0a3a275b06d9080479ff6a5ce42e7ce3600f55af366aeac3ed34039b915"
+          },
+          "limitations": [
+            "Source Blender contains zero actions; attack, death, locomotion and idle animation remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Zero identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+            "Hidden damage mesh remains preserved only in the original Blender source and is excluded from c00 visible appearance.",
+            "Exporter emitted NumPy overflow/divide warnings for one mesh transform; all 64,788 exported float values were finite in both validations and the WebGL render was visually intact."
+          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=assist/zero. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=assist/zero. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions."
       ],
       "aliases": [
         "assist/zero"

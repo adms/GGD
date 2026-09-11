@@ -5938,6 +5938,125 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb"
     },
     {
+      "id": "ssbu-zero-c00-static-skinned-v1",
+      "conversionCandidateId": "ssbu-zero-c00-blender4513-v4",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "Zero／傑洛",
+      "originalName": "Zero",
+      "workZh": "任天堂明星大亂鬥 特別版（原作：洛克人 X／Zero 系列）",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "assist/zero",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "integrated-weapon"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/body.glb",
+      "bytes": 596332,
+      "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+      "gitPath": "content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "zero-megaman"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 5276,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 75,
+      "textureCount": 4,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "limitations": [
+        "Source Blender contains zero actions; attack, death, locomotion and idle animation remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Zero identity.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+        "Hidden damage mesh remains preserved only in the original Blender source and is excluded from c00 visible appearance.",
+        "Exporter emitted NumPy overflow/divide warnings for one mesh transform; all 64,788 exported float values were finite in both validations and the WebGL render was visually intact."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/delivery.json",
+        "bytes": 3673,
+        "sha256": "3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/acceptance.json",
+        "bytes": 1308,
+        "sha256": "2d067b214f583d2eab269f2129bb7929ae57b8e97b32bb5080c2c43f961b7c7b"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/validation.json",
+        "bytes": 13370,
+        "sha256": "4ca69a03265cf252c43fac3b4823371dfb1d064bda2c48136e0e14c738630b26"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/visual-review.json",
+        "bytes": 1950,
+        "sha256": "3fadc0a3a275b06d9080479ff6a5ce42e7ce3600f55af366aeac3ed34039b915"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/webgl-proof.json",
+        "bytes": 7403,
+        "sha256": "662c17992ea03a1949896bd9cc53c5abb116dd8609ec24b2c39b636e2bf0ea54"
+      },
+      "sourceFidelityEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/source-fidelity.json",
+        "bytes": 5995,
+        "sha256": "ddec25c3fbaf1e4f5e902a60e5d4e7508b524ff9fc2b7b13df1d517d283d9394"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/source-rebuild.json",
+        "bytes": 2300,
+        "sha256": "002f6625f34f28841ce0d334185adf04cb6c8e8b504694c806fa30b0d43101c4"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-zero-blender4513-v1-v5/1c6d9ff346d4d64c454a1cf7c8fc0e94ab7c12d7a3de767e5011828d32d6a5c2.tar.gz",
+          "s3ArchiveMember": "stages/v4-final/body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-zero-blender4513-v1-v5/latest-receipt.json",
+          "backupReceiptSha256": "23ea1b8e06c125cc3ccd6954f894efea2724841354c00dc02a7cc91ead7ac842"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-zero-blender4513-v1-v5/1c6d9ff346d4d64c454a1cf7c8fc0e94ab7c12d7a3de767e5011828d32d6a5c2.tar.gz",
+      "s3ArchiveMember": "stages/v4-final/body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-zero-blender4513-v1-v5/latest-receipt.json",
+      "backupReceiptSha256": "23ea1b8e06c125cc3ccd6954f894efea2724841354c00dc02a7cc91ead7ac842",
+      "toolchainBackup": {
+        "name": "Blender 4.5.13 LTS macOS arm64",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/dependencies/blender/4.5.13/13a899d5cb374c9fcdc26b9c4c39489efbd424ed0e9b9bac1a2bcb3160a23131.tar.gz",
+        "s3ArchiveMember": "blender-4.5.13-macos-arm64.dmg",
+        "sha256": "663ce944257c61ff1d6aa09e15c8f57bbd8d59023adb2fa7edde33a9ed960b53",
+        "bytes": 311910354,
+        "s3Use": "backup-only-not-runtime-entry",
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dependencies/blender-4.5.13/latest-receipt.json",
+        "backupReceiptSha256": "7d23602b384626dcc727dcddb25ae3402c52093ff26fa2c66d8721453e4a87c3"
+      },
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb"
+    },
+    {
       "id": "zero-lancer-p1-static-skinned-v1",
       "sourceId": "gamebanana-zero-lancer-493444",
       "sourceClass": "community-mod",
@@ -6549,13 +6668,13 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb"
     }
   ],
-  "modelComponentCount": 11,
+  "modelComponentCount": 12,
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "3bc02f4c845ccb1d376356a967553fcb73a84034a2c1465cc189f807ebac425a"
+    "sha256": "74fb654b10547ec31cd49b8b90fee6d252e3410795096aa704d0a585c21a7c4e"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "1556cf4eeb69b32e2a7a6b87e040349c336a06798d143851c021be12520fe71c"
+    "sha256": "c47480c9cc5d0c619d67775150013c9e5cf571d3ddfd22962ef3c85f1c6cf702"
   }
 }

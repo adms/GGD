@@ -33,17 +33,39 @@ def validate_component(candidate, repo):
     path=verify_pin(candidate, repo)
     require(candidate.get('gitPath') == 'content/assets/models/community/'+candidate['sha256']+'.glb', 'Noncanonical component Git path')
     validation=json.loads(verify_pin(candidate['validationEvidence'],repo).read_text())
-    require(validation.get('schema') == 'ggd.zero-lancer-current-validation@1', 'Unexpected skinned validation schema')
-    require(validation.get('role') == 'independent-skinned-model-component', 'Validation is not an independent skinned component')
-    require((validation.get('outputSha256'),validation.get('outputBytes')) == (candidate['sha256'],candidate['bytes']), 'Validation output pin mismatch')
-    require(validation.get('outputByteIdenticalToAcquiredCandidate') is True, 'Byte-identical source rebuild missing')
-    require(validation.get('skinCount') == 1 and validation.get('joints') == 59 and validation.get('clips') == [], 'Unexpected skin/animation shape')
-    require(validation.get('budget',{}).get('errors') == [], 'Component exceeds current budget')
-    issues=validation.get('uploadReport',{}).get('issues',{})
+    schema=validation.get('schema')
+    if schema == 'ggd.zero-lancer-current-validation@1':
+        require(validation.get('role') == 'independent-skinned-model-component', 'Validation is not an independent skinned component')
+        require((validation.get('outputSha256'),validation.get('outputBytes')) == (candidate['sha256'],candidate['bytes']), 'Validation output pin mismatch')
+        require(validation.get('outputByteIdenticalToAcquiredCandidate') is True, 'Byte-identical source rebuild missing')
+        require(validation.get('skinCount') == 1 and validation.get('joints') == 59 and validation.get('clips') == [], 'Unexpected skin/animation shape')
+        require(validation.get('budget',{}).get('errors') == [], 'Component exceeds current budget')
+        issues=validation.get('uploadReport',{}).get('issues',{})
+        require(validation.get('heroModelPreparationPerformed') is False and validation.get('backendRegistrationPerformed') is False,
+                'Component cannot claim hero preparation or backend registration')
+    elif schema == 'ggd-ssbu-blend-component-validation@1':
+        require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'SSBU conversion candidate mismatch')
+        glb=validation.get('glb',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']), 'SSBU validation output pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')],
+                'Unexpected SSBU skin/joint shape')
+        require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'),
+                'Every SSBU model primitive must be skinned')
+        require(inspection.get('clips') == [] and inspection.get('clipCount') == 0, 'Static SSBU component cannot contain clips')
+        require(inspection.get('budget',{}).get('errors') == [], 'Component exceeds current budget')
+        issues=inspection.get('uploadReport',{}).get('issues',{})
+        khronos=validation.get('khronosIssues',{})
+        require(khronos.get('numErrors') == 0 and khronos.get('numWarnings') == 0 and khronos.get('truncated') is False,
+                'Direct Khronos validation failed')
+        require(validation.get('structuralValidationPassed') is True and validation.get('finiteFloatAccessors',{}).get('passed') is True,
+                'SSBU structural or finite-accessor validation failed')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False,
+                'SSBU component validation cannot claim runtime readiness')
+    else:
+        raise ValueError('Unexpected skinned validation schema: '+str(schema))
     require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
             'Component upload validation failed')
-    require(validation.get('heroModelPreparationPerformed') is False and validation.get('backendRegistrationPerformed') is False,
-            'Component cannot claim hero preparation or backend registration')
     for pin in validation.get('contractPins',[]):
         code=(Path(repo)/pin['path']).resolve()
         require(code.is_relative_to(Path(repo).resolve()) and code.is_file(), 'Contract pin escapes checkout')
@@ -54,8 +76,16 @@ def validate_component(candidate, repo):
             'Missing parent acceptance for skinned component')
     require(matches[0].get('scope') == 'independent-static-skinned-model-component' and matches[0].get('sha256') == candidate['sha256'],
             'Parent acceptance scope or SHA mismatch')
-    for evidence in ['deliveryEvidence','visualEvidence','sourceFidelityEvidence','sourceRebuildEvidence']:
+    for evidence in ['deliveryEvidence','visualEvidence','webglProofEvidence','sourceFidelityEvidence','sourceRebuildEvidence']:
+        if evidence not in candidate:
+            continue
         verify_pin(candidate[evidence],repo)
+    if schema == 'ggd-ssbu-blend-component-validation@1':
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.ssbu-zero-source-rebuild@1', 'Unexpected SSBU rebuild schema')
+        require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('bothValidationsPassed') is True,
+                'SSBU deterministic rebuild proof failed')
+        require(rebuild.get('outputSha256') == candidate['sha256'], 'SSBU rebuild output pin mismatch')
     return dict(candidate,gitAbsolutePath=str(path))
 
 

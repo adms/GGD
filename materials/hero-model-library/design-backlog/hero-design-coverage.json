@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-11T09:08:17.685459+00:00",
+  "generatedAt": "2026-09-11T20:31:56.951915+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
-  "revision": "09c18187fcfe9a0e855dbddf1ab92e092efc868a",
+  "revision": "7a6a6d96732b9d206c1d1240b920de35682a3bbd",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "6f507380da27e4d42f872a3d22648d13ff87495b58f5696af39c2c36e5a90524",
-      "bytes": 6076068
+      "sha256": "a73d3ac1d8153466241cce0fe9e0113d8cc1258c45c844a50332b7ed67851572",
+      "bytes": 6831551
     },
     {
       "path": "package.json",
@@ -6477,8 +6477,8 @@
     },
     {
       "path": "packages/shared/src/content/declaredFieldMatchesShape.test.ts",
-      "bytes": 5313,
-      "sha256": "c5cde082c8143f879f4f28ccb5e46e0198d2f6b064685000e614d68bd2c7b0d4"
+      "bytes": 6892,
+      "sha256": "1e39a7a5d8a22acca607cb0d93e052774929ac74f48a148f4150b63b67890763"
     },
     {
       "path": "packages/shared/src/content/delistedChampions.test.ts",
@@ -6832,8 +6832,8 @@
     },
     {
       "path": "packages/shared/src/content/fieldAdoption.exemptions.json",
-      "bytes": 295292,
-      "sha256": "ca4acd350780a7e4851341d4f3eb05c9cc95044e402216850113387a32d41a5d"
+      "bytes": 295487,
+      "sha256": "16c976cc7a29054977b94302b0bd8ecf39138de099a0c7ab428d250efeeb2228"
     },
     {
       "path": "packages/shared/src/content/fieldAdoption.test.ts",
@@ -6927,8 +6927,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/catalogMatrix.test.ts",
-      "bytes": 11525,
-      "sha256": "9931e8ff4fcb0345405ed9373302cc356199a8bfe83b58b5e90afd2bfad011a6"
+      "bytes": 12282,
+      "sha256": "1d0c48a1c9124fc7cc6f4be14fe4114e5649db41c728496da972122ff755c034"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
@@ -7007,8 +7007,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts",
-      "bytes": 20466,
-      "sha256": "6a785a5b30b06e6f16289997e2428b84fb4d66640cee783471fa8fe3fcfdfb8f"
+      "bytes": 21475,
+      "sha256": "30669090b21cc6f269ad05e4e11b9e08687c576898b4a7a73da5ff327a34520a"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityRefinements/azazel.ts",
@@ -7312,8 +7312,8 @@
     },
     {
       "path": "packages/shared/src/content/import/heroPackage.test.ts",
-      "bytes": 14565,
-      "sha256": "6da706be34b5a1b7659f526b0def5d9e49e04b8932c1e10c7b65318332a19fb6"
+      "bytes": 15564,
+      "sha256": "c6357d0b28fcf3fa98c35419f0a089bf3d86746def9d0b8582241aee888e3159"
     },
     {
       "path": "packages/shared/src/content/import/heroPackage.ts",
@@ -8787,8 +8787,8 @@
     },
     {
       "path": "packages/shared/src/content/schema/effects/fxLongAxisVisibleGeometry.test.ts",
-      "bytes": 9897,
-      "sha256": "fc1d88d31bee2b09446a63b77cf7904d5b1b248311f7b362f71974c8950c3488"
+      "bytes": 11188,
+      "sha256": "64dd6472bed79b842326b89e7a371c49ca3b723e39033a9a654033084361529c"
     },
     {
       "path": "packages/shared/src/content/schema/effects/grantAttribute.ts",
@@ -9267,18 +9267,18 @@
     },
     {
       "path": "packages/shared/src/content/standinCensus.test.ts",
-      "bytes": 19956,
-      "sha256": "2cbb66a07563f865ed81b3e4a7982d0e7e1349da2cbb22d4dd5683f677f0055a"
+      "bytes": 16651,
+      "sha256": "176b7b9f650025a303d701279817358ef46f766129a08dcee539d69136399712"
     },
     {
       "path": "packages/shared/src/content/standinRoster.test.ts",
-      "bytes": 17899,
-      "sha256": "69407110abd6354ddecb0ced3c66f526598e6a487b9730fce5751a8a339e2d0e"
+      "bytes": 19961,
+      "sha256": "276a44e3b7b28ef827a231dbf83c952cf2cb8f883bfe640c0676db44d20d3bf9"
     },
     {
       "path": "packages/shared/src/content/standinScale.test.ts",
-      "bytes": 16401,
-      "sha256": "723fe66c0f56ef4658224fd63484784c961f6e151effece62c1095807b6435fd"
+      "bytes": 17568,
+      "sha256": "5d482345ce9b0f26af41f582b4f072fa64c51da2411c33d63583291a5b0b064c"
     },
     {
       "path": "packages/shared/src/content/standinScale.ts",
@@ -9527,8 +9527,8 @@
     },
     {
       "path": "packages/shared/src/content/tierFlatExclusive.test.ts",
-      "bytes": 7596,
-      "sha256": "2e85cf9a36842fc66a98d62a04e75c1bf2414635f244a932d937cc9868c20d5f"
+      "bytes": 8598,
+      "sha256": "69d4e4669bba0bdf8a1875135ce9eee3a0ee94898906f980e8168a98b73836d7"
     },
     {
       "path": "packages/shared/src/content/tierRawParity.test.ts",
@@ -9677,8 +9677,8 @@
     },
     {
       "path": "packages/shared/src/content/voxelSkin/__snapshots__/roster.json",
-      "bytes": 24855,
-      "sha256": "895db2f921b568f4cdccd83a05d180eeee020d7cb3bbdd54b58fd6ea71f265bd"
+      "bytes": 24813,
+      "sha256": "a9df2366eaeb6c9acb46b5f7f56e55afb0e422d31b1736fca9fda6c3dd7774a6"
     },
     {
       "path": "packages/shared/src/content/voxelSkin/barcode.test.ts",
@@ -9952,8 +9952,8 @@
     },
     {
       "path": "packages/shared/src/ops/agentsMdIsHonest.test.ts",
-      "bytes": 7573,
-      "sha256": "f0d14cd35be4e3a69acc92d70119f1da966deab48c6e9b47db11b6cf959d0e7c"
+      "bytes": 9277,
+      "sha256": "8d34b4f42c4821f204419a77fe5238a25fe1cd0a5750f1d4ef539d20a4f69b78"
     },
     {
       "path": "packages/shared/src/ops/aiPromoteGuardIsArmed.test.ts",
@@ -10062,8 +10062,8 @@
     },
     {
       "path": "packages/shared/src/ops/champQuotesGeneratorRuns.test.ts",
-      "bytes": 6597,
-      "sha256": "e74f5fa32486bf7b02dc683f87228dd32f401160809e6e64b93715d10c922b26"
+      "bytes": 7848,
+      "sha256": "dbaf92ab13ecbb72e2d17cb78234aeb75c4c1870f81f96d6a7e2ead50b687b3d"
     },
     {
       "path": "packages/shared/src/ops/chidoriBuildBaseline.test.ts",
@@ -10157,8 +10157,8 @@
     },
     {
       "path": "packages/shared/src/ops/contentApiCwebpInRuntimeStage.test.ts",
-      "bytes": 11766,
-      "sha256": "d25fe5e7867c4cfb1ee5ddccc94c370ca0985fadfcb0fa3d1e12f9c04d280f39"
+      "bytes": 12239,
+      "sha256": "04ff0e366e0cbd22684bbaa3a22ab3ce1307fd57e30791141d3141dfe8456761"
     },
     {
       "path": "packages/shared/src/ops/contentCacheShippedPath.test.ts",
@@ -10452,8 +10452,8 @@
     },
     {
       "path": "packages/shared/src/ops/inventoryRosterModelHistory.test.ts",
-      "bytes": 4628,
-      "sha256": "1d47da7b2c6635cb03ad8b2c2d2d967ca1016523d078862722f5c3ff4d0d5afb"
+      "bytes": 4775,
+      "sha256": "9f2472efee9d7d989631efe4c894eff26f763d1fd9075ddc72728374bccf719c"
     },
     {
       "path": "packages/shared/src/ops/inventoryRosterSync.test.ts",
@@ -12012,8 +12012,8 @@
     },
     {
       "path": "packages/shared/src/sim/content/requirement.test.ts",
-      "bytes": 25094,
-      "sha256": "9f46b339e12c58cca7929a3d5ca409c7e93df4db1fda1d705c071c6034146fad"
+      "bytes": 27073,
+      "sha256": "adecb19af5b9eece69d43cc542ba08ea42311ae15e6a3aea3118b4206d8bd747"
     },
     {
       "path": "packages/shared/src/sim/content/requirement.ts",
@@ -12022,8 +12022,8 @@
     },
     {
       "path": "packages/shared/src/sim/content/skeleton.ts",
-      "bytes": 15926,
-      "sha256": "37b68be230e01d424620d8279f94f55f80fb2028a8b2a7200c9e02e255f3da26"
+      "bytes": 16734,
+      "sha256": "8715ac8255b13b20bf5af091b8f6d17dddd4e8b0419e30899f9228e849f8568d"
     },
     {
       "path": "packages/shared/src/sim/cooldownFloor.test.ts",
@@ -12452,8 +12452,8 @@
     },
     {
       "path": "packages/shared/src/sim/effects/comboFinisherShowcase.test.ts",
-      "bytes": 10534,
-      "sha256": "4dc897136bfd15a93162da02a3267eed5b99acd122c40e76dab6378d71a61bac"
+      "bytes": 11899,
+      "sha256": "1f96a645a1e846d53ea034c233531d8bdffd315b361cff7354f54e6d77e5a17f"
     },
     {
       "path": "packages/shared/src/sim/effects/comboStrikes.ts",
@@ -13857,8 +13857,8 @@
     },
     {
       "path": "packages/shared/src/sim/pipeline.test.ts",
-      "bytes": 33992,
-      "sha256": "e53b2db4ccb03c01a1dedcb19e726c2127e296c2b8a452e4013acdb977aef7e4"
+      "bytes": 35301,
+      "sha256": "ed61065add46b0ab3e3d9a0de5405e60ad083492cdfcd69f64cec3e61c4d716a"
     },
     {
       "path": "packages/shared/src/sim/predictionHold.ts",
@@ -14708,7 +14708,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "6cb7641517ec95c1637aa146ea3b687cfbf0f7dc9fe219c8cd4920d16e58ae49"
+    "sha256": "c6c147d9a1f7ce0e85319e4758d4e84f3e1d8c2834fa67b6b2c04ea776eeb7ab"
   },
   "heroes": [
     {
