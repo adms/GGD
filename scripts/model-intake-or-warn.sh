@@ -21,7 +21,7 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 RATCHET_FILE="tools/model-budget/intake-ratchet.txt"
-LOG="$(mktemp -t ggd-intake)"
+LOG="$(mktemp "${TMPDIR:-/tmp}/ggd-intake.XXXXXX")"
 
 python3 tools/w3x-import/model_intake.py --all > "$LOG" 2>&1
 rc=$?
@@ -44,7 +44,7 @@ base="$(tr -dc '0-9' < "$RATCHET_FILE" 2>/dev/null)"
 : "${base:=999999}"
 
 if [ "$bad" -gt "$base" ]; then
-  echo "⛔⛔ 有問題的模型從 $base 變成 $bad（掃了 $scanned 顆）—— ⭐ 這一次上架帶進了新的壞模型。"
+  echo "⛔⛔ 有問題的模型從 $base 變成 ${bad}（掃了 $scanned 顆）—— ⭐ 這一次上架帶進了新的壞模型。"
   echo "   ⇒ 跑 \`python3 tools/w3x-import/model_intake.py <那幾顆> --merge\` 自動修可修的，"
   echo "     貼圖過大要走 \`tools/model-budget/optimize.ts\` 的離線批次（⛔ 它會改變畫面，要人審）。"
   echo "   ⛔ 不要改 $RATCHET_FILE 把數字調大來讓它變綠。"
@@ -53,7 +53,7 @@ if [ "$bad" -gt "$base" ]; then
 fi
 
 if [ "$bad" -lt "$base" ]; then
-  echo "⭐ 有問題的模型 $base → $bad（掃了 $scanned 顆）—— ⇒ 把 $RATCHET_FILE 改成 $bad 並 commit。"
+  echo "⭐ 有問題的模型 $base → ${bad}（掃了 $scanned 顆）—— ⇒ 把 $RATCHET_FILE 改成 $bad 並 commit。"
   echo "   ⛔ 不改的話棘輪會鬆掉，而鬆掉的棘輪會開始放行真的回歸。"
   rm -f "$LOG"; exit 1
 fi

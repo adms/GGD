@@ -104,3 +104,40 @@ https://github.com/adms/GGD/blob/main/docs/%E5%85%A8%E8%8B%B1%E9%9B%84%E5%88%97%
 ## 13:52
 
 以後可以定期呼叫這個script檢查就好
+
+## 14:50
+
+模組與貼圖 都有經過 script 檢查面數 貼圖大小  綁好骨架等 自動化 script ?
+
+## 14:55
+
+commit
+
+## 14:55
+
+不對阿 你應該是要給我審查頁 裡面可以看跟聽吧
+
+## 14:57
+
+Takuro@iPhone6sProMax GGD % git push origin docs/re
+adme-refresh-20260911:main
+To github.com:adms/GGD.git
+ ! [rejected]            docs/readme-refresh-20260911 -> main (non-fast-forward)
+error: failed to push some refs to 'github.com:adms/GGD.git'
+hint: Updates were rejected because a pushed branch tip is behind its remote
+hint: counterpart. Check out this branch and integrate the remote changes
+hint: (e.g. 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+Takuro@iPhone6sProMax GGD %
+
+## 14:59
+
+1 2 修正 接上 ok 用分支讓 main 合併
+
+## 15:46
+
+[shell reconnected — replaying buffered output]
+Takuro@iPhone6sProMax GGD % bash scripts/enable-git-hooks.sh
+bash: scripts/enable-git-hooks.sh: No such file or directory
+%                                                  
+Takuro@iPhone6sProMax GGD %

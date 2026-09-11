@@ -37,7 +37,7 @@ aws_() { AWS_PROFILE="$PROFILE" aws --region "$REGION" "$@"; }
 arn="$(aws_ sts get-caller-identity --query Arn --output text 2>&1)"
 case "$arn" in
   *assumed-role/vibe-coding-s3-role/*) : ;;
-  *) echo "⛔ 身分不是預期的角色（拿到：$arn）⇒ 停手，⛔ 不要嘗試換 profile 或擴權。"; exit 1 ;;
+  *) echo "⛔ 身分不是預期的角色（拿到：${arn}）⇒ 停手，⛔ 不要嘗試換 profile 或擴權。"; exit 1 ;;
 esac
 
 sha() { shasum -a 256 "$1" | cut -d' ' -f1; }
@@ -46,7 +46,7 @@ if [ "$check" = "1" ]; then
   [ -f "$MANIFEST" ] || { echo "⛔ 沒有 $MANIFEST —— 先跑一次 \`bash scripts/backup-s3.sh\`。"; exit 1; }
   key="$(python3 -c "import json;print(json.load(open('$MANIFEST'))['gitTree']['key'])")"
   want="$(python3 -c "import json;print(json.load(open('$MANIFEST'))['gitTree']['sha256'])")"
-  tmp="$(mktemp -t ggd-backup-verify)"
+  tmp="$(mktemp "${TMPDIR:-/tmp}/ggd-backup-verify.XXXXXX")"
   if ! aws_ s3 cp "s3://$BUCKET/$key" "$tmp" --no-progress > /dev/null 2>&1; then
     echo "⛔ 抓不回 s3://$BUCKET/$key —— ⭐ 備份**不存在或讀不到**，⛔ 不是「應該沒問題」。"
     rm -f "$tmp"; exit 1
@@ -63,13 +63,13 @@ fi
 
 head_sha="$(git rev-parse HEAD)"
 key="backup/git-tree/$head_sha.tar.gz"
-tar_path="$(mktemp -t ggd-git-archive).tar.gz"
+tar_path="$(mktemp "${TMPDIR:-/tmp}/ggd-git-archive.XXXXXX").tar.gz"
 git archive --format=tar HEAD | gzip -6 > "$tar_path" || { echo "⛔ git archive 失敗"; rm -f "$tar_path"; exit 1; }
 digest="$(sha "$tar_path")"
 bytes="$(wc -c < "$tar_path" | tr -d ' ')"
 aws_ s3 cp "$tar_path" "s3://$BUCKET/$key" --no-progress > /dev/null || { echo "⛔ 上傳失敗"; rm -f "$tar_path"; exit 1; }
 rm -f "$tar_path"
-echo "⭐ git 樹已備份：$key（$bytes bytes）"
+echo "⭐ git 樹已備份：${key}（$bytes bytes）"
 
 trees_json="["; first=1
 for t in "${TREES[@]}"; do
@@ -81,7 +81,7 @@ for t in "${TREES[@]}"; do
   [ "$first" = "0" ] && trees_json="$trees_json,"
   trees_json="$trees_json{\"tree\":\"$t\",\"prefix\":\"$prefix\",\"objects\":$n}"
   first=0
-  echo "⭐ $t → $prefix（$n 個物件）"
+  echo "⭐ $t → ${prefix}（$n 個物件）"
 done
 trees_json="$trees_json]"
 
