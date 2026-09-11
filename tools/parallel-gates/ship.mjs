@@ -403,7 +403,15 @@ mkdirSync(LOGDIR, { recursive: true });
  *   `GGD_SHIP_WATCHDOG_FLOOR_MS=300000` 退回舊地板 · `GGD_SHIP_WATCHDOG_MULT=0` 退回「只看地板」
  *   `GGD_SHIP_WATCHDOG_OFF=1` 整隻關掉（⚠️ 那就回到「等 11 分鐘」的那一版）
  */
-const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 10 * 60 * 1000);
+// ⭐ 2026-09-11（GH#1211）**10 → 15 分鐘**。⛔ 不是「保險起見調大一點」——
+//   帳本 `docs/_data/deploy-timings.json` 裡最慢的一支**健康** vitest 是 **755 秒**，
+//   ⇒ 10 分鐘的地板**低於它** ⇒ ⭐ 看門狗會在一次正常的跑上開火，
+//     而 exit 124 與「閘真的紅了」⛔ 分不出來（08-28 連續四次誤殺就是這個形狀：假紅蓋掉真紅）。
+//   ⚠️ 15 分鐘留 19% 餘裕，⛔ 而仍然低於 `scripts/watchdog.sh` 的 LIMIT_MIN=20 ——
+//     ⭐ 那是刻意的：**單支**先被收掉（看得到是哪一支），⛔ 不是整跑被砍。
+//   ⭐ 守衛 `ops/shipScriptWatchdog.test.ts` 從**帳本**推導這條線，⛔ 不抄字面值 ⇒
+//     suite 再長大它會再紅一次，而那正是它該做的事。
+const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 15 * 60 * 1000);
 const WATCHDOG_MULT = Number(process.env.GGD_SHIP_WATCHDOG_MULT ?? 3);
 // 送出 SIGKILL（或看到 exit）之後,還等多久 `close` —— 等不到就自己收尾。
 const WATCHDOG_GRACE_MS = Number(process.env.GGD_SHIP_WATCHDOG_GRACE_MS ?? 20000);
