@@ -36598,7 +36598,7 @@
       "format": "MDL / GLB / 4 PNG / 349 blend entries",
       "accessStatus": "public-source-or-local-derived",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "pending-runtime-and-visual-validation",
+      "readiness": "ggd-six-state-subset-contract-and-webgl-validated-pending-rights-semantic-gameplay-backend",
       "purchaseDecision": "supplement-only-continue-model-search",
       "defaultEligible": false,
       "resourceRole": "character-model-collection",
@@ -36607,7 +36607,7 @@
       "publicationStatus": "s3-readback-verified",
       "backendIntegration": {
         "required": true,
-        "state": "pending-runtime-and-visual-validation",
+        "state": "pending-rights-semantic-gameplay-and-backend-selection",
         "selectionVerified": false
       },
       "sourceGame": "Fate/unlimited codes",
@@ -36649,19 +36649,64 @@
           "motionOrigin": "Sven Co-op/GoldSrc MOD",
           "originalFateAnimationsProven": false,
           "motionIndex": "motion-index.json",
-          "readyStage": "standard-glb-candidate",
+          "readyStage": "ggd-six-state-subset-contract-and-webgl-validated-pending-rights-semantic-gameplay-backend",
           "khronosValidation": "0 errors; 0 warnings; unlimited issue collection; not truncated",
           "runtimeReady": false,
           "backendSelectionVerified": false,
           "defaultChanged": false,
-          "manualVisualReview": "3 clips x 4 actual mesh frames inspected: standing/running/waving coherent, dark robe/hair/face textured",
+          "manualVisualReview": "reviewed-six-state-webgl-phase-samples-candidate-only",
           "unitStatus": "Retained native model coordinates; metric scale not established or normalized to a hero height.",
           "limitations": [
-            "Original platform PSP/PS2 not proven.",
-            "MOD sequence events, controller mixing and root linear-movement behavior are preserved as metadata, not executed.",
-            "GoldSrc additive/chrome/shading semantics are not fully recreated by base-color PBR.",
-            "Sven model bodypart metadata is preserved in the original and Assimp nodes; backend bodygroup selection is not integrated."
-          ]
+            "Original Fate/unlimited codes PSP/PS2 platform is not proven; this is a Sven Co-op/GoldSrc community-MOD body and motion set.",
+            "Six GGD role mappings are provisional; gutshot falls to the ground and needs gameplay recovery/transition review.",
+            "Continuous playback, loop seams, root-motion policy, source-engine events/controllers and shader parity are not accepted.",
+            "Redistribution permission, backend selection and deployment remain pending."
+          ],
+          "ggdSixStateCandidate": {
+            "attemptId": "fuc-mod-kotomine-kirei-sven-ggd-six-state-v1",
+            "status": "ggd-six-state-subset-contract-and-webgl-validated-pending-rights-semantic-gameplay-backend",
+            "body": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/body.glb",
+              "bytes": 698492,
+              "sha256": "e2559814585dfc1b2474832b10096c6d0993eafc1b5223fb25e22e9fccdd2923"
+            },
+            "clipMap": {
+              "idle": "idle",
+              "run": "run2",
+              "attack": "2handshoot",
+              "cast": "action_wave",
+              "hurt": "gutshot",
+              "death": "die_simple"
+            },
+            "yawOffsetDeg": 90,
+            "motionOrigin": "Sven Co-op/GoldSrc MOD",
+            "fateNativeMotion": false,
+            "fullSourceAnimationEntries": 349,
+            "candidateAnimationEntries": 6,
+            "omittedEntriesPreservedInFullSource": 343,
+            "currentGgdContractAccepted": true,
+            "currentGgdBudgetAccepted": true,
+            "khronosAccepted": true,
+            "webglPhaseReviewAccepted": true,
+            "semanticRoleMappingAccepted": false,
+            "continuousPlaybackAccepted": false,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "backendSelectionVerified": false,
+            "defaultEligible": false,
+            "legacyBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-kotomine-kirei-ggd-subset-v1/7de78c3d50ebd7cde9fc6a5f93d2dc94037069a6d64b8760d1b5fb50e4274d70.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-kotomine-kirei-ggd-subset-v1/7de78c3d50ebd7cde9fc6a5f93d2dc94037069a6d64b8760d1b5fb50e4274d70.files.json",
+              "archiveSha256": "7de78c3d50ebd7cde9fc6a5f93d2dc94037069a6d64b8760d1b5fb50e4274d70",
+              "s3ArchiveMember": "body.glb",
+              "readbackVerified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-kotomine-kirei-ggd-subset-v1/latest-receipt.json",
+              "receiptSha256": "21a9c25548f4e9fc3a051c6ea720a6ad066519ac2963db5b05f76bde1a1d4812",
+              "s3Use": "candidate-evidence-backup-only-not-runtime-entry"
+            }
+          },
+          "runtimeSelectable": false,
+          "defaultEligible": false
         }
       ],
       "candidateManifest": {
@@ -36696,7 +36741,7 @@
         "path": "motion-index.json",
         "sha256": "11454596ee563409cf9434aa814630978bd6d5c2a52fc117b6d8f7c6145c3c3e"
       },
-      "verification": "完整MOD原包與3D本體已取得；22原骨節、GLB蒙皮17個有權重joints、4貼圖。191來源sequence展開349項，其中336時間變化動作、9單幀/4多幀靜態pose；按原MDL每段FPS、loop与全量RLE樣本核對，1745 CPU蒙皮frame通過，3段實際渲染已檢查。動作是Sven/GoldSrc MOD，非Fate原生；Khronos0錯誤0警告。尺度、事件/controllers/root motion及GGD切換未驗收。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "完整Sven/GoldSrc MOD原包、18.7MB GLB與349個動作項均保留；另以固定來源SHA可重建裁出6段時間變化候選。預處理把3個同骨架且無額外變換的mesh節點合併，清除沒有payload的2個不支援擴充宣告，並只在候選排除343段、未從完整來源刪除。最終body.glb經GGD正式prepare/verify，8 draw合併為4、4812三角面、4貼圖、17個glTF weighted joints、6段片段，Khronos 0錯誤0警告、GGD預算0錯誤。Babylon 7.54.3 WebGL已跑6組24張分段姿勢，18個Babylon bones且4個mesh皆GPU蒙皮；完整身體可見。動作屬社群MOD而非Fate原生，六用途語意、連續播放、事件、權利、後台選項與部署仍未驗收。",
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-kotomine-kirei-291438/a62bb0a6fe28699813921d8b056ccdb57ce00030205354edc609a8d0fd1e3f20.zip",
         "bytes": 8828637,
@@ -36705,7 +36750,202 @@
         "readbackVerified": true,
         "fullGetVerified": true,
         "allMemberSha256Verified": true
-      }
+      },
+      "conversionAttempts": [
+        {
+          "id": "fuc-mod-kotomine-kirei-sven-ggd-six-state-v1",
+          "candidateId": "fuc-mod-kotomine-kirei-sven",
+          "status": "ggd-six-state-subset-contract-and-webgl-validated-pending-rights-semantic-gameplay-backend",
+          "sourceClass": "community-mod",
+          "originalPlatform": "unknown",
+          "targetModPlatform": "Sven Co-op / GoldSrc",
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1",
+          "body": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/body.glb",
+            "bytes": 698492,
+            "sha256": "e2559814585dfc1b2474832b10096c6d0993eafc1b5223fb25e22e9fccdd2923"
+          },
+          "preflight": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/preflight.glb",
+            "bytes": 738008,
+            "sha256": "0c8ff1f2bf5d6b1d72e9eebb415653ea326147c33571fc0e9bc8f2b9b0e444e8"
+          },
+          "conversionPreflight": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/conversion-preflight.json",
+            "bytes": 2786,
+            "sha256": "3ef47caddd573b2cb4bf8cfe6da749d62a64064aed8997c941dc579ad8a8af13"
+          },
+          "preparation": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/preparation.json",
+            "bytes": 13802,
+            "sha256": "fb66a47ef4823e5dd8af3bbecc5e5a6aacbaeb9e44d47487f96762793e3c38f9"
+          },
+          "review": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/review.json",
+            "bytes": 7746,
+            "sha256": "45e8de8e68008aace8300e7ac276cbb0f81f982a118cb74416026f43ffc6f818"
+          },
+          "motionSelection": [
+            {
+              "glbAnimationIndex": 1,
+              "sourceSequence": 1,
+              "sourceLabel": "idle",
+              "blendIndex": 0,
+              "fps": 14.0,
+              "frames": 31,
+              "loop": true,
+              "sampleDurationSeconds": 2.142857142857143,
+              "hasTimeVaryingTransform": true,
+              "movingPositionBones": 2,
+              "movingRotationBones": 12,
+              "glbTranslationRotationChannels": 44,
+              "motionOrigin": "GoldSrc/Sven Co-op MOD; not Fate native",
+              "role": "idle",
+              "semanticStatus": "provisional-pending-gameplay-review"
+            },
+            {
+              "glbAnimationIndex": 3,
+              "sourceSequence": 3,
+              "sourceLabel": "run2",
+              "blendIndex": 0,
+              "fps": 40.0,
+              "frames": 25,
+              "loop": true,
+              "sampleDurationSeconds": 0.6,
+              "hasTimeVaryingTransform": true,
+              "movingPositionBones": 2,
+              "movingRotationBones": 11,
+              "glbTranslationRotationChannels": 44,
+              "motionOrigin": "GoldSrc/Sven Co-op MOD; not Fate native",
+              "role": "run",
+              "semanticStatus": "provisional-pending-gameplay-review"
+            },
+            {
+              "glbAnimationIndex": 5,
+              "sourceSequence": 5,
+              "sourceLabel": "2handshoot",
+              "blendIndex": 0,
+              "fps": 20.0,
+              "frames": 8,
+              "loop": false,
+              "sampleDurationSeconds": 0.35,
+              "hasTimeVaryingTransform": true,
+              "movingPositionBones": 1,
+              "movingRotationBones": 14,
+              "glbTranslationRotationChannels": 44,
+              "motionOrigin": "GoldSrc/Sven Co-op MOD; not Fate native",
+              "role": "attack",
+              "semanticStatus": "provisional-pending-gameplay-review"
+            },
+            {
+              "glbAnimationIndex": 348,
+              "sourceSequence": 190,
+              "sourceLabel": "action_wave",
+              "blendIndex": 0,
+              "fps": 10.0,
+              "frames": 22,
+              "loop": false,
+              "sampleDurationSeconds": 2.1,
+              "hasTimeVaryingTransform": true,
+              "movingPositionBones": 1,
+              "movingRotationBones": 16,
+              "glbTranslationRotationChannels": 44,
+              "motionOrigin": "GoldSrc/Sven Co-op MOD; not Fate native",
+              "role": "cast",
+              "semanticStatus": "provisional-pending-gameplay-review"
+            },
+            {
+              "glbAnimationIndex": 18,
+              "sourceSequence": 18,
+              "sourceLabel": "gutshot",
+              "blendIndex": 0,
+              "fps": 26.0,
+              "frames": 38,
+              "loop": false,
+              "sampleDurationSeconds": 1.4230769230769231,
+              "hasTimeVaryingTransform": true,
+              "movingPositionBones": 2,
+              "movingRotationBones": 18,
+              "glbTranslationRotationChannels": 44,
+              "motionOrigin": "GoldSrc/Sven Co-op MOD; not Fate native",
+              "role": "hurt",
+              "semanticStatus": "provisional-pending-gameplay-review"
+            },
+            {
+              "glbAnimationIndex": 12,
+              "sourceSequence": 12,
+              "sourceLabel": "die_simple",
+              "blendIndex": 0,
+              "fps": 22.0,
+              "frames": 19,
+              "loop": false,
+              "sampleDurationSeconds": 0.8181818181818182,
+              "hasTimeVaryingTransform": true,
+              "movingPositionBones": 1,
+              "movingRotationBones": 11,
+              "glbTranslationRotationChannels": 44,
+              "motionOrigin": "GoldSrc/Sven Co-op MOD; not Fate native",
+              "role": "death",
+              "semanticStatus": "provisional-pending-gameplay-review"
+            }
+          ],
+          "fullSourceAnimationEntries": 349,
+          "candidateAnimationEntries": 6,
+          "omittedEntriesPreservedInFullSource": 343,
+          "yawOffsetDeg": 90,
+          "webglPhaseReview": {
+            "run": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/webgl/run.json",
+              "bytes": 335,
+              "sha256": "69298e66e8e59a1b2061f460ef512fefe0285eb12e6fb471d2d507cab847c456"
+            },
+            "proof": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/webgl/proof.json",
+              "bytes": 17001,
+              "sha256": "eaa15e2fafc4076015afa68ff225c4794218a93aac4478d10c182592452b45d4"
+            },
+            "contactSheet": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-kotomine-kirei-ggd-subset-v1/webgl/kirei-six-motion-contact-sheet.png",
+              "bytes": 441248,
+              "sha256": "000d798c83e3e52a15ebd021f3ee80e9b359e1f9c10042d8989d7459e7084cce"
+            },
+            "engine": "Babylon 7.54.3 actual WebGL",
+            "animationGroups": 6,
+            "rendererShots": 24,
+            "skeletons": 1,
+            "babylonBones": 18,
+            "gpuSkinningAllMeshes": true
+          },
+          "legacyBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-kotomine-kirei-ggd-subset-v1/7de78c3d50ebd7cde9fc6a5f93d2dc94037069a6d64b8760d1b5fb50e4274d70.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-kotomine-kirei-ggd-subset-v1/7de78c3d50ebd7cde9fc6a5f93d2dc94037069a6d64b8760d1b5fb50e4274d70.files.json",
+            "archiveSha256": "7de78c3d50ebd7cde9fc6a5f93d2dc94037069a6d64b8760d1b5fb50e4274d70",
+            "s3ArchiveMember": "body.glb",
+            "readbackVerified": true,
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-kotomine-kirei-ggd-subset-v1/latest-receipt.json",
+            "receiptSha256": "21a9c25548f4e9fc3a051c6ea720a6ad066519ac2963db5b05f76bde1a1d4812",
+            "s3Use": "candidate-evidence-backup-only-not-runtime-entry"
+          },
+          "currentGgdContractAccepted": true,
+          "currentGgdBudgetAccepted": true,
+          "khronosAccepted": true,
+          "fateNativeMotion": false,
+          "semanticRoleMappingAccepted": false,
+          "continuousPlaybackAccepted": false,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "backendSelectionVerified": false,
+          "defaultChanged": false,
+          "defaultEligible": false,
+          "deploymentStatus": "not-deployed",
+          "missing": [
+            "These are Sven/GoldSrc community-MOD sequences, not original Fate/unlimited codes animations.",
+            "Attack, cast, hurt and death role choices are provisional. In particular gutshot falls to the ground and still needs gameplay recovery/transition review.",
+            "Phase screenshots do not prove continuous playback, loop seams, root-motion policy, source-engine events/controllers, source shader parity or gameplay timing.",
+            "PSP versus PS2 origin, redistribution permission, backend selection and deployment remain unverified."
+          ]
+        }
+      ]
     },
     {
       "id": "gamebanana-fuc-dark-sakura-492607",
