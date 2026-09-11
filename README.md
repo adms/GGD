@@ -2,8 +2,8 @@
 
 3v3v3v3 網頁 3D 體素競技場 MOBA。私人專案。
 
-> 📍 **現況快照（2026-09-11 · `content/manifest.json` = `cv_824afa79978e` · git tag `v0.44.1`）**
-> 英雄 **153** 名（白名單開放 130）· 技能 **907** · 道具 **142**（另 112 件退場在 `_legacy/`）· 競技場 **13** 張 · 模型文件 389 · 特效 702。
+> 📍 **現況快照（2026-09-11 · `content/manifest.json` = `cv_6fbc4aae62ba` · git tag `v0.44.1`）**
+> 英雄 **153** 名（白名單開放 130）· 技能 **907** · 道具 **142**（另 112 件退場在 `_legacy/`）· 競技場 **13** 張 · 模型文件 416 · 特效 702。
 > 賽制打到**第 10 回合四隊同場大亂鬥**決冠軍；**第 11 回合・生存模式**（500 隻殭屍上限、總分加倍）於 2026-09-10 開啟。
 > 待上架：LoL 第二批 **11** 名（GH#1185）＋ 已取得模型／重上架舊角 **34** 名（GH#1205）—— 兩批都還**不在** `content/` 裡（§7 有名單）。
 > ⚠️ 這一格是全篇唯一一段刻意抄了數字的散文 —— 它一定會過期；每一節底下的**產生區塊**才是可信的。
@@ -613,7 +613,7 @@ make lan-probe
 
 **開放（whitelisted）的英雄、技能與商店清單就直接印在下面、預設展開、不用點任何摺疊**。完整的全表搬到 `docs/reference/roster.md`、`abilities.md`、`items.md`（各區塊都有連結），這樣 README 才不會又肥又被 GitHub 折疊。所有數字都從 repo 量出來，權威計數在 `content/manifest.json`（由 `pnpm content:build` 產生）。
 
-下表是 `cv_824afa79978e`（2026-09-11，origin/main）的實測值 —— 16 個 collection、**2,727** 份文件（不含各目錄的 `_index.json`）。
+下表是 `cv_6fbc4aae62ba`（2026-09-11，origin/main）的實測值 —— 16 個 collection、**2,754** 份文件（不含各目錄的 `_index.json`）。
 
 | collection | docs | 說明 |
 | --- | ---: | --- |
@@ -621,7 +621,7 @@ make lan-probe
 | `content/abilities/` | **907** | 每英雄每 slot 一份，**一名英雄六個 slot**：天生技 `PASSIVE`、Q/W/E/R、EX（150 名有 EX 與天生技） |
 | `content/items/` | **142** | 依 `craftRole` 標記：`final` 42（38 件有效果會進獎池）· `component` 16 · `quest` 6 · `service` 2 · `none` 76。另 **112 件退場**在 `_legacy/items/` |
 | `content/vfx/` · `vfx-scripts/` · `vfx-subtypes/` | 702 · 45 · 4 | 特效文件、GH#838 特效工坊的演出腳本、子類型 |
-| `content/models/` | **389** | `ou99.*` 129（論壇購入的模型，2026-09-10 全部上架後台下拉選單）· `imported.*` 117（w3x 匯入）· `version.body.*` 59（**凍結的模型版本** —— 英雄卡指的是這一種，所以換模型可以一鍵切回）· `community.body.*` 48 · `w3x.*` 23 · `champ.*` 9 · `prop.*` 4 |
+| `content/models/` | **416** | `ou99.*` 129（論壇購入的模型，2026-09-10 全部上架後台下拉選單）· `imported.*` 117（w3x 匯入）· `community.body.*` 75（社群英雄的身體；2026-09-11 那次合併 +27，七名 LoL 英雄拿回本尊模型）· `version.body.*` 59（**凍結的模型版本** —— 英雄卡指的是這一種，所以換模型可以一鍵切回）· `w3x.*` 23 · `champ.*` 9 · `prop.*` 4 |
 | `content/config/` | **103** | 後台可調的每一組旋鈕各一份。⚠️ 其中 7 份是 `skills:sync` 的**產物**（`damage-tiers` / `stat-caps` / `vfx-families` / `ability-vfx-bindings` / `ap-damage-scaling` / `combo-strikes` / `_index`），⛔ 不要手改 |
 | `content/arenas/` · `maps/` | 13 · 7 | 七張動漫競技場（GH#324）＋ 既有場地；`arena.royale` 是第 11 回合的生存場 |
 | `content/ability-templates/` | 82 | 技能模板家族（第〇·五守則：技能 = JSON 模板組合） |
@@ -629,7 +629,7 @@ make lan-probe
 | `content/status-effects/` · `projectiles/` · `skins/` · `loot-tables/` | 51 · 21 · 14 · 3 | 狀態、飛行物、造型、三張武器獎池（`legendary-weapons` 30 件 / `ex-release-weapons` 39 / `ex-origin-weapons` 15） |
 | **合計** | **2,727** | 這是**此刻**的磁碟實測；權威計數永遠是 `content/manifest.json` |
 
-> ⚠️ **這張表被更正過三次，三次都是同一個形狀（第三守則）。** 2026-08-16 從 113/662 改成 78/461（41 隻搬進 `_legacy/`）；2026-08-18 改 items 219→239、augments 31→91；2026-09-11 再改成 153/907/142 —— 81 名新英雄上架、97 件道具退場、模型從 124 長到 389。每一次都是「手寫的統計沒有守衛」的症狀。⛔ 與其留一個看起來精確的舊數字，不如只留量得到的那一格；要即時的看 `manifest.json`。
+> ⚠️ **這張表被更正過三次，三次都是同一個形狀（第三守則）。** 2026-08-16 從 113/662 改成 78/461（41 隻搬進 `_legacy/`）；2026-08-18 改 items 219→239、augments 31→91；2026-09-11 再改成 153/907/142 —— 81 名新英雄上架、97 件道具退場、模型從 124 長到 416（同一天之內就從 389 變成 416）。每一次都是「手寫的統計沒有守衛」的症狀。⛔ 與其留一個看起來精確的舊數字，不如只留量得到的那一格；要即時的看 `manifest.json`。
 
 `manifest.json` 裡的 `contentVersion` 是整棵 `content/` 的純函數，**改內容就會變**。不要相信任何抄在文件裡的雜湊 —— 包含這份 README 的散文部分。下面三個產生區塊會自己印出產生當下的 `contentVersion`，那個才是可信的。
 
@@ -2294,7 +2294,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | 33 | `godie-e00t` | 貞子七夜怪談 | 待上架 |
 | 34 | `godie-h021` | 阿強一號破銅爛鐵 | 待上架 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_824afa79978e` 產生。 全量 153 名，其中開放 130 名。另有 45 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_6fbc4aae62ba` 產生。 全量 153 名，其中開放 130 名。另有 45 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:all-heroes -->
 
 <!-- BEGIN GENERATED:abilities -->
