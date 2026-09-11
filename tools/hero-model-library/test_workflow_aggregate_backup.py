@@ -45,6 +45,30 @@ class WorkflowAggregateBackupTest(unittest.TestCase):
             self.assertEqual([x['id'] for x in records], ['source-a'])
             self.assertEqual(extra, ['metadata.json'])
 
+    def test_range_readback_is_resumable_and_compares_each_part_to_local_archive(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            payload = bytes(range(100))
+            expected = root / 'expected.zip'; expected.write_bytes(payload)
+            destination = root / 'readback.zip'
+            calls = []
+            original = mod.aws
+            def fake_aws(args, action, resource):
+                calls.append((args, action, resource))
+                start, end = map(int, args[args.index('--range') + 1].removeprefix('bytes=').split('-'))
+                Path(args[-1]).write_bytes(payload[start:end + 1])
+                return '{}'
+            mod.aws = fake_aws
+            try:
+                mod.range_readback('fixture/key.zip', destination, expected, len(payload), chunk_bytes=17)
+                first_calls = len(calls)
+                mod.range_readback('fixture/key.zip', destination, expected, len(payload), chunk_bytes=17)
+            finally:
+                mod.aws = original
+            self.assertEqual(destination.read_bytes(), payload)
+            self.assertEqual(first_calls, 6)
+            self.assertEqual(len(calls), first_calls)
+
 
 if __name__ == '__main__':
     unittest.main()

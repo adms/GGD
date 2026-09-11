@@ -28,6 +28,20 @@ def digest(path):
     return h.hexdigest()
 
 
+def digest_range(path, start, length):
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        stream.seek(start)
+        left = length
+        while left:
+            chunk = stream.read(min(left, 1024 * 1024))
+            if not chunk:
+                raise ValueError('Expected local archive ended during range verification')
+            h.update(chunk)
+            left -= len(chunk)
+    return h.hexdigest()
+
+
 def aws(args, action, resource):
     env = {**os.environ, 'AWS_PROFILE': 'vibe-coding', 'AWS_REGION': 'ap-east-2', 'AWS_PAGER': ''}
     result = subprocess.run(['aws', *args, '--profile', 'vibe-coding', '--region', 'ap-east-2', '--no-cli-pager'],
@@ -48,6 +62,59 @@ def existing_object_size(key):
     if 'Not Found' in result.stderr or '(404)' in result.stderr:
         return None
     raise RuntimeError('s3:HeadObject s3://' + BUCKET + '/' + key + ': ' + result.stderr.strip())
+
+
+def range_readback(key, destination, expected, size, chunk_bytes=32 * 1024 * 1024):
+    """Download fixed ranges that can resume and verify against the frozen local archive."""
+    destination, expected = Path(destination), Path(expected)
+    if destination.is_file():
+        if destination.stat().st_size == size and digest(destination) == digest(expected):
+            return destination
+        bad = destination.with_name(destination.name + '.invalid-' + digest(destination)[:12])
+        destination.rename(bad)
+    parts = destination.with_name(destination.name + '.parts')
+    parts.mkdir(parents=True, exist_ok=True)
+    uri = f's3://{BUCKET}/{key}'
+    ordered = []
+    for start in range(0, size, chunk_bytes):
+        end = min(size, start + chunk_bytes) - 1
+        length = end - start + 1
+        piece = parts / f'{start:012d}-{end:012d}.part'
+        expected_sha = digest_range(expected, start, length)
+        if piece.is_file() and piece.stat().st_size == length and digest(piece) == expected_sha:
+            ordered.append(piece)
+            continue
+        if piece.exists():
+            piece.rename(piece.with_name(piece.name + '.invalid-' + digest(piece)[:12]))
+        last_error = None
+        for attempt in range(1, 4):
+            try:
+                aws(['s3api', 'get-object', '--bucket', BUCKET, '--key', key,
+                     '--range', f'bytes={start}-{end}', str(piece)], 's3:GetObject', uri)
+                if piece.stat().st_size != length or digest(piece) != expected_sha:
+                    piece.rename(piece.with_name(piece.name + f'.mismatch-attempt-{attempt}'))
+                    raise ValueError(f'S3 range differs from frozen local archive: {start}-{end}')
+                last_error = None
+                break
+            except (OSError, RuntimeError, ValueError) as error:
+                last_error = error
+                if piece.exists():
+                    piece.rename(piece.with_name(piece.name + f'.failed-attempt-{attempt}'))
+        if last_error is not None:
+            raise last_error
+        ordered.append(piece)
+        print(json.dumps({'phase': 'range-readback', 'start': start, 'end': end,
+                          'verifiedBytes': sum(item.stat().st_size for item in ordered),
+                          'totalBytes': size}), flush=True)
+    assembling = destination.with_name(destination.name + f'.assembling-{os.getpid()}')
+    with assembling.open('xb') as output:
+        for piece in ordered:
+            with piece.open('rb') as source:
+                shutil.copyfileobj(source, output, 1024 * 1024)
+    if assembling.stat().st_size != size or digest(assembling) != digest(expected):
+        raise ValueError('Assembled S3 range readback differs from frozen local archive')
+    os.replace(assembling, destination)
+    return destination
 
 
 def load_catalogs(repo=REPO):
@@ -128,8 +195,7 @@ def upload(args):
         aws(['s3', 'cp', str(local_copy), uri, '--only-show-errors'], 's3:PutObject', uri)
     elif existing != pending['bytes']:
         raise ValueError('Existing aggregate object has an unexpected byte size')
-    readback = out / 'readback.zip'
-    aws(['s3', 'cp', uri, str(readback), '--only-show-errors'], 's3:GetObject', uri)
+    readback = range_readback(key, out / 'readback.zip', local_copy, pending['bytes'])
     if readback.stat().st_size != pending['bytes'] or digest(readback) != pending['sha256']:
         raise ValueError('S3 aggregate readback SHA-256 mismatch')
     verify_members(readback, pending['files'])
