@@ -6766,6 +6766,105 @@
     }
   ],
   "modelComponentCount": 12,
+  "historicalModelSourceArtifacts": [
+    {
+      "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "sourceCandidateId": "historical-kita-kita-7bc2fa3f8",
+      "nameZh": "吉他吉他老伯",
+      "originalName": "Kita Kita Oyaji",
+      "workZh": "魔法陣天使／魔法少女武鬥祭 MBA",
+      "sourceGame": "Magical Battle Arena Complete Form 1.60",
+      "platform": "PC",
+      "variant": "MBA Chara14 歷史 GGD 動作版／7bc2fa3f8 原始位元組",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "native-animation"
+      ],
+      "bytes": 373464,
+      "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+      "gitPath": "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "recoveredFromGitCommit": "7bc2fa3f8",
+      "normalizedReplacementSha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
+      "normalizedReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "readiness": "archived-exact-historical-source; normalized replacement retained separately",
+      "limitations": [
+        "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+        "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+        "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified.",
+        "保留合併前的精確 Git 位元組；未取代材質正規化版本，也不宣稱可切換或已部署。"
+      ],
+      "sourceArtifactBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    },
+    {
+      "id": "historical-lord-nightmares-7bc2fa3f8:exact-historical-source",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "sourceCandidateId": "historical-lord-nightmares-7bc2fa3f8",
+      "nameZh": "金色魔王／惡夢之王",
+      "originalName": "Lord of Nightmares",
+      "workZh": "秀逗魔導士／魔法少女武鬥祭 MBA",
+      "sourceGame": "Magical Battle Arena Complete Form 1.60",
+      "platform": "PC",
+      "variant": "MBA Chara13 歷史 GGD 動作版／7bc2fa3f8 原始位元組",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "native-animation"
+      ],
+      "bytes": 695600,
+      "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+      "gitPath": "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "recoveredFromGitCommit": "7bc2fa3f8",
+      "normalizedReplacementSha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
+      "normalizedReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "readiness": "archived-exact-historical-source; normalized replacement retained separately",
+      "limitations": [
+        "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+        "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+        "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified.",
+        "保留合併前的精確 Git 位元組；未取代材質正規化版本，也不宣稱可切換或已部署。"
+      ],
+      "sourceArtifactBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    }
+  ],
+  "historicalModelSourceArtifactCount": 2,
+  "historicalModelRestorationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/restoration-receipt.json",
+    "sha256": "daf078a845d91dafdd8c6884e6c2ede5b7bc89780b1e10a811affac84c8d0278"
+  },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
     "sha256": "059b777beec1a739683a3e86f4104771bdb8cbc3dac48869fc77a1c421a9c3f5"

@@ -60,6 +60,8 @@ Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Wi
 
 獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原、尚未綁定真實英雄 ID 的舊模型版本。兩者均以 `fullHeroModel=false`、`heroIds=[]` 防止被誤認成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
 
+合併前的精確歷史位元組另由 `current-resources.json → historicalModelSourceArtifacts` 查詢。這些檔案保留原 Git 物件、SHA-256、正規化替換版與 S3 原始備份關係；`componentReady=false`，不能當成已驗收下拉選項。重建使用 `restore_historical_model_assets.py`，遇到同路徑但位元組不同時會停止，不覆蓋現有檔案。
+
 七名 LOL 音訊中央來源為 `lol-project-seven-ja-jp-16.18.8159717`。`voice-index.json.summary` 的 `sourceFileRelationshipRows` 是來源關係數，`uniqueLocalPaths` 是不同本機路徑數，`uniqueSha256Payloads` 是不同內容數；同路徑在不同來源的關係均保留，不能相加當成新取得音訊。依 `voice-files.jsonl.gz` 的 `path` 相對 `voice-index.json.localWorkspace` 取得絕對路徑，再核對每列 `sha256`。
 
 需要哪一個版本，就讓工作流使用同一 Git commit 的設定與 `release.json`。查詢輸出分開列出「素材庫預設」「本分支實際選擇」「正式機觀測快照」，避免把候選或 S3 上傳當成正式站已部署。

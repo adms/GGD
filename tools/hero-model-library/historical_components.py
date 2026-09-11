@@ -23,6 +23,67 @@ def verify_pin(pin, repo):
     return path
 
 
+def source_historical_artifacts(downloads, repo):
+    """Expose exact pre-normalization Git blobs as archived, non-runtime sources."""
+    repo = Path(repo).resolve()
+    result = []
+    seen = set()
+    for source in downloads.get('publicSources', []) + downloads.get('paidSources', []):
+        for candidate in source.get('componentCandidates', []):
+            artifact = candidate.get('sourceArtifact')
+            if (not artifact or not artifact.get('gitPathAtIngest')
+                    or candidate.get('recoveredFromGitCommit') != '7bc2fa3f8'
+                    or candidate.get('resourceRole') != 'independent-historical-model-body-component'):
+                continue
+            artifact_id = candidate['id'] + ':exact-historical-source'
+            require(artifact_id not in seen, 'Duplicate historical source artifact ID: ' + artifact_id)
+            seen.add(artifact_id)
+            pin = {
+                'gitPath': artifact['gitPathAtIngest'],
+                'bytes': artifact['bytes'],
+                'sha256': artifact['sha256'],
+            }
+            model_path = verify_pin(pin, repo)
+            result.append({
+                'id': artifact_id,
+                'sourceId': source['id'],
+                'sourceCandidateId': candidate['id'],
+                'nameZh': candidate['nameZh'],
+                'originalName': candidate['originalName'],
+                'workZh': candidate['workZh'],
+                'sourceGame': candidate['sourceGame'],
+                'platform': candidate['platform'],
+                'variant': candidate['variant'] + '／7bc2fa3f8 原始位元組',
+                'resourceRole': 'exact-historical-model-source-artifact',
+                'assetKinds': candidate['assetKinds'],
+                'bytes': artifact['bytes'],
+                'sha256': artifact['sha256'],
+                'gitPath': artifact['gitPathAtIngest'],
+                'gitAbsolutePath': str(model_path),
+                'recoveredFromGitCommit': candidate['recoveredFromGitCommit'],
+                'normalizedReplacementSha256': candidate['sha256'],
+                'normalizedReplacementGitPath': candidate['gitPath'],
+                'componentReady': False,
+                'runtimeSelectable': False,
+                'runtimeDropdownRegistered': False,
+                'defaultEligible': False,
+                'automaticEligible': False,
+                'fullHeroModel': False,
+                'heroIds': [],
+                'relatedHeroIds': [],
+                'readiness': 'archived-exact-historical-source; normalized replacement retained separately',
+                'limitations': list(candidate.get('limitations', [])) + [
+                    '保留合併前的精確 Git 位元組；未取代材質正規化版本，也不宣稱可切換或已部署。'
+                ],
+                'sourceArtifactBackup': {
+                    key: artifact[key]
+                    for key in ('s3Uri', 's3ArchiveMember', 'backupReceiptPath', 'backupReceiptSha256')
+                    if artifact.get(key) is not None
+                },
+            })
+    return result
+
+
 def source_historical_components(downloads, repo):
     repo = Path(repo).resolve()
     result = []

@@ -1,0 +1,41 @@
+{
+  "schema": "ggd-historical-model-restoration-receipt@1",
+  "historicalCommit": "7bc2fa3f8",
+  "sourceEvidenceGitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
+  "records": [
+    {
+      "id": "historical-astralym-7bc2fa3f8",
+      "gitPath": "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+      "gitObject": "7bc2fa3f8:content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+      "bytes": 3889188,
+      "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+      "presentByteIdenticalAfterRestore": true
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8",
+      "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "gitObject": "7bc2fa3f8:content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "bytes": 3224424,
+      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+      "presentByteIdenticalAfterRestore": true
+    },
+    {
+      "id": "historical-kita-kita-7bc2fa3f8",
+      "gitPath": "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "gitObject": "7bc2fa3f8:content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "bytes": 373464,
+      "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+      "presentByteIdenticalAfterRestore": true
+    },
+    {
+      "id": "historical-lord-nightmares-7bc2fa3f8",
+      "gitPath": "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "gitObject": "7bc2fa3f8:content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "bytes": 695600,
+      "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+      "presentByteIdenticalAfterRestore": true
+    }
+  ],
+  "allPresentByteIdenticalToHistoricalGit": true,
+  "scope": "Exact historical GLB bytes only. Runtime selection and deployment remain separate."
+}
