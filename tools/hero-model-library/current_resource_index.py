@@ -4,6 +4,7 @@ from pathlib import Path
 from build_palworld_index import model_components
 from weapon_components import source_weapon_components
 from skinned_components import source_skinned_components
+from historical_components import source_historical_components
 ROOT=Path(__file__).resolve().parents[2]
 def read(path):return json.loads(path.read_text())
 def verify_component_git_contents(components, repo=ROOT):
@@ -57,6 +58,7 @@ def build():
     component_source_path=base/'download-sources.json'
     components.extend(source_weapon_components(read(component_source_path),ROOT))
     components.extend(source_skinned_components(read(component_source_path),ROOT))
+    components.extend(source_historical_components(read(component_source_path),ROOT))
     result.update(modelComponents=components,modelComponentCount=len(components),
         modelComponentIndex=dict(gitPath=str(component_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_path.read_bytes()).hexdigest()),

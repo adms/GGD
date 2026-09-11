@@ -12,10 +12,11 @@ REPO = Path(__file__).resolve().parents[2]
 def candidate_matches(candidate, query):
     # Shared provenance paragraphs can mention siblings (e.g. a Dissidia pack's
     # Cloud filename). Only this candidate's identity and own paths scope a hit.
-    fields=['candidateId','id','name','label','character','nativeCharacter','nativeCharacterId','originalName','sourceLabel','aliases',
+    fields=['candidateId','id','name','nameZh','label','character','nativeCharacter','nativeCharacterId','originalName','sourceLabel','aliases',
             'heroIds','ownerEntryIds','unitId','sourceRigNode','variant','variantSlot',
             'nativeModel','model','modelPath','convertedPath','convertedFile',
-            'sourceModel','sourceModelPath','sourceBodyNodes','sourceWork','sourceGame']
+            'sourceModel','sourceModelPath','sourceBodyNodes','sourceWork','workZh','sourceGame',
+            'identityIds','originSourceIds','historicalAcceptanceId','historicalModelKey']
     return query in json.dumps([candidate.get(k) for k in fields],ensure_ascii=False).casefold()
 
 
@@ -40,7 +41,7 @@ def source_matches(source, query):
 def public_match_scope(sources, query):
     hero_ids, entry_ids = set(), set()
     for source in sources:
-        scoped = source.get('characters',[]) + source.get('modelCandidates',[])
+        scoped = source.get('characters',[]) + source.get('modelCandidates',[]) + source.get('componentCandidates',[])
         characters = [c for c in scoped if candidate_matches(c,query)]
         matches = characters or ([source] if source_matches(source, query) else [])
         for match in matches:
@@ -72,7 +73,7 @@ def candidate_records(sources, query):
     result=[]
     for source in sources:
         whole_source=query==source['id'].casefold()
-        for candidate in source.get('modelCandidates',[]):
+        for candidate in source.get('modelCandidates',[]) + source.get('componentCandidates',[]):
             if not query or whole_source or candidate_matches(candidate,query):
                 record = dict(candidate,sourceId=source['id'],sourceUrl=source['url'],
                     sourceLocalPath=source['localPath'],sourceReadiness=source['readiness'],
@@ -92,7 +93,7 @@ def main():
     parser.add_argument('--json', action='store_true', help='Return machine-readable records.')
     mode=parser.add_mutually_exclusive_group()
     mode.add_argument('--downloads', action='store_true', help='Search the owner download plan instead of hero models.')
-    mode.add_argument('--candidates', action='store_true', help='List acquired native model/variant/part candidates, including unmapped characters.')
+    mode.add_argument('--candidates', action='store_true', help='List acquired model, variant, part and accepted component candidates, including unmapped characters.')
     args = parser.parse_args()
     check = subprocess.run([sys.executable, str(Path(__file__).with_name('inventory.py')), '--check'], capture_output=True, text=True)
     if check.returncode:
@@ -106,7 +107,7 @@ def main():
                 scope='Acquired source candidates; includes raw and unaccepted assets. No runtime readiness inferred.'),ensure_ascii=False,indent=2))
         else:
             for c in records:
-                print(f"{c.get('candidateId',c.get('id',''))} | {c.get('label',c.get('character',''))} | {c.get('resourceRole','model-candidate')} | {c.get('status',c.get('readyStage',c['sourceReadiness']))} | GGD: {', '.join(c.get('heroIds',[])) or '未對應'}")
+                print(f"{c.get('candidateId',c.get('id',''))} | {c.get('label',c.get('nameZh',c.get('character',c.get('originalName',''))))} | {c.get('resourceRole','model-candidate')} | {c.get('status',c.get('readyStage',c.get('readiness',c['sourceReadiness'])))} | GGD: {', '.join(c.get('heroIds',[])) or '未對應'}")
                 print('  '+c['sourceId']+' | '+c['sourceLocalPath'])
                 current = c.get('currentConversionAttempt', {})
                 body = current.get('body', {})

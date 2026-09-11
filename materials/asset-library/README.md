@@ -53,7 +53,7 @@ python3 tools/hero-model-library/query_voice.py 莉娜
 python3 tools/hero-model-library/query_voice.py mba:Chara02 --files --json
 ```
 
-獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`fullHeroModel=false`、`heroIds=[]`，不能當成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
+獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原、尚未綁定真實英雄 ID 的舊模型版本。兩者均以 `fullHeroModel=false`、`heroIds=[]` 防止被誤認成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
 
 七名 LOL 音訊中央來源為 `lol-project-seven-ja-jp-16.18.8159717`。`voice-index.json.summary` 的 `sourceFileRelationshipRows` 是來源關係數，`uniqueLocalPaths` 是不同本機路徑數，`uniqueSha256Payloads` 是不同內容數；同路徑在不同來源的關係均保留，不能相加當成新取得音訊。依 `voice-files.jsonl.gz` 的 `path` 相對 `voice-index.json.localWorkspace` 取得絕對路徑，再核對每列 `sha256`。
 

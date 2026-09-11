@@ -45709,6 +45709,480 @@
         "fullGetVerified": true,
         "allMemberSha256Verified": true
       }
+    },
+    {
+      "id": "ggd-historical-model-recovery-7bc2fa3f8",
+      "target": "空渦龍、枯星龍、吉他吉他老伯、金色魔王／惡夢之王：Git 歷史模型復原",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://github.com/adms/GGD/commit/7bc2fa3f8",
+      "uploader": "GGD Git history／原整合工作流",
+      "format": "4 embedded-texture skinned animated GLB",
+      "accessStatus": "repository-history-object",
+      "acquisitionStatus": "downloaded-verified",
+      "countsAsNewAcquisition": false,
+      "readiness": "independent-components-current-contract-and-static-visual-accepted",
+      "purchaseDecision": "retain-historical-version-without-changing-current-default",
+      "defaultEligible": false,
+      "resourceRole": "component-supplement",
+      "localPath": "GGD-hero-model-options/content/assets/models/community",
+      "sourceGame": "Palworld；Magical Battle Arena Complete Form 1.60",
+      "platform": "PC；個別原始版本證據見候選",
+      "selectionClass": "historical-retained-candidate",
+      "discoveryChannel": "repository-history",
+      "assetKinds": [
+        "model",
+        "skeleton",
+        "texture",
+        "native-animation"
+      ],
+      "componentCandidates": [
+        {
+          "id": "historical-astralym-7bc2fa3f8",
+          "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+          "sourceClass": "integration-recovery",
+          "nameZh": "枯星龍",
+          "originalName": "Astralym",
+          "workZh": "幻獸帕魯 Palworld",
+          "sourceGame": "Palworld",
+          "platform": "PC（原始遊戲 build 未由歷史 GLB 固定）",
+          "variant": "歷史 GGD 256px 動作版",
+          "identityIds": [
+            "community:palworld-astralym"
+          ],
+          "originSourceIds": [
+            "opgg-palworld-astralym-2026081102"
+          ],
+          "historicalAcceptanceId": "acquired-astralym",
+          "historicalModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+          "resourceRole": "independent-historical-model-body-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "native-animation"
+          ],
+          "bytes": 3889188,
+          "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+          "gitPath": "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeDropdownRegistered": false,
+          "fullHeroModel": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 5,
+          "proceduralAnimationCount": 0,
+          "triangles": 23928,
+          "drawPrimitives": 3,
+          "skinCount": 1,
+          "jointCounts": [
+            145
+          ],
+          "textureCount": 8,
+          "selectedClips": {
+            "idle": "Idle",
+            "run": "Walk",
+            "attack": "FarSkill_Action",
+            "cast": "HaloBeam_Loop",
+            "hurt": "Damage",
+            "death": "Damage"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "clip": "Damage",
+              "reason": "Source contains no native Death clip; explicitly authorized shared hurt/death fallback, not generated animation"
+            },
+            {
+              "state": "run",
+              "clip": "Walk",
+              "reason": "Source provides Walk; no Run clip"
+            }
+          ],
+          "recoveredFromGitCommit": "7bc2fa3f8",
+          "historicalDeliveryReport": {
+            "gitPath": "docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "gitObject": "7bc2fa3f8:docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "sha256": "65c85ce0d31aafaa7aa0b080eee7640573952f8783c48ec81bd7711020c4c866",
+            "bytes": 39409
+          },
+          "currentReplacementSha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+          "currentReplacementGitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+          "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
+            "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
+            "bytes": 65157
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
+            "sha256": "690f693a49c02e3f270e3a695b7c5b135565ccf55edb044fd0b1dc19e5f225d4",
+            "bytes": 6787
+          },
+          "warnings": [
+            "Khronos validator retains 10 warnings; see validation evidence.",
+            "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+            "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+          ],
+          "limitations": [
+            "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+            "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+            "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+              "s3ArchiveMember": "restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+          "s3ArchiveMember": "restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+          "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+        },
+        {
+          "id": "historical-jetragon-7bc2fa3f8",
+          "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+          "sourceClass": "integration-recovery",
+          "nameZh": "空渦龍",
+          "originalName": "Jetragon",
+          "workZh": "幻獸帕魯 Palworld",
+          "sourceGame": "Palworld",
+          "platform": "PC（原始遊戲 build 未由歷史 GLB 固定）",
+          "variant": "歷史 GGD 256px 動作版",
+          "identityIds": [
+            "community:palworld-jetragon"
+          ],
+          "originSourceIds": [
+            "opgg-palworld-jetragon"
+          ],
+          "historicalAcceptanceId": "acquired-jetragon",
+          "historicalModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+          "resourceRole": "independent-historical-model-body-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "native-animation"
+          ],
+          "bytes": 3224424,
+          "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+          "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeDropdownRegistered": false,
+          "fullHeroModel": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 5,
+          "proceduralAnimationCount": 0,
+          "triangles": 8468,
+          "drawPrimitives": 3,
+          "skinCount": 1,
+          "jointCounts": [
+            75
+          ],
+          "textureCount": 7,
+          "selectedClips": {
+            "idle": "Idle",
+            "run": "Run",
+            "attack": "FarSkill_Action",
+            "cast": "JumpBeam_Loop",
+            "hurt": "Damage",
+            "death": "Damage"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "clip": "Damage",
+              "reason": "Source contains no native Death clip; explicitly authorized shared hurt/death fallback, not generated animation"
+            }
+          ],
+          "recoveredFromGitCommit": "7bc2fa3f8",
+          "historicalDeliveryReport": {
+            "gitPath": "docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "gitObject": "7bc2fa3f8:docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "sha256": "65c85ce0d31aafaa7aa0b080eee7640573952f8783c48ec81bd7711020c4c866",
+            "bytes": 39409
+          },
+          "currentReplacementSha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+          "currentReplacementGitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+          "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
+            "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
+            "bytes": 65157
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
+            "sha256": "690f693a49c02e3f270e3a695b7c5b135565ccf55edb044fd0b1dc19e5f225d4",
+            "bytes": 6787
+          },
+          "warnings": [
+            "Khronos validator retains 10 warnings; see validation evidence."
+          ],
+          "limitations": [
+            "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+            "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+            "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+              "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+          "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+          "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+        },
+        {
+          "id": "historical-kita-kita-7bc2fa3f8",
+          "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+          "sourceClass": "integration-recovery",
+          "nameZh": "吉他吉他老伯",
+          "originalName": "Kita Kita Oyaji",
+          "workZh": "魔法陣天使／魔法少女武鬥祭 MBA",
+          "sourceGame": "Magical Battle Arena Complete Form 1.60",
+          "platform": "PC",
+          "variant": "MBA Chara14 歷史 GGD 動作版",
+          "identityIds": [
+            "mba:Chara14"
+          ],
+          "originSourceIds": [
+            "mba:Chara14"
+          ],
+          "historicalAcceptanceId": "acquired-kita-kita",
+          "historicalModelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+          "resourceRole": "independent-historical-model-body-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "native-animation"
+          ],
+          "bytes": 373464,
+          "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+          "gitPath": "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeDropdownRegistered": false,
+          "fullHeroModel": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 6,
+          "proceduralAnimationCount": 0,
+          "triangles": 1202,
+          "drawPrimitives": 1,
+          "skinCount": 1,
+          "jointCounts": [
+            17
+          ],
+          "textureCount": 1,
+          "selectedClips": {
+            "idle": "wait",
+            "run": "F-Move",
+            "attack": "attack_01",
+            "cast": "sp01_01",
+            "hurt": "Damage-1",
+            "death": "D-Down"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "sourceClip": "D-Down",
+              "reason": "Existing native knockdown animation fallback; not a native death clip"
+            }
+          ],
+          "recoveredFromGitCommit": "7bc2fa3f8",
+          "historicalDeliveryReport": {
+            "gitPath": "docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "gitObject": "7bc2fa3f8:docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "sha256": "65c85ce0d31aafaa7aa0b080eee7640573952f8783c48ec81bd7711020c4c866",
+            "bytes": 39409
+          },
+          "currentReplacementSha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
+          "currentReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+          "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
+            "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
+            "bytes": 65157
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
+            "sha256": "690f693a49c02e3f270e3a695b7c5b135565ccf55edb044fd0b1dc19e5f225d4",
+            "bytes": 6787
+          },
+          "warnings": [
+            "Khronos validator retains 21 warnings; see validation evidence."
+          ],
+          "limitations": [
+            "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+            "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+            "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+              "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+          "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+          "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+        },
+        {
+          "id": "historical-lord-nightmares-7bc2fa3f8",
+          "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+          "sourceClass": "integration-recovery",
+          "nameZh": "金色魔王／惡夢之王",
+          "originalName": "Lord of Nightmares",
+          "workZh": "秀逗魔導士／魔法少女武鬥祭 MBA",
+          "sourceGame": "Magical Battle Arena Complete Form 1.60",
+          "platform": "PC",
+          "variant": "MBA Chara13 歷史 GGD 動作版",
+          "identityIds": [
+            "mba:Chara13"
+          ],
+          "originSourceIds": [
+            "mba:Chara13"
+          ],
+          "historicalAcceptanceId": "acquired-lord-nightmares",
+          "historicalModelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+          "resourceRole": "independent-historical-model-body-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "native-animation"
+          ],
+          "bytes": 695600,
+          "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+          "gitPath": "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeDropdownRegistered": false,
+          "fullHeroModel": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 6,
+          "proceduralAnimationCount": 0,
+          "triangles": 3274,
+          "drawPrimitives": 1,
+          "skinCount": 1,
+          "jointCounts": [
+            31
+          ],
+          "textureCount": 1,
+          "selectedClips": {
+            "idle": "wait",
+            "run": "F-Move",
+            "attack": "maryokudan_01",
+            "cast": "sp01_01",
+            "hurt": "Damage-1",
+            "death": "D-Down"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "sourceClip": "D-Down",
+              "reason": "Existing native knockdown animation fallback; not a native death clip"
+            }
+          ],
+          "recoveredFromGitCommit": "7bc2fa3f8",
+          "historicalDeliveryReport": {
+            "gitPath": "docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "gitObject": "7bc2fa3f8:docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+            "sha256": "65c85ce0d31aafaa7aa0b080eee7640573952f8783c48ec81bd7711020c4c866",
+            "bytes": 39409
+          },
+          "currentReplacementSha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
+          "currentReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+          "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
+            "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
+            "bytes": 65157
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
+            "sha256": "690f693a49c02e3f270e3a695b7c5b135565ccf55edb044fd0b1dc19e5f225d4",
+            "bytes": 6787
+          },
+          "warnings": [
+            "Khronos validator retains 21 warnings; see validation evidence."
+          ],
+          "limitations": [
+            "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+            "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+            "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+              "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+          "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+          "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+        }
+      ],
+      "publicationStatus": "s3-readback-verified",
+      "backendIntegration": {
+        "required": true,
+        "state": "component-library-registered-pending-real-hero-definition-and-dropdown-option",
+        "selectionVerified": false
+      },
+      "verification": "從 7bc2fa3f8 逐檔復原，4 檔實際 SHA-256 與檔名、歷史 Git blob、歷史交付表完全一致；現行 GGD 結構與預算檢查通過，保留全部原生動作。三視角 Babylon WebGL 靜態完整性已核對；未覆蓋現行替換版，未建立虛構英雄 ID，未宣稱後台可切換或已部署。",
+      "sourceClass": "integration-recovery",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "bytes": 14839286,
+        "sha256": "f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "s3ReadbackVerified": true
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
