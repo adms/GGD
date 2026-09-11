@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "0a3a01a2afab",
+  "hash": "ba791265412a",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -221,8 +221,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "7edc151e7fde",
-      "size": 3347
+      "hash": "70740be7f3a6",
+      "size": 3344
     },
     {
       "id": "dispel",
@@ -311,8 +311,8 @@
     {
       "id": "mana-tiers",
       "path": "config/mana-tiers.json",
-      "hash": "6d500097e499",
-      "size": 2110
+      "hash": "29b26f94dac9",
+      "size": 2606
     },
     {
       "id": "map-report",
@@ -461,7 +461,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "11de07da31da",
+      "hash": "78e31f81326a",
       "size": 918
     },
     {

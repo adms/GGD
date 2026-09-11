@@ -12,9 +12,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    224.0
+    150.0
   ],
-  "manaCostTier": "中",
+  "manaCostTier": "小",
   "effects": [
     {
       "kind": "spawnModelFx",

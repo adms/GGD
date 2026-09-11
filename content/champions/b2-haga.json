@@ -326,8 +326,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 8.2
@@ -342,8 +342,8 @@
     "as": 0,
     "healthRegen": 0.1168285714285714,
     "manaRegen": 0,
-    "maxHealth": 10.305102040816323,
-    "maxMana": 6.564285714285716,
+    "maxHealth": 60,
+    "maxMana": 35,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",

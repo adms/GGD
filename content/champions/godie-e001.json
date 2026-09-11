@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 61.0037,
+    "maxHealth": 60,
     "healthRegen": 0.3344,
-    "maxMana": 21.3546,
+    "maxMana": 20,
     "manaRegen": 0.0593,
     "ad": 3.0196,
     "armor": 0.665,
@@ -249,10 +249,10 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.beam",

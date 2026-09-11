@@ -8,9 +8,9 @@
   "origin": "鬥士",
   "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 35.000204081632646,
+    "maxHealth": 80,
     "healthRegen": 0.08789387755102042,
-    "maxMana": 26.357142857142858,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 4.289142857142858,
     "as": 0,
@@ -62,12 +62,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 3,
       "radius": 2.75,
       "rangeTier": "極小",
@@ -149,12 +149,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 6,
       "rangeTier": "中",
       "cooldownTier": "小",
@@ -287,11 +287,11 @@
         45.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
-      "manaCostTier": "大",
+      "manaCostTier": "中",
       "range": 4.5,
       "rangeTier": "小",
       "cooldownTier": "大",

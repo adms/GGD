@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 75.5224,
+    "maxHealth": 80,
     "healthRegen": 0.2017,
-    "maxMana": 47.7092,
+    "maxMana": 50,
     "manaRegen": 0.1753,
     "ad": 3.1078,
     "armor": 0.8601,
@@ -137,12 +137,7 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小",
-              "小"
-            ]
+            "damageTier": "極小"
           },
           "radius": 4.5,
           "radiusTier": "小",

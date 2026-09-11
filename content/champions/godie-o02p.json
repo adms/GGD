@@ -26,9 +26,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 61.4731,
+    "maxHealth": 60,
     "healthRegen": 0.2062,
-    "maxMana": 35.851,
+    "maxMana": 35,
     "manaRegen": 0.2033,
     "ad": 1.9592,
     "armor": 0.7048,
@@ -69,10 +69,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {

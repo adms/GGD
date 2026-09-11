@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 52,
+    "maxHealth": 80,
     "healthRegen": 0.13,
-    "maxMana": 18,
+    "maxMana": 50,
     "manaRegen": 0.06,
     "ad": 1.56,
     "armor": 0.7,
@@ -77,11 +77,11 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.ki.pulse",
@@ -168,10 +168,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -194,7 +194,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-o00x.r",
@@ -211,9 +211,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -271,7 +271,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "template": {
         "ref": "tpl-line-strike",
         "params": {

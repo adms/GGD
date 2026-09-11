@@ -112,12 +112,12 @@
       ],
       "id": "b2-orphen.q",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 4,
       "name": "我放出的光之催繳函",
       "range": 6,
@@ -183,11 +183,11 @@
       ],
       "id": "b2-orphen.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "maxRank": 3,
       "name": "債主不用敲門",
       "range": 6,
@@ -305,8 +305,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.6
@@ -321,8 +321,8 @@
     "as": 0,
     "healthRegen": 0.08789387755102042,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 0.9581632653061187,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",

@@ -8,9 +8,9 @@
   "origin": "軟輔",
   "modelKey": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 26.93612244897959,
+    "maxHealth": 60,
     "healthRegen": 0.07386938775510205,
-    "maxMana": 29.456938775510206,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.220326530612245,
     "as": 0,
@@ -62,12 +62,12 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 4.5,
       "rangeTier": "小",
       "cooldownTier": "小",

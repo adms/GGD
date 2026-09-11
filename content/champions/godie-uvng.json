@@ -26,9 +26,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 36.5265,
+    "maxHealth": 40,
     "healthRegen": 0.1289,
-    "maxMana": 37.5347,
+    "maxMana": 35,
     "manaRegen": 0.1341,
     "ad": 1.1878,
     "armor": 0.3801,
@@ -70,11 +70,11 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
@@ -129,11 +129,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "godie-fireblast-p3",
@@ -206,10 +206,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -294,7 +294,7 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "極小"
     },
     "R": {
       "id": "godie-uvng.r",

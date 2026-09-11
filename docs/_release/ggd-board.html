@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-11 23:26 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-12 01:59 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.44.1 · 資料截至 2026-09-11 23:26 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-11 23:26 (GMT+8)</h1><div class="meta"><span>帳本 <b>24</b> 份</span><span>點名票號 <b>431</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.44.1 · 資料截至 2026-09-12 01:59 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-12 01:59 (GMT+8)</h1><div class="meta"><span>帳本 <b>25</b> 份</span><span>點名票號 <b>435</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1569,6 +1569,15 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>19:56</td><td>我的目標是 153名全部上架</td><td>⏸ 未對票</td></tr>
 <tr><td>22:51</td><td>回來了</td><td>⏸ 未對票</td></tr>
 <tr><td>23:26</td><td>上架檢核 模型 每個音效 等都應該分開選項接受或拒絕 也有全部接受 全部拒絕 像你之前做過的那樣</td><td>⏸ 未對票</td></tr>
+</table></div>
+<p># 2026-09-12</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>01:11</td><td>① 最嚴重:平衡會改兩次 傷害 −20%、耗魔 −24% 現在發出去,玩家要適應一次新刻度。而 #1224(74 張卡共用模板屬性)一修,這兩張表會再算一次 —— 玩家在短時間內被重新校準兩次。 ⇒ 這不是技術問題,是要不要先修 #1224 再發的取捨。我建議先修。 =&gt; 如果沒感情的照公式算會怎樣? ② 41 隻現役英雄的貼圖超標,而這個會到玩家的顯卡 =&gt; 我不是有卡 script 在啟動的地方自動轉換256跟過高面數嗎? ③ 必須完整重建映像 =&gt; 那你作測試阿 ④ 一次發 160 個 commit,炸開來很難歸因 =&gt; 我跟你說過一個段落就要 BMPNDD 你要檢討根因為何忘了 這次也…</td><td>#1224 #1237 #1243 #1239</td></tr>
+<tr><td>01:59</td><td>吟唱時間 之前已經五級距過了 最多一秒 你是不是忘了 幾發技能那個之前是沒有加上AP倍數的算法 導致低估</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -8,9 +8,9 @@
   "origin": "狂戰",
   "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 38.2761224489796,
+    "maxHealth": 60,
     "healthRegen": 0.10039591836734693,
-    "maxMana": 17.385714285714286,
+    "maxMana": 20,
     "manaRegen": 0,
     "ad": 3.9845714285714284,
     "as": 0,
@@ -62,12 +62,12 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 4.5,
       "rangeTier": "小",
       "cooldownTier": "小",
@@ -119,12 +119,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 3,
       "radius": 2.75,
       "rangeTier": "極小",
@@ -206,12 +206,12 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "range": 4.5,
       "radius": 2.75,
       "rangeTier": "小",
@@ -290,11 +290,11 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
-      "manaCostTier": "大",
+      "manaCostTier": "中",
       "range": 8,
       "rangeTier": "大",
       "cooldownTier": "大",

@@ -8,9 +8,9 @@
   "origin": "坦克",
   "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 4.2,
     "ap": 0,
@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 96.1173,
+    "maxHealth": 100,
     "healthRegen": 0.2005,
-    "maxMana": 23.2934,
+    "maxMana": 20,
     "manaRegen": 0.0721,
     "ad": 1.9433,
     "armor": 1.7988,
@@ -471,8 +471,8 @@
           "amount": {
             "damageTierPerRank": [
               "小",
-              "中",
-              "大"
+              "小",
+              "中"
             ]
           },
           "radius": 6.0,

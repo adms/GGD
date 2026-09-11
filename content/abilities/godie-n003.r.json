@@ -14,11 +14,11 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    300.0,
+    300.0,
+    300.0
   ],
-  "manaCostTier": "大",
+  "manaCostTier": "中",
   "effects": [
     {
       "kind": "floatingText",

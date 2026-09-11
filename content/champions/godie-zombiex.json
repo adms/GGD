@@ -9,9 +9,9 @@
   "origin": "硬輔",
   "modelKey": "champ.godie-zombiex",
   "baseStats": {
-    "maxHealth": 104,
+    "maxHealth": 150,
     "healthRegen": 0.4,
-    "maxMana": 210,
+    "maxMana": 100,
     "manaRegen": 5.7,
     "ad": 14.4,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 100.0663,
+    "maxHealth": 100,
     "healthRegen": 0.1286,
-    "maxMana": 37.6367,
+    "maxMana": 35,
     "manaRegen": 0.0941,
     "ad": 1.8808,
     "armor": 1.1246,
@@ -69,10 +69,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "radius": 3,
       "effects": [],
@@ -171,10 +171,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "radius": 3.0,
       "effects": [],
@@ -221,9 +221,9 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0,
       "radius": 4.5,

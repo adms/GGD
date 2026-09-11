@@ -11,7 +11,7 @@
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 300,
+    "maxMana": 100,
     "manaRegen": 0.2,
     "ad": 6.0,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 75.9918,
+    "maxHealth": 80,
     "healthRegen": 0.2026,
-    "maxMana": 45.8214,
+    "maxMana": 50,
     "manaRegen": 0.1764,
     "ad": 3.0943,
     "armor": 0.857,
@@ -266,10 +266,10 @@
           "damageType": "magic",
           "amount": {
             "damageTierPerRank": [
+              "極小",
+              "極小",
               "小",
-              "小",
-              "中",
-              "中"
+              "小"
             ]
           },
           "length": 11,

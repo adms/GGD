@@ -9,9 +9,9 @@
   "modelKey": "imported.pika",
   "missileSpeed": 36.7,
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 6.0,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 36.5673,
+    "maxHealth": 40,
     "healthRegen": 0.1281,
-    "maxMana": 37.7898,
+    "maxMana": 35,
     "manaRegen": 0.1234,
     "ad": 1.1828,
     "armor": 0.3985,
@@ -70,11 +70,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -156,10 +156,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -186,7 +186,7 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "radiusTier": "大"
     },
     "R": {
@@ -204,9 +204,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0,
       "effects": [
@@ -238,7 +238,7 @@
       "radius": 6.0,
       "castTimeSec": 0.5,
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "極小",
       "radiusTier": "中"
     }
   },
