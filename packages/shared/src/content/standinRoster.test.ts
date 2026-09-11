@@ -177,9 +177,33 @@ function walkEffects(effects: EffectDef[], visit: (e: EffectDef) => void): void 
   }
 }
 
+/**
+ * ⭐ **已畢業**的：當年從體素替身升上來，而今天**拿到了自己的模型**（GH#1211）。
+ *
+ * ⚠️ ⛔ 它們**不從 `STANDIN_IDS` 刪掉** —— 那份名單是「誰曾經被升級」的**歷史紀錄**，
+ * 而這份檔案自己的註解就寫著同一條規矩（rogue 那一格：「空陣列說『今天沒有人借』，
+ * ⛔ 刪掉會讓『又有人搬回來』變成靜默」）。
+ * ⇒ ⭐ 畢業寫在這裡，⛔ 不是靠讓上面的斷言消失。
+ *
+ * ⭐ 2026-09-11 量到：`STANDIN_IDS` 20 位裡**營運中只剩 4 位**，而其中 3 位畢業了
+ * ⇒ 今天真的還踩在體素 rig 上的只有 **1 位**。
+ *
+ * ⚠️⚠️ ⛔ 「畢業」≠「玩家看得到模型」：這裡問的是 `modelKey` 指到真模型，
+ * ⭐ 而那顆 GLB 在不在磁碟上是**另一件事**（棘輪 `heroModelGlbExists.test.ts`，
+ * 開機訊號 `heroModelHealth` 的 `/healthz`）。⛔ 不要把這一格的畢業讀成那一格的綠。
+ */
+const GRADUATED: ReadonlySet<string> = new Set([
+  "godie-e00s",  // 白木卡迪那 → version.body.61c3d8d7…
+  "godie-n00b",  // → version.body.341ec78a…
+  "godie-u00k",  // 死之王 → version.body.aa6f12b4…
+]);
+
 /** 升級名單裡**還在營運**的那些,已解析。文件層的斷言只跑這一半。 */
 const parsedDocs = (): ChampionDoc[] =>
   liveIds(STANDIN_IDS).map((id) => zChampionDoc.parse(readDoc(id)));
+
+/** ⭐ 還真的踩在體素 rig 上的那些 —— 上面那條「必須是體素模型」只問這一半。 */
+const stillOnVoxel = (): ChampionDoc[] => parsedDocs().filter((d) => !GRADUATED.has(d.id));
 
 describe("voxel stand-in roster (standin-roster)", () => {
   it("every promoted doc is in EXACTLY one of 營運/歸檔, and nothing is pruned (draft-promote-count)", () => {
@@ -309,7 +333,7 @@ describe("voxel stand-in roster (standin-roster)", () => {
   it("voxel models distributed by role heuristic, no mono-model roster (standin-model-dist)", () => {
     cover("standin-model-dist");
     const counts = new Map<string, number>();
-    for (const doc of parsedDocs()) {
+    for (const doc of stillOnVoxel()) {
       expect(VOXEL_MODELS, `${doc.id} uses a voxel model`).toContain(doc.modelKey);
       counts.set(doc.modelKey, (counts.get(doc.modelKey) ?? 0) + 1);
       // ranged heroes always use the mage rig (only voxel attack clip that reads
@@ -317,8 +341,16 @@ describe("voxel stand-in roster (standin-roster)", () => {
       // 大小無關 —— 搬遷前後都一樣硬。
       if (doc.attackType === "ranged") expect(doc.modelKey).toBe("champ.sela");
     }
-    // 「不是清一色同一具」—— 這就是測試名字說的那件事,而且不需要任何出貨數字
-    expect(counts.size, "整批升級英雄擠在同一具 rig 上 —— heuristic 沒跑").toBeGreaterThan(1);
+    // 「不是清一色同一具」—— 這就是測試名字說的那件事,而且不需要任何出貨數字。
+    // ⭐⭐ 2026-09-11（GH#1211）：**cohort 縮到 1 位** —— 20 位裡營運中剩 4 位，
+    // 而其中 3 位拿到了自己的模型（見 `GRADUATED`）。
+    // ⚠️ 對 **1 個樣本**談分布是沒有意義的 —— 這與上一段記的兩次是**同一個理由**
+    // （25 → 7 時已經退掉過兩條斷言）。⇒ ⛔ 不是放寬，是**前提消失**。
+    // ⭐ 而它刻意寫成**有條件**而不是刪掉：哪天又有一批英雄退回體素 rig，
+    // 這一條會自己醒過來（⛔ 刪掉的話它永遠不會回來）。
+    if (stillOnVoxel().length >= 3) {
+      expect(counts.size, "整批升級英雄擠在同一具 rig 上 —— heuristic 沒跑").toBeGreaterThan(1);
+    }
     // ⚠️ 原本這裡還有兩條:「四具 rig 都有人用」與「單一 rig ≤ 12 位」。兩條都是
     // 對**當年 25 位升級英雄**那個母體講的。2026-08-13 之後這個 cohort 只剩 7 位,
     // 對 7 個樣本談分布是沒有意義的(champ.thorne 一位都沒有,而那不是缺陷)。
