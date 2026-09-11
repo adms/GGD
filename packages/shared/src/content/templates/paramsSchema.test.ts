@@ -55,7 +55,62 @@ const PROBE_COMPANION: Record<string, Record<string, unknown>> = {
   //   是 optional 且**刻意沒有預設**（出貨 9 支是純變身，清空 ⇒ 真的不發那個節點）。
   //   ⛔ 沒有這一列，這一格會被判成「表單收得下、展開器不讀」而其實它是活的。
   "tpl-transform.buffDurationSec": { modifiers: [{ stat: "ad", op: "flat", value: 50 }] },
+  // ⭐⭐ `body:"champion"` ⇒ `championId` 從 inert 變成**必填**（`self` 時由 sim 端填施法者）。
+  //
+  // ⛔ 在此之前 `tpl-summon-agent.body=champion` 住在 `KNOWN_BRANCH_GAPS` ——
+  // ⚠️ 而那張表是**缺口**清單，這一格卻不是缺口：它的註解自己逐字寫著
+  // 「（同 PROBE_COMPANION 那種前提）」⇒ ⭐ **它從一開始就歸錯表了**。
+  // 歸錯表的代價是那個分支**從來沒有被真的跑過** —— 只是被跳過。
+  //
+  // ⇒ ⭐ 兩個同型模板一起補前提（第零守則⑨：N 個同型不要變成 N 筆豁免），
+  //   而 `championId` 是 `docRef`，⭐ 填一個**真的存在**的英雄 id。
+  "tpl-summon-agent.body": { championId: "godie-e001" },
 };
+
+/**
+ * ⭐⭐ **按家族查的前提** —— ⛔ 不是按模板 id。
+ *
+ * ⚠️ 量到的形狀（2026-09-11）：每一個 `hero-template.<sha>` 都是某個 `tpl-*`
+ * 家族模板的**複製品**，⭐ 而 `PROBE_COMPANION` 上只寫了原版那一個 id
+ * ⇒ 複製品在同一格上重新開一個紅，而修法**逐字相同**。
+ *
+ * | 家族 | 原版 | 複製品 | 同一格 |
+ * |---|---|---|---|
+ * | `teleport` | `tpl-teleport` | `hero-template.0e807c24…` | `damageType`（`damage` 是 optional 無預設） |
+ * | `summon` | `tpl-summon-agent` | `hero-template.1112de91…` | `body=champion` 要 `championId` |
+ *
+ * ⇒ ⭐ 第零守則⑨：**N 個同型 ＝ 一個機制 ＋ 一張表**，⛔ 不是 N 筆各自會腐爛的豁免。
+ *   按家族查之後，**以後每一個新的複製品自動適用** ——
+ *   ⛔ 而按 id 寫的表，下一個複製品進來時會再紅一次。
+ */
+/**
+ * ⭐ 家族版的前提表 —— ⛔ **不是手寫的第二張表**（第〇·四守則：一個值一個住處）。
+ *
+ * 它**從 `PROBE_COMPANION` 推導**：把每一筆 `tpl-*.<格>` 的模板 id 換成它的 `family`。
+ * ⇒ ⭐ 同家族的複製品自動適用，⛔ 而且以後新增前提只要改**上面那一張表**。
+ */
+let _familyCompanion: Map<string, Record<string, unknown>> | null = null;
+function familyCompanion(): Map<string, Record<string, unknown>> {
+  if (_familyCompanion !== null) return _familyCompanion;
+  const famOf = new Map(allTemplates().map((t) => [t.id, t.family]));
+  const out = new Map<string, Record<string, unknown>>();
+  for (const [key, companion] of Object.entries(PROBE_COMPANION)) {
+    const dot = key.lastIndexOf(".");
+    const fam = famOf.get(key.slice(0, dot));
+    if (fam !== undefined) out.set(`${fam}.${key.slice(dot + 1)}`, companion);
+  }
+  _familyCompanion = out;
+  return out;
+}
+
+/** ⭐ 模板 id 的那一筆優先（更明確），⛔ 沒有才退回家族。 */
+function companionFor(t: TemplateDoc, param: string): Record<string, unknown> {
+  return (
+    PROBE_COMPANION[`${t.id}.${param}`] ??
+    familyCompanion().get(`${t.family}.${param}`) ??
+    {}
+  );
+}
 
 /**
  * ⭐⭐ GH#987 —— 一格的**擾動候選**：與現值不同、而且滿足這一格自己 schema 的值。
@@ -252,7 +307,7 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
           expect(slot.inert, `${key}: 釘死的 enum 不是 inert —— 展開器讀它`).toBeUndefined();
           continue;
         }
-        const base = { ...defaults, ...(PROBE_COMPANION[key] ?? {}) };
+        const base = { ...defaults, ...companionFor(t, name) };
         const baseline = JSON.stringify(expand(t, base));
         // ⭐ 探針值要**滿足這一格自己的 schema**,否則紅的是 Zod ⛔ 不是 expander。
         const probes = probesFor(slot, base[name]).filter(
@@ -342,10 +397,9 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
  *   ② 十份模板的 `path.values` 收窄成 `modelFxPathsFor(t)`（下面那條守衛逼的）
  *      ⇒ 18 個「模板根本沒有那條路徑要的格」分支不再開給表單。
  */
-const KNOWN_BRANCH_GAPS: ReadonlySet<string> = new Set([
-  // body=champion 要先填 championId（同 PROBE_COMPANION 那種前提）
-  "tpl-summon-agent.body=champion",
-]);
+/** ⭐ 今天是空的 —— `tpl-summon-agent.body=champion` 搬去 `PROBE_COMPANION` 了
+ *  （它是**前提**不是缺口，見那張表的註解）。⛔ 新的紅不要加進來，去修展開器／模板。 */
+const KNOWN_BRANCH_GAPS: ReadonlySet<string> = new Set<string>([]);
 
 describe("每一張 enabled 卡的展開結果要過**完整**的 ability schema（GH#1047）", () => {
   const templates = allTemplates();
@@ -401,7 +455,7 @@ describe("每一張 enabled 卡的展開結果要過**完整**的 ability schema
           if (probe !== undefined) variants.push([`${k}=optional`, probe]);
         }
         for (const [label, v] of variants) {
-          const params = { ...d, ...(PROBE_COMPANION[`${t.id}.${k}`] ?? {}), [k]: v };
+          const params = { ...d, ...companionFor(t, k), [k]: v };
           if (!paramsSchemaFor(t).safeParse(params).success) continue;
           probed++;
           const key = `${t.id}.${label}`;
