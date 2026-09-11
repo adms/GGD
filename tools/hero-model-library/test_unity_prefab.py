@@ -1,7 +1,10 @@
 """Coordinate conversion must preserve skinned positions under nontrivial poses."""
 import unittest
+from types import SimpleNamespace
 import numpy as np
-from convert_unity_prefab import REFLECTION, converted_trs, skin_arrays, skin_positions, trs_matrix
+from convert_unity_prefab import (REFLECTION, converted_trs, decode_compressed_skin,
+                                  has_materialized_morph_targets, skin_arrays, skin_positions,
+                                  trs_matrix)
 
 
 class PrefabSkin(unittest.TestCase):
@@ -34,6 +37,26 @@ class PrefabSkin(unittest.TestCase):
         np.testing.assert_array_equal(joints,[[4,2,0,0]])
         np.testing.assert_allclose(weights,[[.3,.7,0,0]])
         with self.assertRaises(ValueError): skin_arrays([[1,2]],None,1)
+
+    def test_empty_unity_shape_channel_is_not_treated_as_a_morph_target(self):
+        sentinel = SimpleNamespace(channels=[SimpleNamespace(name='V_None', frameCount=1)],
+                                   frames=[], data=b'')
+        self.assertFalse(has_materialized_morph_targets(sentinel))
+        self.assertTrue(has_materialized_morph_targets(SimpleNamespace(channels=[], frames=[object()], data=b'')))
+        self.assertTrue(has_materialized_morph_targets(SimpleNamespace(channels=[], frames=[], data=b'nonempty')))
+
+    def test_compressed_skin_restores_implicit_fourth_weight(self):
+        joints, weights = decode_compressed_skin(
+            [31, 26, 5, 17, 12, 0],
+            [4, 5, 6, 7, 8, 9, 10],
+            3,
+        )
+        np.testing.assert_array_equal(joints, [[4, 0, 0, 0], [5, 6, 0, 0], [7, 8, 9, 10]])
+        np.testing.assert_allclose(weights, [[1, 0, 0, 0], [26/31, 5/31, 0, 0], [17/31, 12/31, 0, 2/31]])
+
+    def test_compressed_skin_rejects_unconsumed_indices(self):
+        with self.assertRaisesRegex(ValueError, 'unconsumed'):
+            decode_compressed_skin([31], [4, 5], 1)
 
 
 if __name__=='__main__': unittest.main()

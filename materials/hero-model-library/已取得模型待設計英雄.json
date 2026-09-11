@@ -1,10 +1,10 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 732,
+  "sourceIdentityCount": 735,
   "counts": {
     "not-defined": 388,
     "definitions-incomplete": 11,
-    "identity-review": 247,
+    "identity-review": 250,
     "designed": 86,
     "source-unavailable": 0
   },
@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "0fe01ca5204b464220fdd35ad8389249d81e5ed795dcaed7fa50976422ded7b4"
+      "sha256": "180bb4b02031e0a20b9ae7080144a96d4e41bf6431e0d4f9d7a6c075f56c04d3"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "cfd0aa9f3bad1ac6bcc745e85bc3ca61fa3d24dec0ddba0a609de96af4983f54"
+      "sha256": "1f4fd2176da8f6e1b6d0f4c27365f8b6a773efa0f87d1bf56d7302b9061a2ddd"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -67,11 +67,11 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "92dfa33ce8c947662b326582bd56a7002433d8c17607e078d0cf618c13359539"
+      "sha256": "ea4564a250b91b536091be717d296f80b073a7c4a9d1a78a78b67a8959b038da"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "9ae8fdc51a55ed4e34260faa69584b27418a0fde54a2abfed57bec65e9a74e80"
+      "sha256": "9b7f70c89c728007649bd5dfd1d0a8c80596c45adf747eeaac03cd49c03d9300"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -92879,6 +92879,8 @@
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/extracted/package/Goblin Slayer Release 1.0.0/fighter/link/model/body/c04/model.numshb",
           "existsLocal": true,
           "bytes": 254306,
+          "sha256": "0188a9d2358575ab2cff31c24685ac5079d03b7087bd1ef1c5c140a3f8d1ad7a",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
           "magicHex": "484253534000000000000000",
           "id": "parallel-community-goblin-slayer-ssbu",
           "library": "community",
@@ -92887,6 +92889,8 @@
           "readiness": "reserved-pending-conversion",
           "converted": false,
           "identityReviewRequired": false,
+          "recordedBytes": 254306,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/extracted/package/Goblin Slayer Release 1.0.0/fighter/link/model/body/c04/model.numshb",
           "localSizeMatches": true
         }
@@ -92896,7 +92900,7 @@
       ],
       "designStatus": "designed",
       "evidence": [
-        "原包及本體網格／7 貼圖／6 UI 貼圖已取得，缺少模型描述引用的骨架、材質與動作。34 個音訊串流已完整解碼為 WAV，僅 2 組不同 WAV 內容；保留全部事件映射，不能當作 34 句不同語音。現有手動指定加工模型保持預設。"
+        "原包及本體網格／7 貼圖／6 UI 貼圖已取得，缺少模型描述引用的骨架、材質與動作。34 個音訊串流已完整解碼為 WAV，僅 2 組不同 WAV 內容；保留全部事件映射，不能當作 34 句不同語音。現有手動指定加工模型保持預設。 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。"
       ],
       "aliases": [],
       "identityAmbiguity": [],
@@ -103534,6 +103538,331 @@
       }
     },
     {
+      "id": "community-review-02-20260907",
+      "name": "八神庵",
+      "work": "THE KING OF FIGHTERS",
+      "sourceIds": [
+        "kof-xv-iori-whitemagesunny-raw",
+        "ou99:313646",
+        "thunderstore-iori"
+      ],
+      "modelCandidates": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/native-glb/body.glb",
+          "existsLocal": true,
+          "bytes": 1893348,
+          "sha256": "6796a253cc921ee85bcdfd5698faa9c0fa3ff4b438d010239fbb7099b578695e",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000e4e31c00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 2,
+            "primitives": 2,
+            "skins": 2,
+            "animationEntries": 0
+          },
+          "id": "thunderstore-iori-kof-static-skinned-v1:0",
+          "library": "community",
+          "sourceId": "thunderstore-iori",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
+          "readiness": "glb-structural-validated-pending-visual-review",
+          "converted": true,
+          "identityReviewRequired": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/native-glb/body.glb",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/bundles/Iori.IoriKOF.bundle",
+          "existsLocal": true,
+          "bytes": 957959,
+          "sha256": "63636b447c597a50395dc69dfc317cadbe099742b865f7f1fb22f70405e7e383",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "556e69747946530000000008",
+          "id": "thunderstore-iori-kof-static-skinned-v1:1",
+          "library": "community",
+          "sourceId": "thunderstore-iori",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
+          "readiness": "glb-structural-validated-pending-visual-review",
+          "converted": false,
+          "identityReviewRequired": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/bundles/Iori.IoriKOF.bundle",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+          "existsLocal": true,
+          "bytes": 1182776,
+          "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000380c1200",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 6
+          },
+          "id": "ou99.313646-standard-v2",
+          "library": "ou99",
+          "sourceId": "ou99:313646",
+          "sourceUrl": "https://www.ou99.com/thread-313646-1-1.html",
+          "readiness": "standardized-runtime-candidate",
+          "converted": true,
+          "identityReviewRequired": false,
+          "recordedBytes": 1182776,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
+          "existsLocal": true,
+          "bytes": 6416000,
+          "sha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "4b6179646172612046425820",
+          "id": "kof-xv-iori-whitemagesunny-raw",
+          "library": "community",
+          "sourceId": "kof-xv-iori-whitemagesunny-raw",
+          "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Iori-Yagami-1227665754",
+          "readiness": "pending-standardization",
+          "converted": false,
+          "identityReviewRequired": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-4603019311600330925.json",
+          "existsLocal": true,
+          "bytes": 1522398,
+          "magicHex": "7b226d5f4e616d65223a2022",
+          "modelProof": {
+            "format": "Unity-native-Mesh-typetree",
+            "vertices": 0,
+            "submeshes": 1,
+            "name": "bashen_Untitled_0011"
+          },
+          "id": "thunderstore-iori:0",
+          "library": "community",
+          "sourceId": "thunderstore-iori",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
+          "readiness": "converted-structural-validation-pending-visual-review",
+          "converted": false,
+          "identityReviewRequired": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-4603019311600330925.json",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-190420354469245342.json",
+          "existsLocal": true,
+          "bytes": 7447957,
+          "magicHex": "7b226d5f4e616d65223a2022",
+          "modelProof": {
+            "format": "Unity-native-Mesh-typetree",
+            "vertices": 0,
+            "submeshes": 1,
+            "name": "bashen_Untitled_001"
+          },
+          "id": "thunderstore-iori:1",
+          "library": "community",
+          "sourceId": "thunderstore-iori",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
+          "readiness": "converted-structural-validation-pending-visual-review",
+          "converted": false,
+          "identityReviewRequired": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-190420354469245342.json",
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [
+        "community-review-02-20260907"
+      ],
+      "designStatus": "designed",
+      "evidence": [
+        "Explicit acquired source candidate manifest",
+        "workflow-model-options candidate identity status: [('community-review-02-20260907', 'character-labelled-by-delivering-workflow')]",
+        "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。原始AnimationClip=0，未取得音效/語音/VFX。視覺驗收尚未完成，不能登錄後台下拉或自動預選。"
+      ],
+      "aliases": [
+        "八神庵 / Iori Yagami",
+        "Iori Yagami",
+        "八神庵",
+        "iori"
+      ],
+      "identityAmbiguity": [],
+      "hasNamedIdentityEvidence": true,
+      "borrowedByHeroIds": [],
+      "heroDefinitions": [
+        {
+          "heroId": "community-review-02-20260907",
+          "runtimeHeroId": "community-review-02-20260907",
+          "status": "designed",
+          "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-02-20260907.json",
+          "championSha256": "1e434ba3de0052763f793fba96675dd8c45d203eda098eb733214fea6d7e955a",
+          "name": "八神庵",
+          "skillCount": 6,
+          "skills": [
+            {
+              "slot": "Q",
+              "id": "community-review-02-20260907.q",
+              "name": "百八式・闇拂",
+              "standaloneExists": true,
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.q.json",
+              "sha256": "4280dc94f142fc96ca0842fdab9a1cf43b2b06c55dad450d3f2f09669b54808b",
+              "provenance": "editor-json",
+              "effectKinds": [
+                "delayed"
+              ]
+            },
+            {
+              "slot": "W",
+              "id": "community-review-02-20260907.w",
+              "name": "百式・鬼燒",
+              "standaloneExists": true,
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.w.json",
+              "sha256": "7034c6c09ea500c35331a9f352cf16ee068bd2ed656a4ea5f4a7a2246e77bfd3",
+              "provenance": "editor-json",
+              "effectKinds": [
+                "leap"
+              ]
+            },
+            {
+              "slot": "E",
+              "id": "community-review-02-20260907.e",
+              "name": "百二十七式・葵花",
+              "standaloneExists": true,
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.e.json",
+              "sha256": "5e87bac6f01bc720df8bede225bd4063f24b10b29f7b616159077522a727c3cd",
+              "provenance": "editor-json",
+              "effectKinds": [
+                "dot",
+                "leap"
+              ]
+            },
+            {
+              "slot": "R",
+              "id": "community-review-02-20260907.r",
+              "name": "禁千二百十一式・八稚女",
+              "standaloneExists": true,
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.r.json",
+              "sha256": "09042025ad22dde2d6dd4219ba3684c72c70d795b9e0a537c3bc0ebd484ee17c",
+              "provenance": "editor-json",
+              "effectKinds": [
+                "dot",
+                "leap"
+              ]
+            },
+            {
+              "slot": "EX",
+              "id": "community-review-02-20260907.ex",
+              "name": "裏三百十六式・豺華",
+              "standaloneExists": true,
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.ex.json",
+              "sha256": "02c0d5d67de2515ea49bad6682af004b1c9b129230392afe57416a0ad0789f39",
+              "provenance": "editor-json",
+              "effectKinds": [
+                "dot",
+                "leap"
+              ]
+            },
+            {
+              "slot": "PASSIVE",
+              "id": "community-review-02-20260907.passive",
+              "name": "〔八神之炎〕",
+              "standaloneExists": true,
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.passive.json",
+              "sha256": "3bad0b33c26de0db15e8f3565ada894b1a8699d3027fbe4e47455e7d81fa4013",
+              "provenance": "editor-json",
+              "effectKinds": []
+            }
+          ],
+          "missingStandaloneSkillIds": [],
+          "explicitPlaceholderEvidence": [],
+          "selectedModelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+          "inventoryDefault": {
+            "key": "ou99.313646-standard-v2",
+            "id": "ou99:313646",
+            "name": "八神庵",
+            "work": "THE KING OF FIGHTERS",
+            "tier": "w3x",
+            "library": "ou99",
+            "selectionClass": "community-mod",
+            "kind": "exact",
+            "ready": true,
+            "old": false,
+            "defaultEligible": true,
+            "asset": {
+              "modelKey": "ou99.313646-standard-v2",
+              "glbPath": "assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+              "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+              "s3Uri": null,
+              "gitPath": "content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+              "limitations": [
+                "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+              ]
+            }
+          },
+          "note": "Definition/file completeness only; no new mechanics or runtime E2E validation. Generic effect kinds or template references are not treated as placeholder evidence."
+        }
+      ],
+      "hasActualModelFiles": true,
+      "skillsCheckedAgainst": {
+        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
+        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
+        "nameSearchUniverseCount": 153,
+        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "currentHeroChecks": [
+        {
+          "heroId": "community-review-02-20260907",
+          "name": "八神庵",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "mechanics-defined",
+          "availability": "正式機白名單可選"
+        }
+      ],
+      "nameZh": "八神庵",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "八神庵",
+      "displayWork": "作品中文名稱待確認（THE KING OF FIGHTERS）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "模型內最多 6 個動作條目；版本分列，未相加",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "拳皇3D（XIV／XV；Maximum Impact 尚無已核實包）"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "thunderstore-iori-kof-static-skinned-v1:0",
+            "count": 0,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "ou99.313646-standard-v2",
+            "count": 6,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
       "id": "mai",
       "name": "不知火舞",
       "work": "The King of Fighters",
@@ -103762,290 +104091,6 @@
         "nativeMotionSources": [],
         "evidencePaths": [
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23/clip-analysis.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
-        ],
-        "classificationIsAcquisitionSnapshot": true
-      }
-    },
-    {
-      "id": "iori",
-      "name": "八神庵",
-      "work": "The King of Fighters",
-      "sourceIds": [
-        "kof-xv-iori-whitemagesunny-raw",
-        "ou99:313646",
-        "thunderstore-iori"
-      ],
-      "modelCandidates": [
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
-          "existsLocal": true,
-          "bytes": 6416000,
-          "sha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "4b6179646172612046425820",
-          "id": "kof-xv-iori-whitemagesunny-raw",
-          "library": "community",
-          "sourceId": "kof-xv-iori-whitemagesunny-raw",
-          "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Iori-Yagami-1227665754",
-          "readiness": "pending-standardization",
-          "converted": false,
-          "identityReviewRequired": false,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-4603019311600330925.json",
-          "existsLocal": true,
-          "bytes": 1522398,
-          "magicHex": "7b226d5f4e616d65223a2022",
-          "modelProof": {
-            "format": "Unity-native-Mesh-typetree",
-            "vertices": 0,
-            "submeshes": 1,
-            "name": "bashen_Untitled_0011"
-          },
-          "id": "thunderstore-iori:0",
-          "library": "community",
-          "sourceId": "thunderstore-iori",
-          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
-          "readiness": "pending-standardization",
-          "converted": false,
-          "identityReviewRequired": false,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-4603019311600330925.json",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-190420354469245342.json",
-          "existsLocal": true,
-          "bytes": 7447957,
-          "magicHex": "7b226d5f4e616d65223a2022",
-          "modelProof": {
-            "format": "Unity-native-Mesh-typetree",
-            "vertices": 0,
-            "submeshes": 1,
-            "name": "bashen_Untitled_001"
-          },
-          "id": "thunderstore-iori:1",
-          "library": "community",
-          "sourceId": "thunderstore-iori",
-          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
-          "readiness": "pending-standardization",
-          "converted": false,
-          "identityReviewRequired": false,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/unity-extracted/Iori.IoriKOF/-190420354469245342.json",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
-          "existsLocal": true,
-          "bytes": 1182776,
-          "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c544602000000380c1200",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 1,
-            "skins": 1,
-            "animationEntries": 6
-          },
-          "id": "ou99.313646-standard-v2",
-          "library": "ou99",
-          "sourceId": "ou99:313646",
-          "sourceUrl": "https://www.ou99.com/thread-313646-1-1.html",
-          "readiness": "standardized-runtime-candidate",
-          "converted": true,
-          "identityReviewRequired": false,
-          "recordedBytes": 1182776,
-          "sizeMatchesManifest": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
-          "localSizeMatches": true
-        }
-      ],
-      "mappedHeroIds": [
-        "community-review-02-20260907"
-      ],
-      "designStatus": "designed",
-      "evidence": [
-        "Explicit acquired source candidate manifest",
-        "已靜態擷取 Iori.IoriKOF bundle：2 Mesh、2 SkinnedMeshRenderer、105 Transform、2 貼圖、1 Avatar；0 AnimationClip。bundle 與模型名為 IoriKOF／bashen；待骨架 GLB 轉換與視覺驗收。",
-        "workflow-model-options candidate identity status: [('community-review-02-20260907', 'character-labelled-by-delivering-workflow')]"
-      ],
-      "aliases": [
-        "Iori Yagami",
-        "八神庵",
-        "community-review-02-20260907"
-      ],
-      "identityAmbiguity": [],
-      "hasNamedIdentityEvidence": true,
-      "heroDefinitions": [
-        {
-          "heroId": "community-review-02-20260907",
-          "runtimeHeroId": "community-review-02-20260907",
-          "status": "designed",
-          "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/community-review-02-20260907.json",
-          "championSha256": "1e434ba3de0052763f793fba96675dd8c45d203eda098eb733214fea6d7e955a",
-          "name": "八神庵",
-          "skillCount": 6,
-          "skills": [
-            {
-              "slot": "Q",
-              "id": "community-review-02-20260907.q",
-              "name": "百八式・闇拂",
-              "standaloneExists": true,
-              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.q.json",
-              "sha256": "4280dc94f142fc96ca0842fdab9a1cf43b2b06c55dad450d3f2f09669b54808b",
-              "provenance": "editor-json",
-              "effectKinds": [
-                "delayed"
-              ]
-            },
-            {
-              "slot": "W",
-              "id": "community-review-02-20260907.w",
-              "name": "百式・鬼燒",
-              "standaloneExists": true,
-              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.w.json",
-              "sha256": "7034c6c09ea500c35331a9f352cf16ee068bd2ed656a4ea5f4a7a2246e77bfd3",
-              "provenance": "editor-json",
-              "effectKinds": [
-                "leap"
-              ]
-            },
-            {
-              "slot": "E",
-              "id": "community-review-02-20260907.e",
-              "name": "百二十七式・葵花",
-              "standaloneExists": true,
-              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.e.json",
-              "sha256": "5e87bac6f01bc720df8bede225bd4063f24b10b29f7b616159077522a727c3cd",
-              "provenance": "editor-json",
-              "effectKinds": [
-                "dot",
-                "leap"
-              ]
-            },
-            {
-              "slot": "R",
-              "id": "community-review-02-20260907.r",
-              "name": "禁千二百十一式・八稚女",
-              "standaloneExists": true,
-              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.r.json",
-              "sha256": "09042025ad22dde2d6dd4219ba3684c72c70d795b9e0a537c3bc0ebd484ee17c",
-              "provenance": "editor-json",
-              "effectKinds": [
-                "dot",
-                "leap"
-              ]
-            },
-            {
-              "slot": "EX",
-              "id": "community-review-02-20260907.ex",
-              "name": "裏三百十六式・豺華",
-              "standaloneExists": true,
-              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.ex.json",
-              "sha256": "02c0d5d67de2515ea49bad6682af004b1c9b129230392afe57416a0ad0789f39",
-              "provenance": "editor-json",
-              "effectKinds": [
-                "dot",
-                "leap"
-              ]
-            },
-            {
-              "slot": "PASSIVE",
-              "id": "community-review-02-20260907.passive",
-              "name": "〔八神之炎〕",
-              "standaloneExists": true,
-              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-02-20260907.passive.json",
-              "sha256": "3bad0b33c26de0db15e8f3565ada894b1a8699d3027fbe4e47455e7d81fa4013",
-              "provenance": "editor-json",
-              "effectKinds": []
-            }
-          ],
-          "missingStandaloneSkillIds": [],
-          "explicitPlaceholderEvidence": [],
-          "selectedModelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
-          "inventoryDefault": {
-            "key": "ou99.313646-standard-v2",
-            "id": "ou99:313646",
-            "name": "八神庵",
-            "work": "THE KING OF FIGHTERS",
-            "tier": "w3x",
-            "library": "ou99",
-            "selectionClass": "community-mod",
-            "kind": "exact",
-            "ready": true,
-            "old": false,
-            "defaultEligible": true,
-            "asset": {
-              "modelKey": "ou99.313646-standard-v2",
-              "glbPath": "assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
-              "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
-              "s3Uri": null,
-              "gitPath": "content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
-              "limitations": [
-                "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
-              ]
-            }
-          },
-          "note": "Definition/file completeness only; no new mechanics or runtime E2E validation. Generic effect kinds or template references are not treated as placeholder evidence."
-        }
-      ],
-      "hasActualModelFiles": true,
-      "skillsCheckedAgainst": {
-        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
-        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
-        "nameSearchUniverseCount": 153,
-        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
-      },
-      "currentHeroChecks": [
-        {
-          "heroId": "community-review-02-20260907",
-          "name": "八神庵",
-          "implemented": true,
-          "mechanicsAuditStale": false,
-          "designComplete": null,
-          "missingRefs": [],
-          "status": "mechanics-defined",
-          "availability": "正式機白名單可選"
-        }
-      ],
-      "nameZh": "八神庵",
-      "workZh": "拳皇",
-      "displayName": "八神庵",
-      "displayWork": "拳皇（The King of Fighters）",
-      "nameTranslationBasis": "existing-source-label-or-alias",
-      "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
-      "localizationChangesIdentity": false,
-      "resources": {
-        "motion": "KOF XIV/XV原生0；OU99來源42段，現有GLB含6段；兩者不等於KOF原生動作。",
-        "vfx": "尚未建立角色專屬特效對應",
-        "sfx": "共 97 個音訊檔，音效／語音待分型",
-        "voice": "已入索引97音訊檔；語音/說話者/逐段語系未全聽審。97為voice來源標籤，未證語系。",
-        "voiceGroupIds": [
-          "kof-xv-iori-audio-float32-v1:XV_Iori-voice-label-unreviewed"
-        ],
-        "indexedAudioFileCount": 97,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [],
-        "sourceLabels": [
-          "拳皇3D（XIV／XV；Maximum Impact 尚無已核實包）"
-        ],
-        "voiceIndex": "materials/hero-model-library/voice-index.json",
-        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [
-          {
-            "candidateId": "ou99.313646-standard-v2",
-            "count": 6,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          }
-        ],
-        "nativeMotionSources": [],
-        "evidencePaths": [
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/kof-native-motion-round22/existing-ou99-iori-clips.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
@@ -113323,6 +113368,362 @@
           {
             "candidateId": "ou99.457280-standard-v2",
             "count": 6,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102:枯星龍 / Astralym",
+      "name": "枯星龍 / Astralym",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "opgg-palworld-astralym-2026081102"
+      ],
+      "modelCandidates": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+          "existsLocal": true,
+          "bytes": 12611064,
+          "sha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000f86dc000",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 58
+          },
+          "id": "opgg-palworld-astralym-2026081102.body",
+          "library": "community",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "readiness": "acquired-rigged-animated-source-pending-standardization",
+          "converted": true,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "designStatus": "identity-review",
+      "evidence": [
+        "Explicit acquired source candidate manifest"
+      ],
+      "aliases": [],
+      "identityAmbiguity": [
+        "Explicit acquired source candidate manifest"
+      ],
+      "heroDefinitions": [],
+      "hasActualModelFiles": true,
+      "skillsCheckedAgainst": {
+        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
+        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
+        "nameSearchUniverseCount": 153,
+        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "currentHeroChecks": [],
+      "nameZh": "枯星龍 / Astralym",
+      "workZh": "幻獸帕魯",
+      "displayName": "枯星龍 / Astralym",
+      "displayWork": "幻獸帕魯（Palworld）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "模型內最多 58 個動作條目；版本分列，未相加",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "幻獸帕魯：4 種已取得身份"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "opgg-palworld-astralym-2026081102.body",
+            "count": 58,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
+      "name": "空渦龍 / Jetragon",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "mediafire-shinypenguin-palworld-jetragon"
+      ],
+      "modelCandidates": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
+          "existsLocal": true,
+          "bytes": 8907804,
+          "sha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "4b6179646172612046425820",
+          "id": "mediafire-shinypenguin-palworld-jetragon.fbx",
+          "library": "community",
+          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "readiness": "acquired-rigged-source-pending-standardization",
+          "converted": false,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-assimp-v1/body.glb",
+          "existsLocal": true,
+          "bytes": 8941408,
+          "sha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000606f8800",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "mediafire-shinypenguin-palworld-jetragon.assimp-diagnostic-v1",
+          "library": "community",
+          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "readiness": "diagnostic-invalid-preserved",
+          "converted": true,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-assimp-v1/body.glb",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-reserve-v2/body.glb",
+          "existsLocal": true,
+          "bytes": 8941604,
+          "sha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c54460200000024708800",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "mediafire-shinypenguin-palworld-jetragon.reserve-v2",
+          "library": "community",
+          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
+          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
+          "readiness": "reserve-pending-ggd-standardization",
+          "converted": true,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-reserve-v2/body.glb",
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "designStatus": "identity-review",
+      "evidence": [
+        "Explicit acquired source candidate manifest"
+      ],
+      "aliases": [],
+      "identityAmbiguity": [
+        "Explicit acquired source candidate manifest"
+      ],
+      "heroDefinitions": [],
+      "hasActualModelFiles": true,
+      "skillsCheckedAgainst": {
+        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
+        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
+        "nameSearchUniverseCount": 153,
+        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "currentHeroChecks": [],
+      "nameZh": "空渦龍 / Jetragon",
+      "workZh": "幻獸帕魯",
+      "displayName": "空渦龍 / Jetragon",
+      "displayWork": "幻獸帕魯（Palworld）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "幻獸帕魯：4 種已取得身份"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "mediafire-shinypenguin-palworld-jetragon.assimp-diagnostic-v1",
+            "count": 0,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "mediafire-shinypenguin-palworld-jetragon.reserve-v2",
+            "count": 0,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "opgg-palworld-jetragon:空渦龍 / Jetragon",
+      "name": "空渦龍 / Jetragon",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "opgg-palworld-jetragon"
+      ],
+      "modelCandidates": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
+          "existsLocal": true,
+          "bytes": 2740172,
+          "sha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000cccf2900",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 29
+          },
+          "id": "opgg-palworld-jetragon.original-glb",
+          "library": "community",
+          "sourceId": "opgg-palworld-jetragon",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+          "readiness": "acquired-animated-source-pending-material-binding",
+          "converted": true,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
+          "existsLocal": true,
+          "bytes": 3783312,
+          "sha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c54460200000090ba3900",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 29
+          },
+          "id": "opgg-palworld-jetragon.decoded-v1",
+          "library": "community",
+          "sourceId": "opgg-palworld-jetragon",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+          "readiness": "diagnostic-decoded-pending-extension-declaration",
+          "converted": true,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+          "existsLocal": true,
+          "bytes": 3783400,
+          "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000e8ba3900",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 29
+          },
+          "id": "opgg-palworld-jetragon.decoded-declared-v2",
+          "library": "community",
+          "sourceId": "opgg-palworld-jetragon",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+          "readiness": "reserve-pending-material-binding-and-ggd-standardization",
+          "converted": true,
+          "identityReviewRequired": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "designStatus": "identity-review",
+      "evidence": [
+        "Explicit acquired source candidate manifest"
+      ],
+      "aliases": [],
+      "identityAmbiguity": [
+        "Explicit acquired source candidate manifest"
+      ],
+      "heroDefinitions": [],
+      "hasActualModelFiles": true,
+      "skillsCheckedAgainst": {
+        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
+        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
+        "nameSearchUniverseCount": 153,
+        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "currentHeroChecks": [],
+      "nameZh": "空渦龍 / Jetragon",
+      "workZh": "幻獸帕魯",
+      "displayName": "空渦龍 / Jetragon",
+      "displayWork": "幻獸帕魯（Palworld）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "模型內最多 29 個動作條目；版本分列，未相加",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "幻獸帕魯：4 種已取得身份"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "opgg-palworld-jetragon.original-glb",
+            "count": 29,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "opgg-palworld-jetragon.decoded-v1",
+            "count": 29,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "opgg-palworld-jetragon.decoded-declared-v2",
+            "count": 29,
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
@@ -185931,7 +186332,7 @@
     "locale": "zh-TW",
     "identityUnchanged": true,
     "pendingChineseNames": 0,
-    "pendingChineseWorks": 1
+    "pendingChineseWorks": 2
   },
   "resourceCoverage": {
     "schema": "ggd-design-backlog-resource-coverage@1",

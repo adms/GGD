@@ -57,9 +57,13 @@ def build():
         for old_id in row.get('supersedesAuditRows',[]):
             old=by_id.get(old_id)
             if old is None:continue
-            old_candidates={(c.get('id'),str(Path(c['path']).resolve())) for c in old['modelCandidates']}
-            new_candidates={(c.get('id'),str(Path(c['path']).resolve())) for c in row['modelCandidates']}
-            if not old_candidates.issubset(new_candidates):raise ValueError('Supplemental review must preserve every candidate of '+old_id)
+            # A supplemental audit can assign a more descriptive candidate ID to
+            # the same immutable local file. The actual absolute path is the
+            # preservation identity here; requiring a scanner-specific ID would
+            # reject an unchanged source revision solely for a label change.
+            old_candidates={str(Path(c['path']).resolve()) for c in old['modelCandidates']}
+            new_candidates={str(Path(c['path']).resolve()) for c in row['modelCandidates']}
+            if not old_candidates.issubset(new_candidates):raise ValueError('Supplemental review must preserve every candidate path of '+old_id)
             superseded.add(old_id)
     for audit in audits:
         for raw in audit['characters']:

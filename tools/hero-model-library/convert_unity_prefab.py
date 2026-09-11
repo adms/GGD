@@ -67,6 +67,76 @@ def skin_arrays(indices, weights, vertex_count):
     return np.pad(indices, padding), np.pad(weights, padding), implicit_rigid
 
 
+def decode_compressed_skin(weights_data, bone_indices_data, vertex_count):
+    """Restore Unity's packed 5-bit skin weights without trusting parser output.
+
+    Unity stores up to three explicit integer weights per vertex. They are
+    scaled by 31 and, when necessary, the fourth influence is implicit. The
+    matching fourth bone index is still present in the packed index stream.
+    """
+    joints = np.zeros((vertex_count, 4), dtype=np.int64)
+    weights = np.zeros((vertex_count, 4), dtype=float)
+    index_iter = iter(bone_indices_data)
+    vertex_index = 0
+    influence_index = 0
+    integer_sum = 0
+    try:
+        for integer_weight in weights_data:
+            if vertex_index >= vertex_count or not 0 <= integer_weight <= 31:
+                raise ValueError('Invalid compressed skin weight stream')
+            joints[vertex_index, influence_index] = next(index_iter)
+            weights[vertex_index, influence_index] = integer_weight / 31
+            influence_index += 1
+            integer_sum += integer_weight
+            if integer_sum > 31:
+                raise ValueError('Compressed skin weights exceed one')
+            if integer_sum == 31:
+                vertex_index += 1
+                influence_index = integer_sum = 0
+            elif influence_index == 3:
+                joints[vertex_index, influence_index] = next(index_iter)
+                weights[vertex_index, influence_index] = (31-integer_sum) / 31
+                vertex_index += 1
+                influence_index = integer_sum = 0
+    except StopIteration as error:
+        raise ValueError('Compressed skin index stream is truncated') from error
+    if vertex_index != vertex_count or influence_index or integer_sum:
+        raise ValueError('Compressed skin weight stream does not cover every vertex')
+    try:
+        next(index_iter)
+    except StopIteration:
+        return joints, weights
+    raise ValueError('Compressed skin index stream has unconsumed entries')
+
+
+def native_skin(mesh, handler, vertex_count):
+    """Use the source compressed skin stream when present, otherwise parser data."""
+    compressed = getattr(mesh, 'm_CompressedMesh', None)
+    packed_weights = getattr(compressed, 'm_Weights', None)
+    if packed_weights and packed_weights.m_NumItems > 0:
+        from UnityPy.helpers.MeshHelper import unpack_ints
+        return decode_compressed_skin(
+            unpack_ints(packed_weights),
+            unpack_ints(compressed.m_BoneIndices),
+            vertex_count,
+        )
+    return handler.m_BoneIndices, handler.m_BoneWeights
+
+
+def has_materialized_morph_targets(shapes):
+    """Distinguish Unity's empty V_None channel from stored blend-shape data.
+
+    Some Unity exports retain one channel entry even though they store neither
+    a frame nor any delta payload.  A channel name alone is therefore not
+    sufficient evidence that omitting morph targets would lose source data.
+    """
+    if not shapes:
+        return False
+    frames = getattr(shapes, 'frames', None) or []
+    data = getattr(shapes, 'data', None) or b''
+    return bool(frames or data)
+
+
 class GLB:
     def __init__(self):
         self.data = bytearray()
@@ -221,13 +291,14 @@ def convert(bundle, output, root_name, height=1.8):
             raise ValueError('Disabled renderer requires explicit variant selection')
         mesh_id = ref(tree['m_Mesh'])
         mesh = readers[mesh_id].read()
-        if mesh.m_Shapes and mesh.m_Shapes.channels:
+        if has_materialized_morph_targets(mesh.m_Shapes):
             raise ValueError('Morph targets must be converted before exporting this mesh')
         handler = MeshHandler(mesh)
         handler.process()
         pos = np.asarray(handler.m_Vertices, dtype=float)
         normals = np.asarray(handler.m_Normals, dtype=float)
-        joints, weights, implicit_rigid = skin_arrays(handler.m_BoneIndices, handler.m_BoneWeights, len(pos))
+        native_joints, native_weights = native_skin(mesh, handler, len(pos))
+        joints, weights, implicit_rigid = skin_arrays(native_joints, native_weights, len(pos))
         if not np.isfinite(weights).all() or (weights < 0).any() or (weights.sum(axis=1) <= 0).any():
             raise ValueError('Invalid native skin weights')
         weight_error = float(np.max(np.abs(weights.sum(axis=1)-1)))
