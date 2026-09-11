@@ -207,9 +207,9 @@
         60.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -222,7 +222,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 2.0
+                "coeff": 2
               }
             ],
             "damageTierPerRank": [
@@ -231,14 +231,14 @@
               "中"
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true
         },
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 8.0,
+          "radius": 8,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {
@@ -266,7 +266,7 @@
         "camKick": 0.446
       },
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "manaCostTier": "中",
       "castTimeSec": 1
     }
   },

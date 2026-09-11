@@ -288,9 +288,9 @@
         90.0
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [
         {
@@ -302,7 +302,7 @@
             8
           ],
           "intervalSec": 0.25,
-          "scatterRadius": 6.0,
+          "scatterRadius": 6,
           "firstAtCast": true,
           "stopOnCasterDeath": true,
           "effects": [
@@ -317,7 +317,7 @@
               "count": 1,
               "body": "self",
               "team": "owner",
-              "durationSec": 8.0,
+              "durationSec": 8,
               "damageMult": 0.25,
               "hpMult": 0.25,
               "onOwnerDeath": "despawn"
@@ -338,7 +338,7 @@
                   }
                 ]
               },
-              "radius": 3.0,
+              "radius": 3,
               "radiusTier": "極小",
               "includeOrigin": true
             },
@@ -358,7 +358,7 @@
                   }
                 ]
               },
-              "radius": 3.0,
+              "radius": 3,
               "radiusTier": "極小",
               "includeOrigin": true,
               "victimCondition": {
@@ -376,7 +376,7 @@
       "range": 0.0,
       "radiusTier": "中",
       "cooldownTier": "大",
-      "manaCostTier": "小"
+      "manaCostTier": "中"
     }
   },
   "skillOrder": [

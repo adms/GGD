@@ -10,10 +10,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -26,19 +26,20 @@
             "on": "onDamageTaken",
             "chance": 0.5,
             "target": "self",
-            "internalCooldown": 1.0,
+            "internalCooldown": 1,
             "effects": [
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 60.0
+                  "flat": 60
                 },
-                "duration": 1.0
+                "duration": 1
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "targetsEnemies": false
 }

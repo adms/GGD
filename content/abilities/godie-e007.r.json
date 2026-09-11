@@ -14,11 +14,11 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    150.0,
-    150.0,
-    150.0
+    300.0,
+    300.0,
+    300.0
   ],
-  "manaCostTier": "小",
+  "manaCostTier": "中",
   "range": 0.0,
   "radiusTier": "中",
   "targetsEnemies": true,
@@ -30,7 +30,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 2.0
+            "coeff": 2
           }
         ],
         "damageTierPerRank": [
@@ -39,14 +39,14 @@
           "中"
         ]
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true
     },
     {
       "kind": "dispel",
       "shape": "circle",
-      "radius": 8.0,
+      "radius": 8,
       "radiusTier": "大",
       "side": "enemies",
       "pools": {
@@ -66,7 +66,7 @@
     "shakeStyle": "omni",
     "sparkKind": "magic",
     "flashColor": [
-      1.0,
+      1,
       0.92,
       0.6
     ],

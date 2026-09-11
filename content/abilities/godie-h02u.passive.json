@@ -10,10 +10,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -32,7 +32,7 @@
           {
             "on": "onDamageTaken",
             "target": "event",
-            "internalCooldown": 3.0,
+            "internalCooldown": 3,
             "effects": [
               {
                 "kind": "applyBuff",
@@ -45,12 +45,13 @@
                 ],
                 "dispellable": true,
                 "polarity": "debuff",
-                "duration": 3.0
+                "duration": 3
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "targetsEnemies": false
 }
