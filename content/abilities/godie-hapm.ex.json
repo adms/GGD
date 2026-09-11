@@ -11,7 +11,7 @@
     60.0
   ],
   "manaCost": [
-    448.0
+    300.0
   ],
   "range": 6.0,
   "targetsEnemies": true,
@@ -71,7 +71,7 @@
   "icon": "assets/icons/abilities/godie-hapm.ex.webp",
   "vfxKey": "fx.prim.fire.explosion-lg",
   "cooldownTier": "極大",
-  "manaCostTier": "大",
+  "manaCostTier": "中",
   "rangeTier": "中",
   "castTimeSec": 1
 }

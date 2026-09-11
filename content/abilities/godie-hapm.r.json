@@ -13,9 +13,9 @@
     120.0
   ],
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    300.0,
+    300.0,
+    300.0
   ],
   "range": 0.0,
   "radiusTier": "中",
@@ -68,6 +68,6 @@
   "icon": "assets/icons/abilities/godie-hapm.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "cooldownTier": "極大",
-  "manaCostTier": "大",
+  "manaCostTier": "中",
   "castTimeSec": 0.067
 }
