@@ -298,6 +298,14 @@ const PARALLEL = [
   //    ⭐ 2026-09-09 它抓到一個真的 `no-undef`（合併 PR 1118 時帶進來的),
   //    而我在本機宣告「全綠」之後被 CI 打回。~秒級,⛔ 不動地板（地板是 vitest ~220s）。
   { name: "lint", cmd: ["pnpm", ["lint"]] },
+  // 🗿 GH#1230 —— owner 2026-09-11 逐字:「請你更新 script **每次上架跟啟動自動化處理**」。
+  //    ⭐ 「每次上架」的住處就是這裡（部署前的閘）。
+  //    ⚠️ ⛔ 刻意**不是**直接跑 `model:intake:check`:641 顆裡 285 顆有存量問題
+  //    ⇒ 硬擋會讓每一次部署都紅 ⇒ 下一個人把它關掉 ⇒ ⭐ 等於沒有閘
+  //    （本 repo 已記錄過:一條永遠不會綠的閘與一個不存在的閘沒有差別）。
+  //    ⇒ 包成**棘輪**:顆數變多才紅,變少要求收緊基準線,持平印警示行放行。
+  //    突變驗過:基準線 284(變多)⇒exit 1 · 286(變少)⇒exit 1 · 285(持平)⇒exit 0。
+  { name: "model-intake", cmd: ["bash", ["scripts/model-intake-or-warn.sh"]] },
   // 🚦 GH#1122 —— 這兩支也在 CI 的必跑清單裡,⛔ 而 `ship:check` 從來沒跑過。
   //    ⭐ 是新的閘 `shipCheckCoversCI.test.ts` **當場抓到的**,⛔ 不是我想起來的。
   //    兩支都是秒級的靜態檢查 ⇒ ⛔ 不動地板。
@@ -403,7 +411,15 @@ mkdirSync(LOGDIR, { recursive: true });
  *   `GGD_SHIP_WATCHDOG_FLOOR_MS=300000` 退回舊地板 · `GGD_SHIP_WATCHDOG_MULT=0` 退回「只看地板」
  *   `GGD_SHIP_WATCHDOG_OFF=1` 整隻關掉（⚠️ 那就回到「等 11 分鐘」的那一版）
  */
-const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 10 * 60 * 1000);
+// ⭐ 2026-09-11（GH#1211）**10 → 15 分鐘**。⛔ 不是「保險起見調大一點」——
+//   帳本 `docs/_data/deploy-timings.json` 裡最慢的一支**健康** vitest 是 **755 秒**，
+//   ⇒ 10 分鐘的地板**低於它** ⇒ ⭐ 看門狗會在一次正常的跑上開火，
+//     而 exit 124 與「閘真的紅了」⛔ 分不出來（08-28 連續四次誤殺就是這個形狀：假紅蓋掉真紅）。
+//   ⚠️ 15 分鐘留 19% 餘裕，⛔ 而仍然低於 `scripts/watchdog.sh` 的 LIMIT_MIN=20 ——
+//     ⭐ 那是刻意的：**單支**先被收掉（看得到是哪一支），⛔ 不是整跑被砍。
+//   ⭐ 守衛 `ops/shipScriptWatchdog.test.ts` 從**帳本**推導這條線，⛔ 不抄字面值 ⇒
+//     suite 再長大它會再紅一次，而那正是它該做的事。
+const WATCHDOG_FLOOR_MS = Number(process.env.GGD_SHIP_WATCHDOG_FLOOR_MS ?? 15 * 60 * 1000);
 const WATCHDOG_MULT = Number(process.env.GGD_SHIP_WATCHDOG_MULT ?? 3);
 // 送出 SIGKILL（或看到 exit）之後,還等多久 `close` —— 等不到就自己收尾。
 const WATCHDOG_GRACE_MS = Number(process.env.GGD_SHIP_WATCHDOG_GRACE_MS ?? 20000);

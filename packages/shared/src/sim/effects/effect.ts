@@ -284,6 +284,8 @@ import type { DamageAreaVariant } from "./variants/damageArea";
 import type { DamageLineVariant } from "./variants/damageLine";
 import type { GrantAttributeVariant } from "./variants/grantAttribute";
 import type { DispelVariant } from "./variants/dispel";
+import type { SpawnThresholdsVariant } from "./variants/spawnThresholds";
+import type { SpawnObstacleVariant } from "./variants/spawnObstacle";
 import type { ShieldBreakVariant } from "./variants/shieldBreak";
 import type { DevourVariant } from "./variants/devour";
 import type { ModifyCooldownVariant } from "./variants/modifyCooldown";
@@ -346,6 +348,8 @@ type EffectVariant =
   | DamageLineVariant
   | GrantAttributeVariant
   | DispelVariant
+  | SpawnThresholdsVariant
+  | SpawnObstacleVariant
   | ShieldBreakVariant
   | DevourVariant
   | ModifyCooldownVariant

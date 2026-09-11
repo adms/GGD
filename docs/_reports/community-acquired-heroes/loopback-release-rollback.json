@@ -1,0 +1,73 @@
+{
+  "schema": "ggd-community-hero-release-check@1",
+  "startedAt": "2026-09-10T21:53:14.321Z",
+  "status": "passed",
+  "scope": "Loopback Editor project draft, importer ZIP build/inspection, immutable submission, admin publication and single-hero restore isolation. No production or visual acceptance.",
+  "origin": "http://127.0.0.1:8108/api/v1",
+  "inputDirectory": "/private/tmp/ggd-acquired-release-projects-20260911a/projects",
+  "selectedIds": [
+    "acquired-dio",
+    "acquired-saya"
+  ],
+  "rollbackId": "acquired-dio",
+  "receipts": [
+    {
+      "id": "acquired-dio",
+      "name": "DIO",
+      "file": "acquired-dio.json",
+      "author": "model-author",
+      "status": "published",
+      "projectDigest": "sha256:ddd37ac10e87733a362deb4743d75629b3626832d97aa15f72127c71bad38d20",
+      "sourceArchiveSha256": "sha256:a113f7bcb2926ef0607eaaa0ca4a8b1c686e182582d41317e1fc26f401856d02",
+      "packageArchiveSha256": "sha256:75a15fccee4fee90ba33627da1f3c31d8b64b302fc4a7275faddc83fb3c2e86e",
+      "packageDigest": "sha256:e2774b6bad131e0e435cb7c97c87e294bc1fcdfd021ed1fc23df9c22c1145ab1",
+      "snapshotDigest": "sha256:a782afa6c9904f73308b3e3f512563ee5090c184ed750b04b28149c6c1a771f8",
+      "submissionId": "hero-9d9b1883bcce0eb77f9cef26eee5301873a6810d0c522fbd94cea128ad6",
+      "publishedVersion": "sha256:e2774b6bad131e0e435cb7c97c87e294bc1fcdfd021ed1fc23df9c22c1145ab1",
+      "publicationRevision": 3,
+      "historyCount": 1,
+      "draftRevision": 1,
+      "slots": 6
+    },
+    {
+      "id": "acquired-saya",
+      "name": "沙耶",
+      "file": "acquired-saya.json",
+      "author": "model-author",
+      "status": "published",
+      "projectDigest": "sha256:aa3bec02cd0e1ec77305c231c5eb421435b6c3dcb3b758b811a04cc25db7b1ef",
+      "sourceArchiveSha256": "sha256:d8d6ba88ba222e4b6ce13476d4faf0409510f04a24b97f97b764acc899f7839a",
+      "packageArchiveSha256": "sha256:c1efadafe7bd7c6fd2047914c011e94f84ee7ee21e2bf2bb4816d6509cd65aca",
+      "packageDigest": "sha256:1bf32815ffaaa5109069f86b75ab2adcbbf2425eb2346486ca72703b6eda9ec8",
+      "snapshotDigest": "sha256:d27d266e54bcfc25a4dbf70a4d4aed60e044e844e50df9e49f318e4b78d0aad4",
+      "submissionId": "hero-57085717509a24cc33b5c717d093cf3e82d13ee0a47bb3baae9b6f1461a",
+      "publishedVersion": "sha256:1bf32815ffaaa5109069f86b75ab2adcbbf2425eb2346486ca72703b6eda9ec8",
+      "publicationRevision": 3,
+      "historyCount": 1,
+      "draftRevision": 1,
+      "slots": 6
+    }
+  ],
+  "target": {
+    "gameRevision": "054cfb60e39de8792f7126bcc09c81fd1046a334",
+    "contentVersion": "cv_a980d5d5f521",
+    "migrationFingerprint": "adb0cce4c6f9",
+    "processorFingerprint": "7fa275f09510"
+  },
+  "rollback": {
+    "status": "passed",
+    "workId": "acquired-dio",
+    "v1SubmissionId": "hero-9d9b1883bcce0eb77f9cef26eee5301873a6810d0c522fbd94cea128ad6",
+    "v2SubmissionId": "hero-93916df92d82c9b38ee84fe82e4c6d4c567bd249f739565dd382c9573c7",
+    "restoredSubmissionId": "hero-9d9b1883bcce0eb77f9cef26eee5301873a6810d0c522fbd94cea128ad6",
+    "draftRevision": 2,
+    "publicationRevision": 8,
+    "historyCount": 3,
+    "unaffectedWorkId": "acquired-saya",
+    "unaffectedSubmissionId": "hero-57085717509a24cc33b5c717d093cf3e82d13ee0a47bb3baae9b6f1461a"
+  },
+  "publishedListCount": 2,
+  "passed": 2,
+  "failed": 0,
+  "finishedAt": "2026-09-10T21:54:30.849Z"
+}

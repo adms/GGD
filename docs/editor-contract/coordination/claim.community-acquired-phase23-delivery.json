@@ -1,0 +1,182 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-acquired-phase23-delivery",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "bd6c5e5df9d501b1ea65b0f9c86369dd85f40d3f",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "126 名英雄同服務 loopback 全流程與 Phase 2／3 Editor 交付，請 Main 審查並接正式發布",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "34 名角色由同一 Editor factory 建立獨立專案，204 槽全部編譯，所有模型、動作、VFX、SFX 與文件相依可解析；34 份完整 ZIP 均通過來源逐位元組讀回與既有 inspection，沒有失敗、阻擋或重複六槽結構警告。這是目前 Main 內容目錄的本機建包證據，不冒充正式平台投稿或發布。",
+      "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
+      "repro": {
+        "command": "pnpm exec tsx tools/editor-acceptance/acquired-heroes-check.ts --mode strict",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_reports/community-acquired-heroes/acceptance-summary.json",
+        "packages/shared/src/content/heroForge/communityAcquired.ts",
+        "tools/editor-acceptance/acquired-heroes-check.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "8 名來源模型缺少可用六動作時使用 Owner 已核准且明示的替代預設；26 名使用已取得本尊或轉換模型。每名選項與 modelKey 獨立，舊角沿用 canonical ID，切換一名不會覆寫另一名或刪除歷史版本。",
+      "commit": "7bc2fa3f8415063e195ebe2ecd6f806c6ce9ca2f",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/hero/AcquiredHeroExamples.test.tsx",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/hero/AcquiredHeroExamples.tsx",
+        "packages/shared/src/content/heroForge/communityAcquired.ts",
+        "docs/_reports/community-acquired-heroes/model-delivery-summary.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Phase 3 本機 AI 桌面路徑已接入固定模型 manifest、續傳下載、磁碟與 SHA-256 驗證、IPC、硬體政策、無洩漏 llama runner、216 案例品質 gate 與封裝 gate。runtime 與模型權重未塞入 Git；E8 未通過時推論保持關閉，AI-off 的英雄建立與建包仍可使用。",
+      "commit": "b1725e6dbba681045736c7280abde32058f055c6",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor-desktop exec vitest run src/ai src/desktopContract.test.ts src/packagingGate.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor-desktop/src/ai",
+        "apps/editor-desktop/resources/ai/release-gate-manifest.json",
+        "apps/editor-desktop/src/packagingGate.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Hero Forge 冷啟動時 Babylon BRDF LUT 沒有被 render loop 推進，會停在 PBR 尚未就緒；現在等待迴圈推進既有 Scene render，保留原逾時與像素檢查。Editor 型別及 shader registration 回歸通過；實際 loopback Hero Forge 畫面不再顯示該阻擋。",
+      "commit": "7bc2fa3f8415063e195ebe2ecd6f806c6ce9ca2f",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/vfx-forge/stageShaderRegistration.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/vfx-forge/VfxForgeStage.ts",
+        "apps/editor/src/vfx-forge/stageShaderRegistration.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Phase 2 桌面程式具備 macOS universal 與 Windows 安裝包、草稿保存後更新、摘要及平台發布者驗證；目前 stable feed 仍關閉且未配置 URL，正式簽章、Team ID 與 Windows publisher 不能由本分支偽造。",
+      "commit": "dd8f37bc1ae3e55424db15c4b11c6c258089d92b",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor-desktop exec vitest run src/updates.test.ts src/desktopContract.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor-desktop/resources/updates/stable.json",
+        "apps/editor-desktop/src/updates.ts",
+        "docs/editor-contract/社群創造後台審查英雄自動鑄造計畫 Phase2.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Skill Forge 功能目錄現有 60 份文件／56 個主題，涵蓋第二批已出貨的 consumeStatus、evasion、spendHealth、pull、chance 與 8 個被動事件；視覺證據維持原本 47 份文件／43 個主題，沒有把功能覆蓋誤變成額外錄影範圍。技能形狀閘對 907 支技能／58 份模板已通過。",
+      "commit": "242500f229d5a877b4a5bdf27ef22f4631f1abcd",
+      "repro": {
+        "command": "pnpm shapes:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/forge/skillAcceptanceCatalog.ts",
+        "tools/skill-templates/shape_axes.json",
+        "docs/editor-contract/ggd-skill-shapes.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Editor 完整測試在目前分支為 91 個檔案通過，595 項通過、1 項依既定條件跳過。技能施放判定測試改由當下 abilities index 對帳 907 份技能；已成正式內容的阿薩謝爾測試夾具使用獨立 projectId，不再嘗試佔用官方身分。",
+      "commit": "e0b4008c9bdf959fd4d6a605c3d6cfcadfef7c69",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor test",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor/src/vfx-forge/actionAnimationPrinciples.test.ts",
+        "apps/editor/src/hero/HeroSlotEditor.test.tsx",
+        "apps/editor/src/hero/catalog.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "模型反向閘已逐項分類目前模型幾何；本分支另以可重建工具修復 4 顆社群 GLB 的背景平面、補齊 2 份 model doc 的隱藏幾何宣告，並納入兩批 LoL 成品模型。現在掃描 362 顆 GLB、24 處已宣告殘留幾何與 8 處已宣告離地分身，結果 0 問題；clip degradation 與 presentation receipt 也已由正式生成器刷新。",
+      "commit": "d75e98402a4ebff2ed15d074e8181c709613e981",
+      "repro": {
+        "command": "pnpm models:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "content/assets-offdisk.json",
+        "docs/editor-contract/ggd-clip-degradation.json",
+        "docs/editor-contract/ggd-presentation-receipt.json",
+        "tools/editor-acceptance/repair-community-model-backdrops.py"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "GitHub Linux CI 曾因沒有 macOS say 聲音，把兩份已提交名言索引誤判為 stale；名言 freshness check 現在沿用已提交產物記錄且仍在允許清單內的聲音版本，正式重建仍會依 macOS 實機聲音解析。沒有 say 的 PATH 回歸與一般 freshness check 均通過，因此來源內容漂移仍會紅，主機聲音庫差異不再製造假失敗。",
+      "commit": "188a88a9c62813cad68fef9c6395152948272b06",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/ops/champQuotesGeneratorRuns.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "tools/tts-gen/src/build-champ-quotes.mjs",
+        "packages/shared/src/ops/champQuotesGeneratorRuns.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "目前 target 的真實 loopback 發布證據為 126 名：81 名既有 canonical ID、34 名新 ID 與 LoL 第二批 11 名已在同一套 current Platform 服務經 Editor 專案、完整 ZIP、服務 inspection、不可變投稿、管理員審查、發布與公開名單精確核對；結果 0 缺少、0 多出、0 失敗。canonical 接管只存在於伺服器授權的獨立簽章路徑；普通作者仍不能占用正式 ID。武藤遊戲、空渦龍、賽特各自發布 v2 後恢復 v1，八神庵、愛麗絲、阿璃的 published pointer 與 revision 均未變。這些是 loopback 收據，不冒充正式站部署。",
+      "commit": "bc55271d1ce31d38d37956c53d460b4170e55b6f",
+      "repro": {
+        "command": "node tools/editor-acceptance/check-community-release-receipts.mjs",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_reports/community-acquired-heroes/loopback-release-acquired-34-current.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-canonical-81of81.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-lol-batch2-11-current.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-current-service-126of126.json",
+        "tools/editor-acceptance/community-hero-release-check.mts",
+        "apps/platform/internal/submissions/hero_works.go",
+        "packages/shared/src/content/import/heroPackage.ts"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "P3-05 若要從可選且關閉提升為可發布推論，仍需要 macOS Metal 與 Windows CUDA 的核准 E8 收據及 runtime artifact；目前 manifest 明確維持 LOCAL_AI_E8_GATE_PENDING。這項 AI 發行條件不阻擋 AI-off 的 Editor、建包、投稿與審查路徑。",
+      "commit": "880382da016a0040aa8098a81b445d519ff4c977",
+      "repro": {
+        "command": "pnpm ai:release:metadata",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/editor-desktop/resources/ai/release-gate-manifest.json",
+        "apps/editor-desktop/resources/ai/runtime-manifest.json",
+        "docs/全自動鑄造編輯器進度temp202609091000.md",
+        "docs/editor-contract/社群英雄126名上架狀態.md"
+      ]
+    }
+  ],
+  "asks": [
+    "請 Main 審查並合併 #1216；#1221 canonical 接管與 Draft PR #1193 的 LoL 第二批語意提交都已包含在本分支，不需另外拼接兩張 PR。合併部署後請依正式 target 重建並發布，以正式服務名單確認 126 名及單英雄 rollback。",
+    "LoL 第二批的現有機制簡化版已通過 11／11 本機發布；14 槽來源核心仍由 #1187、#1189、#1190、#1191、#1197 追蹤，不應把 MVP 流程收據寫成完整原作還原。",
+    "P2-05 若要正式發行，請由持有者配置簽章、Team ID、Windows publisher 與 stable feed。P3-05 若要啟用推論，請提供兩個核准硬體 target 的 E8 收據與 runtime artifact；在此之前保留 released=false。",
+    "#1206、#1212、#1214 與 #1221 已在本分支完成。#1205 的模型 ZIP 阻擋已有 34／34 收據；canonical 接管已有 81／81 收據；合併後的同服務總收據為 126／126。正式服務發布狀態仍依 Main 合併與部署分開記錄。"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-11",
+      "text": "請你幫忙"
+    }
+  ]
+}

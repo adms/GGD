@@ -7,13 +7,13 @@
   "role": "marksman",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "champ.sela",
+  "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
     "maxMana": 100,
     "manaRegen": 0.1,
-    "ad": 18.0,
+    "ad": 18,
     "ap": 0,
     "armor": 2,
     "mr": 28,
@@ -132,10 +132,10 @@
         45.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        56.0,
+        56.0,
+        56.0,
+        56.0
       ],
       "range": 3.0,
       "targetsEnemies": true,
@@ -208,10 +208,10 @@
         60.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -298,9 +298,9 @@
         120.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "range": 0.0,
       "radiusTier": "極小",
@@ -385,5 +385,37 @@
     "暗殺",
     "追擊"
   ],
-  "pitch": "高速貼住指定目標，以密集攻擊迅速解決敵人，再尋找下一個獵物。"
+  "pitch": "高速貼住指定目標，以密集攻擊迅速解決敵人，再尋找下一個獵物。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T18:21:49.449Z",
+      "source": {
+        "kind": "previous",
+        "character": "揍敵客大家長 - 揍敵客桀諾",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
+      "label": "ou99 揍敵客桀諾（本尊／相似造型）",
+      "sourceModelKey": "ou99.472410",
+      "modelSha256": "bafb417633778f878b7e81ae7f5d5c27a139d35e16b136d7cfaef63725782b2a",
+      "binarySha256": "dc848d012c84362c811f570a9a58b3cb2371264bb5bb8b2ccc66ec4ab6f36e74",
+      "registeredAt": "2026-09-10T18:21:49.498Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "揍敵客桀諾",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-472410-1-1.html"
+      }
+    }
+  ]
 }

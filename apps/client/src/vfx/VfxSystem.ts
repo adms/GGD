@@ -46,6 +46,7 @@ import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
  * the oldest on screen).
  */
 import { additiveGain, beginAdditiveFrame } from "./additiveBudget";
+import { AbilityTerrainFx, type ObstacleSpawnPayload, type ThresholdSpawnPayload } from "./AbilityTerrainFx";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
@@ -688,6 +689,8 @@ export class VfxSystem {
   /** doc id → its impact-first playback shape (derived once per doc) */
   private readonly shaped = new Map<string, VfxDoc>();
   /** 濺血 / impact-debris layer (task #39) — pooled, allocates on first hit */
+  /** ⭐ GH#1223／#1209 —— 技能生的碰撞地形（柱子／牆段）在畫面上的那一半。 */
+  readonly abilityTerrain: AbilityTerrainFx;
   private readonly blood: BloodFx;
   /** muzzle flash / landing dust / block clink (task #39) */
   private readonly feedback: CombatFeedbackFx;
@@ -811,6 +814,9 @@ export class VfxSystem {
     const textureOpts = ctx.resolveTextureUrl
       ? { resolveTextureUrl: ctx.resolveTextureUrl }
       : {};
+    // ⭐ GH#1223／#1209 —— 技能生出來的**會擋路的東西**畫在哪（柱子／牆段）。
+    //   ⛔ 沒有它，玩家會撞到看不見的東西（碰撞是真的，畫面是空的）。
+    this.abilityTerrain = new AbilityTerrainFx(scene);
     this.blood = new BloodFx(scene, textureOpts);
     this.moveTrail = new MoveTrailFx(scene, undefined, textureOpts);
     // ⭐ GH#551/#549 —— 三個「演出」層。⚠️ `modelFx` 只在**兩個內容接縫都在**時才建：
@@ -2663,6 +2669,36 @@ export class VfxSystem {
       // case」—— 有。⛔ 「那個 case 的第一個 `if` 會不會立刻 break」不是任何
       // 斷言的反面。⇒ 根治是**兩邊 import 同一個型別**（`ModelFxSpawnEvent`
       // 住 `sim/effects/spawnModelFx.ts`），打錯字從此是 tsc 的紅。
+      // ⭐⭐ GH#1223／#1209 —— 技能生出來的**會擋路的東西**。
+      //
+      // ⚠️ 這五個 case 之前**一個都不存在** ⇒ 碰撞是真的（走不過去、衝刺會停），
+      //   而畫面上什麼都沒有 —— ⭐ 那比沒有這個機制更糟（玩家撞到看不見的牆）。
+      // ⭐ 幾何一律用 sim 發出來的那一份（半徑／端點），⛔ 不在這裡另挑一個
+      //   「看起來比較好」的數字 —— 那會讓畫面與碰撞**說兩句話**。
+      case "obstacleSpawn": {
+        const p = ev.data as unknown as ObstacleSpawnPayload;
+        this.abilityTerrain.spawnObstacle(p);
+        break;
+      }
+      case "obstacleShatter":
+      case "obstacleEnd": {
+        this.abilityTerrain.remove((ev.data as unknown as { id: number }).id);
+        break;
+      }
+      case "thresholdSpawn": {
+        const p = ev.data as unknown as ThresholdSpawnPayload;
+        this.abilityTerrain.spawnThresholds(p);
+        break;
+      }
+      case "thresholdBreak": {
+        const p = ev.data as unknown as { id: number; index: number };
+        this.abilityTerrain.breakSegment(p.id, p.index);
+        break;
+      }
+      case "thresholdEnd": {
+        this.abilityTerrain.remove((ev.data as unknown as { id: number }).id);
+        break;
+      }
       case "modelFxSpawn": {
         if (!this.modelFx) break;
         const p = ev.data as unknown as ModelFxSpawnEvent;
@@ -3187,6 +3223,7 @@ export class VfxSystem {
     this.telegraphLayer.dispose();
     for (const s of this.sparks) s.dispose();
     for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
+    this.abilityTerrain.dispose();
     this.blood.dispose();
     this.feedback.dispose();
     this.status.dispose();

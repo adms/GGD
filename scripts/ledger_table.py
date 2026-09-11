@@ -275,14 +275,37 @@ def _set_cell(ln: str, idx: int, value: str) -> str:
     return ln[:lo + 1] + f" {value} " + ln[hi:]
 
 
-def _find_row(lines: list[str], text: str, when: str) -> int | None:
-    """正規表格裡**同一則訊息**（文字相同且時間相近）已存在的那一列（索引）；沒有回 None。"""
+def _find_row(
+    lines: list[str],
+    text: str,
+    when: str,
+    authoritative_rows: list[tuple[str, str]] | None = None,
+) -> int | None:
+    """找已存在的同一則訊息；transcript 明示為兩則時保留兩個時間。
+
+    `ruling.sh` 的執行時間可能比訊息時間晚幾分鐘，所以一般插入仍用模糊時間窗。
+    但 message-ledger 同時握有當天完整 transcript：若候選列的時間本身也對應
+    另一則 transcript 訊息，就不能把本次訊息併進去。先找精確時間，也避免較早的
+    模糊候選遮住後面的精確列。
+    """
+    candidates: list[tuple[int, list[str]]] = []
     for i, ln in enumerate(lines):
         if not ln.startswith("|"):
             continue
         c = cells(ln)
-        if len(c) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]) and _same_message(c[1], c[0], text, when):
+        if len(c) < 3 or not re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
+            continue
+        if c[0] == when and _same_text(c[1], text):
             return i
+        if _same_message(c[1], c[0], text, when):
+            candidates.append((i, c))
+    for i, c in candidates:
+        if authoritative_rows and any(
+            c[0] == row_when and _same_text(c[1], row_text)
+            for row_when, row_text in authoritative_rows
+        ):
+            continue
+        return i
     return None
 
 
@@ -292,7 +315,12 @@ def _raw_cell(ln: str, idx: int) -> str:
     return ln[p[idx] + 1:p[idx + 1]].strip() if len(p) > idx + 1 else ""
 
 
-def insert(path: Path, rows: list[tuple[str, str, str]], prefer_incoming_text: bool = False) -> int:
+def insert(
+    path: Path,
+    rows: list[tuple[str, str, str]],
+    prefer_incoming_text: bool = False,
+    authoritative_rows: list[tuple[str, str]] | None = None,
+) -> int:
     """把 rows 插進正規表格**最後一列之後**。回傳實際**新增**的列數。
 
     ⭐ GH#1028：同一句話已經在表裡 ⇒ ⛔ 不新增第二列，只把票號**併**進既有那一列
@@ -307,7 +335,7 @@ def insert(path: Path, rows: list[tuple[str, str, str]], prefer_incoming_text: b
     lines = ensure(path)
     added = 0
     for when, text, tk in rows:
-        hit = _find_row(lines, text, when)
+        hit = _find_row(lines, text, when, authoritative_rows)
         if hit is not None:
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))

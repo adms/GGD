@@ -11,5 +11,8 @@
     "cast": "Spell",
     "hurt": "Stand Ready",
     "death": "Death"
-  }
+  },
+  "hiddenPrimitives": [
+    2
+  ]
 }

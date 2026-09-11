@@ -1,7 +1,7 @@
 {
  "championId": "community-review-12-20260907",
  "reference": {
-  "sha256": "85bd516ed93f3c29d6a268e1688a70f5482fe32d4a674da5a9fa3493acf2264f",
+  "sha256": "7b24f8b4b5cfdd083cbc7b2a4dc1b969116d315e58b0d009cd068b1b6d958909",
   "seconds": 0,
   "sampleRate": 24000,
   "source": "voice-reference-pipeline/approved/processed/community-review-12-20260907.wav",
@@ -10,8 +10,8 @@
   "licence": "",
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
-  "addedAt": 1789043775567,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-12-20260907.wav"
+  "addedAt": 1789048363644,
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/community-review-12-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -34,23 +34,61 @@
      "error": null
     }
    ],
-   "text": "体は剣で出来ている",
+   "text": "（原檔）VOICE_1991",
    "lang": "ja",
-   "kana": "カラダワ ツルギデ デキテイル",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1991.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
     "stub": false,
-    "bytes": 28047,
-    "seconds": 1.68,
+    "bytes": 92831,
+    "seconds": 5.737347,
     "lufs": null,
-    "hash": "5e21174b68c4aa7f14782ddcc224056712c72b86ed05af22686d819116c866ad",
-    "maxDb": -2.2,
-    "at": 1789043879911
+    "hash": "39fc33174d45f6b3a47f1b0981746973e2e43f0757b773c9a6844957a5451e97",
+    "at": 1789067124334
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_1971",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1971.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 92413,
+    "seconds": 5.714014,
+    "lufs": null,
+    "hash": "7fe69779ca24fdfb478d2a1860def39c18206eff1e20a44df09260c740839e0e",
+    "at": 1789067124407
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）VOICE_1992",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1992.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 91995,
+    "seconds": 5.67,
+    "lufs": null,
+    "hash": "c1b219fe5c1761c899e627c0305dd4596df5cc4f54d06b6f5612f959a2ee60af",
+    "at": 1789067124482
    },
    "lastError": null
   },
@@ -79,6 +117,14 @@
      "seconds": 1.16,
      "at": 1789043880029,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1789060160739,
+     "error": null
     }
    ],
    "text": "干將・莫邪！",
@@ -88,16 +134,16 @@
    "origin": "ability-name:community-review-12-20260907.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 19688,
-    "seconds": 1.16,
+    "bytes": 23031,
+    "seconds": 1.36,
     "lufs": null,
-    "hash": "e1c17174c67f93fc5dc27ea10583f73a8cdfe37d8684cb674411024cc17993f5",
-    "maxDb": -3.8,
-    "at": 1789043880029
+    "hash": "f074656569254978c40a6c473a3396115f3e5be5d4eb7e2a9f75d95e0b5c3643",
+    "maxDb": -2.3,
+    "at": 1789060160739
    },
    "lastError": null
   },
@@ -126,6 +172,14 @@
      "seconds": 1.28,
      "at": 1789043880147,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.96,
+     "at": 1789060160886,
+     "error": null
     }
    ],
    "text": "投影・飛劍！",
@@ -135,16 +189,16 @@
    "origin": "ability-name:community-review-12-20260907.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 21359,
-    "seconds": 1.28,
+    "bytes": 16344,
+    "seconds": 0.96,
     "lufs": null,
-    "hash": "379585f93eece28c1d5a338b65fd04ef73f27fc10b4e47113f9a6b760f72aeca",
-    "maxDb": -4.5,
-    "at": 1789043880147
+    "hash": "08117ad1ce89d3053cbf3c820e806623f00d762dd6f2a1b35707adae1f542b0a",
+    "maxDb": -2,
+    "at": 1789060160886
    },
    "lastError": null
   },
@@ -173,6 +227,14 @@
      "seconds": 0.88,
      "at": 1789043880265,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1789060161041,
+     "error": null
     }
    ],
    "text": "強化・踏步！",
@@ -182,16 +244,16 @@
    "origin": "ability-name:community-review-12-20260907.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 15090,
-    "seconds": 0.88,
+    "bytes": 15926,
+    "seconds": 0.92,
     "lufs": null,
-    "hash": "648392b502ebb61c71db461f2cb0efd06e5aeecd7c52a59ff9b89e9980b82da3",
-    "maxDb": -3.2,
-    "at": 1789043880265
+    "hash": "2370427045c248bad3cb0382c4f8ea70ce4d1344564086cde5ea77061dd3841d",
+    "maxDb": -2,
+    "at": 1789060161042
    },
    "lastError": null
   },
@@ -220,6 +282,14 @@
      "seconds": 1.2,
      "at": 1789043880385,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.48,
+     "at": 1789060161177,
+     "error": null
     }
    ],
    "text": "無限劍製！",
@@ -229,16 +299,16 @@
    "origin": "ability-name:community-review-12-20260907.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20106,
-    "seconds": 1.2,
+    "bytes": 24703,
+    "seconds": 1.48,
     "lufs": null,
-    "hash": "2e2a5b4606a54b54551fece8f7f33983b5e51096b83802bc907ee0b4f658e9fb",
-    "maxDb": -3.8,
-    "at": 1789043880385
+    "hash": "edbf9f5c3d9fa5fb93782432019cd22706eb87f5cf974f8f94baadfd2c0c19b3",
+    "maxDb": -3.5,
+    "at": 1789060161177
    },
    "lastError": null
   },
@@ -267,6 +337,14 @@
      "seconds": 0.96,
      "at": 1789043880503,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1789054966440,
+     "error": null
     }
    ],
    "text": "投影・迎擊！",
@@ -276,16 +354,16 @@
    "origin": "ability-name:community-review-12-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 16344,
-    "seconds": 0.96,
+    "bytes": 18434,
+    "seconds": 1.08,
     "lufs": null,
-    "hash": "44215aba5d1cd7ef2dde0e0b35e7845b1f9c30be6ae297882d59ba4ac636cf4a",
-    "maxDb": -4.8,
-    "at": 1789043880503
+    "hash": "4179a8698bdb5c62f85b639c2b5996671069300ad16dbfb1387e737eeb849345",
+    "maxDb": -4,
+    "at": 1789054966440
    },
    "lastError": null
   },
@@ -306,6 +384,63 @@
      "seconds": 1.08,
      "at": 1789043880625,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789054966617,
+     "error": null
+    }
+   ],
+   "text": "（原檔）VOICE_1208",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1208.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 33062,
+    "seconds": 1.991995,
+    "lufs": null,
+    "hash": "d668fe660bf6c4b934edeb6b5cebfe55e6f7473de14ccb61999bb8070f6567d0",
+    "at": 1789067124552
+   },
+   "lastError": null
+  },
+  "victory.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_1169",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1169.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 30555,
+    "seconds": 1.831338,
+    "lufs": null,
+    "hash": "d968b2144a358511633b5bd1b6c10fbb38260ca332f29ae2298e0354585fab96",
+    "at": 1789067124620
+   },
+   "lastError": null
+  },
+  "victory.3": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1789067425474,
+     "error": null
     }
    ],
    "text": "投影、開始",
@@ -315,16 +450,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 1,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 18434,
     "seconds": 1.08,
     "lufs": null,
-    "hash": "09125a083353e77ebb76ca8420f8deb46e9aab6281c6a262ff4a6b04c094f844",
-    "maxDb": -3.9,
-    "at": 1789043880625
+    "hash": "7df2d69cdd476019e5f7d846924cbde25767d529000e88fc39f751422371d2b0",
+    "maxDb": -1.9,
+    "at": 1789067425474
    },
    "lastError": null
   },
@@ -355,23 +490,61 @@
      "error": null
     }
    ],
-   "text": "ぐ……っ……",
+   "text": "（原檔）-3207472971116271881_Death",
    "lang": "ja",
-   "kana": "グッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-3207472971116271881_Death.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 38078,
+    "seconds": 2.301791,
     "lufs": null,
-    "hash": "5b2d68fef1de0c7e755a5556d681acb3de3dc08a73f1b3ab96110a6991b1711f",
-    "maxDb": -1.9,
-    "at": 1789043880746
+    "hash": "ef9b92b5f8511bf3d3c109a1eb64bd7b8eaef897be214afea23f285706f00284",
+    "at": 1789048363009
+   },
+   "lastError": null
+  },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_1191",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1191.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 82799,
+    "seconds": 5.107347,
+    "lufs": null,
+    "hash": "77a0e1b07ce6ea1ce685b5b37eab444e4fea8c96f57a288d7bd4f2654e4a88f2",
+    "at": 1789067124690
+   },
+   "lastError": null
+  },
+  "defeat.3": {
+   "takes": [],
+   "text": "（原檔）VOICE_1975",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1975.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 77784,
+    "seconds": 4.794014,
+    "lufs": null,
+    "hash": "876d41b9d2363ec3a1f1e6992c8251c338a052aaf0da18b3fbd5394811532754",
+    "at": 1789067124763
    },
    "lastError": null
   },
@@ -402,23 +575,61 @@
      "error": null
     }
    ],
-   "text": "うっ！",
+   "text": "（原檔）-1164302356178838169_Pain4",
    "lang": "ja",
-   "kana": "ウッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-1164302356178838169_Pain4.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 11328,
+    "seconds": 0.645079,
     "lufs": null,
-    "hash": "e424bc2febb6ab5e08e17aed57001e8bfcbc494e49d08f7faca652e8c0f5fb8e",
-    "maxDb": -3,
-    "at": 1789043880864
+    "hash": "17c40ac05f5235a25c759e86d9a4e13df38ea46189b8125297066f5e8cbc39b9",
+    "at": 1789048363078
+   },
+   "lastError": null
+  },
+  "hurt.2": {
+   "takes": [],
+   "text": "（原檔）-2574605753401942291_Pain3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-2574605753401942291_Pain3.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.397982,
+    "lufs": null,
+    "hash": "d9653b2dcff4cef5a25d50fb513446d34bc7571ec371b0b758877fa7d30dbaa2",
+    "at": 1789067124837
+   },
+   "lastError": null
+  },
+  "hurt.3": {
+   "takes": [],
+   "text": "（原檔）VOICE_1215",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1215.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 11746,
+    "seconds": 0.664671,
+    "lufs": null,
+    "hash": "a8bbd61aff90cbaa6df626de443855729d4b239151eff2697a5ab1ce6bf6a9b2",
+    "at": 1789067124913
    },
    "lastError": null
   },
@@ -449,23 +660,61 @@
      "error": null
     }
    ],
-   "text": "ぐああっ……！",
+   "text": "（原檔）-4741925241798207979_Pain1",
    "lang": "ja",
-   "kana": "グアアッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-4741925241798207979_Pain1.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
     "stub": false,
-    "bytes": 8821,
-    "seconds": 0.48,
+    "bytes": 10493,
+    "seconds": 0.579977,
     "lufs": null,
-    "hash": "18b924d3d881fd861c067276a70c7dac2c13b1bb8585dab42f9594c65dbf2bbe",
-    "maxDb": -4,
-    "at": 1789043880983
+    "hash": "d2b9277f03b60ddb151bedb4990a573abf33569d8bc53e003d0c24c1d2818a07",
+    "at": 1789048363223
+   },
+   "lastError": null
+  },
+  "hurt-heavy.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_1146",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1146.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.023333,
+    "lufs": null,
+    "hash": "b8febab285bf457ebd405a18cc38faad227f3d7277c31f97e318b4337b68705b",
+    "at": 1789067124987
+   },
+   "lastError": null
+  },
+  "hurt-heavy.3": {
+   "takes": [],
+   "text": "（原檔）VOICE_1977",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1977.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.936667,
+    "lufs": null,
+    "hash": "22f1e33320226ead8a0c9b445aeaa8e9cd04c5b9f2b00db12f6205db0b2fa6da",
+    "at": 1789067125058
    },
    "lastError": null
   },
@@ -488,23 +737,181 @@
      "error": null
     }
    ],
-   "text": "トレース・オン",
+   "text": "（原檔）-412570245643270488_Talk1",
    "lang": "ja",
-   "kana": "トレース オン",
-   "textSource": "authored",
-   "origin": "owner-lines",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-412570245643270488_Talk1.wav",
    "state": "generated",
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 25957,
+    "seconds": 1.544535,
     "lufs": null,
-    "hash": "fac76ede79955309236bc03095456c44a9403fa03f3cba54d3fabf95c1d4ba0b",
-    "maxDb": -4.1,
-    "at": 1789043881102
+    "hash": "42c6ccd26ad77c1c0ffe685eccf91c3db7a338c6e1b2dbde00787f2d29af7dde",
+    "at": 1789067125131
+   },
+   "lastError": null
+  },
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）-816935317900612421_Talk2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-816935317900612421_Talk2.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.804444,
+    "lufs": null,
+    "hash": "dc50e8b409ee3b0bdb2aec580ec96d5e340ef34c394fae237c9c7b2719ef3bce",
+    "at": 1789067125200
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）VOICE_2009",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_2009.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 87397,
+    "seconds": 5.387347,
+    "lufs": null,
+    "hash": "a6588cb914bc97ce3b4c6deebd78ac7ceab85c433156c4c436eca54f12cc59aa",
+    "at": 1789067125271
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）-8111284017400737213_Combo1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-8111284017400737213_Combo1.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": 0.487619,
+    "lufs": null,
+    "hash": "bfb59746296b41e6bb7c34de2c0bec3a649402909d63df9e7b20e6961c8d7f91",
+    "at": 1789048363505
+   },
+   "lastError": null
+  },
+  "attack-light.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_0471",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_0471.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.583333,
+    "lufs": null,
+    "hash": "1970bb2e279a312bd10ceea6ea28d3d6b2b2f654ebecd312d9bf936fc57bf6d8",
+    "at": 1789067125346
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）-7076748036963549048_Boost_Trick3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-7076748036963549048_Boost_Trick3.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
+    "stub": false,
+    "bytes": 18016,
+    "seconds": 1.060794,
+    "lufs": null,
+    "hash": "6f370722241f8db9493c427f59f40eebb1cc6b7064f22772788a643cb499ce03",
+    "at": 1789048363576
+   },
+   "lastError": null
+  },
+  "attack-heavy.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_1142",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1142.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 14254,
+    "seconds": 0.824014,
+    "lufs": null,
+    "hash": "a8daae0d9f204fa5220b832e5c00c4e53048d9882724a47ee663f676d66401ce",
+    "at": 1789067125415
+   },
+   "lastError": null
+  },
+  "jump": {
+   "takes": [],
+   "text": "（原檔）-5051522238835174812_Jump1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:gamebanana-fuc-shirou-473819:shirou-voice/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-5051522238835174812_Jump1.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "gamebanana-fuc-shirou-473819:shirou-voice",
+    "stub": false,
+    "bytes": 3805,
+    "seconds": 0.169955,
+    "lufs": null,
+    "hash": "ea5d24e660429b23e56aae8bc00068f3c9af3e431a1ee2f81a5174e01c3bee9b",
+    "at": 1789048363644
+   },
+   "lastError": null
+  },
+  "jump.2": {
+   "takes": [],
+   "text": "（原檔）VOICE_1141",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1141.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.58,
+    "lufs": null,
+    "hash": "bcb24147341f2ce5f448f631e128ebadfc4df19b196e52c57afd34ef3db7a3b4",
+    "at": 1789067125488
    },
    "lastError": null
   },
@@ -533,25 +940,31 @@
      "seconds": 0.44,
      "at": 1789043881220,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054966963,
+     "error": null
     }
    ],
-   "text": "はぁっ！",
+   "text": "（原檔）VOICE_1144",
    "lang": "ja",
-   "kana": "ハァッ",
-   "textSource": "derived",
-   "origin": "grunt:default",
+   "textSource": "original",
+   "origin": "original:spritedatabase-fate-ps2-shirou:shirou-character-audio/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_1144.wav",
    "state": "generated",
    "current": {
-    "take": 3,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 70261,
+    "seconds": 4.331995,
     "lufs": null,
-    "hash": "7c40705afc1f2ec8f17f47a3b337f6e1f180a7da6de23a4ba6d523d63d3b9a15",
-    "maxDb": -2,
-    "at": 1789043881220
+    "hash": "2d12aa7d84477f81abbafe0fd060a4b92c0561f35b6c4cad80dc029e9e8da4eb",
+    "at": 1789058017578
    },
    "lastError": null
   }

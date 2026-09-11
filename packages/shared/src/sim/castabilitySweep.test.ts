@@ -101,6 +101,7 @@ import {
   registerAll,
 } from "../content/registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "./content/registry";
+import { noteAbilityCast } from "./content/castLedger"; // GH#1203 —— 佈置 `recentCast` 前提走出貨的那一支
 import { isTransformedBody } from "../content/championForms";
 import { isRetiredChampionId } from "../content/championRetirement";
 import { SimWorld } from "./SimWorld";
@@ -677,10 +678,10 @@ function spawn(world: SimWorld, championId: string, team: number, dx: number): E
  * ⚠️ **`not` 底下的葉子不走這條路**：把它滿足等於讓那段效果**不**發生 ——
  * 方向相反的「幫忙」比不幫忙更糟。
  */
-function collectRequiredStatusIds(node: unknown, out: Set<string>): void {
+function collectRequiredStatusIds(node: unknown, out: Set<string>, selfOut: Set<string>): void {
   if (node === null || typeof node !== "object") return;
   if (Array.isArray(node)) {
-    for (const v of node) collectRequiredStatusIds(v, out);
+    for (const v of node) collectRequiredStatusIds(v, out, selfOut);
     return;
   }
   const rec = node as Record<string, unknown>;
@@ -692,10 +693,59 @@ function collectRequiredStatusIds(node: unknown, out: Set<string>): void {
   ) {
     out.add(rec.statusId);
   }
+  // ⭐⭐ GH#1203 —— `consumeStatus` **自己就是一個宣告出來的前提**。
+  //   它的規格是「把 X 吃掉，然後做 Y」；沒有 X 的世界裡它**正確地**什麼都不做，
+  //   ⛔ 而普查在此之前從來沒有把 X 佈上去 ⇒ 32 格「no-op」裡 **19 格**是這個形狀。
+  //   ⚠️ 判準與上面那一族逐字相同：滿足的是 **JSON 自己寫出來的**閘 ——
+  //   一棵空的效果樹、一條 inert 的 modifier 在這之後仍然量得到一模一樣的東西。
+  //   ⚠️ `onMissing` 那一支**不受影響**：它本來就是「沒有 X」時跑的那一條，
+  //   而有沒有 X 兩邊都會跑到某一支 ⇒ 這一格只把「有 X」那條路打開。
+  if (rec.kind === "consumeStatus" && typeof rec.statusId === "string") {
+    (rec.subject === "self" ? selfOut : out).add(rec.statusId);
+  }
+  // ⭐ GH#1203 —— `condition{kind:"status", subject:"self"}`（「我身上有 X 的時候才⋯」）。
+  //   ⚠️ 上面那一族只收 `subject:"target"` ⇒ ⭐ 把條件掛在**自己**身上的那些從來沒被滿足過。
+  if (rec.kind === "status" && rec.subject === "self" && typeof rec.statusId === "string" && rec.minStacks === undefined) {
+    selfOut.add(rec.statusId);
+  }
   for (const [key, v] of Object.entries(rec)) {
     if (key === "not") continue; // 反向葉子 —— 見檔頭最後一段
-    collectRequiredStatusIds(v, out);
+    collectRequiredStatusIds(v, out, selfOut);
   }
+}
+
+/**
+ * ⭐ GH#1203 —— 這棵樹要求「目標離我多遠」才看得到效果（沒有宣告就回 null）。
+ *
+ * 只讀**技能自己寫出來的**兩個欄位：
+ *   · `pull.stopDistance` —— 拉到這個距離就停 ⇒ ⭐ 假人比它近就**本來就不該動**
+ *   · `blink.stopShortUnits` —— 閃到目標前這麼遠停下 ⇒ 同理，施法者不必移動
+ * 站位取「宣告值 ＋ 2 格」，再被 `radius`（如果有宣告）夾住 —— ⭐ 要在效果範圍**之內**。
+ */
+function declaredStandOff(node: unknown): number | null {
+  if (node === null || typeof node !== "object") return null;
+  if (Array.isArray(node)) {
+    let best: number | null = null;
+    for (const v of node) {
+      const d = declaredStandOff(v);
+      if (d !== null && (best === null || d > best)) best = d;
+    }
+    return best;
+  }
+  const rec = node as Record<string, unknown>;
+  let best: number | null = null;
+  const stop = rec.stopDistance ?? rec.stopShortUnits;
+  if (typeof stop === "number" && stop > 0) {
+    const want = stop + 2;
+    const radius = typeof rec.radius === "number" && rec.radius > 0 ? rec.radius : null;
+    // ⚠️ 圓形範圍要留一點邊界餘裕，⛔ 不可以正好站在圓周上。
+    best = radius === null ? want : Math.min(want, radius - 0.5);
+  }
+  for (const v of Object.values(rec)) {
+    const d = declaredStandOff(v);
+    if (d !== null && (best === null || d > best)) best = d;
+  }
+  return best;
 }
 
 /** 這棵樹裡最寬鬆的處決門檻（沒有 `devour` 就回 null）。 */
@@ -736,16 +786,23 @@ function satisfyDeclaredPreconditions(
   victims: readonly EntityId[],
 ): void {
   const statuses = new Set<string>();
-  collectRequiredStatusIds(def.effects, statuses);
-  if (statuses.size > 0) {
-    const pre: EffectDef[] = [...statuses]
+  const selfStatuses = new Set<string>();
+  collectRequiredStatusIds(def.effects, statuses, selfStatuses);
+  // ⭐ GH#1203 —— 兩批分開跑：一批掛在假人身上，⭐ 另一批掛在**施法者自己**身上
+  //   （`consumeStatus{subject:"self"}` —— 「把我自己的 X 吃掉」那一族，19/32 格）。
+  for (const [ids, on] of [
+    [statuses, [...victims]],
+    [selfStatuses, [caster]],
+  ] as const) {
+    if (ids.size === 0) continue;
+    const pre: EffectDef[] = [...ids]
       .sort()
       .map((statusId) => ({ kind: "applyStatus", statusId, duration: 600 }) as EffectDef);
     runEffects(pre, {
       world,
       caster,
       rank: 1,
-      targets: [...victims],
+      targets: [...on],
       origin: "castability-precondition",
       rng: world.rng,
     });
@@ -756,6 +813,71 @@ function satisfyDeclaredPreconditions(
       const hp = world.health.get(id);
       if (hp) hp.hp = Math.max(1, hp.maxHp * pct * 0.5);
     }
+  }
+  satisfyDeclaredSelfGates(world, def, caster);
+}
+
+/**
+ * ⭐⭐ GH#1203 —— 把技能**掛在施法者自己身上**的那三種閘也佈置好。
+ *
+ * ⚠️ 上面那一支只處理「目標身上要有某個狀態」。⭐ 而逐格量到的另外四格，
+ * 閘是寫在**施法者**這一邊的 —— 一個什麼都沒發生過的世界裡它們**正確地**不觸發：
+ *
+ *   · `condition{kind:"stat", stat:"hp", op:"<"}` —— 「殘血才回」（b2-guts E：`hp < 50%`）
+ *   · `condition{kind:"recentCast", slot}` —— 「剛放過 E 才有補給」（b2-boxxo R：4 秒內）
+ *   · `modifyCooldown{slot, who:"self"}` —— 「Q 的冷卻減 2 秒」：⭐ Q **不在冷卻中就沒得減**
+ *     （b2-albus W · b2-orphen W）
+ *
+ * ⛔ 它不可能把真的 no-op 變綠：滿足的是 **JSON 自己寫出來的**閘，
+ * 一棵空的樹、一條 inert 的 modifier 在這之後仍然量得到一模一樣的東西。
+ */
+function satisfyDeclaredSelfGates(world: SimWorld, def: AbilityDef, caster: EntityId): void {
+  const hpGates: number[] = [];
+  const recentSlots = new Set<string>();
+  const cdSlots = new Set<string>();
+  const walk = (node: unknown): void => {
+    if (node === null || typeof node !== "object") return;
+    if (Array.isArray(node)) {
+      for (const v of node) walk(v);
+      return;
+    }
+    const rec = node as Record<string, unknown>;
+    if (
+      rec.kind === "stat" && rec.subject === "self" && rec.stat === "hp" &&
+      (rec.op === "<" || rec.op === "<=") && typeof rec.value === "number"
+    ) {
+      hpGates.push(rec.mode === "percent" ? rec.value : rec.value / Math.max(1, world.health.get(caster)?.maxHp ?? 1));
+    }
+    if (rec.kind === "recentCast" && rec.subject === "self" && typeof rec.slot === "string") {
+      recentSlots.add(rec.slot);
+    }
+    if (rec.kind === "modifyCooldown" && (rec.who ?? "self") === "self" && typeof rec.slot === "string") {
+      cdSlots.add(rec.slot);
+    }
+    for (const [key, v] of Object.entries(rec)) {
+      if (key === "not") continue; // 反向葉子 —— 滿足它等於讓那段效果**不**發生
+      walk(v);
+    }
+  };
+  walk(def.effects);
+
+  if (hpGates.length > 0) {
+    // ⭐ 取最嚴格的那一格再減半 —— 一次滿足全部（⛔ 不是逐格試）
+    const need = Math.min(...hpGates);
+    const hp = world.health.get(caster);
+    if (hp) hp.hp = Math.max(1, hp.maxHp * need * 0.5);
+  }
+  const ab = world.abilities.get(caster);
+  if (!ab) return;
+  for (const slot of [...recentSlots].sort()) {
+    const inst = slot === "EX" ? ab.exSlot : ab.slots[slot as "Q" | "W" | "E" | "R"];
+    // ⭐ 走出貨的 `noteAbilityCast`（條件葉讀的就是這一份帳），⛔ 不手寫一筆塞進去
+    if (inst) noteAbilityCast(world, caster, slot as CastableSlot, inst.abilityId);
+  }
+  for (const slot of [...cdSlots].sort()) {
+    const inst = slot === "EX" ? ab.exSlot : ab.slots[slot as "Q" | "W" | "E" | "R"];
+    // ⭐ 那一格要**真的在冷卻中**，減冷卻才減得到東西
+    if (inst && inst.cooldownRemainingTicks <= 0) inst.cooldownRemainingTicks = Math.round(5 / world.dt);
   }
 }
 
@@ -968,6 +1090,17 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
     }
 
     // ---- active cast ----
+    // ⭐⭐ GH#1203 —— **假人站多遠，由技能自己宣告的數字決定**，⛔ 不是一個常數。
+    //   `ADJ = 1.35` 是為了讓近戰打得到，⛔ 而它同時讓每一支「把 X 格外的人拉過來」
+    //   的技能**結構上量不到**：`pull.stopDistance` 是 1.5／2 ⇒ ⭐ 假人**一開始就站在終點裡**，
+    //   於是「沒有人被搬動」⇒ 記成 no-op。`blink.stopShortUnits` 同理（施法者不必移動）。
+    //   ⛔ 它不可能把真的 no-op 變綠：一棵沒有宣告這些欄位的樹，站位一格都不會動。
+    const standOff = declaredStandOff(def.effects);
+    if (standOff !== null) {
+      const ft = world.transform.get(foe)!;
+      ft.pos = { x: world.transform.get(caster)!.pos.x + standOff, z: ft.pos.z };
+      world.rebuildGrid();
+    }
     const foePos = { ...world.transform.get(foe)!.pos };
     const allyPos = { ...world.transform.get(ally)!.pos };
     const casterAnchor = { ...world.transform.get(caster)!.pos };
@@ -1000,6 +1133,9 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
     const window = observationWindow(def);
     /** 假人現在被釘在哪 —— 散落型技能會把它改成下一個落點（見 nextScatterPoint）。 */
     const pin = { ...foePos };
+    // ⭐ GH#1203：受害者被搬走／被鎖住 —— 每 tick 在**釘回去之前**量一次。
+    let victimMoved = false;
+    let victimLocked = false;
     for (let i = 0; i < window; i++) {
       // ⛔ 釘在 `step()` **之前**：落點是在那一格的 `randomAreaSystem` 裡結算的，
       //    步完才移動 = 永遠慢一格，等於沒有移動。
@@ -1018,6 +1154,21 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
       //   施法者身上再沿朝向丟 —— 每 tick 把假人釘回原位會讓它永遠落不到拋投終點，終點周圍的
       //   onLand 傷害就打不到它 ⇒ 一格假 no-op（主 session 探針：不釘 ⇒ leapStart → displace → damage）。
       //   `world.airborne` 是 startLeap 寫、落地清的那一張表。
+      // ⭐⭐ GH#1203 —— **量到再釘，⛔ 不是釘了再量。**
+      //   下面那顆釘子是刻意的（免得擊退把假人推出圈外），⛔ 而它同時把
+      //   「這一支技能真的把人搬走了」的**唯一證據**擦掉了 ——
+      //   `pull` / `knockback` 動的是**受害者**的身體，而普查只看施法者。
+      //   實測：`b2-shadow` Q 搬了 2.50 格、`b2-kisaragi` Q 搬了 2.00 格，兩支都被記成 no-op。
+      for (const victim of [foe, ally]) {
+        const anchor = victim === foe ? pin : allyPos;
+        const vt = world.transform.get(victim);
+        if (!vt) continue;
+        const vdx = vt.pos.x - anchor.x;
+        const vdz = vt.pos.z - anchor.z;
+        if (vdx * vdx + vdz * vdz > 0.04) victimMoved = true;
+        if (world.nav.get(victim)?.override != null) victimMoved = true;
+        if ((world.knockdown.get(victim) ?? 0) > 0) victimLocked = true;
+      }
       if (!world.airborne.has(foe)) world.transform.get(foe)!.pos = { ...pin };
       world.transform.get(ally)!.pos = { ...allyPos };
     }
@@ -1034,6 +1185,8 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
       before,
       after,
       moved,
+      victimMoved,
+      victimLocked,
       effectsAuthored: def.effects.length,
     });
     // GH#407 —— 這一格要不要跨 seed 量，由**樹**回答，⛔ 不由一張技能名單回答。

@@ -12,12 +12,14 @@ import (
 
 // These tests exercise the durable workflow; Main's real ZIP/compiler tests cover the bridge content.
 type workflowBridge struct {
-	inspections  map[string]HeroInspection
-	archives     map[string][]byte
-	failPrepare  bool
-	inspectError error
-	onInspect    func()
-	onPrepare    func()
+	inspections      map[string]HeroInspection
+	archives         map[string][]byte
+	failPrepare      bool
+	inspectError     error
+	onInspect        func()
+	onPrepare        func()
+	takeoverInspects int
+	takeoverPrepares int
 }
 
 func (b *workflowBridge) Inspect(_ context.Context, archive []byte) (HeroInspection, error) {
@@ -49,6 +51,17 @@ func (b *workflowBridge) Package(_ context.Context, _, version string) ([]byte, 
 }
 func (b *workflowBridge) File(context.Context, string, string, string) ([]byte, string, error) {
 	return nil, "", nil
+}
+func (b *workflowBridge) BuildTakeover(context.Context, string, []byte) ([]byte, error) {
+	return nil, nil
+}
+func (b *workflowBridge) InspectTakeover(ctx context.Context, _ string, archive []byte) (HeroInspection, error) {
+	b.takeoverInspects++
+	return b.Inspect(ctx, archive)
+}
+func (b *workflowBridge) PrepareTakeover(ctx context.Context, workID, operationID string, archive []byte) (HeroStoredVersion, error) {
+	b.takeoverPrepares++
+	return b.Prepare(ctx, workID, operationID, archive)
 }
 func heroFixture(t *testing.T) (*HeroService, *workflowBridge) {
 	t.Helper()
@@ -97,6 +110,22 @@ func publishHero(t *testing.T, s *HeroService, snapshot HeroSnapshot, operation 
 		t.Fatal(err)
 	}
 	return value
+}
+
+func TestHeroCanonicalTakeoverUsesDedicatedImmutablePath(t *testing.T) {
+	s, b := heroFixture(t)
+	s.SetIntakePolicy(func() (HeroIntakePolicy, error) { return HeroIntakePolicy{Enabled: false}, nil })
+	if _, err := s.Submit(context.Background(), "alice", "hero-proof", "ordinary", []byte("v1"), false); err == nil {
+		t.Fatal("ordinary intake bypassed the closed policy")
+	}
+	snapshot, err := s.SubmitTakeover(context.Background(), "alice", "hero-proof", "takeover", []byte("v1"), false)
+	if err != nil || !snapshot.CanonicalTakeover || b.takeoverInspects != 1 || b.takeoverPrepares != 1 {
+		t.Fatalf("canonical takeover was not fixed to the dedicated path: %+v %+v %v", snapshot, b, err)
+	}
+	published := publishHero(t, s, snapshot, "publish-takeover")
+	if published.Published == nil || published.Published.SubmissionID != snapshot.ID || b.takeoverInspects != 2 || b.takeoverPrepares != 2 {
+		t.Fatalf("publish did not revalidate the authorized takeover: %+v %+v", published, b)
+	}
 }
 
 func TestHeroDraftOwnerCASAndRestart(t *testing.T) {

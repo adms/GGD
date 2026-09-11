@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.64f3795c6a5e90dbf5a8b78fe190d56cf81effb852f353fd",
+  "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-23-20260907.w",
@@ -142,11 +148,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "heal",
           "amount": {
@@ -173,7 +174,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-23-20260907.e",
@@ -198,11 +206,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -232,7 +235,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-23-20260907.r",
@@ -294,7 +304,14 @@
           "castTimeSec": 0.667
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     }
   },
   "exAbility": "community-review-23-20260907.ex",
@@ -307,60 +324,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.0155d8f06cfe3efcc4f8bc7771582e36544e8ace895851a3",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
-      "modelSha256": "0c7faa88c7db9c95a997ecc5b4212028daaf3818d2554e2b9a7e3e277d3cf38d",
-      "binarySha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
-      "registeredAt": "2026-09-10T14:45:31.754Z",
-      "source": {
-        "kind": "previous",
-        "character": "坂田銀時",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.64f3795c6a5e90dbf5a8b78fe190d56cf81effb852f353fd",
-      "label": "坂田银时",
-      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
-      "modelSha256": "e79295151dcdee490b45644bf89ab7f1e436cd57462bef94b5346bc67ced4d01",
-      "binarySha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
-      "registeredAt": "2026-09-10T14:45:31.762Z",
-      "source": {
-        "kind": "exact",
-        "character": "坂田银时",
-        "work": "銀魂",
-        "library": "300heroes",
-        "reference": "300heroes:4a4c507abbd6a236e206dd15",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    },
-    {
-      "modelKey": "version.body.150b4dcb5ca771aee0a8a6ccbb750f5caff9e7cd687168f8",
-      "label": "奴良陆生",
-      "sourceModelKey": "community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63",
-      "modelSha256": "115cd04fd769eda9b56f82a043a4c240bf97c803560d5fb84872207615b3dbbc",
-      "binarySha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
-      "registeredAt": "2026-09-10T14:45:31.885Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "奴良陆生",
-        "work": "妖怪少爺／滑頭鬼之孫",
-        "library": "300heroes",
-        "reference": "300heroes:3afc0ea6519ff5a221a230b7",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    }
+  "tags": [
+    "katana"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

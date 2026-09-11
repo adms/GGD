@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { draftFingerprint, createLocalDraft } from "../drafts/repository";
 import { enqueueDraft } from "../drafts/session";
 import { useHeroStore, type HeroDraftPayload } from "./store";
@@ -6,18 +6,23 @@ import { prepareHeroZip, openHeroZip, recoveredHeroModelDraft, downloadHeroFile,
 import { heroTransferDraft, restoreHeroDraftAssets } from "./draftAssets";
 import { HeroCommunityPanel } from "./HeroCommunityPanel";
 import { HeroHandoffImportPanel } from "./HeroHandoffImportPanel";
+import { useHeroAccount } from "./communitySession";
 
 export function HeroPackagePanel({ value, valid }: { value: HeroDraftPayload; valid: boolean }) {
+  const { account } = useHeroAccount();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [prepared, setPrepared] = useState<{ fingerprint: string; zip: Blob; inspection: HeroPackageInspection } | null>(null);
+  const [canonicalTakeover, setCanonicalTakeover] = useState(false);
+  const [prepared, setPrepared] = useState<{ fingerprint: string; zip: Blob; inspection: HeroPackageInspection; canonicalTakeover: boolean } | null>(null);
+  const canTakeover = account?.roles?.includes("admin") === true;
+  useEffect(() => { if (!canTakeover) setCanonicalTakeover(false); }, [canTakeover]);
   const fingerprint = draftFingerprint({ project: value.project, originalIconRefs: value.originalIconRefs ?? {} });
-  const current = prepared?.fingerprint === fingerprint ? prepared : null;
+  const current = prepared?.fingerprint === fingerprint && prepared.canonicalTakeover === canonicalTakeover ? prepared : null;
   const build = async () => {
     setBusy(true); setMessage("正在固定完整英雄、依賴與圖片，並重跑遊戲模擬…");
     try {
-      const result = await prepareHeroZip(value);
-      setPrepared({ ...result, fingerprint });
+      const result = await prepareHeroZip(value, canonicalTakeover);
+      setPrepared({ ...result, fingerprint, canonicalTakeover });
       setMessage("完整英雄檢查通過。以下圖片就是套件內的正規化版本。");
     } catch (error) { setMessage(`無法建立完整英雄：${String(error)}`); }
     finally { setBusy(false); }
@@ -57,6 +62,7 @@ export function HeroPackagePanel({ value, valid }: { value: HeroDraftPayload; va
         downloadHeroFile(blob, `${value.project.projectId}-draft.json`);
       })().catch((error: unknown) => setMessage(String(error)))}>下載草稿備份</button>
       <label className="local-icon-file">開啟作品檔<input type="file" accept=".zip,.json" disabled={busy} onChange={(event) => { void importFile(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} /></label>
+      {canTakeover ? <label><input type="checkbox" checked={canonicalTakeover} disabled={busy} onChange={(event) => setCanonicalTakeover(event.target.checked)} />接管同 ID 的既有正式英雄</label> : null}
       <button type="button" disabled={busy || !valid} onClick={() => void build()}>{busy ? "正在處理…" : "建立完整英雄 ZIP"}</button>
       {current ? <button type="button" onClick={() => downloadHeroFile(current.zip, `${value.project.projectId}-r${value.project.revision}.zip`)}>下載已驗證英雄 ZIP</button> : null}
     </div>

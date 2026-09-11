@@ -14,10 +14,10 @@
  },
  "lines": {
   "quote": {
-   "text": "私の瞳を…覗く勇気は、あるかしら",
+   "text": "（原檔）voice_joke_1",
    "lang": "ja",
    "kana": "ワタシ ノ ヒトミ オ ノゾク ユウキ ワ アル カシラ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -30,17 +30,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 45183,
-    "seconds": 2.76,
+    "bytes": 51035,
+    "seconds": 3.121633,
     "lufs": null,
-    "hash": "806daf85a951027c41527ffcf037d3cbe902e31fbdae02dc57032a1170784e98",
-    "at": 1784974893895
+    "hash": "c4e92dedcf9b1eedfa9a96e24f6e68134e7e76f83de7373a9cdcec4dcf8f711d",
+    "at": 1789067544381
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0008-253_voice_joke_1.ogg"
   },
   "victory": {
    "text": "終わりよ。…いい夢は、見られたかしら",
@@ -72,10 +73,10 @@
    "lastError": null
   },
   "defeat": {
-   "text": "そう…ここまで、ね…",
+   "text": "（原檔）voice_death_1",
    "lang": "ja",
    "kana": "ソウ ココ マデ ネ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -88,17 +89,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 18852,
-    "seconds": 1.12,
+    "bytes": 15090,
+    "seconds": 0.863492,
     "lufs": null,
-    "hash": "02be0d8b397bf27cee6a2fd69c567958ff475c5c8414e099ac2960405015e073",
-    "at": 1784974926192
+    "hash": "d70b8a003ebfb3f9a1a428b2ee83551925e9aaf53fde7999dd5a5d4c01ab1e89",
+    "at": 1789067544025
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0000-253_voice_death_1.ogg"
   },
   "hurt": {
    "text": "んくっ",
@@ -536,10 +538,10 @@
    "lastError": null
   },
   "attack-light": {
-   "text": "はっ",
+   "text": "（原檔）voice_attack_1",
    "lang": "ja",
    "kana": "ハッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -552,23 +554,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 15926,
+    "seconds": 0.927347,
     "lufs": null,
-    "hash": "e7cb327519fcba475ec1d61f209130c9a243dbb6cd44f16c194aec4c15894d57",
-    "at": 1784975002715
+    "hash": "e0a8195dcc4c30fbf78f92b4a8a86ad9a7e58b5c8200b4d2f5039475a756664a",
+    "at": 1789067543836
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0004-253_voice_attack_1.ogg"
   },
   "attack-heavy": {
-   "text": "はあっ！",
+   "text": "（原檔）voice_attack_2",
    "lang": "ja",
    "kana": "ハアッ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -581,23 +584,24 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 7985,
-    "seconds": 0.44,
+    "bytes": 56050,
+    "seconds": 3.426395,
     "lufs": null,
-    "hash": "8faf9f8263710e8227eeeae6ad2cfe9ddfe0b8f9a35f00334d56fef9565e7287",
-    "at": 1784975007793
+    "hash": "492c84814b1bca398bd78c99b8df3bc32a4a8d725b577b95303b31ace011c4b7",
+    "at": 1789067543729
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0017-253_voice_attack_2.ogg"
   },
   "crit": {
-   "text": "急所…貫いたわ",
+   "text": "（原檔）voice_attack_3",
    "lang": "ja",
    "kana": "キュウショ ツラヌイタ ワ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -610,17 +614,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 23449,
-    "seconds": 1.4,
+    "bytes": 32644,
+    "seconds": 1.983855,
     "lufs": null,
-    "hash": "117da9115137c38ca2ed48a7ded4cfa18dedd7ffac949a730ba8e9f3e1950c55",
-    "at": 1784975009256
+    "hash": "02213cd89908e574cc669b7cc955409c568fd44f1ed487153e0b154656f36f61",
+    "at": 1789067543937
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0011-253_voice_attack_3.ogg"
   },
   "block": {
    "text": "無駄よ",
@@ -739,10 +744,10 @@
    "lastError": null
   },
   "respond.ok": {
-   "text": "ええ、いいわ",
+   "text": "（原檔）voice_move_1",
    "lang": "ja",
    "kana": "エエ イイ ワ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -755,17 +760,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 16344,
+    "seconds": 0.950567,
     "lufs": null,
-    "hash": "402c851d7d9ed20f00005402e196a3db29766da030227586c926f3c9d4f76dfc",
-    "at": 1784975034349
+    "hash": "7bf98f7a71e364ac87935d31bde57046a23c078fc4fb9ec464b323e73062c890",
+    "at": 1789067544649
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0012-253_voice_move_1.ogg"
   },
   "respond.no": {
    "text": "お断りよ",
@@ -971,10 +977,10 @@
    "lastError": null
   },
   "free-move": {
-   "text": "好きになさい。私も、そうするわ",
+   "text": "（原檔）voice_move_2",
    "lang": "ja",
    "kana": "スキ ニ ナサイ ワタシ モ ソウ スル ワ",
-   "textSource": "ai",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -987,17 +993,18 @@
     }
    ],
    "current": {
-    "take": 1,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 39332,
-    "seconds": 2.4,
+    "bytes": 15090,
+    "seconds": 0.863492,
     "lufs": null,
-    "hash": "2ad9ab872acc124c2aa14ef22d22cd6e7ec5369f42b7688db2e44dfbf1c5e9fd",
-    "at": 1784975076889
+    "hash": "a904f2c3f3d4ec068e0feb951ae0e13e83a40bc7306eb539e6a597e5dfccd646",
+    "at": 1789067544293
    },
-   "lastError": null
+   "lastError": null,
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0014-253_voice_move_2.ogg"
   },
   "first-blood": {
    "text": "最初の獲物…いただいたわ",
@@ -1314,9 +1321,9 @@
    "kana": "ブラッドフォート アンドロメダ"
   },
   "skill-name.r": {
-   "text": "騎英之疆繩！",
+   "text": "（原檔）voice_dazhao_1",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "original",
    "state": "generated",
    "takes": [
     {
@@ -1337,18 +1344,19 @@
     }
    ],
    "current": {
-    "take": 2,
-    "engine": "cosyvoice3",
-    "engineVersion": "cv3-0.5b",
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
     "stub": false,
-    "bytes": 13836,
-    "seconds": null,
+    "bytes": 31391,
+    "seconds": 1.888073,
     "lufs": null,
-    "hash": "8d421e9acfb99782d83a6e89c5d276b5efc4369dc9b5a593d409836c3057f500",
-    "at": 1784990945026
+    "hash": "0f8eb74972cfdd490a9670a9fcc0fb8f492f34da45b3cee25bd3d6fcb64da8e3",
+    "at": 1789067544737
    },
    "lastError": null,
-   "kana": "ベルレフォーン"
+   "kana": "ベルレフォーン",
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0010-253_voice_dazhao_1.ogg"
   },
   "skill-name.ex": {
    "text": "騎英之疆繩MAX！",
@@ -1386,6 +1394,86 @@
    },
    "lastError": null,
    "kana": "ベルレフォーン マックス"
+  },
+  "defeat.2": {
+   "text": "（原檔）voice_death_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0009-253_voice_death_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
+    "stub": false,
+    "bytes": 51035,
+    "seconds": 3.133243,
+    "lufs": null,
+    "hash": "4c591939419d6303e19e3595334aafc9b96c5871db9ce32a6a5486a0758dc20d",
+    "at": 1789067544116
+   }
+  },
+  "defeat.3": {
+   "text": "（原檔）voice_death_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0003-253_voice_death_3.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
+    "stub": false,
+    "bytes": 70261,
+    "seconds": 4.314558,
+    "lufs": null,
+    "hash": "903cf47303a2adb5664e79d12662f493773001cf9206859bc642824186e6266e",
+    "at": 1789067544203
+   }
+  },
+  "quote.2": {
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0005-253_voice_joke_2.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
+    "stub": false,
+    "bytes": 88233,
+    "seconds": 5.446531,
+    "lufs": null,
+    "hash": "c1a2a2925d2114e38a3629ef13ff2ae5259f5e81f05cf5a729d70dc625d0ff27",
+    "at": 1789067544467
+   }
+  },
+  "quote.3": {
+   "text": "（原檔）voice_joke_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:253/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/253/01-0002-253_voice_joke_3.ogg",
+   "state": "generated",
+   "lastError": null,
+   "takes": [],
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:253",
+    "stub": false,
+    "bytes": 76948,
+    "seconds": 4.741224,
+    "lufs": null,
+    "hash": "1594714e7833cf04a5abf2d0524bcb74d604c9f67a129fed370223b49d97fa60",
+    "at": 1789067544558
+   }
   }
  }
 }

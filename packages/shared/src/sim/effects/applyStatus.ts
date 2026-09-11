@@ -101,6 +101,7 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       e.stun === true ||
       e.root === true ||
       e.feared === true ||
+      e.charmed === true ||
       // ⭐【繳械】S8 —— 與 `feared` 同一列、同一個論證：敵人塞過來的純減益，
       // 而且拿走的是「打不打得出去」這半個操作。免控擋得掉暈眩卻擋不掉繳械，
       // 那個組合對玩家無法解釋。進這一行也讓它的秒數記進 `ccAppliedTicks` 戰績。
@@ -296,6 +297,7 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 恐懼 —— 暴走的鏡像（`sim/fear.ts`）。同樣跟著 status 到期,所以
           // 「永久嚇到不能玩」在結構上不可能發生。
           feared: e.feared,
+          charmed: e.charmed,
           // 增益還是減益 —— A4b(#278) 把這條線接上。
           // ⛔ 不從 `moveSpeedMult` 之類的欄位猜:1.3 的加速與 0.7 的減速在結構上
           // 一模一樣。答案住在 `status-effect@1` 文件裡(14/14 都填了),

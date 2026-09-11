@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "version.body.a22a6e40793b280739b186768ad8a8a32b303806d27577cc",
+  "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 13,
     "int": 29,
-    "strGrowth": 1.67,
-    "agiGrowth": 1.25,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-32-20260907.w",
@@ -113,10 +119,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -157,7 +163,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.void.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.nova",
+          "attachTo": "point"
+        }
+      ]
     },
     "E": {
       "id": "community-review-32-20260907.e",
@@ -182,11 +195,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -216,7 +224,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-32-20260907.r",
@@ -232,9 +247,9 @@
         45.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -265,7 +280,13 @@
           "castTimeSec": 1.433
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-32-20260907.ex",
@@ -278,61 +299,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.98677c47a7a0e4f1aca2de4beb349b0e4ed296f8891bfd01",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
-      "modelSha256": "fe2320f2ff771a5a712747012cde0c1e68f14dd11e3486f5a8bd134fa0c6c66a",
-      "binarySha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
-      "registeredAt": "2026-09-10T14:45:33.339Z",
-      "source": {
-        "kind": "previous",
-        "character": "阿薩謝爾",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.a5943deb83a8ee7899c8637d19359fb87fd2c0cd940c84af",
-      "label": "喜羊羊",
-      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
-      "modelSha256": "67cacd00d20185d8b988fddcb02b586feb49d1a642e07ecb36fc5fe9cb632952",
-      "binarySha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
-      "registeredAt": "2026-09-10T14:45:33.344Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "喜羊羊",
-        "work": "喜羊羊與灰太狼",
-        "library": "300heroes",
-        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.a22a6e40793b280739b186768ad8a8a32b303806d27577cc",
-      "label": "阿薩謝爾（獨立副本／喜羊羊）",
-      "sourceModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
-      "modelSha256": "058cdab950440523e2c6ddf29bea00c0cf45bb8078344ff72f94c6f119581844",
-      "binarySha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
-      "registeredAt": "2026-09-10T14:45:33.412Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "阿薩謝爾（獨立副本／喜羊羊）",
-        "work": "喜羊羊與灰太狼",
-        "library": "300heroes",
-        "reference": "derivative:azazel",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

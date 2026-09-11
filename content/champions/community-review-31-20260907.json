@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
+  "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-31-20260907.w",
@@ -113,10 +119,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -163,7 +169,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "E": {
       "id": "community-review-31-20260907.e",
@@ -188,11 +201,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -222,7 +230,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-31-20260907.r",
@@ -284,7 +299,14 @@
           "castTimeSec": 0.667
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse",
+          "attachTo": "caster"
+        }
+      ]
     }
   },
   "exAbility": "community-review-31-20260907.ex",
@@ -297,61 +319,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.062da662b79749bb7e3c2426852190c23fe9368484710a47",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
-      "modelSha256": "8f39b70f9c6556bf21a741acb2c1342be666965927bdb70d0e63db136e55a42d",
-      "binarySha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
-      "registeredAt": "2026-09-10T14:45:33.154Z",
-      "source": {
-        "kind": "previous",
-        "character": "SUN樂",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.25ee23749a9a194aa43073ec918e86af9ba7eaa3207c0c34",
-      "label": "哈桑",
-      "sourceModelKey": "community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a",
-      "modelSha256": "92666758c510199e009f1c4409526b3f9010f275e198b7285aae07ebbcc807e5",
-      "binarySha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
-      "registeredAt": "2026-09-10T14:45:33.161Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "哈桑",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "300heroes:1b46757671158e661a0105d1",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
-      "label": "SUN樂（獨立副本／哈桑）",
-      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
-      "modelSha256": "c334cbd15d168da4a39facdae89406547828849703e1fe9f739c33d59f20ac08",
-      "binarySha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
-      "registeredAt": "2026-09-10T14:45:33.258Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "SUN樂（獨立副本／哈桑）",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "derivative:sunraku",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

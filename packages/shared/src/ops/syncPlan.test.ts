@@ -43,12 +43,18 @@ describe("skills:sync 按改動裁剪", () => {
     const p = planFromPaths(["content/brand-new-collection/x.json"], REPO);
     expect(p.full).toBe(true);
     expect(p.fullReason).toContain("content/brand-new-collection/x.json");
-    expect(p.steps.length).toBe(io.steps.length);
-    // ⭐ 表過期(package.json 加了第 33 支)也是 fail-closed 的一種
+    // ⭐ 全跑 ＝ 跑**整條鏈**，⛔ 不是「每一支產生器跑一次」。
+    //   ⚠️ 這兩個數字在 2026-09-11 之前碰巧相等，而它們不是同一件事：
+    //   GH#1225 之後 `content:build` 在鏈上出現**兩次**（環要收斂）
+    //   ⇒ 鏈 69 步、產生器 68 支。⭐ 期望值從**鏈**推導，⛔ 不抄 `io.steps.length`。
+    const chainLen = String(io.chain).split("&&").length;
+    expect(chainLen, "儀器：鏈解析不出來").toBeGreaterThan(40);
+    expect(p.steps.length).toBe(chainLen);
+    // ⭐ 表過期(package.json 加了新的一支)也是 fail-closed 的一種
     const { table, roots, chainSteps } = inputTable(REPO, io, readScripts(REPO));
     const stale = planFor({ io, table, roots, chainSteps, paths: [], chainStale: true });
     expect(stale.full).toBe(true);
-    expect(stale.steps.length).toBe(io.steps.length);
+    expect(stale.steps.length).toBe(chainLen);
   });
 
   it("③ 下游閉包 —— 只改一支產生器,吃它產物的那幾支也要跑", () => {

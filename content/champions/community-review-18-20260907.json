@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "砲手",
-  "modelKey": "version.body.19497fdc652b511ec9848c31dc8709e35a78e1b6e1ef0e44",
+  "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 29,
     "agi": 13,
     "int": 18,
-    "strGrowth": 2.78,
-    "agiGrowth": 1.25,
-    "intGrowth": 1.67,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -106,7 +106,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.holy.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.nova",
+          "attachTo": "point"
+        }
+      ]
     },
     "W": {
       "id": "community-review-18-20260907.w",
@@ -123,10 +130,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -164,7 +171,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-18-20260907.e",
@@ -189,11 +202,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -223,7 +231,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-18-20260907.r",
@@ -239,9 +254,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -293,7 +308,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-18-20260907.ex",
@@ -306,42 +327,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.56c031e042065020d3698fcef045bd9eda3bfd973fa01670",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
-      "modelSha256": "be89aebc4e3599c18fe88619c1cc7b08bff22f67ac79895670ff6a3cfc9fd9f1",
-      "binarySha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
-      "registeredAt": "2026-09-10T14:45:30.993Z",
-      "source": {
-        "kind": "previous",
-        "character": "吉爾伽美什",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.19497fdc652b511ec9848c31dc8709e35a78e1b6e1ef0e44",
-      "label": "吉尔伽美什",
-      "sourceModelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
-      "modelSha256": "5e785744bec4937456b25d9905187355ed1d993ee5274eb5d9d39fccd03af15e",
-      "binarySha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
-      "registeredAt": "2026-09-10T14:45:31.000Z",
-      "source": {
-        "kind": "exact",
-        "character": "吉尔伽美什",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "300heroes:d568447cc4f61f5d9a44f07a",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "thrown"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

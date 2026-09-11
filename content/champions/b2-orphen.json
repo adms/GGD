@@ -51,7 +51,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-orphen.e.webp"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -111,10 +112,10 @@
       ],
       "id": "b2-orphen.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -143,7 +144,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.bolt"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-orphen.q.webp"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -181,9 +183,9 @@
       ],
       "id": "b2-orphen.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -211,7 +213,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-orphen.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -275,20 +278,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-orphen.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "melee",
   "attributes": {
     "agi": 13,
-    "agiGrowth": 1.25,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 18,
-    "strGrowth": 1.67
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -335,7 +339,9 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "icon": "assets/icons/champions/b2-orphen.webp",
   "modelVersions": [
     {

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
+  "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 29,
     "int": 18,
-    "strGrowth": 1.25,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.67,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-13-20260907.w",
@@ -171,7 +177,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-13-20260907.e",
@@ -188,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -238,7 +251,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-13-20260907.r",
@@ -254,9 +274,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -308,7 +328,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-13-20260907.ex",
@@ -321,42 +347,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.8881cba87b158af82872f23d747301edc770b825adabe9bc",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
-      "modelSha256": "eb9ef0862c96c7b14c62ca5fa77a783912c2c5e7c4f02e3a09247a1b16e8e634",
-      "binarySha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
-      "registeredAt": "2026-09-10T14:45:30.416Z",
-      "source": {
-        "kind": "previous",
-        "character": "朝田詩乃",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
-      "label": "冰之狙击手",
-      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
-      "modelSha256": "92434bd0ec543d55098a4c40d6f80a88435cfebe14a0be5b408aaf33ede4c878",
-      "binarySha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
-      "registeredAt": "2026-09-10T14:45:30.422Z",
-      "source": {
-        "kind": "exact",
-        "character": "冰之狙击手",
-        "work": "刀劍神域 Sword Art Online",
-        "library": "300heroes",
-        "reference": "300heroes:d4ce2cfc061185921d1cb222",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "gun"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

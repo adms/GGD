@@ -1,0 +1,28 @@
+{
+  "schema": "ggd-s3-backup-manifest@1",
+  "note": "⭐ S3 **備份站點**的收據（GH#1231）。owner 2026-09-11 逐字：「S3 是備份不是互斥 所有產生器 抽取器 成品也都要在 S3 上一份 作為備份站點」。⛔ 不要手改：跑 `bash scripts/backup-s3.sh`。⭐ 位元組在 S3、**雜湊在 git** —— 這一份就是那個雜湊。",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "gitTree": {
+    "commit": "310ef6c81461585ba4a773707a8cbcb1c9dcd686",
+    "key": "backup/git-tree/310ef6c81461585ba4a773707a8cbcb1c9dcd686.tar.gz",
+    "sha256": "dfd3ebef4975efc44044bc1312e24e57dc1f2975e8df575196615384ca0404f6",
+    "bytes": 907942642
+  },
+  "intermediates": [
+    {
+      "tree": "tools/w3x-import/out",
+      "prefix": "intermediates/tools_w3x-import_out/",
+      "objects": 1971
+    },
+    {
+      "tree": "materials",
+      "prefix": "intermediates/materials/",
+      "objects": 567
+    },
+    {
+      "tree": "tools/bgm-gen/sf",
+      "prefix": "intermediates/tools_bgm-gen_sf/",
+      "objects": 45
+    }
+  ]
+}

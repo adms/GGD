@@ -81,6 +81,8 @@ export const dashEffect: EffectKindSpec<"dash"> = {
       onEndOn: e.onEndOn ?? "always",
       onEndWhenDead: e.onEndWhenDead ?? false,
       zone: t.zone,
+      startTick: world.tick,
+      shatter: e.shatter ?? false,
     });
   },
   /**

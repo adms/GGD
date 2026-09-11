@@ -40,6 +40,8 @@ function mk(over: Partial<SeatView> & { seatId: number; teamId: number }): SeatV
     augments: [],
     abilityRanks: [1, 0, 0, 0],
     cooldowns: [0, 0, 0, 0],
+    recastCharges: [],
+    recastWindow: [],
     exAbilityId: "",
     exRank: 0,
     exCooldown: 0,

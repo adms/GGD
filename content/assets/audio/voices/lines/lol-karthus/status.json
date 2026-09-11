@@ -1,0 +1,173 @@
+{
+ "championId": "lol-karthus",
+ "reference": {
+  "sha256": null,
+  "sourceKind": "none",
+  "donor": null,
+  "note": "originals only — owner excluded this hero from synthesis (COMBAT_CASTING.json.excluded)",
+  "path": null
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "quote": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00078-1154709670",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00078-1154709670.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 97010,
+    "seconds": 5.993447,
+    "lufs": null,
+    "hash": "c2de6e42b40130940d437e96d26a1ac19414d06862cef059cc7094031eb0850d",
+    "at": 1789058021775
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00016-157583185",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00016-157583185.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 97010,
+    "seconds": 5.991474,
+    "lufs": null,
+    "hash": "7e2f43c2335fcf112fd86b0e2ad7b7f41f3c0612d10d78dcc11878edb343d0a5",
+    "at": 1789058021860
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00067-940314714",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00067-940314714.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 97010,
+    "seconds": 5.991293,
+    "lufs": null,
+    "hash": "138582ae7de5fa52ac1dbf729bd5bc192fce701d244d6517e637d2e04f20b326",
+    "at": 1789058021946
+   },
+   "lastError": null
+  },
+  "victory": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00082-1207163039",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00082-1207163039.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 65663,
+    "seconds": 4.030522,
+    "lufs": null,
+    "hash": "6e2cc84d124d358d6a01009381e46829ae4225ccb9562c8c0535fd328086bef3",
+    "at": 1789058022033
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00053-735105578",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00053-735105578.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 81128,
+    "seconds": 4.990454,
+    "lufs": null,
+    "hash": "91b8ff020da3c40067caf2467a371977819c5877be617d975ba9feddaf7a5f7c",
+    "at": 1789058022121
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00110-1606171314",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00110-1606171314.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 97010,
+    "seconds": 5.983107,
+    "lufs": null,
+    "hash": "bbca7bd9f5ccf42f2be47254e0660dfabd0f5cacc57c9e05a372f4607cfd70d0",
+    "at": 1789058022212
+   },
+   "lastError": null
+  },
+  "taunt.2": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00084-1220324455",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00084-1220324455.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 96592,
+    "seconds": 5.979773,
+    "lufs": null,
+    "hash": "9aed661f365ce178e36a54307ac9d426f8004387c05db15a34224a59a6ae3668",
+    "at": 1789058022312
+   },
+   "lastError": null
+  },
+  "taunt.3": {
+   "takes": [],
+   "text": "（原檔）bd0bbe/00096-1478988453",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/bd0bbe780346402b/00096-1478988453.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav",
+    "stub": false,
+    "bytes": 95756,
+    "seconds": 5.921202,
+    "lufs": null,
+    "hash": "9904dd507a7de09ea45743e65656d5c4b13df138039622782ab15d74ee4cdd93",
+    "at": 1789058022402
+   },
+   "lastError": null
+  }
+ }
+}

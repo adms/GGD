@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
+  "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -104,7 +104,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.summon",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.summon",
+          "attachTo": "caster"
+        }
+      ]
     },
     "W": {
       "id": "community-review-01-20260907.w",
@@ -163,7 +170,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.summon",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.summon",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-01-20260907.e",
@@ -188,11 +202,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -222,7 +231,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-01-20260907.r",
@@ -238,9 +254,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -274,7 +290,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "vfxKey": "fx.prim.lightning.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-01-20260907.ex",
@@ -287,42 +310,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.92dda28e20450b2854bb3f4e66351f7490c050989536dee6",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
-      "modelSha256": "0f3119460e5cec7f219c820214bb82ebf3dddf63e48d4159ae2de6c3fb971861",
-      "binarySha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
-      "registeredAt": "2026-09-10T14:45:26.227Z",
-      "source": {
-        "kind": "previous",
-        "character": "武藤遊戲",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
-      "label": "法老王",
-      "sourceModelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
-      "modelSha256": "9feecbbfc51b23f2c2e892581b99d220a5a5ed56eafc37b84b9479ab14ced551",
-      "binarySha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
-      "registeredAt": "2026-09-10T14:45:26.268Z",
-      "source": {
-        "kind": "exact",
-        "character": "法老王",
-        "work": "遊戲王／遊戲王 怪獸之決鬥",
-        "library": "300heroes",
-        "reference": "300heroes:70521f248a94658c5d1ed26c",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "thrown"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

@@ -29,10 +29,10 @@
       ],
       "id": "b2-rin.e",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -63,7 +63,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-rin.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -145,7 +146,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rin.q.webp"
     },
     "R": {
       "castTimeSec": 2.433,
@@ -190,9 +192,9 @@
       ],
       "id": "b2-rin.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -249,7 +251,8 @@
           "vfxKey": "fx.prim.arcane.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rin.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -293,10 +296,10 @@
       ],
       "id": "b2-rin.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -351,20 +354,21 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rin.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -399,7 +403,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-rin",
-  "modelKey": "version.body.24dff69da9f04e6b1cb5fe28affe1d1df196a9f352259aed",
+  "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
   "name": "遠坂凜",
   "origin": "法師",
   "passiveAbility": "b2-rin.passive",
@@ -411,42 +415,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-rin.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.680d8e260e0569abae8a93abf50b72680cd17db3a0bb9613",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
-      "modelSha256": "996ebf6c2da10f4607ebe0dab96b2db3a582f89d15f019823312ef2723e7bc08",
-      "binarySha256": "076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889",
-      "registeredAt": "2026-09-10T14:45:35.184Z",
-      "source": {
-        "kind": "previous",
-        "character": "遠坂凜",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.24dff69da9f04e6b1cb5fe28affe1d1df196a9f352259aed",
-      "label": "远坂凛",
-      "sourceModelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
-      "modelSha256": "c21b2710acb40f5b7988e4aa53dd8c09d1588db8ede7a38f4accbc72c167fce8",
-      "binarySha256": "076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889",
-      "registeredAt": "2026-09-10T14:45:35.193Z",
-      "source": {
-        "kind": "exact",
-        "character": "远坂凛",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "300heroes:7a9bba24a848388ea5dea661",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-rin.webp"
 }

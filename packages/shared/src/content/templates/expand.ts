@@ -1901,6 +1901,30 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     castType: "self",
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
     effects: [
+      /**
+       * ⭐⭐ GH#1211 —— **`modifiers` 是空的就真的不發這個節點**。
+       *
+       * ⛔ 在此之前它無條件發一個 `applyBuff{ modifiers: [], duration }` ——
+       * ⭐ 那個節點**逐位元等於不存在**（`applyBuff` 的 handler 沒有 modifier 就什麼都不做），
+       * 而卡面上寫著「獲得 N 秒增益」⇒ 第一·五守則的形狀。
+       * ⚠️ 實測：出貨內容裡 **34 支**技能因此各帶一個空殼
+       *（社群 37 名與 LOL 七名的護盾／回復技能：真正做事的是它旁邊的 `shield`／`heal`）。
+       *
+       * ⭐ 這條規則**旁邊的 `transform` 家族早就寫著了**，逐字：
+       *「`modifiers` 是一格 optional 槽（清空 ⇒ 真的不發 applyBuff，同 `instant-blast` 的 radius），
+       *  ⛔ 不是「發一個空的 applyBuff」（那會在卡面上多一個什麼都不做的宣稱，第一·五守則）」。
+       * ⇒ ⭐ 這裡只是把同一條規則補上，⛔ 不是新規則。
+       *
+       * ⚠️ ⭐ 判準是**空陣列**，⛔ 不是 `has()`：`buff-self` 的 `modifiers` 是**必填格**
+       *（有 default、⛔ 沒有 optional）⇒ `has()` 永遠是 true。
+       * ⛔ 而 `perRank`／`statusId` 任一個在就**仍要發** —— 那兩格自己就會做事
+       *（handler 走 `perRank[rank-1]`；`statusId` 讓它同時是一個具名標記）。
+       */
+      ...(modifiers(t, p, "modifiers").length === 0 &&
+      !has(t, p, "perRank") &&
+      !has(t, p, "statusId")
+        ? []
+        : [
       {
         kind: "applyBuff",
         modifiers: modifiers(t, p, "modifiers"),
@@ -1928,6 +1952,7 @@ const FAMILIES: Readonly<Record<string, Family>> = {
          */
         ...(has(t, p, "perRank") ? { perRank: buffPerRank(t, p, "perRank") } : {}),
       } as EffectDef,
+          ]),
       // ⭐ 與 single-strike／transform／projectile-strike 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
       ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ],

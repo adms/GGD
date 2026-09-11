@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-yogiri.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -108,7 +109,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-yogiri.q.webp"
     },
     "R": {
       "castTimeSec": 1.233,
@@ -146,9 +148,9 @@
       ],
       "id": "b2-yogiri.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -197,7 +199,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-yogiri.r.webp"
     },
     "W": {
       "castTimeSec": 1.7,
@@ -262,10 +265,10 @@
       ],
       "id": "b2-yogiri.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -341,20 +344,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-yogiri.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -389,7 +393,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-yogiri",
-  "modelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
+  "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
   "name": "高遠夜霧",
   "origin": "法師",
   "passiveAbility": "b2-yogiri.passive",
@@ -401,61 +405,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-yogiri.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.faa797490d76695722baee7ea86bbb6ecae77197f5d0fbcc",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
-      "modelSha256": "b421162eeffd0340dee205e1892afa7ece0bfc1a8ad41c238628370052371331",
-      "binarySha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
-      "registeredAt": "2026-09-10T14:45:40.951Z",
-      "source": {
-        "kind": "previous",
-        "character": "高遠夜霧",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.1b0166a2f3c372c6c7e599efa4faf6c24bf0f2c78d51ab5e",
-      "label": "富樫勇太",
-      "sourceModelKey": "community.body.e854c5c60388f5ecb54fe3cb34e5195ba4ad0128f79f733a",
-      "modelSha256": "6442301633454f54489cd121e8ebe39ca7bc3d5fa62d3073991c239ad29f2103",
-      "binarySha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
-      "registeredAt": "2026-09-10T14:45:40.958Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "富樫勇太",
-        "work": "中二病也想談戀愛！",
-        "library": "300heroes",
-        "reference": "300heroes:1dd02b6976c9ca0a89be6d66",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
-      "label": "高遠夜霧（獨立副本／富樫勇太）",
-      "sourceModelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
-      "modelSha256": "14900891d1f1a5bbce2acee0b7a2dcbfe1c72b2e19f4ad31537c65fd70b7939d",
-      "binarySha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
-      "registeredAt": "2026-09-10T14:45:41.016Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "高遠夜霧（獨立副本／富樫勇太）",
-        "work": "中二病也想談戀愛！",
-        "library": "300heroes",
-        "reference": "derivative:yogiri",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-yogiri.webp"
 }

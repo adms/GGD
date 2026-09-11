@@ -33,12 +33,18 @@ export async function inspectModelUpload(bytes: Uint8Array, kind: "model" | "ani
     return { index, name, duration, channels: animation.channels.length };
   });
   if (kind === "animations" && !clips.length) throw new Error("動作庫沒有動畫片段。");
-  let meshes = 0, triangles = 0;
+  // ⭐ GH#1230 —— owner 2026-09-11 逐字點名「**綁好骨架**」，⛔ 而在此之前
+  //    `model_intake.py` 與這一支**都沒有任何一行**在問它（grep skin/joint/bone ⇒ 0）。
+  //    ⚠️ 一顆沒綁骨架的模型**畫得出來** —— 一具不會動的 T-pose ⇒
+  //    ⭐ 「畫得出來」⛔ 不等於「檔案是對的」，只有這裡問得出這一題。
+  let meshes = 0, triangles = 0, skinnedPrimitives = 0;
   for (const node of json.nodes ?? []) if (node.mesh !== undefined) for (const primitive of json.meshes![node.mesh]!.primitives) {
     meshes++;
+    if (primitive.attributes.JOINTS_0 !== undefined) skinnedPrimitives++;
     const count = json.accessors[primitive.indices ?? primitive.attributes.POSITION!]!.count, mode = primitive.mode ?? 4;
     if (mode === 4) triangles += Math.floor(count / 3); else if (mode === 5 || mode === 6) triangles += Math.max(0, count - 2);
   }
+  const skins = (json.skins ?? []).length;
   if (kind === "model" && (!meshes || !triangles)) throw new Error("模型檔沒有可見的三角網格。");
   const textures = (json.images ?? []).map((image) => {
     if (image.bufferView === undefined || !["image/png", "image/jpeg"].includes(image.mimeType ?? "")) throw new Error("GLB 貼圖必須是內嵌 PNG 或 JPEG。");
@@ -48,6 +54,6 @@ export async function inspectModelUpload(bytes: Uint8Array, kind: "model" | "ani
     if (!header || header.mime !== image.mimeType || !header.width || !header.height) throw new Error("GLB 貼圖格式與內容不符。");
     return { width: header.width, height: header.height, bytes: view.byteLength, sha256: sha256Bytes(imageBytes) };
   });
-  return { ...parsed, sha256: sha256Bytes(bytes), clips, meshes, triangles, textures, report };
+  return { ...parsed, sha256: sha256Bytes(bytes), clips, meshes, triangles, skins, skinnedPrimitives, textures, report };
 }
 export type InspectedModelUpload = Awaited<ReturnType<typeof inspectModelUpload>>;

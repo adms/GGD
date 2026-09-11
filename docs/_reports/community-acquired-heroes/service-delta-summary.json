@@ -1,0 +1,765 @@
+{
+  "schema": "ggd-acquired-heroes-service-delta-summary@1",
+  "scope": "25 unchanged heroes retain their earlier service proof; Astralym and eight explicit proxy assignments were rechecked after their source changed. Local strict check covers all 34 against the current checkout.",
+  "status": "passed",
+  "counts": {
+    "heroes": 34,
+    "passed": 34,
+    "failed": 0,
+    "blocked": 0
+  },
+  "runs": [
+    {
+      "kind": "unchanged-baseline",
+      "target": {
+        "gameRevision": "acquired-heroes-local-20260911",
+        "contentVersion": "cv_afc650cc3972",
+        "migrationFingerprint": "79d7bc384d11",
+        "processorFingerprint": "3763b014a5d4"
+      },
+      "passed": 25,
+      "selectedIds": [
+        "acquired-jetragon",
+        "acquired-cattiva",
+        "acquired-dio",
+        "acquired-morgiana",
+        "acquired-emilia",
+        "acquired-kita-kita",
+        "acquired-wargreymon",
+        "acquired-saya",
+        "acquired-naruto",
+        "acquired-lord-nightmares",
+        "acquired-rim",
+        "acquired-xiaodangjia",
+        "acquired-inuyasha",
+        "acquired-asuna",
+        "acquired-alice",
+        "acquired-leafa",
+        "acquired-kuroyukihime",
+        "godie-hlgr",
+        "godie-eevi",
+        "godie-e00q",
+        "godie-usyl",
+        "godie-nbst",
+        "godie-nman",
+        "godie-e00t",
+        "godie-h021"
+      ]
+    },
+    {
+      "kind": "astralym-model-delta",
+      "target": {
+        "gameRevision": "acquired-heroes-local-20260911",
+        "contentVersion": "cv_8f4dde06dec9",
+        "migrationFingerprint": "79d7bc384d11",
+        "processorFingerprint": "3763b014a5d4"
+      },
+      "passed": 1,
+      "selectedIds": [
+        "acquired-astralym"
+      ]
+    },
+    {
+      "kind": "proxy-assignment-delta",
+      "target": {
+        "gameRevision": "acquired-heroes-local-20260911",
+        "contentVersion": "cv_8f4dde06dec9",
+        "migrationFingerprint": "79d7bc384d11",
+        "processorFingerprint": "3763b014a5d4"
+      },
+      "passed": 8,
+      "selectedIds": [
+        "acquired-zero",
+        "acquired-ram",
+        "acquired-beatrice",
+        "acquired-mario",
+        "acquired-mewtwo",
+        "acquired-pokemon-trainer",
+        "acquired-ryu",
+        "acquired-minecraft"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "acquired-jetragon",
+      "name": "空渦龍",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:fbcafc1f942fc1bf35722051e0927cabc4057c83fc0ab40d5983b4e40005a7e1",
+        "archiveSha256": "sha256:35dc93da85d290d76225ee7a60b17225ffe381f293d1f94bea3570ffa0a2cc2e",
+        "archiveBytes": 6287979,
+        "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+        "modelPath": "assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "modelDocumentSha256": "sha256:34572980707ac5d887da574195f423b7f00e0b8482ae0e0dac386ef9fe82d94e",
+        "modelBytesSha256": "sha256:0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+        "packageDigest": "sha256:64a3acbb04dafc9f1e68c00238b164b823848831fa79cc5d205ae0ec6ea7e507",
+        "slots": 6,
+        "runtimeDocuments": 130,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-cattiva",
+      "name": "搗蛋貓",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:ac4929e85c44cfae71019175b05d557c85fbaa69d9d693aece283d649b381596",
+        "archiveSha256": "sha256:41e7801c4b7880586b623ca4b0b7c30706a1ed230eef0ca0c42999b373159c44",
+        "archiveBytes": 4398119,
+        "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+        "modelPath": "assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+        "modelDocumentSha256": "sha256:e40233deaf578e668e129f82b0590a8103f07f4293aaf8c66f74ffcadc043e35",
+        "modelBytesSha256": "sha256:3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+        "packageDigest": "sha256:e81045b75acf8f05d194e4f53937a49c6aa188cbbda2103875a279e1f30243b4",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-dio",
+      "name": "DIO",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:2088c711c7d7cbf4e02ba5bfd48f60de832ab630a7bc9ab2041c996f923159f8",
+        "archiveSha256": "sha256:d82fa8697b5ead9982ec6b9ec76718db7bec7414ac8326183fde36a947c91839",
+        "archiveBytes": 3649631,
+        "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+        "modelPath": "assets/models/community/fb40119b3d1dd96bb0af8374f69c028577093f8fbc2111ea8d4da1653b80a397.glb",
+        "modelDocumentSha256": "sha256:22e279a044445e7e957242cddc7034f874028cd6e89ca9c34c4c38cee8de5690",
+        "modelBytesSha256": "sha256:fb40119b3d1dd96bb0af8374f69c028577093f8fbc2111ea8d4da1653b80a397",
+        "packageDigest": "sha256:271b0b9e6dcab436c5c8338c2f46a92ef80b36fc4ca030793eca8ecaf09b9f43",
+        "slots": 6,
+        "runtimeDocuments": 131,
+        "validationDocuments": 2,
+        "assets": 95
+      }
+    },
+    {
+      "id": "acquired-morgiana",
+      "name": "摩尔迦娜",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:8f83fe4d964453d45d4bbb9dea6a3016ff8a934ac8c667176fbca7c37cdc0080",
+        "archiveSha256": "sha256:846e0ed1b37b61cb04d2abd1eaffb88438271699dc017c6043b4d51eabed2592",
+        "archiveBytes": 3769627,
+        "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+        "modelPath": "assets/models/community/f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30.glb",
+        "modelDocumentSha256": "sha256:f0c8cca3647c6487063f311ad4e0bde038275eb339e763d6902dd62816ea7ecb",
+        "modelBytesSha256": "sha256:f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30",
+        "packageDigest": "sha256:3f0de246ba29b6cab456d484d7a179e189e9bc4f0640d991917b940f6b21bc09",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-emilia",
+      "name": "愛蜜莉雅",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:9a727136070df0a05779cbed6a712c44226b7a61eb921ce9aa3d3df8c91503df",
+        "archiveSha256": "sha256:4c206e3cef4b00dc9d1dfa1e2183b3743364af215f60409f2c403b6271043cf9",
+        "archiveBytes": 4093658,
+        "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+        "modelPath": "assets/models/community/4a3a7ca9bdbf6181e5be31e7ac645bb92d564d0e95a3b0bb5bfacac87db002ea.glb",
+        "modelDocumentSha256": "sha256:067aa3bf4d17ea0c5088c1b57dd78c02ab501d7b32a006d24f4b2d7af1bf91c7",
+        "modelBytesSha256": "sha256:4a3a7ca9bdbf6181e5be31e7ac645bb92d564d0e95a3b0bb5bfacac87db002ea",
+        "packageDigest": "sha256:3811a348d31c06badc57629b6dd544e0f2f3c15a19b0e1f682f7234a7cb465ab",
+        "slots": 6,
+        "runtimeDocuments": 130,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-kita-kita",
+      "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:1d55408914b3f6df0bc002fa234996278a49c639c679369359197029ff74fb44",
+        "archiveSha256": "sha256:9fa618e39b6131aee392204f26ca9766d2bacb0706043a15536bf716366019ff",
+        "archiveBytes": 3369491,
+        "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+        "modelPath": "assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "modelDocumentSha256": "sha256:3d3c0d8f91324f83289c18865686b60226e4970dce793d4bb883f332b331d859",
+        "modelBytesSha256": "sha256:2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+        "packageDigest": "sha256:c0cde801acf1bdd62e0ec400a9d55fc9dc186f582ed5f99a6993b8270745b87e",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-wargreymon",
+      "name": "戰鬥暴龍獸",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:4bf0458a909e9dc3cfbd9c140a3e7d349cd9b2051d97e854ad52ac13164b3628",
+        "archiveSha256": "sha256:fc051a3949befb3c856f2bdf6c4b6cea55365634ebf770a9cff86ff7e5f35f27",
+        "archiveBytes": 3689872,
+        "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+        "modelPath": "assets/models/community/11408a6a43c57f4905a0bb5175b824733aab0c1bf2625db4e08667438b8caaa4.glb",
+        "modelDocumentSha256": "sha256:665c87f1c7ebe673d739b21ae369f3e3255b60c20cf50a4632a6fedb6d0a249c",
+        "modelBytesSha256": "sha256:11408a6a43c57f4905a0bb5175b824733aab0c1bf2625db4e08667438b8caaa4",
+        "packageDigest": "sha256:b62e3a0e07f1ea67be9e3e4232d4acfcb7e7b262dd106ec0bde94945a011cc93",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-saya",
+      "name": "沙耶",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:866a83e5c7a62df4f413258a5b9fe60cbdf0cdea6a58b954174263540be44689",
+        "archiveSha256": "sha256:19d23dd1ca276d0a98f689716bf383458b56145737f6f14363f5e20f79c70619",
+        "archiveBytes": 3834296,
+        "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+        "modelPath": "assets/models/community/eafbcc61633f853566a1517ae5fea6f495465425b24749ceb9da259407122070.glb",
+        "modelDocumentSha256": "sha256:11d2a98dab790d965e5976ee11508efb2008f62c84578642cc1530def8f192b2",
+        "modelBytesSha256": "sha256:eafbcc61633f853566a1517ae5fea6f495465425b24749ceb9da259407122070",
+        "packageDigest": "sha256:8359fbeb136960bc0479418a186513895d17a4ed6dc1ba03cc15579d738ace7b",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-naruto",
+      "name": "漩渦鳴人",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:4f1dba677e4148daed7618ddd89e6027b1c109f84c80ca83e49d039d26e1b96b",
+        "archiveSha256": "sha256:c02eb5b4b398bf93ee067a0665ea4bd07fc3634732c1f04343f38cd63c134157",
+        "archiveBytes": 3538538,
+        "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+        "modelPath": "assets/models/community/e22f6ef3cf9273e90c3a64c24725738ea2520c5918c60bb7f065882a2f26cd78.glb",
+        "modelDocumentSha256": "sha256:29a314ebf9f6fcf94f07d65591f4b02bb2ffe6f2645f9b70765fab9dbbae5c86",
+        "modelBytesSha256": "sha256:e22f6ef3cf9273e90c3a64c24725738ea2520c5918c60bb7f065882a2f26cd78",
+        "packageDigest": "sha256:5c83535bbea114fcc6486a68d8afb055496d583e1290225b3e1d689577900a88",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-lord-nightmares",
+      "name": "金色魔王／惡夢之王",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:5298cc39de8e4d9d6c80af98523b9270f9d75b74d397ad03c4fa6d0d9ea5bb8d",
+        "archiveSha256": "sha256:1afa45f6ea0244ac953dfc7f07a966f6d66e1c20b0acd10770f8f5764aaa2741",
+        "archiveBytes": 3729916,
+        "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+        "modelPath": "assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "modelDocumentSha256": "sha256:28e05779b8d922c3e0a2ab09869fef04fd602ad90fb0d56ab059384b168033e5",
+        "modelBytesSha256": "sha256:d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+        "packageDigest": "sha256:9ac67b6f59f9907fcdaa19014118e4e5ffa438c762261e417e586ff39c759911",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-rim",
+      "name": "莉姆（Rim；粉紅魔龍）",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:967d35b127080f2a14b26714679271210d1da3bb1f83fe43baf393964d4fef4b",
+        "archiveSha256": "sha256:9bad7bea73997e0b317de447dc6fa79960e1dac0f9b5a92336cfc203de847904",
+        "archiveBytes": 3847741,
+        "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+        "modelPath": "assets/models/community/0ee1fcac10c24ce171186e192bf491a836980632e14dcb166917509c7e06c99e.glb",
+        "modelDocumentSha256": "sha256:2c1a54b94eaee9dc975ebaf6869af331c263a69e1d3a33edb1bb78097e89733e",
+        "modelBytesSha256": "sha256:0ee1fcac10c24ce171186e192bf491a836980632e14dcb166917509c7e06c99e",
+        "packageDigest": "sha256:167291af7498169bdf5b2d0b6601ac86013d55a41c3866a7ab4401afdc503bba",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-xiaodangjia",
+      "name": "小當家",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:c779eb3616428c7eaa2eb49d85ab5d73cfad2d5eb7091583960ec1e258a96d67",
+        "archiveSha256": "sha256:69fb6b876bb344b2e6c3b73172d28e403696312b04f940bd54525bd7522d42ca",
+        "archiveBytes": 3565864,
+        "modelKey": "ou99.498407",
+        "modelPath": "assets/models/ou99/ou99_498407.glb",
+        "modelDocumentSha256": "sha256:66aecfa1182c9f339ac23fe0f4273461da05a770a62d2945831a552daefb68f7",
+        "modelBytesSha256": "sha256:fa2d87e97b0c01a79dfe9f714d956fed0a5ddac2589e4fcaf2a11e20130c0bdb",
+        "packageDigest": "sha256:e8d154204669580c8a7d5fcc3ac0b5978499db9e4889c67cc304c2376be2744b",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-inuyasha",
+      "name": "犬夜叉",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:21c85984dfd922caf32395143900bd90fa06c59ddc6717d229e400b67e1a8d1b",
+        "archiveSha256": "sha256:0d359f7edda2391544dd5a7068061aa210a1053c46366494a1c8ddb4c54860dd",
+        "archiveBytes": 4200937,
+        "modelKey": "ou99.452782",
+        "modelPath": "assets/models/ou99/ou99_452782.glb",
+        "modelDocumentSha256": "sha256:859e846ca0134a21fa56d668c78ac7180ba507a9c390c94a6ad0c102aa8b5348",
+        "modelBytesSha256": "sha256:7cf93c7fc14b517326a509edcf5ef38c0ebe40ce3512b7f945cb2648c3faf3a6",
+        "packageDigest": "sha256:6d7ab7b8c24216b01e7bfac262e784d793d7474adf3999d52ac732103b92665e",
+        "slots": 6,
+        "runtimeDocuments": 129,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-asuna",
+      "name": "亞絲娜／結城明日奈",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:cdb9bb5662a0a1e0e459ffa8c42b559479823d49a271625b1861d01c3249dab7",
+        "archiveSha256": "sha256:ccbce164bed4a237350387e782ab0dace5e08f6a97dc7cdff16b63d72542ccc1",
+        "archiveBytes": 3887911,
+        "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+        "modelPath": "assets/models/community/f3c310011262f6a18bdf8ceb86d08b228695d949f8e32db1ca48fe2e0e1f4604.glb",
+        "modelDocumentSha256": "sha256:985bf64b70fb848236af3d7393a47db8bc6cd30da5b5364b5058ba78176f1692",
+        "modelBytesSha256": "sha256:f3c310011262f6a18bdf8ceb86d08b228695d949f8e32db1ca48fe2e0e1f4604",
+        "packageDigest": "sha256:64323b5d8fa07137aeca7b9bbb5c55da90ef31fa41314f644cfaf87d341dc031",
+        "slots": 6,
+        "runtimeDocuments": 129,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-alice",
+      "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:807eae8b8a2f69f2f861c50706695af728b00e5f334ff17ba32aca18efd0f3cb",
+        "archiveSha256": "sha256:9861e4c10d707d2aa8ff5f61ad3b34054bb4fd8cf222ec729336e5bbcf9d2306",
+        "archiveBytes": 4453347,
+        "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+        "modelPath": "assets/models/community/724fd97d0a808efe71d9d35023d19ca146988a817f4a848b25b0349df2a841ed.glb",
+        "modelDocumentSha256": "sha256:ab47d14b8913943bfc2e2f73265d45a1b23f9d5cb8c366c564900694f1591f05",
+        "modelBytesSha256": "sha256:724fd97d0a808efe71d9d35023d19ca146988a817f4a848b25b0349df2a841ed",
+        "packageDigest": "sha256:9cd2f3625c44d764005281d7e781cbd8b2419189102229d2165496d0c8ab73f5",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-leafa",
+      "name": "莉法",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:6b7c228498c9722929a18c75637453533daa7d7d69c6a16ee3d707f5fff99a38",
+        "archiveSha256": "sha256:77704b805258400931731a9b1656130a71b741e2cebe2c910c7b0eb37f414bed",
+        "archiveBytes": 4163700,
+        "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+        "modelPath": "assets/models/community/30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1.glb",
+        "modelDocumentSha256": "sha256:f168f7eab60eaf1e29b5b4701c08d386cd7a3e03a9d075e11ff5fc2562815432",
+        "modelBytesSha256": "sha256:30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1",
+        "packageDigest": "sha256:92c23f945a25a4633f078b292f3385f716fbe007a6d7ba26074e9b3910a68e28",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-kuroyukihime",
+      "name": "黑雪姬",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:6a1bc5f836314f71af64bbc07f17883eb347f4cd963582d9be9c2ba4e384805f",
+        "archiveSha256": "sha256:bad5b513c260199b5ea831fd00db270219ef12ba8e53131e7e2cef90f187a4e8",
+        "archiveBytes": 3532305,
+        "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+        "modelPath": "assets/models/community/e1e32ccdaace62784a340a57089ecab1b229c78aab7fb79259a187b7b84e8497.glb",
+        "modelDocumentSha256": "sha256:fca0733ad83d998319b37c49cfcb8aa49b8c3a4583b420c945065ccbc30fb808",
+        "modelBytesSha256": "sha256:e1e32ccdaace62784a340a57089ecab1b229c78aab7fb79259a187b7b84e8497",
+        "packageDigest": "sha256:05fa8a2bc75980fce1a77b9d38e557d579cb404a5e13ff07ec12d1b4111941f1",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-hlgr",
+      "name": "鋼彈",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:bd121c22a86ac2adb9ae3dae2e86bc80b31ab9494f9c749f5b0d2a14734b51cb",
+        "archiveSha256": "sha256:0da29896a239348f3e07936b7a7c68b7f7049f253c527b7a8c5ad539c37f3993",
+        "archiveBytes": 4961184,
+        "modelKey": "ou99.472273",
+        "modelPath": "assets/models/ou99/ou99_472273.glb",
+        "modelDocumentSha256": "sha256:67c0495022e7258f2a48e9ce733ab191b1da8390910f59bd8dc16e3b4c7ba894",
+        "modelBytesSha256": "sha256:eacda1cb2a5e1479bd7b4b28faf6510eff9ee353c0544a69c42fd004b5b5f435",
+        "packageDigest": "sha256:d7e94fc10c802d0fa86ee9962039d453f897c3fdcaac53cc069d5d42827e26ac",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-eevi",
+      "name": "劍心拔刀齋",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:6622193d821c1248269176d7ede0b4ca6ad9bb0203ba33564e24b6988142d15a",
+        "archiveSha256": "sha256:d1ce429cf6e2a57a210c7306fd054ef2af3fafd279b5b1135ebaebe4822ee269",
+        "archiveBytes": 3988238,
+        "modelKey": "ou99.470351",
+        "modelPath": "assets/models/ou99/ou99_470351.glb",
+        "modelDocumentSha256": "sha256:bf25d847405bd9c10078f6fea04681cdf837d01a182d31f5118f69cf2d5b81cc",
+        "modelBytesSha256": "sha256:ea79fe64a767d221dacd6d46f074dfd427fd44f79abceb3c95fcc9ee351affa0",
+        "packageDigest": "sha256:3d50c0a9fe0e42b4e1fd108d341ef8239881bf0acd571e3087b9206dcd4e27b3",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-e00q",
+      "name": "黑化Saber英靈亞瑟王",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:1807c86620213460fa2691b7ef4147f640b691928007bcad1cfc00c1fac1eb76",
+        "archiveSha256": "sha256:72c93adc83e86128a8903b9bf518be375f5fe72299a8d463b06ea0f81005d161",
+        "archiveBytes": 4359660,
+        "modelKey": "ou99.466278",
+        "modelPath": "assets/models/ou99/ou99_466278.glb",
+        "modelDocumentSha256": "sha256:686b2c52af8d3fc75b5b62c08406fbcbae2e0dedf58a5760f518d5413246973c",
+        "modelBytesSha256": "sha256:a66a572b1099262940fa82cb16e8b6ef0a0362837115b9762ae1dcdef164031b",
+        "packageDigest": "sha256:7b4b14538d02c5a46dc5a9781acf9e8e0079acca3f7bac026d59985f43d311e6",
+        "slots": 6,
+        "runtimeDocuments": 129,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-usyl",
+      "name": "異形殺戮之牙",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:155fd96183df87fef7ba4d04d7a1d8421cc07ed23f38752484142cd33ceeab12",
+        "archiveSha256": "sha256:8b9c436782177f8c4ed13c1966feeba6016a9ede8baa283d928308877c4a2979",
+        "archiveBytes": 3502160,
+        "modelKey": "ou99.312479",
+        "modelPath": "assets/models/ou99/ou99_312479.glb",
+        "modelDocumentSha256": "sha256:6834403a6a888101f4f6a8dc75d225fb19743913de964ea4599c8edac78452be",
+        "modelBytesSha256": "sha256:6489ec93268ada2aec4b3e679e2a21235f2607782cdb3837a2b33f6cfd2de43b",
+        "packageDigest": "sha256:a0561b351c26bae9058ba9cb98a09dd053e011ee99767a19186b2671717b93dd",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-nbst",
+      "name": "瘋狂假面變態正義",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:92e04cde0708ce086f43cd485012bf525bae9945b0c4368ad0ec9c825c3287d7",
+        "archiveSha256": "sha256:66fb81e1f54906bd43cb67a09e5fffd3eb2729525914f51ff574ca100ae502fb",
+        "archiveBytes": 3548556,
+        "modelKey": "ou99.455144",
+        "modelPath": "assets/models/ou99/ou99_455144.glb",
+        "modelDocumentSha256": "sha256:3414e212670c2c297eed532d61f66e6ef2c647e8eeb4c46f6810ab9511f018b3",
+        "modelBytesSha256": "sha256:57a9acc49317d22d079e0f7b3532f48bbb520b1eb1918579a25ce9099f9dbe68",
+        "packageDigest": "sha256:c9021244df7e675b4e2adc2c1533c09205abfc8eaa018dcaf0ae8bfc02faf353",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "godie-nman",
+      "name": "胖虎地獄歌神",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:a8c17ca3b7c59a0aad361f56d7a5b0f2d5316a68bae59fd70a7fad7da10af99c",
+        "archiveSha256": "sha256:c962eb82acfe9c7bbafd8c63647805e68513157f85d04e8f275e6d548f7e326e",
+        "archiveBytes": 3775915,
+        "modelKey": "ou99.496746",
+        "modelPath": "assets/models/ou99/ou99_496746.glb",
+        "modelDocumentSha256": "sha256:b1e646f09542681667763080108252aad87dcec7b3d11cd3f6bdc1b41698a4b2",
+        "modelBytesSha256": "sha256:910774b747c47dcb0092556957f022a7d5acb404147f4f4fe0f046da4ddbb573",
+        "packageDigest": "sha256:b943e8c23b7c471d057cb33ff4fdd2c364a1cda91436cf5c1b18f5504e1bab5d",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-e00t",
+      "name": "貞子七夜怪談",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:d1f6356fed0f84c40acc2814efb7d7c4f4269ee7b32692374bcde679cc156f5a",
+        "archiveSha256": "sha256:ba46a3336e4495f3d9a5064517b73701247b3e5039a73524f6f4c16b0af318d8",
+        "archiveBytes": 3424770,
+        "modelKey": "ou99.480489",
+        "modelPath": "assets/models/ou99/ou99_480489.glb",
+        "modelDocumentSha256": "sha256:5422f44cb56e76ff80f815b470117286d40a3674e0ce0ebed4675b5aa7d30769",
+        "modelBytesSha256": "sha256:7887e42d27116eabda9a919b100c63df88715b4b32d761b2b182f98c450a01cf",
+        "packageDigest": "sha256:627a715d2d7dce741d35dbb4cf9fb9eff105c872e9fb96d51f08218fd4affabe",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "godie-h021",
+      "name": "阿強一號破銅爛鐵",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:42b9c57049c0a15da36ea7e7359832167a23014ff4960f485e8644bc0963c2f3",
+        "archiveSha256": "sha256:62f5fcfbe987a754cd200517e27da22a33b61a7fc465273054fe827c3f42a157",
+        "archiveBytes": 4016990,
+        "modelKey": "ou99.485012",
+        "modelPath": "assets/models/ou99/ou99_485012.glb",
+        "modelDocumentSha256": "sha256:b38ed37c4ac771c886434855d9376d389ef7fdf7d13a0762d35b39ff682c8ad9",
+        "modelBytesSha256": "sha256:5ee356f14d2b804a257b86b503124f0c2fe2d5b701723f7e01207e2bdc95e417",
+        "packageDigest": "sha256:ef4a98bbc06da482db6166b62bfe1ee9b46b3852cb8897abce2b19e4c79f83a7",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-astralym",
+      "name": "枯星龍",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:1ce58c7edf0e9106af88bae03849ad1d1bf8847be528fbdd22c36ca9bd0378c7",
+        "archiveSha256": "sha256:e9f5645bcb51040126f5b4d31409145099638b2d8d25d69519df5dc42f7eb48c",
+        "archiveBytes": 6865619,
+        "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+        "modelPath": "assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+        "modelDocumentSha256": "sha256:31d168a820fad50c24c2522ee8db6449f39a7b6501e36ea8d35895a6846b901b",
+        "modelBytesSha256": "sha256:618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+        "packageDigest": "sha256:95d8cef7b1786552fd92739f11322a1ca102878395d88c0853ac9fa79d029dab",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    },
+    {
+      "id": "acquired-zero",
+      "name": "Zero",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:0b194ca628c840b4133a067998289df6cd7fb4ed233a301af2e3018fb35c6467",
+        "archiveSha256": "sha256:2369b750abc5b69c2486c3689ace9a70d85d041940a6918505b8feb6fdbb7ec2",
+        "archiveBytes": 3345703,
+        "modelKey": "imported.herosephiroth",
+        "modelPath": "assets/models/imported/herosephiroth.glb",
+        "modelDocumentSha256": "sha256:6ff0567d7bc7a02e61db52a7a9d6b203d709720238accbf0a49c13362ec866eb",
+        "modelBytesSha256": "sha256:f67909023e10d846585439d91bec7f9cd73be0fb5bb43dfe2ff6960374ade704",
+        "packageDigest": "sha256:be0a009f2f387645cf3e3ab34604565a97939fafb55a93939e5bb90dafb827a9",
+        "slots": 6,
+        "runtimeDocuments": 131,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-ram",
+      "name": "拉姆",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:87978183c013415f3bcc55bd71ecf44d9891f7802b252316bd2a182cadf80984",
+        "archiveSha256": "sha256:80567db49f882dc002499348a2b759ac24a5a396d6fa089b30ebfbc1bc2dae4c",
+        "archiveBytes": 3215345,
+        "modelKey": "imported.herooichi",
+        "modelPath": "assets/models/imported/herooichi.glb",
+        "modelDocumentSha256": "sha256:f9875b3c1ac0686bbe4a8e813aae5e1ba190ea128602dfa3f291221cfd07b993",
+        "modelBytesSha256": "sha256:8592695796e8426134da7863fd4ffbb64c3186c9678ba6601ecfef3b3a259053",
+        "packageDigest": "sha256:e319b501ad1e744eb83b608bba9a65b13d78c4cbfa94a5d667e0f98ae5ac4816",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-beatrice",
+      "name": "碧翠絲",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:072405e1ad06f8b9f5964ed86d8e21fc33ce09e354a8f917029542d7604a1341",
+        "archiveSha256": "sha256:001d4729ed98a4103568285cca5689f6211c14f21a828366ffcfead26b49430e",
+        "archiveBytes": 3105860,
+        "modelKey": "champ.sela",
+        "modelPath": "assets/models/champions/blocky-mage.glb",
+        "modelDocumentSha256": "sha256:90b8a7ce5f188b7685256aaab5327a8955d200d64421c21fc90fa8794129f4a9",
+        "modelBytesSha256": "sha256:2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+        "packageDigest": "sha256:698e0b83cd35cf19ef6f32ccceb0598190a182bf2c8981e9b57bb69054707238",
+        "slots": 6,
+        "runtimeDocuments": 130,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-mario",
+      "name": "Mario",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:2b71cbc93d9a5d7e348dee7777a370586fea6357dca6792355814f7c410bedc3",
+        "archiveSha256": "sha256:d9bec1289002fbe3c26fe0dbc814ea6042dc4242b16d691cc700be7c56aa8d5f",
+        "archiveBytes": 3235354,
+        "modelKey": "imported.linkstik",
+        "modelPath": "assets/models/imported/linkstik.glb",
+        "modelDocumentSha256": "sha256:4f7c987513351ec73768e9164ea39b4111e72a1238cfaccdce31ef18014a7f02",
+        "modelBytesSha256": "sha256:26b7c032048bcfbdd4eaa2c3c22a65de050086e89be7836ce672eb370e94f2dd",
+        "packageDigest": "sha256:d4007b3bd5f904d1130a7a8b4ab8d1307bc2690cf5bd087fdbceeefe5e96893a",
+        "slots": 6,
+        "runtimeDocuments": 130,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-mewtwo",
+      "name": "Mewtwo",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:36455dd494d016100bdb84451bb3499c44bcb7b65b9c1ac39cba31098cee5b90",
+        "archiveSha256": "sha256:6f0fcbc419c8aad7a2fea9aeceada287e67b2acc6e37acf217ac733f20073731",
+        "archiveBytes": 3283904,
+        "modelKey": "imported.herobuu",
+        "modelPath": "assets/models/imported/herobuu.glb",
+        "modelDocumentSha256": "sha256:467119ccc454b7fb05c99b385474dd35817d2685097008591787fae94dcef07a",
+        "modelBytesSha256": "sha256:99f18391788367a91b8afacae159a89a351fcbe470f36a29f6dd195e72cc714d",
+        "packageDigest": "sha256:368016979ede90f3793c2b2ae9c4bfc6ea8b1ef3a73dbd19897c2ae45f0b560c",
+        "slots": 6,
+        "runtimeDocuments": 130,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-pokemon-trainer",
+      "name": "Pokémon Trainer",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:ce39e9fc0f9d0f59419bba914f85375e57585ce0f1f2924d2df33427789e40b5",
+        "archiveSha256": "sha256:9e9e950afd34592f7a1a8219f245623f583dac77f299f3be134990894a6ad4b9",
+        "archiveBytes": 3157341,
+        "modelKey": "imported.heropikachu",
+        "modelPath": "assets/models/imported/heropikachu.glb",
+        "modelDocumentSha256": "sha256:f2edf990f5e104bb9fd4eb918da550a6f591cfefea329852dc6590c471f54b4e",
+        "modelBytesSha256": "sha256:24b1c85fbb2af9c70669a26ac4c9b0cf6edbed156a78c920d404cd7112285eb6",
+        "packageDigest": "sha256:02f347d00b9fd88b82a94a4e46b4ecea7296e3b1c4af05f1529108fcba996157",
+        "slots": 6,
+        "runtimeDocuments": 130,
+        "validationDocuments": 2,
+        "assets": 95
+      }
+    },
+    {
+      "id": "acquired-ryu",
+      "name": "Ryu",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:08cf21c1b86a97d02536cfdd93a68574881948c3937113825b2743abf2c1210e",
+        "archiveSha256": "sha256:415ff12379f646fd639942c5e2891c00fb3c1e9c0f3d9657dc88586be2f51bb6",
+        "archiveBytes": 3342734,
+        "modelKey": "imported.herokyo",
+        "modelPath": "assets/models/imported/herokyo.glb",
+        "modelDocumentSha256": "sha256:d7099dd69c9cb7ba3e0017de57efdd40be7d4fb5f1abe2df903fc6201d8c63bc",
+        "modelBytesSha256": "sha256:5cbf64bf46bad1d3b225806ba4e1fd7c90acff8b45288fab8176a0a11bd872ae",
+        "packageDigest": "sha256:9ca88fcf8d45ad42006102f5e2c82867432542d8c4b4c1f175850284ed20d57b",
+        "slots": 6,
+        "runtimeDocuments": 131,
+        "validationDocuments": 2,
+        "assets": 94
+      }
+    },
+    {
+      "id": "acquired-minecraft",
+      "name": "Steve／Alex",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:4da398d42ab70c89347ad6b931aeca4f8a784c11fd711738b427b511e8d4deeb",
+        "archiveSha256": "sha256:9c4463ad8e52d536239faa154f3e0edc12a35ddb23599524d55baa503b21cb38",
+        "archiveBytes": 3032636,
+        "modelKey": "champ.thorne",
+        "modelPath": "assets/models/champions/blocky-knight.glb",
+        "modelDocumentSha256": "sha256:082b1a16e49dd8b97013c053420723d6914a03825d26bf896c8b9f7f58645309",
+        "modelBytesSha256": "sha256:b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "packageDigest": "sha256:9e552c076401a928db91ad44cfebd2ffab2b2eba1cd4a66faa9bffad9e9f05aa",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    }
+  ]
+}

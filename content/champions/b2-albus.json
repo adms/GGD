@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-albus.e.webp"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -70,10 +71,10 @@
       ],
       "id": "b2-albus.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -99,7 +100,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-albus.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -212,7 +214,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-albus.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -276,20 +279,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-albus.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 29,
-    "agiGrowth": 2.78,
+    "agiGrowth": 0,
     "int": 13,
-    "intGrowth": 1.25,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored",
     "str": 18,
-    "strGrowth": 1.67
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -324,7 +328,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-albus",
-  "modelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
+  "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
   "name": "阿爾巴斯",
   "origin": "鬥士",
   "passiveAbility": "b2-albus.passive",
@@ -336,61 +340,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-albus.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.9007ef7a0fdf821b51fad194e34bb04119dd244b59efe049",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
-      "modelSha256": "b17410681b77a6d39039bcafae26abd89e4120688b3e2b9f034703613b4a80f8",
-      "binarySha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
-      "registeredAt": "2026-09-10T14:45:36.787Z",
-      "source": {
-        "kind": "previous",
-        "character": "阿爾巴斯",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.a97c5ef50755d23f69965463e50fd89b18dc5a599260f480",
-      "label": "尤吉欧",
-      "sourceModelKey": "community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54",
-      "modelSha256": "e1eb6dbfacfabd893607843ca67567d6ded195cc64061ba774e8d846962f151c",
-      "binarySha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
-      "registeredAt": "2026-09-10T14:45:36.806Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "尤吉欧",
-        "work": "刀劍神域 Sword Art Online",
-        "library": "300heroes",
-        "reference": "300heroes:8c19c91adaebbcc55755a5ef",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
-      "label": "阿爾巴斯（獨立副本／尤吉欧）",
-      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
-      "modelSha256": "60bc27eab0db4b19d1cad8eb7fcde1b1af8e367fd651dee0dbfbd6019d8581a6",
-      "binarySha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
-      "registeredAt": "2026-09-10T14:45:36.953Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "阿爾巴斯（獨立副本／尤吉欧）",
-        "work": "刀劍神域 Sword Art Online",
-        "library": "300heroes",
-        "reference": "derivative:albus",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-albus.webp"
 }

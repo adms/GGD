@@ -71,7 +71,7 @@ import { abilityActivationCue } from "../abilityCue";
 import { rangeGuide } from "../rangeGuideConfig";
 import { prefersReducedMotion } from "../buttonSfx";
 import { exSlotView } from "../exSlot";
-import { cooldownView } from "../cooldownView";
+import { cooldownSeconds, cooldownView } from "../cooldownView";
 import {
   abilityTileCursor,
   AbilityTileFrame,
@@ -104,6 +104,8 @@ import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 const SLOTS: CoreAbilitySlot[] = ["Q", "W", "E", "R"];
 const EX_ACCENT = "#f2a13c"; // distinct amber for the EX slot
+// ⭐ GH#1208 —— 後段角標的底色：刻意與 EX 的琥珀、三態框的綠都不同。
+const RECAST_ACCENT = "#7fe3ff";
 
 /** Quick scale-down + brightness flash on press (skipped under reduced-motion). */
 function pressVisualDown(el: HTMLElement): void {
@@ -291,6 +293,50 @@ function PassiveIcdChip(props: { slot: ChampionAbilitySlot; size: number }): Rea
         background: `linear-gradient(to right, rgba(${PROC_RIM},0.55) var(--ggd-icd, 0%), rgba(0,0,0,0.35) var(--ggd-icd, 0%))`,
       }}
     />
+  );
+}
+
+/**
+ * ⭐【後段角標】GH#1208 —— 技能格右上角印「還剩幾段」＋ 窗口倒數。
+ *
+ * ⚠️ 在此之前 `EntityState.recastCharges` / `recastWindow` 有**唯一的寫端**
+ *（`apps/game-server/src/net/snapshot.ts`，那兩行自己的註解就說了：
+ * 「沒有它，客戶端永遠讀到 0」）—— ⛔ 而客戶端**一行都沒有讀**
+ * ⇒ 玩家按了阿璃 R 之後不知道還能再按幾次、還剩幾秒（失敗形態②）。
+ *
+ * ⭐ 兩個數字都直讀權威 seat 欄位，⛔ 沒有本地預測：
+ * 「還剩幾段」是伺服器才知道的事（要命中才扣），猜錯比慢一格更糟。
+ * ⭐ 秒數走 `cooldownSeconds()`（⛔ 不自己寫 `/ TICK_HZ` —— 那是第二個住處）。
+ */
+function RecastChip(props: { charges: number; windowTicks: number; size: number }): React.JSX.Element | null {
+  if (props.charges <= 0) return null;
+  const secs = cooldownSeconds(props.windowTicks);
+  return (
+    <div
+      data-recast-slot={props.charges}
+      style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        minWidth: props.size,
+        padding: `0 ${Math.max(1, Math.round(props.size * 0.18))}px`,
+        height: props.size,
+        lineHeight: `${props.size}px`,
+        textAlign: "center",
+        fontSize: Math.max(9, Math.round(props.size * 0.78)),
+        fontWeight: 900,
+        color: "#0c1020",
+        background: RECAST_ACCENT,
+        borderBottomLeftRadius: Math.round(props.size * 0.35),
+        pointerEvents: "none",
+      }}
+    >
+      {/* ⭐ 兩個數字一格：段數，以及還剩幾秒可以按。
+          ⚠️ 3 秒以下印**一位小數** —— 後段窗口本來就短（阿璃 R 是 1.5 秒），
+          ⛔ 無條件進位會把「剩 1.5 秒」印成「2s」＝ 一句誇大的話（第一·五守則）。 */}
+      {props.charges}
+      {secs > 0 ? <span style={{ fontWeight: 700, opacity: 0.85 }}>{` ${secs < 3 ? secs.toFixed(1) : Math.ceil(secs)}s`}</span> : null}
+    </div>
   );
 }
 
@@ -752,6 +798,12 @@ export function AbilityBar(): React.JSX.Element | null {
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
               {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
               <PassiveIcdChip slot={slot} size={m.s(9)} />
+              {/* ⭐ GH#1208 —— 後段角標（還剩幾段／幾秒）。⛔ 直讀權威 seat 欄位，沒有本地預測。 */}
+              <RecastChip
+                charges={learned ? (seat.recastCharges?.[i] ?? 0) : 0}
+                windowTicks={seat.recastWindow?.[i] ?? 0}
+                size={m.s(11)}
+              />
               {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
                   漏了它整排未學技能會亮著框說「可以放」。 */}
               <AbilityTileFrame

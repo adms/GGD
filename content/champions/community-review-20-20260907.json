@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502",
+  "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-20-20260907.w",
@@ -134,10 +140,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -183,7 +189,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-20-20260907.e",
@@ -208,11 +220,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -242,7 +249,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-20-20260907.r",
@@ -258,9 +272,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -312,7 +326,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.lightning.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.lightning.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-20-20260907.ex",
@@ -325,42 +345,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.bb883822916cba61669fe30f9b3e878ae964367229b7dd45",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
-      "modelSha256": "80856ad23c703d23c0aceb3f1c496a96944d032d2e414db121702aae6dbf845b",
-      "binarySha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
-      "registeredAt": "2026-09-10T14:45:31.201Z",
-      "source": {
-        "kind": "previous",
-        "character": "御坂美琴",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502",
-      "label": "御坂美琴",
-      "sourceModelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
-      "modelSha256": "ab4b763185cac246c970576fec5c4629c97ac865d64cbd73b95e23e1ee4fc08a",
-      "binarySha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
-      "registeredAt": "2026-09-10T14:45:31.214Z",
-      "source": {
-        "kind": "exact",
-        "character": "御坂美琴",
-        "work": "魔法禁書目錄／科學超電磁砲",
-        "library": "300heroes",
-        "reference": "300heroes:d397198ec699d52dbaff951e",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "thrown"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

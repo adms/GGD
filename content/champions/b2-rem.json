@@ -86,7 +86,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -149,7 +150,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -265,7 +267,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -302,10 +305,10 @@
       ],
       "id": "b2-rem.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -320,7 +323,7 @@
           {
             "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 1.233,
               "damage": {
                 "damageTier": "小"
               },
@@ -331,7 +334,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 1.233,
               "castType": "targeted",
               "effects": [
                 {
@@ -362,20 +365,21 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-rem.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 23,
-    "agiGrowth": 2.17,
+    "agiGrowth": 0,
     "int": 12,
-    "intGrowth": 1.18,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 25,
-    "strGrowth": 2.36
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -410,7 +414,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-rem",
-  "modelKey": "version.body.712d51b72d6746b5e62dd98a095c148ec269187477f8e040",
+  "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
   "name": "蕾姆",
   "origin": "狂戰",
   "passiveAbility": "b2-rem.passive",
@@ -422,42 +426,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-rem.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.3eb60f520e1dc0b1c3c388b618b3c7a3ab53465669e795cb",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
-      "modelSha256": "0aafae8b91e441cad215b34de2c64deb188bc42befc45bed78740b1b3618ad89",
-      "binarySha256": "2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e",
-      "registeredAt": "2026-09-10T14:45:34.933Z",
-      "source": {
-        "kind": "previous",
-        "character": "蕾姆",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.712d51b72d6746b5e62dd98a095c148ec269187477f8e040",
-      "label": "蕾姆",
-      "sourceModelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
-      "modelSha256": "73ebc84d515a04fd6655506a8bb2460aa6be3cb470d785eddb08f194f84639fd",
-      "binarySha256": "2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e",
-      "registeredAt": "2026-09-10T14:45:34.943Z",
-      "source": {
-        "kind": "exact",
-        "character": "蕾姆",
-        "work": "Re:從零開始的異世界生活",
-        "library": "300heroes",
-        "reference": "300heroes:81b284ecdb9d20cddd22624e",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "thrown"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-rem.webp"
 }

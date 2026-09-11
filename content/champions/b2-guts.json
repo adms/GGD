@@ -88,7 +88,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-guts.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -118,10 +119,10 @@
       ],
       "id": "b2-guts.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -149,7 +150,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.bolt"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-guts.q.webp"
     },
     "R": {
       "castTimeSec": 2.433,
@@ -191,9 +193,9 @@
       ],
       "id": "b2-guts.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -224,7 +226,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-guts.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -312,20 +315,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-guts.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 23,
-    "agiGrowth": 2.17,
+    "agiGrowth": 0,
     "int": 12,
-    "intGrowth": 1.18,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 25,
-    "strGrowth": 2.36
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -360,7 +364,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-guts",
-  "modelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
+  "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
   "name": "凱茲",
   "origin": "狂戰",
   "passiveAbility": "b2-guts.passive",
@@ -372,79 +376,40 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "greatsword"
+  ],
   "icon": "assets/icons/champions/b2-guts.webp",
   "modelVersions": [
     {
-      "modelKey": "version.body.e90a364be5844cdaed4e0d537b1d8135e5dbbfd1a6ab4afb",
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
       "label": "原上線模型",
       "sourceModelKey": "champ.thorne",
-      "modelSha256": "a8868e1b42003957f4432b9130228cffccc8dd1010fb68fa079c5611296745e2",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
       "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-      "registeredAt": "2026-09-10T14:45:38.807Z",
+      "registeredAt": "2026-09-10T18:20:39.862Z",
       "source": {
         "kind": "previous",
         "character": "凱茲",
         "work": "原上線內容",
         "library": "GGD",
-        "reference": "models/champ.thorne.json",
-        "tier": "original"
+        "reference": "models/champ.thorne.json"
       }
     },
     {
-      "modelKey": "version.body.b063e512a3346de9ea34bb8e79528e84e7d46ea3266e2bcb",
-      "label": "Cloud 克勞德模型",
-      "sourceModelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
-      "modelSha256": "01ddd312a521c2a4b7c8ade3e0b28f9b381346bd0be5dda4f7ae6e8dd3208271",
-      "binarySha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
-      "registeredAt": "2026-09-10T14:45:38.813Z",
+      "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
+      "label": "ou99 凱茲（本尊／相似造型）",
+      "sourceModelKey": "ou99.460977",
+      "modelSha256": "4464c49385bb0435b87073a331ba985b14b5421e77609e4ccea34906f1005d0a",
+      "binarySha256": "ea28614b3ec763bd20c205cb8b7e8600d7a7781a7ec12baebd5ad55e86ed2a6d",
+      "registeredAt": "2026-09-10T18:20:39.881Z",
       "source": {
         "kind": "style-proxy",
-        "character": "Cloud 克勞德模型",
-        "work": "Final Fantasy VII；現有匯入模型",
-        "library": "w3x",
-        "reference": "existing:cloud",
-        "tier": "w3x",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.312ae63bf3a0833504025a5bb4e5166834c6b1260d5c77b7",
-      "label": "赫拉克勒斯",
-      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
-      "modelSha256": "d30106f875e8982a4b852553a678df079affaaa8cc460c27d7cbe83680e89275",
-      "binarySha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
-      "registeredAt": "2026-09-10T14:45:38.876Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "赫拉克勒斯",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
-      "label": "凱茲｜狂戰士鎧甲（GGD 程序化動作）",
-      "sourceModelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
-      "modelSha256": "e9a101deef1989deadcc89a9870c59717187b26a33046f9f4e2046cdcd2b4dac",
-      "binarySha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
-      "registeredAt": "2026-09-10T14:45:39.058Z",
-      "source": {
-        "kind": "exact",
-        "character": "凱茲｜狂戰士鎧甲",
-        "work": "烙印勇士 Berserk",
-        "library": "Lethal Company MOD／RRoD",
-        "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
-        "tier": "original",
-        "selectionClass": "community-mod"
-      },
-      "automaticEligible": true
+        "character": "凱茲",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-460977-1-1.html"
+      }
     }
-  ],
-  "modelSelectionMode": "automatic"
+  ]
 }

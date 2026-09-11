@@ -40,6 +40,8 @@ export const spawnProjectileEffect: EffectKindSpec<"spawnProjectile"> = {
       hitRadius: def.hitRadius,
       pierce: def.pierce ?? false,
       hitSet: new Set(),
+      ...(def.returns === true ? { returns: true } : {}),
+      ...(def.split !== undefined ? { split: def.split } : {}),
       // Same cast-time resolution as the leap: a missile is the OTHER gap
       // between cast and payout, so a conditional term rides it frozen. No
       // shipped projectile carries one today — this is the class guard, so

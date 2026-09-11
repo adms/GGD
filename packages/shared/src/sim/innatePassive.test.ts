@@ -134,8 +134,18 @@ beforeAll(async () => {
   //    GH#602）—— 它佔的是天生技槽，但它不屬於任何一張英雄卡，所以把它算進
   //    「幾位英雄有天生技」那個等式裡會讓等式永遠差一。⭐ 判準是**推導**的
   //    （查得到英雄卡就算），⛔ 不是一張會腐爛的 id 白名單。
+  // ⭐ GH#1211 —— 母體限 **w3x 英雄（`godie-*`）**，⛔ 不是註冊表全體。
+  //
+  // ⚠️ 2026-09-10 上架 81 名新英雄之後這一行開始與下面的斷言**對不起來**：
+  //   它掃全部 149 支天生技，⛔ 而右邊的 `godieChampions.length` 只算 `godie-*`（第 178 行）
+  //   ⇒ 每多上架一名 GGD 原創英雄，兩邊就差一個。⭐ 這條測試的主體是
+  //   「**原作那批**天生技在出生時就是第 1 級」——`NO_INNATE` 那張豁免表也只列 `godie-*`。
+  //   ⇒ 收斂母體，⛔ 不是把數字改大。
   const innates = Abilities.all().filter(
-    (a) => a.slot === "PASSIVE" && Champions.tryGet(a.id.replace(/\.passive$/, "") as ChampionId) !== undefined,
+    (a) =>
+      a.slot === "PASSIVE" &&
+      a.id.startsWith("godie-") &&
+      Champions.tryGet(a.id.replace(/\.passive$/, "") as ChampionId) !== undefined,
   );
   passiveInnates = innates.filter(isPassiveInnate);
   activeInnates = innates.filter(isActiveInnate);

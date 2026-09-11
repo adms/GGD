@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "version.body.d3d930c84f9423094ffdca11a0b5ea4fa2c39638cea939ab",
+  "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 29,
     "int": 18,
-    "strGrowth": 1.25,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.67,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -130,7 +130,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.bolt"
+        }
+      ]
     },
     "W": {
       "id": "community-review-26-20260907.w",
@@ -147,10 +153,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -188,7 +194,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-26-20260907.e",
@@ -242,7 +254,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-26-20260907.r",
@@ -258,9 +277,9 @@
         45.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -298,7 +317,13 @@
           "castTimeSec": 1.633
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-26-20260907.ex",
@@ -311,42 +336,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.729e337f18d7ebbbdba8402692ee1d291f7b20a9d600bafe",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
-      "modelSha256": "cdbf65f4938a4b073e575a471414e3c0d3ddc6cd465e9d65b3ab63669880657c",
-      "binarySha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
-      "registeredAt": "2026-09-10T14:45:32.180Z",
-      "source": {
-        "kind": "previous",
-        "character": "名偵探柯南",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.d3d930c84f9423094ffdca11a0b5ea4fa2c39638cea939ab",
-      "label": "万年小学生",
-      "sourceModelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
-      "modelSha256": "c9e1e3a3fc96dd9196f7b4869e03069e7fa3d2db62bec06680ccda91b86a7f0b",
-      "binarySha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
-      "registeredAt": "2026-09-10T14:45:32.186Z",
-      "source": {
-        "kind": "exact",
-        "character": "万年小学生",
-        "work": "名偵探柯南",
-        "library": "300heroes",
-        "reference": "300heroes:48546d36bb328cf6b78a6e9b",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "thrown"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

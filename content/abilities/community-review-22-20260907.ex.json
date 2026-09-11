@@ -18,11 +18,6 @@
   "castTimeSec": 0.067,
   "effects": [
     {
-      "kind": "applyBuff",
-      "modifiers": [],
-      "duration": 3
-    },
-    {
       "kind": "heal",
       "amount": {
         "flat": 80,

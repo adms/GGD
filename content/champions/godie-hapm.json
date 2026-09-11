@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "坦克",
-  "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+  "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
   "baseStats": {
     "maxHealth": 100,
     "healthRegen": 0.25,
@@ -201,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        56.0,
+        56.0,
+        56.0,
+        56.0
       ],
       "range": 12.0,
       "targetsEnemies": true,
@@ -451,9 +451,9 @@
         120.0
       ],
       "manaCost": [
-        288.0,
-        288.0,
-        288.0
+        448.0,
+        448.0,
+        448.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -471,8 +471,8 @@
           "amount": {
             "damageTierPerRank": [
               "小",
-              "小",
-              "中"
+              "中",
+              "大"
             ]
           },
           "radius": 6.0,
@@ -506,7 +506,7 @@
       "icon": "assets/icons/abilities/godie-hapm.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "cooldownTier": "極大",
-      "manaCostTier": "中",
+      "manaCostTier": "大",
       "castTimeSec": 0.067
     }
   },
@@ -543,32 +543,29 @@
       "sourceModelKey": "champ.thorne",
       "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
       "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-      "registeredAt": "2026-09-09T07:13:26.732Z",
+      "registeredAt": "2026-09-10T18:21:48.936Z",
       "source": {
         "kind": "previous",
         "character": "海克力斯 - Berserker",
         "work": "原上線內容",
         "library": "GGD",
-        "reference": "models/champ.thorne.json",
-        "tier": "original"
+        "reference": "models/champ.thorne.json"
       }
     },
     {
-      "modelKey": "version.body.726a54d30297338f0d7405091514d2be37bcf10df0f57649",
-      "label": "赫拉克勒斯",
-      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
-      "modelSha256": "be7c0de185397fb01ec9821e5cfd87ea35d3edf91769506208a50c9addbd356d",
-      "binarySha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
-      "registeredAt": "2026-09-09T07:13:26.736Z",
+      "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+      "label": "ou99 海克力斯（本尊／相似造型）",
+      "sourceModelKey": "ou99.328403",
+      "modelSha256": "3cc07289d3ffd6d4a76f0de38e3f3b660c20f5d2d40cfdfcb5214995d1f2c0a1",
+      "binarySha256": "a92a451d7f8d542acb998150eb65b906b63a91191c399c866d112c2e1bb796b5",
+      "registeredAt": "2026-09-10T18:21:48.960Z",
       "source": {
-        "kind": "exact",
-        "character": "赫拉克勒斯",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
-        "tier": "300heroes"
+        "kind": "style-proxy",
+        "character": "海克力斯",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-328403-1-1.html"
       }
     }
-  ],
-  "modelSelectionMode": "manual"
+  ]
 }

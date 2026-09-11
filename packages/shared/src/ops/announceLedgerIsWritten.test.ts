@@ -59,10 +59,20 @@ describe("Discord 公告發成功就要記帳（owner 2026-09-01：每個版本�
 
     const tags = execFileSync("git", ["tag", "--sort=-v:refname"], { cwd: ROOT, encoding: "utf8" })
       .split("\n").filter(Boolean);
+    // ⭐ GH#1211 —— `--since` 用**最新的 tag**（空視窗），⛔ 不是 `tags[2]`。
+    //
+    // ⚠️ 這條測試的前提在 GH#1171 之後消失了（第〇·六守則）：腳本現在會**拒絕發**
+    //   「系統優化更新」，只要視窗裡有玩家面向的 commit 而票上沒有一句玩家的話
+    //   —— ⭐ 那是對的（發它就是假話）。⇒ 一個**有內容**的視窗 ＋ 一個回空的假 `gh`
+    //   ⇒ 腳本永遠走到「⛔ 不發」⇒ ⭐ 這條守衛從此**只證明得了失敗路徑**，
+    //   而它問的是「**發成功**就要記帳」。
+    //
+    // ⭐ 空視窗走的正是「真的沒有玩家可見的票 ⇒ 發系統優化更新」那一條，
+    //   ⛔ 而斷言一個字都沒放寬：下面仍然要求帳本真的長出這一版那一列。
     const now = tags[0]!;
 
     try {
-      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", tags[2]!], {
+      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", now], {
         cwd: ROOT, encoding: "utf8", timeout: 60_000,
         env: {
           ...process.env,
@@ -116,12 +126,22 @@ describe("Discord 公告發成功就要記帳（owner 2026-09-01：每個版本�
 
     const tags = execFileSync("git", ["tag", "--sort=-v:refname"], { cwd: ROOT, encoding: "utf8" })
       .split("\n").filter(Boolean);
+    // ⭐ GH#1211 —— `--since` 用**最新的 tag**（空視窗），⛔ 不是 `tags[2]`。
+    //
+    // ⚠️ 這條測試的前提在 GH#1171 之後消失了（第〇·六守則）：腳本現在會**拒絕發**
+    //   「系統優化更新」，只要視窗裡有玩家面向的 commit 而票上沒有一句玩家的話
+    //   —— ⭐ 那是對的（發它就是假話）。⇒ 一個**有內容**的視窗 ＋ 一個回空的假 `gh`
+    //   ⇒ 腳本永遠走到「⛔ 不發」⇒ ⭐ 這條守衛從此**只證明得了失敗路徑**，
+    //   而它問的是「**發成功**就要記帳」。
+    //
+    // ⭐ 空視窗走的正是「真的沒有玩家可見的票 ⇒ 發系統優化更新」那一條，
+    //   ⛔ 而斷言一個字都沒放寬：下面仍然要求帳本真的長出這一版那一列。
     const now = tags[0]!;
     // ⭐ 帳本上**已經有**這一版 —— 也就是「第一次已經發過了」的世界。
     writeFileSync(ledger, `版號\t日期\t一句\n${now}\t2026-09-01\t（上一次發過了）\n`);
 
     try {
-      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", tags[2]!], {
+      await run("bash", ["scripts/release-note-players.sh", "--post", "--since", now], {
         cwd: ROOT, encoding: "utf8", timeout: 60_000,
         env: {
           ...process.env,

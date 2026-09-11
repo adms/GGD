@@ -96,7 +96,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kaiji.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -168,7 +169,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kaiji.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -286,7 +288,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kaiji.r.webp"
     },
     "W": {
       "castTimeSec": 0.833,
@@ -316,10 +319,10 @@
       ],
       "id": "b2-kaiji.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -360,20 +363,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kaiji.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "ranged",
   "attributes": {
     "agi": 20,
-    "agiGrowth": 1.89,
+    "agiGrowth": 0,
     "int": 19,
-    "intGrowth": 1.83,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 21,
-    "strGrowth": 1.99
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -408,7 +412,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-kaiji",
-  "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+  "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
   "name": "伊藤開司",
   "origin": "軟輔",
   "passiveAbility": "b2-kaiji.passive",
@@ -420,79 +424,40 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "thrown"
+  ],
   "icon": "assets/icons/champions/b2-kaiji.webp",
   "modelVersions": [
     {
-      "modelKey": "version.body.f997dda7ec73db5339d17f929bbd5ef2f90088ea77225e82",
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
       "label": "原上線模型",
       "sourceModelKey": "champ.thorne",
-      "modelSha256": "610dacead69977b19ac9af6a94725eea4cfcebc13753eb5cbe73359aafa7fadd",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
       "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-      "registeredAt": "2026-09-10T14:45:41.128Z",
+      "registeredAt": "2026-09-10T18:20:39.964Z",
       "source": {
         "kind": "previous",
         "character": "伊藤開司",
         "work": "原上線內容",
         "library": "GGD",
-        "reference": "models/champ.thorne.json",
-        "tier": "original"
+        "reference": "models/champ.thorne.json"
       }
     },
     {
-      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
-      "label": "坂本",
-      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
-      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
-      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
-      "registeredAt": "2026-09-10T14:45:41.149Z",
+      "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
+      "label": "ou99 伊藤開司（本尊／相似造型）",
+      "sourceModelKey": "ou99.457710",
+      "modelSha256": "cd425ec6efa2e24e88a3ab32328770fc3d3d95f20fd2b68c12c244a4ffd4e18f",
+      "binarySha256": "0ffce2b9f25b79753a9128d548a978de691985db46d4077d1466f880deececd3",
+      "registeredAt": "2026-09-10T18:20:39.968Z",
       "source": {
         "kind": "style-proxy",
-        "character": "坂本",
-        "work": "在下坂本，有何貴幹？",
-        "library": "300heroes",
-        "reference": "300heroes:62413511bf6cb6a428c2821a",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
-      "label": "黑",
-      "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
-      "modelSha256": "19a11cad685e66a964e94f48cbd425339c98bbd93ca741f6c91d0596ca081020",
-      "binarySha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
-      "registeredAt": "2026-09-10T14:45:41.199Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "黑",
-        "work": "DARKER THAN BLACK－黑之契約者",
-        "library": "300heroes",
-        "reference": "300heroes:3d7222e80131dc1b4fa7c782",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
-      "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
-      "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
-      "modelSha256": "a2997a1e64f65dafd12709fce65bdec07b4eafa30aa519e9d28a68a9f4527481",
-      "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
-      "registeredAt": "2026-09-10T17:03:36.321Z",
-      "source": {
-        "kind": "exact",
         "character": "伊藤開司",
-        "work": "賭博默示錄",
-        "library": "Lethal Company MOD／holya",
-        "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
-        "tier": "original",
-        "selectionClass": "community-mod"
-      },
-      "automaticEligible": true
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457710-1-1.html"
+      }
     }
-  ],
-  "modelSelectionMode": "automatic"
+  ]
 }

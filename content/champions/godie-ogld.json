@@ -7,13 +7,13 @@
   "role": "marksman",
   "attackType": "ranged",
   "origin": "砲手",
-  "modelKey": "champ.sela",
+  "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 1,
     "maxMana": 200,
     "manaRegen": 0.1,
-    "ad": 30.0,
+    "ad": 30,
     "ap": 0,
     "armor": 2,
     "mr": 28,
@@ -34,7 +34,7 @@
     "armor": 0.3995,
     "mr": 1.0342,
     "as": 0.0104,
-    "ap": 0.0
+    "ap": 0
   },
   "msGrowthTier": "極小",
   "attributes": {
@@ -70,11 +70,11 @@
         30.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        56.0,
+        56.0,
+        56.0,
+        56.0,
+        56.0
       ],
       "effects": [],
       "template": {
@@ -116,9 +116,9 @@
         15.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0
+        56.0,
+        56.0,
+        56.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
@@ -156,9 +156,9 @@
         45.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0
+        56.0,
+        56.0,
+        56.0
       ],
       "effects": [],
       "template": {
@@ -200,9 +200,9 @@
         90.0
       ],
       "manaCost": [
-        288.0,
-        288.0,
-        288.0
+        224.0,
+        224.0,
+        224.0
       ],
       "range": 0,
       "effects": [],
@@ -259,5 +259,37 @@
     "區域轟炸",
     "反近身"
   ],
-  "pitch": "站在敵人難以反擊的位置持續轟炸，逼對手冒險接近才能處理你。"
+  "pitch": "站在敵人難以反擊的位置持續轟炸，逼對手冒險接近才能處理你。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.sela",
+      "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+      "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+      "registeredAt": "2026-09-10T18:20:40.535Z",
+      "source": {
+        "kind": "previous",
+        "character": "美白大法師 - 黑人牙膏",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.sela.json"
+      }
+    },
+    {
+      "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
+      "label": "ou99 黑人牙膏（本尊／相似造型）",
+      "sourceModelKey": "ou99.495978",
+      "modelSha256": "49fb772ba52347a34f551ed988f04aa11e6b63678f5dbf9cdb063c2b51bdd40c",
+      "binarySha256": "9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727",
+      "registeredAt": "2026-09-10T18:20:40.543Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑人牙膏",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-495978-1-1.html"
+      }
+    }
+  ]
 }

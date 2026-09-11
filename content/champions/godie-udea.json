@@ -7,7 +7,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "champ.thorne",
+  "modelKey": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
   "attackDamagePoint": 0.4,
   "baseStats": {
     "maxHealth": 150,
@@ -105,11 +105,11 @@
         30.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "effects": [
         {
@@ -160,11 +160,11 @@
         15.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        56.0,
+        56.0,
+        56.0,
+        56.0,
+        56.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.explosion",
@@ -212,9 +212,9 @@
         30.0
       ],
       "manaCost": [
-        288.0,
-        288.0,
-        288.0
+        224.0,
+        224.0,
+        224.0
       ],
       "effects": [
         {
@@ -285,5 +285,37 @@
     "魔力操作",
     "反擊"
   ],
-  "pitch": "利用瞬移選擇戰鬥位置，用劍與魔法破壞敵方資源，再靠反擊懲罰還手。"
+  "pitch": "利用瞬移選擇戰鬥位置，用劍與魔法破壞敵方資源，再靠反擊懲罰還手。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.thorne",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
+      "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+      "registeredAt": "2026-09-10T18:20:41.338Z",
+      "source": {
+        "kind": "previous",
+        "character": "至尊學長 - 飛鼠先生",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.thorne.json"
+      }
+    },
+    {
+      "modelKey": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
+      "label": "ou99 飛鼠先生（本尊／相似造型）",
+      "sourceModelKey": "ou99.469191",
+      "modelSha256": "9dc5d60a32204e8bc9d15ef3dee0f236020facbe88db5c60deeeca37ec1901c3",
+      "binarySha256": "3719a18cd861533c7acc56d1b1a7ff30ba7ee13cd90ec9caef28f4cec15e8879",
+      "registeredAt": "2026-09-10T18:20:41.377Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "飛鼠先生",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-469191-1-1.html"
+      }
+    }
+  ]
 }

@@ -40,9 +40,9 @@
     "str": 21,
     "agi": 20,
     "int": 19,
-    "strGrowth": 1.99,
-    "agiGrowth": 1.89,
-    "intGrowth": 1.83,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -103,7 +103,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-lux.q.webp"
     },
     "W": {
       "id": "lol-lux.w",
@@ -128,11 +129,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -162,7 +158,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-lux.w.webp"
     },
     "E": {
       "id": "lol-lux.e",
@@ -179,10 +176,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -231,7 +228,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "icon": "assets/icons/abilities/lol-lux.e.webp"
     },
     "R": {
       "id": "lol-lux.r",
@@ -247,9 +245,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -301,7 +299,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-lux.r.webp"
     }
   },
   "exAbility": "lol-lux.ex",
@@ -313,7 +312,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "icon": "assets/icons/champions/lol-lux.webp",
   "modelVersions": [

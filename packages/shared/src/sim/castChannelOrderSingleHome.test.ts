@@ -27,10 +27,15 @@ import {
 const EVERYTHING: CastObservation = {
   // ⭐ 2026-09-08 合併 PR 1118 補一根指針：`healthSpend` 是 `effects/spendHealth.ts:30`
   //   真的發出的事件（Codex 的新 kind）⇒ 它進了 `CAST_CHANNEL_ORDER`，這份夾具就要撥它。
-  events: ["damage", "projectileSpawn", "heal", "manaRestore", "healthSpend", "championForm", "resourceSwap", COSMETIC_ONLY_EVENT],
+  events: ["damage", "projectileSpawn", "heal", "manaRestore", "healthSpend", "championForm", "resourceSwap",
+    // ⭐ GH#1203 補三根指針：狀態「換一個」與「冷卻被改短」都是量得到的頻道
+    "statusApplied", "stunApplied", "cooldownModified",
+    COSMETIC_ONLY_EVENT],
   before: { shields: 0, statuses: 0, buffs: 0, projectiles: 0, taunts: 0, gold: 0, summons: 0 },
   after: { shields: 1, statuses: 1, buffs: 1, projectiles: 1, taunts: 1, gold: 1, summons: 1 },
   moved: true,
+  victimMoved: true, // GH#1203：這份夾具的語意是「全部都發生」
+  victimLocked: true,
   effectsAuthored: 1,
 };
 

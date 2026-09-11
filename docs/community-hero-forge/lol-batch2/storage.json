@@ -1,0 +1,21 @@
+{
+  "localDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/lol-batch2-prepared-20260911",
+  "archive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/lol-batch2-prepared-20260911.tar.gz",
+  "sha256": "087ef509eca61b4e81694aec04ba977a0036a755103c7e28e25ee7846a5082fb",
+  "bytes": 132135478,
+  "s3Key": "community-hero-forge/lol-batch2/prepared/087ef509eca61b4e81694aec04ba977a0036a755103c7e28e25ee7846a5082fb.tar.gz",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/community-hero-forge/lol-batch2/prepared/087ef509eca61b4e81694aec04ba977a0036a755103c7e28e25ee7846a5082fb.tar.gz",
+  "upload": "completed",
+  "headVerified": true,
+  "integrationFollowup": {
+    "localDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/lol-batch2-editor-integration-20260911",
+    "archive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/lol-batch2-editor-integration-20260911.tar.gz",
+    "sha256": "5633fbdcdc9e04c4098b592f5bc377c386cd2530fedeba1981b13bbbc2028ee5",
+    "bytes": 37380394,
+    "files": 236,
+    "s3Key": "community-hero-forge/lol-batch2/prepared/5633fbdcdc9e04c4098b592f5bc377c386cd2530fedeba1981b13bbbc2028ee5.tar.gz",
+    "upload": "completed",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/community-hero-forge/lol-batch2/prepared/5633fbdcdc9e04c4098b592f5bc377c386cd2530fedeba1981b13bbbc2028ee5.tar.gz",
+    "headVerified": true
+  }
+}

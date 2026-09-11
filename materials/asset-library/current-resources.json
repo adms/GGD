@@ -10,11 +10,11 @@
     },
     {
       "gitPath": "materials/hero-model-library/workflow-model-options.json",
-      "sha256": "3c27a528725cad7bd67476382af14d0200043c90a5f0769d5f5c2665fc3a20e9"
+      "sha256": "31e222609240038fd9d39b6b4d23b98683554b6aa60109f686c92f40a3d1ef3b"
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
-      "sha256": "51687d84afd506350dd9eda1fa2f26ff4dd6058d4c7098935a693eb4dc343e53"
+      "sha256": "6d85a3d888657f577237fb0a0c3221ebf537959c9865fb8fede700ac24c20058"
     }
   ],
   "modelSourceCount": 150,
@@ -45,9 +45,7 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.f7b821d40970ffb5bd6fa542",
       "registeredFor": [
-        "b2-elma",
-        "b2-goblin",
-        "b2-naofumi"
+        "b2-elma"
       ],
       "runtimeDropdownRegistered": true,
       "gitPath": "content/assets/models/community/595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469.glb",
@@ -78,10 +76,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.cd7b3fb5b363ce1de24bdec7",
-      "registeredFor": [
-        "b2-yogiri"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7.glb",
       "modelDocumentGitPath": "content/models/community.body.e854c5c60388f5ecb54fe3cb34e5195ba4ad0128f79f733a.json"
     },
@@ -111,10 +107,8 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.550c1060c9dfa0f2c6cd0e63",
       "registeredFor": [
-        "b2-guts",
         "b2-noor",
-        "community-review-15-20260907",
-        "godie-hapm"
+        "community-review-15-20260907"
       ],
       "runtimeDropdownRegistered": true,
       "gitPath": "content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
@@ -211,10 +205,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.0903bb96e376c9b90c63f54d",
-      "registeredFor": [
-        "b2-naofumi"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467.glb",
       "modelDocumentGitPath": "content/models/community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa.json"
     },
@@ -280,7 +272,6 @@
       "registeredFor": [
         "b2-kaede",
         "b2-shadow",
-        "community-review-19-20260907",
         "community-review-33-20260907"
       ],
       "runtimeDropdownRegistered": true,
@@ -344,10 +335,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.d2f724a650d13c43105fee70",
-      "registeredFor": [
-        "b2-aladdin"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb",
       "modelDocumentGitPath": "content/models/community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230.json"
     },
@@ -409,7 +398,6 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.e960075f5a62c21aca702d0c",
       "registeredFor": [
-        "b2-kaiji",
         "b2-orphen"
       ],
       "runtimeDropdownRegistered": true,
@@ -441,11 +429,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.6dc3ecdb1a61a91cbdfd6b6f",
-      "registeredFor": [
-        "b2-keyaru",
-        "b2-popp"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1.glb",
       "modelDocumentGitPath": "content/models/community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4.json"
     },
@@ -536,10 +521,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.750e90fb6502c02246d7a2c2",
-      "registeredFor": [
-        "b2-rin"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
       "modelDocumentGitPath": "content/models/community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345.json"
     },
@@ -628,10 +611,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.7f41043352ed86bd9208db4d",
-      "registeredFor": [
-        "b2-misery"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef.glb",
       "modelDocumentGitPath": "content/models/community.body.7e715d64546a03a955ff8a6530120071081ea7eafac09239.json"
     },
@@ -727,10 +708,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.33f79fda5f82f1e4677c9ec8",
-      "registeredFor": [
-        "b2-maomao"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/edf36fb1ada4a685349ffe5d78fe3a6d2afce96f6536f329ed6cc1d1087897d0.glb",
       "modelDocumentGitPath": "content/models/community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5.json"
     },
@@ -760,8 +739,7 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.01110beb6cdcbc910793f1b2",
       "registeredFor": [
-        "b2-luckyman",
-        "community-review-25-20260907"
+        "b2-luckyman"
       ],
       "runtimeDropdownRegistered": true,
       "gitPath": "content/assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
@@ -792,10 +770,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.f897af4d5be5421e37872ee9",
-      "registeredFor": [
-        "b2-albus"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb.glb",
       "modelDocumentGitPath": "content/models/community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54.json"
     },
@@ -856,10 +832,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.d340b40a16e8b48ba3868597",
-      "registeredFor": [
-        "b2-rem"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
       "modelDocumentGitPath": "content/models/community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905.json"
     },
@@ -890,7 +864,6 @@
       "bundleId": "ggd.model.0231908c8873f295e0e5bbd1",
       "registeredFor": [
         "b2-haga",
-        "b2-kaiji",
         "b2-nube",
         "b2-uncle"
       ],
@@ -923,10 +896,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.f3ed5c49c35d72e1461e6f57",
-      "registeredFor": [
-        "b2-zenitsu"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
       "modelDocumentGitPath": "content/models/community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786.json"
     },
@@ -1288,11 +1259,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.bf084d372ce1532ba48d15d2",
-      "registeredFor": [
-        "b2-bojji",
-        "b2-shinchan"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16.glb",
       "modelDocumentGitPath": "content/models/community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6.json"
     },
@@ -1324,10 +1292,8 @@
       "fullCharacterPackage": false,
       "identityProof": "spider-identity.json",
       "bundleId": "ggd.model.b5d55132dd1214ac6135a73d",
-      "registeredFor": [
-        "b2-kumoko"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b.glb",
       "modelDocumentGitPath": "content/models/community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5.json"
     },
@@ -1358,7 +1324,6 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.dc5874e08aaa2980f8287bdd",
       "registeredFor": [
-        "b2-guts",
         "b2-noor"
       ],
       "runtimeDropdownRegistered": true,
@@ -1423,10 +1388,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.b77c61d90930191a6c246fc9",
-      "registeredFor": [
-        "b2-kisaragi"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
       "modelDocumentGitPath": "content/models/community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c.json"
     },
@@ -1456,8 +1419,7 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.2edc9b2b73e70d1555474f3f",
       "registeredFor": [
-        "b2-fushi",
-        "community-review-23-20260907"
+        "b2-fushi"
       ],
       "runtimeDropdownRegistered": true,
       "gitPath": "content/assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
@@ -1486,10 +1448,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.de7ceb215b2e01016ca55b27",
-      "registeredFor": [
-        "community-review-27-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb",
       "modelDocumentGitPath": "content/models/community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a.json"
     },
@@ -1518,10 +1478,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.25a630680653d8a6bd4c6ad8",
-      "registeredFor": [
-        "community-review-01-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
       "modelDocumentGitPath": "content/models/community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270.json"
     },
@@ -1582,10 +1540,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.81abf8376825a650cdac1c0c",
-      "registeredFor": [
-        "community-review-03-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a.glb",
       "modelDocumentGitPath": "content/models/community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9.json"
     },
@@ -1614,10 +1570,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.8a4f4237130086cd12c973cf",
-      "registeredFor": [
-        "community-review-04-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
       "modelDocumentGitPath": "content/models/community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c.json"
     },
@@ -1676,10 +1630,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.013312636edf7503d23eb32a",
-      "registeredFor": [
-        "community-review-06-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
       "modelDocumentGitPath": "content/models/community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7.json"
     },
@@ -1740,10 +1692,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.26f08f9e0c99ed0a4034f919",
-      "registeredFor": [
-        "community-review-08-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
       "modelDocumentGitPath": "content/models/community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c.json"
     },
@@ -1805,10 +1755,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.783291279029e5bc6d9769b7",
-      "registeredFor": [
-        "community-review-10-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
       "modelDocumentGitPath": "content/models/community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840.json"
     },
@@ -1869,10 +1817,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.453ddf775a0b56ee3f26684a",
-      "registeredFor": [
-        "community-review-12-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
       "modelDocumentGitPath": "content/models/community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef.json"
     },
@@ -1901,10 +1847,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.4e28aa3db4037ab2a585483a",
-      "registeredFor": [
-        "community-review-13-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
       "modelDocumentGitPath": "content/models/community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782.json"
     },
@@ -1964,10 +1908,8 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.550c1060c9dfa0f2c6cd0e63",
       "registeredFor": [
-        "b2-guts",
         "b2-noor",
-        "community-review-15-20260907",
-        "godie-hapm"
+        "community-review-15-20260907"
       ],
       "runtimeDropdownRegistered": true,
       "gitPath": "content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
@@ -1998,10 +1940,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.4d5e2cd03ea2b3f58fa76446",
-      "registeredFor": [
-        "community-review-16-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
       "modelDocumentGitPath": "content/models/community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81.json"
     },
@@ -2030,10 +1970,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.2421668c7f99f7f1f6731180",
-      "registeredFor": [
-        "community-review-17-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
       "modelDocumentGitPath": "content/models/community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e.json"
     },
@@ -2062,10 +2000,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.e26c451829d181665393728d",
-      "registeredFor": [
-        "community-review-18-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
       "modelDocumentGitPath": "content/models/community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c.json"
     },
@@ -2097,7 +2033,6 @@
       "registeredFor": [
         "b2-kaede",
         "b2-shadow",
-        "community-review-19-20260907",
         "community-review-33-20260907"
       ],
       "runtimeDropdownRegistered": true,
@@ -2129,10 +2064,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.7cb67d5b138d42e34bd59f29",
-      "registeredFor": [
-        "community-review-20-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
       "modelDocumentGitPath": "content/models/community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1.json"
     },
@@ -2161,10 +2094,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.578cc97e499867fb83e1b539",
-      "registeredFor": [
-        "community-review-21-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
       "modelDocumentGitPath": "content/models/community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5.json"
     },
@@ -2225,10 +2156,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.8793dcf75df24643459254bc",
-      "registeredFor": [
-        "community-review-23-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb",
       "modelDocumentGitPath": "content/models/community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63.json"
     },
@@ -2257,10 +2186,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.b06fff73ec09076455b6f115",
-      "registeredFor": [
-        "community-review-24-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
       "modelDocumentGitPath": "content/models/community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df.json"
     },
@@ -2290,8 +2217,7 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.01110beb6cdcbc910793f1b2",
       "registeredFor": [
-        "b2-luckyman",
-        "community-review-25-20260907"
+        "b2-luckyman"
       ],
       "runtimeDropdownRegistered": true,
       "gitPath": "content/assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
@@ -2322,10 +2248,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.08dd55647945618f8f60e193",
-      "registeredFor": [
-        "community-review-26-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
       "modelDocumentGitPath": "content/models/community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df.json"
     },
@@ -2354,10 +2278,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.6ea22f05888ba86042e5779b",
-      "registeredFor": [
-        "community-review-28-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
       "modelDocumentGitPath": "content/models/community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47.json"
     },
@@ -2386,10 +2308,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.6906c0aebd70a4dbb8d4946d",
-      "registeredFor": [
-        "community-review-29-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
       "modelDocumentGitPath": "content/models/community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6.json"
     },
@@ -2451,10 +2371,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.c04332eac54d8bad2e1c5b1b",
-      "registeredFor": [
-        "community-review-31-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d.glb",
       "modelDocumentGitPath": "content/models/community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a.json"
     },
@@ -2484,7 +2402,6 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.1b8c59df56b9e416127499b6",
       "registeredFor": [
-        "community-review-32-20260907",
         "community-review-37-20260907"
       ],
       "runtimeDropdownRegistered": true,
@@ -2519,7 +2436,6 @@
       "registeredFor": [
         "b2-kaede",
         "b2-shadow",
-        "community-review-19-20260907",
         "community-review-33-20260907"
       ],
       "runtimeDropdownRegistered": true,
@@ -2583,10 +2499,8 @@
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.f5b09564eab02d38a0560f53",
-      "registeredFor": [
-        "community-review-35-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
       "modelDocumentGitPath": "content/models/community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2.json"
     },
@@ -2650,7 +2564,6 @@
       "fullCharacterPackage": false,
       "bundleId": "ggd.model.1b8c59df56b9e416127499b6",
       "registeredFor": [
-        "community-review-32-20260907",
         "community-review-37-20260907"
       ],
       "runtimeDropdownRegistered": true,
@@ -2692,10 +2605,8 @@
         "changes": "白色衣料改紅色"
       },
       "bundleId": "ggd.model.3efeb4dc4c0a6bf25fd8bab6",
-      "registeredFor": [
-        "community-review-03-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
       "modelDocumentGitPath": "content/models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json"
     },
@@ -2733,10 +2644,8 @@
         "changes": "完整複製 pink-round 程序化替身"
       },
       "bundleId": "ggd.model.ea975386405e8702b6fde096",
-      "registeredFor": [
-        "community-review-06-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
       "modelDocumentGitPath": "content/models/community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b.json"
     },
@@ -2775,10 +2684,8 @@
         "changes": "褲子與頭改藍色，上半身改膚色"
       },
       "bundleId": "ggd.model.de731caac2683e7c7ac6a1e1",
-      "registeredFor": [
-        "community-review-31-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
       "modelDocumentGitPath": "content/models/community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855.json"
     },
@@ -2817,10 +2724,8 @@
         "changes": "上半身咖啡色、下半身深咖啡色"
       },
       "bundleId": "ggd.model.8e43a2882a91a856c5dce141",
-      "registeredFor": [
-        "community-review-32-20260907"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
       "modelDocumentGitPath": "content/models/community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b.json"
     },
@@ -2859,10 +2764,8 @@
         "changes": "完整複製李小狼模型與貼圖"
       },
       "bundleId": "ggd.model.3f497f30c3e42510ebbb1237",
-      "registeredFor": [
-        "b2-popp"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
       "modelDocumentGitPath": "content/models/community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878.json"
     },
@@ -2901,10 +2804,8 @@
         "changes": "完整複製尤吉歐模型與貼圖"
       },
       "bundleId": "ggd.model.f0019265fd1745b7a29bd2b5",
-      "registeredFor": [
-        "b2-albus"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
       "modelDocumentGitPath": "content/models/community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216.json"
     },
@@ -2943,10 +2844,8 @@
         "changes": "完整複製尤吉歐，右手小劍、左手小盾"
       },
       "bundleId": "ggd.model.9cdd717b3f778bf285181952",
-      "registeredFor": [
-        "b2-goblin"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
       "modelDocumentGitPath": "content/models/community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c.json"
     },
@@ -2985,10 +2884,8 @@
         "changes": "完整複製富樫勇太模型與貼圖"
       },
       "bundleId": "ggd.model.666d91f4dd2bcde9a6b27ede",
-      "registeredFor": [
-        "b2-yogiri"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
       "modelDocumentGitPath": "content/models/community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82.json"
     },
@@ -3028,10 +2925,8 @@
         "changes": "八爪魚全身粉紅，修復原生損壞動畫"
       },
       "bundleId": "ggd.model.9fdf84432972781cd4377da8",
-      "registeredFor": [
-        "b2-takopi"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
       "modelDocumentGitPath": "content/models/community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a.json"
     },
@@ -3070,10 +2965,8 @@
         "changes": "完整複製優克莉伍德模型與貼圖"
       },
       "bundleId": "ggd.model.eba1d1141943fb1855696a4c",
-      "registeredFor": [
-        "b2-misery"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
       "modelDocumentGitPath": "content/models/community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee.json"
     },
@@ -3114,10 +3007,8 @@
         "changes": "小桐人上半身藍色、下半身白色"
       },
       "bundleId": "ggd.model.9fa3a3d6bd8823305a9854ed",
-      "registeredFor": [
-        "b2-bojji"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "gitPath": "content/assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
       "modelDocumentGitPath": "content/models/community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a.json"
     },
@@ -3146,7 +3037,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
@@ -3187,7 +3078,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
@@ -3228,7 +3119,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
@@ -3269,7 +3160,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
@@ -3310,7 +3201,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.453949",
@@ -3357,7 +3248,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.454482",
@@ -3383,9 +3274,9 @@
       "id": "ou99:456546",
       "modelKey": "ou99.456546",
       "glbPath": "assets/models/ou99/ou99_456546.glb",
-      "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee",
-      "bytes": 1662596,
-      "documentSha256": "75be5241b63f8badd09f8b1b175da04ddf48f2203ec12fef0fcc5e43c9ea7f36",
+      "sha256": "6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e",
+      "bytes": 1275116,
+      "documentSha256": "532d37ce3ea5c2a0525b044dfd9fe8bd657f5b48e43365acf5b2f84ddaada1e7",
       "sourceCharacter": "动漫卡尔斯",
       "sourceWork": "來源作品待核；論壇標題：动漫卡尔斯",
       "sourceAssetId": "https://www.ou99.com/thread-456546-1-1.html",
@@ -3404,7 +3295,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_456546.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.456546",
@@ -3446,7 +3337,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.456917",
@@ -3493,7 +3384,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.457594",
@@ -3519,9 +3410,9 @@
       "id": "ou99:457883",
       "modelKey": "ou99.457883",
       "glbPath": "assets/models/ou99/ou99_457883.glb",
-      "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
-      "bytes": 1265860,
-      "documentSha256": "c3d9ae90d465828d8db26b26d15665072ca86d355e1a43fc120517e2d29ef1f5",
+      "sha256": "cc6951f5d134f4cf8e85ae63bcdc7d5bdbbe7e41a1b47bb18e72e142aea7c697",
+      "bytes": 961032,
+      "documentSha256": "1dcde5c08ee0967e843353959249ae0e6c6caa0246ae07ef3a8852bdc9dea2e6",
       "sourceCharacter": "牛魔角仙人男",
       "sourceWork": "來源作品待核；論壇標題：牛魔角仙人男",
       "sourceAssetId": "https://www.ou99.com/thread-457883-1-1.html",
@@ -3540,7 +3431,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_457883.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.457883",
@@ -3581,7 +3472,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.458013",
@@ -3623,7 +3514,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.458777",
@@ -3645,10 +3536,8 @@
           "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-458777-comparison.png"
         }
       },
-      "registeredFor": [
-        "b2-keyaru"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "pendingGeometryReview": {
         "heroId": "b2-keyaru",
         "modelKeys": [
@@ -3687,7 +3576,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.459257",
@@ -3734,7 +3623,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.459617",
@@ -3755,9 +3644,9 @@
       "id": "ou99:465205",
       "modelKey": "ou99.465205",
       "glbPath": "assets/models/ou99/ou99_465205.glb",
-      "sha256": "b105f0727db3af9fb32c774db1ce8f260da853c950931856610ffe39b8d180d5",
-      "bytes": 1915168,
-      "documentSha256": "df826ad707935dabbb0b531a6ccd846d5b87913effc2c87c3d3187c98f9bb596",
+      "sha256": "a15afd19cc767a46ce7262f41192923a09d5e7a556bb45cfaf11ce76ea8bb2a9",
+      "bytes": 1592452,
+      "documentSha256": "898c72bf7fa9e0c00552f75e4eb2aef3fc15cfb89b8ea7845fb87ff91b953aca",
       "sourceCharacter": "韩当武侠猛男",
       "sourceWork": "來源作品待核；論壇標題：韩当武侠猛男",
       "sourceAssetId": "https://www.ou99.com/thread-465205-1-1.html",
@@ -3776,7 +3665,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_465205.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.465205",
@@ -3815,7 +3704,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.465884",
@@ -3857,7 +3746,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.467227",
@@ -3899,7 +3788,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.470087",
@@ -3925,9 +3814,9 @@
       "id": "ou99:470426",
       "modelKey": "ou99.470426",
       "glbPath": "assets/models/ou99/ou99_470426.glb",
-      "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29",
-      "bytes": 2384220,
-      "documentSha256": "a6f00258f0d28d20ffbc4b1ef250bbfa2cf15386b6eeac0e0906d58160958ae3",
+      "sha256": "becaad1c7979cdf85a472cd61fe33b487c76f458001b49969b24c44fd4a0a3d8",
+      "bytes": 2252104,
+      "documentSha256": "9a7e87a01b14372637bb6374beeb4533db9c0adefbc3a6f673a797b1eb619731",
       "sourceCharacter": "二次元巫女",
       "sourceWork": "來源作品待核；論壇標題：二次元巫女",
       "sourceAssetId": "https://www.ou99.com/thread-470426-1-1.html",
@@ -3946,7 +3835,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_470426.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.470426",
@@ -3966,9 +3855,9 @@
       "id": "ou99:472035",
       "modelKey": "ou99.472035",
       "glbPath": "assets/models/ou99/ou99_472035.glb",
-      "sha256": "7724a3039a62b00df4754f0fb67fb932b419cd2f750ca7101d5bd0a9ce40ce84",
-      "bytes": 2096040,
-      "documentSha256": "7b6d47e13a893281477b5ac731d1dfb9088822ad954ef4f342f3bbb8df95a26a",
+      "sha256": "565d459f7fe263e8e72fbb92929269109830b25808fc12a5b3f35c59008cf067",
+      "bytes": 1074316,
+      "documentSha256": "e7a08617681808af4f62b1a1318df23c368cb3cd1d0c0f2f77bd8e2fe1cc9d01",
       "sourceCharacter": "WOW兽人祭祀法师",
       "sourceWork": "來源作品待核；論壇標題：WOW兽人祭祀法师",
       "sourceAssetId": "https://www.ou99.com/thread-472035-1-1.html",
@@ -3987,7 +3876,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_472035.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.472035",
@@ -4026,7 +3915,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.472038",
@@ -4073,7 +3962,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.473324",
@@ -4095,10 +3984,8 @@
           "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/visual-audit/ou99-473324-comparison.png"
         }
       },
-      "registeredFor": [
-        "b2-aladdin"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/ou99.473324-standard-v3.json"
     },
     {
@@ -4126,7 +4013,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.474258",
@@ -4179,7 +4066,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.478642",
@@ -4221,7 +4108,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.481732",
@@ -4249,7 +4136,7 @@
       "glbPath": "assets/models/ou99/ou99_487191.glb",
       "sha256": "a76a7631f2d1e99b3f6f20c449dc443291cd853d366636efff4c96caf36946a3",
       "bytes": 2124200,
-      "documentSha256": "0cab86faa2d36a6b9e9f4bba57c102fd75e93b889ed4f9f091e1f5775fd580cd",
+      "documentSha256": "4a07fe2c5f6b517cff5b7e95d872a9459bfea37187a1d601e8e7dc43628ac4ed",
       "sourceCharacter": "SSR鬼神吕布鬼脸将军",
       "sourceWork": "來源作品待核；論壇標題：SSR鬼神吕布鬼脸将军",
       "sourceAssetId": "https://www.ou99.com/thread-487191-1-1.html",
@@ -4268,7 +4155,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_487191.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487191",
@@ -4307,7 +4194,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487484",
@@ -4349,7 +4236,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487487-7yzc0mtk",
@@ -4396,7 +4283,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.487487-sbhhkedr",
@@ -4438,7 +4325,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.491448",
@@ -4491,7 +4378,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.491497",
@@ -4533,7 +4420,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.493578",
@@ -4561,7 +4448,7 @@
       "glbPath": "assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
       "sha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
       "bytes": 653604,
-      "documentSha256": "94919888ba110de705b60aa13e4d535f2c49dbb12ad5403610e4b99557bdfe92",
+      "documentSha256": "7ed746a868bf91cbbe200e07d70ef88a1ea1c76d8bf6c8afbf29729348466f1a",
       "sourceCharacter": "海星动画人",
       "sourceWork": "來源作品待核；論壇標題：海星动画人",
       "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
@@ -4580,7 +4467,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.495015",
@@ -4646,7 +4533,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.496452",
@@ -4672,9 +4559,9 @@
       "id": "ou99:496905",
       "modelKey": "ou99.496905",
       "glbPath": "assets/models/ou99/ou99_496905.glb",
-      "sha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
-      "bytes": 4406260,
-      "documentSha256": "8fd88ddc9c9eb2373f759a569123d95d2b2aa9b470b8808efcb28134ea443b2d",
+      "sha256": "c207cf12e04f92fcd449fca39b33da5cf0a4e3249c6df75b6f7696b9fcf27359",
+      "bytes": 4006504,
+      "documentSha256": "413617b92c2156d0f0a6df220c1cd40201aa2653ca8fddbda866c7b6b35b52f2",
       "sourceCharacter": "搞怪哆啦A梦猫",
       "sourceWork": "來源作品待核；論壇標題：搞怪哆啦A梦猫",
       "sourceAssetId": "https://www.ou99.com/thread-496905-1-1.html",
@@ -4693,7 +4580,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_496905.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.496905",
@@ -4731,7 +4618,7 @@
       "glbPath": "assets/models/ou99/ou99_497131.glb",
       "sha256": "6d573c4018c6f554b0ba7727ad495f4d7b9adf2bdc6f148782fb2c423eccae39",
       "bytes": 746212,
-      "documentSha256": "d5af0e15461e61923efd96eb6525cfd095a2d07e0ad740a52a2bb74fb6632bad",
+      "documentSha256": "385c810c7a276a50df227bda7e5519f5c11e9af901aafe18af558f891992000c",
       "sourceCharacter": "龙珠超孙悟空",
       "sourceWork": "來源作品待核；論壇標題：龙珠超孙悟空",
       "sourceAssetId": "https://www.ou99.com/thread-497131-1-1.html",
@@ -4750,7 +4637,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/ou99/ou99_497131.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.497131",
@@ -4789,7 +4676,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
         "modelKey": "ou99.498214",
@@ -4836,7 +4723,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.313646",
@@ -4883,7 +4770,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.287871",
@@ -4926,7 +4813,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.497211",
@@ -4974,7 +4861,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.472112",
@@ -5021,7 +4908,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.457123",
@@ -5068,7 +4955,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.311294",
@@ -5115,7 +5002,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.468771",
@@ -5162,7 +5049,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "character-labelled-by-delivering-workflow",
       "originalDelivery": {
         "modelKey": "ou99.457280",
@@ -5209,7 +5096,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
@@ -5250,7 +5137,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
@@ -5260,10 +5147,8 @@
         "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false,
-      "registeredFor": [
-        "lol-warwick"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f.json"
     },
     {
@@ -5291,7 +5176,7 @@
       "fullCharacterPackage": false,
       "storage": "git",
       "gitPath": "content/assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
-      "sourceCommit": "b6686109a",
+      "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "native-game-character",
       "originalDelivery": {
         "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
@@ -5301,10 +5186,8 @@
         "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": false,
-      "registeredFor": [
-        "lol-yasuo"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540.json"
     },
     {
@@ -5339,10 +5222,8 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
       "fullCharacterPackage": false,
-      "registeredFor": [
-        "b2-guts"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d.json"
     },
     {
@@ -5379,10 +5260,8 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
       "fullCharacterPackage": false,
-      "registeredFor": [
-        "b2-maomao"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42.json"
     },
     {
@@ -5488,10 +5367,8 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
       "fullCharacterPackage": false,
-      "registeredFor": [
-        "b2-shinchan"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e.json"
     },
     {
@@ -5524,10 +5401,8 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
       "fullCharacterPackage": false,
-      "registeredFor": [
-        "b2-shinchan"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597.json"
     },
     {
@@ -5559,10 +5434,8 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
       "fullCharacterPackage": false,
-      "registeredFor": [
-        "b2-naofumi"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569.json"
     },
     {
@@ -5571,7 +5444,7 @@
       "glbPath": "assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
       "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
       "bytes": 658700,
-      "documentSha256": "ade84bb5a28d7e565f4eba5e2d581275e14f1d6ae6c94beb27850f2103c25368",
+      "documentSha256": "e529f1cd3a8a776f4da7c13a517c781d48218558ffee67b148db825be0e53f0d",
       "sourceCharacter": "海星动画人",
       "sourceWork": "來源作品待核；論壇標題：海星动画人",
       "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
@@ -5633,10 +5506,8 @@
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-khronos-and-36-sample-babylon-render-passed",
       "fullCharacterPackage": false,
-      "registeredFor": [
-        "b2-kaiji"
-      ],
-      "runtimeDropdownRegistered": true,
+      "registeredFor": [],
+      "runtimeDropdownRegistered": false,
       "modelDocumentGitPath": "content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json"
     }
   ],
@@ -5916,8 +5787,8 @@
       },
       "validationEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-        "bytes": 9517,
-        "sha256": "e055e6ff82a9c0c2fb3791a4633ce18a68e28b0b7f8d19e07586ee43e13d1c5d"
+        "bytes": 9683,
+        "sha256": "ef01587f4749e799d66ae99807d8f54061206e4e00273452fb8d1e0355eb114b"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -6001,8 +5872,8 @@
       },
       "validationEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-validation.json",
-        "bytes": 9505,
-        "sha256": "0bd61eabad6556a2f2df918a3f728b062da07935267e37a6018556cf5374c6ba"
+        "bytes": 9671,
+        "sha256": "9011ece6487343995f3c8f03f26063be8654e0269add591207d66536d543be97"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
@@ -6080,8 +5951,8 @@
       },
       "validationEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-validation.json",
-        "bytes": 4087,
-        "sha256": "d23cda69feed8ad78523fabb6095ea040ab08ae198056ba5fc0f2a9eb79249d6"
+        "bytes": 4129,
+        "sha256": "7ceeddce5ce993215dad5b7991b319cf5dd5895cea1421b9fe91209c88ff909d"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-webgl-proof.json",
@@ -6170,8 +6041,8 @@
       },
       "validationEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-validation.json",
-        "bytes": 4087,
-        "sha256": "8053c708514237dd4b8ef3ae80497d5b91fa35405d99dbf0cf19bfb69eea4907"
+        "bytes": 4129,
+        "sha256": "9dfac1a9cdec62a5226a73a72f24aa257a2d42abde02335668e29dc227011d73"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-webgl-proof.json",
@@ -6208,10 +6079,10 @@
   "modelComponentCount": 7,
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "9b88cb2843af831035523ac687ffe087a7eb4ecfd021e1ab563bfaca6bd947f6"
+    "sha256": "90132602ccaaa00266820c3c6dec7114e14568d51a41c9edbb49fad8c55c85d2"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "28fa8da0612bbd3e6de56069d3c4ba7c6ba693ad9601cc5dfcc1358b253c85e5"
+    "sha256": "31888629147bcc7fc80fd75758d509497de2287373a5741b9081ae45a7c70ec6"
   }
 }

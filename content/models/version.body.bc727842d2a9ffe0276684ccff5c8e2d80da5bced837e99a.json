@@ -16,5 +16,8 @@
     "sourceModelKey": "ou99.495015-native-visibility-v1",
     "legacyAppearance": false
   },
-  "yawOffsetDeg": 0
+  "yawOffsetDeg": 0,
+  "hiddenPrimitives": [
+    2
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T16:29:02+08:00",
-  "inputsSha256": "b98a6c272ba29ef72e1e2330743207d984a947f9a8b5cef4091650d1cc055583",
+  "generatedAt": "2026-09-11T17:08:15+08:00",
+  "inputsSha256": "5f5e1160c0f47c91a518042f7486dfda2e74c130b1e6b60f2813dc372062bb86",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -5267,6 +5267,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -5284,6 +5285,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -5305,6 +5307,24 @@
       },
       "options": [
         {
+          "key": "ou99.470225",
+          "id": "ou99.470225",
+          "name": "白木卡迪那",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.470225",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -5313,6 +5333,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -5324,7 +5345,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.sela",
+        "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
         "mode": "auto"
       },
       "downloadSources": [
@@ -5515,6 +5536,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -5532,6 +5554,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -5553,6 +5576,24 @@
       },
       "options": [
         {
+          "key": "ou99.470225",
+          "id": "ou99.470225",
+          "name": "白木卡迪那",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.470225",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -5561,6 +5602,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -5572,7 +5614,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.sela",
+        "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
         "mode": "auto"
       },
       "downloadSources": [
@@ -5714,6 +5756,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -5731,6 +5774,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -5752,6 +5796,24 @@
       },
       "options": [
         {
+          "key": "ou99.472410",
+          "id": "ou99.472410",
+          "name": "揍敵客桀諾",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.472410",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -5760,6 +5822,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -5771,7 +5834,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.sela",
+        "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
         "mode": "auto"
       },
       "downloadSources": [],
@@ -17719,21 +17782,26 @@
       "section": "既有角色／形態",
       "status": "正式機白名單可選",
       "default": {
-        "key": "champ.thorne",
-        "id": "champ.thorne",
-        "name": "Thorne／方塊騎士",
-        "work": "GGD 模型預設",
-        "tier": "original",
-        "kind": "previous",
+        "key": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+        "id": "300heroes:41",
+        "name": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "tier": "300heroes",
+        "library": "300heroes",
+        "kind": "exact",
         "ready": true,
-        "old": true,
-        "library": "GGD",
+        "old": false,
         "defaultEligible": true,
-        "selectionClass": "original",
+        "selectionClass": "300heroes",
         "asset": {
-          "modelKey": "champ.thorne",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+          "glbPath": "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+          "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.550c1060c9dfa0f2c6cd0e63/5efe4cbe768bf7e0/content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.550c1060c9dfa0f2c6cd0e63/5efe4cbe768bf7e0/content/assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+          "limitations": [
+            "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+          ]
         }
       },
       "automaticDefault": {
@@ -17759,7 +17827,7 @@
           ]
         }
       },
-      "defaultSelectionMode": "manual",
+      "defaultSelectionMode": "automatic",
       "current": {
         "key": "champ.thorne",
         "id": "champ.thorne",
@@ -17771,6 +17839,24 @@
         "old": true
       },
       "options": [
+        {
+          "key": "ou99.328403",
+          "id": "ou99.328403",
+          "name": "海克力斯",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.328403",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
         {
           "key": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
           "id": "300heroes:41",
@@ -17815,8 +17901,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
-        "mode": "manual"
+        "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-066"
@@ -30609,7 +30695,7 @@
           "asset": {
             "modelKey": "ou99.465205",
             "glbPath": "assets/models/ou99/ou99_465205.glb",
-            "sha256": "b105f0727db3af9fb32c774db1ce8f260da853c950931856610ffe39b8d180d5",
+            "sha256": "a15afd19cc767a46ce7262f41192923a09d5e7a556bb45cfaf11ce76ea8bb2a9",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_465205.glb",
             "limitations": [
@@ -33331,7 +33417,7 @@
           "asset": {
             "modelKey": "ou99.470426",
             "glbPath": "assets/models/ou99/ou99_470426.glb",
-            "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29",
+            "sha256": "becaad1c7979cdf85a472cd61fe33b487c76f458001b49969b24c44fd4a0a3d8",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_470426.glb",
             "limitations": [
@@ -33441,7 +33527,7 @@
           "asset": {
             "modelKey": "ou99.496905",
             "glbPath": "assets/models/ou99/ou99_496905.glb",
-            "sha256": "845d3bdf23a158954b0925c98bb56f125376862ae33d83ee51164ad5b79719f2",
+            "sha256": "c207cf12e04f92fcd449fca39b33da5cf0a4e3249c6df75b6f7696b9fcf27359",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_496905.glb",
             "limitations": [
@@ -33760,7 +33846,7 @@
           "asset": {
             "modelKey": "ou99.470426",
             "glbPath": "assets/models/ou99/ou99_470426.glb",
-            "sha256": "57e1a295a752445bd768afa815354d6edba801e6ec1d62de657f7914b9d61e29",
+            "sha256": "becaad1c7979cdf85a472cd61fe33b487c76f458001b49969b24c44fd4a0a3d8",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_470426.glb",
             "limitations": [
@@ -34027,8 +34113,8 @@
               },
               "validationEvidence": {
                 "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-                "bytes": 9517,
-                "sha256": "e055e6ff82a9c0c2fb3791a4633ce18a68e28b0b7f8d19e07586ee43e13d1c5d"
+                "bytes": 9683,
+                "sha256": "ef01587f4749e799d66ae99807d8f54061206e4e00273452fb8d1e0355eb114b"
               },
               "visualEvidence": {
                 "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -34111,8 +34197,8 @@
               },
               "validationEvidence": {
                 "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-validation.json",
-                "bytes": 9505,
-                "sha256": "0bd61eabad6556a2f2df918a3f728b062da07935267e37a6018556cf5374c6ba"
+                "bytes": 9671,
+                "sha256": "9011ece6487343995f3c8f03f26063be8654e0269add591207d66536d543be97"
               },
               "visualEvidence": {
                 "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
@@ -34845,7 +34931,7 @@
           "asset": {
             "modelKey": "ou99.456546",
             "glbPath": "assets/models/ou99/ou99_456546.glb",
-            "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee",
+            "sha256": "6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_456546.glb",
             "limitations": [
@@ -35194,6 +35280,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -35211,6 +35298,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -35232,6 +35320,24 @@
       },
       "options": [
         {
+          "key": "ou99.495978",
+          "id": "ou99.495978",
+          "name": "黑人牙膏",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.495978",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -35240,6 +35346,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -35251,7 +35358,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.sela",
+        "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
         "mode": "auto"
       },
       "downloadSources": [
@@ -35480,7 +35587,7 @@
           "asset": {
             "modelKey": "ou99.456546",
             "glbPath": "assets/models/ou99/ou99_456546.glb",
-            "sha256": "f5897de0cd6803bd3111e908d04424cdd63d65c5cb4407edea2da8111fb03eee",
+            "sha256": "6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_456546.glb",
             "limitations": [
@@ -35856,6 +35963,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -35873,6 +35981,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -35894,6 +36003,24 @@
       },
       "options": [
         {
+          "key": "ou99.459087",
+          "id": "ou99.459087",
+          "name": "死之王",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.459087",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.sela",
           "id": "champ.sela",
           "name": "Sela／方塊法師",
@@ -35902,6 +36029,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -35913,7 +36041,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.sela",
+        "modelKey": "version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa",
         "mode": "auto"
       },
       "downloadSources": [
@@ -36669,7 +36797,7 @@
           "asset": {
             "modelKey": "ou99.457883",
             "glbPath": "assets/models/ou99/ou99_457883.glb",
-            "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
+            "sha256": "cc6951f5d134f4cf8e85ae63bcdc7d5bdbbe7e41a1b47bb18e72e142aea7c697",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_457883.glb",
             "limitations": [
@@ -36692,7 +36820,7 @@
           "asset": {
             "modelKey": "ou99.472035",
             "glbPath": "assets/models/ou99/ou99_472035.glb",
-            "sha256": "7724a3039a62b00df4754f0fb67fb932b419cd2f750ca7101d5bd0a9ce40ce84",
+            "sha256": "565d459f7fe263e8e72fbb92929269109830b25808fc12a5b3f35c59008cf067",
             "s3Uri": null,
             "gitPath": "content/assets/models/ou99/ou99_472035.glb",
             "limitations": [
@@ -36881,6 +37009,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -36898,6 +37027,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
@@ -36919,6 +37049,24 @@
       },
       "options": [
         {
+          "key": "ou99.469191",
+          "id": "ou99.469191",
+          "name": "飛鼠先生",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.469191",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -36927,6 +37075,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
@@ -36938,7 +37087,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.thorne",
+        "modelKey": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
         "mode": "auto"
       },
       "downloadSources": [
@@ -37911,8 +38060,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.4adda1a3edb607f372580e0ef9091fd64431b8e866df76bd",
-        "mode": "automatic"
+        "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -38747,8 +38896,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.4460b40eae91d19d1895469c9eaf0d6bd1e4fb3766b1b350",
-        "mode": "automatic"
+        "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -40590,8 +40739,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.e47f9a11483e936f6ae4796e32f51853b1a2ad1c0599cc75",
-        "mode": "automatic"
+        "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-032"
@@ -40938,8 +41087,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.6484c748978551f4419a5e982a3e6814f8fca9b9ff276939",
-        "mode": "automatic"
+        "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -41396,8 +41545,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.66097b65102bec44b3d65cc9e524ba10b3e175261680a998",
-        "mode": "automatic"
+        "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -41838,8 +41987,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.1017c2855b9daf1ffefdf0a6285253a6cfee673a8329b94b",
-        "mode": "automatic"
+        "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-067"
@@ -42190,8 +42339,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.317bd7b51ce0d64c24ebd79093f3aea10399eaaeec9186ec",
-        "mode": "automatic"
+        "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -42884,8 +43033,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a49361fde53ac8e465cb392f9f9d8b415370ddcfa9939448",
-        "mode": "automatic"
+        "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -43418,8 +43567,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.c50b439503acbc0286d34aa863de3b5b60f040647b3e3fe5",
-        "mode": "automatic"
+        "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -43535,8 +43684,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a7b05cda23ed28ef09c8cc70fdb6331f78fe40521d48c953",
-        "mode": "automatic"
+        "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -43652,8 +43801,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.19497fdc652b511ec9848c31dc8709e35a78e1b6e1ef0e44",
-        "mode": "automatic"
+        "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-070"
@@ -46026,8 +46175,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.6a8f96e74f75181f0076b272622cf3fe83404a51f17149fa",
-        "mode": "automatic"
+        "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -46143,8 +46292,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.74ec8806afbe1835fca3dc984ea47e5f23b29100cc99a502",
-        "mode": "automatic"
+        "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-063"
@@ -46262,8 +46411,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
-        "mode": "automatic"
+        "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -46611,8 +46760,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.64f3795c6a5e90dbf5a8b78fe190d56cf81effb852f353fd",
-        "mode": "automatic"
+        "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -46728,8 +46877,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.7f075191d8d759a8475e66b421de085eb1fcf8926a175681",
-        "mode": "automatic"
+        "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-069"
@@ -46847,8 +46996,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.93f9bee80c870645e52e6c71f731c3bf56dd3c9f0757fc76",
-        "mode": "automatic"
+        "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -46964,8 +47113,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d3d930c84f9423094ffdca11a0b5ea4fa2c39638cea939ab",
-        "mode": "automatic"
+        "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -47075,8 +47224,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
-        "mode": "automatic"
+        "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -47192,8 +47341,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.1de4f7fe358ffb265236f5cbcd16e3b6cf4289ff48c9c429",
-        "mode": "automatic"
+        "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -47309,8 +47458,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.ba1886127e7f2741f4e6763d243777cb7e34b38d28d02bd4",
-        "mode": "automatic"
+        "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-031"
@@ -47614,8 +47763,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.266dcb33c9b54e2b7b388a4869702efad8223b92d354cfd5",
-        "mode": "automatic"
+        "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -47757,8 +47906,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a22a6e40793b280739b186768ad8a8a32b303806d27577cc",
-        "mode": "automatic"
+        "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -48344,8 +48493,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.2f9f563af47ff08c5b5a7e3e34658d24ce59718cc568379c",
-        "mode": "automatic"
+        "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-016"
@@ -49438,8 +49587,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
-        "mode": "automatic"
+        "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -49774,8 +49923,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.712d51b72d6746b5e62dd98a095c148ec269187477f8e040",
-        "mode": "automatic"
+        "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -49874,8 +50023,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.80d9331a8e1ba0ea4afa42aefa76dc1c3b11b0d0bf1ceb4c",
-        "mode": "automatic"
+        "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-015"
@@ -49976,8 +50125,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.24dff69da9f04e6b1cb5fe28affe1d1df196a9f352259aed",
-        "mode": "automatic"
+        "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-065"
@@ -51057,8 +51206,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.f8868cbb08e0ca359ebd1dcfb1b9cd5392235511ddf457a0",
-        "mode": "automatic"
+        "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -51199,6 +51348,24 @@
           }
         },
         {
+          "key": "ou99.467165",
+          "id": "ou99.467165",
+          "name": "貓貓",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.467165",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -51219,8 +51386,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
-        "mode": "automatic"
+        "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-011"
@@ -51555,8 +51722,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.c9f1486e1f2c8e3a0aaf53aa06fbe2f57b8e70266ad34ae6",
-        "mode": "automatic"
+        "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -51681,8 +51848,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d10ee74c106dbc6ed7c08168720ecfade61d528aaadfbc46",
-        "mode": "automatic"
+        "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -52053,6 +52220,24 @@
           }
         },
         {
+          "key": "ou99.470782",
+          "id": "ou99.470782",
+          "name": "岩谷尚文",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.470782",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -52073,8 +52258,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
-        "mode": "automatic"
+        "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-035"
@@ -52978,6 +53163,24 @@
           }
         },
         {
+          "key": "ou99.460977",
+          "id": "ou99.460977",
+          "name": "凱茲",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.460977",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -52998,8 +53201,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
-        "mode": "automatic"
+        "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-021"
@@ -53172,13 +53375,12 @@
           "id": "ou99:458777:original",
           "name": "假面绅士（原交付版本）",
           "work": "來源作品待核；論壇標題：假面绅士",
-          "tier": "original",
+          "tier": "w3x",
           "kind": "previous",
           "ready": true,
           "old": true,
-          "library": "GGD",
           "defaultEligible": true,
-          "selectionClass": "original",
+          "selectionClass": "w3x",
           "asset": {
             "modelKey": "ou99.458777",
             "location": "existing-project-model",
@@ -53188,8 +53390,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
-        "mode": "automatic"
+        "modelKey": "ou99.458777",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-055"
@@ -53903,8 +54105,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
-        "mode": "automatic"
+        "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-014"
@@ -54031,8 +54233,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.19e38a660df5fb169ca48f545ec3d67e00f404c3e8f08f9b",
-        "mode": "automatic"
+        "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -54190,6 +54392,24 @@
           }
         },
         {
+          "key": "ou99.457710",
+          "id": "ou99.457710",
+          "name": "伊藤開司",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.457710",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -54210,8 +54430,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
-        "mode": "automatic"
+        "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-058"
@@ -55017,8 +55237,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
-        "mode": "automatic"
+        "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -55304,8 +55524,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d4cffd536c8d484810c76b5cc47bb397cff677f25bc95200",
-        "mode": "automatic"
+        "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -55623,6 +55843,24 @@
           }
         },
         {
+          "key": "ou99.457874",
+          "id": "ou99.457874",
+          "name": "野原新之助",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "style-proxy",
+          "ready": true,
+          "old": true,
+          "library": "ou99 偶久網",
+          "defaultEligible": false,
+          "selectionClass": "similar-proxy",
+          "asset": {
+            "modelKey": "ou99.457874",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -55643,8 +55881,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
-        "mode": "automatic"
+        "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-060"
@@ -55869,13 +56107,12 @@
           "id": "ou99:473324:original",
           "name": "龙族亚瑟王（原交付版本）",
           "work": "來源作品待核；論壇標題：龙族亚瑟王",
-          "tier": "original",
+          "tier": "w3x",
           "kind": "previous",
           "ready": true,
           "old": true,
-          "library": "GGD",
           "defaultEligible": true,
-          "selectionClass": "original",
+          "selectionClass": "w3x",
           "asset": {
             "modelKey": "ou99.473324",
             "location": "existing-project-model",
@@ -55885,8 +56122,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
-        "mode": "automatic"
+        "modelKey": "ou99.473324",
+        "mode": "auto"
       },
       "downloadSources": [
         "owner-model-033"
@@ -56149,8 +56386,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.39c18a9b1921088ab533c174a64f6ae0bf908933d72ed3ea",
-        "mode": "automatic"
+        "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -62630,8 +62867,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.b2b6844ed06e05009309d104f46f9c3245ddf636af2023d5",
-        "mode": "automatic"
+        "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -65809,8 +66046,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
-        "mode": "automatic"
+        "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+        "mode": "auto"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -67304,37 +67541,47 @@
       "section": "主線追加形態",
       "status": "目錄未上架",
       "default": {
-        "key": "champ.thorne",
-        "id": "champ.thorne",
-        "name": "Thorne／方塊騎士",
-        "work": "GGD 模型預設",
-        "tier": "original",
+        "key": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+        "id": "300heroes:272",
+        "name": "梅普露",
+        "work": "怕痛的我，把防禦力點滿就對了",
+        "tier": "300heroes",
         "kind": "previous",
         "ready": true,
         "old": true,
         "defaultEligible": true,
-        "selectionClass": "original",
+        "selectionClass": "300heroes",
         "asset": {
-          "modelKey": "champ.thorne",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+          "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+          "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+          "limitations": [
+            "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+          ]
         }
       },
       "automaticDefault": {
-        "key": "champ.thorne",
-        "id": "champ.thorne",
-        "name": "Thorne／方塊騎士",
-        "work": "GGD 模型預設",
-        "tier": "original",
+        "key": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+        "id": "300heroes:272",
+        "name": "梅普露",
+        "work": "怕痛的我，把防禦力點滿就對了",
+        "tier": "300heroes",
         "kind": "previous",
         "ready": true,
         "old": true,
         "defaultEligible": true,
-        "selectionClass": "original",
+        "selectionClass": "300heroes",
         "asset": {
-          "modelKey": "champ.thorne",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+          "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+          "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+          "limitations": [
+            "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+          ]
         }
       },
       "defaultSelectionMode": "automatic",
@@ -67350,26 +67597,31 @@
       },
       "options": [
         {
-          "key": "champ.thorne",
-          "id": "champ.thorne",
-          "name": "Thorne／方塊騎士",
-          "work": "GGD 模型預設",
-          "tier": "original",
+          "key": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+          "id": "300heroes:272",
+          "name": "梅普露",
+          "work": "怕痛的我，把防禦力點滿就對了",
+          "tier": "300heroes",
           "kind": "previous",
           "ready": true,
           "old": true,
           "defaultEligible": true,
-          "selectionClass": "original",
+          "selectionClass": "300heroes",
           "asset": {
-            "modelKey": "champ.thorne",
-            "location": "existing-project-model",
-            "s3Uri": null
+            "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+            "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+            "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a/content/assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+            "limitations": [
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            ]
           }
         }
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "champ.thorne",
+        "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
         "mode": "auto"
       },
       "downloadSources": [],
@@ -88224,8 +88476,8 @@
             },
             "validationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-validation.json",
-              "bytes": 4087,
-              "sha256": "d23cda69feed8ad78523fabb6095ea040ab08ae198056ba5fc0f2a9eb79249d6"
+              "bytes": 4129,
+              "sha256": "7ceeddce5ce993215dad5b7991b319cf5dd5895cea1421b9fe91209c88ff909d"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-webgl-proof.json",
@@ -88313,8 +88565,8 @@
             },
             "validationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-validation.json",
-              "bytes": 4087,
-              "sha256": "8053c708514237dd4b8ef3ae80497d5b91fa35405d99dbf0cf19bfb69eea4907"
+              "bytes": 4129,
+              "sha256": "9dfac1a9cdec62a5226a73a72f24aa257a2d42abde02335668e29dc227011d73"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-webgl-proof.json",
@@ -112737,8 +112989,8 @@
             },
             "validationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-              "bytes": 9517,
-              "sha256": "e055e6ff82a9c0c2fb3791a4633ce18a68e28b0b7f8d19e07586ee43e13d1c5d"
+              "bytes": 9683,
+              "sha256": "ef01587f4749e799d66ae99807d8f54061206e4e00273452fb8d1e0355eb114b"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -112821,8 +113073,8 @@
             },
             "validationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-validation.json",
-              "bytes": 9505,
-              "sha256": "0bd61eabad6556a2f2df918a3f728b062da07935267e37a6018556cf5374c6ba"
+              "bytes": 9671,
+              "sha256": "9011ece6487343995f3c8f03f26063be8654e0269add591207d66536d543be97"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",

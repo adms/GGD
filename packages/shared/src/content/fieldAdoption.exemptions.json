@@ -2282,5 +2282,59 @@
     "status": "landing",
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
+  },
+  "field:abilities.recast": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1187 —— 【再次施放】機制（e36a5acda）—— 內容綁定在 LoL lane：阿璃 R／瑟雷西 Q／鄂爾 R 由 #1185 接回三槽。⛔ 我不先填：填了等於替內容 lane 決定那三支長什麼樣。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.recastEffects": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1187 —— 同上 —— 後段效果樹的第一份採用者是鄂爾 R（撞羊改向），由 #1185 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:champions.abilities.*.recast": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1187 —— 同上（英雄內嵌鏡像那一份，同步器從 standalone 抄過去）。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:champions.abilities.*.recastEffects": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1187 —— 同上（鏡像）。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#applyStatus.charmed": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1197 —— 魅惑機制（sim/charm.ts）—— 第一份採用者是阿璃 E，由 #1193／#1185 接回六槽。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#dispel.statusKinds": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1197 —— 只清減速 —— 第一份採用者是蓋倫 Q，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:projectiles.returns": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1197 —— 回程彈 —— 第一份採用者是阿璃 Q 的法球 projectile 文件，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:projectiles.split": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1197 —— 分裂彈 —— 第一份採用者是威寇茲 Q 的主彈 projectile 文件，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "variant:abilities.effects[]#spawnThresholds": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1197 —— 邊界陣（新 effect kind）—— 第一份採用者是瑟雷西 R，由 #1193 接回；客戶端畫面另票 #1209。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
+    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
   }
 }

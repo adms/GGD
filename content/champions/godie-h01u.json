@@ -124,10 +124,10 @@
         60.0
       ],
       "manaCost": [
-        72.0,
-        72.0,
-        72.0,
-        72.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -137,7 +137,12 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTier": "極小"
+            "damageTierPerRank": [
+              "極小",
+              "極小",
+              "小",
+              "小"
+            ]
           },
           "radius": 4.5,
           "radiusTier": "小",
@@ -245,7 +250,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "中",
-      "manaCostTier": "極小",
+      "manaCostTier": "小",
       "castTimeSec": 0.667
     },
     "E": {
@@ -263,10 +268,10 @@
         60.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "range": 8.0,
       "radiusTier": "中",

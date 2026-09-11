@@ -93,7 +93,7 @@ function probeQ(championId: ChampionId): ReturnType<typeof classifyCastOutcome> 
     world.step(NO_INTENTS);
     events.push(...world.events.map((e) => e.type));
   }
-  return classifyCastOutcome({ events, before, after: snapshotChannels(world), moved: false, effectsAuthored: 1 });
+  return classifyCastOutcome({ events, before, after: snapshotChannels(world), moved: false, victimMoved: false, victimLocked: false, effectsAuthored: 1 });
 }
 
 describe("castability sweep — 只有特效的技能不算「有效果」（GH#374 洞②）", () => {

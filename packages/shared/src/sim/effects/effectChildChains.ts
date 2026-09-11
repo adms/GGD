@@ -40,6 +40,7 @@ export const EFFECT_CHILD_CHAINS = [
   "onArrive", // blink · spawnModelFx（#551 抵達/壽命到的落點那一串）
   "onDevour", // devour
   "onConsumed", // consumeStatus
+  "onCross", // spawnThresholds —— 穿越那一段時對穿越者跑的那一串（GH#1197 瑟雷西 R）
   "onMissing", // consumeStatus
   "onEnd", // dash
   "onHit", // spawnProjectile

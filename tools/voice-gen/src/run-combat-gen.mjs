@@ -33,6 +33,16 @@ const SHARDS = Math.max(1, Number(opt("--shards", 3)));
 const LIMIT = Number(opt("--limit", 0));
 const ONLY = opt("--hero", null);
 const DRY = argv.includes("--dry-run");
+/** --all: enqueue every synthesized line, not only the ones needsRender() flags (used when
+ *  a render parameter such as --takes changes — synth.py keys on it and re-renders). */
+const ALL = argv.includes("--all");
+/**
+ * ⭐ Best-of-N by CAM++ speaker similarity (synth.py --takes). Measured 2026-09-10 on six
+ * (hero, line) pairs from the lowest-scoring reference group: single take 0.585 mean →
+ * best of 4 0.655; the rl variant (0.595) and a 5 s prompt (0.555) did not help. So the
+ * lever the owner asked for (「盡量提高原本聲音相似度」) is takes, not the model.
+ */
+const TAKES = Math.max(1, Number(opt("--takes", 4)));
 const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 13).replace("T", "-");
 
 // ── the ruler ───────────────────────────────────────────────────────────────
@@ -68,7 +78,7 @@ for (const id of Object.keys(casting.champions).sort()) {
     if (!rec) continue;
     if (rec.textSource === "original") continue;   // an original clip is never rendered
     const why = needsRender(rec, clipPath(id, cat));
-    if (!why) continue;
+    if (!why && !ALL) continue;
     const e = { id: `${id}.${cat}`, ref: doc.reference.path, lang: rec.lang, text: rec.text, out: `${id}/${cat}.mp3`, category: cat.split(".")[0] };
     if (rec.lang === "ja") e.kana = rec.kana ?? "";
     entries.push(e);
@@ -87,11 +97,11 @@ const started = Date.now();
 
 // ── render: N persistent synth.py workers, model loaded once each ────────────
 const shards = Math.min(SHARDS, work.length);
-console.log(`[combat:gen] spawning ${shards} shard(s): ${ENGINE_PYTHON} ${relative(ROOT, SYNTH)} --manifest ${relative(ROOT, manifest)} --out-root ${relative(ROOT, LINES_DIR)}`);
+console.log(`[combat:gen] spawning ${shards} shard(s), best of ${TAKES} take(s) by speaker similarity: ${ENGINE_PYTHON} ${relative(ROOT, SYNTH)} --manifest ${relative(ROOT, manifest)} --out-root ${relative(ROOT, LINES_DIR)}`);
 const procs = [];
 for (let i = 0; i < shards; i++) {
   const log = join(OUT_DIR, `combat-shard${i}-${stamp}.log`);
-  const child = spawn(ENGINE_PYTHON, [SYNTH, "--manifest", manifest, "--out-root", LINES_DIR, "--ref-root", ROOT, "--shard", String(i), "--shards", String(shards)], { stdio: ["ignore", "pipe", "pipe"] });
+  const child = spawn(ENGINE_PYTHON, [SYNTH, "--manifest", manifest, "--out-root", LINES_DIR, "--ref-root", ROOT, "--takes", String(TAKES), "--shard", String(i), "--shards", String(shards)], { stdio: ["ignore", "pipe", "pipe"] });
   const chunks = [];
   const tee = (d) => { chunks.push(d); writeFileSync(log, Buffer.concat(chunks)); };
   child.stdout.on("data", tee); child.stderr.on("data", tee);

@@ -59,7 +59,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-takopi.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -86,10 +87,10 @@
       ],
       "id": "b2-takopi.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -114,7 +115,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-takopi.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -178,7 +180,7 @@
                   180
                 ]
               },
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.067,
               "target": "ally"
             },
             "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -186,7 +188,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.067,
               "castType": "targeted",
               "effects": [
                 {
@@ -217,7 +219,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-takopi.r.webp"
     },
     "W": {
       "castTimeSec": 0.067,
@@ -308,20 +311,21 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-takopi.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "ranged",
   "attributes": {
     "agi": 20,
-    "agiGrowth": 1.89,
+    "agiGrowth": 0,
     "int": 19,
-    "intGrowth": 1.83,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 21,
-    "strGrowth": 1.99
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -356,7 +360,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-takopi",
-  "modelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
+  "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
   "name": "章魚嗶",
   "origin": "軟輔",
   "passiveAbility": "b2-takopi.passive",
@@ -368,43 +372,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-takopi.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.f5672186284c6c404a1269c660d077546e82ce7f49e4d882",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
-      "modelSha256": "b51c43a373313067819a48399b45f3f8100422b6222b2b0f5434beb0f31e8e20",
-      "binarySha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
-      "registeredAt": "2026-09-10T14:45:41.986Z",
-      "source": {
-        "kind": "previous",
-        "character": "章魚嗶",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.e859dc912825a600d6175745de2dc29ab6256a10763510ca",
-      "label": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
-      "sourceModelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
-      "modelSha256": "7d22fb81e6fc80130ed5e28aae27456d4d2c8e78dbb6a4781afce8368a2a6615",
-      "binarySha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
-      "registeredAt": "2026-09-10T14:45:41.993Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
-        "work": "300英雄寵物；其他作品出處未確認",
-        "library": "300heroes",
-        "reference": "derivative:takopi",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-takopi.webp"
 }

@@ -1,5 +1,5 @@
 {
-  "note": "⭐ GH#1160 —— 「素材／來源／準備材料不進 git」的**棘輪**。owner 2026-09-10 逐字：「成品一律上傳至 git，剩下半成品、來源、準備材料等都進 S3」。⛔ 這張表不是豁免名單：每一類的 files/bytes 只准變**少**，大於 5 MB 的 blob 要逐檔列在 bigBlobs 並寫理由。2026-09-11 第一次量（origin/main 66cb3787f）。判準：一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。 ⭐ 大檔檢查排除 content/assets/（成品）。 ⭐ legacy-overwrites 不走「只准變少」（留底 hook 會往那裡寫，owner 08-20 允許）——改走單檔上限 legacyPerFileBytes（= hook 的 MAX_BYTES，GH#1192）。",
+  "note": "⭐ GH#1160 —— 「素材／來源／準備材料不進 git」的**棘輪**。owner 2026-09-10 逐字：「成品一律上傳至 git，剩下半成品、來源、準備材料等都進 S3」。⛔ 這張表不是豁免名單：每一類的 files/bytes 只准變**少**，大於 5 MB 的 blob 要逐檔列在 bigBlobs 並寫理由。2026-09-11 第一次量（origin/main 66cb3787f）。判準：一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。 ⭐ 大檔檢查排除 content/assets/（成品）。 ⭐ legacy-overwrites 不走「只准變少」（留底 hook 會往那裡寫，owner 08-20 允許）——改走單檔上限 legacyPerFileBytes（= hook 的 MAX_BYTES，GH#1192）。 ⭐ 2026-09-11 重量（GH#1220）：`materials/` 底下**靠 diff 讀得動的來源**（腳本一律算；`.json`/`.csv` 等結構化資料在 256 KB 以內算）⛔ 不再計入 —— owner 2026-09-08 逐字把「解析／轉換程式」與「版本清單、SHA-256、文件」點名進 git。超過 256 KB 的結構化資料仍算材料（CLAUDE.md 把 96,429 行的 OBJECTS.json 歸到 S3）。⇒ materials 554→82 個檔，⭐ 棘輪因此**更緊**。",
   "bigBlobBytes": 5242880,
   "categories": {
     "archives": {
@@ -8,15 +8,15 @@
     },
     "legacy-overwrites": {
       "files": 3600,
-      "bytes": 223005939
+      "bytes": 223023297
     },
     "logs": {
       "files": 359,
       "bytes": 1472329
     },
     "materials": {
-      "files": 554,
-      "bytes": 71649949
+      "files": 82,
+      "bytes": 55452611
     }
   },
   "bigBlobs": [

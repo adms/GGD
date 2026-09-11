@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.93f9bee80c870645e52e6c71f731c3bf56dd3c9f0757fc76",
+  "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 25,
     "agi": 23,
     "int": 12,
-    "strGrowth": 2.36,
-    "agiGrowth": 2.17,
-    "intGrowth": 1.18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-25-20260907.w",
@@ -113,10 +119,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -177,7 +183,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.9
+      "castTimeSec": 0.9,
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-25-20260907.e",
@@ -194,10 +206,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -255,7 +267,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ki.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-25-20260907.r",
@@ -271,9 +290,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -325,7 +344,13 @@
           "castTimeSec": 0.833
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ki.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ki.beam"
+        }
+      ]
     }
   },
   "exAbility": "community-review-25-20260907.ex",
@@ -338,42 +363,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.9831048563cb5cea8009561f07a5f692f7de81bb04de0fef",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
-      "modelSha256": "4bd81b9afbd5e6d7d211f878d996ce53d8a7c5b793365b548ccc7edb2791968e",
-      "binarySha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
-      "registeredAt": "2026-09-10T14:45:32.095Z",
-      "source": {
-        "kind": "previous",
-        "character": "一拳超人",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.93f9bee80c870645e52e6c71f731c3bf56dd3c9f0757fc76",
-      "label": "埼玉",
-      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
-      "modelSha256": "ecec7f09142a3dbbc27ee7f7b7f774b99b7bf13611679acc8dad0707073533d1",
-      "binarySha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
-      "registeredAt": "2026-09-10T14:45:32.103Z",
-      "source": {
-        "kind": "exact",
-        "character": "埼玉",
-        "work": "一拳超人 ONE-PUNCH MAN",
-        "library": "300heroes",
-        "reference": "300heroes:8ab9713ac0d4058884378c3a",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "fist"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

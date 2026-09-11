@@ -1,0 +1,1218 @@
+{
+  "schema": "ggd-lol-batch2-conversion-recipes@1",
+  "characters": [
+    {
+      "nativeId": "Sett",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sett/Sett.wad.client",
+      "sourceSha256": "61e28a37b3d62ba750ec3ea4ded0753d8a6ae90df7531e5304b8799cbd406734",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/sett/skin0.json",
+      "materials": [
+        "Sett_Base_Mat",
+        "Joke",
+        "Wolverine"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "Sett_Base_Mat",
+          "nativeTexture": "ASSETS/Characters/Sett/Skins/Base/Sett_Base_TX_CM.dds",
+          "sha256": "03461e4c8200dcdff2e956ffbf6e92829b28b6b4125897ee7e9c53741fb1ebdf"
+        },
+        {
+          "submesh": "Joke",
+          "nativeTexture": "ASSETS/Characters/Sett/Skins/Base/Sett_Base_Mom_TX_CM.dds",
+          "sha256": "2bbbf5b414acd243e43c2876a5f19ff497e84b6dbf2099a7665ee5025d669662"
+        },
+        {
+          "submesh": "Wolverine",
+          "nativeTexture": "ASSETS/Characters/Sett/Skins/Base/Sett_Base_Wolverine_TX_CM.dds",
+          "sha256": "082cca76ee7dde81669e2797d2f72c5700331bd56aca09e96e551fb3081db95b"
+        }
+      ],
+      "initialSubmeshToHide": [
+        "Wolverine",
+        "Joke"
+      ],
+      "stateClips": {
+        "idle": "sett_idle",
+        "run": "sett_run",
+        "attack": "sett_attack1",
+        "cast": "sett_spell1_a",
+        "death": "sett_death",
+        "hurt": "sett_idle"
+      },
+      "selectedSourceClips": {
+        "sett_idle": {
+          "archiveMember": "assets/characters/sett/skins/base/animations/sett_idle.anm",
+          "format": "anm",
+          "bytes": 33090,
+          "sha256": "7d0713b2352eb8efca642075e18a68c428c288e024bbe24098097f2903e7d16d",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sett/Sett.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/sett/assets/characters/sett/skins/base/animations/sett_idle.anm"
+        },
+        "sett_run": {
+          "archiveMember": "assets/characters/sett/skins/base/animations/sett_run.anm",
+          "format": "anm",
+          "bytes": 48348,
+          "sha256": "de731f46b82a29aeb48f9f0aefe2c7eda8f0c18a4ad5a68888dd9b185f245d58",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sett/Sett.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/sett/assets/characters/sett/skins/base/animations/sett_run.anm"
+        },
+        "sett_attack1": {
+          "archiveMember": "assets/characters/sett/skins/base/animations/sett_attack1.anm",
+          "format": "anm",
+          "bytes": 72544,
+          "sha256": "dba7306f4e20c1a63f248b9eaf2e8fae8f1aa677bfa32eb42b5e32813e78becc",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sett/Sett.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/sett/assets/characters/sett/skins/base/animations/sett_attack1.anm"
+        },
+        "sett_death": {
+          "archiveMember": "assets/characters/sett/skins/base/animations/sett_death.anm",
+          "format": "anm",
+          "bytes": 104960,
+          "sha256": "08be672eac635ce3d9b2d63a4b61c9f081d76f279a5231e71286512bdddd7e42",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sett/Sett.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/sett/assets/characters/sett/skins/base/animations/sett_death.anm"
+        },
+        "sett_spell1_a": {
+          "archiveMember": "assets/characters/sett/skins/base/animations/sett_spell1_a.anm",
+          "format": "anm",
+          "bytes": 92552,
+          "sha256": "b538b49d6abfa1a0f72a14d78dacaa9ec892ee20b66e9e38c30115afc15392c1",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Sett/Sett.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/sett/assets/characters/sett/skins/base/animations/sett_spell1_a.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/sett/assets/characters/sett/skins/base/sett.skn",
+        "-s",
+        "/work/extracted/sett/assets/characters/sett/skins/base/sett.skl",
+        "-g",
+        "/work/converted/sett.glb",
+        "-a",
+        "/work/selected-native-animations/sett",
+        "--materials",
+        "Sett_Base_Mat",
+        "Joke",
+        "Wolverine",
+        "--textures",
+        "/work/extracted/sett/assets/characters/sett/skins/base/sett_base_tx_cm.dds",
+        "/work/extracted/sett/assets/characters/sett/skins/base/sett_base_mom_tx_cm.dds",
+        "/work/extracted/sett/assets/characters/sett/skins/base/sett_base_wolverine_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "FiddleSticks",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/FiddleSticks/FiddleSticks.wad.client",
+      "sourceSha256": "41a9b25f07c3940e9c1c7adac3bfa102d006d3429accb55c6c1820d2b0141fb3",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/fiddlesticks/skin0.json",
+      "materials": [
+        "Weapon",
+        "Body",
+        "Lantern",
+        "Tongue",
+        "L_Demon_Arm",
+        "R_Demon_Arm"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "Weapon",
+          "nativeTexture": "ASSETS/Characters/Fiddlesticks/Skins/Base/Fiddlesticks_Base_Weapon_TX_CM.dds",
+          "sha256": "df5a1b8729a7cf7169ffe34516322c9d3e197820a67cf7e5eb8d7a5110e130de"
+        },
+        {
+          "submesh": "Body",
+          "nativeTexture": "ASSETS/Characters/Fiddlesticks/Skins/Base/Fiddlesticks_Base_Body_TX_CM.dds",
+          "sha256": "e4ab5f35268af3c878d47545096ce9383e42529e947b060e5af3b05d53a102aa"
+        },
+        {
+          "submesh": "Lantern",
+          "nativeTexture": "ASSETS/Characters/Fiddlesticks/Skins/Base/Fiddlesticks_Base_Body_TX_CM.dds",
+          "sha256": "e4ab5f35268af3c878d47545096ce9383e42529e947b060e5af3b05d53a102aa"
+        },
+        {
+          "submesh": "Tongue",
+          "nativeTexture": "ASSETS/Characters/Fiddlesticks/Skins/Base/Fiddlesticks_Base_Body_TX_CM.dds",
+          "sha256": "e4ab5f35268af3c878d47545096ce9383e42529e947b060e5af3b05d53a102aa"
+        },
+        {
+          "submesh": "L_Demon_Arm",
+          "nativeTexture": "ASSETS/Characters/Fiddlesticks/Skins/Base/Fiddlesticks_Base_Body_TX_CM.dds",
+          "sha256": "e4ab5f35268af3c878d47545096ce9383e42529e947b060e5af3b05d53a102aa"
+        },
+        {
+          "submesh": "R_Demon_Arm",
+          "nativeTexture": "ASSETS/Characters/Fiddlesticks/Skins/Base/Fiddlesticks_Base_Body_TX_CM.dds",
+          "sha256": "e4ab5f35268af3c878d47545096ce9383e42529e947b060e5af3b05d53a102aa"
+        }
+      ],
+      "initialSubmeshToHide": [
+        "L_Demon_Arm",
+        "Lantern",
+        "Tongue",
+        "R_Demon_Arm"
+      ],
+      "stateClips": {
+        "idle": "fiddlesticks_idle1",
+        "run": "fiddlesticks_run",
+        "attack": "fiddlesticks_attack1_a",
+        "cast": "fiddlesticks_spell1",
+        "death": "fiddlesticks_death_v2",
+        "hurt": "fiddlesticks_idle1"
+      },
+      "selectedSourceClips": {
+        "fiddlesticks_run": {
+          "archiveMember": "assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_run.anm",
+          "format": "anm",
+          "bytes": 32456,
+          "sha256": "2a12bebb9819277f4a8451b5e1abeaf61497ade0252b586d05935bc39acef239",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/FiddleSticks/FiddleSticks.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_run.anm"
+        },
+        "fiddlesticks_death_v2": {
+          "archiveMember": "assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_death_v2.anm",
+          "format": "anm",
+          "bytes": 151700,
+          "sha256": "3795f4bf774c95fbb255be09db91fdbb52bca9539a9d6fc8610d90ce9d9bad0d",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/FiddleSticks/FiddleSticks.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_death_v2.anm"
+        },
+        "fiddlesticks_spell1": {
+          "archiveMember": "assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_spell1.anm",
+          "format": "anm",
+          "bytes": 19510,
+          "sha256": "6ab1d66caf915ab5003bd46a5af4c25ff0e02140291b3eb4c074ecc222900915",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/FiddleSticks/FiddleSticks.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_spell1.anm"
+        },
+        "fiddlesticks_attack1_a": {
+          "archiveMember": "assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_attack1_a.anm",
+          "format": "anm",
+          "bytes": 17446,
+          "sha256": "c26242adc5bfcce2878c1b3fc02ff103a0df13c9e995e11c668ba819fc106863",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/FiddleSticks/FiddleSticks.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_attack1_a.anm"
+        },
+        "fiddlesticks_idle1": {
+          "archiveMember": "assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_idle1.anm",
+          "format": "anm",
+          "bytes": 129308,
+          "sha256": "e4855d12893e7fe0c5644b31d35d41ec0f5322edda65a1cf2491dd9f040ba79c",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/FiddleSticks/FiddleSticks.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/animations/fiddlesticks_idle1.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base.skn",
+        "-s",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base.skl",
+        "-g",
+        "/work/converted/fiddlesticks.glb",
+        "-a",
+        "/work/selected-native-animations/fiddlesticks",
+        "--materials",
+        "Weapon",
+        "Body",
+        "Lantern",
+        "Tongue",
+        "L_Demon_Arm",
+        "R_Demon_Arm",
+        "--textures",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_weapon_tx_cm.dds",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds",
+        "/work/extracted/fiddlesticks/assets/characters/fiddlesticks/skins/base/fiddlesticks_base_body_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Ornn",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ornn/Ornn.wad.client",
+      "sourceSha256": "6ac1e3a212a2bb245475d20311b9a1b188e7c1df7c438b650c83271407032269",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/ornn/skin0.json",
+      "materials": [
+        "Ornn_Base_Mat",
+        "Ornn_Base_Anvil_Mat",
+        "Ornn_Base_Hammer_Mat",
+        "Ornn_Base_Sword_Mat",
+        "Ornn_Base_Bucket_Mat",
+        "Ornn_Base_Poro_Mat"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "Ornn_Base_Mat",
+          "nativeTexture": "ASSETS/Characters/Ornn/Skins/Base/Ornn_Base_TX_CM.dds",
+          "sha256": "29f0146a4e5063dfdb192b87b66ac8bb3c0bcc6cb60fbfcf489d1b56c37785b3"
+        },
+        {
+          "submesh": "Ornn_Base_Anvil_Mat",
+          "nativeTexture": "ASSETS/Characters/Ornn/Skins/Base/Ornn_Base_TX_CM.dds",
+          "sha256": "29f0146a4e5063dfdb192b87b66ac8bb3c0bcc6cb60fbfcf489d1b56c37785b3"
+        },
+        {
+          "submesh": "Ornn_Base_Hammer_Mat",
+          "nativeTexture": "ASSETS/Characters/Ornn/Skins/Base/Ornn_Base_TX_CM.dds",
+          "sha256": "29f0146a4e5063dfdb192b87b66ac8bb3c0bcc6cb60fbfcf489d1b56c37785b3"
+        },
+        {
+          "submesh": "Ornn_Base_Sword_Mat",
+          "nativeTexture": "ASSETS/Characters/Ornn/Skins/Base/Ornn_Base_SwordBarrel_TX_CM.dds",
+          "sha256": "4863fcc9ecb14801d6358ad1e81bb4e63b12eba8229e8e88ccc035b2a6d6dc89"
+        },
+        {
+          "submesh": "Ornn_Base_Bucket_Mat",
+          "nativeTexture": "ASSETS/Characters/Ornn/Skins/Base/Ornn_Base_SwordBarrel_TX_CM.dds",
+          "sha256": "4863fcc9ecb14801d6358ad1e81bb4e63b12eba8229e8e88ccc035b2a6d6dc89"
+        },
+        {
+          "submesh": "Ornn_Base_Poro_Mat",
+          "nativeTexture": "ASSETS/Characters/Ornn/Skins/Base/Poro_2016_TX_CM.dds",
+          "sha256": "0f63ed880f6df7d7c7b5d42639f1cd4c021b0bc7c0295674984510dba86e4abd"
+        }
+      ],
+      "initialSubmeshToHide": [
+        "Ornn_Base_Sword_Mat",
+        "Ornn_Base_Bucket_Mat",
+        "Ornn_Base_Poro_Mat"
+      ],
+      "stateClips": {
+        "idle": "ornn_idle1",
+        "run": "ornn_run",
+        "attack": "ornn_attack1",
+        "cast": "ornn_spell1",
+        "death": "ornn_death",
+        "hurt": "ornn_idle1"
+      },
+      "selectedSourceClips": {
+        "ornn_run": {
+          "archiveMember": "assets/characters/ornn/skins/base/animations/ornn_run.anm",
+          "format": "anm",
+          "bytes": 54072,
+          "sha256": "71e294cd6835f61a6e8c77c05cfdb6fb6b264295787cfa9f1534afbf4b49f4f3",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ornn/Ornn.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ornn/assets/characters/ornn/skins/base/animations/ornn_run.anm"
+        },
+        "ornn_death": {
+          "archiveMember": "assets/characters/ornn/skins/base/animations/ornn_death.anm",
+          "format": "anm",
+          "bytes": 167918,
+          "sha256": "4b2f80714b7b788411aa870ad7296664156a34214038ef79134f4c6575b2fa83",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ornn/Ornn.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ornn/assets/characters/ornn/skins/base/animations/ornn_death.anm"
+        },
+        "ornn_attack1": {
+          "archiveMember": "assets/characters/ornn/skins/base/animations/ornn_attack1.anm",
+          "format": "anm",
+          "bytes": 92898,
+          "sha256": "401a6653beb72f795f728045aa49a2ac79b9a58946d0e9295c6aa611a7589f34",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ornn/Ornn.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ornn/assets/characters/ornn/skins/base/animations/ornn_attack1.anm"
+        },
+        "ornn_idle1": {
+          "archiveMember": "assets/characters/ornn/skins/base/animations/ornn_idle1.anm",
+          "format": "anm",
+          "bytes": 61138,
+          "sha256": "091c90e897b2b919c190b6576cace4ff870facde427907e56a7024722e52f59b",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ornn/Ornn.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ornn/assets/characters/ornn/skins/base/animations/ornn_idle1.anm"
+        },
+        "ornn_spell1": {
+          "archiveMember": "assets/characters/ornn/skins/base/animations/ornn_spell1.anm",
+          "format": "anm",
+          "bytes": 24804,
+          "sha256": "95bf75d82d083a9409ec4397408e593f309761de76db3afd009da6aae58cfc2d",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ornn/Ornn.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ornn/assets/characters/ornn/skins/base/animations/ornn_spell1.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn.skn",
+        "-s",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn.skl",
+        "-g",
+        "/work/converted/ornn.glb",
+        "-a",
+        "/work/selected-native-animations/ornn",
+        "--materials",
+        "Ornn_Base_Mat",
+        "Ornn_Base_Anvil_Mat",
+        "Ornn_Base_Hammer_Mat",
+        "Ornn_Base_Sword_Mat",
+        "Ornn_Base_Bucket_Mat",
+        "Ornn_Base_Poro_Mat",
+        "--textures",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_tx_cm.dds",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_tx_cm.dds",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_tx_cm.dds",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_swordbarrel_tx_cm.dds",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/ornn_base_swordbarrel_tx_cm.dds",
+        "/work/extracted/ornn/assets/characters/ornn/skins/base/poro_2016_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Chogath",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Chogath/Chogath.wad.client",
+      "sourceSha256": "959c5f6b3305bd91b3587d384a4987a250fae1e97613b5eb41d6118d972fdfdf",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/chogath/skin0.json",
+      "materials": [
+        "riotRig:lambert4"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "riotRig:lambert4",
+          "nativeTexture": "ASSETS/Characters/Chogath/skins/base/GreenTerror.dds",
+          "sha256": "20a91fc4ba5cb893d4ec602de631aae2f06b3467388fbcb3f891f4edc84140a9"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "chogath_idle1",
+        "run": "chogath_run",
+        "attack": "chogath_attack1",
+        "cast": "chogath_spell1",
+        "death": "chogath_death",
+        "hurt": "chogath_idle1"
+      },
+      "selectedSourceClips": {
+        "chogath_spell1": {
+          "archiveMember": "assets/characters/chogath/skins/base/animations/chogath_spell1.anm",
+          "format": "anm",
+          "bytes": 52220,
+          "sha256": "5ad2b277f2225b8eabc9b988d0086d884cea100bde58796db9dbbc1ccd97bd04",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Chogath/Chogath.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/chogath/assets/characters/chogath/skins/base/animations/chogath_spell1.anm"
+        },
+        "chogath_idle1": {
+          "archiveMember": "assets/characters/chogath/skins/base/animations/chogath_idle1.anm",
+          "format": "anm",
+          "bytes": 97692,
+          "sha256": "ed30166b60ddb048c7313ec9c8e5c00d84a2c72cd2f412de6b278d59b82de3eb",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Chogath/Chogath.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/chogath/assets/characters/chogath/skins/base/animations/chogath_idle1.anm"
+        },
+        "chogath_death": {
+          "archiveMember": "assets/characters/chogath/skins/base/animations/chogath_death.anm",
+          "format": "anm",
+          "bytes": 199612,
+          "sha256": "b9dd12c3cdbec8cb33ee3bdbd2da972255f9c2a90a58693c2798842dacdca8c5",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Chogath/Chogath.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/chogath/assets/characters/chogath/skins/base/animations/chogath_death.anm"
+        },
+        "chogath_run": {
+          "archiveMember": "assets/characters/chogath/skins/base/animations/chogath_run.anm",
+          "format": "anm",
+          "bytes": 50652,
+          "sha256": "cbc1f00597c0444102c80fb6c18ce1877db4bcac293ef7748707fa0ce1a63a14",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Chogath/Chogath.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/chogath/assets/characters/chogath/skins/base/animations/chogath_run.anm"
+        },
+        "chogath_attack1": {
+          "archiveMember": "assets/characters/chogath/skins/base/animations/chogath_attack1.anm",
+          "format": "anm",
+          "bytes": 42812,
+          "sha256": "a4b7ef28f240b863223bf1dd9a235a91cc0fab7d0996840310fa3fe8ead40b10",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Chogath/Chogath.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/chogath/assets/characters/chogath/skins/base/animations/chogath_attack1.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/chogath/assets/characters/chogath/skins/base/chogath.skn",
+        "-s",
+        "/work/extracted/chogath/assets/characters/chogath/skins/base/chogath.skl",
+        "-g",
+        "/work/converted/chogath.glb",
+        "-a",
+        "/work/selected-native-animations/chogath",
+        "--materials",
+        "riotRig:lambert4",
+        "--textures",
+        "/work/extracted/chogath/assets/characters/chogath/skins/base/greenterror.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Ashe",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ashe/Ashe.wad.client",
+      "sourceSha256": "8a133dc7054ccec42294840505e57fad747d43e96c84cc6ded9b9e3915c25946",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/ashe/skin0.json",
+      "materials": [
+        "ashe_base_2011_MD_lambert2SG1"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "ashe_base_2011_MD_lambert2SG1",
+          "nativeTexture": "ASSETS/Characters/Ashe/Skins/Base/ashe_base_2011_TX_CM.dds",
+          "sha256": "2e8e838ba8b0774063bd64377596efb307d7dc5fef0aec9020a37425f60dee54"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "ashe_idle1",
+        "run": "ashe_run",
+        "attack": "ashe_attack1",
+        "cast": "ashe_spell1",
+        "death": "ashe_death",
+        "hurt": "ashe_idle1"
+      },
+      "selectedSourceClips": {
+        "ashe_spell1": {
+          "archiveMember": "assets/characters/ashe/skins/base/animations/ashe_spell1.anm",
+          "format": "anm",
+          "bytes": 21698,
+          "sha256": "a5cadd972883ba21fbed0864247bd5e24d2eeb6ca0698ce0c96ef5bf6ddba662",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ashe/Ashe.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ashe/assets/characters/ashe/skins/base/animations/ashe_spell1.anm"
+        },
+        "ashe_run": {
+          "archiveMember": "assets/characters/ashe/skins/base/animations/ashe_run.anm",
+          "format": "anm",
+          "bytes": 84848,
+          "sha256": "960fd5af69fd4f005e31d3a1a0e4ff0b3e314e3c66d631a815a35a1a574377f7",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ashe/Ashe.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ashe/assets/characters/ashe/skins/base/animations/ashe_run.anm"
+        },
+        "ashe_idle1": {
+          "archiveMember": "assets/characters/ashe/skins/base/animations/ashe_idle1.anm",
+          "format": "anm",
+          "bytes": 24628,
+          "sha256": "de7f3ebc6444d005b4553a6f234c48386d572c89f53909f5832a4c273b38c87a",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ashe/Ashe.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ashe/assets/characters/ashe/skins/base/animations/ashe_idle1.anm"
+        },
+        "ashe_attack1": {
+          "archiveMember": "assets/characters/ashe/skins/base/animations/ashe_attack1.anm",
+          "format": "anm",
+          "bytes": 29278,
+          "sha256": "6f76b23ef6be5a52f1846700e25fb1ada4dace0115917819581ad5dc6b609609",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ashe/Ashe.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ashe/assets/characters/ashe/skins/base/animations/ashe_attack1.anm"
+        },
+        "ashe_death": {
+          "archiveMember": "assets/characters/ashe/skins/base/animations/ashe_death.anm",
+          "format": "anm",
+          "bytes": 45448,
+          "sha256": "ae50134c3e3c07e9df513b3872ad07765e869b72ad0f29e2ea34a7b04826ec77",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ashe/Ashe.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ashe/assets/characters/ashe/skins/base/animations/ashe_death.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/ashe/assets/characters/ashe/skins/base/ashe.skn",
+        "-s",
+        "/work/extracted/ashe/assets/characters/ashe/skins/base/ashe.skl",
+        "-g",
+        "/work/converted/ashe.glb",
+        "-a",
+        "/work/selected-native-animations/ashe",
+        "--materials",
+        "ashe_base_2011_MD_lambert2SG1",
+        "--textures",
+        "/work/extracted/ashe/assets/characters/ashe/skins/base/ashe_base_2011_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Blitzcrank",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Blitzcrank/Blitzcrank.wad.client",
+      "sourceSha256": "9a834968b8c563188d6f7df7dfd083ba4643c0fafa8ffc2e8b6111c2e6dbdced",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/blitzcrank/skin0.json",
+      "materials": [
+        "riotRig:MAT_blitzcrank"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "riotRig:MAT_blitzcrank",
+          "nativeTexture": "ASSETS/Characters/Blitzcrank/Skins/Base/steamGolem.dds",
+          "sha256": "f1fc22462d3dcb1359e95974671b928221d223914cadec582a8223abf9ff2db7"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "blitzcrank_idle1",
+        "run": "blitzcrank_run",
+        "attack": "blitzcrank_attack1",
+        "cast": "blitzcrank_spell1",
+        "death": "blitzcrank_death",
+        "hurt": "blitzcrank_idle1"
+      },
+      "selectedSourceClips": {
+        "blitzcrank_spell1": {
+          "archiveMember": "assets/characters/blitzcrank/skins/base/animations/blitzcrank_spell1.anm",
+          "format": "anm",
+          "bytes": 37748,
+          "sha256": "d230edf53056e49c63c8fdd26170b469f94789a3a5b8e0839c3a25fdc25b4cfa",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Blitzcrank/Blitzcrank.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/animations/blitzcrank_spell1.anm"
+        },
+        "blitzcrank_idle1": {
+          "archiveMember": "assets/characters/blitzcrank/skins/base/animations/blitzcrank_idle1.anm",
+          "format": "anm",
+          "bytes": 41612,
+          "sha256": "542f0608f10ffe8c7e69b12e5c3b29f76bce71944e18516a8298f9b7d2961d21",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Blitzcrank/Blitzcrank.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/animations/blitzcrank_idle1.anm"
+        },
+        "blitzcrank_death": {
+          "archiveMember": "assets/characters/blitzcrank/skins/base/animations/blitzcrank_death.anm",
+          "format": "anm",
+          "bytes": 67372,
+          "sha256": "c515951dbfbb923451a7e0fbe4432d882795261442732bada390ff17a694269e",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Blitzcrank/Blitzcrank.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/animations/blitzcrank_death.anm"
+        },
+        "blitzcrank_run": {
+          "archiveMember": "assets/characters/blitzcrank/skins/base/animations/blitzcrank_run.anm",
+          "format": "anm",
+          "bytes": 41612,
+          "sha256": "a93ed5232277eb66ef59790f8274a43d1bb316c1a260935a52dc826df7f0f789",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Blitzcrank/Blitzcrank.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/animations/blitzcrank_run.anm"
+        },
+        "blitzcrank_attack1": {
+          "archiveMember": "assets/characters/blitzcrank/skins/base/animations/blitzcrank_attack1.anm",
+          "format": "anm",
+          "bytes": 37748,
+          "sha256": "2039658a640cdb0d76825e98185397754ad2e407af725d290393db00737e9205",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Blitzcrank/Blitzcrank.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/animations/blitzcrank_attack1.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/blitzcrank.skn",
+        "-s",
+        "/work/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/blitzcrank.skl",
+        "-g",
+        "/work/converted/blitzcrank.glb",
+        "-a",
+        "/work/selected-native-animations/blitzcrank",
+        "--materials",
+        "riotRig:MAT_blitzcrank",
+        "--textures",
+        "/work/extracted/blitzcrank/assets/characters/blitzcrank/skins/base/steamgolem.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Ahri",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ahri/Ahri.wad.client",
+      "sourceSha256": "28c2f99b99b4519e208b6b1b9069d9f80a5416e31b37132ccdc3597e90e86a37",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/ahri/skin0.json",
+      "materials": [
+        "Body",
+        "Eyes",
+        "Tails",
+        "Tail_Large"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "Body",
+          "nativeTexture": "ASSETS/Characters/Ahri/Skins/Base/Ahri_base_TX_CM.dds",
+          "sha256": "0de4971cb5482de613b7483e67952ea655b89c23d4d022611f0934cf42f5ab7f"
+        },
+        {
+          "submesh": "Eyes",
+          "nativeTexture": "ASSETS/Characters/Ahri/Skins/Base/Ahri_base_TX_CM.dds",
+          "sha256": "0de4971cb5482de613b7483e67952ea655b89c23d4d022611f0934cf42f5ab7f"
+        },
+        {
+          "submesh": "Tails",
+          "nativeTexture": "ASSETS/Characters/Ahri/Skins/Base/Ahri_Base_Tails_TX_CM.dds",
+          "sha256": "09a3d2a6ac2023b44cfe33b12ce37e2b269d2949919581e80eb2976d5697ad3b"
+        },
+        {
+          "submesh": "Tail_Large",
+          "nativeTexture": "ASSETS/Characters/Ahri/Skins/Base/Ahri_Base_Tails_TX_CM.dds",
+          "sha256": "09a3d2a6ac2023b44cfe33b12ce37e2b269d2949919581e80eb2976d5697ad3b"
+        }
+      ],
+      "initialSubmeshToHide": [
+        "Tail_Large",
+        "Body_Proxy"
+      ],
+      "stateClips": {
+        "idle": "idle1",
+        "run": "run",
+        "attack": "attack1",
+        "cast": "spell1",
+        "death": "death",
+        "hurt": "idle1"
+      },
+      "selectedSourceClips": {
+        "spell1": {
+          "archiveMember": "assets/characters/ahri/skins/base/animations/spell1.anm",
+          "format": "anm",
+          "bytes": 46826,
+          "sha256": "55b13152990aad5c3cfb94f8fe201349026b9acb7f6770ecacbc96e665dc2f74",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ahri/Ahri.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ahri/assets/characters/ahri/skins/base/animations/spell1.anm"
+        },
+        "run": {
+          "archiveMember": "assets/characters/ahri/skins/base/animations/run.anm",
+          "format": "anm",
+          "bytes": 74770,
+          "sha256": "ca389040cfd16558a3da966d8047a3935b5bb642e0a437b76fec5af27c6b51ca",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ahri/Ahri.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ahri/assets/characters/ahri/skins/base/animations/run.anm"
+        },
+        "idle1": {
+          "archiveMember": "assets/characters/ahri/skins/base/animations/idle1.anm",
+          "format": "anm",
+          "bytes": 382984,
+          "sha256": "699aacd7d5f6872b7a40af3d6603864e591d925169297a01ddf9ced13f571a64",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ahri/Ahri.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ahri/assets/characters/ahri/skins/base/animations/idle1.anm"
+        },
+        "attack1": {
+          "archiveMember": "assets/characters/ahri/skins/base/animations/attack1.anm",
+          "format": "anm",
+          "bytes": 41780,
+          "sha256": "d89eda8ac736b9aa1ab4a715e3d6df7a0f0b27176fce824543f501134bf55c13",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ahri/Ahri.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ahri/assets/characters/ahri/skins/base/animations/attack1.anm"
+        },
+        "death": {
+          "archiveMember": "assets/characters/ahri/skins/base/animations/death.anm",
+          "format": "anm",
+          "bytes": 251540,
+          "sha256": "df36a1b773863ffef2b5538f38305dfb67d7d859da6110f6e7a8d33c4235d06e",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Ahri/Ahri.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/ahri/assets/characters/ahri/skins/base/animations/death.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base.skn",
+        "-s",
+        "/work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base.skl",
+        "-g",
+        "/work/converted/ahri.glb",
+        "-a",
+        "/work/selected-native-animations/ahri",
+        "--materials",
+        "Body",
+        "Eyes",
+        "Tails",
+        "Tail_Large",
+        "--textures",
+        "/work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tx_cm.dds",
+        "/work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tx_cm.dds",
+        "/work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tails_tx_cm.dds",
+        "/work/extracted/ahri/assets/characters/ahri/skins/base/ahri_base_tails_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Thresh",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Thresh/Thresh.wad.client",
+      "sourceSha256": "60e73355d19cab0bb6a8b6b148a91bf27e13dc4e679ee05330a6fcdbdb12311d",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/thresh/skin0.json",
+      "materials": [
+        "ChainWarden_Base_Mesh_Material10"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "ChainWarden_Base_Mesh_Material10",
+          "nativeTexture": "ASSETS/Characters/Thresh/Skins/Base/Thresh_Base_TX_CM.DDS",
+          "sha256": "9e45a0c05dbbae3704312a58efd359c89b20261157934ebe6c28d3a0ed73c7ad"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "thresh_idle1",
+        "run": "thresh_run",
+        "attack": "thresh_attack1_long",
+        "cast": "thresh_spell1_in",
+        "death": "thresh_death",
+        "hurt": "thresh_idle1"
+      },
+      "selectedSourceClips": {
+        "thresh_idle1": {
+          "archiveMember": "assets/characters/thresh/skins/base/animations/thresh_idle1.anm",
+          "format": "anm",
+          "bytes": 26118,
+          "sha256": "22a843d2e8553ee83f00e2739b409d33e0d77a8a3b14bdf118be8c5fed2a695c",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Thresh/Thresh.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/thresh/assets/characters/thresh/skins/base/animations/thresh_idle1.anm"
+        },
+        "thresh_death": {
+          "archiveMember": "assets/characters/thresh/skins/base/animations/thresh_death.anm",
+          "format": "anm",
+          "bytes": 154948,
+          "sha256": "c84888cd99b204a00694bfc39dcd997a174cb49552b2fad4dded5b610643e333",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Thresh/Thresh.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/thresh/assets/characters/thresh/skins/base/animations/thresh_death.anm"
+        },
+        "thresh_attack1_long": {
+          "archiveMember": "assets/characters/thresh/skins/base/animations/thresh_attack1_long.anm",
+          "format": "anm",
+          "bytes": 86582,
+          "sha256": "e4e3243a7bc45b1aa1c9da5cc4c9ab23d48a259a2dd30410d1608b70a43b252a",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Thresh/Thresh.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/thresh/assets/characters/thresh/skins/base/animations/thresh_attack1_long.anm"
+        },
+        "thresh_spell1_in": {
+          "archiveMember": "assets/characters/thresh/skins/base/animations/thresh_spell1_in.anm",
+          "format": "anm",
+          "bytes": 70318,
+          "sha256": "34cc355325223aba7221078dd67677dfeb836f9b46d38c812efd15e4a97b2988",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Thresh/Thresh.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/thresh/assets/characters/thresh/skins/base/animations/thresh_spell1_in.anm"
+        },
+        "thresh_run": {
+          "archiveMember": "assets/characters/thresh/skins/base/animations/thresh_run.anm",
+          "format": "anm",
+          "bytes": 44688,
+          "sha256": "d5d6c5a21630748b6e722af04c2f528554e72c9ac3cce9e867f1824506d71aa7",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Thresh/Thresh.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/thresh/assets/characters/thresh/skins/base/animations/thresh_run.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/thresh/assets/characters/thresh/skins/base/thresh.skn",
+        "-s",
+        "/work/extracted/thresh/assets/characters/thresh/skins/base/thresh.skl",
+        "-g",
+        "/work/converted/thresh.glb",
+        "-a",
+        "/work/selected-native-animations/thresh",
+        "--materials",
+        "ChainWarden_Base_Mesh_Material10",
+        "--textures",
+        "/work/extracted/thresh/assets/characters/thresh/skins/base/thresh_base_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Velkoz",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+      "sourceSha256": "2de8837128bbe3a8261bf933e1ad6ce43ccaa66d0efbee98407116dfb4602261",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/velkoz/skin0.json",
+      "materials": [
+        "Velkoz_MAT"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "Velkoz_MAT",
+          "nativeTexture": "ASSETS/Characters/Velkoz/Skins/Base/Velkoz_Base.dds",
+          "sha256": "1f082fb1a8328361bf3d418155bd95db172ea44a29f4271388643679360c06c6"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "velkoz_idle1v2",
+        "run": "velkoz_run",
+        "attack": "velkoz_attack1",
+        "cast": "velkoz_spell1",
+        "death": "velkoz_death",
+        "hurt": "velkoz_idle1v2"
+      },
+      "selectedSourceClips": {
+        "velkoz_spell1": {
+          "archiveMember": "assets/characters/velkoz/skins/base/animations/velkoz_spell1.anm",
+          "format": "anm",
+          "bytes": 39968,
+          "sha256": "8f3173c21acc575e1039b32590937a82cc0685a0b22c01f1a114bc9529c28e39",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/velkoz/assets/characters/velkoz/skins/base/animations/velkoz_spell1.anm"
+        },
+        "velkoz_attack1": {
+          "archiveMember": "assets/characters/velkoz/skins/base/animations/velkoz_attack1.anm",
+          "format": "anm",
+          "bytes": 41358,
+          "sha256": "35b72bfe53cc6ae3c3c19f818a207c143c681ae292c35df7495a23271fe0f765",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/velkoz/assets/characters/velkoz/skins/base/animations/velkoz_attack1.anm"
+        },
+        "velkoz_death": {
+          "archiveMember": "assets/characters/velkoz/skins/base/animations/velkoz_death.anm",
+          "format": "anm",
+          "bytes": 140588,
+          "sha256": "19c152b837f85df09ef61946c66bfa8afbbd48dbf617934a60c16a6055777183",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/velkoz/assets/characters/velkoz/skins/base/animations/velkoz_death.anm"
+        },
+        "velkoz_idle1v2": {
+          "archiveMember": "assets/characters/velkoz/skins/base/animations/velkoz_idle1v2.anm",
+          "format": "anm",
+          "bytes": 82768,
+          "sha256": "c46b9b52c8ac4ef929b6f0f14fe7d108f697c34926b190f9e428b9a0787c70c5",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/velkoz/assets/characters/velkoz/skins/base/animations/velkoz_idle1v2.anm"
+        },
+        "velkoz_run": {
+          "archiveMember": "assets/characters/velkoz/skins/base/animations/velkoz_run.anm",
+          "format": "anm",
+          "bytes": 81168,
+          "sha256": "f1fbccb396f341ad12c90b347c78a768b72159df5bc920a55d242bf321298d33",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Velkoz/Velkoz.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/velkoz/assets/characters/velkoz/skins/base/animations/velkoz_run.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/velkoz/assets/characters/velkoz/skins/base/velkoz_base.skn",
+        "-s",
+        "/work/extracted/velkoz/assets/characters/velkoz/skins/base/velkoz_base.skl",
+        "-g",
+        "/work/converted/velkoz.glb",
+        "-a",
+        "/work/selected-native-animations/velkoz",
+        "--materials",
+        "Velkoz_MAT",
+        "--textures",
+        "/work/extracted/velkoz/assets/characters/velkoz/skins/base/velkoz_base.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Malphite",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Malphite/Malphite.wad.client",
+      "sourceSha256": "cdd2fab9b4246bd10267fd72ec119b969aa959f1bbf5b66530996f63204b45c9",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/malphite/skin0.json",
+      "materials": [
+        "MAT_malphite"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "MAT_malphite",
+          "nativeTexture": "ASSETS/Characters/Malphite/Skins/Base/malphite.dds",
+          "sha256": "1917e60b3946c68511c7207951b0f882b5a5105e59ee9ccae27ed30aa242eb41"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "malphite_idle1",
+        "run": "malphite_run",
+        "attack": "malphite_attack1",
+        "cast": "malphite_spell1",
+        "death": "malphite_death",
+        "hurt": "malphite_idle1"
+      },
+      "selectedSourceClips": {
+        "malphite_death": {
+          "archiveMember": "assets/characters/malphite/skins/base/animations/malphite_death.anm",
+          "format": "anm",
+          "bytes": 11246,
+          "sha256": "d5e396dac0048d6d404179ff5b3a45057195161b7053fa40e249be014e6c1aa3",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Malphite/Malphite.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/malphite/assets/characters/malphite/skins/base/animations/malphite_death.anm"
+        },
+        "malphite_idle1": {
+          "archiveMember": "assets/characters/malphite/skins/base/animations/malphite_idle1.anm",
+          "format": "anm",
+          "bytes": 80252,
+          "sha256": "c77a7d2fd3c5baade0c30f834c546a527949fe8076674e36122faab0659689c2",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Malphite/Malphite.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/malphite/assets/characters/malphite/skins/base/animations/malphite_idle1.anm"
+        },
+        "malphite_run": {
+          "archiveMember": "assets/characters/malphite/skins/base/animations/malphite_run.anm",
+          "format": "anm",
+          "bytes": 12212,
+          "sha256": "e21aa3b14258e3026911d5f60e34d5a46c60eceba2ecea2f554a210408f9e62a",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Malphite/Malphite.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/malphite/assets/characters/malphite/skins/base/animations/malphite_run.anm"
+        },
+        "malphite_attack1": {
+          "archiveMember": "assets/characters/malphite/skins/base/animations/malphite_attack1.anm",
+          "format": "anm",
+          "bytes": 63988,
+          "sha256": "23f9f379c946fed80351355082da4995563b660d8bd90b3325a691f97e0f70cf",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Malphite/Malphite.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/malphite/assets/characters/malphite/skins/base/animations/malphite_attack1.anm"
+        },
+        "malphite_spell1": {
+          "archiveMember": "assets/characters/malphite/skins/base/animations/malphite_spell1.anm",
+          "format": "anm",
+          "bytes": 35288,
+          "sha256": "6f7d879136898a25488bd6a27e321b9f60a40b9602c1f1911bd9773b73474909",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Malphite/Malphite.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/malphite/assets/characters/malphite/skins/base/animations/malphite_spell1.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/malphite/assets/characters/malphite/skins/base/malphite.skn",
+        "-s",
+        "/work/extracted/malphite/assets/characters/malphite/skins/base/malphite.skl",
+        "-g",
+        "/work/converted/malphite.glb",
+        "-a",
+        "/work/selected-native-animations/malphite",
+        "--materials",
+        "MAT_malphite",
+        "--textures",
+        "/work/extracted/malphite/assets/characters/malphite/skins/base/malphite.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    },
+    {
+      "nativeId": "Garen",
+      "sourceArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Garen/Garen.wad.client",
+      "sourceSha256": "1629c0529ed2a24cfc1ecbed417aa4892b0f977574d9bb253e98b55d09385896",
+      "skinConfigurationPath": "/private/tmp/ggd-lol-batch2-assets/skin-config/garen/skin0.json",
+      "materials": [
+        "Garen_Base_Mat"
+      ],
+      "textureBindings": [
+        {
+          "submesh": "Garen_Base_Mat",
+          "nativeTexture": "ASSETS/Characters/Garen/Skins/Base/Garen_base_TX_CM.dds",
+          "sha256": "263815e83cd935d2a563217c3fcc436109781b212ff518d01f6c5eeeba240ddf"
+        }
+      ],
+      "initialSubmeshToHide": [],
+      "stateClips": {
+        "idle": "garen_2013_idle1",
+        "run": "garen_2013_run",
+        "attack": "garen_2013_attack_01",
+        "cast": "garen_2013_spell1",
+        "death": "garen_2013_death",
+        "hurt": "garen_2013_idle1"
+      },
+      "selectedSourceClips": {
+        "garen_2013_death": {
+          "archiveMember": "assets/characters/garen/skins/base/animations/garen_2013_death.anm",
+          "format": "anm",
+          "bytes": 38398,
+          "sha256": "ccd6551e6873bc72f258b955d33b757f4d692c56fd0677d6051c3c04a1c9035a",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Garen/Garen.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/garen/assets/characters/garen/skins/base/animations/garen_2013_death.anm"
+        },
+        "garen_2013_run": {
+          "archiveMember": "assets/characters/garen/skins/base/animations/garen_2013_run.anm",
+          "format": "anm",
+          "bytes": 16350,
+          "sha256": "c28487402c4bd1c4653cdfbba49dd024e85f254d9df85f6cb5ac219028195a99",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Garen/Garen.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/garen/assets/characters/garen/skins/base/animations/garen_2013_run.anm"
+        },
+        "garen_2013_idle1": {
+          "archiveMember": "assets/characters/garen/skins/base/animations/garen_2013_idle1.anm",
+          "format": "anm",
+          "bytes": 55800,
+          "sha256": "929f5e0810b64a8049410b4afd730f1f784d65965f55f3b5abfa1519420809f4",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Garen/Garen.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/garen/assets/characters/garen/skins/base/animations/garen_2013_idle1.anm"
+        },
+        "garen_2013_spell1": {
+          "archiveMember": "assets/characters/garen/skins/base/animations/garen_2013_spell1.anm",
+          "format": "anm",
+          "bytes": 21400,
+          "sha256": "24f4c99920325757c46d300228e4f3a9ec959626319edc0b38cd3a6b03e62342",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Garen/Garen.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/garen/assets/characters/garen/skins/base/animations/garen_2013_spell1.anm"
+        },
+        "garen_2013_attack_01": {
+          "archiveMember": "assets/characters/garen/skins/base/animations/garen_2013_attack_01.anm",
+          "format": "anm",
+          "bytes": 21220,
+          "sha256": "7b8ea30a81aad7f5b94b4751b3149cd463073cfa5073a6b15a8564cd87de64fd",
+          "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/packages/Garen/Garen.wad.client",
+          "exists_local": true,
+          "storage": "archive-member-read-verified",
+          "extractedPath": "/private/tmp/ggd-lol-batch2-assets/extracted/garen/assets/characters/garen/skins/base/animations/garen_2013_attack_01.anm"
+        }
+      },
+      "conversionArgv": [
+        "/tool/lol2gltf",
+        "skn2gltf",
+        "-m",
+        "/work/extracted/garen/assets/characters/garen/skins/base/garen.skn",
+        "-s",
+        "/work/extracted/garen/assets/characters/garen/skins/base/garen.skl",
+        "-g",
+        "/work/converted/garen.glb",
+        "-a",
+        "/work/selected-native-animations/garen",
+        "--materials",
+        "Garen_Base_Mat",
+        "--textures",
+        "/work/extracted/garen/assets/characters/garen/skins/base/garen_base_tx_cm.dds"
+      ],
+      "limitations": [
+        "hurt aliases original idle; no dedicated native hurt animation",
+        "Only five chosen native clips are converted; complete original ANM files retained in extraction",
+        "Source game dynamic material/reflection effects are not reproduced by the existing diffuse glTF converter"
+      ]
+    }
+  ]
+}

@@ -52,6 +52,8 @@ import { zTaunt } from "./taunt";
 import { zGrantGold } from "./grantGold";
 import { zGrantXp } from "./grantXp";
 import { zDispel, refine as refine_dispel } from "./dispel";
+import { zSpawnThresholds } from "./spawnThresholds";
+import { zSpawnObstacle } from "./spawnObstacle";
 import { zShieldBreak, refine as refine_shieldBreak } from "./shieldBreak";
 import { zDevour, refine as refine_devour } from "./devour";
 import { zModifyCooldown, refine as refine_modifyCooldown } from "./modifyCooldown";
@@ -103,6 +105,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zGrantGold,
   zGrantXp,
   zDispel,
+  zSpawnThresholds,
+  zSpawnObstacle,
   zShieldBreak,
   zDevour,
   zModifyCooldown,

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.c50b439503acbc0286d34aa863de3b5b60f040647b3e3fe5",
+  "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-16-20260907.w",
@@ -142,11 +148,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -176,7 +177,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-16-20260907.e",
@@ -193,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -243,7 +251,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-16-20260907.r",
@@ -305,7 +320,14 @@
           "castTimeSec": 0.667
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     }
   },
   "exAbility": "community-review-16-20260907.ex",
@@ -318,42 +340,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.aae5cf041595b826b208125edbe113fd30680a79c180eb55",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
-      "modelSha256": "f8dde9f224eac04b2b97e4637006a227ffb807239c09412684f4d578f3415bb3",
-      "binarySha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
-      "registeredAt": "2026-09-10T14:45:30.797Z",
-      "source": {
-        "kind": "previous",
-        "character": "魔法少女☆伊莉雅",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.c50b439503acbc0286d34aa863de3b5b60f040647b3e3fe5",
-      "label": "伊莉雅",
-      "sourceModelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
-      "modelSha256": "fc5af7ebe455d31f60536e93d3a410668c559833395d6f484de9523922e0b4c3",
-      "binarySha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
-      "registeredAt": "2026-09-10T14:45:30.805Z",
-      "source": {
-        "kind": "exact",
-        "character": "伊莉雅",
-        "work": "Fate/kaleid liner 魔法少女☆伊莉雅",
-        "library": "300heroes",
-        "reference": "300heroes:3ec592fda559036e3b71758f",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

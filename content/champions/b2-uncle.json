@@ -90,7 +90,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-uncle.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -167,7 +168,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-uncle.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -255,7 +257,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-uncle.r.webp"
     },
     "W": {
       "castTimeSec": 1,
@@ -338,20 +341,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-uncle.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -398,7 +402,9 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "icon": "assets/icons/champions/b2-uncle.webp",
   "modelVersions": [
     {

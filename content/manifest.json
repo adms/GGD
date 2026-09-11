@@ -1,13 +1,13 @@
 {
-  "contentVersion": "cv_dc97f8aa6fdd",
+  "contentVersion": "cv_5427548d11e0",
   "collections": {
     "champions": {
-      "hash": "a89d783c5cad",
+      "hash": "c620bdf7c20e",
       "count": 153,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "e3d32b894881",
+      "hash": "849c081263f8",
       "count": 907,
       "path": "abilities/_index.json"
     },
@@ -47,13 +47,13 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "889783c791ac",
+      "hash": "ffa2e8dc8b5e",
       "count": 103,
       "path": "config/_index.json"
     },
     "models": {
-      "hash": "e72f07f6eb1f",
-      "count": 609,
+      "hash": "91e74f3d8aa0",
+      "count": 735,
       "path": "models/_index.json"
     },
     "vfx": {

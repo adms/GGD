@@ -1,0 +1,17 @@
+{
+  "id": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "wait",
+    "run": "F-Move",
+    "attack": "maryokudan_01",
+    "cast": "sp01_01",
+    "hurt": "Damage-1",
+    "death": "D-Down"
+  },
+  "yawOffsetDeg": 0,
+  "heroBody": true
+}

@@ -30,7 +30,7 @@ const champ = (name: string, q: AbilityDef): ChampionId => {
   registerChampion({ ...SELA, id, passive: undefined, abilities: { ...SELA.abilities, Q: q } } as ChampionDef, { overrideAbilities: true });
   return id;
 };
-const CH = {} as { plain: ChampionId; end: ChampionId; hit: ChampionId; miss: ChampionId; alt: ChampionId };
+const CH = {} as { plain: ChampionId; end: ChampionId; hit: ChampionId; miss: ChampionId; alt: ChampionId; anchor: ChampionId };
 beforeAll(() => {
   registerSkeletonContent();
   CH.plain = champ("plain", qDef("plain", { charges: 1, windowSec: 2 }, HIT)); // 首段 + 1 段後段
@@ -38,6 +38,7 @@ beforeAll(() => {
   CH.hit = champ("hit", qDef("hit", { charges: 1, windowSec: 2, gate: "onHit" }, HIT));
   CH.miss = champ("miss", qDef("miss", { charges: 1, windowSec: 2, gate: "onHit" }, MISS));
   CH.alt = champ("alt", qDef("alt", { charges: 1, windowSec: 2 }, HIT, [{ kind: "damage", damageType: "true", amount: { flat: 5 } }]));
+  CH.anchor = champ("anchor", { ...qDef("anchor", { charges: 1, windowSec: 2, anchor: "firstCast" }, HIT), castType: "ground", radius: 2.5 });
 });
 
 function arena(championId: ChampionId) {
@@ -48,7 +49,7 @@ function arena(championId: ChampionId) {
   const q = () => castAbility(world, caster, "Q", { type: "entity", entityId: foe });
   const foeHp = () => world.health.get(foe)!.hp;
   const slot = () => world.abilities.get(caster)!.slots.Q;
-  return { world, q, foeHp, slot };
+  return { world, caster, q, foeHp, slot };
 }
 
 describe("【再次施放】GH#1187", () => {
@@ -108,5 +109,20 @@ describe("【再次施放】GH#1187", () => {
     const d2 = hp0 - d1 - a.foeHp();
     expect(d2).toBeGreaterThan(0);
     expect(d2).toBeLessThan(d1); // recastEffects 是 5，首段是 50 —— ⛔ 不釘數字，釘「不是同一份」
+  });
+});
+
+describe("recast.anchor:firstCast（GH#1197 威寇茲 W）", () => {
+  it("後段釘在首段落點：第二按指向別處，打到的還是首段那一圈", () => {
+    const a = arena(CH.anchor);
+    const hp0 = a.foeHp();
+    const foePos = { x: Z0.center.x, z: Z0.center.z + 6 };
+    expect(castAbility(a.world, a.caster, "Q", { type: "point", point: foePos })).toBe("ok");
+    a.world.step(NO_INTENTS);
+    const hp1 = a.foeHp();
+    expect(hp1).toBeLessThan(hp0);
+    expect(castAbility(a.world, a.caster, "Q", { type: "point", point: { x: Z0.center.x, z: Z0.center.z - 6 } })).toBe("ok");
+    a.world.step(NO_INTENTS);
+    expect(a.foeHp()).toBeLessThan(hp1); // ⭐ 承重：沒有 anchor 這一發落在反方向，敵人不掉血
   });
 });

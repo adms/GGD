@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.ba1886127e7f2741f4e6763d243777cb7e34b38d28d02bd4",
+  "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 13,
     "agi": 18,
     "int": 29,
-    "strGrowth": 1.25,
-    "agiGrowth": 1.67,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.beam"
+        }
+      ]
     },
     "W": {
       "id": "community-review-29-20260907.w",
@@ -142,11 +148,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -176,7 +177,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-29-20260907.e",
@@ -193,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -243,7 +251,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.arcane.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-29-20260907.r",
@@ -259,9 +274,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -302,7 +317,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-29-20260907.ex",
@@ -315,42 +337,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.43f76edd6ef6fac669a686fbd5dfd81425c24efa7a9e8316",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
-      "modelSha256": "8224843f53823d449984a1a8622f448c6f661a76e753a2a8a1ab8a39a87c9afc",
-      "binarySha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
-      "registeredAt": "2026-09-10T14:45:32.773Z",
-      "source": {
-        "kind": "previous",
-        "character": "芙莉蓮",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.ba1886127e7f2741f4e6763d243777cb7e34b38d28d02bd4",
-      "label": "芙莉莲",
-      "sourceModelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
-      "modelSha256": "85fabc7b76fa9e244ca80539e823beccb6ef217f46c12c824884f8a720f24877",
-      "binarySha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
-      "registeredAt": "2026-09-10T14:45:32.795Z",
-      "source": {
-        "kind": "exact",
-        "character": "芙莉莲",
-        "work": "葬送的芙莉蓮",
-        "library": "300heroes",
-        "reference": "300heroes:cfce4a1a5c5ede186be83a40",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

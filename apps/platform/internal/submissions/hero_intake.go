@@ -2,7 +2,9 @@ package submissions
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"strings"
 	"time"
 
 	"github.com/ggd/platform/internal/data/jsonstore"
@@ -79,11 +81,34 @@ func (m HeroTargetMatch) Matches(row, target heroListTarget) (bool, string) {
 	return true, ""
 }
 
-func heroArchiveLimit(policy HeroIntakePolicy, uploadedModel bool) int {
-	if uploadedModel && policy.ModelUploadsEnabled && policy.ModelMaxBytes >= 4096 && policy.ModelMaxBytes <= MaxHeroArchiveBytes {
+func heroArchiveLimit(policy HeroIntakePolicy, containsModelAsset bool) int {
+	if containsModelAsset && policy.ModelMaxBytes >= 4096 && policy.ModelMaxBytes <= MaxHeroArchiveBytes {
 		return policy.ModelMaxBytes
 	}
 	return policy.MaxBytes
+}
+
+// Complete packages built from an approved catalog model contain a GLB even
+// though the Editor project correctly keeps uploadedModel empty. Inspect the
+// server-validated manifest so those packages use the model-package byte cap;
+// uploadedModel remains the separate switch for accepting new private uploads.
+func heroManifestContainsModelAsset(raw json.RawMessage) bool {
+	var manifest struct {
+		Entries []struct {
+			Path string `json:"path"`
+			Role string `json:"role"`
+			Mime string `json:"mime"`
+		} `json:"entries"`
+	}
+	if json.Unmarshal(raw, &manifest) != nil {
+		return false
+	}
+	for _, entry := range manifest.Entries {
+		if entry.Role == "asset" && entry.Mime == "model/gltf-binary" && strings.HasSuffix(strings.ToLower(entry.Path), ".glb") {
+			return true
+		}
+	}
+	return false
 }
 
 // A bounded set of locks shared by both intake paths and service instances.

@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
+  "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         30.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -117,7 +117,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.q.webp"
     },
     "W": {
       "id": "lol-yasuo.w",
@@ -142,11 +143,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -176,7 +172,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.w.webp"
     },
     "E": {
       "id": "lol-yasuo.e",
@@ -193,10 +190,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -254,7 +251,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-yasuo.e.webp"
     },
     "R": {
       "id": "lol-yasuo.r",
@@ -270,9 +268,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -340,7 +338,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.9
+      "castTimeSec": 0.9,
+      "icon": "assets/icons/abilities/lol-yasuo.r.webp"
     }
   },
   "exAbility": "lol-yasuo.ex",
@@ -352,44 +351,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-yasuo.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.94ace3ac3ea8da708363cf83848e1023783438f26dd23e99",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
-      "modelSha256": "12573e982bca2287f28a8a97a49fc83f9a171fdd9fc6df5bb213545a422034ef",
-      "binarySha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
-      "registeredAt": "2026-09-10T14:45:45.169Z",
-      "source": {
-        "kind": "previous",
-        "character": "犽宿",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.738f259230c6e03ac32fc2978953e9597ac39a37bbc3e624",
-      "label": "犽宿（LOL 原生模型）",
-      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
-      "modelSha256": "7843b03475f2e6cd3ae7749ce952993df95291322bed0257c047bad5962cd9b5",
-      "binarySha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
-      "registeredAt": "2026-09-10T14:45:45.188Z",
-      "source": {
-        "kind": "exact",
-        "character": "犽宿",
-        "work": "英雄聯盟 League of Legends",
-        "library": "lol",
-        "reference": "content/champions/lol-yasuo.json",
-        "tier": "original",
-        "selectionClass": "canonical-game"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "katana"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-yasuo.webp"
 }

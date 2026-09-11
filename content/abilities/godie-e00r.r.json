@@ -13,9 +13,9 @@
     60.0
   ],
   "manaCost": [
-    288.0,
-    288.0,
-    288.0
+    448.0,
+    448.0,
+    448.0
   ],
   "range": 8.0,
   "targetsEnemies": true,
@@ -82,7 +82,7 @@
     }
   ],
   "cooldownTier": "極大",
-  "manaCostTier": "中",
+  "manaCostTier": "大",
   "rangeTier": "大",
   "castTimeSec": 0.833
 }

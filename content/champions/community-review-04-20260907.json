@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.e47f9a11483e936f6ae4796e32f51853b1a2ad1c0599cc75",
+  "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 1.067
+      "castTimeSec": 1.067,
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-04-20260907.w",
@@ -143,10 +149,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -198,7 +204,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.beam",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.beam"
+        }
+      ]
     },
     "E": {
       "id": "community-review-04-20260907.e",
@@ -223,11 +235,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -257,7 +264,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-04-20260907.r",
@@ -273,9 +287,9 @@
         45.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -313,7 +327,13 @@
           "castTimeSec": 0.8
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-04-20260907.ex",
@@ -326,42 +346,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.99d99c5474f4557be9d98233f28120d4166edaa627a75796",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
-      "modelSha256": "e08ce68777f5db725f29bfb5f6762ce4bdfbd16ba655e0110ef19f67f4466a3b",
-      "binarySha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
-      "registeredAt": "2026-09-10T14:45:28.186Z",
-      "source": {
-        "kind": "previous",
-        "character": "空條承太郎",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.e47f9a11483e936f6ae4796e32f51853b1a2ad1c0599cc75",
-      "label": "空条承太郎",
-      "sourceModelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
-      "modelSha256": "73ecab16eb9ce2ca733740dd6d9cd5a0f41b6e1c6ac0776c527a4d0b2658d579",
-      "binarySha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
-      "registeredAt": "2026-09-10T14:45:28.193Z",
-      "source": {
-        "kind": "exact",
-        "character": "空条承太郎",
-        "work": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
-        "library": "300heroes",
-        "reference": "300heroes:53fd11c0026fe928567b7760",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "fist"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

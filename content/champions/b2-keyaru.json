@@ -51,7 +51,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-keyaru.e.webp"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -113,7 +114,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-keyaru.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -177,7 +179,7 @@
                   180
                 ]
               },
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.067,
               "target": "ally"
             },
             "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -185,7 +187,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.067,
               "castType": "targeted",
               "effects": [
                 {
@@ -216,7 +218,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-keyaru.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -315,20 +318,21 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-keyaru.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "melee",
   "attributes": {
     "agi": 13,
-    "agiGrowth": 1.25,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 18,
-    "strGrowth": 1.67
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -363,7 +367,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-keyaru",
-  "modelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
+  "modelKey": "ou99.458777",
   "name": "凱亞爾",
   "origin": "法鬥",
   "passiveAbility": "b2-keyaru.passive",
@@ -375,61 +379,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-keyaru.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
-      "label": "原上線模型",
-      "sourceModelKey": "ou99.458777",
-      "modelSha256": "9203bc0f9174350323468ed7912665b72516fbfe0a838c163ce7d8ed7eb36c2a",
-      "binarySha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
-      "registeredAt": "2026-09-10T14:45:39.342Z",
-      "source": {
-        "kind": "previous",
-        "character": "凱亞爾",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/ou99.458777.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.7eb6f6479c9dde50a9d28924edb2e19f27c896f91b4c44ff",
-      "label": "李小狼",
-      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
-      "modelSha256": "0b6e5a2e13e111540ef07543ecfacc8857b7f429c3fcdbb97621368ea981285c",
-      "binarySha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
-      "registeredAt": "2026-09-10T14:45:39.349Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "李小狼",
-        "work": "TSUBASA 翼／翼年代記",
-        "library": "300heroes",
-        "reference": "300heroes:f1660efeba7e0630c361c814",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
-      "label": "假面绅士（論壇相似模型）",
-      "sourceModelKey": "ou99.458777-standard-v3",
-      "modelSha256": "b699fba95c852fadf85c977e59fd0fa542bf73a024d7d83089d1ca3490aeb395",
-      "binarySha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
-      "registeredAt": "2026-09-10T15:02:45.029Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "假面绅士",
-        "work": "來源作品待核；論壇標題：假面绅士",
-        "library": "ou99",
-        "reference": "https://www.ou99.com/thread-458777-1-1.html",
-        "tier": "w3x",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-keyaru.webp"
 }

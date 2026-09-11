@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.6a8f96e74f75181f0076b272622cf3fe83404a51f17149fa",
+  "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 29,
     "int": 13,
-    "strGrowth": 1.67,
-    "agiGrowth": 2.78,
-    "intGrowth": 1.25,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367
+      "castTimeSec": 0.367,
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-19-20260907.w",
@@ -151,11 +157,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -185,7 +186,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-19-20260907.e",
@@ -202,10 +210,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -252,7 +260,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-19-20260907.r",
@@ -268,9 +283,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -331,7 +346,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 1.6
+      "castTimeSec": 1.6,
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-19-20260907.ex",
@@ -344,42 +365,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.1e263ee96d6472a5e4d91f6fbb4b92b1155f7a63a4f9130a",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
-      "modelSha256": "79aeb9662c4593388a9a6d1a11e8099861e48aa98b6f6d5c730fce85ff58a43e",
-      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
-      "registeredAt": "2026-09-10T14:45:31.079Z",
-      "source": {
-        "kind": "previous",
-        "character": "桐谷和人",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.6a8f96e74f75181f0076b272622cf3fe83404a51f17149fa",
-      "label": "黑衣剑士",
-      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
-      "modelSha256": "2ff1651cc7f20691abe9f6c963147314197fb05e299dd375a9f1ba43766e294e",
-      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
-      "registeredAt": "2026-09-10T14:45:31.088Z",
-      "source": {
-        "kind": "exact",
-        "character": "黑衣剑士",
-        "work": "刀劍神域 Sword Art Online",
-        "library": "300heroes",
-        "reference": "300heroes:0a857c33be1b779ffac18f74",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "sword"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

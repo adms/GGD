@@ -5,7 +5,7 @@ import { zAbilityDef } from "@ggd/shared/content/schema/ability";
 import { ContentLoader, VfxDefs, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { Abilities, type AbilityDef, type EffectDef } from "@ggd/shared/sim";
-import { SKILL_ACCEPTANCE_CANDIDATES } from "../forge/skillAcceptanceCatalog";
+import { SKILL_VISUAL_ACCEPTANCE_CANDIDATES } from "../forge/skillAcceptanceCatalog";
 import {
   buildMechanicVisualPreview,
   mechanicProjectionWithoutVfx,
@@ -172,7 +172,7 @@ describe("mechanic-aware preview-only visual overlay", () => {
   });
 
   it("43 主題／47 份 runtime 定義全部維持機制相等，且只引用已出貨 VFX 積木", () => {
-    const results = SKILL_ACCEPTANCE_CANDIDATES.map((row) => {
+    const results = SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map((row) => {
       const source = Abilities.get(row.id as AbilityDef["id"]);
       const preview = buildMechanicVisualPreview(source);
       if (preview.definition) {

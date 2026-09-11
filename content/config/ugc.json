@@ -1,15 +1,18 @@
 {
   "id": "ugc",
   "schema": "config.ugc@1",
-  "note": "⭐⭐ 玩家自製內容（UGC）的提交閘（GH#991）。owner 2026-09-05 逐字：「開放讓玩家自己設計 英雄、技能、特效，**不是靠 AI 無止境的逼近太沒效率**」。⭐ 這一份只管「那條路開不開、開多大」，⛔ 不管內容長什麼樣 —— 提交格式沿用 `ggd-ai-authoring-operation@1`（票文 Scope 3 逐字「⛔ 不設計第二種格式」）。⭐⭐ `enabled` 出貨是 **true**（2026-09-09 起）。owner 逐字：「ugc.enabled: false → true（UGC ＝ 玩家自製內容）=> **開**，我們總共新增兩批 37+37=74 個新英雄喔」。⚠️⚠️ ⭐ **這一格在 2026-09-09 之前逐字寫著「出貨是 false」** —— ⛔ 而那句話在開關被翻開的那一刻就變成假話，⭐ 且沒有任何東西會紅（第三守則）。⇒ ⭐ 記下當年那個 false 的理由，因為它同時是**關回去的條件**：身分檢查 ✅ `requireAuth: true` · 配額 ✅ 20/日＋待審 5 · 大小上限 ✅ 256 KiB · 嚴格 Zod ✅（沿用 `ggd-ai-authoring-operation@1`）· ⭐ **前提閘** ✅ `apps/platform/internal/server/ugcgate_routes_test.go` 的 `TestUgcEnabledGatesEveryRegisteredSubmissionWrite` **PASS**（它從 `chi.Walk` 推導真入口＝`POST /api/v1/submissions`，關著時打真的生產路由要 403、開著時要真的寫進耐久層）。⚠️ ⭐ 那支閘的名字換過（GH#1103）：在此之前指的是 `ugcGateIsArmed.test.ts`，⛔ 而它掃的是 `ugc/(proposals|submissions)` 這個路徑形狀、對真入口零命中就直接 return ⇒ 它永遠不會從紅轉綠（失敗形態⑥＋⑨）。⚠️ 另外：`ugc.enabled` 只守**收件**，⛔ 不守 `promote` —— 因為 promote 是**所有**審核通過內容的出貨路徑（⛔ 不只 UGC），把它也掛上這一格會連編輯器投稿一起擋死。⇒ 這一格的 rollback 語意是「**停收件**」，⛔ 不是「停發布」。",
+  "note": "⭐⭐ 玩家自製內容（UGC）的提交閘（GH#991）。owner 2026-09-05 逐字：「開放讓玩家自己設計 英雄、技能、特效，**不是靠 AI 無止境的逼近太沒效率**」。⭐ 這一份只管「那條路開不開、開多大」，⛔ 不管內容長什麼樣 —— 提交格式沿用 `ggd-ai-authoring-operation@1`（票文 Scope 3 逐字「⛔ 不設計第二種格式」）。⭐⭐ `enabled` 出貨是 **true**（2026-09-09 起）。owner 逐字：「ugc.enabled: false → true（UGC ＝ 玩家自製內容）=> **開**，我們總共新增兩批 37+37=74 個新英雄喔」。⚠️⚠️ ⭐ **這一格在 2026-09-09 之前逐字寫著「出貨是 false」** —— ⛔ 而那句話在開關被翻開的那一刻就變成假話，⭐ 且沒有任何東西會紅（第三守則）。⇒ ⭐ 記下當年那個 false 的理由，因為它同時是**關回去的條件**：身分檢查 ✅ `requireAuth: true` · 配額 ✅ 一般 100/日＋認證 200/日＋待審 50 · 一般投稿上限 ✅ 256 KiB · 含模型完整英雄 ZIP 上限 ✅ 64 MiB · 嚴格 Zod ✅（沿用 `ggd-ai-authoring-operation@1`）· ⭐ **前提閘** ✅ `apps/platform/internal/server/ugcgate_routes_test.go` 的 `TestUgcEnabledGatesEveryRegisteredSubmissionWrite` **PASS**（它從 `chi.Walk` 推導真入口＝`POST /api/v1/submissions`，關著時打真的生產路由要 403、開著時要真的寫進耐久層）。⚠️ ⭐ 那支閘的名字換過（GH#1103）：在此之前指的是 `ugcGateIsArmed.test.ts`，⛔ 而它掃的是 `ugc/(proposals|submissions)` 這個路徑形狀、對真入口零命中就直接 return ⇒ 它永遠不會從紅轉綠（失敗形態⑥＋⑨）。⚠️ 另外：`ugc.enabled` 只守**收件**，⛔ 不守 `promote` —— 因為 promote 是**所有**審核通過內容的出貨路徑（⛔ 不只 UGC），把它也掛上這一格會連編輯器投稿一起擋死。⇒ 這一格的 rollback 語意是「**停收件**」，⛔ 不是「停發布」。",
   "enabled": true,
   "requireAuth": true,
-  "maxPendingPerPlayer": 5,
-  "quotaPerPlayerPerDay": 20,
+  "maxPendingPerPlayer": 50,
+  "quotaPerPlayerPerDay": 100,
+  "powerUserQuotaPerDay": 200,
   "maxBytes": 262144,
   "autoPromote": false,
   "publishMode": "immediate",
   "heroTargetMatch": "migration",
   "communityRoomOnly": false,
-  "digestRecompute": true
+  "digestRecompute": true,
+  "heroModelUploadsEnabled": true,
+  "heroModelMaxBytes": 67108864
 }

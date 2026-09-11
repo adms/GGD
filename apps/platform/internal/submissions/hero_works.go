@@ -70,6 +70,7 @@ type HeroSnapshot struct {
 	Version               HeroStoredVersion `json:"version"`
 	Inspection            HeroInspection    `json:"inspection"`
 	AllowAttributionRemix bool              `json:"allowAttributionRemix"`
+	CanonicalTakeover     bool              `json:"canonicalTakeover,omitempty"`
 	Source                *HeroSource       `json:"source,omitempty"`
 	SubmittedAt           time.Time         `json:"submittedAt"`
 }
@@ -235,6 +236,17 @@ func (s *HeroService) Snapshot(id string) (HeroSnapshot, error) {
 }
 
 func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID string, archive []byte, allowRemix bool) (HeroSnapshot, error) {
+	return s.submit(ctx, accountID, workID, operationID, archive, allowRemix, false)
+}
+
+// SubmitTakeover is called only after the platform admin middleware accepted
+// the session. It deliberately uses separate signed importer paths and does
+// not consume a player's intake quota.
+func (s *HeroService) SubmitTakeover(ctx context.Context, accountID, workID, operationID string, archive []byte, allowRemix bool) (HeroSnapshot, error) {
+	return s.submit(ctx, accountID, workID, operationID, archive, allowRemix, true)
+}
+
+func (s *HeroService) submit(ctx context.Context, accountID, workID, operationID string, archive []byte, allowRemix, takeover bool) (HeroSnapshot, error) {
 	var out HeroSnapshot
 	if err := s.requireBridge(); err != nil {
 		return out, err
@@ -249,17 +261,29 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if !validHeroID(operationID) || len(archive) == 0 || len(archive) > MaxHeroArchiveBytes {
 		return out, httpx.BadRequest("投稿操作或 ZIP 大小不合法。")
 	}
-	policy, err := s.IntakePolicyForAccount(ctx, accountID)
-	if err != nil {
-		return out, err
+	var policy HeroIntakePolicy
+	if !takeover {
+		policy, err = s.IntakePolicyForAccount(ctx, accountID)
+		if err != nil {
+			return out, err
+		}
+		if !policy.Enabled {
+			return out, httpx.Forbidden("目前 UGC 政策未開放投稿；本機草稿仍可保存。")
+		}
+		if len(archive) > max(policy.MaxBytes, heroArchiveLimit(policy, true)) {
+			return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+		}
 	}
-	if !policy.Enabled {
-		return out, httpx.Forbidden("目前 UGC 政策未開放投稿；本機草稿仍可保存。")
+	var inspection HeroInspection
+	if takeover {
+		bridge, ok := s.bridge.(HeroTakeoverBridge)
+		if !ok {
+			return out, httpx.Err(503, "hero_takeover_unavailable", "英雄 canonical 接管服務未設定。")
+		}
+		inspection, err = bridge.InspectTakeover(ctx, workID, archive)
+	} else {
+		inspection, err = s.bridge.Inspect(ctx, archive)
 	}
-	if len(archive) > max(policy.MaxBytes, heroArchiveLimit(policy, true)) {
-		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
-	}
-	inspection, err := s.bridge.Inspect(ctx, archive)
 	if err != nil {
 		return out, err
 	}
@@ -273,61 +297,73 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 		return out, httpx.BadRequest("套件不屬於這個作品。")
 	}
 	hasUploadedModel := len(project.Presentation.UploadedModel) > 0 && string(project.Presentation.UploadedModel) != "null"
-	if hasUploadedModel && !policy.ModelUploadsEnabled {
+	hasModelAsset := hasUploadedModel || heroManifestContainsModelAsset(inspection.Manifest)
+	if !takeover && hasUploadedModel && !policy.ModelUploadsEnabled {
 		return out, httpx.Forbidden("目前未開放上傳模型的新投稿。")
 	}
 	unlock := submissionIntakeLocks.Lock(s.store.Root() + "\x00" + accountID)
 	defer unlock()
 	// Re-read after waiting/validation: an operator can tighten or disable intake
 	// while the package is being checked. No placement or quota write occurs first.
-	policy, err = s.IntakePolicyForAccount(ctx, accountID)
-	if err != nil {
-		return out, err
-	}
-	if !policy.Enabled {
-		return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
-	}
-	if hasUploadedModel && !policy.ModelUploadsEnabled {
-		return out, httpx.Forbidden("模型投稿已關閉，請保留本機草稿。")
-	}
-	if len(archive) > heroArchiveLimit(policy, hasUploadedModel) {
-		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+	if !takeover {
+		policy, err = s.IntakePolicyForAccount(ctx, accountID)
+		if err != nil {
+			return out, err
+		}
+		if !policy.Enabled {
+			return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
+		}
+		if hasUploadedModel && !policy.ModelUploadsEnabled {
+			return out, httpx.Forbidden("模型投稿已關閉，請保留本機草稿。")
+		}
+		if len(archive) > heroArchiveLimit(policy, hasModelAsset) {
+			return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+		}
 	}
 	id := "hero-" + strings.TrimPrefix(heroHash([]string{workID, inspection.PackageDigest}), "sha256:")[:59]
-	if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
-		return out, err
+	if !takeover {
+		if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
+			return out, err
+		}
 	}
-	version, err := s.bridge.Prepare(ctx, workID, "submission-"+operationID, archive)
+	var version HeroStoredVersion
+	if takeover {
+		version, err = s.bridge.(HeroTakeoverBridge).PrepareTakeover(ctx, workID, "submission-"+operationID, archive)
+	} else {
+		version, err = s.bridge.Prepare(ctx, workID, "submission-"+operationID, archive)
+	}
 	if err != nil {
 		return out, err
 	}
 	if version.Schema != "ggd-work-version@1" || version.WorkID != workID || version.ProjectID != workID || version.PackageDigest != inspection.PackageDigest || version.VersionID != version.PackageDigest || version.SnapshotDigest == "" {
 		return out, httpx.Err(503, "hero_receipt_mismatch", "匯入收據與投稿不一致。")
 	}
-	policy, err = s.IntakePolicyForAccount(ctx, accountID)
-	if err != nil {
-		return out, err
+	if !takeover {
+		policy, err = s.IntakePolicyForAccount(ctx, accountID)
+		if err != nil {
+			return out, err
+		}
+		if !policy.Enabled {
+			return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
+		}
+		if len(archive) > heroArchiveLimit(policy, hasModelAsset) {
+			return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+		}
+		if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
+			return out, err
+		}
+		if hasUploadedModel && !policy.ModelUploadsEnabled {
+			return out, httpx.Forbidden("模型投稿已關閉，請保留本機草稿。")
+		}
 	}
-	if !policy.Enabled {
-		return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
-	}
-	if len(archive) > heroArchiveLimit(policy, hasUploadedModel) {
-		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
-	}
-	if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
-		return out, err
-	}
-	if hasUploadedModel && !policy.ModelUploadsEnabled {
-		return out, httpx.Forbidden("模型投稿已關閉，請保留本機草稿。")
-	}
-	out = HeroSnapshot{Schema: "ggd-hero-submission@1", ID: id, WorkID: workID, AccountID: accountID, Version: version, Inspection: inspection, AllowAttributionRemix: allowRemix, Source: work.Source, SubmittedAt: s.now().UTC()}
+	out = HeroSnapshot{Schema: "ggd-hero-submission@1", ID: id, WorkID: workID, AccountID: accountID, Version: version, Inspection: inspection, AllowAttributionRemix: allowRemix, CanonicalTakeover: takeover, Source: work.Source, SubmittedAt: s.now().UTC()}
 	err = s.store.Update(CollectionHeroSnapshots, id, func(raw json.RawMessage) (any, error) {
 		if len(raw) > 0 {
 			var prior HeroSnapshot
 			if err := json.Unmarshal(raw, &prior); err != nil {
 				return nil, err
 			}
-			if prior.AccountID != accountID || prior.AllowAttributionRemix != allowRemix || heroHash(prior.Version) != heroHash(version) || heroHash(prior.Inspection) != heroHash(inspection) {
+			if prior.AccountID != accountID || prior.AllowAttributionRemix != allowRemix || prior.CanonicalTakeover != takeover || heroHash(prior.Version) != heroHash(version) || heroHash(prior.Inspection) != heroHash(inspection) {
 				return nil, heroConflict("同一投稿版本不能改寫內容或改作授權。")
 			}
 			out = prior

@@ -1153,10 +1153,38 @@
       "rootWhileCasting": true
     },
     {
+      "id": "b2-noor.w",
+      "name": "新人拿收據換急救",
+      "champion": "b2-noor",
+      "championName": "諾爾",
+      "slot": "W",
+      "castTimeSec": 1.233,
+      "effectiveSec": 1,
+      "deltaSec": 0.233,
+      "clamped": true,
+      "castType": "targeted",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "b2-popp.w",
       "name": "冷氣帳單換定身",
       "champion": "b2-popp",
       "championName": "何布",
+      "slot": "W",
+      "castTimeSec": 1.233,
+      "effectiveSec": 1,
+      "deltaSec": 0.233,
+      "clamped": true,
+      "castType": "targeted",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
+      "id": "b2-rem.w",
+      "name": "鐵球拖把暫停你的普攻",
+      "champion": "b2-rem",
+      "championName": "蕾姆",
       "slot": "W",
       "castTimeSec": 1.233,
       "effectiveSec": 1,

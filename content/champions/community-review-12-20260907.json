@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "version.body.317bd7b51ce0d64c24ebd79093f3aea10399eaaeec9186ec",
+  "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 13,
     "int": 29,
-    "strGrowth": 1.67,
-    "agiGrowth": 1.25,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367
+      "castTimeSec": 0.367,
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-12-20260907.w",
@@ -143,10 +149,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -187,7 +193,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.physical.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.nova",
+          "attachTo": "point"
+        }
+      ]
     },
     "E": {
       "id": "community-review-12-20260907.e",
@@ -204,10 +217,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -265,7 +278,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.physical.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-12-20260907.r",
@@ -281,9 +301,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -332,7 +352,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.physical.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.physical.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-12-20260907.ex",
@@ -345,42 +372,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.ec60a738f60e4f2d93ed019dd30d4e8e7cb2a704060c710b",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
-      "modelSha256": "9f2d1462edb53bdc72dc633a62b8d5130db17bca8842a2ee07caa92ed57898c0",
-      "binarySha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
-      "registeredAt": "2026-09-10T14:45:30.332Z",
-      "source": {
-        "kind": "previous",
-        "character": "衛宮士郎",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.317bd7b51ce0d64c24ebd79093f3aea10399eaaeec9186ec",
-      "label": "卫宫",
-      "sourceModelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
-      "modelSha256": "77ee6a066c2015932ebea1eb16ae775fbbd4be3ffee86829d7b00f90e5fd09c4",
-      "binarySha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
-      "registeredAt": "2026-09-10T14:45:30.340Z",
-      "source": {
-        "kind": "alternate",
-        "character": "卫宫",
-        "work": "Fate/stay night",
-        "library": "300heroes",
-        "reference": "300heroes:234e90fbb7002fcae4985063",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "sword"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

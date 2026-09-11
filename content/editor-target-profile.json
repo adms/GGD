@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_dc97f8aa6fdd",
+    "contentVersion": "cv_5427548d11e0",
     "collections": {
       "champions": {
-        "hash": "a89d783c5cad",
+        "hash": "c620bdf7c20e",
         "count": 153
       },
       "abilities": {
-        "hash": "e3d32b894881",
+        "hash": "849c081263f8",
         "count": 907
       },
       "items": {
@@ -42,12 +42,12 @@
         "count": 7
       },
       "config": {
-        "hash": "889783c791ac",
+        "hash": "ffa2e8dc8b5e",
         "count": 103
       },
       "models": {
-        "hash": "e72f07f6eb1f",
-        "count": 609
+        "hash": "91e74f3d8aa0",
+        "count": 735
       },
       "vfx": {
         "hash": "7df129081586",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "600485a2",
+    "fingerprint": "fb8d3eb8",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -140,7 +140,9 @@
       "shield",
       "shieldBreak",
       "spawnModelFx",
+      "spawnObstacle",
       "spawnProjectile",
+      "spawnThresholds",
       "spawnVfx",
       "spendHealth",
       "spendMana",
@@ -285,6 +287,7 @@
       "centre",
       "championId",
       "chance",
+      "charmed",
       "clampMin",
       "clip",
       "clipTimeScale",
@@ -402,6 +405,7 @@
       "onCarrierDeath",
       "onCasterDeath",
       "onConsumed",
+      "onCross",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -461,7 +465,10 @@
       "scatterRadius",
       "scripted",
       "shape",
+      "shatter",
+      "shatterable",
       "side",
+      "sides",
       "silenced",
       "sizeScale",
       "slot",
@@ -479,6 +486,7 @@
       "stacks",
       "statusId",
       "statusImmunity",
+      "statusKinds",
       "steps",
       "stopDistance",
       "stopOnCasterDeath",
@@ -624,6 +632,7 @@
       "centre",
       "championId",
       "chance",
+      "charmed",
       "clampMin",
       "clip",
       "clipTimeScale",
@@ -801,6 +810,7 @@
       "onCarrierDeath",
       "onCasterDeath",
       "onConsumed",
+      "onCross",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -887,7 +897,10 @@
       "scatterRadius",
       "scripted",
       "shape",
+      "shatter",
+      "shatterable",
       "side",
+      "sides",
       "silenced",
       "sizeScale",
       "slot",
@@ -907,6 +920,7 @@
       "statusImmunity",
       "statusImmunity.charges",
       "statusImmunity.tags",
+      "statusKinds",
       "steps",
       "steps.duration",
       "steps.modifiers",
@@ -1222,8 +1236,10 @@
         "maxRange",
         "meshShape",
         "pierce",
+        "returns",
         "schema",
         "speed",
+        "split",
         "vfxKey"
       ],
       "status-effect@1": [
@@ -7530,12 +7546,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "600485a2",
+    "engineFingerprint": "fb8d3eb8",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 600485a2 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 fb8d3eb8 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -8062,28 +8078,28 @@
             "unlocked": 500000
           },
           "maxHealth": {
-            "base": 581152,
-            "unlocked": 581152
+            "base": 402129,
+            "unlocked": 402129
           },
           "maxMana": {
-            "base": 352091,
-            "unlocked": 352091
+            "base": 240323,
+            "unlocked": 240323
           },
           "healthRegen": {
-            "base": 1235,
-            "unlocked": 1235
+            "base": 929,
+            "unlocked": 929
           },
           "manaRegen": {
-            "base": 2351,
-            "unlocked": 2351
+            "base": 1248,
+            "unlocked": 1248
           },
           "ad": {
-            "base": 23056,
-            "unlocked": 23056
+            "base": 21532,
+            "unlocked": 21532
           },
           "armor": {
-            "base": 6638,
-            "unlocked": 6638
+            "base": 4620,
+            "unlocked": 4620
           },
           "mr": {
             "base": 15311,
@@ -8256,7 +8272,7 @@
         {
           "rule": "low-damage-cell",
           "zh": "傷害相對冷卻偏低",
-          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 41.7/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝250 傷害 × 2 人 ÷ 30 卡面秒 = 16.7/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝625 傷害 × 2 人 ÷ 45 卡面秒 = 27.8/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
+          "note": "⚠️ **傷害偏低的 2 格**（相對錨點 單體・極小 的 33.3/卡面秒）：「範圍・極小」-60%（照對角線填「極小」＝200 傷害 × 2 人 ÷ 30 卡面秒 = 13.3/秒；要追平錨點得跳到「小」）；「範圍・小」-33%（照對角線填「小」＝500 傷害 × 2 人 ÷ 45 卡面秒 = 22.2/秒；要追平錨點得跳到「中」）。⭐ 全部是**算出來的**：改「期望命中人數」／冷卻五級距／傷害五級距任何一格，這份名單下一秒就跟著動。⚠️ 只**警告不擋** —— owner 說的是「不合理」不是「不准」。",
           "enabled": true
         }
       ],
@@ -8265,23 +8281,23 @@
           "shape": "範圍",
           "cooldownTier": "極小",
           "cooldownSec": 30,
-          "ratePerCardSecond": 16.666666666666668,
-          "anchorRate": 41.666666666666664,
+          "ratePerCardSecond": 13.333333333333334,
+          "anchorRate": 33.333333333333336,
           "deficitPct": -60,
           "diagonalDamageTier": "極小",
           "requiredDamageTier": "小",
-          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 16.7。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・極小」的期望輸出比錨點（單體・極小）**-60%**：照級距名填「極小」傷害的話，每卡面秒只有 13.3。⇒ 要嘛把傷害拉到「小」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         },
         {
           "shape": "範圍",
           "cooldownTier": "小",
           "cooldownSec": 45,
-          "ratePerCardSecond": 27.77777777777778,
-          "anchorRate": 41.666666666666664,
+          "ratePerCardSecond": 22.22222222222222,
+          "anchorRate": 33.333333333333336,
           "deficitPct": -33,
           "diagonalDamageTier": "小",
           "requiredDamageTier": "中",
-          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 27.8。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
+          "note": "「範圍・小」的期望輸出比錨點（單體・極小）**-33%**：照級距名填「小」傷害的話，每卡面秒只有 22.2。⇒ 要嘛把傷害拉到「中」，要嘛把冷卻挪出這一格。⚠️ 只警告不擋。"
         }
       ],
       "derivedFrom": [
@@ -8381,11 +8397,11 @@
       }
     ]
   },
-  "assetManifestDigest": "3367d2f5c79b",
+  "assetManifestDigest": "e5a743bc0931",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2606,
-    "totalBytes": 706322282
+    "entries": 2732,
+    "totalBytes": 941511830
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8403,15 +8419,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "151875fef168",
+    "fingerprint": "d1ec2d56c053",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "206362c4fbbb"
+        "digest": "6a2d425a4f17"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "58fb2d5798f7"
+        "digest": "639da5369f6d"
       },
       {
         "surface": "exact-ref-collector",
@@ -8459,7 +8475,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "a4122d73241d",
+  "migrationFingerprint": "5214d5735563",
   "supportedModes": [
     "bootstrap"
   ],
@@ -8473,5 +8489,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "128633509952"
+  "profileDigest": "86457373f92d"
 }

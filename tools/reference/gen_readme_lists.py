@@ -73,6 +73,7 @@ SCRIPT = "tools/reference/gen_readme_lists.py"
 #    進版控快照。宣告在原始碼裡（單一住處，reconcile.mjs / merge-io.mjs 會收割），
 #    ⛔ 不手寫 sync-io.json。
 # ggd:writes docs/reference/_curation-snapshot.json
+# ggd:writes docs/全英雄列表.md
 
 # Truncation limits, in CHARACTERS. A markdown cell / kit line that runs to 300
 # characters destroys readability, and readability is the entire point of the
@@ -94,7 +95,7 @@ DOC_MECHANICS = "docs/reference/mechanics.md"
 DOC_TIERS = "docs/editor-contract/ggd-skill-tiers.md"   # `pnpm tiers:build`
 DOC_ANCHORS = "docs/平衡錨點量測.md"                      # `pnpm anchors:build`
 
-BLOCKS = ("roster", "abilities", "items", "grail", "mechanics", "arenas",
+BLOCKS = ("roster", "all-heroes", "abilities", "items", "grail", "mechanics", "arenas",
           "combat-env", "stat-bands", "tiers")
 
 
@@ -295,6 +296,242 @@ def gen_roster(ctx):
 # census + how-to-read + a link to the full 554-row detail table in docs. It is
 # deliberately compact so the README stays small; it is EXPANDED (no <details>).
 # ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# all-heroes — ⭐ **全部**英雄 × 六槽技能名（owner 2026-09-11）
+# ---------------------------------------------------------------------------
+# owner 逐字：「請你產生一個全英雄列表.md 並且更新在 github readme 主頁，
+#              主頁需包含技能名稱 天生/Q/W/E/R/EX」
+#
+# ⭐ 它與上面的 `roster` 區段**刻意不同**，⛔ 不是重複：
+#   · `roster`      —— 只印**開放名單**，每槽「名稱＋一行效果」（讀的是「這一場能選誰」）
+#   · `all-heroes`  —— 印**全部**（含未開放／變身態），每槽**只有名稱**（讀的是「這遊戲有什麼」）
+#
+# ⚠️ 這個檔的檔頭第 2 條記著「README 曾經 224 KB 因為把全部內容內嵌」——
+# ⭐ 所以這一段刻意**只印名稱**（⛔ 不印效果、⛔ 不印說明）：153 列 × 6 個短格。
+# owner 明確要求名稱要在主頁上，⇒ 精簡的是**每一格的內容**，⛔ 不是列數。
+
+ALL_HEROES_DOC = "docs/全英雄列表.md"
+PENDING_JSON = "docs/_data/pending-heroes.json"
+
+
+def pending_heroes():
+    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**。
+
+    ⛔ 不直接讀來源 repo：它不保證在這台機器上（CLAUDE.md「換機時：有文件不等於有素材」），
+    而這份文件必須在每一台機器上算出同樣的位元組。
+    唯一的寫入端是 `tools/reference/sync_pending_heroes.py`。
+    ⚠️ 快照不在 ⇒ 回 `None`，⭐ 而下面會**印一行說它不在**（⛔ 不是安靜地少印 45 名）。
+    """
+    path = os.path.join(G.REPO, PENDING_JSON)
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _pending_block(doc, heading_level):
+    if doc is None:
+        return [f"{heading_level} 待上架（快照不在）", "",
+                f"> ⚠️ ⛔ 找不到 `{PENDING_JSON}` ⇒ **這一段沒有印任何東西**。",
+                f"> 跑 `python3 tools/reference/sync_pending_heroes.py` 重抽。", ""]
+    out = [f"{heading_level} 待上架（{doc['counts']['pending']} 名）—— ⛔ 還沒進 `content/champions/`", ""]
+    out += note([
+        f"⭐ 這些英雄的卡**還不在這個 repo 裡** ⇒ 上面那張表看不到它們。"
+        f"狀態的權威來源是 `{doc['source']['repo']}` 的 `{doc['source']['path']}`"
+        f"（快照日 {doc['source']['snapshotDate']}）。",
+        "",
+        f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
+        "",
+        "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
+    ])
+    for g in doc["groups"]:
+        out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
+                "| # | ID | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
+        for i, r in enumerate(g["rows"], 1):
+            out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
+        out.append("")
+    return out
+
+
+#: 分組：讓「原本就上架的那批」與後來幾批**一眼分得開**（owner 2026-09-11 問的正是這個）。
+HERO_GROUPS = (
+    ("godie-", "原作 w3x 班底"),
+    ("b2-", "第二批社群英雄"),
+    ("community-review", "第一批社群英雄"),
+    ("lol-", "英雄聯盟"),
+)
+
+
+def hero_group(cid):
+    for prefix, label in HERO_GROUPS:
+        if cid.startswith(prefix):
+            return label
+    return "其他"
+
+
+#: ⭐ 一格 `—` 回答不了 owner 2026-09-11 問的「**為什麼這幾隻沒上架**」。
+#: ⛔ 而在此之前這張表只印 ✅/— ⇒ 讀起來像「153 名裡有 23 名漏掉了」，
+#: ⭐ 而真相是那 23 名**沒有一名是漏掉的**。⇒ 理由逐格印出來，⛔ 不是印在表腳的散文裡
+#: （第一·五守則的同族：一個限定詞只寫在表頭，第一個複製這張表的人就會把它丟掉）。
+#:
+#: ⚠️ ⭐ 每一條都**從內容推導**，⛔ 沒有一條是寫死的 id 名單：
+#:   · `transform.role == "alternate"` —— 它是**某一位已上架英雄的第二具身體**，
+#:     結構上不可獨立選取（`formPairShipping.ts` 與 `championForms.test.ts` 逐對釘死）
+#:   · `retiredChampions` —— owner 逐字下架（理由存在 `content/config/roster.json` 的 note 裡）
+#:   · 三者皆無（origin / 天生 / EX）—— 內容載入失敗時 `main.tsx:186` 註冊的**骨架替身**，
+#:     ⛔ 它本來就不該是玩家選得到的英雄
+def offlist_reason(c, retired):
+    """⭐ 它**不在**開放名單上的理由。回 None ＝ ⛔ 真的沒有理由（那就是一個缺口）。"""
+    if (c.get("transform") or {}).get("role") == "alternate":
+        return "變身態"
+    if c["id"] in retired:
+        return "已下架"
+    if c.get("origin") is None and c.get("passiveAbility") is None and c.get("exAbility") is None:
+        return "骨架"
+    return None
+
+
+def _retired_ids():
+    """⛔ 讀 `content/config/roster.json`，⛔ 不抄一份 id 名單進這裡（第〇·四守則）。"""
+    path = os.path.join(G.CONTENT, "config", "roster.json")
+    if not os.path.exists(path):
+        return frozenset()
+    with open(path, encoding="utf-8") as f:
+        return frozenset(json.load(f).get("retiredChampions") or ())
+
+
+def all_heroes_rows(ctx):
+    """(組, id, 全名, 稱號, 六格技能名) —— ⭐ 缺的槽印 `—`，⛔ 不是省略那一格
+    （省略會讓表格錯位，而且看不出來「這一支沒有 EX」）。"""
+    open_ids = ctx["open_champions"]
+    retired = _retired_ids()
+    rows = []
+    for c in ctx["champions"]:
+        names = {slot: G.cell(a.get("name") or a.get("id")) for slot, a in kit_slots(c, ctx)}
+        title, full = G.split_champion_name(c.get("name", ""))
+        is_open = c["id"] in open_ids
+        rows.append({
+            "group": hero_group(c["id"]),
+            "id": c["id"],
+            "full": G.cell(full),
+            "title": G.cell(title),
+            "open": is_open,
+            "reason": None if is_open else offlist_reason(c, retired),
+            "slots": [names.get(s, "—") for s in ("天生", "Q", "W", "E", "R", "EX")],
+        })
+    rows.sort(key=lambda r: (
+        [lbl for _p, lbl in HERO_GROUPS].index(r["group"]) if r["group"] != "其他" else 99,
+        r["id"],
+    ))
+    return rows
+
+
+def _all_heroes_table(rows, flags):
+    out = ["| 英雄 | 稱號 | 上架 | 天生 | Q | W | E | R | EX |",
+           "| --- | --- | :-: | --- | --- | --- | --- | --- | --- |"]
+    for r in rows:
+        # ⭐ 不在名單上時印**理由**，⛔ 不是一個問不出東西的 `—`。
+        flag = ("✅" if r["open"] else (r["reason"] or "⛔ 未列入")) if flags else "·"
+        out.append("| " + " | ".join([
+            f"**{r['full']}**<br>`{r['id']}`", r["title"], flag, *r["slots"],
+        ]) + " |")
+    return out
+
+
+def _offlist_summary(rows, opened):
+    """⭐ owner 2026-09-11 問「153 名全部上架」⇒ 這幾行就是答案。
+
+    ⛔ 在此之前這份文件只說「153 名，其中 130 名在開放名單內」——
+    ⭐ 那句話**每個字都對**，⚠️ 而它讀起來像「有 23 名漏掉了」。
+    ⇒ 這裡把差額**逐類拆開**，⛔ 不是留給讀的人自己去數。
+    """
+    off = [r for r in rows if not r["open"]]
+    if not off:
+        return [f"⭐ **{opened} 名全部在開放名單內** —— 零缺口。"]
+    buckets = {}
+    for r in off:
+        buckets.setdefault(r["reason"] or "⛔ 未列入", []).append(r["id"])
+    why = {
+        "變身態": "**某一位已上架英雄的第二具身體**，結構上不可獨立選取"
+                  "（`transform.role = \"alternate\"`；`formPairShipping.ts` 逐對釘死）",
+        "已下架": "owner 逐字下架，理由存在 `content/config/roster.json` 的 note 裡",
+        "骨架": "內容載入失敗時 `apps/client/src/main.tsx:186` 註冊的**替身**，"
+                "⛔ 本來就不該是玩家選得到的英雄",
+        "⛔ 未列入": "⛔ **沒有推導得出來的理由** —— 這是一個真的缺口，要處理",
+    }
+    out = [f"⭐ 差額 **{len(off)}** 名 ⛔ **沒有一名是「漏掉」的**，逐類如下："]
+    out += ["", "| 為什麼不在名單上 | 幾名 | 是什麼 |", "| --- | :-: | --- |"]
+    for reason, ids in sorted(buckets.items(), key=lambda kv: -len(kv[1])):
+        out.append(f"| {reason} | {len(ids)} | {why.get(reason, '—')} |")
+    out += ["", f"⇒ ⭐ **每一位獨立可選的英雄（{opened} 名）今天都在開放名單上。**"]
+    return out
+
+
+def gen_all_heroes(ctx):
+    rows = all_heroes_rows(ctx)
+    flags = ctx["curation_flags"]
+    opened = sum(1 for r in rows if r["open"])
+    by_group = {}
+    for r in rows:
+        by_group.setdefault(r["group"], []).append(r)
+
+    out = [f"#### 全英雄列表（{len(rows)} 名）— 六個技能 slot 的**名稱**", ""]
+    out += note([
+        "⭐ 這是 `content/champions/` 的**全部**英雄，⛔ 不是開放名單 —— "
+        f"上面那一段才是「這一場能選誰」（{opened} 名）。",
+        "",
+        "⭐ 每一列六格＝**天生 / Q / W / E / R / EX**，只印**名稱**；"
+        "一行效果在上面那一段，完整文字在 `docs/reference/abilities.md`。",
+        "",
+        "分組：" + " · ".join(
+            f"**{g}** {len(v)}" for g, v in by_group.items()
+        ) + "。",
+    ])
+    out += _all_heroes_table(rows, flags)
+    out += [""]
+    pend = pending_heroes()
+    out += _pending_block(pend, "#####")
+    extra = f"全量 {len(rows)} 名，其中開放 {opened} 名。"
+    if pend:
+        extra += f"另有 {pend['counts']['pending']} 名待上架（卡還沒進 repo）。"
+    out += provenance(ctx, extra + f" 完整清單另見 `{ALL_HEROES_DOC}`。")
+    return "\n".join(out), len(rows)
+
+
+def gen_all_heroes_doc(ctx):
+    """獨立的 `docs/全英雄列表.md` —— 同一份 ctx、同一次 run ⇒ ⛔ 不可能與 README 打架。"""
+    rows = all_heroes_rows(ctx)
+    flags = ctx["curation_flags"]
+    opened = sum(1 for r in rows if r["open"])
+    out = [
+        "# 全英雄列表",
+        "",
+        f"> ⛔ **這份文件是產生的**（`{CMD}`）—— 手改會在下一次重新產生時被打回來。",
+        f"> 來源只有 `content/champions/` 與進版控的策展快照；contentVersion `{ctx['contentVersion']}`。",
+        "",
+        f"共 **{len(rows)}** 名英雄，其中 **{opened}** 名在開放名單內。",
+        "",
+        *_offlist_summary(rows, opened),
+        "",
+        "每一列六格＝**天生 / Q / W / E / R / EX**，印的是技能**名稱**。",
+        "一行效果見 README 的開放名單那一段；完整效果文字見 `docs/reference/abilities.md`。",
+        "",
+    ]
+    for _prefix, label in HERO_GROUPS:
+        grp = [r for r in rows if r["group"] == label]
+        if not grp:
+            continue
+        o = sum(1 for r in grp if r["open"])
+        out += [f"## {label}（{len(grp)} 名，開放 {o}）", ""]
+        out += _all_heroes_table(grp, flags)
+        out += [""]
+    rest = [r for r in rows if r["group"] == "其他"]
+    if rest:
+        out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
+    out += _pending_block(pending_heroes(), "##")
+    return "\n".join(out) + "\n"
 
 def gen_abilities(ctx):
     abils = ctx["abilities"]
@@ -1270,7 +1507,8 @@ def gen_stat_bands(ctx):
     return "\n".join(L), len(origins) * len(keys)
 
 
-GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items,
+GENERATORS = {"roster": gen_roster, "all-heroes": gen_all_heroes,
+              "abilities": gen_abilities, "items": gen_items,
               "grail": gen_grail, "mechanics": gen_mechanics, "arenas": gen_arenas,
               "combat-env": gen_combat_env, "stat-bands": gen_stat_bands,
               "tiers": gen_tiers}
@@ -1289,6 +1527,10 @@ def _render_docs(ctx):
         "roster": (G.gen_roster, os.path.join(G.OUTDIR, "roster.md")),
         "abilities": (G.gen_abilities, os.path.join(G.OUTDIR, "abilities.md")),
         "items": (G.gen_items, os.path.join(G.OUTDIR, "items.md")),
+        # ⭐ owner 2026-09-11：「產生一個全英雄列表.md」—— 同一次 run、同一份 ctx
+        #   ⇒ ⛔ 它與 README 的那一段不可能互相矛盾。
+        "all-heroes": (lambda c: (gen_all_heroes_doc(c), 0),
+                       os.path.join(G.REPO, ALL_HEROES_DOC)),
         # ⭐ 聖杯願望與機制詞彙 —— 同一次 run，同一份 ctx，所以 README 的摘要與
         # 這兩份完整清單不可能互相矛盾（owner 2026-08-17「統一用程式建立」）。
         "grail": (lambda c: (GR.gen_grail_doc(c, G.CONTENT), 0),

@@ -40,9 +40,9 @@
     "str": 12,
     "agi": 25,
     "int": 23,
-    "strGrowth": 1.18,
-    "agiGrowth": 2.36,
-    "intGrowth": 2.17,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,13 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.733
+      "castTimeSec": 0.733,
+      "vfxKey": "fx.prim.wind.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-14-20260907.w",
@@ -143,10 +149,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -204,7 +210,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-14-20260907.e",
@@ -229,11 +242,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "heal",
           "amount": {
@@ -260,7 +268,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-14-20260907.r",
@@ -283,11 +298,6 @@
       "range": 0.0,
       "cooldownTier": "大",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -316,7 +326,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse",
+          "attachTo": "caster"
+        }
+      ]
     }
   },
   "exAbility": "community-review-14-20260907.ex",
@@ -329,7 +346,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "claw"
+  ],
   "schema": "champion@1",
   "modelVersions": [
     {

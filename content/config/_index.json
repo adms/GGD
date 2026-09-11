@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "889783c791ac",
+  "hash": "ffa2e8dc8b5e",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -221,8 +221,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "1caf3d4af2fd",
-      "size": 3352
+      "hash": "7edc151e7fde",
+      "size": 3347
     },
     {
       "id": "dispel",
@@ -311,8 +311,8 @@
     {
       "id": "mana-tiers",
       "path": "config/mana-tiers.json",
-      "hash": "0995909cf692",
-      "size": 956
+      "hash": "6d500097e499",
+      "size": 2110
     },
     {
       "id": "map-report",
@@ -461,8 +461,8 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "7341ce37a7df",
-      "size": 920
+      "hash": "11de07da31da",
+      "size": 918
     },
     {
       "id": "stat-normalization",
@@ -497,8 +497,8 @@
     {
       "id": "ugc",
       "path": "config/ugc.json",
-      "hash": "41391a3646bf",
-      "size": 2255
+      "hash": "aee153500514",
+      "size": 2435
     },
     {
       "id": "ui-cues",
@@ -551,7 +551,7 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "567dff9f2ee9",
+      "hash": "0e9bed36d842",
       "size": 29899
     },
     {

@@ -547,7 +547,8 @@ func capRequestBody(next http.Handler) http.Handler {
 				limit = maxArchiveUploadBytes
 			case matchstats.IngestPath:
 				limit = maxMatchStatsBytes
-			case "/api/v1/hero-submissions", "/api/v1/hero-import/build", "/api/v1/hero-import/inspect":
+			case "/api/v1/hero-submissions", "/api/v1/hero-import/build", "/api/v1/hero-import/inspect",
+				"/api/v1/admin/hero-submissions/takeover", "/api/v1/admin/hero-import/build", "/api/v1/admin/hero-import/inspect":
 				limit = submissions.MaxHeroArchiveBytes
 			case "/api/v1/hero-works/draft":
 				limit = submissions.MaxHeroDraftBytes + 4096

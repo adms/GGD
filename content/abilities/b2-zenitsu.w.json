@@ -27,6 +27,11 @@
           "kind": "blink",
           "onArrive": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.nova",
+              "at": "point"
+            },
+            {
               "amount": {
                 "damageTier": "小"
               },
@@ -46,10 +51,10 @@
   ],
   "id": "b2-zenitsu.w",
   "manaCost": [
-    144.0,
-    144.0,
-    144.0,
-    144.0
+    112.0,
+    112.0,
+    112.0,
+    112.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
@@ -81,6 +86,11 @@
               "applyTo": "self",
               "kind": "blink",
               "onArrive": [
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.lightning.nova",
+                  "at": "point"
+                },
                 {
                   "amount": {
                     "damageTier": "小"

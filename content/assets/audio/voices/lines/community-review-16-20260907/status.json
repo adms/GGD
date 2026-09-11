@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753710,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/community-review-16-20260907.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/community-review-16-20260907.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -26,6 +26,55 @@
      "error": null
     }
    ],
+   "text": "（原檔）voice_joke_1",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0011-168_voice_joke_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:168",
+    "stub": false,
+    "bytes": 89069,
+    "seconds": 5.492971,
+    "lufs": null,
+    "hash": "5fb3ba55f3c959f54985b879df3ef7c8b5386db9d5237484cda4d3b25816d6f3",
+    "at": 1789067125851
+   },
+   "lastError": null
+  },
+  "quote.2": {
+   "takes": [],
+   "text": "（原檔）voice_joke_2",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0002-168_voice_joke_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:168",
+    "stub": false,
+    "bytes": 55214,
+    "seconds": 3.391565,
+    "lufs": null,
+    "hash": "25c6fa0c85fb5861006b4ee98ebfd4a189941a817d6ac3f5a214e74f7dcc92ca",
+    "at": 1789067125924
+   },
+   "lastError": null
+  },
+  "quote.3": {
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789067425825,
+     "error": null
+    }
+   ],
    "text": "このバカステッキ～！",
    "lang": "ja",
    "kana": "コノ バカ ステッキー",
@@ -37,12 +86,12 @@
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17598,
-    "seconds": 1.04,
+    "bytes": 21359,
+    "seconds": 1.28,
     "lufs": null,
-    "hash": "3ac78701c42a2a65d758b22bfd041a5919d8ffabc1e258888704c7889cb082ae",
-    "maxDb": -3,
-    "at": 1789043007582
+    "hash": "fc2c14a2cf6423838eb8d5f97ddacfb0874dc28820db605e0ad1ff19cb842247",
+    "maxDb": -1.9,
+    "at": 1789067425825
    },
    "lastError": null
   },
@@ -63,23 +112,33 @@
      "seconds": 1.36,
      "at": 1789040385597,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.96,
+     "at": 1789060162428,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_attack_1",
+   "text": "魔力砲擊！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0003-168_voice_attack_1.ogg",
+   "kana": "マリョク ホウ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-16-20260907.q",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 29301,
-    "seconds": 1.766168,
+    "bytes": 16344,
+    "seconds": 0.96,
     "lufs": null,
-    "hash": "0f014246330ff48ba2bdd4db04e04c61cf6407a27866935d56a004bd88e12e2f",
-    "at": 1789041883640
+    "hash": "5699b423d98c341673e69e43d6005af834eecea7c8fcb0148610e19ef5c69b5b",
+    "maxDb": -1.9,
+    "at": 1789060162428
    },
    "lastError": null
   },
@@ -100,23 +159,33 @@
      "seconds": 2.12,
      "at": 1789040385707,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1789060162546,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_attack_2",
+   "text": "魔力防壁！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0009-168_voice_attack_2.ogg",
+   "kana": "マリョク ボウヘキ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-16-20260907.w",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 41839,
-    "seconds": 2.535329,
+    "bytes": 23031,
+    "seconds": 1.36,
     "lufs": null,
-    "hash": "3e1b94cd8f82bdf5bc5c211768eadc10e3d890362723b86d29e3a0546d90fce1",
-    "at": 1789041883691
+    "hash": "bb0855160b944d33f3220299bb1a8fb13dedd6c39bcca985241f0ca91a42492c",
+    "maxDb": -2,
+    "at": 1789060162546
    },
    "lastError": null
   },
@@ -137,23 +206,33 @@
      "seconds": 1.28,
      "at": 1789040385819,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1789060162664,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_attack_3",
+   "text": "魔法少女飛行！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0000-168_voice_attack_3.ogg",
+   "kana": "マホウショウジョ ヒコウ",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-16-20260907.e",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 35570,
-    "seconds": 2.155102,
+    "bytes": 21359,
+    "seconds": 1.28,
     "lufs": null,
-    "hash": "542b084b84584b62a6fd99036b63a1063f3fe18cf38f29f0a7f756481c787ecb",
-    "at": 1789041883741
+    "hash": "67faba2cfc948bc67db451654a57dfb08ebd872b1d79cafa7b1608515ac52539",
+    "maxDb": -2,
+    "at": 1789060162664
    },
    "lastError": null
   },
@@ -174,23 +253,33 @@
      "seconds": 2.8,
      "at": 1789040385925,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1789060162787,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_dazhao_1",
+   "text": "夢幻召喚・Saber！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0006-168_voice_dazhao_1.ogg",
+   "kana": "ムゲン ショウカン Saber",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-16-20260907.r",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 38496,
-    "seconds": 2.335057,
+    "bytes": 25539,
+    "seconds": 1.52,
     "lufs": null,
-    "hash": "86b744ef092412a0ee1a8eee9c16a5a62c8c09adb5cc351ba38aa9b9d4e69a29",
-    "at": 1789041883792
+    "hash": "8715dc1577fd34bd85063e01d57001d2fe4cc72b8729894db9f974eafb4e356a",
+    "maxDb": -2.1,
+    "at": 1789060162787
    },
    "lastError": null
   },
@@ -211,23 +300,33 @@
      "seconds": 2.8,
      "at": 1789040386037,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.92,
+     "at": 1789060162911,
+     "error": null
     }
    ],
-   "text": "（原檔）voice_dazhao_2",
+   "text": "限定展開・Excalibur！",
    "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0001-168_voice_dazhao_2.ogg",
+   "kana": "ゲンテイ テンカイ Excalibur",
+   "textSource": "derived",
+   "origin": "ability-name:community-review-16-20260907.ex",
    "state": "generated",
    "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 41839,
-    "seconds": 2.546939,
+    "bytes": 31808,
+    "seconds": 1.92,
     "lufs": null,
-    "hash": "4a0575cb0fea56d03faf2dffa20f12f03400ebc042811ad825bc1c85ff6509a3",
-    "at": 1789041883845
+    "hash": "0c6f21c3578f532810ee3921c0eff9e22d4b7794e213db2b49e3e3964dc6dcb3",
+    "maxDb": -2,
+    "at": 1789060162911
    },
    "lastError": null
   },
@@ -240,6 +339,14 @@
      "seconds": 0.76,
      "at": 1789043007691,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1789054972410,
+     "error": null
     }
    ],
    "text": "限定展開！インクルード！",
@@ -249,16 +356,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 12582,
+    "seconds": 0.72,
     "lufs": null,
-    "hash": "17ab964cf91a11caef9f2ef8e50ed24c71f39436ca0721d71beb168fc75e6755",
-    "maxDb": -2.5,
-    "at": 1789043007691
+    "hash": "842ba9f44d975f735373990ede349939db59da2f5d635b4dddb98fa57b5a4aff",
+    "maxDb": -4.4,
+    "at": 1789054972410
    },
    "lastError": null
   },
@@ -316,6 +423,14 @@
      "seconds": 0.32,
      "at": 1789040386253,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789060163034,
+     "error": null
     }
    ],
    "text": "きゃっ！",
@@ -325,16 +440,16 @@
    "origin": "grunt:child-girl",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 6313,
     "seconds": 0.32,
     "lufs": null,
-    "hash": "d753bb4111dd966c2234c8d596c9b811b574b8716ed5014cf8be359d6aae7317",
+    "hash": "7729abdb3d794bfa12210d410fc5c2743d9815ca2b6026cc99a2935fb2971379",
     "maxDb": -2,
-    "at": 1789040386253
+    "at": 1789060163034
    },
    "lastError": null
   },
@@ -355,6 +470,14 @@
      "seconds": 0.52,
      "at": 1789040386357,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1789060163154,
+     "error": null
     }
    ],
    "text": "ああっ……！",
@@ -364,16 +487,16 @@
    "origin": "grunt:child-girl",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 9239,
     "seconds": 0.52,
     "lufs": null,
-    "hash": "5b02fbb6c44ef30eacfe20a5eb444fd7f099687fdbb864e971cfef1c574a4e43",
-    "maxDb": -3.1,
-    "at": 1789040386357
+    "hash": "9776bb39f0916cd5114e36e538865aacc65e261578cff54547e2a1227a0ce193",
+    "maxDb": -2.2,
+    "at": 1789060163154
    },
    "lastError": null
   },
@@ -386,6 +509,14 @@
      "seconds": 0.8,
      "at": 1789043007804,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1789060163318,
+     "error": null
     }
    ],
    "text": "夢幻召喚！インストール！",
@@ -395,16 +526,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13836,
-    "seconds": 0.8,
+    "bytes": 13418,
+    "seconds": 0.76,
     "lufs": null,
-    "hash": "8db73c731f6acf9fb28c05f7b106282b3f3abe2eed38b536c5e803af8c49a362",
-    "maxDb": -2.2,
-    "at": 1789043007804
+    "hash": "808060b69c0cefb51d4a1599d04d7e486a2c687962667260657b39b35b5b6ae7",
+    "maxDb": -2.8,
+    "at": 1789060163318
    },
    "lastError": null
   },
@@ -430,25 +561,45 @@
   },
   "attack-heavy": {
    "takes": [],
-   "text": "（原檔）voice_attack_1",
+   "text": "（原檔）voice_attack_2",
    "lang": "ja",
    "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0003-168_voice_attack_1.ogg",
+   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0009-168_voice_attack_2.ogg",
    "state": "generated",
    "current": {
     "take": 0,
     "engine": "original",
     "engineVersion": "300heroes:168",
     "stub": false,
-    "bytes": 29301,
-    "seconds": 1.766168,
+    "bytes": 41839,
+    "seconds": 2.535329,
     "lufs": null,
-    "hash": "0f014246330ff48ba2bdd4db04e04c61cf6407a27866935d56a004bd88e12e2f",
-    "at": 1789041884059
+    "hash": "3e1b94cd8f82bdf5bc5c211768eadc10e3d890362723b86d29e3a0546d90fce1",
+    "at": 1789058017982
    },
    "lastError": null
   },
-  "sprint": {
+  "crit": {
+   "takes": [],
+   "text": "（原檔）voice_attack_3",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0000-168_voice_attack_3.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:168",
+    "stub": false,
+    "bytes": 35570,
+    "seconds": 2.155102,
+    "lufs": null,
+    "hash": "542b084b84584b62a6fd99036b63a1063f3fe18cf38f29f0a7f756481c787ecb",
+    "at": 1789058018078
+   },
+   "lastError": null
+  },
+  "respond.ok": {
    "takes": [],
    "text": "（原檔）voice_move_1",
    "lang": "ja",
@@ -464,47 +615,7 @@
     "seconds": 2.993923,
     "lufs": null,
     "hash": "ffa04c80154f25dd11307869f4085b65a3fc891417fb869e211b0efbe499b629",
-    "at": 1789041884112
-   },
-   "lastError": null
-  },
-  "puzzled": {
-   "takes": [],
-   "text": "（原檔）voice_joke_2",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0002-168_voice_joke_2.ogg",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
-    "stub": false,
-    "bytes": 55214,
-    "seconds": 3.391565,
-    "lufs": null,
-    "hash": "25c6fa0c85fb5861006b4ee98ebfd4a189941a817d6ac3f5a214e74f7dcc92ca",
-    "at": 1789041884162
-   },
-   "lastError": null
-  },
-  "charge": {
-   "takes": [],
-   "text": "（原檔）voice_move_3",
-   "lang": "ja",
-   "textSource": "original",
-   "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0005-168_voice_move_3.ogg",
-   "state": "generated",
-   "current": {
-    "take": 0,
-    "engine": "original",
-    "engineVersion": "300heroes:168",
-    "stub": false,
-    "bytes": 20524,
-    "seconds": 1.217596,
-    "lufs": null,
-    "hash": "ecbb5c258501583202837d750c7101f3e2fd1e33bbb8b4ee6a453a0136933d8c",
-    "at": 1789041884213
+    "at": 1789048366313
    },
    "lastError": null
   },
@@ -524,7 +635,7 @@
     "seconds": 2.883628,
     "lufs": null,
     "hash": "91e365bb9801b676fb82a601657dfc0be625f1dbe02d63b781a2a12c1ea2c6c9",
-    "at": 1789041884262
+    "at": 1789058018173
    },
    "lastError": null
   },
@@ -545,6 +656,14 @@
      "seconds": 0.4,
      "at": 1789040386461,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054972791,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -554,16 +673,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "b01a278f8fc99f388ce5dca1fcf882ac074868a46abc038428e453880f79cdb9",
-    "maxDb": -5.4,
-    "at": 1789040386461
+    "hash": "cbaf03f230b68b28a169e346f4f9fe84e834ea9935087d0edf7ba5663a09779d",
+    "maxDb": -1.9,
+    "at": 1789054972791
    },
    "lastError": null
   }

@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-popp.e.webp"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -76,10 +77,10 @@
       ],
       "id": "b2-popp.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -110,7 +111,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-popp.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -139,9 +141,9 @@
       ],
       "id": "b2-popp.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -169,7 +171,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.bolt"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-popp.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -210,10 +213,10 @@
       ],
       "id": "b2-popp.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -265,20 +268,21 @@
           "vfxKey": "fx.prim.ice.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-popp.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -313,7 +317,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-popp",
-  "modelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
+  "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
   "name": "何布",
   "origin": "法師",
   "passiveAbility": "b2-popp.passive",
@@ -325,61 +329,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-popp.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.19cac64b23e771710b951b12b35a4fee74ddcd256de2cb86",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
-      "modelSha256": "f784ca701072c5e7356836b77579c3ae240f954833b18af12c54b7f73ef2d88a",
-      "binarySha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
-      "registeredAt": "2026-09-10T14:45:34.726Z",
-      "source": {
-        "kind": "previous",
-        "character": "何布",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.7eb6f6479c9dde50a9d28924edb2e19f27c896f91b4c44ff",
-      "label": "李小狼",
-      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
-      "modelSha256": "0b6e5a2e13e111540ef07543ecfacc8857b7f429c3fcdbb97621368ea981285c",
-      "binarySha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
-      "registeredAt": "2026-09-10T14:45:34.734Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "李小狼",
-        "work": "TSUBASA 翼／翼年代記",
-        "library": "300heroes",
-        "reference": "300heroes:f1660efeba7e0630c361c814",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.5b73b4d46cb54d3447224e979ef9466238ad954e58c9220d",
-      "label": "何布（獨立副本／李小狼）",
-      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
-      "modelSha256": "ff39f062f6a30e88297b657b97d88250ede46a4e7cab5aa94d3b01762c8169d3",
-      "binarySha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
-      "registeredAt": "2026-09-10T14:45:34.797Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "何布（獨立副本／李小狼）",
-        "work": "TSUBASA 翼／翼年代記",
-        "library": "300heroes",
-        "reference": "derivative:popp",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-popp.webp"
 }

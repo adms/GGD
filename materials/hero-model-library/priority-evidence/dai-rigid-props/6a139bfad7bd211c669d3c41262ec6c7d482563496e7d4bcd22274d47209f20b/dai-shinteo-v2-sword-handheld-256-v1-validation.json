@@ -2,9 +2,9 @@
   "schema": "ggd.dai-rigid-prop-current-validation@1",
   "prop": "handheld",
   "role": "independent-weapon-component",
-  "inputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/intermediate/handheld/source-materials.glb",
+  "inputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/replay-05-main-50f3d8ab/intermediate/handheld/source-materials.glb",
   "inputSha256": "5733a7b8060651878e706c0805b70b07d3f06e87e29e51c02ae05a569ddb7237",
-  "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/outputs/handheld/component.glb",
+  "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/replay-05-main-50f3d8ab/outputs/handheld/component.glb",
   "outputSha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
   "outputBytes": 732280,
   "triangles": 1854,
@@ -289,6 +289,9 @@
     "errors": [],
     "warnings": []
   },
+  "heroModelIneligibilityErrors": [
+    "模型沒有骨架綁定（glTF 沒有 skins）—— 進場會是一具不會動的 T-pose。"
+  ],
   "limits": {
     "upload": {
       "fileBytes": 33554432,
@@ -329,7 +332,7 @@
     },
     {
       "path": "packages/shared/src/content/modelUpload/inspect.ts",
-      "sha256": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1"
+      "sha256": "95f15b3098d4baaad45e282f927978476b685a1a2116dc032838eb7c8215e0ad"
     },
     {
       "path": "packages/shared/src/content/modelUpload/glb.ts",
@@ -337,7 +340,7 @@
     },
     {
       "path": "packages/shared/src/content/modelUpload/heroModel.ts",
-      "sha256": "99a05abcb803576e41f5896f9275c436cc40e32a96ebfdd4ddba6d3163696111"
+      "sha256": "be545dddd055d1674bfec7123ce923951105170984a511d4f467474b2791b38c"
     },
     {
       "path": "packages/shared/src/content/modelUpload/budget.ts",
@@ -351,7 +354,7 @@
   "nodeVersion": "v25.9.0",
   "ffmpegVersion": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
   "contractRepository": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
-  "contractCommit": "b4369aad3c3dde9a497315362988094233ffa67a",
+  "contractCommit": "09c18187fcfe9a0e855dbddf1ab92e092efc868a",
   "heroModelPreparationPerformed": false,
   "backendRegistrationPerformed": false,
   "gameplayAcceptance": false,

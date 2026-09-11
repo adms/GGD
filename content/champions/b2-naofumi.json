@@ -31,10 +31,10 @@
       ],
       "id": "b2-naofumi.e",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -78,7 +78,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.e.webp"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -171,7 +172,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.q.webp"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -207,6 +209,11 @@
           },
           "kind": "blink",
           "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.wind.pulse",
+              "at": "point"
+            },
             {
               "absorbs": "all",
               "amount": {
@@ -269,6 +276,11 @@
               "kind": "blink",
               "onArrive": [
                 {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.wind.pulse",
+                  "at": "point"
+                },
+                {
                   "absorbs": "all",
                   "amount": {
                     "flat": 180,
@@ -300,7 +312,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -393,20 +406,21 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-naofumi.w.webp"
     }
   },
   "archetype": "tank",
   "attackType": "melee",
   "attributes": {
     "agi": 12,
-    "agiGrowth": 1.18,
+    "agiGrowth": 0,
     "int": 23,
-    "intGrowth": 2.17,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 25,
-    "strGrowth": 2.36
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -441,7 +455,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-naofumi",
-  "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
+  "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
   "name": "岩谷尚文",
   "origin": "硬輔",
   "passiveAbility": "b2-naofumi.passive",
@@ -453,79 +467,40 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "fist"
+  ],
   "icon": "assets/icons/champions/b2-naofumi.webp",
   "modelVersions": [
     {
-      "modelKey": "version.body.af6acbd2cc678a2ce1c4cc584a367d605b8bafda27c5046d",
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
       "label": "原上線模型",
       "sourceModelKey": "champ.thorne",
-      "modelSha256": "eb579be7955156f68bf0941265756fbb1030739f49788ee21d123c0716b24489",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
       "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-      "registeredAt": "2026-09-10T14:45:37.414Z",
+      "registeredAt": "2026-09-10T18:20:40.232Z",
       "source": {
         "kind": "previous",
         "character": "岩谷尚文",
         "work": "原上線內容",
         "library": "GGD",
-        "reference": "models/champ.thorne.json",
-        "tier": "original"
+        "reference": "models/champ.thorne.json"
       }
     },
     {
-      "modelKey": "version.body.78fb667d88e454a748ee6dfc9691bc91184b1c3545a4ad82",
-      "label": "阿尔冯斯",
-      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
-      "modelSha256": "00c1ffc5e546f566db58f13e0e892009428efedb78dece311f82f00856d8aa64",
-      "binarySha256": "595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469",
-      "registeredAt": "2026-09-10T14:45:37.419Z",
+      "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
+      "label": "ou99 岩谷尚文（本尊／相似造型）",
+      "sourceModelKey": "ou99.470782",
+      "modelSha256": "5a61cb266ad38661e492e1272f8f03c595244b9348b7a96ee48a97d010232f70",
+      "binarySha256": "250f873ccdd2a6111cdcd041cd94f9c054a0a598b76cabf5bbb3bbe85be0b160",
+      "registeredAt": "2026-09-10T18:20:40.237Z",
       "source": {
         "kind": "style-proxy",
-        "character": "阿尔冯斯",
-        "work": "鋼之鍊金術師",
-        "library": "300heroes",
-        "reference": "300heroes:aa89b351426082f8df362c89",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.0883dbe1f4facc6f264b2356d9579fa1ddfb639e3a349458",
-      "label": "骑士娃",
-      "sourceModelKey": "community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa",
-      "modelSha256": "027dd9a5d9472c46d05596076f6ac3abbe87df22bb1b642b530f60a4b5a4939b",
-      "binarySha256": "6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467",
-      "registeredAt": "2026-09-10T14:45:37.472Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "骑士娃",
-        "work": "葫蘆兄弟／葫蘆娃",
-        "library": "300heroes",
-        "reference": "300heroes:6533778837fecf4a5b811d57",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
-      "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
-      "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
-      "modelSha256": "590e814b2bc15a9655fe0f8104dd8ddd7b4c0b2400ae46a89c651cb951d9c156",
-      "binarySha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
-      "registeredAt": "2026-09-10T15:02:43.123Z",
-      "source": {
-        "kind": "exact",
         "character": "岩谷尚文",
-        "work": "盾之勇者成名錄",
-        "library": "GTA SA 社群 MOD",
-        "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
-        "tier": "original",
-        "selectionClass": "community-mod"
-      },
-      "automaticEligible": true
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-470782-1-1.html"
+      }
     }
-  ],
-  "modelSelectionMode": "automatic"
+  ]
 }

@@ -29,6 +29,11 @@
                   "kind": "blink",
                   "onArrive": [
                     {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.void.nova",
+                      "at": "point"
+                    },
+                    {
                       "duration": 5,
                       "kind": "applyStatus",
                       "missChance": 0.5,
@@ -62,6 +67,11 @@
                   "kind": "blink",
                   "onArrive": [
                     {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.void.nova",
+                      "at": "point"
+                    },
+                    {
                       "duration": 5,
                       "kind": "applyStatus",
                       "missChance": 0.5,
@@ -94,6 +104,11 @@
                   "distanceUnits": 16,
                   "kind": "blink",
                   "onArrive": [
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.void.nova",
+                      "at": "point"
+                    },
                     {
                       "duration": 5,
                       "kind": "applyStatus",
@@ -132,9 +147,9 @@
   ],
   "id": "b2-kisaragi.r",
   "manaCost": [
-    144.0,
-    144.0,
-    144.0
+    112.0,
+    112.0,
+    112.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
@@ -169,6 +184,11 @@
                       "kind": "blink",
                       "onArrive": [
                         {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.void.nova",
+                          "at": "point"
+                        },
+                        {
                           "duration": 5,
                           "kind": "applyStatus",
                           "missChance": 0.5,
@@ -202,6 +222,11 @@
                       "kind": "blink",
                       "onArrive": [
                         {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.void.nova",
+                          "at": "point"
+                        },
+                        {
                           "duration": 5,
                           "kind": "applyStatus",
                           "missChance": 0.5,
@@ -234,6 +259,11 @@
                       "distanceUnits": 16,
                       "kind": "blink",
                       "onArrive": [
+                        {
+                          "kind": "spawnVfx",
+                          "vfxId": "fx.prim.void.nova",
+                          "at": "point"
+                        },
                         {
                           "duration": 5,
                           "kind": "applyStatus",

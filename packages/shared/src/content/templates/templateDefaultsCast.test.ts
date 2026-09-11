@@ -188,7 +188,7 @@ function probe(t: TemplateDoc): Row {
     const c = world.transform.get(caster)!.pos;
     const dx = c.x - anchor.x, dz = c.z - anchor.z;
     const moved = dx * dx + dz * dz > 0.04 || world.nav.get(caster)!.override != null;
-    out = classifyCastOutcome({ events, before, after: snapshotChannels(world), moved, effectsAuthored: def.effects.length });
+    out = classifyCastOutcome({ events, before, after: snapshotChannels(world), moved, victimMoved: false, victimLocked: false, effectsAuthored: def.effects.length });
     if (out.verdict === "PASS") break;
   }
   if (out.verdict !== "PASS" && isCosmeticModelFx(def)) {

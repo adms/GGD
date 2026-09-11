@@ -1,0 +1,41 @@
+{
+  "schema": "ggd-community-hero-release-check@1",
+  "startedAt": "2026-09-10T23:34:35.990Z",
+  "status": "failed",
+  "scope": "Loopback Editor project draft, importer ZIP build/inspection, immutable submission, admin publication and single-hero restore isolation. No production or visual acceptance.",
+  "origin": "http://127.0.0.1:8835/api/v1",
+  "inputDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/materials/asset-library/source/GGD社群英雄上傳內容_37名/projects",
+  "selectedIds": [
+    "community-review-01-20260907",
+    "community-review-02-20260907"
+  ],
+  "rollbackId": "community-review-01-20260907",
+  "receipts": [
+    {
+      "id": "community-review-01-20260907",
+      "name": "武藤遊戲",
+      "file": "01.hero-project.json",
+      "author": "model-author-4",
+      "status": "failed",
+      "error": "/hero-import/build: HTTP 422 {\"error\":{\"code\":\"hero_importer_failed\",\"message\":\"社群作品不能佔用既有官方英雄的身分，請建立改作草稿。\"}}\n"
+    },
+    {
+      "id": "community-review-02-20260907",
+      "name": "八神庵",
+      "file": "02.hero-project.json",
+      "author": "model-author-4",
+      "status": "failed",
+      "error": "/hero-import/build: HTTP 422 {\"error\":{\"code\":\"hero_importer_failed\",\"message\":\"社群作品不能佔用既有官方英雄的身分，請建立改作草稿。\"}}\n"
+    }
+  ],
+  "target": {
+    "gameRevision": "community-release-mainmerge-077057d8d",
+    "contentVersion": "cv_237ec58648bc",
+    "migrationFingerprint": "adb0cce4c6f9",
+    "processorFingerprint": "f043f61d484a"
+  },
+  "error": "AssertionError [ERR_ASSERTION]: At least two projects must publish to prove rollback isolation.\n    at <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/tools/editor-acceptance/community-hero-release-check.ts:264:3)",
+  "passed": 0,
+  "failed": 2,
+  "finishedAt": "2026-09-10T23:34:41.511Z"
+}

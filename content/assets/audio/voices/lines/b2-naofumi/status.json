@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "donor casting (COMBAT_CASTING.json, voiceClass=male-youth) — drop b2-naofumi.wav into approved/processed/ to switch to the hero's own take",
   "addedAt": 1789035549554,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-nplh.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/godie-nplh.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -24,6 +24,14 @@
      "seconds": 1,
      "at": 1789042997650,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1789054916695,
+     "error": null
     }
    ],
    "text": "アイアンメイデン！",
@@ -33,16 +41,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 18852,
+    "seconds": 1.12,
     "lufs": null,
-    "hash": "3fe82296fe21bed56c9f7239e59841e8da16420504ad537db04964c4a10513b5",
-    "maxDb": -4.4,
-    "at": 1789042997650
+    "hash": "9f349dc53ee2178f232e8ee79cd75b8ead01100b66e954e0f6ec00c06c847069",
+    "maxDb": -2,
+    "at": 1789054916695
    },
    "lastError": null
   },
@@ -63,6 +71,14 @@
      "seconds": 2.24,
      "at": 1789042392195,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.48,
+     "at": 1789054916928,
+     "error": null
     }
    ],
    "text": "友軍通行證附贈盾牌！",
@@ -72,16 +88,16 @@
    "origin": "ability-name:b2-naofumi.q",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 36824,
-    "seconds": 2.24,
+    "bytes": 40586,
+    "seconds": 2.48,
     "lufs": null,
-    "hash": "d2f27049bc639e1e7fccd2bfa12e480a18ff46418727c525c20e6063755c694f",
-    "maxDb": -1.9,
-    "at": 1789042392195
+    "hash": "d285e872c09065625dc8aaf1c3fe7d09f9f53a1fb3ae53731f4d7a8cd73ee0c8",
+    "maxDb": -2,
+    "at": 1789054916928
    },
    "lastError": null
   },
@@ -102,6 +118,14 @@
      "seconds": 2.28,
      "at": 1789042392311,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1789054917164,
+     "error": null
     }
    ],
    "text": "憑通行證補一口血！",
@@ -111,7 +135,7 @@
    "origin": "ability-name:b2-naofumi.w",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
@@ -120,7 +144,7 @@
     "lufs": null,
     "hash": "ca62679906aacc932b2fc8fd38e27f29f3ece48f57a4a5fbe391697e7a950824",
     "maxDb": -2,
-    "at": 1789042392311
+    "at": 1789054917165
    },
    "lastError": null
   },
@@ -141,6 +165,14 @@
      "seconds": 1.76,
      "at": 1789042392415,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.6,
+     "at": 1789054917390,
+     "error": null
     }
    ],
    "text": "盾牌清空違停入口！",
@@ -150,16 +182,16 @@
    "origin": "ability-name:b2-naofumi.e",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 29301,
-    "seconds": 1.76,
+    "bytes": 26793,
+    "seconds": 1.6,
     "lufs": null,
-    "hash": "44f456ac83616ed8ff56d28a6c27d7350c1c6b23c9963617c4061f5ed1030133",
-    "maxDb": -2,
-    "at": 1789042392415
+    "hash": "f82b862248d2f1aade1322a3d194e2d70f7bd7aa3d9a997847848e385c89015e",
+    "maxDb": -3.5,
+    "at": 1789054917390
    },
    "lastError": null
   },
@@ -180,6 +212,14 @@
      "seconds": 2.84,
      "at": 1789042392523,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1789054917621,
+     "error": null
     }
    ],
    "text": "清完門口才能接隊友！",
@@ -189,16 +229,16 @@
    "origin": "ability-name:b2-naofumi.r",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 46437,
-    "seconds": 2.84,
+    "bytes": 38078,
+    "seconds": 2.32,
     "lufs": null,
-    "hash": "5ba87914833976cda24a61503d8e8b72c3b0850dc90d1263100b370abd9eaa97",
+    "hash": "64ec6205cb3bb913cc063884234868b4a9f2bff5cfe7924bc7238e2faf08fa2d",
     "maxDb": -2,
-    "at": 1789042392523
+    "at": 1789054917621
    },
    "lastError": null
   },
@@ -219,6 +259,14 @@
      "seconds": 2.04,
      "at": 1789042392630,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.84,
+     "at": 1789054917845,
+     "error": null
     }
    ],
    "text": "糾察隊本人安全帽！",
@@ -228,16 +276,16 @@
    "origin": "ability-name:b2-naofumi.ex",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 33898,
-    "seconds": 2.04,
+    "bytes": 30555,
+    "seconds": 1.84,
     "lufs": null,
-    "hash": "cbaf715f2680892160fc7e2da8520ba7440b5474d7662a093aa91d0549a21495",
-    "maxDb": -4.4,
-    "at": 1789042392630
+    "hash": "13fd50f6ddea9fa9ee93b7c34e040cfbd8f924aa57a69856d24b43192357a51a",
+    "maxDb": -2,
+    "at": 1789054917845
    },
    "lastError": null
   },
@@ -250,6 +298,14 @@
      "seconds": 2.16,
      "at": 1789042997763,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1789054918082,
+     "error": null
     }
    ],
    "text": "守ってほしいなら呼んでくれ",
@@ -259,16 +315,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 35570,
     "seconds": 2.16,
     "lufs": null,
-    "hash": "857d14f5ede51bd1536a52bd5196535c1546d8cf87e039877341c2a6507c03c6",
-    "maxDb": -1.9,
-    "at": 1789042997763
+    "hash": "1eef27714fe796c41acebe0434375c9f275fb9273edf3f4da43904600cab5c98",
+    "maxDb": -2,
+    "at": 1789054918082
    },
    "lastError": null
   },
@@ -281,6 +337,14 @@
      "seconds": 0.24,
      "at": 1789037093303,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054918328,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -290,16 +354,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5059,
-    "seconds": 0.24,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "8dfa7a7b52bf9e6cd619a4711d475b1dea726e07de2bc718af4b09181a285a54",
-    "maxDb": -2,
-    "at": 1789037093303
+    "hash": "b06e65baa2f67526cd848e49a87ba4c1b964325fb97b2da2556c72bba7064f5d",
+    "maxDb": -2.1,
+    "at": 1789054918328
    },
    "lastError": null
   },
@@ -312,6 +376,14 @@
      "seconds": 0.4,
      "at": 1789037093418,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1789054918566,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -321,16 +393,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 5477,
+    "seconds": 0.28,
     "lufs": null,
-    "hash": "5620c611042f56d6a642e4fa5288e3f4b9aa7e08c8de392681bf6fb4c1304833",
+    "hash": "bf1fae30cdda579f6462ff78d133a75ac3826f078338be7939a682bf5b85d1f9",
     "maxDb": -1.9,
-    "at": 1789037093418
+    "at": 1789054918567
    },
    "lastError": null
   },
@@ -343,6 +415,14 @@
      "seconds": 0.76,
      "at": 1789037093535,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1789054918804,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -352,16 +432,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13418,
-    "seconds": 0.76,
+    "bytes": 12164,
+    "seconds": 0.680249,
     "lufs": null,
-    "hash": "af0e8f7f7b7498707256082646428cf5d80e9a866b29ccf91f720c483873bef2",
-    "maxDb": -4.9,
-    "at": 1789037093535
+    "hash": "9344af2d317240e48af1d4c247ae3a95239e3b9eba329f7b21ac177e463db7bf",
+    "maxDb": -5,
+    "at": 1789054918804
    },
    "lastError": null
   },
@@ -374,6 +454,14 @@
      "seconds": 0.64,
      "at": 1789042997877,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1789054919043,
+     "error": null
     }
    ],
    "text": "任せろ",
@@ -383,16 +471,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 10493,
+    "seconds": 0.6,
     "lufs": null,
-    "hash": "f315bf549690eaf9056659f7736826b77e2e84ebaec441b9a65be8fd34d75d0d",
-    "maxDb": -2.4,
-    "at": 1789042997877
+    "hash": "bd573b2840c9690815b724df05095e4a681cf0bfbd5295c6fc661e72547fdfe1",
+    "maxDb": -2,
+    "at": 1789054919043
    },
    "lastError": null
   },
@@ -405,6 +493,14 @@
      "seconds": 0.32,
      "at": 1789037093651,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1789054919273,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -414,16 +510,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 7985,
+    "seconds": 0.44,
     "lufs": null,
-    "hash": "ed840bf15d8059a3ae90084130b67a2bdcb6b645785469ee45e3923d813d1bb9",
-    "maxDb": -2,
-    "at": 1789037093651
+    "hash": "73e57684518a545c2179ab3008a926856d05043b02d2e04d97a661943f7ed064",
+    "maxDb": -1.9,
+    "at": 1789054919273
    },
    "lastError": null
   }

@@ -1075,6 +1075,11 @@ export const STATUS_FIELD_TAGS: Readonly<
     { tag: "uncontrollable", when: (s) => s.feared === true },
     { tag: "cc", when: (s) => s.feared === true },
   ],
+  charmed: [
+    { tag: "charm", when: (s) => s.charmed === true },
+    { tag: "uncontrollable", when: (s) => s.charmed === true },
+    { tag: "cc", when: (s) => s.charmed === true },
+  ],
   /** 暴走拿走方向盤但**不算 CC**（自己給自己的增益，`sim/fear.ts` 決策 3）。 */
   berserk: [
     { tag: "berserk", when: (s) => s.berserk === true },

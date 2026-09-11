@@ -90,7 +90,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maomao.e.webp"
     },
     "Q": {
       "castTimeSec": 1.233,
@@ -127,10 +128,10 @@
       ],
       "id": "b2-maomao.q",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -177,7 +178,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maomao.q.webp"
     },
     "R": {
       "castTimeSec": 1.033,
@@ -290,7 +292,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maomao.r.webp"
     },
     "W": {
       "castTimeSec": 0.067,
@@ -348,7 +351,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.067,
               "castType": "self",
               "effects": [
                 {
@@ -381,7 +384,7 @@
                   180
                 ]
               },
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.067,
               "target": "self"
             },
             "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -396,20 +399,21 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maomao.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "ranged",
   "attributes": {
     "agi": 20,
-    "agiGrowth": 1.89,
+    "agiGrowth": 0,
     "int": 19,
-    "intGrowth": 1.83,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 21,
-    "strGrowth": 1.99
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -444,7 +448,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-maomao",
-  "modelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
+  "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
   "name": "貓貓",
   "origin": "軟輔",
   "passiveAbility": "b2-maomao.passive",
@@ -456,61 +460,40 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "thrown"
+  ],
   "icon": "assets/icons/champions/b2-maomao.webp",
   "modelVersions": [
     {
-      "modelKey": "version.body.1863c1d40670f1de5f1f7950c47abef23db94881c8a57016",
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
       "label": "原上線模型",
       "sourceModelKey": "champ.thorne",
-      "modelSha256": "a06858ba9ca08d4d9d688472bc5bc5f8286f7b9739f49065d7fe2f162e30f5b6",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
       "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-      "registeredAt": "2026-09-10T14:45:36.194Z",
+      "registeredAt": "2026-09-10T18:20:40.163Z",
       "source": {
         "kind": "previous",
         "character": "貓貓",
         "work": "原上線內容",
         "library": "GGD",
-        "reference": "models/champ.thorne.json",
-        "tier": "original"
+        "reference": "models/champ.thorne.json"
       }
     },
     {
-      "modelKey": "version.body.59a39cbb294ed94feb309c7467c12af6b4cb5bada2b4272d",
-      "label": "少司命",
-      "sourceModelKey": "community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5",
-      "modelSha256": "4b0315f33c1975a2e0ac784425aea41ee2d4eac8f9599f981490fc9bdda84eb1",
-      "binarySha256": "edf36fb1ada4a685349ffe5d78fe3a6d2afce96f6536f329ed6cc1d1087897d0",
-      "registeredAt": "2026-09-10T14:45:36.206Z",
+      "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
+      "label": "ou99 貓貓（本尊／相似造型）",
+      "sourceModelKey": "ou99.467165",
+      "modelSha256": "05868c2f451cea8b6a39fbdf9aa63d6b6f675e4b7522a98d60f1a98a64dcefab",
+      "binarySha256": "95dfde82bc19ead9c4d1dd20441c176af0c398fd064055dfa703cb4f4fb1144d",
+      "registeredAt": "2026-09-10T18:20:40.177Z",
       "source": {
         "kind": "style-proxy",
-        "character": "少司命",
-        "work": "秦時明月",
-        "library": "300heroes",
-        "reference": "300heroes:bb25f176065469beefe7dd86",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
-      "label": "貓貓｜中性表情／小步幅（GGD 程序化動作）",
-      "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
-      "modelSha256": "afa2c08d5d767313e82acf0330475a62f7974ea136f00c96d97896c1bff78a2b",
-      "binarySha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67",
-      "registeredAt": "2026-09-10T14:45:36.342Z",
-      "source": {
-        "kind": "exact",
-        "character": "貓貓｜中性表情／小步幅",
-        "work": "藥師少女的獨語",
-        "library": "Lethal Company MOD／GrogCompany",
-        "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
-        "tier": "original",
-        "selectionClass": "community-mod"
-      },
-      "automaticEligible": true
+        "character": "貓貓",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-467165-1-1.html"
+      }
     }
-  ],
-  "modelSelectionMode": "automatic"
+  ]
 }

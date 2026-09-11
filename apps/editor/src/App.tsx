@@ -8,6 +8,7 @@ import { appModeFromPathname, pathnameForAppMode, type AppMode } from "./appRout
 import { DraftLibrary } from "./drafts/DraftLibrary";
 import { documentPayload, initializeDraftSession, restoreDocumentDraft, useDraftSession } from "./drafts/session";
 import { useHeroStore } from "./hero/store";
+import { AiFirstLaunch } from "./hero/AiFirstLaunch";
 
 const HeroPage = lazy(() => import("./hero/HeroPage").then((module) => ({ default: module.HeroPage })));
 
@@ -54,6 +55,7 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AiFirstLaunch />
       <div className="app">
         <Sidebar
           active={mode.kind === "collection" ? mode.collection : null}

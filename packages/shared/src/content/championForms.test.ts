@@ -241,10 +241,27 @@ describe("champion docs carry the form link (transform-forms-docs)", () => {
     const linked = new Set(
       CHAMPION_FORM_PAIRS.flatMap((p) => [p.baseId, p.alternateId]),
     );
+    // ⭐ GH#1211 —— 母體限 **w3x 英雄（`godie-*`）**，⛔ 不是註冊表全體。
+    //
+    // ⚠️ `CHAMPION_FORM_PAIRS` 是 `extract_transform_forms.py` **從 w3x 產生**的，
+    //   每一列都要 `heroNumber` 與三個 rawcode ⇒ ⭐ 社群英雄的變身**結構上放不進去**。
+    //   2026-09-10 上架的梅普露（`b2-maple` ⇄ `b2-maple-alt-…`）就是第一對
+    //   ⇒ 拿全體去對一張只描述原作的表，每多一對社群變身它就多錯一次。
     const strays = [...DOCS.values()]
-      .filter((d) => d.transform !== undefined && !linked.has(d.id))
+      .filter((d) => d.transform !== undefined && d.id.startsWith("godie-") && !linked.has(d.id))
       .map((d) => d.id);
-    expect(strays, "a transform link may only come from the w3x table").toEqual([]);
+    expect(strays, "w3x 英雄的變身連結只能來自 w3x 表").toEqual([]);
+
+    // ⭐ 而非 w3x 的變身**不是沒人管**：它們要**雙向指回來**，
+    //   ⛔ 否則一張卡宣稱自己是誰的變身，而對方不認得它（單邊連結會讓變身在執行期解不開）。
+    const nonW3x = [...DOCS.values()].filter((d) => d.transform !== undefined && !d.id.startsWith("godie-"));
+    const broken = nonW3x
+      .filter((d) => {
+        const cp = DOCS.get(String(d.transform!.counterpartId));
+        return cp?.transform?.counterpartId !== d.id;
+      })
+      .map((d) => `${d.id} → ${d.transform!.counterpartId}`);
+    expect(broken, "非 w3x 的變身連結要雙向 —— 對方也要指回來").toEqual([]);
   });
 
   it("carries the per-level w3x numbers so the mechanic needs no second trip", () => {

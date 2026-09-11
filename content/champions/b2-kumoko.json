@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-kumoko.e.webp"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -98,7 +99,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-kumoko.q.webp"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -137,9 +139,9 @@
       ],
       "id": "b2-kumoko.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -168,7 +170,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.nova"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-kumoko.r.webp"
     },
     "W": {
       "castTimeSec": 1.7,
@@ -213,10 +216,10 @@
       ],
       "id": "b2-kumoko.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -272,20 +275,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-kumoko.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 25,
-    "agiGrowth": 2.36,
+    "agiGrowth": 0,
     "int": 23,
-    "intGrowth": 2.17,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored",
     "str": 12,
-    "strGrowth": 1.18
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -320,7 +324,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-kumoko",
-  "modelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
+  "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
   "name": "蜘蛛子",
   "origin": "法刺",
   "passiveAbility": "b2-kumoko.passive",
@@ -332,42 +336,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-kumoko.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.a2ef790f50f4896b622d64028d9e3f8c73e240e0a90d7142",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
-      "modelSha256": "9dacd60ae10bd942b5e38daa8d6127b24c0ae0aa7d567c1524f225f629853f7a",
-      "binarySha256": "f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b",
-      "registeredAt": "2026-09-10T14:45:40.863Z",
-      "source": {
-        "kind": "previous",
-        "character": "蜘蛛子",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.d6d6b80f255d93bf5f03989e57552670e0692ea5804f87a0",
-      "label": "蜘蛛子（300英雄寵物版）",
-      "sourceModelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
-      "modelSha256": "fbcb47e6affe21434a6b4a70fc2113cff2a1ec69b0a93ee71d24634698367e49",
-      "binarySha256": "f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b",
-      "registeredAt": "2026-09-10T14:45:40.870Z",
-      "source": {
-        "kind": "exact",
-        "character": "蜘蛛子（300英雄寵物版）",
-        "work": "轉生成蜘蛛又怎樣！",
-        "library": "300heroes",
-        "reference": "300heroes:4157bcefff6690cc3cf84b76",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "claw"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-kumoko.webp"
 }

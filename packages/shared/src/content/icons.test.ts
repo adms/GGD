@@ -247,7 +247,15 @@ describe("w3x original icons (icons)", () => {
       const cid = file.slice(0, -5);
       const abilities = (doc.abilities ?? {}) as Record<string, { id?: string; icon?: string }>;
       for (const slot of ["Q", "W", "E", "R"]) {
-        const twinName = `${cid}.${slot.toLowerCase()}.json`;
+        // ⭐ GH#1211 —— twin 從 **embedded 的 `id`** 推導，⛔ 不是從英雄檔名猜。
+        //
+        // ⚠️ 兩者在 2026-09-10 之前一直相等，⭐ 而變身態把它們拆開了：
+        //   `b2-maple-alt-…` 的四格 `abilities[*].id` 全部指向**本體**的 `b2-maple.q` …
+        //   ⇒ 用檔名猜會去找 `b2-maple-alt-….q.json`（不存在）而報「缺 standalone」，
+        //   ⛔ 而載入器查的是 `Abilities.tryGet(embedded.id)` —— ⭐ 那一份**在**。
+        //   ⇒ 這條閘要問的是「**載入器查得到嗎**」，⛔ 不是「檔名長得一樣嗎」。
+        const twinId = abilities[slot]?.id ?? `${cid}.${slot.toLowerCase()}`;
+        const twinName = `${twinId}.json`;
         const twin = join(CONTENT_DIR, "abilities", twinName);
         // NOT a skip. A champion slot with no standalone doc means the loader's
         // `Abilities.tryGet(embedded.id)` misses and the embedded copy silently

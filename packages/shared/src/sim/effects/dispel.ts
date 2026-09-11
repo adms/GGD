@@ -56,6 +56,7 @@ export const dispelEffect: EffectKindSpec<"dispel"> = {
         // 差別是一個**參數**而不是兩份會分岔的程式碼。
         requireDispellable: true,
         count,
+        ...(e.statusKinds !== undefined ? { statusKinds: e.statusKinds } : {}),
         order: e.order ?? rules.defaultOrder,
         defaults: {
           status: rules.statusDefaultDispellable,

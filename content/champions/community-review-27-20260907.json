@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
+  "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 21,
     "agi": 20,
     "int": 19,
-    "strGrowth": 1.99,
-    "agiGrowth": 1.89,
-    "intGrowth": 1.83,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-27-20260907.w",
@@ -121,11 +127,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -155,7 +156,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-27-20260907.e",
@@ -172,10 +180,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -222,7 +230,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.arc",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.arc",
+          "attachTo": "point"
+        }
+      ]
     },
     "R": {
       "id": "community-review-27-20260907.r",
@@ -284,7 +299,14 @@
           "castTimeSec": 0.667
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.wind.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse",
+          "attachTo": "caster"
+        }
+      ]
     }
   },
   "exAbility": "community-review-27-20260907.ex",
@@ -297,42 +319,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.0a17d59aab16b776610a5c8c23fe0057bd84f022956951c4",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
-      "modelSha256": "0541edd740663ef6b3514d3b23aa23816a13a74ea699fa4c5a809bf5a8e63446",
-      "binarySha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
-      "registeredAt": "2026-09-10T14:45:32.332Z",
-      "source": {
-        "kind": "previous",
-        "character": "庫洛魔法使",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.f821e81326c6b0831839f2e39706baaa191bfdc03ebafc01",
-      "label": "木之本櫻",
-      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
-      "modelSha256": "a96f6977fa887530f42590e2b4e7f4972b146bfde924a7f2eeb38e6fe4fa4e01",
-      "binarySha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
-      "registeredAt": "2026-09-10T14:45:32.341Z",
-      "source": {
-        "kind": "exact",
-        "character": "木之本櫻",
-        "work": "庫洛魔法使",
-        "library": "mba",
-        "reference": "mba:ce884f239ba2fa1f0e05bceb",
-        "tier": "mba"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

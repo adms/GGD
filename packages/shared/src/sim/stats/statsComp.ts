@@ -60,6 +60,9 @@ export interface RecastState {
   hit: boolean;
   /** 首段的施放序號（castInstance.serial）—— 命中歸因只認這一次。 */
   serial: number;
+  /** 首段解析出的落點／方向（`recast.anchor:"firstCast"` 的後段讀這兩格）。 */
+  point?: { x: number; z: number };
+  direction?: { x: number; z: number };
   /** 首段命中的第一個受害者（後段「沿鉤進場」那一族要用；今天只記，不消費）。 */
   anchor?: EntityId;
   /** `cooldownAt:"end"` 時暫存的冷卻 tick 數，階段結束才寫進 cooldownRemainingTicks。 */

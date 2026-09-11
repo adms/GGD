@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
+  "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 21,
     "agi": 20,
     "int": 19,
-    "strGrowth": 1.99,
-    "agiGrowth": 1.89,
-    "intGrowth": 1.83,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -130,7 +130,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse"
+        }
+      ]
     },
     "W": {
       "id": "community-review-21-20260907.w",
@@ -155,11 +161,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -189,7 +190,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-21-20260907.e",
@@ -243,7 +251,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.holy.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-21-20260907.r",
@@ -259,9 +274,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -302,7 +317,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.holy.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.holy.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-21-20260907.ex",
@@ -315,42 +337,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.c3528a53b30e5a72d13d68c8c56229beec01dbac844a7d3e",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
-      "modelSha256": "bf1de83ac33602a4db4b94eb6f73a42f31cf4487a89fc74a73f052ff540938c4",
-      "binarySha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
-      "registeredAt": "2026-09-10T14:45:31.306Z",
-      "source": {
-        "kind": "previous",
-        "character": "鹿目圓",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.cd324770853d5841f7fd7f9c5715f7f549f7ea00833337fe",
-      "label": "鹿目圆香",
-      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
-      "modelSha256": "13442775fa7751b0c079b99c9c2e866ae56b13d2bb2c407a247bcc238639ba84",
-      "binarySha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
-      "registeredAt": "2026-09-10T14:45:31.314Z",
-      "source": {
-        "kind": "exact",
-        "character": "鹿目圆香",
-        "work": "魔法少女小圓",
-        "library": "300heroes",
-        "reference": "300heroes:36223c09f16c6648e9508448",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "bow"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

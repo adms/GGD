@@ -59,12 +59,35 @@ export interface PoolSelection {
 }
 
 /** 誰該被拔。 */
+/** GH#1197 `dispel.statusKinds` 的詞彙（與 Zod 同字）。 */
+export type StatusKind = "slow" | "root" | "stun" | "silence" | "fear" | "charm" | "disarm";
+/** 一筆狀態實例**在做**哪幾類事 —— 從旗標推導，⛔ 不讀 statusId 的字面。 */
+export function statusKindsOf(e: StatusEffect): StatusKind[] {
+  const out: StatusKind[] = [];
+  if (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1) out.push("slow");
+  if (e.root === true) out.push("root");
+  if (e.stun === true) out.push("stun");
+  if (e.silenced === true) out.push("silence");
+  if (e.feared === true) out.push("fear");
+  if (e.charmed === true) out.push("charm");
+  if (e.disarmed === true) out.push("disarm");
+  return out;
+}
+/** 名單缺 ⇒ 全過；有名單 ⇒ 這一筆的**每一類**都要在名單內（而且至少有一類）—— 帶暈眩的減速 ⛔ 不會被「只清減速」拔掉。 */
+export function statusKindsPass(e: StatusEffect, kinds: readonly StatusKind[] | undefined): boolean {
+  if (kinds === undefined) return true;
+  const mine = statusKindsOf(e);
+  return mine.length > 0 && mine.every((k) => kinds.includes(k));
+}
+
 export type ClearPolarity = "buff" | "debuff" | "any";
 
 /** `count` 砍不完時先拔哪一邊。 */
 export type ClearOrder = "newest" | "oldest";
 
 export interface ClearPoolsOpts {
+  /** GH#1197：只清這幾類（見 `statusKindsPass`）。只影響 status 池。 */
+  statusKinds?: readonly StatusKind[];
   pools: PoolSelection;
   /**
    * 只拔這一種極性的。`"any"` = 不分。
@@ -188,7 +211,8 @@ export function clearPools(
         st.effects,
         (e) =>
           (!need || dispellableOf(e.dispellable, opts.defaults?.status)) &&
-          polarityPasses(polarity, e.polarity),
+          polarityPasses(polarity, e.polarity) &&
+          statusKindsPass(e, opts.statusKinds),
         cmpByOrder(
           order,
           (e) => e.expiresAtTick,

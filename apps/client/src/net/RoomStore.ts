@@ -151,6 +151,14 @@ export interface SeatView {
   abilityRanks: number[];
   /** remaining cooldown ticks Q W E R */
   cooldowns: number[];
+  /**
+   * ⭐ GH#1208【再次施放】—— 每槽剩餘後段次數／窗口 tick（0 = 不在後段）。
+   * ⚠️ 唯一的寫端在 `game-server/src/net/snapshot.ts`；⛔ 在這一行之前客戶端
+   *   **一行都沒有讀**，於是「有沒有後段」在畫面上跟沒有這個機制一模一樣（失敗形態②）。
+   * `?? []` 覆蓋舊/未投影的快照 —— 讀成「沒有任何技能在後段」。
+   */
+  recastCharges: number[];
+  recastWindow: number[];
   /** per-hero EX skill: id ("" = hero has none), rank (0 locked / 1 unlocked), cd ticks */
   exAbilityId: string;
   exRank: number;
@@ -983,6 +991,8 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       augments: [...ss.augments],
       abilityRanks: [...ss.abilityRanks],
       cooldowns: [...ss.cooldowns],
+      recastCharges: [...(ss.recastCharges ?? [])],
+      recastWindow: [...(ss.recastWindow ?? [])],
       exAbilityId: ss.exAbilityId,
       exRank: ss.exRank,
       exCooldown: ss.exCooldown,

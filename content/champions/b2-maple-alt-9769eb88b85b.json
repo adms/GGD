@@ -64,7 +64,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-maple.e.webp"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -144,7 +145,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maple.q.webp"
     },
     "R": {
       "castTimeSec": 2.433,
@@ -195,9 +197,9 @@
       ],
       "id": "b2-maple.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -260,7 +262,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maple.r.webp"
     },
     "W": {
       "castTimeSec": 0.067,
@@ -356,20 +359,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-maple.w.webp"
     }
   },
   "archetype": "tank",
   "attackType": "melee",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 13,
-    "intGrowth": 1.25,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 29,
-    "strGrowth": 2.78
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -403,7 +407,7 @@
     "mr": 5.279591836734694
   },
   "id": "b2-maple-alt-9769eb88b85b",
-  "modelKey": "champ.thorne",
+  "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
   "name": "梅普露（變身）",
   "origin": "坦克",
   "passiveAbility": "b2-maple.passive",
@@ -415,7 +419,9 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "greatsword"
+  ],
   "transform": {
     "counterpartId": "b2-maple",
     "role": "alternate"

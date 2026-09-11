@@ -90,7 +90,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-noor.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -224,7 +225,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-noor.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -318,7 +320,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-noor.r.webp"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -365,10 +368,10 @@
       ],
       "id": "b2-noor.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -383,7 +386,7 @@
           {
             "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 1.233,
               "damage": {
                 "damageTier": "小"
               },
@@ -394,7 +397,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 1.233,
               "castType": "targeted",
               "effects": [
                 {
@@ -435,20 +438,21 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-noor.w.webp"
     }
   },
   "archetype": "tank",
   "attackType": "melee",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 13,
-    "intGrowth": 1.25,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 29,
-    "strGrowth": 2.78
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -495,7 +499,9 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "sword"
+  ],
   "icon": "assets/icons/champions/b2-noor.webp",
   "modelVersions": [
     {

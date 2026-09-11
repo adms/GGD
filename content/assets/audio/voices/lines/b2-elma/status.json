@@ -11,7 +11,7 @@
   "licenceUrl": "",
   "note": "hero's own reference (approved/processed)",
   "addedAt": 1789039753599,
-  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/b2-elma.wav"
+  "path": "/private/tmp/ggd-merge/voice-reference-pipeline/approved/processed/b2-elma.wav"
  },
  "generator": "tools/voice-gen/src/build-combat-lines.mjs",
  "lines": {
@@ -40,6 +40,14 @@
      "seconds": 1.28,
      "at": 1789042383554,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1789054879213,
+     "error": null
     }
    ],
    "text": "攻略說先扣自己血！",
@@ -49,16 +57,16 @@
    "origin": "ability-name:b2-elma.q",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 21359,
-    "seconds": 1.28,
+    "bytes": 18434,
+    "seconds": 1.08,
     "lufs": null,
-    "hash": "a74ac1fcb1c7cc9fbe6711cb946861d1e00aa94da30a23571b98acd0ef55c55c",
+    "hash": "cbc8ef562057c8369241630e9268e2f3aa204f623b4e89fd1bdc29d69fb08445",
     "maxDb": -1.9,
-    "at": 1789042383554
+    "at": 1789054879214
    },
    "lastError": null
   },
@@ -87,6 +95,14 @@
      "seconds": 2.44,
      "at": 1789042383658,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.76,
+     "at": 1789054879403,
+     "error": null
     }
    ],
    "text": "半血以下保固升級！",
@@ -96,16 +112,16 @@
    "origin": "ability-name:b2-elma.w",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 40168,
-    "seconds": 2.44,
+    "bytes": 29301,
+    "seconds": 1.76,
     "lufs": null,
-    "hash": "1c053c9052dd0940e63127a535933483d8c3a4dd4f36c99e1fab09fb065e7d08",
-    "maxDb": -2,
-    "at": 1789042383659
+    "hash": "58efa94657207cb100ff79a016fd675e0ffa21d2a47503f4f2287206d9152e04",
+    "maxDb": -1.9,
+    "at": 1789054879403
    },
    "lastError": null
   },
@@ -134,6 +150,14 @@
      "seconds": 2.48,
      "at": 1789042383769,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1789054879590,
+     "error": null
     }
    ],
    "text": "重劍攻略追加七十點！",
@@ -143,16 +167,16 @@
    "origin": "ability-name:b2-elma.e",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 40586,
-    "seconds": 2.48,
+    "bytes": 43511,
+    "seconds": 2.64,
     "lufs": null,
-    "hash": "2d5b48f01bb68484a9db072b06c4c3ac24da1965ca8f8e8c9e237f42d3b8d40f",
-    "maxDb": -2.4,
-    "at": 1789042383769
+    "hash": "206eaab5eaa22b87b98d2c365bb8b81e2ded5573dcd8d3c8c64bdc0900e06049",
+    "maxDb": -2,
+    "at": 1789054879590
    },
    "lastError": null
   },
@@ -181,6 +205,14 @@
      "seconds": 1.56,
      "at": 1789042383873,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2,
+     "at": 1789054879780,
+     "error": null
     }
    ],
    "text": "照攻略抄的重擊！",
@@ -190,16 +222,16 @@
    "origin": "ability-name:b2-elma.r",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 25957,
-    "seconds": 1.56,
+    "bytes": 33062,
+    "seconds": 2,
     "lufs": null,
-    "hash": "cc5063db58c19cdc52d09aed94cc5d2452d54911068ddc4af277c1a82fc29ffb",
-    "maxDb": -1.9,
-    "at": 1789042383873
+    "hash": "21767806a5e0ec592d8eaba25ce1c029f402a38b7287c1f252a1220e03617e96",
+    "maxDb": -2,
+    "at": 1789054879780
    },
    "lastError": null
   },
@@ -228,6 +260,14 @@
      "seconds": 2.4,
      "at": 1789042383981,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789054879970,
+     "error": null
     }
    ],
    "text": "攻略漏寫帶補包！",
@@ -237,16 +277,16 @@
    "origin": "ability-name:b2-elma.ex",
    "state": "generated",
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 39332,
-    "seconds": 2.4,
+    "bytes": 25957,
+    "seconds": 1.56,
     "lufs": null,
-    "hash": "70e83880e20c37368c46a735093d525741a1c59f01d153932d659969f3cc4eb1",
-    "maxDb": -2.3,
-    "at": 1789042383981
+    "hash": "5789b2241c64e957da253ce4d207900170292cd1417a97e6da150201eaffda15",
+    "maxDb": -2,
+    "at": 1789054879971
    },
    "lastError": null
   },
@@ -259,6 +299,14 @@
      "seconds": 3.2,
      "at": 1789042992641,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.92,
+     "at": 1789054880163,
+     "error": null
     }
    ],
    "text": "見せてやる これがクラス重騎士の真の力だ！",
@@ -268,16 +316,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 52288,
-    "seconds": 3.2,
+    "bytes": 47691,
+    "seconds": 2.92,
     "lufs": null,
-    "hash": "c0941d70f51623319e25dc4267e9b677d8f0b7740ad68c8af072f40a319fb8b9",
-    "maxDb": -1.9,
-    "at": 1789042992641
+    "hash": "89e5a1ab8b2af61909f4e903473f66f9f232baf67cf44919d371744b4e4db2ad",
+    "maxDb": -2,
+    "at": 1789054880163
    },
    "lastError": null
   },
@@ -298,6 +346,14 @@
      "seconds": 0.32,
      "at": 1789040358940,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1789054880352,
+     "error": null
     }
    ],
    "text": "ぐ……っ……",
@@ -307,16 +363,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 6313,
-    "seconds": 0.32,
+    "bytes": 6731,
+    "seconds": 0.36,
     "lufs": null,
-    "hash": "ab91b63aebbf2496da7b92f31cc0de9ef71850f3730989db512429d937d99bec",
+    "hash": "65d32d5cba703321bec890b13f9110dd90935b004fe44d05abb22f7e70256ffc",
     "maxDb": -1.9,
-    "at": 1789040358940
+    "at": 1789054880352
    },
    "lastError": null
   },
@@ -337,6 +393,14 @@
      "seconds": 0.28,
      "at": 1789040359046,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1789054880549,
+     "error": null
     }
    ],
    "text": "うっ！",
@@ -346,16 +410,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 5477,
-    "seconds": 0.28,
+    "bytes": 6313,
+    "seconds": 0.32,
     "lufs": null,
-    "hash": "abb61310eeabbb5f405de2de867fc5ec3d2bc615dbdcf1b81f33c41dbb3d6327",
-    "maxDb": -1.9,
-    "at": 1789040359046
+    "hash": "1e196256e88f2165c91e00617227e5197187a1e752df7ebacc1a2c4c8bcfa7ba",
+    "maxDb": -2,
+    "at": 1789054880549
    },
    "lastError": null
   },
@@ -376,6 +440,14 @@
      "seconds": 0.64,
      "at": 1789040359154,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1789054880757,
+     "error": null
     }
    ],
    "text": "ぐああっ……！",
@@ -385,16 +457,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 10493,
+    "seconds": 0.6,
     "lufs": null,
-    "hash": "d4af2135321369ba9e0703bdd0f53291dce446ad51afab6a2ddcfc4634a1a105",
-    "maxDb": -2.7,
-    "at": 1789040359154
+    "hash": "24240e6b262b5198b7a400841f92ab42ccedaac6b6d62c2a341acd242b1af683",
+    "maxDb": -6.1,
+    "at": 1789054880757
    },
    "lastError": null
   },
@@ -407,6 +479,14 @@
      "seconds": 1.56,
      "at": 1789042992763,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1789054880950,
+     "error": null
     }
    ],
    "text": "お前が必要なんだ",
@@ -416,16 +496,16 @@
    "origin": "owner-lines",
    "state": "generated",
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
     "bytes": 25957,
     "seconds": 1.56,
     "lufs": null,
-    "hash": "d1070fd102bc1c79b08c5b790567d63a904cf108c0df8bd49659b8f8ff1279a0",
+    "hash": "0dc3c7e3a26862f6b62259026ecfac0c5db259716e3176b5eb7753d41ab69e38",
     "maxDb": -2,
-    "at": 1789042992763
+    "at": 1789054880950
    },
    "lastError": null
   },
@@ -446,6 +526,14 @@
      "seconds": 0.4,
      "at": 1789040359258,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1789054881146,
+     "error": null
     }
    ],
    "text": "はぁっ！",
@@ -455,16 +543,16 @@
    "origin": "grunt:default",
    "state": "generated",
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 7567,
-    "seconds": 0.4,
+    "bytes": 10075,
+    "seconds": 0.56,
     "lufs": null,
-    "hash": "99eb30ed868679fa881c72a07d401e539bea980c3b41ed2db0c331a5dc1fddb4",
-    "maxDb": -1.9,
-    "at": 1789040359258
+    "hash": "ddd83638d87c91960bd4de3c3acc42763382f3dfb62194d0633b8751e9b2dd9a",
+    "maxDb": -2.9,
+    "at": 1789054881146
    },
    "lastError": null
   }

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "version.body.1017c2855b9daf1ffefdf0a6285253a6cfee673a8329b94b",
+  "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 21,
     "agi": 20,
     "int": 19,
-    "strGrowth": 1.99,
-    "agiGrowth": 1.89,
-    "intGrowth": 1.83,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -96,7 +96,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     },
     "W": {
       "id": "community-review-10-20260907.w",
@@ -113,10 +119,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -154,7 +160,13 @@
           "castTimeSec": 0.567
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     },
     "E": {
       "id": "community-review-10-20260907.e",
@@ -208,7 +220,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.pulse",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.pulse",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-10-20260907.r",
@@ -224,9 +243,9 @@
         45.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -264,7 +283,13 @@
           "castTimeSec": 0.8
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.void.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.void.slash"
+        }
+      ]
     }
   },
   "exAbility": "community-review-10-20260907.ex",
@@ -277,42 +302,8 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.ddbb44714e45ba5420d77fe15af26a0bb18224f3e47ae68e",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
-      "modelSha256": "75e377bde6d84af327602de1f079a2dfd5ad8b0bd8d268bdcf6a3a83ad17b450",
-      "binarySha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
-      "registeredAt": "2026-09-10T14:45:29.846Z",
-      "source": {
-        "kind": "previous",
-        "character": "魯路修",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.1017c2855b9daf1ffefdf0a6285253a6cfee673a8329b94b",
-      "label": "鲁路修",
-      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
-      "modelSha256": "eff76d803b7ec55b6cd1948fd31c66bc98dd164c6ef39c4674785f46cf0211ee",
-      "binarySha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
-      "registeredAt": "2026-09-10T14:45:29.855Z",
-      "source": {
-        "kind": "exact",
-        "character": "鲁路修",
-        "work": "Code Geass 反叛的魯路修",
-        "library": "300heroes",
-        "reference": "300heroes:33317960eca2c46de312fce2",
-        "tier": "300heroes"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1"
 }

@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-shinchan.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -108,7 +109,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-shinchan.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -146,9 +148,9 @@
       ],
       "id": "b2-shinchan.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -196,7 +198,8 @@
           "vfxKey": "fx.prim.arcane.nova"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-shinchan.r.webp"
     },
     "W": {
       "castTimeSec": 0.567,
@@ -249,20 +252,21 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-shinchan.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "ranged",
   "attributes": {
     "agi": 20,
-    "agiGrowth": 1.89,
+    "agiGrowth": 0,
     "int": 19,
-    "intGrowth": 1.83,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored",
     "str": 21,
-    "strGrowth": 1.99
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -297,7 +301,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-shinchan",
-  "modelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
+  "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
   "name": "野原新之助",
   "origin": "軟輔",
   "passiveAbility": "b2-shinchan.passive",
@@ -309,79 +313,40 @@
     "E",
     "R"
   ],
-  "tags": [],
+  "tags": [
+    "thrown"
+  ],
   "icon": "assets/icons/champions/b2-shinchan.webp",
   "modelVersions": [
     {
-      "modelKey": "version.body.1d251f9c439c7e371109c629ea100a8ffdcac5d46c38d52b",
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
       "label": "原上線模型",
       "sourceModelKey": "champ.thorne",
-      "modelSha256": "8827855afd2e4ee5f631855df8e3e2616c18ff99643e6f81a3c8462501972be8",
+      "modelSha256": "bfab4eb08b0dcdcb5a23e2ab4cd77047e2766b99de36e7e09acef79e115a6091",
       "binarySha256": "b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
-      "registeredAt": "2026-09-10T14:45:42.873Z",
+      "registeredAt": "2026-09-10T18:20:40.277Z",
       "source": {
         "kind": "previous",
         "character": "野原新之助",
         "work": "原上線內容",
         "library": "GGD",
-        "reference": "models/champ.thorne.json",
-        "tier": "original"
+        "reference": "models/champ.thorne.json"
       }
     },
     {
-      "modelKey": "version.body.159b291baa7f90ec0605514604a20bb3acbba2d85cdabbec",
-      "label": "小桐人寵物",
-      "sourceModelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
-      "modelSha256": "1b89f6546dcdb7a72da861d72eff53be25c41075482fe4f29edd30506b3cbdd0",
-      "binarySha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
-      "registeredAt": "2026-09-10T14:45:42.885Z",
+      "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
+      "label": "ou99 野原新之助（本尊／相似造型）",
+      "sourceModelKey": "ou99.457874",
+      "modelSha256": "4f04ecf73998222c6feef59eb0d46acb1a38f4846ac3b54f1110ceed334b1872",
+      "binarySha256": "a725f7fc1c46ee63f359f864b3f5c65472fa65d1d0d1d2e67371dd5a1995192f",
+      "registeredAt": "2026-09-10T18:20:40.281Z",
       "source": {
         "kind": "style-proxy",
-        "character": "小桐人寵物",
-        "work": "刀劍神域；依檔名與外觀推定",
-        "library": "300heroes",
-        "reference": "300heroes:752d81a9fe2da27b368dadee",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.5eab06ffe97ab08c6663effe1b84c1a48a80b72a263fb06f",
-      "label": "野原新之助｜GTA V MOD 彩色條紋衣／綠褲＋GGD 程序化六態",
-      "sourceModelKey": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
-      "modelSha256": "5c366f96c02d111b8476dc6f77043b769e03c8e463a0f2e577249790b8864396",
-      "binarySha256": "9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e",
-      "registeredAt": "2026-09-10T14:45:42.975Z",
-      "source": {
-        "kind": "exact",
-        "character": "野原新之助（normal outfit 彩色條紋衣／綠褲）",
-        "work": "蠟筆小新",
-        "library": "GTA V MOD／GTA5OPMOD",
-        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
-        "tier": "original",
-        "selectionClass": "community-mod"
-      },
-      "automaticEligible": true
-    },
-    {
-      "modelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
-      "label": "野原新之助｜GTA V MOD 紅衣／黃褲＋GGD 程序化六態",
-      "sourceModelKey": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
-      "modelSha256": "cf526b1be9ef9c96af745ebfd48b140b7a67a5e6cf1b988093b5290862d832db",
-      "binarySha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
-      "registeredAt": "2026-09-10T14:45:43.063Z",
-      "source": {
-        "kind": "exact",
-        "character": "野原新之助（normal outfit 紅衣／黃褲）",
-        "work": "蠟筆小新",
-        "library": "GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL",
-        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
-        "tier": "original",
-        "selectionClass": "community-mod"
-      },
-      "automaticEligible": true
+        "character": "野原新之助",
+        "work": "ou99 偶久網下載",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-457874-1-1.html"
+      }
     }
-  ],
-  "modelSelectionMode": "automatic"
+  ]
 }

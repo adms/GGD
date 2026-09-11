@@ -398,8 +398,13 @@ describe("stand-in meshes never imply sameness (champion-identity-standin-mesh)"
         }
       }
     }
-    // The headline example: champ.sela is worn by 18 unrelated characters.
-    expect(CORPUS.filter((c) => c.modelKey === "champ.sela").length).toBeGreaterThanOrEqual(15);
+    // ⭐ 非空探針：這條迴圈要有東西可跑 —— 至少一顆替身網格被**兩個以上不相干的角色**穿著。
+    //
+    // ⚠️ ⭐ **這個數字會往下走，而那正是目標**：每有一名英雄拿到真模型，替身的穿戴者就少一個。
+    //   2026-08 寫下時是 18，2026-09-11 ou99 模型批次併回 main 之後是 **12**（12 支英雄脫掉骨架身體）。
+    //   ⛔ 它**不是棘輪**（棘輪只准往一個方向走，而這一格往下走是好事）—— 它只負責「迴圈不是空跑」。
+    //   ⭐ 哪一天它掉到 1，代表替身現象消失了 ⇒ 那時該刪掉這一整條測試，⛔ 不是再把數字調低。
+    expect(CORPUS.filter((c) => c.modelKey === "champ.sela").length).toBeGreaterThanOrEqual(10);
   });
 });
 

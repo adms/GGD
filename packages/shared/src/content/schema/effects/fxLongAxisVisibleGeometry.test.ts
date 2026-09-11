@@ -38,8 +38,6 @@ import { fileURLToPath } from "node:url";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../../../content");
 
-/** 兩軸相差不到這個比例算平手 —— 平手時宣告任一軸都對。 */
-const LONG_AXIS_TIE_EPS = 0.01;
 /** 宣告的那一軸上，可見幾何至少要撐出含隱形長度的這麼多比例。 */
 const MIN_VISIBLE_FRAC = 0.5;
 
@@ -121,14 +119,9 @@ function longAxisComplaint(g: Gltf, axis: string): string | undefined {
   if (!vis) return `${full.join(" × ")} 的幾何**一片都畫不出來**（材質 alpha 全 0）⇒ 零像素`;
   const k = "xyz".indexOf(axis);
   if (k < 0) return `宣告了一個不存在的軸「${axis}」`;
-  const visMax = Math.max(...vis);
-  const visLong = "xyz"[vis.indexOf(visMax)];
+  const visLong = "xyz"[vis.indexOf(Math.max(...vis))];
   const frac = full[k]! > 1e-9 ? vis[k]! / full[k]! : 0;
-  // ⭐ 平手（兩軸差不到 1%）算「宣告的那一軸也是最長」—— 2026-09-10 `932646ef3` 重匯出 reddragonmissile 之後
-  //   y／z 都是 4.925（差在第四位小數），`indexOf(max)` 挑到 z 就把一份對的宣告判成錯的。
-  //   判準是「宣告的軸**不比**最長軸短超過 1%」，⛔ 不是「宣告的軸是 argmax」。
-  const declaredIsLongest = vis[k]! >= visMax * (1 - LONG_AXIS_TIE_EPS);
-  if (!declaredIsLongest)
+  if (visLong !== axis)
     return (
       `宣告 ${axis}，但**可見**幾何的最長軸是 ${visLong}` +
       `（可見 ${vis.map((v) => v.toFixed(3)).join(" × ")} · 含隱形 ${full.map((v) => v.toFixed(3)).join(" × ")}）`

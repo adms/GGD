@@ -49,6 +49,7 @@ import type { CastableSlot } from "../intents";
 import type { Vec2 } from "../math/vec2";
 import type { EffectDef } from "./effect";
 import { runEffects } from "./effectRunner";
+import { shatterObstaclesAt } from "../obstacles";
 import { len, sub } from "../math/vec2";
 
 /** 一筆「等這一次衝刺結束就跑」的待付回呼。 */
@@ -64,7 +65,11 @@ export interface DashOnEndPending {
   origin: string;
   abilitySlot?: CastableSlot;
   /** 撞牆停下來的衝刺算不算「衝完」。 */
-  onEndOn: "always" | "completed";
+  onEndOn: "always" | "completed" | "blocked";
+  /** GH#1190：施放那一 tick —— `blocked` 只認這之後的撞停（⛔ 不是上一次衝刺留下的）。 */
+  startTick: number;
+  /** GH#1190：撞停時撞碎碰到的可碎暫時障礙。 */
+  shatter: boolean;
   /** 衝刺途中死掉還要不要揮。 */
   onEndWhenDead: boolean;
   zone: number;
@@ -111,6 +116,13 @@ export function dashOnEndSystem(world: SimWorld): void {
       const travelled = len(sub(t.pos, p.from));
       if (travelled + 1e-6 < p.maxDistance) continue;
     }
+    // ⭐ GH#1190 鄂爾 E —— `blocked`：**撞到東西才震**，⛔ 走完全程不震。
+    //   判準是 MovementSystem 記的 `dashBlockedTick`（那一步走不到該有的長度 = 被牆／柱擋停），
+    //   ⛔ 不是「走的距離小於 maxDistance」—— ⭐ 那個量分不出「撞到牆」與「提早收手」。
+    const blockedAt = world.nav.get(p.caster)?.dashBlockedTick;
+    const didBlock = blockedAt !== undefined && blockedAt >= p.startTick;
+    if (p.onEndOn === "blocked" && !didBlock) continue;
+    if (p.shatter && didBlock) shatterObstaclesAt(world, t.zone, t.pos, t.radius, p.caster);
 
     // ⭐ 這一行是整個機制：圓心是**現在**的座標（衝刺終點），不是起點。
     runEffects(p.effects, {

@@ -227,8 +227,25 @@ def evaluate(day: str, tx: dict):
     # ⛔ **把「這段文字出現在某處」誤認成「這則訊息有自己的列」。**
     # 實測漏掉 2026-08-21 的 12:52 / 12:56 / 13:06 / 14:48 四則，而 13:06 是 #486–#490 五張票的來源。
     # ⇒ 現在**兩個條件都要成立**：文字窗命中，**而且**該時間戳真的有一列。
-    row_times = {c[0].strip() for _, c in LT.canonical_rows(led)}
-    missing = [(t, m) for t, m in msgs if not (covered(m, hay) and t in row_times)]
+    rows = [(c[0].strip(), c[1]) for _, c in LT.canonical_rows(led)]
+    row_times = {t for t, _ in rows}
+
+    def has_row(t: str, m: str) -> bool:
+        """這一則在帳本裡有沒有一列。
+
+        ⭐ 逐字的 `HH:MM` 先問（既有行為）；⛔ 對不上時**再問一次 `ledger_table` 的「同一則」判準** ——
+        ⚠️ 2026-09-11 量到的死路：owner 同一句話出現在 17:45／17:47／17:56 三個時間，
+        而 `ledger_table.py`（追加那一支）把 15 分鐘內同一句**併成一列**（`_same_message`，
+        它是為了 `ok`／`ok` 那次資料毀損才寫的），於是這道閘要的那兩個時間**產不出來**：
+        追加 → 被併掉 → 閘照樣說「漏了」→ 再追加 …
+        ⇒ ⭐ 兩支工具必須問**同一個問題**（第〇·四守則：判準只有一個住處），
+        ⛔ 否則這道閘要求的是一個工具拒絕產生的東西（同 genguard 那次「改產物被擋／改來源沒有來源」）。
+        """
+        if t in row_times:
+            return True
+        return any(LT._same_message(m, t, rt_text, rt) for rt, rt_text in rows)
+
+    missing = [(t, m) for t, m in msgs if not (covered(m, hay) and has_row(t, m))]
     return msgs, missing, unmapped_rows(day), from_tx
 
 
@@ -389,7 +406,7 @@ if FROM_TX:
 # ⭐ `prefer_incoming_text=True`:建置器的字**逐字**來自 transcript ⇒ 併進 `ruling.sh` 已插的列時,
 #   owner 的原話贏過我的改述(GH#1028;`_same_message` 的第三條路就是為這個開的)。
 added = LT.insert(LEDGER, [(t, LT.cell(m, MAXLEN), tickets_in(m)) for t, m in missing],
-                  prefer_incoming_text=True)
+                  prefer_incoming_text=True, authoritative_rows=msgs)
 print(f"✓ {DAY}：{len(msgs)} 則訊息,補了 {added} 列（其餘已經有列）")
 if added:
     print(f"⚠️ 新列的票號是**推出來**的;推不出來的是 `{LT.UNMAPPED}` —— 去填掉,"

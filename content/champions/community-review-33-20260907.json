@@ -40,9 +40,9 @@
     "str": 25,
     "agi": 23,
     "int": 12,
-    "strGrowth": 2.36,
-    "agiGrowth": 2.17,
-    "intGrowth": 1.18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -117,7 +117,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.blood.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.blood.pulse-sm"
+        }
+      ]
     },
     "W": {
       "id": "community-review-33-20260907.w",
@@ -171,7 +177,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.blood.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.blood.pulse-sm",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-33-20260907.e",
@@ -188,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -249,7 +262,14 @@
           "castTimeSec": 1.033
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.blood.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.blood.slash",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-33-20260907.r",
@@ -272,11 +292,6 @@
       "range": 0.0,
       "cooldownTier": "大",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "heal",
           "amount": {
@@ -302,7 +317,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.blood.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.blood.pulse-sm",
+          "attachTo": "caster"
+        }
+      ]
     }
   },
   "exAbility": "community-review-33-20260907.ex",
@@ -315,7 +337,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "katana"
+  ],
   "schema": "champion@1",
   "modelVersions": [
     {

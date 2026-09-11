@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.b2b6844ed06e05009309d104f46f9c3245ddf636af2023d5",
+  "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
   "baseStats": {
     "maxHealth": 541,
     "healthRegen": 0.97,
@@ -40,9 +40,9 @@
     "str": 25,
     "agi": 23,
     "int": 12,
-    "strGrowth": 2.36,
-    "agiGrowth": 2.17,
-    "intGrowth": 1.18,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "STR",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -131,7 +131,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-warwick.q.webp"
     },
     "W": {
       "id": "lol-warwick.w",
@@ -195,7 +196,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-warwick.w.webp"
     },
     "E": {
       "id": "lol-warwick.e",
@@ -212,10 +214,10 @@
         15.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -253,7 +255,8 @@
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
-      }
+      },
+      "icon": "assets/icons/abilities/lol-warwick.e.webp"
     },
     "R": {
       "id": "lol-warwick.r",
@@ -269,9 +272,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -339,7 +342,8 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.9
+      "castTimeSec": 0.9,
+      "icon": "assets/icons/abilities/lol-warwick.r.webp"
     }
   },
   "exAbility": "lol-warwick.ex",
@@ -351,44 +355,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
-  "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-warwick.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.1ca03c78617904bb46d42e88cf4cde3cd60449a35456da3e",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
-      "modelSha256": "3659f7a78bc25c04c3f8d21f0aa9d1a389cafa526b41bbd9398473e688647969",
-      "binarySha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
-      "registeredAt": "2026-09-10T14:45:44.629Z",
-      "source": {
-        "kind": "previous",
-        "character": "沃維克",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.b2b6844ed06e05009309d104f46f9c3245ddf636af2023d5",
-      "label": "沃維克（LOL 原生模型）",
-      "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
-      "modelSha256": "35e77430c72ac937c287ed0dcc75cd987798bf60b4aa93c0660d4eec59b99e61",
-      "binarySha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
-      "registeredAt": "2026-09-10T14:45:44.649Z",
-      "source": {
-        "kind": "exact",
-        "character": "沃維克",
-        "work": "英雄聯盟 League of Legends",
-        "library": "lol",
-        "reference": "content/champions/lol-warwick.json",
-        "tier": "original",
-        "selectionClass": "canonical-game"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "claw"
   ],
-  "modelSelectionMode": "automatic"
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-warwick.webp"
 }

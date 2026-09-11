@@ -1,0 +1,3 @@
+root ::= object
+object ::= "{" ws "\"schema\"" ws ":" ws "\"ggd-ai-proposal@1\"" ws "," ws "\"operations\"" ws ":" ws "[]" ws "}"
+ws ::= ([ \t\n] ws)?

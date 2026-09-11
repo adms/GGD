@@ -73,7 +73,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-aladdin.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -127,7 +128,7 @@
             "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f",
             "params": {
               "body": "self",
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.467,
               "cleanse": "none",
               "count": 1,
               "damageMult": 0.3,
@@ -143,7 +144,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.1,
+              "castTimeSec": 0.467,
               "castType": "self",
               "effects": [
                 {
@@ -168,7 +169,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-aladdin.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -197,9 +199,9 @@
       ],
       "id": "b2-aladdin.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -227,7 +229,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.bolt"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-aladdin.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -317,20 +320,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-aladdin.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -365,7 +369,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-aladdin",
-  "modelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
+  "modelKey": "ou99.473324",
   "name": "阿拉丁",
   "origin": "法師",
   "passiveAbility": "b2-aladdin.passive",
@@ -377,61 +381,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-aladdin.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
-      "label": "原上線模型",
-      "sourceModelKey": "ou99.473324",
-      "modelSha256": "ac2f276326ce0a264c63be5e1f14e9b877a67d59b797878a798db5f1c318f22b",
-      "binarySha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
-      "registeredAt": "2026-09-10T14:45:43.267Z",
-      "source": {
-        "kind": "previous",
-        "character": "阿拉丁",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/ou99.473324.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.7a3850da73a510480e08bc87ac6c4deef04b925a7dfecc9e",
-      "label": "小悟空",
-      "sourceModelKey": "community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230",
-      "modelSha256": "ab401c36c9f4ffb0b80bd2398a999cbcdb9e8aca0c0fcfcaea18813bfc1856f9",
-      "binarySha256": "32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811",
-      "registeredAt": "2026-09-10T14:45:43.273Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "小悟空",
-        "work": "七龍珠／Dragon Ball 系列",
-        "library": "300heroes",
-        "reference": "300heroes:79b8c441240465551389fecc",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.920f895180c21c83deccb1972486fdbb98f3a4882aa5c874",
-      "label": "龙族亚瑟王（論壇相似模型）",
-      "sourceModelKey": "ou99.473324-standard-v3",
-      "modelSha256": "6bb691777a316f102cc2c6235954bc0a0e7019975068175495ebb1a843b457b8",
-      "binarySha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5",
-      "registeredAt": "2026-09-10T15:02:48.705Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "龙族亚瑟王",
-        "work": "來源作品待核；論壇標題：龙族亚瑟王",
-        "library": "ou99",
-        "reference": "https://www.ou99.com/thread-473324-1-1.html",
-        "tier": "w3x",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-aladdin.webp"
 }

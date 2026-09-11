@@ -40,9 +40,9 @@
     "str": 18,
     "agi": 13,
     "int": 29,
-    "strGrowth": 1.67,
-    "agiGrowth": 1.25,
-    "intGrowth": 2.78,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored"
   },
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -130,7 +130,13 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ice.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ice.bolt"
+        }
+      ]
     },
     "W": {
       "id": "community-review-11-20260907.w",
@@ -155,11 +161,6 @@
       "range": 0.0,
       "cooldownTier": "小",
       "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
         {
           "kind": "shield",
           "amount": {
@@ -189,7 +190,14 @@
           "castTimeSec": 0.067
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ice.pulse-sm",
+          "attachTo": "caster"
+        }
+      ]
     },
     "E": {
       "id": "community-review-11-20260907.e",
@@ -243,7 +251,14 @@
           "castTimeSec": 0.267
         },
         "inheritDefaults": true
-      }
+      },
+      "vfxKey": "fx.prim.ice.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ice.pulse-sm",
+          "attachTo": "caster"
+        }
+      ]
     },
     "R": {
       "id": "community-review-11-20260907.r",
@@ -259,9 +274,9 @@
         90.0
       ],
       "manaCost": [
-        576.0,
-        576.0,
-        576.0
+        448.0,
+        448.0,
+        448.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -310,7 +325,14 @@
         },
         "inheritDefaults": true
       },
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "vfxKey": "fx.prim.ice.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.ice.nova",
+          "attachTo": "point"
+        }
+      ]
     }
   },
   "exAbility": "community-review-11-20260907.ex",
@@ -323,7 +345,9 @@
     "R"
   ],
   "buildPriority": [],
-  "tags": [],
+  "tags": [
+    "magic"
+  ],
   "schema": "champion@1",
   "modelVersions": [
     {

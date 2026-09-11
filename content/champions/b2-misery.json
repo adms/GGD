@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-misery.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -108,7 +109,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-misery.q.webp"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -178,7 +180,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-misery.r.webp"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -257,20 +260,21 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-misery.w.webp"
     }
   },
   "archetype": "mage",
   "attackType": "ranged",
   "attributes": {
     "agi": 18,
-    "agiGrowth": 1.67,
+    "agiGrowth": 0,
     "int": 29,
-    "intGrowth": 2.78,
+    "intGrowth": 0,
     "primary": "INT",
     "source": "authored",
     "str": 13,
-    "strGrowth": 1.25
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -305,7 +309,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-misery",
-  "modelKey": "version.body.d4cffd536c8d484810c76b5cc47bb397cff677f25bc95200",
+  "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
   "name": "米瑟利",
   "origin": "法師",
   "passiveAbility": "b2-misery.passive",
@@ -317,61 +321,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-misery.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.aa11905147f1bbf47ba18be0dc2c1127f123e60ca4409bed",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
-      "modelSha256": "72f75c5edce321accfb4395a7e2ab10130129de0bf546c9f3cdee256bb384ec7",
-      "binarySha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
-      "registeredAt": "2026-09-10T14:45:42.258Z",
-      "source": {
-        "kind": "previous",
-        "character": "米瑟利",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.1f352ae70c26ae54dcbd4510c0528665b2cef0b63ec511b2",
-      "label": "优克莉伍德",
-      "sourceModelKey": "community.body.7e715d64546a03a955ff8a6530120071081ea7eafac09239",
-      "modelSha256": "ecc747e3db7b04380b18f0d8356daa23d6a93fb8d772fa560e3e322a59f98e4b",
-      "binarySha256": "e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef",
-      "registeredAt": "2026-09-10T14:45:42.270Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "优克莉伍德",
-        "work": "這樣算是殭屍嗎？",
-        "library": "300heroes",
-        "reference": "300heroes:cce0d9c46d77319ecef36c85",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.d4cffd536c8d484810c76b5cc47bb397cff677f25bc95200",
-      "label": "米瑟利（獨立副本／优克莉伍德）",
-      "sourceModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
-      "modelSha256": "bcdcd10bcd1ed9991e29efcc4c6765ad42d2af3073171a77c7e9cd2d319760c2",
-      "binarySha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
-      "registeredAt": "2026-09-10T14:45:42.364Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "米瑟利（獨立副本／优克莉伍德）",
-        "work": "這樣算是殭屍嗎？",
-        "library": "300heroes",
-        "reference": "derivative:misery",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "magic"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-misery.webp"
 }

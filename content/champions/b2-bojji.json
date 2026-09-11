@@ -45,7 +45,8 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.dash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-bojji.e.webp"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -107,7 +108,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-bojji.q.webp"
     },
     "R": {
       "castTimeSec": 1.633,
@@ -147,9 +149,9 @@
       ],
       "id": "b2-bojji.r",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -201,7 +203,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/b2-bojji.r.webp"
     },
     "W": {
       "castTimeSec": 0.567,
@@ -233,10 +236,10 @@
       ],
       "id": "b2-bojji.w",
       "manaCost": [
-        144.0,
-        144.0,
-        144.0,
-        144.0
+        112.0,
+        112.0,
+        112.0,
+        112.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -268,20 +271,21 @@
           "attachTo": "caster",
           "vfxKey": "fx.prim.arcane.slash"
         }
-      ]
+      ],
+      "icon": "assets/icons/abilities/b2-bojji.w.webp"
     }
   },
   "archetype": "fighter",
   "attackType": "melee",
   "attributes": {
     "agi": 29,
-    "agiGrowth": 2.78,
+    "agiGrowth": 0,
     "int": 13,
-    "intGrowth": 1.25,
+    "intGrowth": 0,
     "primary": "AGI",
     "source": "authored",
     "str": 18,
-    "strGrowth": 1.67
+    "strGrowth": 0
   },
   "baseStats": {
     "ad": 32,
@@ -316,7 +320,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-bojji",
-  "modelKey": "version.body.f8868cbb08e0ca359ebd1dcfb1b9cd5392235511ddf457a0",
+  "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
   "name": "波吉",
   "origin": "鬥士",
   "passiveAbility": "b2-bojji.passive",
@@ -328,61 +332,8 @@
     "E",
     "R"
   ],
-  "tags": [],
-  "icon": "assets/icons/champions/b2-bojji.webp",
-  "modelVersions": [
-    {
-      "modelKey": "version.body.1fd3871777dddc0d1b3a797ffe2c048a5afbd40d41065e37",
-      "label": "原上線模型",
-      "sourceModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
-      "modelSha256": "39b75416476435a69c5c138d0f02e1415208fd40ae6bda2fdf543e3381228b56",
-      "binarySha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
-      "registeredAt": "2026-09-10T14:45:35.996Z",
-      "source": {
-        "kind": "previous",
-        "character": "波吉",
-        "work": "原上線內容",
-        "library": "GGD",
-        "reference": "models/community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a.json",
-        "tier": "original"
-      }
-    },
-    {
-      "modelKey": "version.body.159b291baa7f90ec0605514604a20bb3acbba2d85cdabbec",
-      "label": "小桐人寵物",
-      "sourceModelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
-      "modelSha256": "1b89f6546dcdb7a72da861d72eff53be25c41075482fe4f29edd30506b3cbdd0",
-      "binarySha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
-      "registeredAt": "2026-09-10T14:45:36.007Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "小桐人寵物",
-        "work": "刀劍神域；依檔名與外觀推定",
-        "library": "300heroes",
-        "reference": "300heroes:752d81a9fe2da27b368dadee",
-        "tier": "300heroes",
-        "selectionClass": "similar-proxy"
-      },
-      "automaticEligible": false
-    },
-    {
-      "modelKey": "version.body.f8868cbb08e0ca359ebd1dcfb1b9cd5392235511ddf457a0",
-      "label": "波吉（獨立副本／小桐人寵物）",
-      "sourceModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
-      "modelSha256": "38e1716edad75ed2adff8de30693826d93a6470c03b1a82cac23ee1b81f65c20",
-      "binarySha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
-      "registeredAt": "2026-09-10T14:45:36.079Z",
-      "source": {
-        "kind": "style-proxy",
-        "character": "波吉（獨立副本／小桐人寵物）",
-        "work": "刀劍神域；依檔名與外觀推定",
-        "library": "300heroes",
-        "reference": "derivative:bojji",
-        "tier": "300heroes",
-        "selectionClass": "manual"
-      },
-      "automaticEligible": true
-    }
+  "tags": [
+    "sword"
   ],
-  "modelSelectionMode": "automatic"
+  "icon": "assets/icons/champions/b2-bojji.webp"
 }

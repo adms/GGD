@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "600485a2",
+  "capabilityFingerprint": "fb8d3eb8",
   "counts": {
-    "effectKinds": 49,
+    "effectKinds": 51,
     "hookEvents": 33,
     "conditionLeafKinds": 10,
     "templateFamilies": 47,
-    "effectFields": 274,
+    "effectFields": 280,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -63,27 +63,27 @@
   "caps": [
     {
       "key": "maxHealth",
-      "value": "預設上限 base 581152 / 解鎖 581152　·　⚙️出貨 base 581152 / 解鎖 581152　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
+      "value": "預設上限 base 402129 / 解鎖 402129　·　⚙️出貨 base 402129 / 解鎖 402129　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
       "from": "shipped"
     },
     {
       "key": "healthRegen",
-      "value": "預設上限 base 1235 / 解鎖 1235　·　⚙️出貨 base 1235 / 解鎖 1235　·　後台基礎加成上限 200　·　道具欄位帶 ±100",
+      "value": "預設上限 base 929 / 解鎖 929　·　⚙️出貨 base 929 / 解鎖 929　·　後台基礎加成上限 200　·　道具欄位帶 ±100",
       "from": "shipped"
     },
     {
       "key": "maxMana",
-      "value": "預設上限 base 352091 / 解鎖 352091　·　⚙️出貨 base 352091 / 解鎖 352091　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
+      "value": "預設上限 base 240323 / 解鎖 240323　·　⚙️出貨 base 240323 / 解鎖 240323　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
       "from": "shipped"
     },
     {
       "key": "manaRegen",
-      "value": "預設上限 base 2351 / 解鎖 2351　·　⚙️出貨 base 2351 / 解鎖 2351　·　後台基礎加成上限 200　·　道具欄位帶 ±50",
+      "value": "預設上限 base 1248 / 解鎖 1248　·　⚙️出貨 base 1248 / 解鎖 1248　·　後台基礎加成上限 200　·　道具欄位帶 ±50",
       "from": "shipped"
     },
     {
       "key": "ad",
-      "value": "預設上限 base 23056 / 解鎖 23056　·　⚙️出貨 base 23056 / 解鎖 23056　·　後台基礎加成上限 2000　·　道具欄位帶 ±400",
+      "value": "預設上限 base 21532 / 解鎖 21532　·　⚙️出貨 base 21532 / 解鎖 21532　·　後台基礎加成上限 2000　·　道具欄位帶 ±400",
       "from": "shipped"
     },
     {
@@ -93,7 +93,7 @@
     },
     {
       "key": "armor",
-      "value": "預設上限 base 6638 / 解鎖 6638　·　⚙️出貨 base 6638 / 解鎖 6638　·　後台基礎加成上限 500　·　道具欄位帶 ±150",
+      "value": "預設上限 base 4620 / 解鎖 4620　·　⚙️出貨 base 4620 / 解鎖 4620　·　後台基礎加成上限 500　·　道具欄位帶 ±150",
       "from": "shipped"
     },
     {
@@ -530,7 +530,9 @@
       "shield",
       "shieldBreak",
       "spawnModelFx",
+      "spawnObstacle",
       "spawnProjectile",
+      "spawnThresholds",
       "spawnVfx",
       "spendHealth",
       "spendMana",
