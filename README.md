@@ -634,49 +634,9 @@ make lan-probe
 `manifest.json` 裡的 `contentVersion` 是整棵 `content/` 的純函數，**改內容就會變**。不要相信任何抄在文件裡的雜湊 —— 包含這份 README 的散文部分。下面三個產生區塊會自己印出產生當下的 `contentVersion`，那個才是可信的。
 
 
-### 🚧 待上架的兩批（2026-09-11，⛔ 尚未進 `content/`）
+### 🚧 待上架的兩批（⛔ 尚未進 `content/`）
 
-上面那張表數的是**已經在 repo 裡**的東西。另有兩批英雄在上架流程中 —— owner 2026-09-11 給的名單如下，狀態欄是他當天的字（「本機發布已通過」＝ Codex 那一側在本機驗過；「來源核心待 Main」＝ 引擎／來源那一半還在等 Main 收）。⚠️ 2026-09-11 實測 origin/main：`content/champions/` 裡 **零份** `acquired-*`、`lol-*` 只有第一批 7 名；8 名舊角有 7 名躺在 `_legacy/champions/`、`godie-eevi` 兩邊都沒有。**以兩張票為準**，這裡只是快照。
-
-**LoL 第二批（11 名 · [GH#1185](https://github.com/adms/GGD/issues/1185)，保留原版 QWER）**
-
-| # | ID | 角色 | 狀態（owner 2026-09-11） |
-| ---: | --- | --- | --- |
-| 1 | `lol-sett` | 賽特 | 待上架（本機發布已通過；來源核心待 Main） |
-| 2 | `lol-fiddlesticks` | 稻草人 | 待上架（本機發布已通過；來源核心待 Main） |
-| 3 | `lol-ornn` | 鄂爾 | 待上架（本機發布已通過；來源核心待 Main） |
-| 4 | `lol-chogath` | 科加斯 | 待上架（本機發布已通過） |
-| 5 | `lol-ashe` | 艾希 | 待上架（本機發布已通過） |
-| 6 | `lol-blitzcrank` | 布里姿 | 待上架（本機發布已通過） |
-| 7 | `lol-ahri` | 阿璃 | 待上架（本機發布已通過；來源核心待 Main） |
-| 8 | `lol-thresh` | 瑟雷西 | 待上架（本機發布已通過；來源核心待 Main） |
-| 9 | `lol-velkoz` | 威寇茲 | 待上架（本機發布已通過；來源核心待 Main） |
-| 10 | `lol-malphite` | 墨菲特 | 待上架（本機發布已通過） |
-| 11 | `lol-garen` | 蓋倫 | 待上架（本機發布已通過；來源核心待 Main） |
-
-**已取得模型／重上架舊角（34 名 · [GH#1205](https://github.com/adms/GGD/issues/1205)：新增 26 名 ＋ JASS 舊角重上架 8 名）**
-
-| # | ID | 角色 | # | ID | 角色 |
-| ---: | --- | --- | ---: | --- | --- |
-| 1 | `acquired-jetragon` | 空渦龍 | 18 | `acquired-naruto` | 漩渦鳴人 |
-| 2 | `acquired-astralym` | 枯星龍 | 19 | `acquired-lord-nightmares` | 金色魔王／惡夢之王 |
-| 3 | `acquired-cattiva` | 搗蛋貓 | 20 | `acquired-rim` | 莉姆（Rim；粉紅魔龍） |
-| 4 | `acquired-dio` | DIO | 21 | `acquired-xiaodangjia` | 小當家 |
-| 5 | `acquired-morgiana` | 摩尔迦娜 | 22 | `acquired-inuyasha` | 犬夜叉 |
-| 6 | `acquired-zero` | Zero | 23 | `acquired-asuna` | 亞絲娜／結城明日奈 |
-| 7 | `acquired-emilia` | 愛蜜莉雅 | 24 | `acquired-alice` | 愛麗絲·滋貝魯庫（Alice Zuberg） |
-| 8 | `acquired-ram` | 拉姆 | 25 | `acquired-leafa` | 莉法 |
-| 9 | `acquired-beatrice` | 碧翠絲 | 26 | `acquired-kuroyukihime` | 黑雪姬 |
-| 10 | `acquired-mario` | Mario | 27 | `godie-hlgr` | 鋼彈（舊角重上架） |
-| 11 | `acquired-mewtwo` | Mewtwo | 28 | `godie-eevi` | 劍心拔刀齋（舊角重上架） |
-| 12 | `acquired-pokemon-trainer` | Pokémon Trainer | 29 | `godie-e00q` | 黑化Saber英靈亞瑟王（舊角重上架） |
-| 13 | `acquired-ryu` | Ryu | 30 | `godie-usyl` | 異形殺戮之牙（舊角重上架） |
-| 14 | `acquired-minecraft` | Steve／Alex | 31 | `godie-nbst` | 瘋狂假面變態正義（舊角重上架） |
-| 15 | `acquired-kita-kita` | 吉他吉他老伯（阿德巴古·艾魯多魯） | 32 | `godie-nman` | 胖虎地獄歌神（舊角重上架） |
-| 16 | `acquired-wargreymon` | 戰鬥暴龍獸 | 33 | `godie-e00t` | 貞子七夜怪談（舊角重上架） |
-| 17 | `acquired-saya` | 沙耶 | 34 | `godie-h021` | 阿強一號破銅爛鐵（舊角重上架） |
-
-全部 34 名的狀態都是**待上架**。上架的三道閘（roster 同步、內容各軸缺 0、白名單）與 81 名那一批相同，見 `tools/ship-81/` 與 `roster:check`。
+上面那張表數的是**已經在 repo 裡**的東西。另有 **45 名**在上架流程中 —— LoL 第二批 11 名（[GH#1185](https://github.com/adms/GGD/issues/1185)，保留原版 QWER）＋ 已取得模型／重上架舊角 34 名（[GH#1205](https://github.com/adms/GGD/issues/1205)：新增 26 ＋ JASS 舊角重上架 8）。⭐ **逐名的 ID／角色／狀態表在下面的產生區塊**（「全英雄列表」那一段末尾的「待上架」小節），⛔ 這裡不再手抄一份：它的唯一來源是 `docs/_data/pending-heroes.json`，由 `python3 tools/reference/sync_pending_heroes.py` 從另一個 repo（`GGD-community-acquired-heroes` 的 `社群英雄126名上架狀態.md`）重抽 —— 那個 repo 不保證在每一台機器上，所以走快照（與 `_curation-snapshot.json` 同一個模式），`--check` 在來源缺席時會**明說跳過**。⚠️ 2026-09-11 實測 origin/main：`content/champions/` 裡**零份** `acquired-*`、`lol-*` 只有第一批 7 名；8 名舊角有 7 名躺在 `_legacy/champions/`、`godie-eevi` 兩邊都沒有。上架的三道閘（roster 同步、內容各軸缺 0、白名單）與 81 名那一批相同（`tools/ship-81/`、`roster:check`）。**以兩張票與那份快照為準。**
 
 ### ⭐ 英雄定位與屬性級距 —— 機制參考表
 
