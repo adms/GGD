@@ -203,25 +203,28 @@ func TestHeroModelSubmissionRollbackDuringValidationAndPlacement(t *testing.T) {
 }
 
 func TestHeroModelArchiveLimitDoesNotRaiseOrdinaryHeroLimit(t *testing.T) {
-	for _, kind := range []string{"ordinary", "model", "tightened"} {
+	for _, kind := range []string{"ordinary", "uploaded-model", "catalog-model", "tightened"} {
 		t.Run(kind, func(t *testing.T) {
 			s, b := heroFixture(t)
 			policy := HeroIntakePolicy{Enabled: true, MaxPendingPerPlayer: 5, QuotaPerPlayerPerDay: 20, MaxBytes: 4096, ModelUploadsEnabled: true, ModelMaxBytes: 8192}
 			s.SetIntakePolicy(func() (HeroIntakePolicy, error) { return policy, nil })
 			archive := bytes.Repeat([]byte("x"), 6000)
 			inspection := b.inspections["v1"]
-			if kind != "ordinary" {
+			if kind == "uploaded-model" || kind == "tightened" {
 				inspection.Project = json.RawMessage(`{"projectId":"hero-proof","presentation":{"uploadedModel":{"sha256":"fixture"}}}`)
+			}
+			if kind == "catalog-model" {
+				inspection.Manifest = json.RawMessage(`{"entries":[{"path":"assets/models/community/fixture.glb","role":"asset","mime":"model/gltf-binary"}]}`)
 			}
 			b.inspections[string(archive)] = inspection
 			if kind == "tightened" {
 				b.onInspect = func() { policy.ModelMaxBytes = 4096 }
 			}
 			_, err := s.Submit(context.Background(), "alice", "hero-proof", "size-limit", archive, false)
-			if (err == nil) != (kind == "model") {
+			if (err == nil) != (kind == "uploaded-model" || kind == "catalog-model") {
 				t.Fatalf("%s: %v", kind, err)
 			}
-			if kind != "model" && len(b.archives) != 0 {
+			if kind != "uploaded-model" && kind != "catalog-model" && len(b.archives) != 0 {
 				t.Fatal("oversized archive was placed")
 			}
 		})

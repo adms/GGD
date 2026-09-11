@@ -10,6 +10,9 @@ import { downloadVerifiedUpdate, fetchStableRelease, type UpdatePolicy } from ".
 import { verifyPlatformInstaller } from "./platformUpdate";
 import { registerDesktopPlatformBridge } from "./platformBridge";
 import { addAllowedOrigins } from "../../content-api/src/guard";
+import { registerLocalAiIpc } from "./ai/ipc";
+import { LocalModelStore } from "./ai/local/modelStore";
+import { readAiPreference } from "./ai/preferences";
 import {
   EDITOR_DESKTOP_SOURCE_SCHEMA,
   type EditorDesktopSourceInfo,
@@ -366,6 +369,13 @@ async function start(): Promise<void> {
     title: "GGD 技能／VFX 編輯器",
     webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: join(__dirname, "preload.cjs"), additionalArguments: [`--ggd-platform-origin=${platformOrigin ?? "offline"}`] },
   });
+  const aiPreference = readAiPreference(app.getPath("userData"));
+  const localModelStore = new LocalModelStore(
+    join(app.getPath("userData"), "models"),
+    aiPreference.mode,
+    aiPreference.configured,
+  );
+  registerLocalAiIpc(window, localModelStore, app.getPath("userData"));
   let closing = false;
   let savedForClose = false;
   window.on("close", (event) => {

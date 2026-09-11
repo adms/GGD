@@ -21,7 +21,7 @@ export function buildHeroImportServer(opts: HeroImportServerOptions): FastifyIns
     const path = req.url.startsWith(HERO_IMPORT_PREFIX + "/") ? req.url.slice(HERO_IMPORT_PREFIX.length) : "";
     const catalog = /^\/catalog\/(capture|heroes|versions|preview|prepare)$/.test(path);
     const allowed = req.method === "POST"
-      ? catalog || ["/hero-package", "/inspect-hero-package", "/prepare-work"].includes(path)
+      ? catalog || ["/hero-package", "/inspect-hero-package", "/prepare-work", "/admin/hero-package-takeover", "/admin/inspect-hero-package-takeover", "/admin/prepare-work-takeover"].includes(path)
       : req.method === "GET" && (path === "/active/target-profile" || /^\/work-versions\/[^/?]+\/[^/?]+(?:\/package|\/files\/[^?]+)?$/.test(path));
     if (!allowed) return reply.code(404).send({ message: "這個通道只處理完整英雄作品。" });
     if (req.method === "POST" && req.headers["content-type"]?.split(";")[0] !== (catalog ? "application/json" : "application/zip")) return reply.code(415).send({ message: "完整英雄通道的內容格式不符。" });

@@ -175,37 +175,38 @@
       "W": {
         "slot": "W",
         "name": "防禦魔法",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】展開方向明確的防壁，消耗資源抵擋有限傷害。\n【待補機制】目前無方向盾；需六角防壁方向、耐久與持續消耗。",
+        "purpose": "【目前模板可執行】自身獲得 120 點護盾，持續 3 秒。\n【目標設計】展開方向明確的防壁，消耗資源抵擋有限傷害。\n【待補機制】目前無方向盾；需六角防壁方向、耐久與持續消耗。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
           "manaCostTier": "小",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-29-20260907.w.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-29-20260907-w-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-29-20260907.w.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }
@@ -316,37 +317,38 @@
       "EX": {
         "slot": "EX",
         "name": "變出花田的魔法",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-29-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。\n【待補機制】目前自身盾；需花田區域、友軍首次進入解除恐懼及一次護盾。",
+        "purpose": "【目前模板可執行】自身獲得 120 點護盾，持續 3 秒。\n【目標設計】生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。\n【待補機制】目前自身盾；需花田區域、友軍首次進入解除恐懼及一次護盾。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
           "manaCostTier": "大",
-          "castTimeTier": "小",
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "ratios": []
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "community-review-29-20260907.ex.guard",
-              "onExisting": "keepLarger"
-            }
-          ]
+          "castTimeTier": "小"
         },
         "products": [
           {
             "instanceId": "community-review-29-20260907-ex-1",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "duration": 3,
-                "modifiers": [],
-                "castTimeSec": 0.15
+                "castType": "self",
+                "castTimeSec": 0.15,
+                "radius": 1,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120,
+                      "ratios": []
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "community-review-29-20260907.ex.guard",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               },
               "inheritDefaults": true
             }

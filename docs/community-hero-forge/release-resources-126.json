@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-community-release-resources@1",
+  "scope": "All 126 community-forge heroes",
+  "statusPage": "docs/editor-contract/社群英雄126名上架狀態.md",
+  "counts": {
+    "heroes": 126,
+    "slots": 756,
+    "groups": 5
+  },
+  "groups": [
+    {
+      "id": "community-first-37",
+      "heroes": 37,
+      "slots": 222,
+      "projectPattern": "materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/*.hero-project.json",
+      "recipePattern": "materials/community-hero-forge/recipes/*.upload-recipe.json",
+      "modelBindings": "tools/community-hero-forge/library-bodies/community37.bindings.json",
+      "generator": "tools/ship-81/gen.py",
+      "releaseReceipt": "docs/_reports/community-acquired-heroes/loopback-release-canonical-81of81.json"
+    },
+    {
+      "id": "community-second-37",
+      "heroes": 37,
+      "slots": 222,
+      "roster": "docs/community-hero-forge/第二批37全自動創建英雄名單.md",
+      "championPattern": "content/champions/b2-*.json",
+      "abilityPattern": "content/abilities/b2-*.json",
+      "generator": "tools/ship-81/gen.py",
+      "releaseReceipt": "docs/_reports/community-acquired-heroes/loopback-release-canonical-81of81.json"
+    },
+    {
+      "id": "lol-first-7",
+      "heroes": 7,
+      "slots": 42,
+      "recipes": "packages/shared/src/content/heroForge/communityExamples.ts",
+      "generator": "tools/ship-81/lol7.py",
+      "compiler": "tools/ship-81/lol7_compile.mts",
+      "championPattern": "content/champions/lol-*.json",
+      "releaseReceipt": "docs/_reports/community-acquired-heroes/loopback-release-canonical-81of81.json"
+    },
+    {
+      "id": "lol-second-11",
+      "heroes": 11,
+      "slots": 66,
+      "recipes": "packages/shared/src/content/heroForge/communityLolBatch2.ts",
+      "generator": "tools/community-hero-forge/lol-batch2.mts",
+      "authoringManifest": "docs/community-hero-forge/lol-batch2/authoring-manifest.json",
+      "modelVersions": "docs/community-hero-forge/lol-batch2/models.json",
+      "storage": "docs/community-hero-forge/lol-batch2/storage.json",
+      "validation": "docs/community-hero-forge/lol-batch2/validation.json",
+      "releaseReceipt": "docs/_reports/community-acquired-heroes/loopback-release-lol-batch2-11-current.json"
+    },
+    {
+      "id": "acquired-and-relisted-34",
+      "heroes": 34,
+      "slots": 204,
+      "recipes": [
+        "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
+        "packages/shared/src/content/heroForge/communityAcquiredSecond.ts",
+        "packages/shared/src/content/heroForge/communityAcquiredLegacy.ts"
+      ],
+      "modelSelection": "packages/shared/src/content/heroForge/communityAcquired.ts",
+      "presentation": "packages/shared/src/content/heroForge/communityAcquiredPresentation.ts",
+      "generator": "tools/editor-acceptance/acquired-heroes-check.ts",
+      "modelDelivery": "docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+      "compileAcceptance": "docs/_reports/community-acquired-heroes/acceptance-summary.json",
+      "releaseReceipt": "docs/_reports/community-acquired-heroes/loopback-release-acquired-34-current.json"
+    }
+  ],
+  "combinedReleaseReceipt": "docs/_reports/community-acquired-heroes/loopback-release-current-service-126of126.json",
+  "notes": [
+    "All paths are repository-relative and form the stable handoff interface for parallel work.",
+    "Receipt paths are replaced after a current-service rerun; inspect target, status, passed, failed and rollback.status.",
+    "Local publication evidence does not imply Main merge or production deployment."
+  ]
+}

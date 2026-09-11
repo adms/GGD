@@ -313,6 +313,47 @@ def gen_roster(ctx):
 # owner 明確要求名稱要在主頁上，⇒ 精簡的是**每一格的內容**，⛔ 不是列數。
 
 ALL_HEROES_DOC = "docs/全英雄列表.md"
+PENDING_JSON = "docs/_data/pending-heroes.json"
+
+
+def pending_heroes():
+    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**。
+
+    ⛔ 不直接讀來源 repo：它不保證在這台機器上（CLAUDE.md「換機時：有文件不等於有素材」），
+    而這份文件必須在每一台機器上算出同樣的位元組。
+    唯一的寫入端是 `tools/reference/sync_pending_heroes.py`。
+    ⚠️ 快照不在 ⇒ 回 `None`，⭐ 而下面會**印一行說它不在**（⛔ 不是安靜地少印 45 名）。
+    """
+    path = os.path.join(G.REPO, PENDING_JSON)
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _pending_block(doc, heading_level):
+    if doc is None:
+        return [f"{heading_level} 待上架（快照不在）", "",
+                f"> ⚠️ ⛔ 找不到 `{PENDING_JSON}` ⇒ **這一段沒有印任何東西**。",
+                f"> 跑 `python3 tools/reference/sync_pending_heroes.py` 重抽。", ""]
+    out = [f"{heading_level} 待上架（{doc['counts']['pending']} 名）—— ⛔ 還沒進 `content/champions/`", ""]
+    out += note([
+        f"⭐ 這些英雄的卡**還不在這個 repo 裡** ⇒ 上面那張表看不到它們。"
+        f"狀態的權威來源是 `{doc['source']['repo']}` 的 `{doc['source']['path']}`"
+        f"（快照日 {doc['source']['snapshotDate']}）。",
+        "",
+        f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
+        "",
+        "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
+    ])
+    for g in doc["groups"]:
+        out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
+                "| # | ID | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
+        for i, r in enumerate(g["rows"], 1):
+            out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
+        out.append("")
+    return out
+
 
 #: 分組：讓「原本就上架的那批」與後來幾批**一眼分得開**（owner 2026-09-11 問的正是這個）。
 HERO_GROUPS = (
@@ -330,20 +371,54 @@ def hero_group(cid):
     return "其他"
 
 
+#: ⭐ 一格 `—` 回答不了 owner 2026-09-11 問的「**為什麼這幾隻沒上架**」。
+#: ⛔ 而在此之前這張表只印 ✅/— ⇒ 讀起來像「153 名裡有 23 名漏掉了」，
+#: ⭐ 而真相是那 23 名**沒有一名是漏掉的**。⇒ 理由逐格印出來，⛔ 不是印在表腳的散文裡
+#: （第一·五守則的同族：一個限定詞只寫在表頭，第一個複製這張表的人就會把它丟掉）。
+#:
+#: ⚠️ ⭐ 每一條都**從內容推導**，⛔ 沒有一條是寫死的 id 名單：
+#:   · `transform.role == "alternate"` —— 它是**某一位已上架英雄的第二具身體**，
+#:     結構上不可獨立選取（`formPairShipping.ts` 與 `championForms.test.ts` 逐對釘死）
+#:   · `retiredChampions` —— owner 逐字下架（理由存在 `content/config/roster.json` 的 note 裡）
+#:   · 三者皆無（origin / 天生 / EX）—— 內容載入失敗時 `main.tsx:186` 註冊的**骨架替身**，
+#:     ⛔ 它本來就不該是玩家選得到的英雄
+def offlist_reason(c, retired):
+    """⭐ 它**不在**開放名單上的理由。回 None ＝ ⛔ 真的沒有理由（那就是一個缺口）。"""
+    if (c.get("transform") or {}).get("role") == "alternate":
+        return "變身態"
+    if c["id"] in retired:
+        return "已下架"
+    if c.get("origin") is None and c.get("passiveAbility") is None and c.get("exAbility") is None:
+        return "骨架"
+    return None
+
+
+def _retired_ids():
+    """⛔ 讀 `content/config/roster.json`，⛔ 不抄一份 id 名單進這裡（第〇·四守則）。"""
+    path = os.path.join(G.CONTENT, "config", "roster.json")
+    if not os.path.exists(path):
+        return frozenset()
+    with open(path, encoding="utf-8") as f:
+        return frozenset(json.load(f).get("retiredChampions") or ())
+
+
 def all_heroes_rows(ctx):
     """(組, id, 全名, 稱號, 六格技能名) —— ⭐ 缺的槽印 `—`，⛔ 不是省略那一格
     （省略會讓表格錯位，而且看不出來「這一支沒有 EX」）。"""
     open_ids = ctx["open_champions"]
+    retired = _retired_ids()
     rows = []
     for c in ctx["champions"]:
         names = {slot: G.cell(a.get("name") or a.get("id")) for slot, a in kit_slots(c, ctx)}
         title, full = G.split_champion_name(c.get("name", ""))
+        is_open = c["id"] in open_ids
         rows.append({
             "group": hero_group(c["id"]),
             "id": c["id"],
             "full": G.cell(full),
             "title": G.cell(title),
-            "open": c["id"] in open_ids,
+            "open": is_open,
+            "reason": None if is_open else offlist_reason(c, retired),
             "slots": [names.get(s, "—") for s in ("天生", "Q", "W", "E", "R", "EX")],
         })
     rows.sort(key=lambda r: (
@@ -357,10 +432,40 @@ def _all_heroes_table(rows, flags):
     out = ["| 英雄 | 稱號 | 上架 | 天生 | Q | W | E | R | EX |",
            "| --- | --- | :-: | --- | --- | --- | --- | --- | --- |"]
     for r in rows:
-        flag = ("✅" if r["open"] else "—") if flags else "·"
+        # ⭐ 不在名單上時印**理由**，⛔ 不是一個問不出東西的 `—`。
+        flag = ("✅" if r["open"] else (r["reason"] or "⛔ 未列入")) if flags else "·"
         out.append("| " + " | ".join([
             f"**{r['full']}**<br>`{r['id']}`", r["title"], flag, *r["slots"],
         ]) + " |")
+    return out
+
+
+def _offlist_summary(rows, opened):
+    """⭐ owner 2026-09-11 問「153 名全部上架」⇒ 這幾行就是答案。
+
+    ⛔ 在此之前這份文件只說「153 名，其中 130 名在開放名單內」——
+    ⭐ 那句話**每個字都對**，⚠️ 而它讀起來像「有 23 名漏掉了」。
+    ⇒ 這裡把差額**逐類拆開**，⛔ 不是留給讀的人自己去數。
+    """
+    off = [r for r in rows if not r["open"]]
+    if not off:
+        return [f"⭐ **{opened} 名全部在開放名單內** —— 零缺口。"]
+    buckets = {}
+    for r in off:
+        buckets.setdefault(r["reason"] or "⛔ 未列入", []).append(r["id"])
+    why = {
+        "變身態": "**某一位已上架英雄的第二具身體**，結構上不可獨立選取"
+                  "（`transform.role = \"alternate\"`；`formPairShipping.ts` 逐對釘死）",
+        "已下架": "owner 逐字下架，理由存在 `content/config/roster.json` 的 note 裡",
+        "骨架": "內容載入失敗時 `apps/client/src/main.tsx:186` 註冊的**替身**，"
+                "⛔ 本來就不該是玩家選得到的英雄",
+        "⛔ 未列入": "⛔ **沒有推導得出來的理由** —— 這是一個真的缺口，要處理",
+    }
+    out = [f"⭐ 差額 **{len(off)}** 名 ⛔ **沒有一名是「漏掉」的**，逐類如下："]
+    out += ["", "| 為什麼不在名單上 | 幾名 | 是什麼 |", "| --- | :-: | --- |"]
+    for reason, ids in sorted(buckets.items(), key=lambda kv: -len(kv[1])):
+        out.append(f"| {reason} | {len(ids)} | {why.get(reason, '—')} |")
+    out += ["", f"⇒ ⭐ **每一位獨立可選的英雄（{opened} 名）今天都在開放名單上。**"]
     return out
 
 
@@ -386,7 +491,12 @@ def gen_all_heroes(ctx):
     ])
     out += _all_heroes_table(rows, flags)
     out += [""]
-    out += provenance(ctx, f"全量 {len(rows)} 名，其中開放 {opened} 名。完整清單另見 `{ALL_HEROES_DOC}`。")
+    pend = pending_heroes()
+    out += _pending_block(pend, "#####")
+    extra = f"全量 {len(rows)} 名，其中開放 {opened} 名。"
+    if pend:
+        extra += f"另有 {pend['counts']['pending']} 名待上架（卡還沒進 repo）。"
+    out += provenance(ctx, extra + f" 完整清單另見 `{ALL_HEROES_DOC}`。")
     return "\n".join(out), len(rows)
 
 
@@ -403,6 +513,8 @@ def gen_all_heroes_doc(ctx):
         "",
         f"共 **{len(rows)}** 名英雄，其中 **{opened}** 名在開放名單內。",
         "",
+        *_offlist_summary(rows, opened),
+        "",
         "每一列六格＝**天生 / Q / W / E / R / EX**，印的是技能**名稱**。",
         "一行效果見 README 的開放名單那一段；完整效果文字見 `docs/reference/abilities.md`。",
         "",
@@ -418,6 +530,7 @@ def gen_all_heroes_doc(ctx):
     rest = [r for r in rows if r["group"] == "其他"]
     if rest:
         out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
+    out += _pending_block(pending_heroes(), "##")
     return "\n".join(out) + "\n"
 
 def gen_abilities(ctx):

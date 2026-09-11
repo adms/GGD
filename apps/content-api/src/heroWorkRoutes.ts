@@ -1,4 +1,4 @@
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
 import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import { buildRuntimePackageZip, packageZipInput } from "@ggd/shared/content/import/packageZip";
@@ -23,6 +23,11 @@ export const HERO_WORK_ENDPOINTS = [
   { method: "GET", path: "/work-versions/:workId/:versionId/package" },
   { method: "GET", path: "/work-versions/:workId/:versionId/files/*" },
 ] as const;
+export const HERO_TAKEOVER_ENDPOINTS = [
+  { method: "POST", path: "/admin/hero-package-takeover" },
+  { method: "POST", path: "/admin/inspect-hero-package-takeover" },
+  { method: "POST", path: "/admin/prepare-work-takeover" },
+] as const;
 
 interface Dependencies {
   repoRoot: string;
@@ -31,7 +36,7 @@ interface Dependencies {
   store: ImportStore;
   context: () => Promise<{ target: HeroPackageTarget; overlay?: OverlayBundle } | null>;
   packageOf: (body: unknown, jsonField: unknown) => unknown;
-  validate: (raw: unknown) => Promise<ValidateOutput>;
+  validate: (raw: unknown, canonicalTakeoverId?: string) => Promise<ValidateOutput>;
   iconPolicy: () => IconUploadPolicy;
 }
 
@@ -40,21 +45,29 @@ const messageOf = (error: unknown) => error instanceof Error ? error.message : S
 const unavailable = (error: unknown) => error instanceof HeroWorkerUnavailable || error instanceof HeroContentUnavailable;
 
 /** Part of Main's existing importer. Platform remains the author/publish authority. */
-export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: Dependencies): void {
-  app.post<{ Body: { project?: unknown } }>(`${prefix}/hero-package`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
+export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: Dependencies, allowCanonicalTakeover = false): void {
+  const canonicalId = (req: FastifyRequest): string => String(req.headers["x-ggd-work-id"] ?? "");
+  const validWorkId = (value: string): boolean => /^[A-Za-z0-9][A-Za-z0-9._@-]{0,127}$/.test(value);
+  const registerBuild = (path: string, takeover: boolean) => app.post<{ Body: { project?: unknown } }>(`${prefix}${path}`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
     try {
       const context = await d.context();
       if (!context) return reply.code(503).send(failure("HERO_TARGET_UNAVAILABLE", "目前目標缺少可驗證的建置版本。", true));
+      const takeoverId = takeover ? canonicalId(req) : undefined;
+      if (takeover && (!takeoverId || !validWorkId(takeoverId))) return reply.code(400).send(failure("WORK_IDENTITY_REQUIRED", "管理員接管需要合法的 canonical 英雄 ID。"));
       const sourcePackage = Buffer.isBuffer(req.body) ? d.packageOf(req.body, null) : undefined;
-      const pkg = await runHeroPackageJob(d.root, { kind: "build", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, project: req.body?.project, ...context, sourcePackage, iconPolicy: d.iconPolicy() }, d.store.directory);
+      const pkg = await runHeroPackageJob(d.root, { kind: "build", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, project: req.body?.project, ...context, sourcePackage, iconPolicy: d.iconPolicy(), canonicalTakeoverId: takeoverId }, d.store.directory);
       const zip = await buildRuntimePackageZip(packageZipInput(pkg, pkg.manifest.selectionRoots[0]!.id));
       return reply.type("application/zip").header("x-ggd-package-digest", pkg.manifest.packageDigest).send(Buffer.from(zip.bytes));
     } catch (error) { return reply.code(unavailable(error) ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), unavailable(error))); }
   });
+  registerBuild("/hero-package", false);
+  if (allowCanonicalTakeover) registerBuild("/admin/hero-package-takeover", true);
 
-  app.post(`${prefix}/inspect-hero-package`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
+  const registerInspect = (path: string, takeover: boolean) => app.post(`${prefix}${path}`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
     try {
-      const checked = await d.validate(d.packageOf(req.body, req.body));
+      const takeoverId = takeover ? canonicalId(req) : undefined;
+      if (takeover && (!takeoverId || !validWorkId(takeoverId))) return reply.code(400).send(failure("WORK_IDENTITY_REQUIRED", "管理員接管需要合法的 canonical 英雄 ID。"));
+      const checked = await d.validate(d.packageOf(req.body, req.body), takeoverId);
       if (!checked.ok || !checked.hero || !checked.value) return reply.code(422).send({ ...failure("HERO_PACKAGE_INVALID", "完整英雄檢查未通過。"), diagnostics: checked.diagnostics });
       const project = checked.hero.project;
       const icons = [{ slot: "hero", path: project.presentation.championIcon }, ...HERO_SLOTS.map((slot) => ({ slot, path: project.presentation.slots[slot].icon }))].flatMap(({ slot, path }) => {
@@ -64,8 +77,11 @@ export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: 
       return reply.send({ schema: "ggd-hero-package-inspection@1", project, packageDigest: checked.value.manifest.packageDigest, manifest: checked.value.manifest, icons, diagnostics: checked.diagnostics });
     } catch (error) { return reply.code(unavailable(error) ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), unavailable(error))); }
   });
+  registerInspect("/inspect-hero-package", false);
+  if (allowCanonicalTakeover) registerInspect("/admin/inspect-hero-package-takeover", true);
 
-  app.post<{ Body: { operationId?: string; workId?: string; package?: unknown } }>(`${prefix}/prepare-work`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
+  type PrepareRequest = FastifyRequest<{ Body: { operationId?: string; workId?: string; package?: unknown } }>;
+  const prepare = (takeover: boolean) => async (req: PrepareRequest, reply: FastifyReply) => {
     const operationId = Buffer.isBuffer(req.body) ? String(req.headers["x-ggd-operation-id"] ?? "") : req.body?.operationId ?? "";
     const workId = Buffer.isBuffer(req.body) ? String(req.headers["x-ggd-work-id"] ?? "") : req.body?.workId ?? "";
     if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/.test(operationId) || !/^[A-Za-z0-9][A-Za-z0-9._@-]{0,127}$/.test(workId)) return reply.code(400).send(failure("WORK_IDENTITY_REQUIRED", "作品與操作身分格式錯誤。"));
@@ -89,7 +105,7 @@ export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: 
       d.store.updateOperation(operationId, { kind: "work-prepare", requestDigest, workId });
     }
     try {
-      const checked = await d.validate(raw);
+      const checked = await d.validate(raw, takeover ? workId : undefined);
       if (!checked.ok || !checked.value || !checked.hero) {
         const diagnostics = checked.diagnostics.length ? checked.diagnostics : [{ code: "HERO_PACKAGE_INVALID", severity: "error", message: "此入口只接受完整英雄作品。" }];
         d.store.updateOperation(operationId, { status: "rejected", diagnostics });
@@ -105,7 +121,9 @@ export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: 
       // A crash after object placement resumes with the same operation, never a new version.
       return reply.code(503).send({ ...failure("WORK_PREPARE_FAILED", messageOf(error), true), operationId });
     }
-  });
+  };
+  app.post<{ Body: { operationId?: string; workId?: string; package?: unknown } }>(`${prefix}/prepare-work`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, prepare(false));
+  if (allowCanonicalTakeover) app.post<{ Body: { operationId?: string; workId?: string; package?: unknown } }>(`${prefix}/admin/prepare-work-takeover`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, prepare(true));
 
   app.get<{ Params: { workId: string; versionId: string } }>(`${prefix}/work-versions/:workId/:versionId`, async (req, reply) => {
     const record = d.store.getWorkVersion(req.params.workId, req.params.versionId);

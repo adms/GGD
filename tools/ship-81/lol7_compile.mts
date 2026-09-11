@@ -35,6 +35,7 @@ import { resolve } from "node:path";
 import { shippedHeroCatalog } from "../../packages/shared/testkit/heroPackageFixture";
 import { COMMUNITY_HERO_EXAMPLES, createCommunityHeroExample } from "../../packages/shared/src/content/heroForge/communityExamples";
 import { compileHeroPackageProject } from "../../packages/shared/src/content/import/heroPackage";
+import { snapshotHeroGenerator } from "../../packages/shared/src/content/import/heroBuildSources";
 import type { TemplateDoc } from "../../packages/shared/src/content/schema/template";
 
 /** ⭐ 出貨 id 的規則，⛔ 一個住處。盤點表的 `example:<x>` 與範例表的 `<x>` 都由它 join。 */
@@ -83,6 +84,7 @@ catalog.readAsset = (path: string) => {
 };
 
 const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
+const generatorVersion = snapshotHeroGenerator(resolve(import.meta.dirname, "../..")).versionId;
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 const blocked: unknown[] = [];
@@ -101,7 +103,7 @@ for (const example of COMMUNITY_HERO_EXAMPLES) {
   const sha = createHash("sha256").update(bytes).digest("hex");
   if (row.glbSha256 && sha !== row.glbSha256) throw new Error(`⛔ ${example.id} 的 GLB 雜湊與素材庫不符：${sha} ≠ ${row.glbSha256}`);
 
-  const project = createCommunityHeroExample(example.id, shippedId(example.id), templates);
+  const project = createCommunityHeroExample(example.id, shippedId(example.id), templates, generatorVersion);
   project.presentation.modelKey = row.modelKey;
   const compiled = compileHeroPackageProject(project, catalog, false);
   const fresh = compiled.runtime.filter((doc) => !catalog.documents.has(`${doc.collection}/${doc.id}`));
@@ -128,6 +130,7 @@ for (const example of COMMUNITY_HERO_EXAMPLES) {
     source: { inspiration: example.inspiration, sourceUrl: example.sourceUrl, adaptations: example.adaptations,
       from: "packages/shared/src/content/heroForge/communityExamples.ts" },
   }, null, 2) + "\n");
+  writeFileSync(resolve(out, `${shippedId(example.id)}.project.json`), JSON.stringify(project, null, 2) + "\n");
   rows.push({ id: example.id, shippedId: shippedId(example.id), name: champion.document.name, modelState: row.state,
     abilities: abilities.length, vfxScripts: scripts.length, abilityTemplates: templatesUsed.length });
 }

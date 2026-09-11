@@ -156,7 +156,7 @@ func TestHeroHTTPIdentityAndReviewBoundaries(t *testing.T) {
 		t.Fatalf("admin cannot load frozen package: %d", got)
 	}
 	for _, actor := range []string{"alice", "editor-proposer"} {
-		for _, path := range []string{"/admin/hero-submissions/" + snapshot.ID + "/publish", "/admin/hero-submissions/" + snapshot.ID + "/decide", "/admin/hero-works/hero-proof/unpublish"} {
+		for _, path := range []string{"/admin/hero-import/build", "/admin/hero-import/inspect", "/admin/hero-submissions/takeover", "/admin/hero-submissions/" + snapshot.ID + "/publish", "/admin/hero-submissions/" + snapshot.ID + "/decide", "/admin/hero-works/hero-proof/unpublish"} {
 			if got := heroRequest(router, "POST", path, actor, `{"reviewer":"admin"}`).Code; got != 403 {
 				t.Fatalf("%s bypassed admin gate %s: %d", actor, path, got)
 			}

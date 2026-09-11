@@ -68,3 +68,39 @@
 ## 03:37
 
 這兩個 模型 跟 語音 分支都做完回來了 請你/main 好好合併後 BMPNDD
+
+## 12:15
+
+你有看到最新的上架英雄名單嗎
+
+## 13:00
+
+請你從目前專案中最新訊息來更新 github readme 主頁
+
+## 13:02
+
+我又有一批34個英雄上架中 請你做一樣的流程並且用自動化流程（script）的方式來執行語音配對與圖示生成
+
+## 13:03
+
+全部放到一頁檢核頁面讓我複查，這個過程全部自動化，只留最後我的審查通過與否，並且這一頁也要放到後台管理頁
+
+## 13:27
+
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/docs/editor-contract/社群英雄126名上架狀態.md
+
+## 13:41
+
+請你掃描整個 GGD github 專案沒有任何 金鑰 登入方法 等敏感資料不適合公開 repo 的資訊
+
+## 13:44
+
+https://github.com/adms/GGD/blob/main/docs/%E5%85%A8%E8%8B%B1%E9%9B%84%E5%88%97%E8%A1%A8.md
+
+## 13:44
+
+請你查看最後段落
+
+## 13:52
+
+以後可以定期呼叫這個script檢查就好

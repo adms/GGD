@@ -73,6 +73,27 @@ describe("逐則對票 scripts/message-ledger.sh", () => {
     expect(run(dir, "--check").status, "填了票號就該綠").toBe(0);
   });
 
+  it("同一句原話在 transcript 的不同分鐘各保留一列，build 不得去重掉 check 要求的時間", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ggd-msgledger-repeat-"));
+    const repeated = "我們上傳git的規則是 成品一律上傳至git, 剩下半成品與來源都進 S3";
+    writeFileSync(
+      join(dir, `${DAY}.md`),
+      `# ${DAY}\n\n## 逐則對票\n\n| 時間 | owner 說了什麼（逐字） | 票 |\n|---|---|---|\n` +
+        `| 17:45 | ${repeated} | #1160 |\n`,
+    );
+    writeFileSync(
+      join(dir, "ledger-source_temp_20200102.md"),
+      `# 存檔\n\n## 17:45\n\n${repeated}\n\n## 17:47\n\n${repeated}\n\n## 17:56\n\n${repeated} (本機全保留)\n`,
+    );
+
+    const built = run(dir);
+    expect(built.status, built.stdout + built.stderr).toBe(0);
+    const after = readFileSync(join(dir, `${DAY}.md`), "utf8");
+    expect(after).toContain("| 17:45 |");
+    expect(after).toContain("| 17:47 |");
+    expect(after).toContain("| 17:56 |");
+  });
+
   /**
    * GH#876 —— 失敗形態⑨：**一個永遠不會綠的閘**。
    *

@@ -406,7 +406,7 @@ if FROM_TX:
 # ⭐ `prefer_incoming_text=True`:建置器的字**逐字**來自 transcript ⇒ 併進 `ruling.sh` 已插的列時,
 #   owner 的原話贏過我的改述(GH#1028;`_same_message` 的第三條路就是為這個開的)。
 added = LT.insert(LEDGER, [(t, LT.cell(m, MAXLEN), tickets_in(m)) for t, m in missing],
-                  prefer_incoming_text=True)
+                  prefer_incoming_text=True, authoritative_rows=msgs)
 print(f"✓ {DAY}：{len(msgs)} 則訊息,補了 {added} 列（其餘已經有列）")
 if added:
     print(f"⚠️ 新列的票號是**推出來**的;推不出來的是 `{LT.UNMAPPED}` —— 去填掉,"

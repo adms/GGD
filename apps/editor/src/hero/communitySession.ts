@@ -9,12 +9,13 @@ export const heroPlatform = new ApiClient({ storage: {
   },
   save(value) { try { if (value) localStorage.setItem(SESSION_KEY, JSON.stringify(value)); else localStorage.removeItem(SESSION_KEY); } catch { /* Session still works in memory when browser storage is unavailable. */ } },
 } });
-export const useHeroAccount = create<{ account: { id: string; username: string } | null; ready: boolean }>(() => ({ account: null, ready: false }));
+export type HeroAccount = { id: string; username: string; roles?: string[] };
+export const useHeroAccount = create<{ account: HeroAccount | null; ready: boolean }>(() => ({ account: null, ready: false }));
 heroPlatform.onSessionExpired = () => useHeroAccount.setState({ account: null, ready: true });
 let restoring: Promise<void> | null = null;
 export function restoreHeroAccount(): Promise<void> {
   return restoring ??= (async () => {
-    try { if (heroPlatform.hasSession) { const result = await heroPlatform.request<{ account: { id: string; username: string } }>("/me"); useHeroAccount.setState({ account: result.account }); } }
+    try { if (heroPlatform.hasSession) { const result = await heroPlatform.request<{ account: HeroAccount }>("/me"); useHeroAccount.setState({ account: result.account }); } }
     finally { useHeroAccount.setState({ ready: true }); }
   })();
 }

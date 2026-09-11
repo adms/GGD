@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-acquired-heroes-service-check@1",
+  "startedAt": "2026-09-10T19:24:09.975Z",
+  "finishedAt": "2026-09-10T19:24:15.783Z",
+  "status": "passed",
+  "origin": "http://127.0.0.1:8834",
+  "editorOrigin": "http://127.0.0.1:5214",
+  "scope": "Loopback source factory, service build, exact ZIP source/dependencies and service inspection. No publication, visual or design-fidelity acceptance.",
+  "recipeSha256": "sha256:b32a2724f9ea581eceaea091d2a132dd12cda6364f2a10f35e7580fa926844d7",
+  "selectedIds": [
+    "acquired-astralym"
+  ],
+  "target": {
+    "gameRevision": "acquired-heroes-local-20260911",
+    "contentVersion": "cv_8f4dde06dec9",
+    "migrationFingerprint": "79d7bc384d11",
+    "processorFingerprint": "3763b014a5d4"
+  },
+  "passed": 1,
+  "failed": 0,
+  "blocked": 0,
+  "notRun": 0,
+  "error": "",
+  "results": [
+    {
+      "id": "acquired-astralym",
+      "name": "枯星龍",
+      "status": "passed",
+      "errors": [],
+      "facts": {
+        "sourceSha256": "sha256:1ce58c7edf0e9106af88bae03849ad1d1bf8847be528fbdd22c36ca9bd0378c7",
+        "archiveSha256": "sha256:e9f5645bcb51040126f5b4d31409145099638b2d8d25d69519df5dc42f7eb48c",
+        "archiveBytes": 6865619,
+        "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+        "modelPath": "assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+        "modelDocumentSha256": "sha256:31d168a820fad50c24c2522ee8db6449f39a7b6501e36ea8d35895a6846b901b",
+        "modelBytesSha256": "sha256:618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+        "packageDigest": "sha256:95d8cef7b1786552fd92739f11322a1ca102878395d88c0853ac9fa79d029dab",
+        "slots": 6,
+        "runtimeDocuments": 128,
+        "validationDocuments": 2,
+        "assets": 93
+      }
+    }
+  ]
+}

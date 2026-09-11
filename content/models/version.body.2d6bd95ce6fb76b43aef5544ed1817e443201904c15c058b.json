@@ -2,6 +2,9 @@
   "id": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
   "schema": "model@1",
   "glbPath": "assets/models/ou99/versions/cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724.glb",
+  "hiddenPrimitives": [
+    1
+  ],
   "scale": 1,
   "collisionRadius": 0.55,
   "clipMap": {

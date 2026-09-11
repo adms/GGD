@@ -57,7 +57,7 @@ import { parseImportPackage } from "@ggd/shared/content/import/packageSchema";
 import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
 import { runHeroPackageJob, heroPackageJobsIdle } from "./heroPackageWorkerClient";
 import { ImportTransientCleanup } from "./importTransientCleanup";
-import { registerHeroWorkRoutes, HERO_WORK_ENDPOINTS } from "./heroWorkRoutes";
+import { registerHeroWorkRoutes, HERO_TAKEOVER_ENDPOINTS, HERO_WORK_ENDPOINTS } from "./heroWorkRoutes";
 import { readHeroContentSnapshot, type HeroOverlayReader } from "./heroContentSnapshot";
 import type { OverlayBundle } from "@ggd/shared/content/overlay";
 import { packageDigest } from "@ggd/shared/content/import/digest";
@@ -502,7 +502,7 @@ export function registerImportRoutes(
           authoringProcessor,
           // ⭐ 與上面**同一支** `g2Facts()` ⇒ ⛔ 兩份 profile 不可能對 stage 說不同的話。
           ...g2Facts(),
-          importerEndpoints: opts.workOnly ? HERO_WORK_ENDPOINTS : IMPORTER_ENDPOINTS,
+          importerEndpoints: opts.workOnly ? [...HERO_WORK_ENDPOINTS, ...HERO_TAKEOVER_ENDPOINTS] : IMPORTER_ENDPOINTS,
           ...(opts.reloadMode !== undefined
             ? { reloadMode: opts.reloadMode }
             : {}),
@@ -839,13 +839,13 @@ function registerG2Routes(
   });
 
   /** ⭐ validate 與 apply 共用**同一支**驗證 —— ⛔ 兩份實作必然漂。 */
-  const runValidate = async (raw: unknown) => {
+  const runValidate = async (raw: unknown, canonicalTakeoverId?: string) => {
     const entries =
       (raw as { manifest?: { entries?: unknown } } | null)?.manifest?.entries;
     const isHero = (raw as { manifest?: { scope?: string } } | null)?.manifest?.scope === "community-work";
     if (isHero) {
       const context = await d.heroContext();
-      return runHeroPackageJob(d.root, { kind: "validate", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
+      return runHeroPackageJob(d.root, { kind: "validate", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, overlay: context?.overlay, canonicalTakeoverId, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
     }
     return validatePackage({
       raw,
@@ -900,7 +900,7 @@ function registerG2Routes(
     ...extra,
   });
 
-  registerHeroWorkRoutes(app, prefix, { root: d.root, repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
+  registerHeroWorkRoutes(app, prefix, { root: d.root, repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy }, Boolean(d.workOnly));
   if (d.workOnly) return;
 
   // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────

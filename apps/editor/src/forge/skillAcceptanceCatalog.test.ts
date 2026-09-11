@@ -14,6 +14,8 @@ import {
   CAPABILITY_ONLY_HOOK_EVENTS,
   SKILL_ACCEPTANCE_CANDIDATES,
   SKILL_ACCEPTANCE_THEME_IDS,
+  SKILL_VISUAL_ACCEPTANCE_CANDIDATES,
+  SKILL_VISUAL_ACCEPTANCE_THEME_IDS,
   STRICT_VISUAL_ACCEPTANCE,
   STRICT_VISUAL_ACCEPTANCE_IDS,
   skillAcceptanceThemeId,
@@ -115,17 +117,20 @@ function union<K extends keyof Surface>(docs: readonly AbilityDoc[], key: K): Se
   return new Set(docs.flatMap((doc) => [...surfaceOf(doc)[key]]));
 }
 
-describe("鑄技工坊 47 份現有技能驗收清單", () => {
-  it("清單固定為 43 個技能主題／47 份實際技能：26 份 Owner 聯集＋21 份 runtime 覆蓋（2026-09-06 GH#1020 ＋小傑猜猜拳）", () => {
-    expect(SKILL_ACCEPTANCE_CANDIDATES).toHaveLength(47);
-    expect(SKILL_ACCEPTANCE_THEME_IDS.size).toBe(43);
+describe("鑄技工坊 60 份現有技能驗收清單", () => {
+  it("清單固定為 56 個技能主題／60 份實際技能：47 份視覺基線＋13 份新增能力覆蓋", () => {
+    expect(SKILL_ACCEPTANCE_CANDIDATES).toHaveLength(60);
+    expect(SKILL_ACCEPTANCE_THEME_IDS.size).toBe(56);
     expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "owner-union")).toHaveLength(26);
     expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "runtime-coverage")).toHaveLength(21);
-    expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id)).size).toBe(47);
+    expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "capability-coverage")).toHaveLength(13);
+    expect(SKILL_VISUAL_ACCEPTANCE_CANDIDATES).toHaveLength(47);
+    expect(SKILL_VISUAL_ACCEPTANCE_THEME_IDS.size).toBe(43);
+    expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id)).size).toBe(60);
     for (const row of SKILL_ACCEPTANCE_CANDIDATES) expect(row.acceptance.length, row.id).toBeGreaterThan(20);
   });
 
-  it("46→42 只來自三組已知鏡像與一條 Avalon 連鎖，沒有名稱碰巧相同造成的暗中合併", () => {
+  it("60→56 只來自三組已知鏡像與一條 Avalon 連鎖，沒有名稱碰巧相同造成的暗中合併", () => {
     const grouped = new Map<string, string[]>();
     for (const row of SKILL_ACCEPTANCE_CANDIDATES) {
       const key = skillAcceptanceThemeId(row);
@@ -170,7 +175,7 @@ describe("鑄技工坊 47 份現有技能驗收清單", () => {
     for (const id of STRICT_VISUAL_ACCEPTANCE_IDS) expect(vfxIds.has(id), id).toBe(true);
   });
 
-  it("嚴格八主題直接採用 Main 機器契約，展開後正好 11 份且都在 46 份內", () => {
+  it("嚴格八主題直接採用 Main 機器契約，展開後正好 11 份且都在 60 份內", () => {
     expect(STRICT_VISUAL_ACCEPTANCE).toHaveLength(8);
     expect(STRICT_VISUAL_ACCEPTANCE_IDS.size).toBe(11);
     const candidates = new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
