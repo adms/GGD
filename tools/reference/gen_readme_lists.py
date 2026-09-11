@@ -313,6 +313,47 @@ def gen_roster(ctx):
 # owner 明確要求名稱要在主頁上，⇒ 精簡的是**每一格的內容**，⛔ 不是列數。
 
 ALL_HEROES_DOC = "docs/全英雄列表.md"
+PENDING_JSON = "docs/_data/pending-heroes.json"
+
+
+def pending_heroes():
+    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**。
+
+    ⛔ 不直接讀來源 repo：它不保證在這台機器上（CLAUDE.md「換機時：有文件不等於有素材」），
+    而這份文件必須在每一台機器上算出同樣的位元組。
+    唯一的寫入端是 `tools/reference/sync_pending_heroes.py`。
+    ⚠️ 快照不在 ⇒ 回 `None`，⭐ 而下面會**印一行說它不在**（⛔ 不是安靜地少印 45 名）。
+    """
+    path = os.path.join(G.REPO, PENDING_JSON)
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _pending_block(doc, heading_level):
+    if doc is None:
+        return [f"{heading_level} 待上架（快照不在）", "",
+                f"> ⚠️ ⛔ 找不到 `{PENDING_JSON}` ⇒ **這一段沒有印任何東西**。",
+                f"> 跑 `python3 tools/reference/sync_pending_heroes.py` 重抽。", ""]
+    out = [f"{heading_level} 待上架（{doc['counts']['pending']} 名）—— ⛔ 還沒進 `content/champions/`", ""]
+    out += note([
+        f"⭐ 這些英雄的卡**還不在這個 repo 裡** ⇒ 上面那張表看不到它們。"
+        f"狀態的權威來源是 `{doc['source']['repo']}` 的 `{doc['source']['path']}`"
+        f"（快照日 {doc['source']['snapshotDate']}）。",
+        "",
+        f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
+        "",
+        "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
+    ])
+    for g in doc["groups"]:
+        out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
+                "| # | ID | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
+        for i, r in enumerate(g["rows"], 1):
+            out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
+        out.append("")
+    return out
+
 
 #: 分組：讓「原本就上架的那批」與後來幾批**一眼分得開**（owner 2026-09-11 問的正是這個）。
 HERO_GROUPS = (
@@ -386,7 +427,12 @@ def gen_all_heroes(ctx):
     ])
     out += _all_heroes_table(rows, flags)
     out += [""]
-    out += provenance(ctx, f"全量 {len(rows)} 名，其中開放 {opened} 名。完整清單另見 `{ALL_HEROES_DOC}`。")
+    pend = pending_heroes()
+    out += _pending_block(pend, "#####")
+    extra = f"全量 {len(rows)} 名，其中開放 {opened} 名。"
+    if pend:
+        extra += f"另有 {pend['counts']['pending']} 名待上架（卡還沒進 repo）。"
+    out += provenance(ctx, extra + f" 完整清單另見 `{ALL_HEROES_DOC}`。")
     return "\n".join(out), len(rows)
 
 
@@ -418,6 +464,7 @@ def gen_all_heroes_doc(ctx):
     rest = [r for r in rows if r["group"] == "其他"]
     if rest:
         out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
+    out += _pending_block(pending_heroes(), "##")
     return "\n".join(out) + "\n"
 
 def gen_abilities(ctx):
