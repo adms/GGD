@@ -183,6 +183,8 @@ const seatView = (seatId: number, displayName: string, zone = 0): SeatView => ({
   augments: [],
   abilityRanks: [0, 0, 0, 0],
   cooldowns: [0, 0, 0, 0],
+  recastCharges: [],
+  recastWindow: [],
   exAbilityId: "",
   exRank: 0,
   exCooldown: 0,
