@@ -8396,11 +8396,11 @@
       }
     ]
   },
-  "assetManifestDigest": "9abcae28f243",
+  "assetManifestDigest": "c429a8e670dc",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2463,
-    "totalBytes": 529890178
+    "entries": 2474,
+    "totalBytes": 557955002
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8418,11 +8418,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "ba2486ede86d",
+    "fingerprint": "89649af8b23c",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "1dca4fd7f376"
+        "digest": "3dd1f3d12fdf"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8488,5 +8488,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "345a6a4b1562"
+  "profileDigest": "5a448161ffd4"
 }

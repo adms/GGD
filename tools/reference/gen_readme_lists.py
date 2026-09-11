@@ -73,6 +73,7 @@ SCRIPT = "tools/reference/gen_readme_lists.py"
 #    進版控快照。宣告在原始碼裡（單一住處，reconcile.mjs / merge-io.mjs 會收割），
 #    ⛔ 不手寫 sync-io.json。
 # ggd:writes docs/reference/_curation-snapshot.json
+# ggd:writes docs/全英雄列表.md
 
 # Truncation limits, in CHARACTERS. A markdown cell / kit line that runs to 300
 # characters destroys readability, and readability is the entire point of the
@@ -94,7 +95,7 @@ DOC_MECHANICS = "docs/reference/mechanics.md"
 DOC_TIERS = "docs/editor-contract/ggd-skill-tiers.md"   # `pnpm tiers:build`
 DOC_ANCHORS = "docs/平衡錨點量測.md"                      # `pnpm anchors:build`
 
-BLOCKS = ("roster", "abilities", "items", "grail", "mechanics", "arenas",
+BLOCKS = ("roster", "all-heroes", "abilities", "items", "grail", "mechanics", "arenas",
           "combat-env", "stat-bands", "tiers")
 
 
@@ -295,6 +296,129 @@ def gen_roster(ctx):
 # census + how-to-read + a link to the full 554-row detail table in docs. It is
 # deliberately compact so the README stays small; it is EXPANDED (no <details>).
 # ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# all-heroes — ⭐ **全部**英雄 × 六槽技能名（owner 2026-09-11）
+# ---------------------------------------------------------------------------
+# owner 逐字：「請你產生一個全英雄列表.md 並且更新在 github readme 主頁，
+#              主頁需包含技能名稱 天生/Q/W/E/R/EX」
+#
+# ⭐ 它與上面的 `roster` 區段**刻意不同**，⛔ 不是重複：
+#   · `roster`      —— 只印**開放名單**，每槽「名稱＋一行效果」（讀的是「這一場能選誰」）
+#   · `all-heroes`  —— 印**全部**（含未開放／變身態），每槽**只有名稱**（讀的是「這遊戲有什麼」）
+#
+# ⚠️ 這個檔的檔頭第 2 條記著「README 曾經 224 KB 因為把全部內容內嵌」——
+# ⭐ 所以這一段刻意**只印名稱**（⛔ 不印效果、⛔ 不印說明）：153 列 × 6 個短格。
+# owner 明確要求名稱要在主頁上，⇒ 精簡的是**每一格的內容**，⛔ 不是列數。
+
+ALL_HEROES_DOC = "docs/全英雄列表.md"
+
+#: 分組：讓「原本就上架的那批」與後來幾批**一眼分得開**（owner 2026-09-11 問的正是這個）。
+HERO_GROUPS = (
+    ("godie-", "原作 w3x 班底"),
+    ("b2-", "第二批社群英雄"),
+    ("community-review", "第一批社群英雄"),
+    ("lol-", "英雄聯盟"),
+)
+
+
+def hero_group(cid):
+    for prefix, label in HERO_GROUPS:
+        if cid.startswith(prefix):
+            return label
+    return "其他"
+
+
+def all_heroes_rows(ctx):
+    """(組, id, 全名, 稱號, 六格技能名) —— ⭐ 缺的槽印 `—`，⛔ 不是省略那一格
+    （省略會讓表格錯位，而且看不出來「這一支沒有 EX」）。"""
+    open_ids = ctx["open_champions"]
+    rows = []
+    for c in ctx["champions"]:
+        names = {slot: G.cell(a.get("name") or a.get("id")) for slot, a in kit_slots(c, ctx)}
+        title, full = G.split_champion_name(c.get("name", ""))
+        rows.append({
+            "group": hero_group(c["id"]),
+            "id": c["id"],
+            "full": G.cell(full),
+            "title": G.cell(title),
+            "open": c["id"] in open_ids,
+            "slots": [names.get(s, "—") for s in ("天生", "Q", "W", "E", "R", "EX")],
+        })
+    rows.sort(key=lambda r: (
+        [lbl for _p, lbl in HERO_GROUPS].index(r["group"]) if r["group"] != "其他" else 99,
+        r["id"],
+    ))
+    return rows
+
+
+def _all_heroes_table(rows, flags):
+    out = ["| 英雄 | 稱號 | 上架 | 天生 | Q | W | E | R | EX |",
+           "| --- | --- | :-: | --- | --- | --- | --- | --- | --- |"]
+    for r in rows:
+        flag = ("✅" if r["open"] else "—") if flags else "·"
+        out.append("| " + " | ".join([
+            f"**{r['full']}**<br>`{r['id']}`", r["title"], flag, *r["slots"],
+        ]) + " |")
+    return out
+
+
+def gen_all_heroes(ctx):
+    rows = all_heroes_rows(ctx)
+    flags = ctx["curation_flags"]
+    opened = sum(1 for r in rows if r["open"])
+    by_group = {}
+    for r in rows:
+        by_group.setdefault(r["group"], []).append(r)
+
+    out = [f"#### 全英雄列表（{len(rows)} 名）— 六個技能 slot 的**名稱**", ""]
+    out += note([
+        "⭐ 這是 `content/champions/` 的**全部**英雄，⛔ 不是開放名單 —— "
+        f"上面那一段才是「這一場能選誰」（{opened} 名）。",
+        "",
+        "⭐ 每一列六格＝**天生 / Q / W / E / R / EX**，只印**名稱**；"
+        "一行效果在上面那一段，完整文字在 `docs/reference/abilities.md`。",
+        "",
+        "分組：" + " · ".join(
+            f"**{g}** {len(v)}" for g, v in by_group.items()
+        ) + "。",
+    ])
+    out += _all_heroes_table(rows, flags)
+    out += [""]
+    out += provenance(ctx, f"全量 {len(rows)} 名，其中開放 {opened} 名。完整清單另見 `{ALL_HEROES_DOC}`。")
+    return "\n".join(out), len(rows)
+
+
+def gen_all_heroes_doc(ctx):
+    """獨立的 `docs/全英雄列表.md` —— 同一份 ctx、同一次 run ⇒ ⛔ 不可能與 README 打架。"""
+    rows = all_heroes_rows(ctx)
+    flags = ctx["curation_flags"]
+    opened = sum(1 for r in rows if r["open"])
+    out = [
+        "# 全英雄列表",
+        "",
+        f"> ⛔ **這份文件是產生的**（`{CMD}`）—— 手改會在下一次重新產生時被打回來。",
+        f"> 來源只有 `content/champions/` 與進版控的策展快照；contentVersion `{ctx['contentVersion']}`。",
+        "",
+        f"共 **{len(rows)}** 名英雄，其中 **{opened}** 名在開放名單內。",
+        "",
+        "每一列六格＝**天生 / Q / W / E / R / EX**，印的是技能**名稱**。",
+        "一行效果見 README 的開放名單那一段；完整效果文字見 `docs/reference/abilities.md`。",
+        "",
+    ]
+    for _prefix, label in HERO_GROUPS:
+        grp = [r for r in rows if r["group"] == label]
+        if not grp:
+            continue
+        o = sum(1 for r in grp if r["open"])
+        out += [f"## {label}（{len(grp)} 名，開放 {o}）", ""]
+        out += _all_heroes_table(grp, flags)
+        out += [""]
+    rest = [r for r in rows if r["group"] == "其他"]
+    if rest:
+        out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
+    return "\n".join(out) + "\n"
 
 def gen_abilities(ctx):
     abils = ctx["abilities"]
@@ -1270,7 +1394,8 @@ def gen_stat_bands(ctx):
     return "\n".join(L), len(origins) * len(keys)
 
 
-GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_items,
+GENERATORS = {"roster": gen_roster, "all-heroes": gen_all_heroes,
+              "abilities": gen_abilities, "items": gen_items,
               "grail": gen_grail, "mechanics": gen_mechanics, "arenas": gen_arenas,
               "combat-env": gen_combat_env, "stat-bands": gen_stat_bands,
               "tiers": gen_tiers}
@@ -1289,6 +1414,10 @@ def _render_docs(ctx):
         "roster": (G.gen_roster, os.path.join(G.OUTDIR, "roster.md")),
         "abilities": (G.gen_abilities, os.path.join(G.OUTDIR, "abilities.md")),
         "items": (G.gen_items, os.path.join(G.OUTDIR, "items.md")),
+        # ⭐ owner 2026-09-11：「產生一個全英雄列表.md」—— 同一次 run、同一份 ctx
+        #   ⇒ ⛔ 它與 README 的那一段不可能互相矛盾。
+        "all-heroes": (lambda c: (gen_all_heroes_doc(c), 0),
+                       os.path.join(G.REPO, ALL_HEROES_DOC)),
         # ⭐ 聖杯願望與機制詞彙 —— 同一次 run，同一份 ctx，所以 README 的摘要與
         # 這兩份完整清單不可能互相矛盾（owner 2026-08-17「統一用程式建立」）。
         "grail": (lambda c: (GR.gen_grail_doc(c, G.CONTENT), 0),

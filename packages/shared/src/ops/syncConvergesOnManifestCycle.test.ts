@@ -42,7 +42,7 @@ function syncSteps(): string[] {
   };
   const chain = pkg.scripts["skills:sync"];
   expect(chain, "package.json 裡找不到 skills:sync").toBeTruthy();
-  return chain
+  return String(chain ?? "")
     .split("&&")
     .map((s) => s.trim().replace(/^pnpm /, ""))
     .filter(Boolean);
