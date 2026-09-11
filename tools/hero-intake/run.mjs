@@ -27,7 +27,7 @@
  * ```
  */
 import { createHash } from "node:crypto";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -46,6 +46,27 @@ const BATCH = opt("--batch", "batch");
 const CHECK = has("--check");
 const GEN_ICONS = !has("--no-gen-icons");
 const VOICE_INDEX = opt("--voice-index", process.env.GGD_VOICE_INDEX ?? null);
+/**
+ * ⭐ 還沒進 `content/champions/` 的英雄（待上架）**也要答得出模型那一段** ——
+ * 來源是另一個 repo 的交付表（`docs/_reports/community-acquired-heroes/model-delivery-summary.json`：
+ * 每一位的 `defaultModelKey` · `selectedClips` · `files[].gitPath`＋`sha256`）。
+ * ⛔ 沒給就只能說「還沒有 champion 文件」，⛔ 不是假裝沒有模型。
+ */
+const DELIVERY = opt("--delivery", null);
+/**
+ * ⭐ 交付**表**與交付**的位元組**是兩件事 —— 表說「已交付」，位元組可能還在那個 repo，
+ * 也可能**連那裡都沒有**（2026-09-11 量到：32 個交付檔裡有 4 個在來源 repo 也不存在）。
+ * ⇒ 從交付表的路徑往上找到那個 repo 的根（`.git` 所在），兩邊都數一次。
+ */
+const DELIVERY_ROOT = opt("--delivery-root", null) ?? (() => {
+  if (!DELIVERY) return null;
+  let dir = dirname(DELIVERY);
+  for (let i = 0; i < 8 && dir && dir !== "/"; i += 1) {
+    if (existsSync(join(dir, ".git"))) return dir;
+    dir = dirname(dir);
+  }
+  return null;
+})();
 
 const readJson = (p, d = null) => { try { return JSON.parse(readFileSync(p, "utf8")); } catch { return d; } };
 const sha256 = (b) => createHash("sha256").update(b).digest("hex");
@@ -59,9 +80,10 @@ function heroList() {
   if (from) {
     const doc = readJson(join(ROOT, from)) ?? readJson(from);
     if (doc === null) die(`--from 讀不到：${from}`);
-    if (Array.isArray(doc)) return doc.map((x) => (typeof x === "string" ? { id: x } : { id: x.id ?? x.heroId, name: x.name }));
-    if (Array.isArray(doc.heroes)) return doc.heroes.map((x) => (typeof x === "string" ? { id: x } : { id: x.id ?? x.heroId, name: x.name }));
-    if (Array.isArray(doc.rows)) return doc.rows.map((x) => ({ id: x.id ?? x.heroId, name: x.name }));
+    const row = (x) => (typeof x === "string" ? { id: x } : { id: x.id ?? x.heroId, name: x.name, deliveryKey: x.deliveryKey ?? null });
+    if (Array.isArray(doc)) return doc.map(row);
+    if (Array.isArray(doc.heroes)) return doc.heroes.map(row);
+    if (Array.isArray(doc.rows)) return doc.rows.map(row);
     if (doc.champions && !Array.isArray(doc.champions)) {
       // official-names.json 的形狀：{champions: {Sett: {ownerName: "賽特"}}} —— 還沒有 GGD id
       return Object.entries(doc.champions).map(([native, v]) => ({ id: v.id ?? `lol-${native.toLowerCase()}`, name: v.ownerName ?? native, native }));
@@ -110,24 +132,95 @@ const offDisk = (() => {
  * ⭐ 「檔不在工作樹」與「檔**任何分支都沒有**」是兩件事 —— 前者是我 checkout 錯地方，
  * 後者才是真的缺漏。⇒ 一次把每一條 ref 的 blob 路徑收成一個集合，⛔ 不是逐檔問 git。
  */
-const trackedAnywhere = (() => {
+function treePathsAnywhere(root, subdir) {
   const set = new Set();
-  const refs = spawnSync("git", ["for-each-ref", "--format=%(refname)", "refs/heads", "refs/remotes"], { cwd: ROOT, encoding: "utf8" });
+  if (!root || !existsSync(join(root, ".git"))) return set;
+  const refs = spawnSync("git", ["for-each-ref", "--format=%(refname)", "refs/heads", "refs/remotes"], { cwd: root, encoding: "utf8" });
   const list = String(refs.stdout ?? "").trim().split("\n").filter(Boolean).slice(0, 40);
   for (const ref of list) {
-    const r = spawnSync("git", ["ls-tree", "-r", "--name-only", ref, "content/assets/models"], { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+    const r = spawnSync("git", ["ls-tree", "-r", "--name-only", ref, subdir], { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
     for (const line of String(r.stdout ?? "").split("\n")) if (line) set.add(line);
   }
   return set;
+}
+const trackedAnywhere = treePathsAnywhere(ROOT, "content/assets/models");
+
+/**
+ * 交付表：heroId／短名 → {defaultModelKey, selectedClips, files[]}
+ *
+ * ⛔⛔ **這是一把 join key，所以它自己要先被驗過**（CLAUDE.md 第〇·六守則：
+ * 「⭐ 當你要用一把鑰匙把兩份對起來時，**先驗那把鑰匙**」）。交付表用的是**那個 repo 的短名**
+ * （`ptrainer` · `steve-alex` · `oyaji` · `cooking-master`），GGD 這邊是 `acquired-*` / `godie-*`
+ * ⇒ ⭐ 自動規則只解得開「去掉前綴就一樣」的那些，剩下的要在**清單裡逐位寫明** `deliveryKey`
+ * （⛔ 不是在這裡猜近似字串，也⛔ 不是照順序配對 —— 順序不是 key）。
+ */
+const delivery = (() => {
+  const out = new Map();
+  if (!DELIVERY) return out;
+  const d = readJson(DELIVERY) ?? readJson(join(ROOT, DELIVERY));
+  if (!d?.heroes) die(`--delivery 讀不到或沒有 heroes：${DELIVERY}`);
+  for (const h of d.heroes) {
+    const short = String(h.hero ?? "");
+    if (!short) continue;
+    for (const key of [short, `acquired-${short}`, `godie-${short}`, ...(h.identityIds ?? [])]) if (key) out.set(key, h);
+  }
+  return out;
+})();
+/** 來源 repo 的「任何分支都有的路徑」與「宣告在 S3 的路徑」—— ⭐ 與本地那三分法同型 */
+const sourceTracked = DELIVERY_ROOT ? treePathsAnywhere(DELIVERY_ROOT, "content/assets/models") : new Set();
+const sourceOffDisk = new Set(Object.keys((DELIVERY_ROOT ? readJson(join(DELIVERY_ROOT, "content/assets-offdisk.json")) : null)?.entries ?? {}));
+/**
+ * ⛔⛔ **「任何分支的樹上都沒有」⛔ 不等於「位元組不存在」** —— 2026-09-11 量到 4 顆 glb 正是這樣：
+ * 它們在 `7bc2fa3f8` 進來過，又被後來的一次合併刪掉 ⇒ 樹上查不到，⭐ 而位元組還在 git 歷史裡。
+ * 兩者的處置完全不同（一個是「去撈回來」，一個是「還沒做出來」）⇒ ⭐ 分開回答，⛔ 不要合併成一句。
+ */
+const sourceEverAdded = (() => {
+  const set = new Set();
+  if (!DELIVERY_ROOT || !existsSync(join(DELIVERY_ROOT, ".git"))) return set;
+  const r = spawnSync("git", ["log", "--all", "--full-history", "--diff-filter=A", "--name-only", "--pretty=format:", "--", "content/assets/models"],
+    { cwd: DELIVERY_ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, timeout: 5 * 60 * 1000 });
+  for (const line of String(r.stdout ?? "").split("\n")) if (line.trim()) set.add(line.trim());
+  return set;
 })();
 
-/** 模型對應的缺漏 —— ⭐ 每一階都分開回答，⛔ 不是一個「有沒有模型」的布林 */
-function checkModel(champ) {
-  const modelKey = champ?.modelKey ?? null;
-  if (!champ) return { ok: false, gap: "還沒有 content/champions 文件", severity: "blocker" };
-  if (!modelKey) return { ok: false, gap: "champion 文件沒有 modelKey", severity: "blocker" };
+/** 交付表原本有幾列（⭐ 反方向要問「有沒有哪一列沒人認領」，⛔ 不是只問「我查得到嗎」） */
+const deliveryRows = new Set([...delivery.values()].map((h) => String(h.hero)));
+const deliveryClaimed = new Map();
+
+/** ⭐ 一位英雄對到交付表的哪一列 —— 顯式 `deliveryKey` 優先，⛔ 指不到就**當場死**（別靜靜地沒對上）。 */
+function deliveryRowFor(h) {
+  if (h.deliveryKey) {
+    if (!DELIVERY) die(`清單替 ${h.id} 指定了 deliveryKey「${h.deliveryKey}」，⛔ 但這次沒給 --delivery —— 補上那個旗標再跑`);
+    const row = delivery.get(h.deliveryKey);
+    if (!row) die(`${h.id} 的 deliveryKey「${h.deliveryKey}」在交付表裡查不到 —— ⛔ 那把鑰匙是錯的`);
+    return row;
+  }
+  return delivery.get(h.id) ?? null;
+}
+
+/**
+ * ⭐ 交付表的 `status` 逐字翻成一句話 —— ⛔ 不要把它讀成「有沒有交付」的布林：
+ * 其中一種狀態（`rig-source-present-actions-missing`）的意思正是**還沒交付得出動作**。
+ * ⛔ 認不得的狀態原字串照印，⛔ 不猜。
+ */
+const DELIVERY_STATUS_TEXT = {
+  "converted-shared-contract-and-motion-verified": "已轉檔並驗過動作",
+  "existing-finished-files-copied-byte-identical": "沿用既有成品（逐位元組相同）",
+  "rig-source-present-actions-missing": "只有骨架來源，⛔ 動作還沒做",
+};
+
+const CLIPS = ["idle", "run", "attack", "cast", "hurt", "death"];
+
+/**
+ * ⭐ 一把 modelKey 在**這個 repo** 裡站不站得住 —— 兩條路共用它：
+ * ① champion 文件上的 `modelKey` ② 交付表上的 `defaultModelKey`。
+ * ⚠️ 後者是踩出來的：那 10 位「沿用既有成品」的交付列 `files` 是**空的**，
+ * 因為那些檔**本來就在這個 repo** ⇒ ⛔ 空的 files ⛔ 不等於沒有模型，要真的拿那把 key 去查。
+ */
+function resolveModelKey(modelKey) {
+  if (!modelKey) return { ok: false, modelKey: null, gap: "沒有 modelKey", severity: "blocker" };
   const doc = modelDocs.get(modelKey);
-  if (!doc) return { ok: false, modelKey, gap: `modelKey 指不到任何 model@1 文件`, severity: "blocker" };
+  if (!doc) return { ok: false, modelKey, gap: "modelKey 指不到任何 model@1 文件", severity: "blocker" };
   const glbPath = doc.glbPath ?? null;
   if (!glbPath) return { ok: false, modelKey, gap: "model 文件沒有 glbPath", severity: "blocker" };
   const abs = join(CONTENT, glbPath);
@@ -144,21 +237,90 @@ function checkModel(champ) {
       severity: declared ? "" : inSomeBranch ? "warning" : "blocker",
     };
   }
-  const bytes = statSync(abs).size;
   const clip = doc.clipMap ?? null;
-  const CLIPS = ["idle", "run", "attack", "cast", "hurt", "death"];
   const missingClips = clip ? CLIPS.filter((c) => !clip[c]) : CLIPS;
   return {
     ok: missingClips.length === 0,
-    modelKey, glbPath, bytes, clipMap: clip,
-    missingClips,
+    modelKey, glbPath, bytes: statSync(abs).size, clipMap: clip, missingClips,
     gap: missingClips.length === 0 ? "" : `clipMap 少了：${missingClips.join("／")}`,
     severity: missingClips.length === 0 ? "" : clip ? "warning" : "blocker",
   };
 }
 
+/** 模型對應的缺漏 —— ⭐ 每一階都分開回答，⛔ 不是一個「有沒有模型」的布林 */
+function checkModel(champ, id, d = null) {
+  // 還沒有 champion 文件，但**交付表有** ⇒ 回答得出「模型在哪、進 repo 了沒」。
+  if (!champ && d) {
+    const files = d.files ?? [];
+    const status = String(d.status ?? "");
+    const statusText = DELIVERY_STATUS_TEXT[status] ?? "";
+    const key = d.defaultModelKey ?? null;
+    // ⛔⛔ `files` 是**空的**時有**兩個**完全相反的意思，⛔ 而「0/0 個檔進來了」把兩個都讀成了「到齊」：
+    //    ① 沒有 modelKey ⇒ 這一位**還沒有模型可交**（`rig-source-present-actions-missing`）⇒ ⛔ 真缺漏
+    //    ② 有 modelKey ⇒ 檔**本來就在這個 repo**（`existing-finished-files-copied-byte-identical`）⇒ 去查那把 key
+    if (files.length === 0) {
+      if (!key) {
+        return {
+          ok: false, modelKey: null, clipMap: null, deliveryStatus: status, files: 0, filesInRepo: 0,
+          gap: `交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「${status || "(空)"}」${statusText ? `：${statusText}` : ""}`,
+          severity: "blocker",
+        };
+      }
+      const m = resolveModelKey(key);
+      const bad = m.severity === "blocker";
+      return {
+        ...m, ok: false, clipMap: m.clipMap ?? d.selectedClips ?? null, deliveryStatus: status, files: 0, filesInRepo: 0,
+        gap: bad
+          ? `交付表說「${statusText || status}」，⛔ 但這個 repo 裡 ${m.gap}`
+          : `模型已經在這個 repo（${statusText || status}${m.gap ? `；${m.gap}` : ""}）—— ⛔ 只差 champion 文件還沒進 content`,
+        severity: bad ? "blocker" : "warning",
+      };
+    }
+    const here = files.filter((f) => f.gitPath && existsSync(join(ROOT, f.gitPath)));
+    const declaredOff = files.filter((f) => f.gitPath?.startsWith("content/") && offDisk.has(f.gitPath.slice("content/".length)));
+    const landed = here.length + declaredOff.length;
+    // ⭐ 反方向再問一次：那些檔**在來源 repo** 存在嗎？⛔ 「表上寫了」⛔ 不等於「位元組在」。
+    // ⚠️ 而「來源那棵工作樹沒有」與「來源**任何分支都沒有**」又是兩件事（跟本地那三分法同型）——
+    //    ⛔ 只 stat 檔案會把「在別的分支」誤判成「位元組沒交出來」。
+    const liveAtSource = (f) => f.gitPath && (existsSync(join(DELIVERY_ROOT, f.gitPath)) || sourceTracked.has(f.gitPath) || sourceOffDisk.has(f.gitPath.replace(/^content\//, "")));
+    const atSource = DELIVERY_ROOT ? files.filter(liveAtSource).length : null;
+    const atSourceWorktree = DELIVERY_ROOT ? files.filter((f) => f.gitPath && existsSync(join(DELIVERY_ROOT, f.gitPath))).length : null;
+    // 樹上沒有，但**歷史裡有** ⇒ 撈得回來（⛔ 不是「還沒做出來」）
+    const inHistory = DELIVERY_ROOT ? files.filter((f) => !liveAtSource(f) && sourceEverAdded.has(f.gitPath)).length : 0;
+    const gone = atSource === null ? 0 : files.length - atSource - inHistory;
+    const sourceShort = gone > 0;
+    return {
+      ok: false, modelKey: d.defaultModelKey ?? null, clipMap: d.selectedClips ?? null,
+      deliveryStatus: status, files: files.length, filesInRepo: landed,
+      filesAtSource: atSource, filesAtSourceWorktree: atSourceWorktree, filesOnlyInSourceHistory: inHistory, filesGone: gone,
+      gap: landed >= files.length
+        ? `模型已交付且 ${files.length} 個檔都在 —— ⛔ 只差 champion 文件還沒進 content`
+        : sourceShort
+          ? `⛔ 交付表說「${statusText || status}」，但 ${gone}/${files.length} 個檔**來源 repo 的樹上與歷史裡都沒有** —— 位元組還沒交出來`
+          : inHistory > 0
+            ? `模型已交付（${statusText || status}），⚠️ 但 ${inHistory}/${files.length} 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）`
+            : `模型已交付（${statusText || status}），${atSource === null ? "" : `來源 repo ${atSource}/${files.length} 個檔在${atSourceWorktree < atSource ? "（其中 " + (atSource - atSourceWorktree) + " 個在別的分支／S3）" : ""}，`}但 ${files.length - landed}/${files.length} 個檔還沒進這個 repo`,
+      severity: sourceShort ? "blocker" : "warning",
+    };
+  }
+  if (!champ) {
+    return {
+      ok: false,
+      gap: DELIVERY
+        ? "還沒有 content/champions 文件，⛔ **交付表裡也沒有這一位** —— 模型從哪來還沒有答案"
+        : "還沒有 content/champions 文件（⚠️ 沒給 --delivery，這支答不出模型在別的 repo 交付了沒）",
+      severity: "blocker",
+    };
+  }
+  const m = resolveModelKey(champ.modelKey ?? null);
+  return m.modelKey === null ? { ...m, gap: "champion 文件沒有 modelKey" } : m;
+}
+
 // ────────────────────────────── ② 圖示 ──────────────────────────────
 function checkIcon(champ, id) {
+  // ⭐ 英雄還沒進 content ⇒ 圖示產生器（吃 live content 文件）**還不能跑**。
+  // 那是**順序**，⛔ 不是第二個缺漏 —— 所以它是 warning，模型那一段也一樣。
+  if (!champ) return { ok: false, gap: "等 champion 文件進 content 才產得了圖示", severity: "warning" };
   const rel = champ?.icon ?? null;
   if (!rel) return { ok: false, gap: "champion 文件沒有 icon 欄位", severity: "blocker" };
   const abs = join(CONTENT, rel);
@@ -193,7 +355,23 @@ function loadVoiceIndex() {
   return null;
 }
 
-function checkVoice(id, name, index) {
+/**
+ * ⭐ 兩個名字「像不像」—— ⛔ 這不是判準，是**證據**：編號對上而名字對不上的時候，
+ * 頁面要**兩個都印出來**讓人看一眼（CLAUDE.md：一個單點的 key 錯誤會被同步器放大成資料毀損）。
+ */
+function namesAgree(a, b) {
+  const clean = (x) => String(x ?? "").replace(/[\s·・（）()／/「」]/g, "");
+  const A = clean(a); const B = clean(b);
+  if (!A || !B) return false;
+  if (A.includes(B) || B.includes(A)) return true;
+  const cjk = (x) => new Set([...x].filter((c) => /[\u3400-\u9fff]/.test(c)));
+  const sa = cjk(A); const sb = cjk(B);
+  let shared = 0;
+  for (const c of sa) if (sb.has(c)) shared += 1;
+  return shared >= 2;
+}
+
+function checkVoice(id, name, index, inContent, identityIds = []) {
   const entry = voicePack.champions?.[id] ?? null;
   const lines = entry?.lines ?? {};
   const have = REQUIRED.filter((c) => Array.isArray(lines[c]) && lines[c].length > 0);
@@ -206,26 +384,52 @@ function checkVoice(id, name, index) {
     required: REQUIRED.length, haveRequired: have.length, missing,
     select: Array.isArray(lines.select) ? lines.select.length : 0,
     candidates: [],
-    gap: entry === null ? "沒有語音包" : missing.length ? `出貨門檻缺 ${missing.length} 格` : "",
-    severity: entry === null ? "blocker" : missing.length ? "warning" : "",
+    gap: entry === null ? (inContent ? "沒有語音包" : "還沒有語音包（英雄也還沒進 content）") : missing.length ? `出貨門檻缺 ${missing.length} 格` : "",
+    // ⭐ 還沒進 content 的英雄，語音當然還沒配 —— 那是**順序**，⛔ 不是它自己的缺陷。
+    severity: entry === null ? (inContent ? "blocker" : "warning") : missing.length ? "warning" : "",
   };
   if (!index) return out;
-  // ⭐ 全庫有沒有這位角色的原作語音？先看索引自己綁的 heroIds（owner 的索引器寫的），
-  // ⛔ 名字相同只是候選 —— 所以名字命中只標 candidate、不標 ok。
-  for (const g of index.groups) {
-    const gid = g.id ?? g.groupId;
-    const bound = Array.isArray(g.heroIds) && g.heroIds.includes(id);
-    const byName = name && typeof g.name === "string" && g.name.includes(name);
-    if (!bound && !byName) continue;
+  // ⭐ 全庫有沒有這位角色的原作語音？三種命中方式，⛔ 它們的可信度**不一樣**：
+  //   ① 索引自己綁的 `heroIds`（owner 的索引器寫的）⇒ 最可信
+  //   ② 交付表的 `identityId` 命中索引的**編號**（`300heroes:62` / `mba:Chara14`）
+  //      ⚠️ 編號是 join key ⇒ ⭐ 一定要把索引那一邊的**名字也印出來**：編號對上而名字對不上，
+  //      正是 key 漂掉的樣子（CLAUDE.md 第〇·六守則），⛔ 不可以靜靜地當成命中。
+  //   ③ 名字包含 ⇒ ⛔ 只是候選（owner 2026-09-08：「同名匹配只是候選」）
+  const byId = new Map();
+  for (const g of index.groups) byId.set(String(g.id ?? g.groupId), g);
+  const push = (g, why, confidence) => {
+    const gid = String(g.id ?? g.groupId);
+    if (out.candidates.some((c) => c.groupId === gid)) return;
     out.candidates.push({
       groupId: gid, groupName: g.name ?? "", library: g.library ?? "", work: g.work ?? "",
       language: g.language ?? "", fileCount: g.fileCount ?? 0,
-      why: bound ? "索引已綁 heroId" : "名字命中（⚠️ 只是候選）",
-      confidence: bound ? "high" : "candidate",
+      speakerVerified: g.speakerVerified ?? null, transcriptStatus: g.transcriptStatus ?? null,
+      why, confidence,
     });
-    if (out.candidates.length >= 4) break;
+  };
+  for (const raw of identityIds) {
+    const g = byId.get(String(raw));
+    if (!g) continue;
+    const agree = namesAgree(name, g.name);
+    push(g, agree
+      ? `交付表的 identityId「${raw}」命中索引編號，名字也對得上`
+      : `⚠️ 交付表說這一位是「${raw}」，而索引裡那個編號叫「${g.name ?? ""}」—— **編號對上、名字對不上**，要人看一眼`,
+      agree ? "identity" : "identity-name-mismatch");
   }
-  if (!out.pack && out.candidates.length > 0) out.gap += `；全庫有 ${out.candidates.length} 個候選來源`;
+  for (const g of index.groups) {
+    const bound = Array.isArray(g.heroIds) && g.heroIds.includes(id);
+    const byName = name && typeof g.name === "string" && g.name.includes(name);
+    if (!bound && !byName) continue;
+    push(g, bound ? "索引已綁 heroId" : "名字命中（⚠️ 只是候選）", bound ? "high" : "candidate");
+    if (out.candidates.length >= 5) break;
+  }
+  out.candidates.sort((a, b) => ({ high: 0, identity: 1, "identity-name-mismatch": 2, candidate: 3 }[a.confidence] ?? 9)
+    - ({ high: 0, identity: 1, "identity-name-mismatch": 2, candidate: 3 }[b.confidence] ?? 9));
+  const mismatched = out.candidates.filter((c) => c.confidence === "identity-name-mismatch").length;
+  if (!out.pack && out.candidates.length > 0) {
+    out.gap += `；全庫有 ${out.candidates.length} 個候選來源`;
+    if (mismatched) out.gap += `（⚠️ 其中 ${mismatched} 個編號對上但名字對不上）`;
+  }
   return out;
 }
 
@@ -240,36 +444,64 @@ for (const h of heroes) {
   const champPath = join(CONTENT, "champions", `${h.id}.json`);
   const champ = readJson(champPath);
   const name = h.name ?? champ?.name ?? h.id;
-  const model = checkModel(champ);
+  const drow = deliveryRowFor(h);
+  if (drow) {
+    const key = String(drow.hero);
+    deliveryClaimed.set(key, [...(deliveryClaimed.get(key) ?? []), h.id]);
+  }
+  const model = checkModel(champ, h.id, drow);
   let icon = checkIcon(champ, h.id);
   let iconRun = null;
   if (!icon.ok && GEN_ICONS && !CHECK && champ) {
     iconRun = generateIcon(h.id);
     icon = { ...checkIcon(readJson(champPath), h.id), generated: iconRun.code === 0, run: iconRun };
   }
-  const voice = checkVoice(h.id, name, index);
+  const voice = checkVoice(h.id, name, index, champ !== null, drow?.identityIds ?? []);
   // ⭐ 圖示**不複製**一份進材料 —— 那會讓同一張圖在 git 裡有第二個住處（第〇·四守則）。
   // 頁面透過 `/__review/hero-asset?p=` 直接讀出貨樹那一張（那條路只供應 content/assets/icons/）。
   const iconAsset = icon.ok ? `content/${icon.path}` : null;
   const blockers = [model, icon, voice].filter((x) => x.severity === "blocker").map((x) => x.gap);
   const warnings = [model, icon, voice].filter((x) => x.severity === "warning").map((x) => x.gap);
-  rows.push({ id: h.id, name, inContent: champ !== null, model, icon: { ...icon, asset: iconAsset }, voice, blockers, warnings, ready: blockers.length === 0 });
+  rows.push({ id: h.id, name, inContent: champ !== null, deliveryKey: drow ? String(drow.hero) : null, model, icon: { ...icon, asset: iconAsset }, voice, blockers, warnings, ready: blockers.length === 0 });
 }
 
-const digest = sha256(JSON.stringify(rows.map((r) => [r.id, r.model.glbPath ?? "", r.model.bytes ?? 0, r.icon.path ?? "", r.icon.bytes ?? 0, r.voice.haveRequired, r.voice.categories])));
+/**
+ * ⭐⭐ **反方向再走一次**（CLAUDE.md 形態⑫）：上面那個迴圈只答得出「我這 N 位查得到交付列嗎」，
+ * ⛔ 結構上答不出「交付表裡有沒有哪一列**沒有人認領**」—— 而那正是 join key 漂掉的樣子
+ * （一位英雄配到別人的模型，兩邊看起來都很正常）。⇒ 兩頭都走，⛔ 一頭不算。
+ */
+const deliveryUnclaimed = [...deliveryRows].filter((k) => !deliveryClaimed.has(k)).sort();
+const deliveryDouble = [...deliveryClaimed.entries()].filter(([, ids]) => ids.length > 1).map(([k, ids]) => `${k}←${ids.join("＋")}`);
+
+// ⭐ digest 要涵蓋**頁面上看得到的每一件事** —— ⛔ 只放 glbPath/bytes 的話，
+// 「模型交付狀態變了」這種改動不會讓舊裁決過期（而 owner 正是照那一欄按的）。
+const digest = sha256(JSON.stringify(rows.map((r) => [
+  r.id, r.ready, r.model.ok, r.model.deliveryStatus ?? "", r.model.filesInRepo ?? -1, r.model.files ?? -1, r.model.filesAtSource ?? -1,
+  r.model.filesOnlyInSourceHistory ?? -1, r.model.filesGone ?? -1,
+  r.model.glbPath ?? "", r.model.bytes ?? 0, r.icon.path ?? "", r.icon.bytes ?? 0, r.voice.haveRequired, r.voice.categories, (r.voice.candidates ?? []).map((c) => `${c.groupId}:${c.confidence}`).join("|"),
+])));
 const doc = {
   schema: "ggd-hero-intake@1",
   batch: BATCH,
   generatedBy: "tools/hero-intake/run.mjs",
   ownerAsk: "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
+  // ⭐ 這一份是**用哪一行算出來的** —— `--check` 少一個旗標就會得到不同的 digest，
+  // ⛔ 而「材料過期」與「你少打了 --delivery」長得一模一樣。⇒ 把那一行存進材料。
+  invocation: `node tools/hero-intake/run.mjs ${argv.filter((a) => a !== "--check").map((a) => (/[\s]/.test(a) ? JSON.stringify(a) : a)).join(" ")}`,
   voiceIndex: index?.path ?? null,
+  delivery: DELIVERY ? { path: DELIVERY, root: DELIVERY_ROOT, rows: deliveryRows.size, claimed: deliveryClaimed.size, unclaimed: deliveryUnclaimed, doubleClaimed: deliveryDouble } : null,
   counts: {
     heroes: rows.length,
     ready: rows.filter((r) => r.ready).length,
     blocked: rows.filter((r) => !r.ready).length,
-    modelGaps: rows.filter((r) => !r.model.ok).length,
-    iconGaps: rows.filter((r) => !r.icon.ok).length,
-    voiceGaps: rows.filter((r) => !r.voice.ok).length,
+    // ⭐ 「缺漏」只算**擋上架**的那一種 —— ⛔ 把「順序還沒到」也算進去，這三個數字會永遠等於總人數
+    //    （而一個永遠等於總人數的統計，讀起來跟「全部都壞了」一模一樣）。
+    modelGaps: rows.filter((r) => r.model.severity === "blocker").length,
+    iconGaps: rows.filter((r) => r.icon.severity === "blocker").length,
+    voiceGaps: rows.filter((r) => r.voice.severity === "blocker").length,
+    modelPending: rows.filter((r) => r.model.severity === "warning").length,
+    iconPending: rows.filter((r) => r.icon.severity === "warning").length,
+    voicePending: rows.filter((r) => r.voice.severity === "warning").length,
   },
   digest,
   heroes: rows,
@@ -279,14 +511,30 @@ const target = join(outDir, `${BATCH}.json`);
 if (CHECK) {
   const prev = readJson(target);
   if (!prev) die(`${relative(ROOT, target)} 還沒產生 —— 跑一次 node tools/hero-intake/run.mjs --batch ${BATCH} …`);
-  if (prev.digest !== digest) die(`材料過期：磁碟上的英雄狀態已經變了（digest ${prev.digest?.slice(0, 12)} ≠ ${digest.slice(0, 12)}）—— 重跑 hero-intake`);
+  if (prev.digest !== digest) {
+    die(
+      `材料過期：磁碟上的英雄狀態已經變了（digest ${prev.digest?.slice(0, 12)} ≠ ${digest.slice(0, 12)}）\n` +
+        `   ⭐ 這一份當初是這樣算的：${prev.invocation ?? "（舊材料沒記）"}\n` +
+        `   ⚠️ 少一個旗標（例如 --delivery）也會得到不同的 digest —— ⛔ 那不是「英雄變了」`,
+    );
+  }
   console.log(`[hero-intake] --check ✓ ${relative(ROOT, target)} 是最新的（${prev.counts.heroes} 位）`);
   process.exit(0);
 }
 mkdirSync(dirname(target), { recursive: true });
+// ⭐ 材料平時鎖 444（`scripts/review-access.sh`）—— 寫入端**自己解鎖、自己重鎖**，
+// ⛔ 不是叫人先手動 chmod（一個要人記得的鎖，等於沒有鎖）。
+if (existsSync(target)) chmodSync(target, 0o644);
 writeFileSync(target, `${JSON.stringify(doc, null, 1)}\n`);
+chmodSync(target, 0o444);
 console.log(
   `[hero-intake] ${rows.length} 位 · 可上架 ${doc.counts.ready} · 被擋 ${doc.counts.blocked}` +
-    `（模型 ${doc.counts.modelGaps}／圖示 ${doc.counts.iconGaps}／語音 ${doc.counts.voiceGaps}）→ ${relative(ROOT, target)}`,
+    `（擋上架：模型 ${doc.counts.modelGaps}／圖示 ${doc.counts.iconGaps}／語音 ${doc.counts.voiceGaps}` +
+    `；等順序：模型 ${doc.counts.modelPending}／圖示 ${doc.counts.iconPending}／語音 ${doc.counts.voicePending}）→ ${relative(ROOT, target)}`,
 );
 for (const r of rows.filter((x) => !x.ready).slice(0, 12)) console.log(`  ⛔ ${r.id}（${r.name}）：${r.blockers.join("；")}`);
+if (DELIVERY) {
+  console.log(`[hero-intake] 交付表 ${deliveryRows.size} 列 · 對上 ${deliveryClaimed.size} 列`);
+  if (deliveryUnclaimed.length) console.log(`  ⚠️ 沒有人認領的交付列（${deliveryUnclaimed.length}）：${deliveryUnclaimed.join("、")}`);
+  if (deliveryDouble.length) console.log(`  ⛔ 同一列被兩位英雄認領：${deliveryDouble.join("、")}`);
+}

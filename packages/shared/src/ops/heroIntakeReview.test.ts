@@ -10,13 +10,20 @@
  *  ③ **退回必填原因**（owner 2026-08-24「追加原因的HITL」）——
  *     ⛔ 一個沒有理由的退回，下一輪讀到時沒有人知道要修什麼。
  *
+ *  ④ **「交付表有這一列」⛔ 不等於「模型交出來了」**：`files: []` 有**兩個相反**的意思 ——
+ *     沒有 modelKey ⇒ 還沒做出來（⛔ 擋上架）；有 modelKey ⇒ 檔本來就在這個 repo（只是順序沒到）。
+ *     ⛔ 沒有這一條，那 8 位「只有骨架、動作還沒做」會以「0/0 個檔都到齊了」的樣子通過。
+ *     同一條也驗 join key：同一列⛔ 不可以被兩位英雄認領（key 漂掉就是這樣放大成資料毀損的）。
+ *
  * ⚠️ 這一條**不驗畫面**（那要真的開後台）；它驗的是頁面吃的那份資料與寫回去的那條路。
  *
  * ── 突變紀錄（一批一條，挑最承重的）────────────────────────────────────
  *  · `heroIntake.mjs` 的 `stale` 改成永遠 false → 第 ② 條紅（重跑後舊裁決被算成有效）。實測過。
+ *  · `run.mjs` 的「files 空 ＋ 沒有 modelKey ⇒ blocker」改成 warning → 第 ④ 條紅（8 位沒有模型的
+ *    英雄被算成可上架）。實測過。
  */
 import { describe, expect, it } from "vitest";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -64,6 +71,25 @@ describe("新英雄上架一頁檢核 (hero-intake-review)", () => {
       expect(after.stale, "⛔ 你看的那一份已經不是現在的那一份 —— 必須標 stale").toBe(true);
     } finally {
       rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it("⭐ ④ 空的交付列有兩個相反的意思，而 join key 一列只能被一位英雄認領", () => {
+    const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8")) as {
+      delivery: { rows: number; claimed: number; unclaimed: string[]; doubleClaimed: string[] };
+      heroes: { id: string; model: { files?: number; modelKey?: string | null; severity?: string; gap?: string } }[];
+    };
+    expect(doc.delivery.doubleClaimed, "⛔ 同一列交付被兩位英雄認領 —— 那是 join key 漂掉的樣子").toEqual([]);
+    expect(doc.delivery.claimed, "對不上的交付列會讓整張表不能被相信").toBe(doc.delivery.rows);
+    const empty = doc.heroes.filter((h) => h.model.files === 0);
+    expect(empty.length, "ship34 裡本來就有『交付列是空的』那一族（10 位沿用既有＋8 位還沒做）").toBeGreaterThan(0);
+    for (const h of empty) {
+      if (h.model.modelKey == null) {
+        expect(h.model.severity, `${h.id}：0 個檔又沒有 modelKey ＝ **沒有模型**，⛔ 不可以算成只是順序沒到`).toBe("blocker");
+        expect(h.model.gap ?? "").toMatch(/沒有模型/);
+      } else {
+        expect(h.model.severity, `${h.id}：0 個檔但 modelKey 查得到（檔本來就在這裡）⇒ ⛔ 不是缺漏`).not.toBe("blocker");
+      }
     }
   });
 

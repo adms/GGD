@@ -27,6 +27,11 @@ MATERIAL="$MATERIAL_DIR/batches.json"
 
 perm() { stat -f "%Lp" "$1" 2>/dev/null || stat -c "%a" "$1" 2>/dev/null; }
 
+# ⛔⛔ **這一支只認得 `batches.json` 的時候，它對「材料目錄底下的任何新檔」是結構性失明的**
+# （2026-09-11 踩到：`material/hero-intake/*.json` 是 644，而 guard 說「四條不變量全過」）。
+# ⇒ ⭐ 掃**實體**，⛔ 不是掃一份宣告過的清單（CLAUDE.md 形態⑫：兩頭都要走）。
+material_files() { find "$MATERIAL_DIR" -type f -name '*.json' 2>/dev/null | sort; }
+
 cmd="${1:-status}"; shift || true
 
 case "$cmd" in
@@ -39,6 +44,10 @@ case "$cmd" in
     else
       echo "📦 材料 $MATERIAL —— ⛔ 不存在（跑 node tools/review/split-stores.mjs）"
     fi
+    while IFS= read -r f; do
+      [[ -n "$f" && "$f" != "$MATERIAL" ]] || continue
+      echo "📦 材料 $f —— 權限 $(perm "$f") $([[ $(perm "$f") == 444 ]] && echo '✓ 已鎖' || echo '⚠️ 沒鎖！跑 lock')"
+    done < <(material_files)
     for f in "$VERDICT_DIR"/*.json; do
       [[ -e "$f" ]] || { echo "🧑‍⚖️ 結果 —— ⛔ $VERDICT_DIR 是空的"; break; }
       n=$(node -e "console.log(Object.keys(JSON.parse(require('fs').readFileSync('$f','utf8')).verdicts||{}).length)")
@@ -53,14 +62,17 @@ case "$cmd" in
     fail=0
     [[ -f "$MATERIAL" ]] || { echo "⛔ 材料檔不存在：$MATERIAL"; fail=1; }
     ls "$VERDICT_DIR"/*.json >/dev/null 2>&1 || { echo "⛔ 結果目錄沒有任何檔：$VERDICT_DIR"; fail=1; }
-    if [[ -f "$MATERIAL" ]]; then
-      p=$(perm "$MATERIAL")
-      [[ "$p" == 444 ]] || { echo "⛔ 材料沒鎖（${p}，該是 444）—— 手滑的 Edit 會直接寫進去。修：bash scripts/review-access.sh lock"; fail=1; }
+    # ⭐ 逐一驗**材料目錄底下的每一個檔**（⛔ 不是只驗 batches.json）
+    while IFS= read -r f; do
+      [[ -n "$f" ]] || continue
+      p=$(perm "$f")
+      [[ "$p" == 444 ]] || { echo "⛔ 材料沒鎖：$f（${p}，該是 444）—— 手滑的 Edit 會直接寫進去。修：bash scripts/review-access.sh lock"; fail=1; }
       # ⭐ 欄位不相交：材料檔裡出現裁決欄位 = 分署漏了
-      if grep -qE '"(verdict|verdictAt|verdictHash)"' "$MATERIAL"; then
-        echo "⛔ 材料檔裡有**裁決欄位** —— 分署破了（誰把 owner 的裁決寫進我的檔？）"; fail=1
+      # ⚠️ `verdict` 這個字會出現在材料的**說明文字**裡，所以只認「JSON 欄位」的樣子（冒號緊跟著）
+      if grep -qE '"(verdict|verdictAt|verdictHash)"[[:space:]]*:' "$f"; then
+        echo "⛔ 材料檔 $f 裡有**裁決欄位** —— 分署破了（誰把 owner 的裁決寫進我的檔？）"; fail=1
       fi
-    fi
+    done < <(material_files)
     for f in "$VERDICT_DIR"/*.json; do
       [[ -e "$f" ]] || continue
       if grep -qE '"(rollback|registeredAt|sequenceDir)"' "$f"; then
@@ -72,13 +84,13 @@ case "$cmd" in
     ;;
 
   unlock)
-    [[ -f "$MATERIAL" ]] && chmod 644 "$MATERIAL"
-    echo "⚠️ 材料已解鎖（644）。⭐ 改完**一定**要 lock 回去 —— 忘了鎖，下一次手滑就寫得進去了。"
+    n=0; while IFS= read -r f; do [[ -n "$f" ]] && chmod 644 "$f" && n=$((n+1)); done < <(material_files)
+    echo "⚠️ 材料已解鎖（644，$n 個檔）。⭐ 改完**一定**要 lock 回去 —— 忘了鎖，下一次手滑就寫得進去了。"
     ;;
 
   lock)
-    [[ -f "$MATERIAL" ]] && chmod 444 "$MATERIAL"
-    echo "✓ 材料已鎖（444）"
+    n=0; while IFS= read -r f; do [[ -n "$f" ]] && chmod 444 "$f" && n=$((n+1)); done < <(material_files)
+    echo "✓ 材料已鎖（444，$n 個檔）"
     ;;
 
   register)

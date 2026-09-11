@@ -3,21 +3,27 @@
  "batch": "ship153",
  "generatedBy": "tools/hero-intake/run.mjs",
  "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
+ "invocation": "node tools/hero-intake/run.mjs --batch ship153 --all --no-gen-icons",
  "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+ "delivery": null,
  "counts": {
   "heroes": 153,
   "ready": 128,
   "blocked": 25,
   "modelGaps": 0,
   "iconGaps": 0,
-  "voiceGaps": 32
+  "voiceGaps": 25,
+  "modelPending": 0,
+  "iconPending": 0,
+  "voicePending": 7
  },
- "digest": "d844a29286e148e9fa45bff2d9f61d921fdda7d0748504c708c41aa7620c6ee4",
+ "digest": "200d3a668a6c3eb9d9c0932e7e32d9b467665dc61cceda1b83e65e523a73088c",
  "heroes": [
   {
    "id": "b2-aladdin",
    "name": "阿拉丁",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "ou99.473324",
@@ -65,6 +71,7 @@
    "id": "b2-albus",
    "name": "阿爾巴斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
@@ -104,6 +111,7 @@
    "id": "b2-bojji",
    "name": "波吉",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
@@ -143,6 +151,7 @@
    "id": "b2-boxxo",
    "name": "阿箱＋拉蜜絲",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.115a4c5a7e643388bd988c1caab582482f6d1175616a0437",
@@ -190,6 +199,7 @@
    "id": "b2-elma",
    "name": "艾爾瑪",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
@@ -237,6 +247,7 @@
    "id": "b2-fushi",
    "name": "不死",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
@@ -284,6 +295,7 @@
    "id": "b2-goblin",
    "name": "哥布林殺手",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
@@ -319,6 +331,8 @@
       "work": "Super Smash Bros. Ultimate",
       "language": "unreviewed",
       "fileCount": 34,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -334,6 +348,7 @@
    "id": "b2-guts",
    "name": "凱茲",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
@@ -381,6 +396,7 @@
    "id": "b2-haga",
    "name": "羽賀",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
@@ -428,6 +444,7 @@
    "id": "b2-kaede",
    "name": "楓",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.12d315398cde2fe6298c11f3889201a0ca9077c01e320907",
@@ -475,6 +492,7 @@
    "id": "b2-kaiji",
    "name": "伊藤開司",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
@@ -522,6 +540,7 @@
    "id": "b2-keyaru",
    "name": "凱亞爾",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "ou99.458777",
@@ -569,6 +588,7 @@
    "id": "b2-kisaragi",
    "name": "如月電車",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
@@ -608,6 +628,7 @@
    "id": "b2-klaus",
    "name": "克勞斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556",
@@ -655,6 +676,7 @@
    "id": "b2-kumoko",
    "name": "蜘蛛子",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
@@ -694,6 +716,7 @@
    "id": "b2-luckyman",
    "name": "幸運超人",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
@@ -741,6 +764,7 @@
    "id": "b2-makoto",
    "name": "深澄真",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.ff6d8255b711b5b0e69f13845edc2413aa1f3e40575fadd3",
@@ -788,6 +812,7 @@
    "id": "b2-maomao",
    "name": "貓貓",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
@@ -835,6 +860,7 @@
    "id": "b2-maple",
    "name": "梅普露",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
@@ -870,6 +896,8 @@
       "work": "怕痛的我，把防禦力點滿就對了",
       "language": "unreviewed",
       "fileCount": 107,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -880,6 +908,8 @@
       "work": "怕痛的我，把防禦力點滿就對了",
       "language": "unreviewed",
       "fileCount": 78,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      }
@@ -895,6 +925,7 @@
    "id": "b2-maple-alt-9769eb88b85b",
    "name": "梅普露（變身）",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
@@ -946,6 +977,7 @@
    "id": "b2-matthias",
    "name": "馬提亞斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
@@ -993,6 +1025,7 @@
    "id": "b2-misery",
    "name": "米瑟利",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
@@ -1032,6 +1065,7 @@
    "id": "b2-naofumi",
    "name": "岩谷尚文",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
@@ -1079,6 +1113,7 @@
    "id": "b2-ned",
    "name": "青蛙劍士 Ned",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.db80a14d14fe5bf724271e3fc298b87ed497bb61f27a564b",
@@ -1126,6 +1161,7 @@
    "id": "b2-noor",
    "name": "諾爾",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.64d007d7082b6fb9e2ac7f3f0a77a91134edb89657b5fc81",
@@ -1173,6 +1209,7 @@
    "id": "b2-nube",
    "name": "鵺野鳴介",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.8edb328689a62ca31c36c2c1f5d880366ecd1d05a805d552",
@@ -1220,6 +1257,7 @@
    "id": "b2-orphen",
    "name": "歐菲",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.22bdbf148e368f65a812201d250e439c5d431676c638bf9e",
@@ -1267,6 +1305,7 @@
    "id": "b2-popp",
    "name": "何布",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
@@ -1306,6 +1345,7 @@
    "id": "b2-rem",
    "name": "蕾姆",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
@@ -1341,6 +1381,8 @@
       "work": "Re:從零開始的異世界生活",
       "language": "unreviewed",
       "fileCount": 189,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -1356,6 +1398,7 @@
    "id": "b2-rin",
    "name": "遠坂凜",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
@@ -1391,6 +1434,8 @@
       "work": "Fate/stay night",
       "language": "unreviewed",
       "fileCount": 263,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -1401,6 +1446,8 @@
       "work": "Fate/unlimited codes",
       "language": "unreviewed",
       "fileCount": 12,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -1416,6 +1463,7 @@
    "id": "b2-shadow",
    "name": "闇影",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.fefbd90d0746bfe2b0ec1eaa34346fd20f90fe551bb57f07",
@@ -1459,6 +1507,8 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 146,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -1474,6 +1524,7 @@
    "id": "b2-shinchan",
    "name": "野原新之助",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
@@ -1521,6 +1572,7 @@
    "id": "b2-sinbad",
    "name": "辛巴達",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.50475cd0a71c5c569d77fe67d9450a189662424ade9a6933",
@@ -1568,6 +1620,7 @@
    "id": "b2-takopi",
    "name": "章魚嗶",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
@@ -1607,6 +1660,7 @@
    "id": "b2-touka",
    "name": "托卡・史考特",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
@@ -1654,6 +1708,7 @@
    "id": "b2-uncle",
    "name": "異世界舅舅",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.7135f29cae6eb26851a90d407801e0b7dc27671ca3b08909",
@@ -1701,6 +1756,7 @@
    "id": "b2-yogiri",
    "name": "高遠夜霧",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
@@ -1740,6 +1796,7 @@
    "id": "b2-zenitsu",
    "name": "我妻善逸",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
@@ -1775,6 +1832,8 @@
       "work": "鬼滅之刃",
       "language": "unreviewed",
       "fileCount": 101,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -1790,6 +1849,7 @@
    "id": "community-review-01-20260907",
    "name": "武藤遊戲",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
@@ -1829,6 +1889,7 @@
    "id": "community-review-02-20260907",
    "name": "八神庵",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.a89b32319ef8148b84d78d6db012d6dad16c406291505f5e",
@@ -1872,6 +1933,8 @@
       "work": "The King of Fighters XV",
       "language": "unreviewed",
       "fileCount": 97,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -1887,6 +1950,7 @@
    "id": "community-review-03-20260907",
    "name": "不知火舞",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
@@ -1922,6 +1986,8 @@
       "work": "The King of Fighters XIV",
       "language": "unreviewed",
       "fileCount": 27,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -1932,6 +1998,8 @@
       "work": "The King of Fighters XIV",
       "language": "unreviewed",
       "fileCount": 118,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -1942,6 +2010,8 @@
       "work": "The King of Fighters XV",
       "language": "unreviewed",
       "fileCount": 82,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -1957,6 +2027,7 @@
    "id": "community-review-04-20260907",
    "name": "空條承太郎",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
@@ -1996,6 +2067,7 @@
    "id": "community-review-05-20260907",
    "name": "洛克人",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.29236b04b74aab09f6a72a3b70e82d3a49f4b308fddae01a",
@@ -2043,6 +2115,7 @@
    "id": "community-review-06-20260907",
    "name": "卡比",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
@@ -2078,6 +2151,8 @@
       "work": "Super Smash Bros. Melee",
       "language": "unreviewed",
       "fileCount": 101,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -2088,6 +2163,8 @@
       "work": "Super Smash Bros. Ultimate",
       "language": "unreviewed",
       "fileCount": 13,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -2098,6 +2175,8 @@
       "work": "Super Smash Bros. Ultimate",
       "language": "unreviewed",
       "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -2108,6 +2187,20 @@
       "work": "Super Smash Bros. Ultimate",
       "language": "unreviewed",
       "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     },
+     {
+      "groupId": "parallel-voice-ssbu-japanese:vc_kirby_copy_eflame",
+      "groupName": "NS 原生音訊／vc_kirby_copy_eflame（卡比複製能力，非對象本人）",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Ultimate",
+      "language": "unreviewed",
+      "fileCount": 8,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      }
@@ -2123,6 +2216,7 @@
    "id": "community-review-07-20260907",
    "name": "西索",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
@@ -2170,6 +2264,7 @@
    "id": "community-review-08-20260907",
    "name": "米卡莎",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
@@ -2209,6 +2304,7 @@
    "id": "community-review-09-20260907",
    "name": "赫蘿",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
@@ -2256,6 +2352,7 @@
    "id": "community-review-10-20260907",
    "name": "魯路修",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
@@ -2295,6 +2392,7 @@
    "id": "community-review-11-20260907",
    "name": "利姆路",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473",
@@ -2338,6 +2436,8 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 13,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -2353,6 +2453,7 @@
    "id": "community-review-12-20260907",
    "name": "衛宮士郎",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
@@ -2388,6 +2489,8 @@
       "work": "Fate/unlimited codes",
       "language": "unreviewed",
       "fileCount": 222,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -2398,6 +2501,8 @@
       "work": "Fate/unlimited codes",
       "language": "unreviewed",
       "fileCount": 16,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -2413,6 +2518,7 @@
    "id": "community-review-13-20260907",
    "name": "朝田詩乃",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
@@ -2452,6 +2558,7 @@
    "id": "community-review-14-20260907",
    "name": "殺老師",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1",
@@ -2499,6 +2606,7 @@
    "id": "community-review-15-20260907",
    "name": "比利海靈頓",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.c574cdb9cfe55750d8acef037f8463288a5078a121e5db71",
@@ -2546,6 +2654,7 @@
    "id": "community-review-16-20260907",
    "name": "魔法少女☆伊莉雅",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
@@ -2585,6 +2694,7 @@
    "id": "community-review-17-20260907",
    "name": "安茲·烏爾·恭",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
@@ -2624,6 +2734,7 @@
    "id": "community-review-18-20260907",
    "name": "吉爾伽美什",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
@@ -2663,6 +2774,7 @@
    "id": "community-review-19-20260907",
    "name": "桐谷和人",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
@@ -2702,6 +2814,7 @@
    "id": "community-review-20-20260907",
    "name": "御坂美琴",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
@@ -2737,6 +2850,8 @@
       "work": "魔法禁書目錄／科學超電磁砲",
       "language": "unreviewed",
       "fileCount": 496,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      }
@@ -2752,6 +2867,7 @@
    "id": "community-review-21-20260907",
    "name": "鹿目圓",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
@@ -2791,6 +2907,7 @@
    "id": "community-review-22-20260907",
    "name": "菜月昴",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
@@ -2838,6 +2955,7 @@
    "id": "community-review-23-20260907",
    "name": "坂田銀時",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
@@ -2873,6 +2991,8 @@
       "work": "銀魂",
       "language": "unreviewed",
       "fileCount": 207,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -2888,6 +3008,7 @@
    "id": "community-review-24-20260907",
    "name": "奇犽",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
@@ -2923,6 +3044,8 @@
       "work": "HUNTER×HUNTER 獵人",
       "language": "unreviewed",
       "fileCount": 271,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      }
@@ -2938,6 +3061,7 @@
    "id": "community-review-25-20260907",
    "name": "一拳超人",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
@@ -2977,6 +3101,7 @@
    "id": "community-review-26-20260907",
    "name": "名偵探柯南",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
@@ -3016,6 +3141,7 @@
    "id": "community-review-27-20260907",
    "name": "庫洛魔法使",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
@@ -3055,6 +3181,7 @@
    "id": "community-review-28-20260907",
    "name": "艾莉絲·伯雷亞斯·格雷拉特",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
@@ -3094,6 +3221,7 @@
    "id": "community-review-29-20260907",
    "name": "芙莉蓮",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
@@ -3133,6 +3261,7 @@
    "id": "community-review-30-20260907",
    "name": "尼古貓貓",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
@@ -3180,6 +3309,7 @@
    "id": "community-review-31-20260907",
    "name": "SUN樂",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
@@ -3219,6 +3349,7 @@
    "id": "community-review-32-20260907",
    "name": "阿薩謝爾",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
@@ -3258,6 +3389,7 @@
    "id": "community-review-33-20260907",
    "name": "近衛刀太",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.621e928d6f5f58a8b7fc18bde58c8e0b189843fd36202b2f",
@@ -3305,6 +3437,7 @@
    "id": "community-review-34-20260907",
    "name": "高速婆婆",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.1c6835b90c39d1d3b1c6457a89d8fe0599cc6b5d09be22a1",
@@ -3352,6 +3485,7 @@
    "id": "community-review-35-20260907",
    "name": "炭治郎",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
@@ -3387,6 +3521,8 @@
       "work": "鬼滅之刃",
       "language": "unreviewed",
       "fileCount": 1685,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      }
@@ -3402,6 +3538,7 @@
    "id": "community-review-36-20260907",
    "name": "鬼畜王蘭斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.3139ca177291a0bdad27850cbc7aaa17b65f07f2f6775272",
@@ -3449,6 +3586,7 @@
    "id": "community-review-37-20260907",
    "name": "吉伊卡哇",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
@@ -3492,6 +3630,8 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 3,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -3502,6 +3642,8 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 3,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -3512,6 +3654,8 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 3,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -3522,6 +3666,20 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 3,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     },
+     {
+      "groupId": "github-chiikawa:rakko",
+      "groupName": "吉伊卡哇素材包／rakko",
+      "library": "公開來源",
+      "work": "見來源頁",
+      "language": "unreviewed",
+      "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      }
@@ -3537,6 +3695,7 @@
    "id": "godie-e001",
    "name": "蟬在叫人壞掉 - 龍宮禮奈",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.renaryugu2",
@@ -3584,6 +3743,7 @@
    "id": "godie-e002",
    "name": "亞瑟王 - Saber",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herosaber",
@@ -3627,6 +3787,8 @@
       "work": "Fate/stay night",
       "language": "unreviewed",
       "fileCount": 584,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -3642,6 +3804,7 @@
    "id": "godie-e007",
    "name": "龍之子 - 天地志狼",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herolingtong",
@@ -3689,6 +3852,7 @@
    "id": "godie-e008",
    "name": "火霧戰士 - 夏娜",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heroshana",
@@ -3732,6 +3896,8 @@
       "work": "灼眼的夏娜",
       "language": "unreviewed",
       "fileCount": 305,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -3747,6 +3913,7 @@
    "id": "godie-e00l",
    "name": "亞瑟王 - Saber",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herosaber",
@@ -3800,6 +3967,8 @@
       "work": "Fate/stay night",
       "language": "unreviewed",
       "fileCount": 584,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -3817,6 +3986,7 @@
    "id": "godie-e00n",
    "name": "蟬在叫人壞掉 - 龍宮禮奈",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.renaryugu2",
@@ -3876,6 +4046,7 @@
    "id": "godie-e00r",
    "name": "最終泛用人型決戰兵器 - 初號機",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "w3x.stock.satyrtrickster",
@@ -3923,6 +4094,7 @@
    "id": "godie-e00s",
    "name": "白木老樹精 - 白木卡迪那",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
@@ -3982,6 +4154,7 @@
    "id": "godie-e00w",
    "name": "神鳴流劍士 - 櫻綻剎那",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.mfls",
@@ -4029,6 +4202,7 @@
    "id": "godie-e00x",
    "name": "神鳴流劍士 - 櫻綻剎那",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.mfls",
@@ -4088,6 +4262,7 @@
    "id": "godie-e010",
    "name": "白木老樹精 - 白木卡迪那",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
@@ -4147,6 +4322,7 @@
    "id": "godie-edem",
    "name": "寫輪眼復仇者 - 宇智波佐助",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herosasuke",
@@ -4190,6 +4366,8 @@
       "work": "火影忍者 NARUTO",
       "language": "unreviewed",
       "fileCount": 657,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -4205,6 +4383,7 @@
    "id": "godie-efur",
    "name": "揍敵客大家長 - 揍敵客桀諾",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
@@ -4252,6 +4431,7 @@
    "id": "godie-emfr",
    "name": "魔法老師 - 涅吉。史普林。菲爾德",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.negi",
@@ -4299,6 +4479,7 @@
    "id": "godie-emns",
    "name": "奇樂 - 夜神月",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herolight",
@@ -4346,6 +4527,7 @@
    "id": "godie-etyr",
    "name": "治癒系公主 - 木乃香",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herooichi",
@@ -4393,6 +4575,7 @@
    "id": "godie-ewar",
    "name": "龍之子 - 天地志狼",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herolingtong",
@@ -4452,6 +4635,7 @@
    "id": "godie-h00l",
    "name": "時空勇者 - 林克",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.linkstik",
@@ -4495,6 +4679,8 @@
       "work": "Super Smash Bros. Brawl",
       "language": "unreviewed",
       "fileCount": 79,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -4510,6 +4696,7 @@
    "id": "godie-h01n",
    "name": "開外掛的死神 - 黑崎一護",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heroichigo",
@@ -4553,6 +4740,8 @@
       "work": "BLEACH 死神",
       "language": "unreviewed",
       "fileCount": 649,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -4568,6 +4757,7 @@
    "id": "godie-h01o",
    "name": "外掛開很大的死神 - 黑崎一護",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heroichigo-bankai",
@@ -4621,6 +4811,8 @@
       "work": "BLEACH 死神",
       "language": "unreviewed",
       "fileCount": 649,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -4638,6 +4830,7 @@
    "id": "godie-h01u",
    "name": "亂世癿王者 - 呂布奉先",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.lubu",
@@ -4685,6 +4878,7 @@
    "id": "godie-h020",
    "name": "黑魔導士 - 莉娜因巴斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.linainvers",
@@ -4728,6 +4922,8 @@
       "work": "秀逗魔導士 Slayers",
       "language": "unreviewed",
       "fileCount": 232,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -4738,6 +4934,8 @@
       "work": "秀逗魔導士",
       "language": "unreviewed",
       "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -4748,6 +4946,8 @@
       "work": "Super Smash Bros. Ultimate",
       "language": "unreviewed",
       "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -4763,6 +4963,7 @@
    "id": "godie-h02k",
    "name": "國寶級的畜生 - 熊貓",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "champ.skin.barbarian",
@@ -4810,6 +5011,7 @@
    "id": "godie-h02r",
    "name": "種子神奇寶貝 - 妙蛙花",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.bulbasaur",
@@ -4857,6 +5059,7 @@
    "id": "godie-h02u",
    "name": "看似憂鬱的神獸 - 草泥馬",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.horse",
@@ -4904,6 +5107,7 @@
    "id": "godie-h02v",
    "name": "看似憂鬱的神獸 - 草泥馬",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.horse",
@@ -4963,6 +5167,7 @@
    "id": "godie-hapm",
    "name": "海克力斯 - Berserker",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
@@ -5006,6 +5211,8 @@
       "work": "Fate/stay night",
       "language": "unreviewed",
       "fileCount": 369,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -5016,6 +5223,8 @@
       "work": "Fate/Unlimited Block Works",
       "language": "unreviewed",
       "fileCount": 1,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -5031,6 +5240,7 @@
    "id": "godie-hart",
    "name": "最終幻想 - 克勞德",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.cloud",
@@ -5074,6 +5284,8 @@
       "work": "Dissidia Final Fantasy NT",
       "language": "unreviewed",
       "fileCount": 49,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -5089,6 +5301,7 @@
    "id": "godie-hgam",
    "name": "種子神奇寶貝 - 妙蛙種子",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.bulbasaur",
@@ -5148,6 +5361,7 @@
    "id": "godie-hjai",
    "name": "黑魔導士 - 莉娜因巴斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.linainvers",
@@ -5201,6 +5415,8 @@
       "work": "秀逗魔導士 Slayers",
       "language": "unreviewed",
       "fileCount": 232,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -5211,6 +5427,8 @@
       "work": "秀逗魔導士",
       "language": "unreviewed",
       "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      },
@@ -5221,6 +5439,8 @@
       "work": "Super Smash Bros. Ultimate",
       "language": "unreviewed",
       "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -5238,6 +5458,7 @@
    "id": "godie-hpb1",
    "name": "獸矛傳承使 - 蒼月潮",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herotoshiiemaeda",
@@ -5285,6 +5506,7 @@
    "id": "godie-huth",
    "name": "超級普烏 - 魔人普烏",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herobuu",
@@ -5332,6 +5554,7 @@
    "id": "godie-hvsh",
    "name": "梅杜莎 - Rider",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herorider",
@@ -5375,6 +5598,8 @@
       "work": "Fate/stay night",
       "language": "unreviewed",
       "fileCount": 120,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -5390,6 +5615,7 @@
    "id": "godie-hvwd",
    "name": "除魔巫女 - 桔梗",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.kikyou",
@@ -5437,6 +5663,7 @@
    "id": "godie-n003",
    "name": "黑暗福音 - 依文潔琳",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
@@ -5484,6 +5711,7 @@
    "id": "godie-n00b",
    "name": "小叮噹 - 哆拉A夢",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.341ec78a7bca839b456340a5809d375ae7b4c75aa01101bf",
@@ -5531,6 +5759,7 @@
    "id": "godie-n00p",
    "name": "妖狐藏馬 - 南野秀一",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.fox",
@@ -5578,6 +5807,7 @@
    "id": "godie-n01c",
    "name": "傳說的龍騎士 - 勇者小呆",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.sd2",
@@ -5625,6 +5855,7 @@
    "id": "godie-n01g",
    "name": "黑暗福音 - 依文潔琳",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.long",
@@ -5684,6 +5915,7 @@
    "id": "godie-nbbc",
    "name": "傳說的龍騎士 - 勇者小呆",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.sd2",
@@ -5737,6 +5969,8 @@
       "work": "JUMP FORCE",
       "language": "unreviewed",
       "fileCount": 261,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -5754,6 +5988,7 @@
    "id": "godie-nsjs",
    "name": "妖狐藏馬 - 南野秀一",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.fox2",
@@ -5813,6 +6048,7 @@
    "id": "godie-o00k",
    "name": "傲嬌電氣老鼠 - 皮卡娘",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.pika",
@@ -5860,6 +6096,7 @@
    "id": "godie-o00l",
    "name": "獸神官 - 傑洛士",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heroxelloss",
@@ -5907,6 +6144,7 @@
    "id": "godie-o00x",
    "name": "超級賽亞人 - 悟空",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.goku",
@@ -5954,6 +6192,7 @@
    "id": "godie-o02l",
    "name": "神騎寶貝 - 皮卡丘",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.picacugy",
@@ -6013,6 +6252,7 @@
    "id": "godie-o02p",
    "name": "夢幻之星 - 初音",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heromiku",
@@ -6060,6 +6300,7 @@
    "id": "godie-o030",
    "name": "電車癡漢 - 臭作",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
@@ -6119,6 +6360,7 @@
    "id": "godie-ofar",
    "name": "神奇寶貝兒 - 皮卡丘",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heropikachu",
@@ -6162,6 +6404,8 @@
       "work": "Super Smash Bros. Melee",
       "language": "unreviewed",
       "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -6177,6 +6421,7 @@
    "id": "godie-ogld",
    "name": "美白大法師 - 黑人牙膏",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
@@ -6224,6 +6469,7 @@
    "id": "godie-ogrh",
    "name": "賽亞人 - 悟空",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.goku",
@@ -6277,6 +6523,8 @@
       "work": "見來源頁",
       "language": "unreviewed",
       "fileCount": 69,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -6294,6 +6542,7 @@
    "id": "godie-orkn",
    "name": "電車癡漢 - 臭作",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.def15fb0818dc8a5c6b974d7c43730cafee54445606882e6",
@@ -6341,6 +6590,7 @@
    "id": "godie-osam",
    "name": "犬妖 - 殺生丸",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.sesshomaru",
@@ -6384,6 +6634,8 @@
       "work": "犬夜叉",
       "language": "unreviewed",
       "fileCount": 218,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -6399,6 +6651,7 @@
    "id": "godie-u00h",
    "name": "鬼畜紅王 - 鬼畜狂刀KYO",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herokyo",
@@ -6446,6 +6699,7 @@
    "id": "godie-u00j",
    "name": "神性的流失 - 賽菲洛斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herosephiroth",
@@ -6493,6 +6747,7 @@
    "id": "godie-u00k",
    "name": "邪惡意念集合體 - 死之王",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa",
@@ -6540,6 +6795,7 @@
    "id": "godie-u00l",
    "name": "北斗之鼠 - 拳四郎",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heropikachu",
@@ -6587,6 +6843,7 @@
    "id": "godie-u00n",
    "name": "草帽小子 - 蒙其.D.魯夫",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.luffe",
@@ -6630,6 +6887,8 @@
       "work": "ONE PIECE 航海王",
       "language": "unreviewed",
       "fileCount": 348,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -6645,6 +6904,7 @@
    "id": "godie-u00o",
    "name": "草帽小子 - 蒙其.D.魯夫",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.luffe",
@@ -6698,6 +6958,8 @@
       "work": "ONE PIECE 航海王",
       "language": "unreviewed",
       "fileCount": 348,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -6715,6 +6977,7 @@
    "id": "godie-u00v",
    "name": "黑手黨老大 - 基廉列克",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.rabbit",
@@ -6762,6 +7025,7 @@
    "id": "godie-u010",
    "name": "邪眼師 - 飛影",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herohehi",
@@ -6809,6 +7073,7 @@
    "id": "godie-u01u",
    "name": "三刀流劍士 - 索隆",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heromusashimiyamoto",
@@ -6852,6 +7117,8 @@
       "work": "ONE PIECE 航海王",
       "language": "unreviewed",
       "fileCount": 226,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -6867,6 +7134,7 @@
    "id": "godie-u034",
    "name": "職業獵人 - 傑 富力士",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herobiggon",
@@ -6926,6 +7194,7 @@
    "id": "godie-ubal",
    "name": "魔界霸主 - 巴恩大魔王",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
@@ -6973,6 +7242,7 @@
    "id": "godie-ucrl",
    "name": "職業獵人 - 傑 富力士",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herobiggon",
@@ -7032,6 +7302,7 @@
    "id": "godie-udea",
    "name": "至尊學長 - 飛鼠先生",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
@@ -7079,6 +7350,7 @@
    "id": "godie-udre",
    "name": "三刀流劍士 - 索隆",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.heromusashimiyamoto",
@@ -7132,6 +7404,8 @@
       "work": "ONE PIECE 航海王",
       "language": "unreviewed",
       "fileCount": 226,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -7149,6 +7423,7 @@
    "id": "godie-umal",
    "name": "北斗神拳掌門人 - 拳四郎",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "champ.skin.barbarian",
@@ -7202,6 +7477,8 @@
       "work": "JUMP FORCE",
       "language": "unreviewed",
       "fileCount": 217,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -7219,6 +7496,7 @@
    "id": "godie-uvng",
    "name": "邪眼師 - 飛影",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "imported.herohehi",
@@ -7278,6 +7556,7 @@
    "id": "godie-zombiex",
    "name": "聖杯黑泥醬 - 喪標麥可",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "champ.godie-zombiex",
@@ -7325,6 +7604,7 @@
    "id": "lol-karthus",
    "name": "卡爾瑟斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
@@ -7363,12 +7643,26 @@
     "select": 1,
     "candidates": [
      {
+      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
+      "groupName": "卡爾瑟斯 / Karthus.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 225,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
       "groupId": "local-lol-decoded-audio:Karthus",
       "groupName": "LOL／卡爾瑟斯／共用音效包",
       "library": "本機遊戲",
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 195,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -7379,18 +7673,10 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 199,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
-     },
-     {
-      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
-      "groupName": "卡爾瑟斯 / Karthus.ja_JP / 官方日文來源包（逐段待聽審）",
-      "library": "公開來源",
-      "work": "League of Legends",
-      "language": "unreviewed",
-      "fileCount": 225,
-      "why": "索引已綁 heroId",
-      "confidence": "high"
      }
     ],
     "gap": "出貨門檻缺 8 格",
@@ -7406,6 +7692,7 @@
    "id": "lol-leesin",
    "name": "李星",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
@@ -7449,6 +7736,8 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 1069,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -7466,6 +7755,7 @@
    "id": "lol-lux",
    "name": "拉克絲",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
@@ -7501,12 +7791,26 @@
     "select": 1,
     "candidates": [
      {
+      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-lux-ja-jp-16-18-8159717",
+      "groupName": "拉克絲 / Lux.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 1142,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
       "groupId": "local-lol-decoded-audio:Lux",
       "groupName": "LOL／拉克絲／共用音效包",
       "library": "本機遊戲",
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 1011,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -7517,18 +7821,10 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 1142,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
-     },
-     {
-      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-lux-ja-jp-16-18-8159717",
-      "groupName": "拉克絲 / Lux.ja_JP / 官方日文來源包（逐段待聽審）",
-      "library": "公開來源",
-      "work": "League of Legends",
-      "language": "unreviewed",
-      "fileCount": 1142,
-      "why": "索引已綁 heroId",
-      "confidence": "high"
      }
     ],
     "gap": "出貨門檻缺 5 格",
@@ -7544,6 +7840,7 @@
    "id": "lol-missfortune",
    "name": "好運姐",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
@@ -7579,12 +7876,26 @@
     "select": 1,
     "candidates": [
      {
+      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-missfortune-ja-jp-16-18-8159717",
+      "groupName": "好運姐 / MissFortune.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 695,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
       "groupId": "local-lol-decoded-audio:MissFortune",
       "groupName": "LOL／好運姐／共用音效包",
       "library": "本機遊戲",
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 1200,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -7595,18 +7906,10 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 526,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
-     },
-     {
-      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-missfortune-ja-jp-16-18-8159717",
-      "groupName": "好運姐 / MissFortune.ja_JP / 官方日文來源包（逐段待聽審）",
-      "library": "公開來源",
-      "work": "League of Legends",
-      "language": "unreviewed",
-      "fileCount": 695,
-      "why": "索引已綁 heroId",
-      "confidence": "high"
      }
     ],
     "gap": "出貨門檻缺 5 格",
@@ -7622,6 +7925,7 @@
    "id": "lol-warwick",
    "name": "沃維克",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
@@ -7664,6 +7968,8 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 531,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -7681,6 +7987,7 @@
    "id": "lol-xerath",
    "name": "齊勒斯",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
@@ -7717,12 +8024,26 @@
     "select": 1,
     "candidates": [
      {
+      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717",
+      "groupName": "齊勒斯 / Xerath.ja_JP / 官方日文來源包（逐段待聽審）",
+      "library": "公開來源",
+      "work": "League of Legends",
+      "language": "unreviewed",
+      "fileCount": 223,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "索引已綁 heroId",
+      "confidence": "high"
+     },
+     {
       "groupId": "local-lol-decoded-audio:Xerath",
       "groupName": "LOL／齊勒斯／共用音效包",
       "library": "本機遊戲",
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 542,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
      },
@@ -7733,18 +8054,10 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 223,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "名字命中（⚠️ 只是候選）",
       "confidence": "candidate"
-     },
-     {
-      "groupId": "lol-project-seven-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717",
-      "groupName": "齊勒斯 / Xerath.ja_JP / 官方日文來源包（逐段待聽審）",
-      "library": "公開來源",
-      "work": "League of Legends",
-      "language": "unreviewed",
-      "fileCount": 223,
-      "why": "索引已綁 heroId",
-      "confidence": "high"
      }
     ],
     "gap": "出貨門檻缺 6 格",
@@ -7760,6 +8073,7 @@
    "id": "lol-yasuo",
    "name": "犽宿",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
@@ -7803,6 +8117,8 @@
       "work": "League of Legends",
       "language": "unreviewed",
       "fileCount": 1042,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
       "why": "索引已綁 heroId",
       "confidence": "high"
      }
@@ -7820,6 +8136,7 @@
    "id": "sela",
    "name": "Sela, the Ember Sage",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "champ.sela",
@@ -7879,6 +8196,7 @@
    "id": "thorne",
    "name": "Thorne, the Bramble Knight",
    "inContent": true,
+   "deliveryKey": null,
    "model": {
     "ok": true,
     "modelKey": "champ.thorne",

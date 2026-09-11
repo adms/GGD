@@ -39,6 +39,13 @@ interface ModelSection extends Section {
   readonly bytes?: number;
   readonly offDisk?: boolean;
   readonly missingClips?: readonly string[];
+  // ⭐ 還沒進 content 的英雄：模型在**別的 repo** 交付 —— 這幾格回答「交了幾個、到了幾個」
+  readonly deliveryStatus?: string;
+  readonly files?: number;
+  readonly filesInRepo?: number;
+  readonly filesAtSource?: number | null;
+  readonly filesOnlyInSourceHistory?: number;
+  readonly filesGone?: number;
 }
 interface IconSection extends Section {
   readonly path?: string;
@@ -80,11 +87,20 @@ interface Hero {
   readonly verdictAt: string | null;
   readonly stale: boolean;
 }
+/** ⭐ 交付表的**對帳**：兩頭都走過（我對得到幾列／有沒有哪一列沒人認領）—— ⛔ 不是只報一個數字 */
+interface DeliveryAudit {
+  readonly path: string;
+  readonly rows: number;
+  readonly claimed: number;
+  readonly unclaimed: readonly string[];
+  readonly doubleClaimed: readonly string[];
+}
 interface Batch {
   readonly batch: string;
   readonly digest: string;
   readonly generatedBy: string;
   readonly voiceIndex: string | null;
+  readonly delivery?: DeliveryAudit | null;
   readonly counts: Record<string, number>;
   readonly heroes: readonly Hero[];
 }
@@ -165,7 +181,7 @@ export function HeroIntakePage() {
           <div key={b.batch} style={{ border: `1px solid ${PANEL_BORDER}`, padding: 12, marginBottom: 16 }}>
             <h3 style={{ margin: "0 0 4px", color: TEXT_MAIN }}>
               {b.batch} <span style={{ color: TEXT_DIM, fontSize: 13, fontWeight: 400 }}>
-                {b.counts.heroes} 位 · 可上架 {b.counts.ready} · 被擋 {b.counts.blocked} ·
+                {b.counts.heroes} 位 · 沒有硬傷 {b.counts.ready} · 被擋 {b.counts.blocked} ·
                 通過 {b.counts.approved} · 退回 {b.counts.rejected} · 未判定 {b.counts.undecided}
                 {(b.counts.stale ?? 0) > 0 ? ` · ⟳ 已重跑 ${b.counts.stale}` : ""}
               </span>
@@ -173,7 +189,18 @@ export function HeroIntakePage() {
             <div style={{ color: TEXT_DIM, fontSize: 12, marginBottom: 8 }}>
               材料 digest <code>{b.digest.slice(0, 12)}</code> · 產生器 <code>{b.generatedBy}</code>
               {b.voiceIndex !== null && <> · 語音索引 <code>{b.voiceIndex.split("/").slice(-1)[0]}</code></>}
+              {(b.counts.modelGaps ?? 0) + (b.counts.modelPending ?? 0) > 0 && (
+                <> · 模型 擋 {b.counts.modelGaps} ／ 等順序 {b.counts.modelPending}</>
+              )}
             </div>
+            {b.delivery != null && (
+              /* ⭐ join key 的對帳要**印在頁面上** —— 「對上 34/34」是這張表能不能被相信的前提 */
+              <div style={{ color: b.delivery.unclaimed.length + b.delivery.doubleClaimed.length > 0 ? WARN : TEXT_DIM, fontSize: 12, marginBottom: 8 }}>
+                🔑 模型交付表 {b.delivery.rows} 列 · 對上 {b.delivery.claimed} 列
+                {b.delivery.unclaimed.length > 0 && ` · ⚠️ 沒人認領 ${b.delivery.unclaimed.length}（${b.delivery.unclaimed.slice(0, 6).join("、")}）`}
+                {b.delivery.doubleClaimed.length > 0 && ` · ⛔ 被兩位認領 ${b.delivery.doubleClaimed.join("、")}`}
+              </div>
+            )}
             <div style={{ overflowX: "auto" }}>
               <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
                 <thead>
@@ -214,7 +241,14 @@ export function HeroIntakePage() {
                           <span style={{ color: TEXT_DIM }}>
                             {h.model.offDisk === true ? "S3" : KB(h.model.bytes)}
                             {(h.model.missingClips?.length ?? 0) > 0 && ` · 缺動作 ${h.model.missingClips?.length}`}
+                            {typeof h.model.files === "number" && h.model.files > 0 && (
+                              ` · 交付檔 ${h.model.filesInRepo ?? 0}/${h.model.files} 進 repo`
+                            )}
+                            {(h.model.filesOnlyInSourceHistory ?? 0) > 0 && ` · ⚠️ ${h.model.filesOnlyInSourceHistory} 個被合併刪掉（歷史裡還在）`}
                           </span>
+                          {h.model.modelKey != null && (
+                            <div style={{ color: TEXT_DIM, fontSize: 11 }} title={h.model.modelKey}>{h.model.modelKey.slice(0, 22)}…</div>
+                          )}
                         </td>
                         <td style={{ padding: 4 }}>
                           <Dot ok={h.voice.ok} severity={h.voice.severity} />{" "}
@@ -223,6 +257,13 @@ export function HeroIntakePage() {
                             {h.voice.sharedFrom != null && ` · 借 ${h.voice.sharedFrom}`}
                             {(h.voice.candidates?.length ?? 0) > 0 && ` · 候選 ${h.voice.candidates?.length}`}
                           </span>
+                          {h.voice.candidates?.slice(0, 1).map((c) => (
+                            /* ⭐ 「編號對上而名字對不上」要當場看得到 —— ⛔ 機器不替 owner 決定那是不是同一位角色 */
+                            <div key={c.groupId} style={{ color: c.confidence === "identity-name-mismatch" ? WARN : TEXT_DIM, fontSize: 11 }}>
+                              {c.confidence === "identity-name-mismatch" ? "⚠️ " : c.confidence === "candidate" ? "· " : "✓ "}
+                              {c.groupId} 「{c.groupName}」 {c.fileCount} 檔
+                            </div>
+                          ))}
                         </td>
                         <td style={{ padding: 4, color: h.blockers.length > 0 ? DANGER : TEXT_DIM, maxWidth: "36ch" }}>
                           {h.blockers.length > 0 ? h.blockers.join("；") : h.warnings.join("；") || "—"}
