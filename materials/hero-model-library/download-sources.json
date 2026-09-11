@@ -36730,7 +36730,94 @@
         "readbackVerified": true,
         "fullReadbackVerified": true,
         "s3ReadbackVerified": true
-      }
+      },
+      "supplementalDeliveries": [
+        {
+          "id": "infinity-strash-popp-action-reference-v1",
+          "sourceId": "parallel-infinity-strash-sorcerer-popp",
+          "resourceRole": "integration-evidence-backup",
+          "localPath": "GGD-Asset-Library/conversions/infinity-strash-popp-action-reference-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-action-reference-v1/35f7b69cae4811ffc9b8b5bf7c6195b6084f1ea2a17f1d3fa9b48f736327db06/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-action-reference-v1/35f7b69cae4811ffc9b8b5bf7c6195b6084f1ea2a17f1d3fa9b48f736327db06/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-popp-action-reference-v1/0c7b97cc585b51a94aed9606487da6d9c92d93e6331a543c1a8b9e6b3b856c8d.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-popp-action-reference-v1/0c7b97cc585b51a94aed9606487da6d9c92d93e6331a543c1a8b9e6b3b856c8d.files.json",
+          "bytes": 5342,
+          "sha256": "0c7b97cc585b51a94aed9606487da6d9c92d93e6331a543c1a8b9e6b3b856c8d",
+          "fileCount": 1,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-action-reference-v1/latest-receipt.json",
+          "receiptSha256": "ae5d5ea70e24098d2789820b7ac679c940a8c2342e059ae737562ee85c5d45a4",
+          "manifestSha256": "f4120a00c5cdf0fffda7517d4a9596de7828983b82855e7e54b8ef40f81864a0",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
+      ],
+      "actionReferenceAnalyses": [
+        {
+          "id": "infinity-strash-popp-action-reference-v1",
+          "status": "controller-references-indexed-not-playable",
+          "sourceCharacterId": "PN020",
+          "heroIds": [
+            "b2-popp"
+          ],
+          "artifact": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-action-reference-v1/action-reference-index.json",
+            "sha256": "9f1edaecfcc2cd61409099085a344c22b8802d954c7c0ab5e5fe332a0815662d",
+            "bytes": 57914
+          },
+          "actionControllerCount": 36,
+          "categoryCounts": {
+            "ActiveSkill": 4,
+            "Base": 12,
+            "Emote": 6,
+            "Extra": 1,
+            "NormalAttack": 1,
+            "Skill": 7,
+            "Special": 3,
+            "root": 2
+          },
+          "eventReferenceCounts": {
+            "damage-reference": 1,
+            "death-reference": 1,
+            "emote-reference": 6,
+            "locomotion-reference": 1,
+            "normal-attack-reference": 1,
+            "skill-or-special-reference": 15,
+            "unclassified-action-controller-reference": 11
+          },
+          "knownNativeMotionAssets": {
+            "animSequenceCount": 1,
+            "animMontageCount": 5,
+            "decodedPlayableGlbClipCount": 0,
+            "claim": "Only the separately indexed AnimSequence/Montage package bytes are retained. Controller references do not prove a clip exists locally or plays on the missing skeleton."
+          },
+          "legacyBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-popp-action-reference-v1/0c7b97cc585b51a94aed9606487da6d9c92d93e6331a543c1a8b9e6b3b856c8d.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-popp-action-reference-v1/0c7b97cc585b51a94aed9606487da6d9c92d93e6331a543c1a8b9e6b3b856c8d.files.json",
+            "archiveSha256": "0c7b97cc585b51a94aed9606487da6d9c92d93e6331a543c1a8b9e6b3b856c8d",
+            "readbackVerified": true,
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-action-reference-v1/latest-receipt.json",
+            "receiptSha256": "ae5d5ea70e24098d2789820b7ac679c940a8c2342e059ae737562ee85c5d45a4"
+          },
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "defaultEligible": false,
+          "deploymentStatus": "not-deployed",
+          "gaps": [
+            "SK_PN020_Skeleton and PN020 body mesh are external dependencies and absent from this package.",
+            "Compressed AnimSequence tracks are not decoded and no controller state machine has been executed.",
+            "AkEvent and Niagara references identify missing dependencies; they are not recovered audio or VFX payloads.",
+            "No rendered model, action playback, backend option, default selection, or deployment is proven by this index."
+          ]
+        }
+      ]
     },
     {
       "id": "kof-xv-mai-sfmlab-lordscrub-v1",
