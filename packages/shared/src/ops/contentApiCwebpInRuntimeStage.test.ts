@@ -47,7 +47,12 @@ const ICON_PATH_ROOTS = [
 const BASE_IMAGE_BINS = new Set(["node", "npm", "npx", "corepack", "pnpm", "sh", "env", "which"]);
 
 /** bin → Alpine 套件名。⚠️ Alpine 上 `cwebp` 來自 `libwebp-tools`（⛔ 不是 `webp`／`cwebp`）。 */
-const APK_PACKAGE_FOR: Record<string, string> = { cwebp: "libwebp-tools" };
+//: ⭐ 2026-09-11（GH#1211）：補上 `ffmpeg`。
+//: `apps/content-api/src/resizeImage.node.ts:25` 直接 `execFileSync("ffmpeg", …)`，
+//: 而 runtime stage 只裝了 `tini libwebp-tools` ⇒ ⛔ **容器裡縮不了圖**。
+//: ⚠️ 它 fail-open（找不到 ffmpeg 回 `null`）⇒ ⭐ 症狀是「貼圖悄悄沒縮」，
+//: ⛔ 不是一個會喊的錯 —— 而那正是 256 貼圖上限那條路（`ModelVersions.prepare`）在用的。
+const APK_PACKAGE_FOR: Record<string, string> = { cwebp: "libwebp-tools", ffmpeg: "ffmpeg" };
 
 // ── Dockerfile 解析 ────────────────────────────────────────────────────────
 

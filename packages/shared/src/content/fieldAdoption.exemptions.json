@@ -1416,12 +1416,6 @@
     "why": "隨機落點的圓心放誰身上。預設是 `\"self\"`（`sim/effects/randomArea.ts` 的 `(e.who ?? \"self\")`），而 4 份 randomArea 都明寫了 `\"self\"`。`\"target\"`（以解出來的第一個目標為圓心）是「對著那個人頭上下流星雨」的寫法，還沒有一支技能要。",
     "group": "⑥ 五個「真的還沒有人選」的成員（landing，30 天後回來看）"
   },
-  "tag:weaponClass=gun": {
-    "status": "legacy-parked",
-    "witness": "content/_legacy/champions/godie-hlgr.json",
-    "why": "全名單唯一的槍械英雄是 03 鋼彈-煌（godie-hlgr，tags 帶 \"gun\"），而他在 2026-08-13 隨未上架名單搬進 _legacy。⚠️ 這一格不是裝飾：WEAPON_TAGS → client audio/combatSfx.ts WEAPON_SFX 是普攻音效的選擇鍵，所以零採用的實際意思是「這一版沒有任何英雄會發出槍聲」。引擎與音效表都還在，缺的只是一位持槍的英雄回到營運名單。",
-    "group": "⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）"
-  },
   "field:abilities.vfxLayers[].flyHeight": {
     "status": "legacy-parked",
     "witness": "content/_legacy/abilities/godie-nman.w.json",
@@ -2063,11 +2057,6 @@
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
-  "enum:abilities.effects[]#chainLightning.amount.damageTier=極大": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
-  },
   "enum:abilities.effects[]#consumeStatus.shape=circle": {
     "status": "landing",
     "since": "2026-09-11",
@@ -2336,5 +2325,15 @@
     "since": "2026-09-11",
     "why": "GH#1197 —— 邊界陣（新 effect kind）—— 第一份採用者是瑟雷西 R，由 #1193 接回；客戶端畫面另票 #1209。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
     "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
+  },
+  "field:abilities.effects[]#dash.shatter": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1190／#1211 —— ⭐ 機制與它的第一份內容**不在同一批**。`dash.shatter` 是 `fdd1a25d3` 為「衝刺撞到暫時柱才震」做的那一半；⭐ 它的第一個使用者是 **鄂爾（`lol-ornn`）Q→E**，而那位英雄今天**還不在 `content/champions/`** —— 他在 LoL 第二批 11 名的待上架名單裡（GH#1185）。⇒ ⛔ 今天的 0 **不是沒做完的遷移**，是「內容那一半還沒進 repo」。⭐ 反駁法：#1185 上架之後這一格要變成非零；若那批上了而它仍是 0，代表機制與內容對不上 —— ⭐ 那時這條 30 天的閘會自己再喊一次。"
+  },
+  "variant:abilities.effects[]#spawnObstacle": {
+    "status": "landing",
+    "since": "2026-09-11",
+    "why": "GH#1190／#1211 —— 同上：`spawnObstacle`（技能生得出**真的擋路**的暫時柱）由 `fdd1a25d3` 落地，⭐ 而它的第一份內容是 **鄂爾 Q**，仍在 GH#1185 的待上架 11 名裡。⚠️ ⭐ 這一格特別值得留 30 天的計時器：機制已經**出貨**（registry 認得、編輯器列得出來），⛔ 而一個出貨了卻沒有任何內容用的 effect kind，正是 S8「做了但玩家拿不到」的定義。⭐ 反駁法同上：#1185 上架後仍為 0 ⇒ 接線斷了。"
   }
 }
