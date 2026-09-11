@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "bd6c5e5df9d501b1ea65b0f9c86369dd85f40d3f",
   "contractFingerprint": "34e36ee3486cf36a",
-  "title": "34 名已取得模型英雄與 Phase 2／3 Editor 交付，請 Main 審查並接正式發布",
+  "title": "115 名英雄 loopback 全流程與 Phase 2／3 Editor 交付，請 Main 審查並接正式發布",
   "claims": [
     {
       "kind": "confirmed",
@@ -134,15 +134,15 @@
     },
     {
       "kind": "confirmed",
-      "text": "目前 target 的真實 loopback 發布批次已完成：34 名全部經 Editor 草稿、完整 ZIP、服務 inspection、投稿、管理員審查與發布；完整 ZIP 為 3,032,801–6,852,600 bytes。DIO 發布暫時 v2 後恢復 v1，愛麗絲的發布指標與 revision 均未變。修正包含兩個實測缺口：content/config/ugc.json 恢復待審 50、一般每日 100、認證每日 200 與含模型完整 ZIP 64 MiB；Platform 以已驗證 manifest 的 GLB asset 判定 catalog 模型包，不再只看 uploadedModel。集合檢查證明第一批 37、第二批 37 與 LoL 第一批 7 名共 81／81 canonical ID 已存在 content/champions，而 compileHeroPackageProject() 對此條件會確定套用官方身分防撞規則；第一批兩名在同一 target 仍收到相同拒絕，因此目前無法將這 81 名既有正式英雄接入同 ID 的版本發布鏈。",
-      "commit": "860c747b914e80852b475cedf61140065d8e6848",
+      "text": "目前 target 的真實 loopback 發布證據為 115 名：34 名新 ID 與 81 名既有 canonical ID 全部經 Editor 草稿、完整 ZIP、服務 inspection、不可變投稿、管理員審查、發布與公開名單核對。canonical 接管只存在於伺服器授權的獨立簽章路徑；普通作者仍不能占用正式 ID。武藤遊戲發布 v2 後恢復 v1，八神庵的 published pointer 與 revision 均未變；DIO 的既有回復證據也保持通過。這些是乾淨 loopback 收據，不冒充正式站部署。",
+      "commit": "d75e98402a4ebff2ed15d074e8181c709613e981",
       "repro": {
         "command": "node tools/editor-acceptance/check-community-release-receipts.mjs",
         "expectedExit": 0
       },
       "evidence": [
         "docs/_reports/community-acquired-heroes/loopback-release-34of34.json",
-        "docs/_reports/community-acquired-heroes/loopback-release-canonical-id-blocker.json",
+        "docs/_reports/community-acquired-heroes/loopback-release-canonical-81of81.json",
         "tools/editor-acceptance/community-hero-release-check.mts",
         "apps/platform/internal/submissions/hero_works.go",
         "packages/shared/src/content/import/heroPackage.ts"
@@ -165,11 +165,10 @@
     }
   ],
   "asks": [
-    "請 Main 審查並合併本 PR；34／34 已以目前 target 完成隔離投稿、管理員審查、發布與單英雄回復，合併後請在正式服務重建並發布。完整 catalog 模型包已正確採 heroModelMaxBytes，不再需要刪模型或移除依賴規避限制。",
-    "請 Main 依 #1221 為已存在 content/champions 的 canonical ID 提供明確的 Editor 接管／遷移模式，使第一、二批與 LoL 第一批能沿用原 ID 建立不可變候選、發布新版本與 rollback；不能換 ID 產生同名副本。",
+    "請 Main 審查並合併本 PR 的 #1221 canonical 接管實作；普通投稿的 ID 防撞保持不變，管理員路徑已有 81／81 發布與單英雄 rollback 收據。合併後請在正式服務重建並發布。",
     "請與 Draft PR #1193 的 LoL 第二批 11 名一併安排合併；兩張 PR 合併後，以同一正式服務名單確認 126 名的目前發布版本及單英雄 rollback。",
     "P2-05 若要正式發行，請由持有者配置簽章、Team ID、Windows publisher 與 stable feed。P3-05 若要啟用推論，請提供兩個核准硬體 target 的 E8 收據與 runtime artifact；在此之前保留 released=false。",
-    "#1206、#1212 與 #1214 已在本分支完成。#1205 的模型 ZIP 阻擋已由 860c747b9 修正並有 34／34 收據，但該票仍要等 34 名在 Main 正式服務發布後才可關閉。"
+    "#1206、#1212 與 #1214 已在本分支完成。#1205 的模型 ZIP 阻擋已有 34／34 收據；#1221 的接管實作已有 81／81 收據。兩票的正式服務發布狀態仍依 Main 合併與部署分開記錄。"
   ],
   "ownerQuotes": [
     {
