@@ -16,9 +16,14 @@ source; no licence is granted to anyone.
     abilities, items, strings, stats).
   * The character models, textures and reskins authored for that map.
   * The 21 Chinese voice quips recorded for the map.
-  * All eleven background-music tracks, synthesised from scratch by
-    tools/bgm-gen — every waveform computed from numpy arrays, no sample and no
-    audio file read as input.
+  * The 24 scene background-music tracks (12 themes x 2 arrangements),
+    synthesised from scratch by tools/bgm-gen — every waveform computed from
+    numpy arrays, no sample and no audio file read as input.
+  * The composition of the 13 per-arena battle themes, also written by
+    tools/bgm-gen. These are NOT zero-input: they are rendered through the
+    MuseScore_General soundfont (MIT) and layered with Warcraft III ambience.
+    See content/assets/CREDITS.md for the per-track breakdown; 37 tracks ship
+    under content/assets/audio/bgm/ in total.
   * The arena ground textures and cursor art, generated procedurally by this
     repo's own scripts — byte-reproducible from a seed.
 
@@ -37,7 +42,8 @@ source; no licence is granted to anyone.
       by LasquetiSpice (https://sketchfab.com/LasquetiSpice)
       licensed under CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
 
-  * 効果音ラボ (Sound Effect Lab), https://soundeffect-lab.info/ — 40 clips under
+  * 効果音ラボ (Sound Effect Lab), https://soundeffect-lab.info/ — 54 clips
+    (46 SFX + 8 Japanese voice clips; see content/assets/CREDITS.md) under
     content/assets/audio/sfx/lab/ and audio/voice-jp/. Free to use, credit
     optional, copyright retained by 効果音ラボ. Not CC0.
 
