@@ -17,7 +17,7 @@
   "iconPending": 0,
   "voicePending": 7
  },
- "digest": "200d3a668a6c3eb9d9c0932e7e32d9b467665dc61cceda1b83e65e523a73088c",
+ "digest": "b308d111c07a8f8c4044535ceb243ba8acfa55c384f50777a9f753fa47e15234",
  "heroes": [
   {
    "id": "b2-aladdin",
@@ -76,9 +76,17 @@
     "ok": true,
     "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
     "glbPath": "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2355552,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_attack_attcom_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -116,9 +124,17 @@
     "ok": true,
     "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
     "glbPath": "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1519620,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "bat_run",
+     "attack": "bat_dance1",
+     "cast": "bat_dance2",
+     "hurt": "bat_idle",
+     "death": "bat_dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -300,9 +316,17 @@
     "ok": true,
     "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
     "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2361292,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_attack_attcom_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -593,9 +617,17 @@
     "ok": true,
     "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
     "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 78876,
+    "clipMap": {
+     "idle": "idle",
+     "run": "run",
+     "attack": "attack",
+     "cast": "cast",
+     "hurt": "hurt",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -681,9 +713,17 @@
     "ok": true,
     "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
     "glbPath": "assets/models/community/f4704423926d8cfb7d8e272f96d0bb240c865afa62d75a936b387049d969f01b.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 799056,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "bat_run",
+     "attack": "bat_dance1",
+     "cast": "bat_dance2",
+     "hurt": "bat_idle",
+     "death": "bat_dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -865,9 +905,17 @@
     "ok": true,
     "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
     "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 920828,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_attack_attcom_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -930,9 +978,17 @@
     "ok": true,
     "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
     "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 920828,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_attack_attcom_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1030,9 +1086,17 @@
     "ok": true,
     "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
     "glbPath": "assets/models/community/28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1281100,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1310,9 +1374,17 @@
     "ok": true,
     "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
     "glbPath": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 762900,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1350,9 +1422,17 @@
     "ok": true,
     "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
     "glbPath": "assets/models/community/2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1230780,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_a",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1403,9 +1483,17 @@
     "ok": true,
     "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
     "glbPath": "assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 992984,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1625,9 +1713,17 @@
     "ok": true,
     "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
     "glbPath": "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 856548,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "bat_run",
+     "attack": "bat_dance1",
+     "cast": "bat_dance2",
+     "hurt": "bat_hit",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1761,9 +1857,17 @@
     "ok": true,
     "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
     "glbPath": "assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 683364,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1801,9 +1905,17 @@
     "ok": true,
     "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
     "glbPath": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1436500,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_attack_attcom_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1854,9 +1966,17 @@
     "ok": true,
     "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
     "glbPath": "assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 772664,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -1955,9 +2075,17 @@
     "ok": true,
     "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
     "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1736188,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2032,9 +2160,17 @@
     "ok": true,
     "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
     "glbPath": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 764552,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2120,9 +2256,17 @@
     "ok": true,
     "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
     "glbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 199860,
+    "clipMap": {
+     "idle": "idle",
+     "run": "run",
+     "attack": "attack",
+     "cast": "cast",
+     "hurt": "hurt",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2269,9 +2413,17 @@
     "ok": true,
     "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
     "glbPath": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1160176,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2357,9 +2509,17 @@
     "ok": true,
     "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
     "glbPath": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 890368,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01_a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2458,9 +2618,17 @@
     "ok": true,
     "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
     "glbPath": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1001788,
+    "clipMap": {
+     "idle": "single_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01_b",
+     "hurt": "single_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2523,9 +2691,17 @@
     "ok": true,
     "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
     "glbPath": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 816876,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_skill_03",
+     "cast": "single_skill_03",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2659,9 +2835,17 @@
     "ok": true,
     "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
     "glbPath": "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1053984,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2699,9 +2883,17 @@
     "ok": true,
     "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
     "glbPath": "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1281464,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_a",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2739,9 +2931,17 @@
     "ok": true,
     "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
     "glbPath": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 834460,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2779,9 +2979,17 @@
     "ok": true,
     "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
     "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1104488,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2819,9 +3027,17 @@
     "ok": true,
     "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
     "glbPath": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1492264,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01_a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2872,9 +3088,17 @@
     "ok": true,
     "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
     "glbPath": "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 862984,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -2960,9 +3184,17 @@
     "ok": true,
     "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
     "glbPath": "assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 958364,
+    "clipMap": {
+     "idle": "single_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_05",
+     "hurt": "single_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3013,9 +3245,17 @@
     "ok": true,
     "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
     "glbPath": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 663584,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3066,9 +3306,17 @@
     "ok": true,
     "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
     "glbPath": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 852356,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_a",
+     "cast": "single_skill_01_a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3106,9 +3354,17 @@
     "ok": true,
     "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
     "glbPath": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 589076,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3146,9 +3402,17 @@
     "ok": true,
     "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
     "glbPath": "assets/models/community/ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 981000,
+    "clipMap": {
+     "idle": "wait",
+     "run": "F-Move",
+     "attack": "attack_01",
+     "cast": "sp01_01",
+     "hurt": "Damage-1",
+     "death": "D-Down"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3186,9 +3450,17 @@
     "ok": true,
     "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
     "glbPath": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2322448,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_05",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3226,9 +3498,17 @@
     "ok": true,
     "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
     "glbPath": "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2343924,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_2",
+     "cast": "single_skill_01_b",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3314,9 +3594,17 @@
     "ok": true,
     "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
     "glbPath": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1058392,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3354,9 +3642,17 @@
     "ok": true,
     "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
     "glbPath": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 679728,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -3490,9 +3786,17 @@
     "ok": true,
     "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
     "glbPath": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1249564,
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -7609,9 +7913,17 @@
     "ok": true,
     "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
     "glbPath": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1715124,
+    "clipMap": {
+     "idle": "karthus_idle01",
+     "run": "karthus_run",
+     "attack": "karthus_attack1",
+     "cast": "karthus_spell1a",
+     "hurt": "karthus_idle01",
+     "death": "karthus_death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -7697,9 +8009,17 @@
     "ok": true,
     "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
     "glbPath": "assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2518200,
+    "clipMap": {
+     "idle": "idle_active",
+     "run": "run_combat",
+     "attack": "attack1",
+     "cast": "spell1_cast",
+     "hurt": "idle_active",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -7760,9 +8080,17 @@
     "ok": true,
     "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
     "glbPath": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1968836,
+    "clipMap": {
+     "idle": "lux_idle1",
+     "run": "lux_run",
+     "attack": "lux_attack1",
+     "cast": "lux_spell1",
+     "hurt": "lux_idle1",
+     "death": "lux_death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -7845,9 +8173,17 @@
     "ok": true,
     "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
     "glbPath": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1426364,
+    "clipMap": {
+     "idle": "missfortune_idle1",
+     "run": "missfortune_run",
+     "attack": "missfortune_attack1",
+     "cast": "missfortune_spell1",
+     "hurt": "missfortune_idle1",
+     "death": "missfortune_death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -7930,9 +8266,17 @@
     "ok": true,
     "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
     "glbPath": "assets/models/community/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2043016,
+    "clipMap": {
+     "idle": "warwick_idle_v1",
+     "run": "warwick_run",
+     "attack": "warwick_attack1",
+     "cast": "warwick_spell1",
+     "hurt": "warwick_idle_v1",
+     "death": "warwick_death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -7992,9 +8336,17 @@
     "ok": true,
     "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
     "glbPath": "assets/models/community/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 2287728,
+    "clipMap": {
+     "idle": "xerath_idle1",
+     "run": "xerath_run",
+     "attack": "xerath_attack1",
+     "cast": "xerath_spell1",
+     "hurt": "xerath_idle1",
+     "death": "xerath_death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
@@ -8078,9 +8430,17 @@
     "ok": true,
     "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
     "glbPath": "assets/models/community/87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b.glb",
-    "offDisk": true,
-    "inSomeBranch": false,
-    "gap": "位元組在 S3（`assets-offdisk.json` 宣告過，sha256 驗得起來）—— ⭐ 本機沒抓而已",
+    "bytes": 1837560,
+    "clipMap": {
+     "idle": "yasuo_idle1",
+     "run": "yasuo_run1",
+     "attack": "yasuo_attack1",
+     "cast": "yasuo_spell1a",
+     "hurt": "yasuo_idle1",
+     "death": "yasuo_death"
+    },
+    "missingClips": [],
+    "gap": "",
     "severity": ""
    },
    "icon": {
