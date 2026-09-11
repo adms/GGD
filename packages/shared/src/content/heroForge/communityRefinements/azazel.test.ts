@@ -30,7 +30,23 @@ import { createHeroSimulationBaseline } from "../simulationBaseline";
 import { runEffects } from "../../../sim/effects/effectRunner";
 
 const source = zHeroProject.parse(JSON.parse(readFileSync(resolve(import.meta.dirname, "../../../../testkit/fixtures/azazel-handoff.json"), "utf8")));
-const catalog = shippedHeroCatalog();
+/**
+ * ⭐⭐ GH#1211（2026-09-11）：阿薩謝爾**已經上架了**。
+ *
+ * 這份 refinement 的 `projectId` 是 `community-review-32-20260907`，
+ * ⭐ 而 `content/champions/community-review-32-20260907.json` 今天**存在** ——
+ * 他是第一批社群 37 名之一（owner 點名保留的兩件之一就是他的
+ * 「THE END OF SON 重複詛咒反轉增益」機制）。
+ *
+ * ⇒ `compileHeroPackageProject` 因此擲
+ *   「社群作品不能佔用既有官方英雄的身分，請建立改作草稿。」（`heroPackage.ts:94`）
+ *   —— ⭐ **那條規則做得對**：它擋的是「社群投稿悄悄蓋掉一位已上架英雄」。
+ *
+ * ⇒ ⛔ 錯的不是規則，是這份夾具還停在「他還沒上架」那個世界。
+ * ⭐ 正解是走它自己指的那條路：**宣告改作**（`canonicalTakeoverId`）——
+ * ⛔ 不是把那條檢查放寬，也⛔ 不是替這份 refinement 換一個假 id。
+ */
+const catalog = { ...shippedHeroCatalog(), canonicalTakeoverId: "community-review-32-20260907" };
 const templates = [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, value]) => value as TemplateDoc);
 const project = refineAzazelProject(source);
 const result = compileGeneratedHeroDraft(generateHeroDraft(project.acceptedPlan!, { heroId: project.projectId, heroName: project.brief.name }),
