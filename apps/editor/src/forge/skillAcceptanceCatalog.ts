@@ -387,7 +387,7 @@ export const SKILL_VISUAL_ACCEPTANCE_THEME_IDS = new Set(
 );
 
 export const CAPABILITY_ONLY_EFFECT_KINDS = [
-  "carry", "convertTeam", "revive", "shieldBreak", "spawnThresholds",
+  "carry", "convertTeam", "revive", "shieldBreak", "spawnObstacle", "spawnThresholds",
 ] as const;
 
 export const CAPABILITY_ONLY_HOOK_EVENTS = [
