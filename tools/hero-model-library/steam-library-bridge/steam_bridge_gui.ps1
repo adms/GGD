@@ -304,11 +304,20 @@ $applyButton.Add_Click({
         $account = $accountBox.Text.Trim()
         if ([string]::IsNullOrWhiteSpace($account)) { throw '請填寫 Windows 讀取帳號。' }
         $shares = @()
+        $removedShares = @()
         foreach ($row in $grid.Rows) {
-            if (-not [bool]$row.Cells[0].Value) { continue }
             $name = [string]$row.Cells[1].Value
             $library = [string]$row.Cells[2].Value
             $path = Join-Path $library 'steamapps'
+            if (-not [bool]$row.Cells[0].Value) {
+                $existing = Get-SmbShare -Name $name -ErrorAction SilentlyContinue
+                if ($null -ne $existing -and $existing.Path -eq $path) {
+                    Remove-SmbShare -Name $name -Force
+                    $removedShares += [ordered]@{ shareName = $name; steamLibrary = $library
+                        sharedPath = $path; action = 'share-removed-files-preserved' }
+                }
+                continue
+            }
             Ensure-SmbShareState -Name $name -Path $path -Account $account -Access Read
             $shares += [ordered]@{ shareName = $name; steamLibrary = $library; sharedPath = $path
                 uncPath = "\\$env:COMPUTERNAME\$name"; access = 'read-only'; account = $account
@@ -328,13 +337,13 @@ $applyButton.Add_Click({
             computerName = $env:COMPUTERNAME; ipv4 = $addresses
             firewall = @{ profile = 'Private'; remoteAddress = 'LocalSubnet'; tcpPort = 445 }
             sourceSharesReadOnly = $true; coordinationShare = "\\$env:COMPUTERNAME\GGDSteamStatus"
-            shares = $shares
+            shares = $shares; removedShares = $removedShares
         }
         $receipt | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $receiptPath -Encoding UTF8
-        Write-BridgeEvent -Type 'share-apply' -Message ("已套用 {0} 個唯讀 Steam share，收據位於 {1}。" -f $shares.Count, $receiptPath) -Data $receipt
+        Write-BridgeEvent -Type 'share-apply' -Message ("已套用 {0} 個唯讀 Steam share，停用 {1} 個 share；收據位於 {2}。" -f $shares.Count, $removedShares.Count, $receiptPath) -Data $receipt
         Refresh-LibraryGrid
         Refresh-History
-        [System.Windows.Forms.MessageBox]::Show("已建立 $($shares.Count) 個唯讀分享。`n請把桌面的 GGD-Steam-Shares.json 上傳到素材頁面。", '完成') | Out-Null
+        [System.Windows.Forms.MessageBox]::Show("已套用 $($shares.Count) 個唯讀分享，停用 $($removedShares.Count) 個分享。`n請把桌面的 GGD-Steam-Shares.json 交給素材整合工作流。", '完成') | Out-Null
     } catch {
         Write-BridgeEvent -Type 'error' -Message $_.Exception.Message
         Refresh-History

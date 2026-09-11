@@ -2,7 +2,7 @@
 
 當 Steam 遊戲庫分散在多顆 Windows 硬碟時，每個 `steamapps` 以獨立 SMB share 提供給同一局域網的素材處理 Mac。來源端權限為唯讀；Mac 先建立遊戲與版本清單，有需要時才將指定遊戲複製到 `GGD-Asset-Library/intake/`。
 
-Windows 上將這個資料夾複製過去後，雙擊 `launch_steam_bridge_gui.cmd`。啟動器會開啟 `steam_bridge_gui.ps1`，Windows 顯示 UAC 時按「是」。GUI 可以自動掃描或手動新增 SteamLibrary，勾選後套用唯讀分享，並顯示當前 SMB 連線、開啟檔案、網卡即時速率、中央已掃描／已擷取／已登記數量與 JSONL 歷史。遊戲 share 是唯讀；`GGDSteamStatus` 只存放 Mac 回寫的小型 `usage.json`。
+Windows 上將這個資料夾複製過去後，雙擊 `launch_steam_bridge_gui.cmd`。啟動器會開啟 `steam_bridge_gui.ps1`，Windows 顯示 UAC 時按「是」。GUI 可以自動掃描或手動新增 SteamLibrary，勾選後套用唯讀分享；取消勾選再套用會只停用對應 share，不會刪除資料夾或遊戲檔。畫面會顯示當前 SMB 連線、開啟檔案、網卡即時速率、中央已掃描／已擷取／已登記數量與 JSONL 歷史。遊戲 share 是唯讀；`GGDSteamStatus` 只存放 Mac 回寫的小型 `usage.json`。
 
 如果只需要無 GUI 設定，以系統管理員 PowerShell 執行：
 
