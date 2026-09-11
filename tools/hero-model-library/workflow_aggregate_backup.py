@@ -7,6 +7,7 @@ additional legacy receipt, but must never replace a constituent source's
 primary archive or make a component runtime-addressable.
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
 import os
@@ -76,6 +77,7 @@ def range_readback(key, destination, expected, size, chunk_bytes=32 * 1024 * 102
     parts.mkdir(parents=True, exist_ok=True)
     uri = f's3://{BUCKET}/{key}'
     ordered = []
+    pending = []
     for start in range(0, size, chunk_bytes):
         end = min(size, start + chunk_bytes) - 1
         length = end - start + 1
@@ -86,6 +88,11 @@ def range_readback(key, destination, expected, size, chunk_bytes=32 * 1024 * 102
             continue
         if piece.exists():
             piece.rename(piece.with_name(piece.name + '.invalid-' + digest(piece)[:12]))
+        ordered.append(piece)
+        pending.append((start, end, length, piece, expected_sha))
+
+    def fetch(item):
+        start, end, length, piece, expected_sha = item
         last_error = None
         for attempt in range(1, 4):
             try:
@@ -102,10 +109,18 @@ def range_readback(key, destination, expected, size, chunk_bytes=32 * 1024 * 102
                     piece.rename(piece.with_name(piece.name + f'.failed-attempt-{attempt}'))
         if last_error is not None:
             raise last_error
-        ordered.append(piece)
-        print(json.dumps({'phase': 'range-readback', 'start': start, 'end': end,
-                          'verifiedBytes': sum(item.stat().st_size for item in ordered),
-                          'totalBytes': size}), flush=True)
+        return start, end, piece
+
+    verified = sum(piece.stat().st_size for piece in ordered if piece.exists())
+    if pending:
+        with ThreadPoolExecutor(max_workers=min(3, len(pending))) as pool:
+            futures = [pool.submit(fetch, item) for item in pending]
+            for future in as_completed(futures):
+                start, end, piece = future.result()
+                verified += piece.stat().st_size
+                print(json.dumps({'phase': 'range-readback', 'start': start, 'end': end,
+                                  'verifiedBytes': verified, 'totalBytes': size}), flush=True)
+    ordered.sort()
     assembling = destination.with_name(destination.name + f'.assembling-{os.getpid()}')
     with assembling.open('xb') as output:
         for piece in ordered:
