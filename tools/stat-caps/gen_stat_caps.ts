@@ -127,15 +127,58 @@ interface Row {
   fuse: number;
 }
 
+/**
+ * ⭐⭐ **固定的基礎中位**（owner 2026-09-12：「以後**固定數值 别再取中位數了**」）。
+ *
+ * ⛔ 在此之前每一格上限都是 `median(每一張出貨卡) × STAT_CAP_MULTIPLE`
+ * ⇒ ⭐ **上架一批英雄，玩家堆得到的每一項上限都會動**。
+ * ⚠️ 2026-09-12 實測：81 名上架 ＋ 逐出身梯子落地之後
+ * `maxHealth` 的上限從 **402,129 → 567,600**，⛔ 而那不是任何人的決定。
+ *
+ * ⭐ 這一組是「逐出身梯子」落地之後量到的（2026-09-12），⛔ 而它們現在是常數。
+ * ⚠️ `maxHealth` / `maxMana` 的 LV30 值（2838 / 1745）⭐ 與
+ * `tools/balance-anchors/gen.ts` 的 `FIXED_BASE_*` **刻意是同一個數字** ——
+ * 它們量的是同一件事（⛔ 兩邊不一致就是兩個住處各自漂）。
+ */
+const FIXED_MEDIAN: Readonly<Record<string, Readonly<Record<number, number>>>> = {
+  maxHealth: { 30: 2838, 50: 4438, 99: 8358 },
+  maxMana: { 30: 1745, 50: 2745, 99: 5195 },
+  healthRegen: { 30: 4.645, 50: 7.165, 99: 13.26 },
+  manaRegen: { 30: 6.24, 50: 7.205, 99: 7.5 },
+  ad: { 30: 107.66, 50: 163.02, 99: 315 },
+  armor: { 30: 23.1, 50: 34.27, 99: 61.64 },
+  mr: { 30: 76.555, 50: 117.48, 99: 206.96 },
+};
+/** 量到的中位與固定值差超過這個比例 ⇒ 印一行（⛔ 不改值、⛔ 不回非零）。 */
+const STAT_CAP_DRIFT_WARN = 0.1;
+
 const LEVELS: readonly BalanceAnchorLevel[] = BALANCE_ANCHOR_LEVELS;
 
 const rows: Row[] = DERIVED_CAP_STATS.map((stat) => {
   const medianAt: Record<number, number> = {};
   const capAt: Record<number, number> = {};
   for (const lv of LEVELS) {
+    // ⭐⭐ **固定值**（owner 2026-09-12：「以後**固定數值 别再取中位數了**」）。
+    //
+    // ⛔ 在此之前這一行是 `median(每一張出貨卡)` × 倍數 ⇒ ⭐ **上架一批英雄，
+    //   每一項屬性的上限都會動**（2026-09-12 實測：maxHealth 402,129 → 567,600）。
+    // ⚠️ 而屬性上限是**出貨值** —— 它直接決定玩家堆得到多高。
+    //
+    // ⭐ 與 `balance-anchors/gen.ts` 同一個形狀：值固定，⛔ 而仍然量並印出偏差
+    //   （靜默地固定住，與「忘了更新」長得一模一樣）。
     const m = median(pop.map((p) => championStatBase(p.doc as never, stat, lv, env)));
-    medianAt[lv] = m;
-    capAt[lv] = Math.round(m * STAT_CAP_MULTIPLE);
+    const fixed = FIXED_MEDIAN[stat]?.[lv];
+    medianAt[lv] = fixed ?? m;
+    capAt[lv] = Math.round(medianAt[lv]! * STAT_CAP_MULTIPLE);
+    if (fixed !== undefined) {
+      const off = Math.abs(m - fixed) / (fixed || 1);
+      if (off > STAT_CAP_DRIFT_WARN) {
+        console.log(
+          `⚠️ LV${lv} ${stat}：固定中位 ${fixed}，而**今天的名單中位是 ${Math.round(m)}**（差 ${(off * 100).toFixed(1)}%）。\n` +
+            `   ⭐ 上限**沒有動**。⛔ 要改就改 \`FIXED_MEDIAN\` —— 那是一次**平衡決定**，⛔ 不是同步。`,
+        );
+      }
+    }
   }
   const chain = envChain(stat, env);
   let peakFinalL99 = -Infinity;

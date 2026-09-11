@@ -36,11 +36,11 @@ export const DERIVED_CAP_PROVENANCE: DerivedCapProvenance = Object.freeze({
   medians: Object.freeze({
   "maxHealth": 2838,
   "maxMana": 1745,
-  "healthRegen": 4.6449,
+  "healthRegen": 4.645,
   "manaRegen": 6.24,
-  "ad": 107.6621,
-  "armor": 23.0989,
-  "mr": 76.5541,
+  "ad": 107.66,
+  "armor": 23.1,
+  "mr": 76.555,
   }),
 });
 
