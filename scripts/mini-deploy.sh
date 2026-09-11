@@ -11,13 +11,14 @@
 #
 # ═══ ⭐ 為什麼預設用 `.local` 而不是 IP ═══
 # mini 同時有兩個位址（實測 2026-08-29）:
-#   169.254.166.33  ← 直連的網卡（RTT 0.59 ms,100 Mbps 硬上限）
-#   192.168.0.133   ← Wi-Fi（RTT 9.18 ms）
+#   169.254.x.x     ← 直連的網卡（RTT 0.59 ms,100 Mbps 硬上限）
+#   192.168.x.x     ← Wi-Fi（RTT 9.18 ms）
+#   ⛔ 實際位址不寫在這裡 —— 見 scripts/hosts.local.sh（不進 git）
 # ⭐ mDNS 會自己挑當下通的那一條 ⇒ 拔線、換網段、換 DHCP 位址都不會壞。
 # ⛔ 寫死 IP 的話,owner「有時候會把 mini 放在同一個區網」那句話就會變成一個 bug。
 #
 # ═══ ⛔ 這支腳本**永遠不碰正式站** ═══
-# GCP（34.81.104.163 / ggd.adms.ai）走 scripts/host-deploy.sh。
+# GCP 回滾機（$GGD_DEPLOY_SSH / ggd.adms.ai）走 scripts/host-deploy.sh。
 # 這一支只對 mini 說話,而且開頭會拒絕任何看起來像正式站的目標。
 set -uo pipefail
 RED=$'\033[31m'; GRN=$'\033[32m'; YEL=$'\033[33m'; BLD=$'\033[1m'; RST=$'\033[0m'
@@ -35,9 +36,17 @@ REMOTE_REPO="${GGD_MINI_REPO:-\$HOME/GGD}"
 
 # ⛔ 硬柵欄:這支腳本不可以對正式站說話
 case "$HOST" in
-  *ggd.adms.ai*|34.81.104.163|*adms.ai*)
+  *ggd.adms.ai*|*adms.ai*)
     die "⛔ $HOST 看起來是正式站 —— 這支腳本只對 mini 說話。正式站走 scripts/host-deploy.sh" ;;
 esac
+# ⭐ 回滾機的位址住 scripts/hosts.local.sh（⛔ 不進 git,因為這個 repo 是 public 的)。
+#   ⚠️ 沒設就**只剩上面那條網域柵欄** —— 這是刻意的取捨:⛔ 不因為少一個檔就擋下整次部署。
+if [ -n "${GGD_DEPLOY_SSH:-}" ]; then
+  case "$HOST" in
+    *"${GGD_DEPLOY_SSH##*@}"*)
+      die "⛔ $HOST 是回滾機 —— 這支腳本只對 mini 說話。回滾機走 scripts/host-deploy.sh" ;;
+  esac
+fi
 [ -n "$USER_" ] || { echo "${RED}⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
 # ⭐ `-A`（agent 轉發）—— mini 用**我這台的** GitHub 金鑰 clone/fetch,
 #   ⛔ 而 mini 上不需要存放任何憑證。GCP 的 `host-deploy.sh` 也是這樣做的。

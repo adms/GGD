@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# GGD pre-commit —— ⭐ 這個 repo 是 **public** 的:擋下憑證進 commit。
+#
+# 啟用（每台機器一次）:  bash scripts/enable-git-hooks.sh
+# 一次性跳過（要在 commit 訊息裡說為什麼）:  GGD_SKIP_SECRET_SCAN=1 git commit …
+#
+# ⚠️ 它只看 **staged 的內容**（幾秒）。全樹／歷史／commit 訊息／GitHub 走 `pnpm secrets:check`。
+set -uo pipefail
+[ "${GGD_SKIP_SECRET_SCAN:-}" = "1" ] && exit 0
+root="$(git rev-parse --show-toplevel)"
+[ -x "$root/scripts/secret-scan.sh" ] || exit 0     # 還沒有這支(舊 checkout) ⇒ ⛔ 不擋人
+
+out="$(bash "$root/scripts/secret-scan.sh" --staged 2>&1)"; rc=$?
+case "$rc" in
+  0) exit 0 ;;
+  3) echo "$out" >&2
+     echo "🚨 secret-scan 的**尺壞了** ⇒ 這次 commit 沒有被驗到。⛔ 修好它,⛔ 不要跳過。" >&2
+     exit 1 ;;
+  *) echo "$out" >&2
+     echo "" >&2
+     echo "⛔ 上面的東西會**永久**進到一個 public repo 的歷史裡。" >&2
+     echo "   ⭐ 真的是憑證 ⇒ 先去該服務**撤銷／輪換**,⛔ 刪 commit 不等於讓它失效。" >&2
+     echo "   ⭐ 是誤報 ⇒ 在 tools/secret-scan/allowlist.tsv 補一列(要寫得出反駁法)。" >&2
+     exit 1 ;;
+esac

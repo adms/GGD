@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# 部署主機的身分 —— ⭐ 複製成 `scripts/hosts.local.sh`（⛔ 它不進 git）再填。
+#
+# ⚠️ 為什麼不直接寫在腳本裡：`github.com/adms/GGD` 是 **public** 的。
+#    一個寫死的 `user@ip` 等於公開「用哪個帳號登入哪一台」—— ⭐ ssh 憑證的一半。
+#    ⛔ 這不會讓已經公開的那些消失（git 歷史留著）,它擋的是**下一個**。
+#
+# 環境變數仍然**優先於**這個檔（⇒ CI／一次性覆寫照舊可用,也是 rollback 的辦法）。
+
+# 正式站（Mac mini M4）—— 玩家連到的就是這台
+export GGD_MINI_USER="${GGD_MINI_USER:-<使用者>}"
+export GGD_MINI_HOST="${GGD_MINI_HOST:-<LAN IP 或主機名>}"
+
+# 回滾機（GCP）
+export GGD_DEPLOY_SSH="${GGD_DEPLOY_SSH:-<user@host>}"
+export GGD_REVIEW_HOST="${GGD_REVIEW_HOST:-$GGD_DEPLOY_SSH}"
+
+# 對外站台（⭐ 這個不是祕密 —— 它本來就要解析得到）
+export GGD_PUBLIC_HOST="${GGD_PUBLIC_HOST:-ggd.adms.ai}"
