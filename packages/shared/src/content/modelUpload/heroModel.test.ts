@@ -39,6 +39,13 @@ it("enforces the tablet budget on the selected runtime body", async () => {
     meshes: over(HERO_MODEL_BUDGET.meshes),
     textures: [{ width: over(HERO_MODEL_BUDGET.texEdge), height: 4, bytes: 20, sha256: "x" }],
     clips: [{ index: 0, name: "A", duration: 1, channels: over(HERO_MODEL_BUDGET.channels) }],
+    // ⭐ GH#1230 —— 骨架綁定變成硬錯誤之後，這個夾具要**明說它是綁好的**。
+    // ⚠️ ⛔ 這不是回歸，是**前提消失**：`meshes` 被覆寫成 limit+1，而 `skinnedPrimitives`
+    //    還留著 `original` 的值 ⇒ 「有網格沒權重」當然成立。
+    // ⇒ 這條測試要問的是**四條預算**，⛔ 不是骨架 —— 所以把骨架這一格釘成合格。
+    //    骨架本身有自己的守衛：`heroModelRig.test.ts`。
+    skins: 1,
+    skinnedPrimitives: over(HERO_MODEL_BUDGET.meshes),
   };
   expect(heroModelBudgetIssues(metrics).errors).toHaveLength(4);
   // One heavy unused clip must not block a small explicitly selected one.

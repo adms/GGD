@@ -42,6 +42,30 @@ TEX_EDGE_EXEMPT = {
 }
 
 
+def hero_body_glbs() -> set:
+    """⭐ 哪幾顆 GLB 是**英雄身體** —— 從 `content/models/*.json` 推導，⛔ 不是寫死路徑。
+
+    ⚠️ ⭐ 骨架檢查**只能**問這一批：一支火把、一面旗子本來就沒有骨架，
+    ⛔ 對它們喊「沒綁骨架」會讓這條檢查對 641 顆裡的大多數變成噪音 ——
+    而一條一直喊的警報沒有人讀（本 repo 已記錄過這個形狀）。
+    """
+    out = set()
+    d = os.path.join(ROOT, "content", "models")
+    if not os.path.isdir(d):
+        return out
+    for name in os.listdir(d):
+        if not name.endswith(".json") or name.startswith("_"):
+            continue
+        try:
+            with open(os.path.join(d, name), encoding="utf-8") as f:
+                doc = json.load(f)
+        except Exception:
+            continue
+        if doc.get("heroBody") and doc.get("glbPath"):
+            out.add(os.path.abspath(os.path.join(ROOT, "content", doc["glbPath"])))
+    return out
+
+
 def tex_cap(path: str) -> int:
     rel = os.path.relpath(os.path.abspath(path), os.path.join(ROOT, "content"))
     for k, (edge, _why) in TEX_EDGE_EXEMPT.items():
@@ -72,12 +96,15 @@ def render_key(j, mi):
 
 def inspect(path):
     j, b = read_glb(path)
-    draws, tris, keys = 0, 0, set()
+    draws, tris, keys, skinned = 0, 0, set(), 0
     for n in j.get("nodes", []):
         if n.get("mesh") is None:
             continue
         for pr in j["meshes"][n["mesh"]]["primitives"]:
             draws += 1
+            # ⭐ ⑥ 骨架綁定（owner 2026-09-11 逐字「綁好骨架」）—— ⛔ 在此之前這支一行都沒問。
+            if "JOINTS_0" in (pr.get("attributes") or {}):
+                skinned += 1
             keys.add(render_key(j, pr.get("material")))
             acc = j["accessors"][pr["indices"]] if "indices" in pr else j["accessors"][pr["attributes"]["POSITION"]]
             if pr.get("mode", 4) == 4:
@@ -98,7 +125,8 @@ def inspect(path):
         if span <= 0:
             zero.append(a.get("name", "?"))
     return {"draws": draws, "distinct": len(keys), "tris": tris, "texEdge": tex,
-            "images": n_img, "zeroClips": zero, "anims": len(j.get("animations", []))}
+            "images": n_img, "zeroClips": zero, "anims": len(j.get("animations", [])),
+            "skins": len(j.get("skins", [])), "skinned": skinned}
 
 
 def validate(paths):
@@ -202,6 +230,7 @@ def main() -> int:
         return 2
 
     rows, codes = [], {}
+    heroes = hero_body_glbs()
     for f in files:
         rel = os.path.relpath(f, ROOT)
         try:
@@ -228,6 +257,12 @@ def main() -> int:
             issues.append(f"⛔ 三角面 {s['tris']:,} > {BUDGET['tris']:,}")
         if s["draws"] > BUDGET["meshes"]:
             issues.append(f"⛔ draw call {s['draws']} > {BUDGET['meshes']}（英雄身體）")
+        # ⭐ ⑥ 骨架綁定 —— ⛔ 只問英雄身體（道具/場景本來就沒有骨架）。
+        if f in heroes:
+            if s["skins"] == 0:
+                issues.append("⛔ 沒有骨架綁定（glTF 沒有 skins）⇒ 進場是不會動的 T-pose")
+            elif s["skinned"] < s["draws"]:
+                issues.append(f"⛔ {s['draws'] - s['skinned']}/{s['draws']} 塊網格沒有蒙皮權重（缺 JOINTS_0）")
         rows.append((rel, s, issues))
 
     bad = [r for r in rows if r[2]]

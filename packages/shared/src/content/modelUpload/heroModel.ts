@@ -28,6 +28,25 @@ export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: st
     if (value > limit.limit) errors.push(`${label} ${value} 超過英雄模型上限 ${limit.limit}。`);
     else if (value > limit.warn) warnings.push(`${label} ${value} 高於警戒值 ${limit.warn}，送審時需檢查演出負載。`);
   }
+  // ⭐ GH#1230 ——「綁好骨架」（owner 2026-09-11 逐字）。
+  // ⚠️ 一顆沒綁骨架的英雄**畫得出來**：一具不會動的 T-pose ⇒ ⛔ 它跟正常的長得很像，
+  //    而六段 clipMap 仍然「有」——動的是節點，⛔ 不是網格。
+  // ⇒ 兩件都要問：有沒有 skin，以及**每一塊網格**是不是都吃得到權重。
+  if (model.skins === 0) {
+    errors.push("模型沒有骨架綁定（glTF 沒有 skins）—— 進場會是一具不會動的 T-pose。");
+  } else if (model.skinnedPrimitives < model.meshes) {
+    errors.push(
+      `有 ${model.meshes - model.skinnedPrimitives}/${model.meshes} 塊網格沒有蒙皮權重（缺 JOINTS_0）—— 那幾塊會留在原地不跟著動作走。`,
+    );
+  }
+  // ⭐ GH#1230 ④ —— 貼圖整組掉成佔位圖（BLP 住在子目錄時查不到 ⇒ 靜默退回 8×8）。
+  // ⚠️ 它與「這顆本來就沒貼圖」量起來一模一樣 ⇒ 所以只在**有**貼圖時問。
+  if (model.textures.length > 0) {
+    const maxEdge = Math.max(...model.textures.flatMap((t) => [t.width, t.height]));
+    if (maxEdge <= 8) {
+      errors.push(`貼圖整組只有 ${maxEdge}×${maxEdge} —— 那是佔位圖，八成是來源貼圖沒查到。`);
+    }
+  }
   return { errors, warnings };
 }
 
