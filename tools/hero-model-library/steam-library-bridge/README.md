@@ -45,8 +45,7 @@ Set-ExecutionPolicy -Scope Process Bypass
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\scan_windows_asset_containers.ps1 `
-  -SteamRoots @('F:\SteamLibrary\steamapps\common') `
   -GameRoot 'E:\Game\單機遊戲'
 ```
 
-若另三顆硬碟也有 SteamLibrary，把它們的 `steamapps\common` 一併放進 `-SteamRoots @(...)`。腳本會輸出每個遊戲的檔案數、總大小、前 25 種副檔名、引擎線索，以及 `.pak/.utoc/.ucas/.uasset`、Unity、Wwise、FMOD、CRIWARE、模型和動作候選的逐檔路徑與大小。它不讀取容器內容、不計大檔雜湊、不複製遊戲，也不變更分享權限；`payloadBytesRead=0`。交付 `GGD-Asset-Container-Inventory-*.zip` 後，整合工作流才能把 Palworld 本體與其他遊戲從「已安裝」提升為「容器已盤點」，再按角色需求選擇性複製和解包。
+腳本預設從 Steam Registry 與 `libraryfolders.vdf` 自動發現分散在四顆硬碟的所有 SteamLibrary；找不到時才需要用 `-SteamRoots @('F:\SteamLibrary\steamapps\common', ...)` 手動指定。它會輸出每個遊戲的檔案數、總大小、前 25 種副檔名、引擎線索，以及 `.pak/.utoc/.ucas/.uasset`、Unity、Wwise、FMOD、CRIWARE、模型和動作候選的逐檔路徑與大小。它不讀取容器內容、不計大檔雜湊、不複製遊戲，也不變更分享權限；`payloadBytesRead=0`。交付 `GGD-Asset-Container-Inventory-*.zip` 後，整合工作流才能把 Palworld 本體與其他遊戲從「已安裝」提升為「容器已盤點」，再按角色需求選擇性複製和解包。

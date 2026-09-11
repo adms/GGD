@@ -55,7 +55,7 @@ $steamGames = @(
 
 $steamManifests = @(
     Get-ChildItem -LiteralPath $steamAppsRoot -Filter 'appmanifest_*.acf' -File | ForEach-Object {
-        $text = Get-Content -LiteralPath $_.FullName -Raw
+        $text = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
         [pscustomobject]@{
             AppId = Read-VdfValue -Text $text -Key 'appid'
             Name = Read-VdfValue -Text $text -Key 'name'

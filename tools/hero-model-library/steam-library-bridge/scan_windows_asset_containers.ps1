@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-    [string[]]$SteamRoots = @('F:\SteamLibrary\steamapps\common'),
+    [string[]]$SteamRoots = @(),
+    [bool]$DiscoverSteamLibraries = $true,
     [string]$GameRoot = 'E:\Game\單機遊戲',
     [string]$OutputDirectory = ''
 )
@@ -12,6 +13,44 @@ if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
     $OutputDirectory = Join-Path ([Environment]::GetFolderPath('Desktop')) "GGD-Asset-Container-Inventory-$stamp"
 }
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
+
+$requestedSteamRoots = New-Object 'System.Collections.Generic.List[string]'
+foreach ($root in $SteamRoots) {
+    if (-not [string]::IsNullOrWhiteSpace($root)) { $requestedSteamRoots.Add($root) }
+}
+if ($DiscoverSteamLibraries) {
+    $steamInstallPaths = New-Object 'System.Collections.Generic.List[string]'
+    foreach ($registryPath in @('HKCU:\Software\Valve\Steam', 'HKLM:\SOFTWARE\WOW6432Node\Valve\Steam')) {
+        try {
+            $item = Get-ItemProperty -LiteralPath $registryPath -ErrorAction Stop
+            foreach ($name in @('SteamPath', 'InstallPath')) {
+                $value = $item.$name
+                if ($value) { $steamInstallPaths.Add($value) }
+            }
+        } catch { }
+    }
+    foreach ($fallback in @("${env:ProgramFiles(x86)}\Steam", "$env:ProgramFiles\Steam")) {
+        if (-not [string]::IsNullOrWhiteSpace($fallback)) { $steamInstallPaths.Add($fallback) }
+    }
+    foreach ($steamInstall in @($steamInstallPaths | Select-Object -Unique)) {
+        $defaultCommon = Join-Path $steamInstall 'steamapps\common'
+        if (Test-Path -LiteralPath $defaultCommon -PathType Container) { $requestedSteamRoots.Add($defaultCommon) }
+        $libraryFile = Join-Path $steamInstall 'steamapps\libraryfolders.vdf'
+        if (-not (Test-Path -LiteralPath $libraryFile -PathType Leaf)) { continue }
+        try {
+            $text = [IO.File]::ReadAllText($libraryFile, [Text.Encoding]::UTF8)
+            foreach ($match in [Regex]::Matches($text, '(?m)^\s*"path"\s+"([^"]+)"')) {
+                $library = $match.Groups[1].Value.Replace('\\', '\')
+                $common = Join-Path $library 'steamapps\common'
+                if (Test-Path -LiteralPath $common -PathType Container) { $requestedSteamRoots.Add($common) }
+            }
+        } catch { }
+    }
+}
+$SteamRoots = @($requestedSteamRoots | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique)
+if ($SteamRoots.Count -eq 0) {
+    throw 'No Steam library was found. Pass -SteamRoots with one or more steamapps\common paths.'
+}
 
 $assetExtensions = @(
     '.pak', '.utoc', '.ucas', '.uasset', '.uexp', '.ubulk',
@@ -64,7 +103,7 @@ foreach ($steamRoot in $SteamRoots) {
     $manifestByDirectory = @{}
     Get-ChildItem -LiteralPath $steamAppsRoot -Filter 'appmanifest_*.acf' -File -ErrorAction SilentlyContinue | ForEach-Object {
         try {
-            $text = Get-Content -LiteralPath $_.FullName -Raw
+            $text = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
             $installDir = Read-VdfValue -Text $text -Key 'installdir'
             if ($installDir) {
                 $manifestByDirectory[$installDir.ToLowerInvariant()] = [pscustomobject]@{
