@@ -60,6 +60,26 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
         self.assertFalse(candidate["runtimeSelectable"])
         self.assertEqual(candidate["modelProof"]["animationEntries"], 0)
 
+    def test_palworld_converted_paths_are_grouped_under_integrated_rows(self):
+        source_document = json.loads(SOURCE.read_text())
+        affected = {"opgg-palworld-astralym-2026081102", "palworld-cattiva-opgg", "opgg-palworld-jetragon"}
+        self.assertFalse([issue for issue in source_document["issues"] if issue.get("sourceId") in affected])
+        expected = {
+            "community:palworld-astralym": 6,
+            "community:palworld-cattiva": 8,
+            "community:palworld-jetragon": 8,
+        }
+        for identity, count in expected.items():
+            with self.subTest(identity=identity):
+                self.assertEqual(len(self.backlog[identity]["modelCandidates"]), count)
+        superseded = {
+            "opgg-palworld-astralym-2026081102:枯星龍 / Astralym",
+            "palworld-cattiva-opgg:Cattiva",
+            "opgg-palworld-jetragon:空渦龍 / Jetragon",
+            "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
+        }
+        self.assertTrue(superseded.isdisjoint(self.backlog))
+
 
 if __name__ == "__main__":
     unittest.main()

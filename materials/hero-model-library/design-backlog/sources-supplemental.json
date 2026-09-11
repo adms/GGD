@@ -1592,7 +1592,7 @@
         "Model/source readiness does not prove hero skills or backend implementation."
       ],
       "supersedesAuditRows": [
-        "opgg-palworld-astralym-2026081102:Astralym"
+        "opgg-palworld-astralym-2026081102:枯星龍 / Astralym"
       ]
     },
     {
@@ -2695,6 +2695,10 @@
           "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
           "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb"
         }
+      ],
+      "supersedesAuditRows": [
+        "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
+        "opgg-palworld-jetragon:空渦龍 / Jetragon"
       ],
       "mappedHeroIds": [],
       "identityHeroIds": [],

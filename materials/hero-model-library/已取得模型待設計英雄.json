@@ -1,10 +1,10 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 735,
+  "sourceIdentityCount": 732,
   "counts": {
     "not-defined": 388,
     "definitions-incomplete": 11,
-    "identity-review": 250,
+    "identity-review": 247,
     "designed": 86,
     "source-unavailable": 0
   },
@@ -51,7 +51,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "25d158dd6ca7cf42306ea8eed787ffaff3b9b3931e616d0bd628fc68f8e5fece"
+      "sha256": "a49dea01760298a7a597c9340a373b7de73f6f6eb2acc4dae5c4d8e183b7f0bb"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
@@ -75,7 +75,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "4f1330864a18147592853d88a6d9a2cde816e2b8ca751ed77072f322d9066fbf"
+      "sha256": "88156ae9e208ac57c045c7109b68cc90e171e54795a58de813c60448f4a6c833"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -90070,7 +90070,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilgamesh_archer.geo.json",
           "localSizeMatches": true
         }
@@ -90279,7 +90282,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7155,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medusa_rider.geo.json",
           "localSizeMatches": true
         }
@@ -90478,7 +90484,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 11274,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
           "localSizeMatches": true
         }
@@ -90688,7 +90697,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/artoria_pendragon_saber.geo.json",
           "localSizeMatches": true
         }
@@ -91009,7 +91021,16 @@
           "sourceUrl": "https://gamebanana.com/mods/473819",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 265432,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/01-casual/body.glb",
           "localSizeMatches": true
         },
@@ -91033,7 +91054,16 @@
           "sourceUrl": "https://gamebanana.com/mods/473819",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 283920,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/02-homurahara/body.glb",
           "localSizeMatches": true
         },
@@ -91057,7 +91087,16 @@
           "sourceUrl": "https://gamebanana.com/mods/473819",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 263308,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/03-casual-b/body.glb",
           "localSizeMatches": true
         },
@@ -91081,7 +91120,16 @@
           "sourceUrl": "https://gamebanana.com/mods/473819",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 273544,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/04-satsujinki/body.glb",
           "localSizeMatches": true
         }
@@ -91311,7 +91359,16 @@
           "sourceUrl": "https://gamebanana.com/mods/474593",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 351712,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/01-rin/body.glb",
           "localSizeMatches": true
         },
@@ -91335,7 +91392,16 @@
           "sourceUrl": "https://gamebanana.com/mods/474593",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 326624,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/02-homurahara/body.glb",
           "localSizeMatches": true
         },
@@ -91359,7 +91425,16 @@
           "sourceUrl": "https://gamebanana.com/mods/474593",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 350520,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/03-rinb/body.glb",
           "localSizeMatches": true
         },
@@ -91383,7 +91458,16 @@
           "sourceUrl": "https://gamebanana.com/mods/474593",
           "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "defaultEligible": false,
+          "limitations": [
+            "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+            "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+            "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+            "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 338012,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/04-extra/body.glb",
           "localSizeMatches": true
         }
@@ -97028,6 +97112,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "xellos01",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "xellos01.001"
@@ -97055,6 +97142,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "xellos01",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "xellos01.001"
@@ -97180,6 +97270,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [
         {
@@ -97351,6 +97448,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "lina00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "lina00.001"
@@ -97378,6 +97478,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "lina00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "lina00.001"
@@ -97405,6 +97508,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "lina01",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "lina01.001"
@@ -97432,6 +97538,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "lina01",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "lina01.001"
@@ -97639,6 +97748,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2071080,
           "sizeMatchesManifest": true,
@@ -97663,6 +97773,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina00-hands-a.glb",
           "localSizeMatches": true
@@ -97687,6 +97798,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2071140,
           "sizeMatchesManifest": true,
@@ -97711,6 +97823,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina00-hands-b.glb",
           "localSizeMatches": true
@@ -97735,6 +97848,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2073608,
           "sizeMatchesManifest": true,
@@ -97759,6 +97873,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina00-hands-c.glb",
           "localSizeMatches": true
@@ -97783,6 +97898,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2073864,
           "sizeMatchesManifest": true,
@@ -97807,6 +97923,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina00-hands-d.glb",
           "localSizeMatches": true
@@ -97831,6 +97948,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2010076,
           "sizeMatchesManifest": true,
@@ -97855,6 +97973,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina01-hands-a.glb",
           "localSizeMatches": true
@@ -97879,6 +97998,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2010136,
           "sizeMatchesManifest": true,
@@ -97903,6 +98023,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina01-hands-b.glb",
           "localSizeMatches": true
@@ -97927,6 +98048,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2012600,
           "sizeMatchesManifest": true,
@@ -97951,6 +98073,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina01-hands-c.glb",
           "localSizeMatches": true
@@ -97975,6 +98098,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "recordedBytes": 2012856,
           "sizeMatchesManifest": true,
@@ -97999,6 +98123,7 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "static-visual-reviewed-pending-runtime-motion",
           "converted": true,
+          "resourceRole": "character-body-hand-variant",
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/candidates/lina01-hands-d.glb",
           "localSizeMatches": true
@@ -98023,6 +98148,21 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "review-sample-needs-foot-contact-loop-repair",
           "converted": true,
+          "resourceRole": "character-body-retarget-review-sample",
+          "format": "glb",
+          "limitations": [
+            "No native Rays animation; all two clips are 300英雄動作重綁到Rays模型. No walk clip is available in existing GLB or native metadata.",
+            "Native JUMPX FPS is unknown. Existing GGD GLB durations are preserved; 120 Hz is derived processing and Babylon 60 fps is an importer convention, not verified native timing.",
+            "240 Hz boot-vertex audit still finds run right boot -1.18 mm below ground; idle left boot stays roughly 1.4 cm above ground.",
+            "Run loop foot-position gaps remain 10.1 cm left / 6.3 cm right; endpoint repair not performed.",
+            "Run is in-place with no gameplay velocity; planted-foot locking and sliding are not solved. Near-contact samples can move horizontally up to roughly 20 m/s under the existing very fast clip tempo.",
+            "Only short near-ground contacts and visually elevated run phases remain after constant grounding. This is a review sample, not production locomotion.",
+            "No transfer of limb axial twist or separate finger animation; selected relaxed hand meshes are rigid wrist children. No target toe joint; source toe orientation drives target boot.",
+            "Unmapped hair/cape/accessory joints preserve local rest. Large static cape silhouette during running is visible and lacks source secondary motion.",
+            "Sparse visual inspection covers 22 images across baseline/source and final snapshots, not every frame. Dense geometry audit checks feet, not whole-body self collision.",
+            "Assimp readback confirms parsing/counts only; renderer/CPU skin calculations are used for skin-space grounding, not Assimp static bounds.",
+            "No game runtime, backend selection, production default, or gameplay locomotion acceptance."
+          ],
           "identityReviewRequired": false,
           "recordedBytes": 2166420,
           "sizeMatchesManifest": true,
@@ -98047,6 +98187,21 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "review-sample-needs-foot-contact-loop-repair",
           "converted": true,
+          "resourceRole": "character-body-retarget-review-sample",
+          "format": "glb",
+          "limitations": [
+            "No native Rays animation; all two clips are 300英雄動作重綁到Rays模型. No walk clip is available in existing GLB or native metadata.",
+            "Native JUMPX FPS is unknown. Existing GGD GLB durations are preserved; 120 Hz is derived processing and Babylon 60 fps is an importer convention, not verified native timing.",
+            "240 Hz boot-vertex audit still finds run right boot -1.18 mm below ground; idle left boot stays roughly 1.4 cm above ground.",
+            "Run loop foot-position gaps remain 10.1 cm left / 6.3 cm right; endpoint repair not performed.",
+            "Run is in-place with no gameplay velocity; planted-foot locking and sliding are not solved. Near-contact samples can move horizontally up to roughly 20 m/s under the existing very fast clip tempo.",
+            "Only short near-ground contacts and visually elevated run phases remain after constant grounding. This is a review sample, not production locomotion.",
+            "No transfer of limb axial twist or separate finger animation; selected relaxed hand meshes are rigid wrist children. No target toe joint; source toe orientation drives target boot.",
+            "Unmapped hair/cape/accessory joints preserve local rest. Large static cape silhouette during running is visible and lacks source secondary motion.",
+            "Sparse visual inspection covers 22 images across baseline/source and final snapshots, not every frame. Dense geometry audit checks feet, not whole-body self collision.",
+            "Assimp readback confirms parsing/counts only; renderer/CPU skin calculations are used for skin-space grounding, not Assimp static bounds.",
+            "No game runtime, backend selection, production default, or gameplay locomotion acceptance."
+          ],
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget/candidates/lina00-hands-a-300-idle-run-resampled-120hz.glb",
           "localSizeMatches": true
@@ -98071,6 +98226,20 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
           "converted": true,
+          "resourceRole": "character-body-retarget-footplant-loop-review",
+          "format": "glb",
+          "limitations": [
+            "All motions are 300英雄動作重綁到Rays模型，再作落地與循環加工; 0 native Rays animations and no new walk. Existing GGD 300 GLB durations remain unchanged; native JUMPX FPS is unknown.",
+            "Source comparison diagnoses the existing GGD 300 conversion, not the original running game. Native JUMPX was not decoded again, so native-game foot defects are not established.",
+            "Foot locking depends on the derived 4.522414609 m/s external actor test speed and configured stance windows. This is not a default gameplay speed; turning, acceleration, other speeds and terrain were not tested.",
+            "Run left foot retains a rare 1.995 m/s horizontal contact-speed spike and up to 6.79 mm core-phase boot clearance; IK target reach can miss by up to 10.4 mm.",
+            "Run endpoint foot positions close exactly in sampled output; velocity seam remains about 0.118 m/s, not a proven perfect C1 loop.",
+            "IK changes lower-body posing materially: maximum local rotation change roughly 21.3 degrees idle / 67.4 degrees run. Do not describe the result as unchanged source motion.",
+            "The fixed world +Z knee pole is suitable only for this forward-facing bounded sample; it is not a general turning or arbitrary-animation retarget system.",
+            "Hair/cape/accessory secondary animation remains absent. Cape remains visibly broad and rigid; fingers remain the selected single relaxed hand meshes.",
+            "960 Hz CPU skin audit proves sampled flat-ground metrics only. Whole-body self collision, arbitrary terrain, game runtime, transitions between clips and backend selection remain unverified.",
+            "Structural validator has 0 errors / 0 warnings, plus 43 information messages: 42 intentionally retained unused prior animation accessors and one unsupported FB_ngon_encoding extension."
+          ],
           "identityReviewRequired": false,
           "recordedBytes": 2490156,
           "sizeMatchesManifest": true,
@@ -98095,6 +98264,20 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
           "converted": true,
+          "resourceRole": "character-body-retarget-footplant-loop-review",
+          "format": "glb",
+          "limitations": [
+            "All motions are 300英雄動作重綁到Rays模型，再作落地與循環加工; 0 native Rays animations and no new walk. Existing GGD 300 GLB durations remain unchanged; native JUMPX FPS is unknown.",
+            "Source comparison diagnoses the existing GGD 300 conversion, not the original running game. Native JUMPX was not decoded again, so native-game foot defects are not established.",
+            "Foot locking depends on the derived 4.522414609 m/s external actor test speed and configured stance windows. This is not a default gameplay speed; turning, acceleration, other speeds and terrain were not tested.",
+            "Run left foot retains a rare 1.995 m/s horizontal contact-speed spike and up to 6.79 mm core-phase boot clearance; IK target reach can miss by up to 10.4 mm.",
+            "Run endpoint foot positions close exactly in sampled output; velocity seam remains about 0.118 m/s, not a proven perfect C1 loop.",
+            "IK changes lower-body posing materially: maximum local rotation change roughly 21.3 degrees idle / 67.4 degrees run. Do not describe the result as unchanged source motion.",
+            "The fixed world +Z knee pole is suitable only for this forward-facing bounded sample; it is not a general turning or arbitrary-animation retarget system.",
+            "Hair/cape/accessory secondary animation remains absent. Cape remains visibly broad and rigid; fingers remain the selected single relaxed hand meshes.",
+            "960 Hz CPU skin audit proves sampled flat-ground metrics only. Whole-body self collision, arbitrary terrain, game runtime, transitions between clips and backend selection remain unverified.",
+            "Structural validator has 0 errors / 0 warnings, plus 43 information messages: 42 intentionally retained unused prior animation accessors and one unsupported FB_ngon_encoding extension."
+          ],
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
           "localSizeMatches": true
@@ -98321,6 +98504,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 34
       },
       "currentHeroChecks": [
         {
@@ -103917,7 +104107,18 @@
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
           "readiness": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "defaultEligible": false,
+          "limitations": [
+            "No native animation, audio or standalone VFX assets were present in the source bundle.",
+            "Three WebGL views validate only static-body completeness and basic material visibility; original KOF shader parity is not proven.",
+            "This is a community MOD source, not verified as a direct KOF game extraction or a licensed redistribution asset.",
+            "No GGD action retargeting, gameplay test, backend dropdown registration, default selection or deployment has been performed."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 1893348,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/native-glb/body.glb",
           "localSizeMatches": true
         },
@@ -103934,6 +104135,15 @@
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
           "readiness": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": false,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "defaultEligible": false,
+          "limitations": [
+            "No native animation, audio or standalone VFX assets were present in the source bundle.",
+            "Three WebGL views validate only static-body completeness and basic material visibility; original KOF shader parity is not proven.",
+            "This is a community MOD source, not verified as a direct KOF game extraction or a licensed redistribution asset.",
+            "No GGD action retargeting, gameplay test, backend dropdown registration, default selection or deployment has been performed."
+          ],
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori/bundles/Iori.IoriKOF.bundle",
           "localSizeMatches": true
@@ -103977,7 +104187,16 @@
           "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Iori-Yagami-1227665754",
           "readiness": "pending-standardization",
           "converted": false,
+          "limitations": [
+            "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+            "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+            "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+            "No GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed.",
+            "Existing manually approved Mai proxy default is preserved; this is an additional candidate only."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 6416000,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
           "localSizeMatches": true
         },
@@ -104202,6 +104421,11 @@
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
           {
+            "candidateId": "thunderstore-iori-kof-static-skinned-v1:1",
+            "count": 0,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
             "candidateId": "ou99.313646-standard-v2",
             "count": 6,
             "evidence": "existing-candidate-metadata; not runtime acceptance"
@@ -104264,7 +104488,17 @@
           "sourceUrl": "https://www.deviantart.com/whitemagesunny/art/The-King-of-Fighters-XV-Mai-Shiranui-974127482",
           "readiness": "pending-standardization",
           "converted": false,
+          "limitations": [
+            "FBX import texture bindings are placeholder material names; all imported images remain unresolved until mapped to the 12 supplied TGA files.",
+            "sample_pbr_e3.dds environment/reflection reference is not supplied; do not invent a substitute as original source data.",
+            "No original gameplay animation, voice/SFX, or standalone VFX files are included in this model-only archive.",
+            "No texture-complete GLB conversion, shader fidelity review, game runtime testing or backend selection acceptance has been performed. A 2026-09-11 preflight was explicitly rejected; retained stage evidence is not a candidate.",
+            "Existing manually approved Mai proxy default is preserved; this is an additional candidate only.",
+            "Blender import reported Materials mapping type NoMappingInformation; per-material assignments require inspection during conversion."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 10074400,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/extracted-v1/Raw Files/Mai Shiranui.fbx",
           "localSizeMatches": true
         }
@@ -113249,6 +113483,9 @@
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
           "readiness": "extracted-native-pending-conversion",
           "converted": false,
+          "resourceRole": "character-body",
+          "nativeAnimationCount": 0,
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/embedded/kaiji-unityfs.bundle",
           "localSizeMatches": true
@@ -113415,6 +113652,13 @@
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
+      "candidateBreakdown": {
+        "characterBodySources": 1,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 1
+      },
       "currentHeroChecks": [
         {
           "heroId": "b2-kaiji",
@@ -113447,6 +113691,11 @@
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
         "motionCandidateCounts": [
+          {
+            "candidateId": "candidate.holya-kaiji-suit2.0.1.1",
+            "count": 0,
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
           {
             "candidateId": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
             "count": 6,
@@ -113788,362 +114037,6 @@
           {
             "candidateId": "ou99.457280-standard-v2",
             "count": 6,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          }
-        ],
-        "nativeMotionSources": [],
-        "evidencePaths": [],
-        "classificationIsAcquisitionSnapshot": true
-      }
-    },
-    {
-      "id": "opgg-palworld-astralym-2026081102:枯星龍 / Astralym",
-      "name": "枯星龍 / Astralym",
-      "work": "Palworld / 幻獸帕魯",
-      "sourceIds": [
-        "opgg-palworld-astralym-2026081102"
-      ],
-      "modelCandidates": [
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
-          "existsLocal": true,
-          "bytes": 12611064,
-          "sha256": "de062117e831ed28ac74605970454fb111e13585f2597d4791caf881aa36d1f4",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c544602000000f86dc000",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 3,
-            "skins": 1,
-            "animationEntries": 58
-          },
-          "id": "opgg-palworld-astralym-2026081102.body",
-          "library": "community",
-          "sourceId": "opgg-palworld-astralym-2026081102",
-          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
-          "readiness": "acquired-rigged-animated-source-pending-standardization",
-          "converted": true,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
-          "localSizeMatches": true
-        }
-      ],
-      "mappedHeroIds": [],
-      "designStatus": "identity-review",
-      "evidence": [
-        "Explicit acquired source candidate manifest"
-      ],
-      "aliases": [],
-      "identityAmbiguity": [
-        "Explicit acquired source candidate manifest"
-      ],
-      "heroDefinitions": [],
-      "hasActualModelFiles": true,
-      "skillsCheckedAgainst": {
-        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
-        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
-        "nameSearchUniverseCount": 153,
-        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
-      },
-      "currentHeroChecks": [],
-      "nameZh": "枯星龍 / Astralym",
-      "workZh": "幻獸帕魯",
-      "displayName": "枯星龍 / Astralym",
-      "displayWork": "幻獸帕魯（Palworld）",
-      "nameTranslationBasis": "existing-source-label-or-alias",
-      "workTranslationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
-      "localizationChangesIdentity": false,
-      "resources": {
-        "motion": "模型內最多 58 個動作條目；版本分列，未相加",
-        "vfx": "尚未建立角色專屬特效對應",
-        "sfx": "尚未建立角色專屬音訊對應",
-        "voice": "尚未建立角色專屬語音對應",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [],
-        "sourceLabels": [
-          "幻獸帕魯：4 種已取得身份"
-        ],
-        "voiceIndex": "materials/hero-model-library/voice-index.json",
-        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [
-          {
-            "candidateId": "opgg-palworld-astralym-2026081102.body",
-            "count": 58,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          }
-        ],
-        "nativeMotionSources": [],
-        "evidencePaths": [],
-        "classificationIsAcquisitionSnapshot": true
-      }
-    },
-    {
-      "id": "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
-      "name": "空渦龍 / Jetragon",
-      "work": "Palworld / 幻獸帕魯",
-      "sourceIds": [
-        "mediafire-shinypenguin-palworld-jetragon"
-      ],
-      "modelCandidates": [
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
-          "existsLocal": true,
-          "bytes": 8907804,
-          "sha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "4b6179646172612046425820",
-          "id": "mediafire-shinypenguin-palworld-jetragon.fbx",
-          "library": "community",
-          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
-          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
-          "readiness": "acquired-rigged-source-pending-standardization",
-          "converted": false,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/jetdragon.fbx",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-assimp-v1/body.glb",
-          "existsLocal": true,
-          "bytes": 8941408,
-          "sha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c544602000000606f8800",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 3,
-            "skins": 1,
-            "animationEntries": 0
-          },
-          "id": "mediafire-shinypenguin-palworld-jetragon.assimp-diagnostic-v1",
-          "library": "community",
-          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
-          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
-          "readiness": "diagnostic-invalid-preserved",
-          "converted": true,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-assimp-v1/body.glb",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-reserve-v2/body.glb",
-          "existsLocal": true,
-          "bytes": 8941604,
-          "sha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c54460200000024708800",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 3,
-            "skins": 1,
-            "animationEntries": 0
-          },
-          "id": "mediafire-shinypenguin-palworld-jetragon.reserve-v2",
-          "library": "community",
-          "sourceId": "mediafire-shinypenguin-palworld-jetragon",
-          "sourceUrl": "https://www.reddit.com/r/Palworld/comments/1ajwntw/3d_models_from_in_game/",
-          "readiness": "reserve-pending-ggd-standardization",
-          "converted": true,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/converted-reserve-v2/body.glb",
-          "localSizeMatches": true
-        }
-      ],
-      "mappedHeroIds": [],
-      "designStatus": "identity-review",
-      "evidence": [
-        "Explicit acquired source candidate manifest"
-      ],
-      "aliases": [],
-      "identityAmbiguity": [
-        "Explicit acquired source candidate manifest"
-      ],
-      "heroDefinitions": [],
-      "hasActualModelFiles": true,
-      "skillsCheckedAgainst": {
-        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
-        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
-        "nameSearchUniverseCount": 153,
-        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
-      },
-      "currentHeroChecks": [],
-      "nameZh": "空渦龍 / Jetragon",
-      "workZh": "幻獸帕魯",
-      "displayName": "空渦龍 / Jetragon",
-      "displayWork": "幻獸帕魯（Palworld）",
-      "nameTranslationBasis": "existing-source-label-or-alias",
-      "workTranslationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
-      "localizationChangesIdentity": false,
-      "resources": {
-        "motion": "已核對版本未含動作；其他來源待核",
-        "vfx": "尚未建立角色專屬特效對應",
-        "sfx": "尚未建立角色專屬音訊對應",
-        "voice": "尚未建立角色專屬語音對應",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [],
-        "sourceLabels": [
-          "幻獸帕魯：4 種已取得身份"
-        ],
-        "voiceIndex": "materials/hero-model-library/voice-index.json",
-        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [
-          {
-            "candidateId": "mediafire-shinypenguin-palworld-jetragon.assimp-diagnostic-v1",
-            "count": 0,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          },
-          {
-            "candidateId": "mediafire-shinypenguin-palworld-jetragon.reserve-v2",
-            "count": 0,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          }
-        ],
-        "nativeMotionSources": [],
-        "evidencePaths": [],
-        "classificationIsAcquisitionSnapshot": true
-      }
-    },
-    {
-      "id": "opgg-palworld-jetragon:空渦龍 / Jetragon",
-      "name": "空渦龍 / Jetragon",
-      "work": "Palworld / 幻獸帕魯",
-      "sourceIds": [
-        "opgg-palworld-jetragon"
-      ],
-      "modelCandidates": [
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
-          "existsLocal": true,
-          "bytes": 2740172,
-          "sha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c544602000000cccf2900",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 3,
-            "skins": 1,
-            "animationEntries": 29
-          },
-          "id": "opgg-palworld-jetragon.original-glb",
-          "library": "community",
-          "sourceId": "opgg-palworld-jetragon",
-          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
-          "readiness": "acquired-animated-source-pending-material-binding",
-          "converted": true,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/original/opgg/model.glb",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
-          "existsLocal": true,
-          "bytes": 3783312,
-          "sha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c54460200000090ba3900",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 3,
-            "skins": 1,
-            "animationEntries": 29
-          },
-          "id": "opgg-palworld-jetragon.decoded-v1",
-          "library": "community",
-          "sourceId": "opgg-palworld-jetragon",
-          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
-          "readiness": "diagnostic-decoded-pending-extension-declaration",
-          "converted": true,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-meshopt-decoded.glb",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
-          "existsLocal": true,
-          "bytes": 3783400,
-          "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203",
-          "sha256Status": "recorded-manifest; this audit checks local size/header",
-          "magicHex": "676c544602000000e8ba3900",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 1,
-            "primitives": 3,
-            "skins": 1,
-            "animationEntries": 29
-          },
-          "id": "opgg-palworld-jetragon.decoded-declared-v2",
-          "library": "community",
-          "sourceId": "opgg-palworld-jetragon",
-          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
-          "readiness": "reserve-pending-material-binding-and-ggd-standardization",
-          "converted": true,
-          "identityReviewRequired": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
-          "localSizeMatches": true
-        }
-      ],
-      "mappedHeroIds": [],
-      "designStatus": "identity-review",
-      "evidence": [
-        "Explicit acquired source candidate manifest"
-      ],
-      "aliases": [],
-      "identityAmbiguity": [
-        "Explicit acquired source candidate manifest"
-      ],
-      "heroDefinitions": [],
-      "hasActualModelFiles": true,
-      "skillsCheckedAgainst": {
-        "championDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions",
-        "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
-        "nameSearchUniverseCount": 153,
-        "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
-      },
-      "currentHeroChecks": [],
-      "nameZh": "空渦龍 / Jetragon",
-      "workZh": "幻獸帕魯",
-      "displayName": "空渦龍 / Jetragon",
-      "displayWork": "幻獸帕魯（Palworld）",
-      "nameTranslationBasis": "existing-source-label-or-alias",
-      "workTranslationBasis": "優先採用原 work 已提供的中文標題；外文原文由原 key 保留，未追加角色來源判定。",
-      "localizationChangesIdentity": false,
-      "resources": {
-        "motion": "模型內最多 29 個動作條目；版本分列，未相加",
-        "vfx": "尚未建立角色專屬特效對應",
-        "sfx": "尚未建立角色專屬音訊對應",
-        "voice": "尚未建立角色專屬語音對應",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [],
-        "sourceLabels": [
-          "幻獸帕魯：4 種已取得身份"
-        ],
-        "voiceIndex": "materials/hero-model-library/voice-index.json",
-        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [
-          {
-            "candidateId": "opgg-palworld-jetragon.original-glb",
-            "count": 29,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          },
-          {
-            "candidateId": "opgg-palworld-jetragon.decoded-v1",
-            "count": 29,
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          },
-          {
-            "candidateId": "opgg-palworld-jetragon.decoded-declared-v2",
-            "count": 29,
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
@@ -131280,6 +131173,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "farah46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "farah46"
@@ -131307,6 +131203,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "farah46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "farah46"
@@ -131331,6 +131230,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "nameZh": "待確認角色／模型（檔名疑指法菈）",
@@ -131397,6 +131303,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "guy46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "guy46"
@@ -131424,6 +131333,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "guy46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "guy46"
@@ -131448,6 +131360,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "nameZh": "待確認角色／模型（檔名疑指蓋伊）",
@@ -131708,6 +131627,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "mitos46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "mitos46.001",
@@ -131736,6 +131658,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "mitos46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "mitos46.001",
@@ -131761,6 +131686,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "nameZh": "待確認角色／模型（檔名疑指米托斯）",
@@ -131827,6 +131759,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "natalia46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "natalia46"
@@ -131854,6 +131789,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "natalia46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "natalia46"
@@ -131878,6 +131816,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "nameZh": "待確認角色／模型（檔名疑指娜塔莉亞）",
@@ -131944,6 +131889,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "rid46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "rid46"
@@ -131971,6 +131919,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "rid46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "rid46"
@@ -131995,6 +131946,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "nameZh": "待確認角色／模型（檔名疑指里德）",
@@ -132061,6 +132019,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "van46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "van46.001"
@@ -132088,6 +132049,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "van46",
+          "defaultEligible": false,
           "identityReviewRequired": true,
           "sourceScope": [
             "van46.001"
@@ -132112,6 +132076,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "nameZh": "待確認角色／模型（檔名疑指梵）",
@@ -139349,7 +139320,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/emiya_archer.geo.json",
           "localSizeMatches": true
         }
@@ -139438,7 +139412,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/iskander_rider.geo.json",
           "localSizeMatches": true
         }
@@ -139525,7 +139502,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/sasaki_kojiro_assassin.geo.json",
           "localSizeMatches": true
         }
@@ -139612,7 +139592,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilles_de_rais_caster.geo.json",
           "localSizeMatches": true
         }
@@ -139699,7 +139682,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/hassan-i-sabbah_assassin.geo.json",
           "localSizeMatches": true
         }
@@ -139787,7 +139773,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/nero_claudius_saber.geo.json",
           "localSizeMatches": true
         },
@@ -139916,7 +139905,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/cu_chulainn_lancer.geo.json",
           "localSizeMatches": true
         }
@@ -140003,7 +139995,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 9189,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
           "localSizeMatches": true
         }
@@ -140090,7 +140085,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/lancelot_berserker.geo.json",
           "localSizeMatches": true
         }
@@ -140226,7 +140224,10 @@
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
           "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
+          "defaultEligible": false,
           "identityReviewRequired": false,
+          "recordedBytes": 7142,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
           "localSizeMatches": true
         }
@@ -140331,7 +140332,15 @@
           "sourceUrl": "https://gamebanana.com/mods/291438",
           "readiness": "standard-glb-candidate",
           "converted": true,
+          "limitations": [
+            "Original platform PSP/PS2 not proven.",
+            "MOD sequence events, controller mixing and root linear-movement behavior are preserved as metadata, not executed.",
+            "GoldSrc additive/chrome/shading semantics are not fully recreated by base-color PBR.",
+            "Sven model bodypart metadata is preserved in the original and Assimp nodes; backend bodygroup selection is not integrated."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 18728816,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei/converted/kotomine-kirei-standard.glb",
           "localSizeMatches": true
         }
@@ -140422,7 +140431,14 @@
           "sourceUrl": "https://gamebanana.com/mods/492607",
           "readiness": "standard-glb-candidate",
           "converted": true,
+          "limitations": [
+            "Original game source platform, skeleton and animations not proven.",
+            "Custom toon shader reduced to base-color PBR.",
+            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 307032,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura/converted/models/01-p1/body.glb",
           "localSizeMatches": true
         },
@@ -140446,7 +140462,14 @@
           "sourceUrl": "https://gamebanana.com/mods/492607",
           "readiness": "standard-glb-candidate",
           "converted": true,
+          "limitations": [
+            "Original game source platform, skeleton and animations not proven.",
+            "Custom toon shader reduced to base-color PBR.",
+            "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 309512,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura/converted/models/02-p2/body.glb",
           "localSizeMatches": true
         }
@@ -141647,6 +141670,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "zelgadis00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "zelgadis00"
@@ -141674,6 +141700,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "zelgadis00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "zelgadis00"
@@ -141699,6 +141728,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "suggestedHeroIds": [],
@@ -141766,6 +141802,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "naga00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "naga00.001",
@@ -141794,6 +141833,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "naga00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "naga00.001",
@@ -141820,6 +141862,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "suggestedHeroIds": [],
@@ -141887,6 +141936,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "amelia00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "amelia00"
@@ -141914,6 +141966,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "amelia00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "amelia00"
@@ -141939,6 +141994,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "suggestedHeroIds": [],
@@ -142006,6 +142068,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "gourry00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "gourry00"
@@ -142033,6 +142098,9 @@
           "sourceUrl": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/",
           "readiness": "glb-structure-validated-awaiting-visual-motion-review",
           "converted": true,
+          "resourceRole": "character-body",
+          "variantSlot": "gourry00",
+          "defaultEligible": false,
           "identityReviewRequired": false,
           "sourceScope": [
             "gourry00"
@@ -142058,6 +142126,13 @@
         "standaloneAbilityDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities",
         "nameSearchUniverseCount": 153,
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 2,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "suggestedHeroIds": [],
@@ -183573,7 +183648,17 @@
           "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
           "readiness": "standard-glb-candidate-needs-appearance-review",
           "converted": true,
+          "limitations": [
+            "Static single-frame source actions are retained in original blend, not presented as gameplay animations.",
+            "Full rig, helper widgets and source drivers remain in original blend; GLB exports deform bones only.",
+            "Source vertex influences are preserved; runtime retargeting/deformation and maximum influence compatibility require acceptance.",
+            "The native Blender front preview shows more visible face and finer hair strands; the GLB fringe appears more opaque and covers more face.",
+            "GLB boots show bright reflective patches not apparent in the source preview.",
+            "Exact source-to-GLB appearance parity is not accepted; material translation and current-versus-rest pose need further review."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 41217652,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv/converted/left-hair/body.glb",
           "localSizeMatches": true
         },
@@ -183597,7 +183682,17 @@
           "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
           "readiness": "standard-glb-candidate-needs-appearance-review",
           "converted": true,
+          "limitations": [
+            "Static single-frame source actions are retained in original blend, not presented as gameplay animations.",
+            "Full rig, helper widgets and source drivers remain in original blend; GLB exports deform bones only.",
+            "Source vertex influences are preserved; runtime retargeting/deformation and maximum influence compatibility require acceptance.",
+            "The native Blender front preview shows more visible face and finer hair strands; the GLB fringe appears more opaque and covers more face.",
+            "GLB boots show bright reflective patches not apparent in the source preview.",
+            "Exact source-to-GLB appearance parity is not accepted; material translation and current-versus-rest pose need further review."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 41217580,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv/converted/right-hair/body.glb",
           "localSizeMatches": true
         },
@@ -183621,7 +183716,16 @@
           "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
           "readiness": "standard-glb-candidate-material-repaired-runtime-review-pending",
           "converted": true,
+          "limitations": [
+            "Original reflection-vector TextureEnvironment additive emission is view-dependent and has no core glTF static UV texture equivalent; its source images and node graph are preserved, but this term is not reproduced in v2.",
+            "Diffuse/lightmap multiplication and nonlinear roughness are sampled to 8-bit PNG; original source textures are unchanged. Filtering between texel centers is a finite-resolution approximation.",
+            "Only source frame 1 and two camera directions plus face/boots detail views were compared. Dynamic deformation, retargeting, gameplay, performance and GGD backend selection remain unverified.",
+            "Source Rigify controls and 3 single-frame pose actions remain in original blend; there are 0 original gameplay animation clips in either candidate.",
+            "Maximum 5 vertex influences retained; target runtime compatibility must be accepted separately."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 64653404,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2/converted/left-hair/body.glb",
           "localSizeMatches": true
         },
@@ -183645,7 +183749,16 @@
           "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
           "readiness": "standard-glb-candidate-material-repaired-runtime-review-pending",
           "converted": true,
+          "limitations": [
+            "Original reflection-vector TextureEnvironment additive emission is view-dependent and has no core glTF static UV texture equivalent; its source images and node graph are preserved, but this term is not reproduced in v2.",
+            "Diffuse/lightmap multiplication and nonlinear roughness are sampled to 8-bit PNG; original source textures are unchanged. Filtering between texel centers is a finite-resolution approximation.",
+            "Only source frame 1 and two camera directions plus face/boots detail views were compared. Dynamic deformation, retargeting, gameplay, performance and GGD backend selection remain unverified.",
+            "Source Rigify controls and 3 single-frame pose actions remain in original blend; there are 0 original gameplay animation clips in either candidate.",
+            "Maximum 5 vertex influences retained; target runtime compatibility must be accepted separately."
+          ],
           "identityReviewRequired": false,
+          "recordedBytes": 64653332,
+          "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2/converted/right-hair/body.glb",
           "localSizeMatches": true
         }
@@ -187475,7 +187588,7 @@
       ],
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -187561,7 +187674,7 @@
       "shelfNote": "⭐ **原作已設計**：`Usyl`／「殺戮之牙」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -187646,7 +187759,7 @@
       "shelfNote": "⛔ **未設計**：原作 127 名英雄與 GGD 153 張卡逐字比對（含綽號別名）皆無此角色",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -187722,7 +187835,7 @@
       "shelfNote": "⭐ **原作已設計**：`Nbst`／「變態正義」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -187836,7 +187949,7 @@
       "shelfNote": "⭐ **原作已設計**：`E00Q`／「英靈-亞瑟王」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 2,
-        "standaloneCharacterBodies": 2,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -187950,7 +188063,7 @@
       "shelfNote": "⭐ **原作已設計**：`Eevi`／「拔刀齋」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 2,
-        "standaloneCharacterBodies": 2,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188039,7 +188152,7 @@
       "shelfNote": "⛔ **未設計**：原作 127 名英雄與 GGD 153 張卡逐字比對（含綽號別名）皆無此角色",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188163,7 +188276,7 @@
       "shelfNote": "⭐ **原作已設計**：`Hlgr`／「鋼彈」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 3,
-        "standaloneCharacterBodies": 3,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188253,7 +188366,7 @@
       "shelfNote": "⭐ **原作已設計**：`E00T`／「七夜怪談」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188343,7 +188456,7 @@
       "shelfNote": "⭐ **原作已設計**：`H021`／「破銅爛鐵」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188433,7 +188546,7 @@
       "shelfNote": "⭐ **原作已設計**：`Nman`／「地獄歌神」在 GoDieEX22s 的 127 名英雄裡有完整技能組，⛔ 而 GGD 尚未建立 content/champions 卡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188518,7 +188631,7 @@
       "shelfNote": "⛔ **未設計**：原作 127 名英雄與 GGD 153 張卡逐字比對（含綽號別名）皆無此角色",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188592,7 +188705,7 @@
       "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188678,7 +188791,7 @@
       "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -188764,7 +188877,7 @@
       "shelfNote": "⭐ 英雄卡已存在且設計完成，⛔ 在 content/config/roster.json 的 hiddenChampions 裡 ⇒ **未上架**",
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -189624,11 +189737,11 @@
         "Model/source readiness does not prove hero skills or backend implementation."
       ],
       "supersedesAuditRows": [
-        "opgg-palworld-astralym-2026081102:Astralym"
+        "opgg-palworld-astralym-2026081102:枯星龍 / Astralym"
       ],
       "candidateBreakdown": {
         "characterBodySources": 6,
-        "standaloneCharacterBodies": 6,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -190547,7 +190660,7 @@
       ],
       "candidateBreakdown": {
         "characterBodySources": 8,
-        "standaloneCharacterBodies": 8,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -190917,6 +191030,10 @@
           "localSizeMatches": true
         }
       ],
+      "supersedesAuditRows": [
+        "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
+        "opgg-palworld-jetragon:空渦龍 / Jetragon"
+      ],
       "mappedHeroIds": [],
       "identityHeroIds": [],
       "proxyUseHeroIds": [],
@@ -190954,7 +191071,7 @@
       },
       "candidateBreakdown": {
         "characterBodySources": 8,
-        "standaloneCharacterBodies": 8,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -191117,7 +191234,7 @@
       },
       "candidateBreakdown": {
         "characterBodySources": 1,
-        "standaloneCharacterBodies": 1,
+        "standaloneCharacterBodies": 0,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0

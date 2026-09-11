@@ -35,7 +35,7 @@ def candidate_breakdown(candidates):
         role=candidate_role(candidate)
         if role=='body':
             counts['characterBodySources']+=1
-            if candidate.get('isStandaloneModelCandidate') is True or candidate.get('resourceRole') in {'character-body','character-body-costume'}:counts['standaloneCharacterBodies']+=1
+            if candidate.get('isStandaloneModelCandidate') is True or candidate.get('resourceRole')=='character-body-costume':counts['standaloneCharacterBodies']+=1
         elif role=='component':counts['componentsOrProps']+=1
         elif role=='shared-container':counts['sharedContainers']+=1
         else:counts['otherCandidateFiles']+=1

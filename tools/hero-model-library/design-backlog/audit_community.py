@@ -121,6 +121,11 @@ ident(['cloud','Cloud / 克勞德'],'cloud','克勞德','Final Fantasy VII',['go
 ident(['sephiroth'],'sephiroth','賽菲洛斯','Final Fantasy VII',['godie-u00j'])
 
 handled=set()
+palworld_source_identities={
+ 'opgg-palworld-astralym-2026081102':('opgg-palworld-astralym-2026081102:枯星龍 / Astralym','枯星龍 / Astralym','Palworld / 幻獸帕魯'),
+ 'palworld-cattiva-opgg':('palworld-cattiva-opgg:Cattiva','Cattiva','Palworld / 幻獸帕魯'),
+ 'opgg-palworld-jetragon':('opgg-palworld-jetragon:空渦龍 / Jetragon','空渦龍 / Jetragon','Palworld / 幻獸帕魯'),
+}
 for s in sources:
  cs=s.get('modelCandidates') or []
  if not cs:continue
@@ -132,19 +137,24 @@ for s in sources:
   label=c.get('nativeCharacter') or c.get('character') or c.get('label') or c.get('candidateId') or c.get('id')
   if s['id']=='github-flemmli97-fateubw-07e9d79b' and '/servant/' not in c.get('sourceModel',''):
    excluded.append({'sourceId':s['id'],'candidateId':c['candidateId'],'reason':'non-servant summon/prop: '+label});continue
-  if label in identity:key,name,work,hh,unknown=identity[label]
+  if s['id'] in palworld_source_identities:
+   key,name,work=palworld_source_identities[s['id']];hh=[];unknown=False
+  elif label in identity:key,name,work,hh,unknown=identity[label]
   else:
    hh=c.get('heroIds',[]);key=(hh[0] if hh else s['id']+':'+label);name,work=hero_group(hh[0]) if hh else (label,c.get('sourceWork',c.get('sourceGame',s.get('sourceWork','unknown'))));unknown=not hh
   # filename-only PSP identity still requires visual confirmation, even for known Cloud alias.
   if c.get('identityReview')=='filename-only-pending-visual-verification':unknown=True
   paths=[]
-  for k in ['model','convertedFile','file','convertedPath','localPath','nativeModel','sourceModel','sourceBundlePath']:
+  for k in ['path','model','convertedFile','file','convertedPath','localPath','nativeModel','sourceModel','sourceBundlePath']:
    val=c.get(k)
    if val and (isinstance(val,str) or isinstance(val,dict) and val.get('path')):
     item=val.copy() if isinstance(val,dict) else {'path':val}
     if pathlib.Path(item['path']).suffix.lower() in ['.glb','.gltf','.gmo','.fbx','.blend','.mdl','.json','.bundle']:
      item.setdefault('sha256', c.get('sourceModelSha256') if k=='sourceModel' else c.get('nativeModelSha256') if k=='nativeModel' else c.get('sha256'))
-     paths.append(item)
+     item.setdefault('bytes',c.get('sourceModelBytes') if k=='sourceModel' else c.get('nativeModelBytes') if k=='nativeModel' else c.get('bytes'))
+     for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence']:
+      if field in c:item.setdefault(field,c[field])
+     if str(pathlib.Path(item['path'])) not in {str(pathlib.Path(existing['path'])) for existing in paths}:paths.append(item)
   if not paths:
    if c.get('descriptorPath'): paths=[{'path':str(pathlib.Path(c['descriptorPath']).with_suffix('.numshb'))}]
    elif c.get('parts'):paths=[{'path':p} for p in c['parts']]
