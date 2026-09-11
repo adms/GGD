@@ -1,418 +1,86 @@
 {
-  "schema": "ggd-bricks@1",
-  "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "e9023124",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（73 份）→ 後台自己的 readSchema()（1184 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
-  "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts-spawn-obstacle.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 180 顆有收據；收據裡沒有的才退回代理值。",
-  "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
-  "counts": {
-    "total": 180,
-    "effect": 51,
-    "hook": 33,
-    "leaf": 10,
-    "template": 47,
-    "vfx-prim": 13,
-    "vfx-subtype": 4,
-    "vfx-call": 4,
-    "model-preset": 18,
-    "gated": 139,
-    "gaps": 55,
-    "missingAdminForm": 55,
-    "missingEditorForm": 4,
-    "zeroAdoption": 46
-  },
-  "gaps": [
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.editor-form-receipts-spawn-obstacle",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "bd6c5e5df9d501b1ea65b0f9c86369dd85f40d3f",
+  "contractFingerprint": "34e36ee3486cf36a",
+  "title": "Editor 180 顆積木的 React 操作與回讀：175 通過、5 不可用",
+  "claims": [
     {
-      "id": "ally-shield",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "apply-status",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "area-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "beam-roll",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "blink",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "blink-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "buff-self",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "charge-push",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "charge-resource",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "combo-finisher",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "dragon-quake",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "dragon-serpent",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "drain-leech",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "effect-sequence",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "event-passive",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "ground-nova",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "growth-charge",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "heal",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "instant-blast",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "leap-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "life-manipulate",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "line-blast",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "line-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "line-sweep",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "lock-combo",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "locust-line",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "locust-orb",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "locust-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "locust-swarm",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "locust-travel",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "mark-stacks",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "on-attack",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "on-hit-react",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "orbit-array",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "periodic-field",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "projectile-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "proxy-cast",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "proxy-fanout",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "pull-throw",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "radial-burst",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "random-barrage",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "single-strike",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "spend-resource",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "summon-agent",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "teleport",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "transform",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "traveling-wave",
-      "layer": "template",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "sub.bladestorm-8hit",
-      "layer": "vfx-call",
-      "missing": [
-        "adminForm",
-        "editorForm"
-      ]
-    },
-    {
-      "id": "sub.dive-dash-thunder",
-      "layer": "vfx-call",
-      "missing": [
-        "adminForm",
-        "editorForm"
-      ]
-    },
-    {
-      "id": "sub.doom-mark-cast",
-      "layer": "vfx-call",
-      "missing": [
-        "adminForm",
-        "editorForm"
-      ]
-    },
-    {
-      "id": "sub.forward-twin-blast",
-      "layer": "vfx-call",
-      "missing": [
-        "adminForm",
-        "editorForm"
-      ]
-    },
-    {
-      "id": "billboard",
-      "layer": "vfx-subtype",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "decal",
-      "layer": "vfx-subtype",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "ribbon",
-      "layer": "vfx-subtype",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "trail",
-      "layer": "vfx-subtype",
-      "missing": [
-        "adminForm"
+      "kind": "confirmed",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，180 顆積木中 175 顆通過，5 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "repro": {
+        "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
+        "expectedExit": 0
+      },
+      "commit": "76f85752e30dcdc388427b7d00664714d59ce713",
+      "evidence": [
+        "apps/editor/src/form/editorFormInteractions.test.tsx",
+        "apps/editor/src/form/walk.test.ts",
+        "tools/skill-forge/build-editor-form-receipts.mjs",
+        "docs/editor-contract/ggd-bricks.json"
       ]
     }
   ],
-  "bricks": [
+  "source": {
+    "bricks": "docs/editor-contract/ggd-bricks.json",
+    "brickInputSha256": "46a84df853d1b0f1b27d28d60a07d858eb33b7d8dcc674c379ca2067226e6955",
+    "capabilityFingerprint": "e9023124",
+    "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
+    "typeCatalogSha256": "34e36ee3486cf36a362be073f44c4c9d98ef7acd2ba4a31d91efe0409a4099ff"
+  },
+  "summary": {
+    "total": 180,
+    "renderable": 175,
+    "missing": 5,
+    "parameterEdited": 108,
+    "byLayer": {
+      "effect": {
+        "total": 51,
+        "renderable": 51,
+        "missing": 0
+      },
+      "hook": {
+        "total": 33,
+        "renderable": 33,
+        "missing": 0
+      },
+      "leaf": {
+        "total": 10,
+        "renderable": 10,
+        "missing": 0
+      },
+      "model-preset": {
+        "total": 18,
+        "renderable": 17,
+        "missing": 1
+      },
+      "template": {
+        "total": 47,
+        "renderable": 47,
+        "missing": 0
+      },
+      "vfx-call": {
+        "total": 4,
+        "renderable": 0,
+        "missing": 4
+      },
+      "vfx-prim": {
+        "total": 13,
+        "renderable": 13,
+        "missing": 0
+      },
+      "vfx-subtype": {
+        "total": 4,
+        "renderable": 4,
+        "missing": 0
+      }
+    }
+  },
+  "measurementLimits": "Headless real React controls and handlers; JSON serialization and remount. Not browser, IndexedDB, runtime or full parameter coverage.",
+  "receipts": [
     {
       "id": "applyBuff",
       "layer": "effect",
@@ -603,7 +271,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 134,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=applyBuff",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 88,
+      "editedPath": "value.duration",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "applyStatus",
@@ -747,7 +424,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 134,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=applyStatus",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 34,
+      "editedPath": "value.clipTimeScale",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "blink",
@@ -841,7 +527,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 33,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=blink",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 16,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "carry",
@@ -924,7 +619,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=carry",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "chainLightning",
@@ -1045,7 +749,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=chainLightning",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 28,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "championForm",
@@ -1074,7 +787,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 13,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=championForm",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 3,
+      "editedPath": "value.to",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "comboStrikes",
@@ -1184,7 +906,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=comboStrikes",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 27,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "consumeStatus",
@@ -1273,7 +1004,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 28,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=consumeStatus",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "convertTeam",
@@ -1344,7 +1084,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=convertTeam",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 12,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "cycleBuff",
@@ -1376,7 +1125,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=cycleBuff",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 3,
+      "editedPath": "value.applyTo",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "damage",
@@ -1454,7 +1212,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 298,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=damage",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 43,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "damageArea",
@@ -1558,7 +1325,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 59,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=damageArea",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 23,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "damageLine",
@@ -1662,7 +1438,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 27,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=damageLine",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 24,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "dash",
@@ -1731,7 +1516,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=dash",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 10,
+      "editedPath": "value.speed",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "delayed",
@@ -1852,7 +1646,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 72,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=delayed",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 31,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "devour",
@@ -1944,7 +1747,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=devour",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 13,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "dispel",
@@ -2033,7 +1845,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 17,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=dispel",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 16,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "dot",
@@ -2127,7 +1948,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 42,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=dot",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 23,
+      "editedPath": "value.amountPerTick.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "evasion",
@@ -2169,7 +1999,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=evasion",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
+      "editedPath": "value.chance",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "eventValueConversion",
@@ -2270,7 +2109,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=eventValueConversion",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 19,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "extendBuff",
@@ -2366,7 +2214,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=extendBuff",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 19,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "floatingText",
@@ -2470,7 +2327,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 9,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=floatingText",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 29,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "grantAttribute",
@@ -2545,7 +2411,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=grantAttribute",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": "value.amount",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "grantGold",
@@ -2593,7 +2468,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=grantGold",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 9,
+      "editedPath": "value.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "grantXp",
@@ -2621,7 +2505,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=grantXp",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": "value.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "heal",
@@ -2649,7 +2542,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 47,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=heal",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "invulnerable",
@@ -2698,7 +2600,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 11,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=invulnerable",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": "value.durationSec",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "knockback",
@@ -2798,7 +2709,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 40,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=knockback",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 18,
+      "editedPath": "value.distance",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "leap",
@@ -2858,7 +2778,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 62,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=leap",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
+      "editedPath": "value.apexHeight",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "manaBarrier",
@@ -2940,7 +2869,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=manaBarrier",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "modifyCooldown",
@@ -3068,7 +3006,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=modifyCooldown",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 19,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "proxyCast",
@@ -3194,7 +3141,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=proxyCast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 21,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "pull",
@@ -3288,7 +3244,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=pull",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 20,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "randomArea",
@@ -3338,7 +3303,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=randomArea",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
+      "editedPath": "value.intervalSec",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "restore",
@@ -3372,7 +3346,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 45,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=restore",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": "value.healthPct",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "revive",
@@ -3415,7 +3398,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=revive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": "value.hpPct",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "screenFlash",
@@ -3484,7 +3476,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=screenFlash",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 19,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "screenShake",
@@ -3545,7 +3546,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 17,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=screenShake",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 12,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "shield",
@@ -3594,7 +3604,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 81,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=shield",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 10,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "shieldBreak",
@@ -3663,7 +3682,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=shieldBreak",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 11,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spawnModelFx",
@@ -3862,7 +3890,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 55,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnModelFx",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spawnObstacle",
@@ -3899,7 +3936,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnObstacle",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spawnProjectile",
@@ -3922,7 +3968,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnProjectile",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 2,
+      "editedPath": "value.projectileId",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spawnThresholds",
@@ -3953,7 +4008,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnThresholds",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 5,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spawnVfx",
@@ -4002,7 +4066,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 56,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spawnVfx",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": "value.durationSec",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spendHealth",
@@ -4036,7 +4109,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spendHealth",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 10,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spendMana",
@@ -4079,7 +4161,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spendMana",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "summon",
@@ -4242,7 +4333,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=summon",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.count",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "swapResource",
@@ -4320,7 +4420,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=swapResource",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 12,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "taunt",
@@ -4385,7 +4494,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=taunt",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 11,
+      "editedPath": "value.durationSec",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "weightedBranch",
@@ -4444,7 +4562,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 12,
-      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=weightedBranch",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onAbilityCast",
@@ -4664,7 +4791,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onAbilityCast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onAbilityHit",
@@ -4884,7 +5020,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onAbilityHit",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onAllyDamaged",
@@ -5104,7 +5249,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onAllyDamaged",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onAllyDeath",
@@ -5324,7 +5478,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onAllyDeath",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onBasicAttack",
@@ -5544,7 +5707,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 80,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onBasicAttack",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onBossSpawn",
@@ -5764,7 +5936,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onBossSpawn",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onBoundaryTouch",
@@ -5984,7 +6165,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onBoundaryTouch",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onCrowdControlApplied",
@@ -6204,7 +6394,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onCrowdControlApplied",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onCrowdControlReceived",
@@ -6424,7 +6623,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onCrowdControlReceived",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onDamageDealt",
@@ -6644,7 +6852,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onDamageDealt",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onDamageTaken",
@@ -6864,7 +7081,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 27,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onDamageTaken",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onDashOrBlink",
@@ -7084,7 +7310,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onDashOrBlink",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onDeath",
@@ -7304,7 +7539,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onDeath",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onEvade",
@@ -7524,7 +7768,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onEvade",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onFireRingIgnite",
@@ -7744,7 +7997,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onFireRingIgnite",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onGuardianDown",
@@ -7964,7 +8226,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onGuardianDown",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onHeal",
@@ -8184,7 +8455,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onHeal",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onInterval",
@@ -8404,7 +8684,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onInterval",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onKill",
@@ -8624,7 +8913,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onKill",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onLethalDamage",
@@ -8844,7 +9142,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onLethalDamage",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onOverheal",
@@ -9064,7 +9371,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onOverheal",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onProjectileExpire",
@@ -9284,7 +9600,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onProjectileExpire",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onReflectSuccess",
@@ -9504,7 +9829,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 9,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onReflectSuccess",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onRevive",
@@ -9724,7 +10058,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onRevive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onRoundEnd",
@@ -9944,7 +10287,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onRoundEnd",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onRoundStart",
@@ -10164,7 +10516,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onRoundStart",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onShieldBroken",
@@ -10384,7 +10745,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onShieldBroken",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onShieldGained",
@@ -10604,7 +10974,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onShieldGained",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onStatCapReached",
@@ -10824,7 +11203,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onStatCapReached",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onStatusApplied",
@@ -11044,7 +11432,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onStatusApplied",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onStunned",
@@ -11264,7 +11661,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onStunned",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onUltimateCast",
@@ -11484,7 +11890,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onUltimateCast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "onUltimateHit",
@@ -11704,7 +12119,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
+      "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability hook.on=onUltimateHit",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 32,
+      "editedPath": "value.on",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "chance",
@@ -11718,7 +12142,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 36,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=chance",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 3,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "distance",
@@ -11744,7 +12177,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=distance",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "equipment",
@@ -11753,7 +12195,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=equipment",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 5,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "facing",
@@ -11775,7 +12226,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=facing",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "form",
@@ -11801,7 +12261,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=form",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "kind",
@@ -11831,7 +12300,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=kind",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "learned",
@@ -11861,7 +12339,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=learned",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "recentCast",
@@ -11870,7 +12357,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=recentCast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 5,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "stat",
@@ -11879,7 +12375,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 14,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=stat",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "status",
@@ -11888,7 +12393,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 39,
-      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=status",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
@@ -11906,7 +12420,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d",
@@ -11923,7 +12446,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -11942,7 +12474,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-beam-roll",
@@ -12078,7 +12619,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 13,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-beam-roll.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-beam-roll.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-dragon-quake",
@@ -12148,7 +12698,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-quake.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-quake.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-dragon-serpent",
@@ -12249,7 +12808,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-serpent.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-serpent.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-dragon-shockwave",
@@ -12287,7 +12855,16 @@
       "adminForm": false,
       "editorForm": false,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-shockwave.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-shockwave.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": false,
+      "reason": "分析已完成但 Main 尚未接上展開路徑",
+      "controlCount": 0,
+      "editedPath": null,
+      "parameterEdited": false,
+      "roundTrip": false,
+      "browserVerified": false
     },
     {
       "id": "tpl-line-blast",
@@ -12341,7 +12918,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-line-blast.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-line-blast.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-locust-line",
@@ -12413,7 +12999,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-line.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-line.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-locust-orb",
@@ -12495,7 +13090,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 29,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-orb.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-orb.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-locust-strike",
@@ -12575,7 +13179,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 12,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-strike.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-strike.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-locust-swarm",
@@ -12654,7 +13267,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-swarm.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-swarm.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-locust-travel",
@@ -12726,7 +13348,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-travel.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-travel.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-periodic-field",
@@ -12745,7 +13376,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-periodic-field.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-periodic-field.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-proxy-cast",
@@ -12765,7 +13405,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-proxy-cast.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-proxy-cast.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-radial-burst",
@@ -12827,7 +13476,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-radial-burst.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-radial-burst.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-random-barrage",
@@ -12844,7 +13502,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-random-barrage.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-random-barrage.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tpl-summon-agent",
@@ -12862,7 +13529,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-summon-agent.json.params"
+      "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-summon-agent.json.params",
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "spawnModelFx.preset",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 54,
+      "editedPath": "value.preset",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "ally-shield",
@@ -12938,7 +13614,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-ally-shield.json"
+      "origin": "template@1:content/ability-templates/tpl-ally-shield.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-ally-shield",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 18,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "apply-status",
@@ -12976,7 +13661,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 11,
-      "origin": "template@1:content/ability-templates/hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b.json content/ability-templates/tpl-apply-status.json"
+      "origin": "template@1:content/ability-templates/hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b.json content/ability-templates/tpl-apply-status.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-apply-status",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 37,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "area-strike",
@@ -13084,7 +13778,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 11,
-      "origin": "template@1:content/ability-templates/tpl-area-strike.json"
+      "origin": "template@1:content/ability-templates/tpl-area-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-area-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 159,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "beam-roll",
@@ -13286,7 +13989,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 9,
-      "origin": "template@1:content/ability-templates/tpl-beam-roll.json"
+      "origin": "template@1:content/ability-templates/tpl-beam-roll.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-beam-roll",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 33,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "blink",
@@ -13305,7 +14017,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 21,
-      "origin": "template@1:content/ability-templates/hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4.json content/ability-templates/tpl-blink.json"
+      "origin": "template@1:content/ability-templates/hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4.json content/ability-templates/tpl-blink.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-blink",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 2,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "blink-strike",
@@ -13371,7 +14092,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "template@1:content/ability-templates/hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16.json content/ability-templates/tpl-blink-strike.json"
+      "origin": "template@1:content/ability-templates/hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16.json content/ability-templates/tpl-blink-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-blink-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "buff-self",
@@ -13422,7 +14152,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 112,
-      "origin": "template@1:content/ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json content/ability-templates/tpl-buff-self.json"
+      "origin": "template@1:content/ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json content/ability-templates/tpl-buff-self.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-buff-self",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 46,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "charge-push",
@@ -13520,7 +14259,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 16,
-      "origin": "template@1:content/ability-templates/hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368.json content/ability-templates/tpl-charge-push.json"
+      "origin": "template@1:content/ability-templates/hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368.json content/ability-templates/tpl-charge-push.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-charge-push",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 24,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "charge-resource",
@@ -13585,7 +14333,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-charge-resource.json"
+      "origin": "template@1:content/ability-templates/tpl-charge-resource.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-charge-resource",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 8,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "combo-finisher",
@@ -13688,7 +14445,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-combo-finisher.json"
+      "origin": "template@1:content/ability-templates/tpl-combo-finisher.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-combo-finisher",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 21,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "dragon-quake",
@@ -13830,7 +14596,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-dragon-quake.json"
+      "origin": "template@1:content/ability-templates/tpl-dragon-quake.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-dragon-quake",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 12,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "dragon-serpent",
@@ -13998,7 +14773,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-dragon-serpent.json"
+      "origin": "template@1:content/ability-templates/tpl-dragon-serpent.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-dragon-serpent",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 21,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "drain-leech",
@@ -14085,7 +14869,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 7,
-      "origin": "template@1:content/ability-templates/hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990.json content/ability-templates/tpl-drain-leech.json"
+      "origin": "template@1:content/ability-templates/hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990.json content/ability-templates/tpl-drain-leech.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-drain-leech",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 11,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "effect-sequence",
@@ -14147,7 +14940,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 113,
-      "origin": "template@1:content/ability-templates/hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550.json content/ability-templates/tpl-effect-sequence.json"
+      "origin": "template@1:content/ability-templates/hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550.json content/ability-templates/tpl-effect-sequence.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-effect-sequence",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 49,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "event-passive",
@@ -14176,7 +14978,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 35,
-      "origin": "template@1:content/ability-templates/hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77.json content/ability-templates/tpl-event-passive.json"
+      "origin": "template@1:content/ability-templates/hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77.json content/ability-templates/tpl-event-passive.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-event-passive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 75,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "ground-nova",
@@ -14221,7 +15032,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 9,
-      "origin": "template@1:content/ability-templates/hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68.json content/ability-templates/tpl-ground-nova.json"
+      "origin": "template@1:content/ability-templates/hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68.json content/ability-templates/tpl-ground-nova.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-ground-nova",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 11,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "growth-charge",
@@ -14315,7 +15135,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-growth-charge.json"
+      "origin": "template@1:content/ability-templates/tpl-growth-charge.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-growth-charge",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 14,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "heal",
@@ -14372,7 +15201,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 12,
-      "origin": "template@1:content/ability-templates/hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6.json content/ability-templates/tpl-heal.json"
+      "origin": "template@1:content/ability-templates/hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6.json content/ability-templates/tpl-heal.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-heal",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 14,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "instant-blast",
@@ -14418,7 +15256,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 16,
-      "origin": "template@1:content/ability-templates/tpl-instant-blast.json"
+      "origin": "template@1:content/ability-templates/tpl-instant-blast.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-instant-blast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 11,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "leap-strike",
@@ -14506,7 +15353,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 16,
-      "origin": "template@1:content/ability-templates/hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52.json content/ability-templates/tpl-leap-strike.json"
+      "origin": "template@1:content/ability-templates/hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52.json content/ability-templates/tpl-leap-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-leap-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 52,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "life-manipulate",
@@ -14551,7 +15407,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-life-manipulate.json"
+      "origin": "template@1:content/ability-templates/tpl-life-manipulate.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-life-manipulate",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 7,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "line-blast",
@@ -14694,7 +15559,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "template@1:content/ability-templates/tpl-line-blast.json"
+      "origin": "template@1:content/ability-templates/tpl-line-blast.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-line-blast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 23,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "line-strike",
@@ -14758,7 +15632,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 12,
-      "origin": "template@1:content/ability-templates/hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71.json content/ability-templates/tpl-line-strike.json"
+      "origin": "template@1:content/ability-templates/hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71.json content/ability-templates/tpl-line-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-line-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 13,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "line-sweep",
@@ -14820,7 +15703,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 23,
-      "origin": "template@1:content/ability-templates/hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699.json content/ability-templates/tpl-line-sweep.json"
+      "origin": "template@1:content/ability-templates/hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699.json content/ability-templates/tpl-line-sweep.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-line-sweep",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "lock-combo",
@@ -14918,7 +15810,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 14,
-      "origin": "template@1:content/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json content/ability-templates/tpl-lock-combo.json"
+      "origin": "template@1:content/ability-templates/hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c.json content/ability-templates/tpl-lock-combo.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-lock-combo",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 23,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "locust-line",
@@ -15000,7 +15901,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "template@1:content/ability-templates/tpl-locust-line.json"
+      "origin": "template@1:content/ability-templates/tpl-locust-line.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-locust-line",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 22,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "locust-orb",
@@ -15092,7 +16002,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 25,
-      "origin": "template@1:content/ability-templates/tpl-locust-orb.json"
+      "origin": "template@1:content/ability-templates/tpl-locust-orb.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-locust-orb",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 24,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "locust-strike",
@@ -15182,7 +16101,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 12,
-      "origin": "template@1:content/ability-templates/tpl-locust-strike.json"
+      "origin": "template@1:content/ability-templates/tpl-locust-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-locust-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 20,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "locust-swarm",
@@ -15271,7 +16199,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "template@1:content/ability-templates/tpl-locust-swarm.json"
+      "origin": "template@1:content/ability-templates/tpl-locust-swarm.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-locust-swarm",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 24,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "locust-travel",
@@ -15353,7 +16290,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "template@1:content/ability-templates/tpl-locust-travel.json"
+      "origin": "template@1:content/ability-templates/tpl-locust-travel.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-locust-travel",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 22,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "mark-stacks",
@@ -15527,7 +16473,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "template@1:content/ability-templates/hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8.json content/ability-templates/tpl-mark-stacks.json"
+      "origin": "template@1:content/ability-templates/hero-template.c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8.json content/ability-templates/tpl-mark-stacks.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-mark-stacks",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 47,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "on-attack",
@@ -15622,7 +16577,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 6,
-      "origin": "template@1:content/ability-templates/hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71.json content/ability-templates/tpl-on-attack.json"
+      "origin": "template@1:content/ability-templates/hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71.json content/ability-templates/tpl-on-attack.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-on-attack",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 34,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "on-hit-react",
@@ -15676,7 +16640,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "template@1:content/ability-templates/hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4.json content/ability-templates/tpl-on-hit-react.json"
+      "origin": "template@1:content/ability-templates/hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4.json content/ability-templates/tpl-on-hit-react.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-on-hit-react",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 11,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "orbit-array",
@@ -15746,7 +16719,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "template@1:content/ability-templates/tpl-orbit-array.json"
+      "origin": "template@1:content/ability-templates/tpl-orbit-array.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-orbit-array",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "periodic-field",
@@ -15837,7 +16819,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 13,
-      "origin": "template@1:content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json content/ability-templates/tpl-periodic-field.json"
+      "origin": "template@1:content/ability-templates/hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806.json content/ability-templates/tpl-periodic-field.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-periodic-field",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 12,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "projectile-strike",
@@ -15896,7 +16887,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 18,
-      "origin": "template@1:content/ability-templates/tpl-projectile-strike.json"
+      "origin": "template@1:content/ability-templates/tpl-projectile-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-projectile-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 70,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "proxy-cast",
@@ -15979,7 +16979,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 14,
-      "origin": "template@1:content/ability-templates/tpl-proxy-cast.json"
+      "origin": "template@1:content/ability-templates/tpl-proxy-cast.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-proxy-cast",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "proxy-fanout",
@@ -16035,7 +17044,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 1,
-      "origin": "template@1:content/ability-templates/tpl-proxy-fanout.json"
+      "origin": "template@1:content/ability-templates/tpl-proxy-fanout.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-proxy-fanout",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 44,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "pull-throw",
@@ -16159,7 +17177,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 6,
-      "origin": "template@1:content/ability-templates/hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6.json content/ability-templates/tpl-pull-throw.json"
+      "origin": "template@1:content/ability-templates/hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6.json content/ability-templates/tpl-pull-throw.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-pull-throw",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 19,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "radial-burst",
@@ -16269,7 +17296,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "template@1:content/ability-templates/tpl-radial-burst.json"
+      "origin": "template@1:content/ability-templates/tpl-radial-burst.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-radial-burst",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 19,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "random-barrage",
@@ -16349,7 +17385,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 11,
-      "origin": "template@1:content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json content/ability-templates/tpl-random-barrage.json"
+      "origin": "template@1:content/ability-templates/hero-template.34fc1fc2579e395212180f244209347185c83466671e8b1d.json content/ability-templates/tpl-random-barrage.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-random-barrage",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 23,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "single-strike",
@@ -16404,7 +17449,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 92,
-      "origin": "template@1:content/ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json content/ability-templates/tpl-single-strike.json"
+      "origin": "template@1:content/ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json content/ability-templates/tpl-single-strike.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-single-strike",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 66,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "spend-resource",
@@ -16467,7 +17521,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "template@1:content/ability-templates/tpl-spend-resource.json"
+      "origin": "template@1:content/ability-templates/tpl-spend-resource.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-spend-resource",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 50,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "summon-agent",
@@ -16592,7 +17655,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 6,
-      "origin": "template@1:content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json content/ability-templates/tpl-summon-agent.json"
+      "origin": "template@1:content/ability-templates/hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804.json content/ability-templates/tpl-summon-agent.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-summon-agent",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 18,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "teleport",
@@ -16648,7 +17720,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "template@1:content/ability-templates/hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b.json content/ability-templates/tpl-teleport.json"
+      "origin": "template@1:content/ability-templates/hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b.json content/ability-templates/tpl-teleport.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-teleport",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 13,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "transform",
@@ -16706,7 +17787,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 13,
-      "origin": "template@1:content/ability-templates/hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010.json content/ability-templates/tpl-transform.json"
+      "origin": "template@1:content/ability-templates/hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010.json content/ability-templates/tpl-transform.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-transform",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 40,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "traveling-wave",
@@ -16785,7 +17875,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 7,
-      "origin": "template@1:content/ability-templates/tpl-traveling-wave.json"
+      "origin": "template@1:content/ability-templates/tpl-traveling-wave.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-traveling-wave",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 20,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "sub.bladestorm-8hit",
@@ -16830,7 +17929,16 @@
       "adminForm": false,
       "editorForm": false,
       "usedBy": 2,
-      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.bladestorm-8hit.json"
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.bladestorm-8hit.json",
+      "componentPath": "(未實作)",
+      "surface": "bricks.layer=vfx-call",
+      "renderable": false,
+      "reason": "GH#1075 —— vfx-call 這一層兩個編輯器都還沒有 picker（見 ops/bricksComplete.test.ts 的分母說明）",
+      "controlCount": 0,
+      "editedPath": null,
+      "parameterEdited": false,
+      "roundTrip": false,
+      "browserVerified": false
     },
     {
       "id": "sub.dive-dash-thunder",
@@ -16871,7 +17979,16 @@
       "adminForm": false,
       "editorForm": false,
       "usedBy": 2,
-      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.dive-dash-thunder.json"
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.dive-dash-thunder.json",
+      "componentPath": "(未實作)",
+      "surface": "bricks.layer=vfx-call",
+      "renderable": false,
+      "reason": "GH#1075 —— vfx-call 這一層兩個編輯器都還沒有 picker（見 ops/bricksComplete.test.ts 的分母說明）",
+      "controlCount": 0,
+      "editedPath": null,
+      "parameterEdited": false,
+      "roundTrip": false,
+      "browserVerified": false
     },
     {
       "id": "sub.doom-mark-cast",
@@ -16912,7 +18029,16 @@
       "adminForm": false,
       "editorForm": false,
       "usedBy": 2,
-      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.doom-mark-cast.json"
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.doom-mark-cast.json",
+      "componentPath": "(未實作)",
+      "surface": "bricks.layer=vfx-call",
+      "renderable": false,
+      "reason": "GH#1075 —— vfx-call 這一層兩個編輯器都還沒有 picker（見 ops/bricksComplete.test.ts 的分母說明）",
+      "controlCount": 0,
+      "editedPath": null,
+      "parameterEdited": false,
+      "roundTrip": false,
+      "browserVerified": false
     },
     {
       "id": "sub.forward-twin-blast",
@@ -16963,7 +18089,16 @@
       "adminForm": false,
       "editorForm": false,
       "usedBy": 9,
-      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.forward-twin-blast.json"
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.forward-twin-blast.json",
+      "componentPath": "(未實作)",
+      "surface": "bricks.layer=vfx-call",
+      "renderable": false,
+      "reason": "GH#1075 —— vfx-call 這一層兩個編輯器都還沒有 picker（見 ops/bricksComplete.test.ts 的分母說明）",
+      "controlCount": 0,
+      "editedPath": null,
+      "parameterEdited": false,
+      "roundTrip": false,
+      "browserVerified": false
     },
     {
       "id": "beam",
@@ -16972,7 +18107,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 58,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "bolt",
@@ -16981,7 +18125,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "column",
@@ -16990,7 +18143,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "dash",
@@ -16999,7 +18161,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "explosion",
@@ -17008,7 +18179,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 56,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "fall",
@@ -17017,7 +18197,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "nova",
@@ -17026,7 +18215,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 43,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "pulse",
@@ -17035,7 +18233,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 85,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "shockwave",
@@ -17044,7 +18251,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 27,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "slash",
@@ -17053,7 +18269,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 35,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "summon",
@@ -17062,7 +18287,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "swarm",
@@ -17071,7 +18305,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 21,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "tornado",
@@ -17080,7 +18323,16 @@
       "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
-      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.prim.primitive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "billboard",
@@ -17089,7 +18341,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.presentation",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "decal",
@@ -17098,7 +18359,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.presentation",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "ribbon",
@@ -17107,7 +18377,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.presentation",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     },
     {
       "id": "trail",
@@ -17116,7 +18395,16 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 0,
-      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
+      "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）",
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx.presentation",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 1,
+      "editedPath": "value",
+      "parameterEdited": false,
+      "roundTrip": true,
+      "browserVerified": false
     }
   ]
 }

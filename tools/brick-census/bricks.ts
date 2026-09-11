@@ -592,7 +592,8 @@ export function buildBricks(root: string): BricksDoc {
    * ⛔ 所以這裡**不是**「兩個住處」：量值只有一個來源（他們的收據），
    * ⭐ 而代理值是**收據還沒到**時的誠實退路（`editorFormSource` 會說出用的是哪一個）。
    */
-  const receiptPath = join(root, "docs/editor-contract/coordination/claim.editor-form-receipts.json");
+  const receiptName = "claim.editor-form-receipts-spawn-obstacle.json";
+  const receiptPath = join(root, "docs/editor-contract/coordination", receiptName);
   const receipts = ((): Map<string, boolean> | null => {
     if (!existsSync(receiptPath)) return null;
     try {
@@ -800,14 +801,14 @@ export function buildBricks(root: string): BricksDoc {
       "那會把 effect kind `damage` 誤判成有表單。",
     editorFormSource:
       receipts !== null
-        ? "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`" +
+        ? `⭐ **量值** —— Codex 的收據 \`coordination/${receiptName}\`` +
           "（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，" +
           "每一列帶元件路徑）。⛔ 已經不是代理值。" +
           `目前 ${receipts.size} 顆有收據；收據裡沒有的才退回代理值。`
         : "⚠️ **代理值** —— `docs/editor-contract/ggd-editor-coverage.json` 的 `required`" +
           "（＝「編輯器**應該**要有的欄位」），⛔ 不是「apps/editor 真的有表單」。" +
           "`apps/editor` 是 Codex 的目錄，這支產生器量不到它。" +
-          "⭐ 收據一旦出現在 `coordination/claim.editor-form-receipts.json`，這一欄會自動換成量值。",
+          `⭐ 收據一旦出現在 \`coordination/${receiptName}\`，這一欄會自動換成量值。`,
     editorFormNeededFromCodex:
       "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`" +
       "（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）" +
