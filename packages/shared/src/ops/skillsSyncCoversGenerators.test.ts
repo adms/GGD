@@ -242,6 +242,14 @@ const EXEMPT: Record<string, string> = {
   // ⛔ **無窮遞迴**（skills:check → ship:check → skills:check）。
   // 它自己的閘是 `shipGateScript.test.ts`（驗「每一包 vitest 都在裡面」等三個關係）。
   "ship:check": "**出貨聚合指令本身** —— 它*跑* skills:check，放進去會遞迴；它自己的閘是 shipGateScript.test.ts",
+  "backup:s3:check":
+    "⭐ **純驗證、0 個產物**（`scripts/backup-s3.sh --check` 只 `aws s3 cp` 到 tempfile 再重算 sha256，" +
+    "跑完即刪）。⛔ 它不是新鮮度閘 —— 沒有東西會因為技能／內容改動而過期。" +
+    "⚠️ ⭐ 而且它**刻意不在任何自動鏈上**：它要下載 ~907 MB，接進 `skills:check` 會讓每一次閘多跑好幾分鐘 " +
+    "⇒ 下一個人就會把整條鏈跳過（⭐ 而被跳過的閘等於沒有閘）。收據的**關係**由 " +
+    "`ops/s3BackupManifest.test.ts` 守（它只問「這個 commit 真的存在嗎」，毫秒級，進 `pnpm test`）。" +
+    "反駁法：哪天 S3 支援讓我們**不下載**就驗得到內容雜湊（例如存 checksum metadata 再 head-object 比對），" +
+    "這一列就要刪掉並把它接進 `skills:check`。",
   "model:intake:check":
     "⭐ **純檢查、0 個產物**（`tools/w3x-import/model_intake.py` 唯一的 write 是 `tempfile.NamedTemporaryFile` 的" +
     "暫存 gltf-validator 腳本，跑完即丟，實查 2026-09-11）。它驗的是**每一顆匯入 GLB 與 `content/config/model-lod.json` " +
