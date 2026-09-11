@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T11:22:32+08:00",
-  "inputsSha256": "e2c01b275e29c780f12d7d7886d7b903d05d2839dc561e70841d9731b9ea4f77",
+  "generatedAt": "2026-09-11T11:29:08+08:00",
+  "inputsSha256": "3c9573d016b74ec3257e83041c4526d10a4e02ffcbb7f3db2f4adb20f0d583bf",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -38090,7 +38090,7 @@
           "accessStatus": "public-mod-download",
           "checkedAt": "2026-09-09T19:57:59+00:00",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "converted-structural-validation-pending-visual-review",
+          "readiness": "converted-glb-structural-and-webgl-static-body-validated-pending-rights-action-integration",
           "purchaseDecision": "hold-purchase-review-free-source",
           "defaultEligible": false,
           "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori",
@@ -38102,7 +38102,7 @@
               "archiveMember": "raw/thunderstore-iori.zip"
             }
           ],
-          "verification": "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。原始AnimationClip=0，未取得音效/語音/VFX。視覺驗收尚未完成，不能登錄後台下拉或自動預選。",
+          "verification": "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。Babylon WebGL 已載入兩個GPU蒙皮網格與兩張來源 albedo 貼圖，前／後／等角三視圖的靜態身體、四肢連接與材質可見性已人工驗收。原始AnimationClip=0，未取得音效/語音/VFX；未驗證原作KOF shader、權利、動作整合、後台下拉、預設選擇、遊戲測試或部署。",
           "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
           "usage": "intake-only; no automatic runtime selection",
           "backup": {
@@ -38114,7 +38114,7 @@
           },
           "backendIntegration": {
             "required": true,
-            "state": "pending-visual-review-and-action-integration",
+            "state": "pending-rights-action-integration-and-backend-selection",
             "heroIds": [
               "community-review-02-20260907"
             ],
@@ -38156,7 +38156,7 @@
               "textureCount": 2,
               "materialCount": 2,
               "maxVertexInfluences": 4,
-              "readyStage": "glb-structural-validated-pending-visual-review",
+              "readyStage": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
               "defaultChanged": false,
@@ -38166,9 +38166,9 @@
               "conversionEvidenceSha256": "4dee56878827658da2753a42c0f5bb8371797d49ac3351dec2b04e1c0666a424",
               "limitations": [
                 "No native animation, audio or standalone VFX assets were present in the source bundle.",
-                "Visual identity, shader fidelity and three-view preview are pending; no candidate is registered in the runtime dropdown.",
+                "Three WebGL views validate only static-body completeness and basic material visibility; original KOF shader parity is not proven.",
                 "This is a community MOD source, not verified as a direct KOF game extraction or a licensed redistribution asset.",
-                "No GGD action retargeting, gameplay test, default selection or deployment has been performed."
+                "No GGD action retargeting, gameplay test, backend dropdown registration, default selection or deployment has been performed."
               ],
               "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/iori-community-body-v1/e263478c47d498bda68253ebd7db64e350cb77e7fb47e770c0176c80a5f3daf1.tar.gz",
               "s3ArchiveMember": "body.glb",
@@ -38183,7 +38183,53 @@
                   "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/iori-community-body-v1/latest-receipt.json",
                   "backupReceiptSha256": "83f0b3e5320cd089f4bf2442ee2ae5266b92ff2da2e08189181c4f966555ffee"
                 }
-              ]
+              ],
+              "manualVisualReview": "reviewed-static-body-only",
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/review.json",
+                  "bytes": 3429,
+                  "sha256": "f8b413271fb52531d3f9d34dba0713dd1f006eada5b03a6594e2184a9a3df527"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/proof.json",
+                  "bytes": 3695,
+                  "sha256": "d18a378b37e36736c90e39b5c49148a46404c7c395df237d30b6e67633b5b587"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/run.json",
+                  "bytes": 335,
+                  "sha256": "4082374cd2465c5c5f7e3cd3c4248e7321d0f3a2e2650d98e83b143befb97531"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/front.png",
+                    "bytes": 202374,
+                    "sha256": "33d05dc592818c77a373ed49bf7a472903fd7ecde3e2fc07bda3aecd787da8be"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/back.png",
+                    "bytes": 184462,
+                    "sha256": "bf86c31e09640c28647e8f113a4fe6c9ae6cde5b8f5f89b0a74409e22f6d68fc"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/isometric.png",
+                    "bytes": 199763,
+                    "sha256": "b99d6b1c4416efa46ed19f1be7082be1e1a444b11cc5a5ebd9a60cbbb2a8dc88"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/iori-community-webgl-visual-v1/a5b8adcedfff8dba8296c09c28c8f64b59de0433e8f39f6011628458acb07b87.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/iori-community-webgl-visual-v1/latest-receipt.json",
+                  "backupReceiptSha256": "e5e492a6bb3477b316387c0cc6e3b1c4304aff44a44e90ae14b9ca73aebd5c97"
+                }
+              }
             }
           ],
           "assetKinds": [
@@ -69828,7 +69874,7 @@
         "accessStatus": "public-mod-download",
         "checkedAt": "2026-09-09T19:57:59+00:00",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "converted-structural-validation-pending-visual-review",
+        "readiness": "converted-glb-structural-and-webgl-static-body-validated-pending-rights-action-integration",
         "purchaseDecision": "hold-purchase-review-free-source",
         "defaultEligible": false,
         "localPath": "GGD-Asset-Library/intake/public-models-20260910/thunderstore-iori",
@@ -69840,7 +69886,7 @@
             "archiveMember": "raw/thunderstore-iori.zip"
           }
         ],
-        "verification": "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。原始AnimationClip=0，未取得音效/語音/VFX。視覺驗收尚未完成，不能登錄後台下拉或自動預選。",
+        "verification": "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。Babylon WebGL 已載入兩個GPU蒙皮網格與兩張來源 albedo 貼圖，前／後／等角三視圖的靜態身體、四肢連接與材質可見性已人工驗收。原始AnimationClip=0，未取得音效/語音/VFX；未驗證原作KOF shader、權利、動作整合、後台下拉、預設選擇、遊戲測試或部署。",
         "reuseTerms": "署名與包內 README 已保留；免費下載不等於已核實跨遊戲轉換或再散布授權。",
         "usage": "intake-only; no automatic runtime selection",
         "backup": {
@@ -69852,7 +69898,7 @@
         },
         "backendIntegration": {
           "required": true,
-          "state": "pending-visual-review-and-action-integration",
+          "state": "pending-rights-action-integration-and-backend-selection",
           "heroIds": [
             "community-review-02-20260907"
           ],
@@ -69894,7 +69940,7 @@
             "textureCount": 2,
             "materialCount": 2,
             "maxVertexInfluences": 4,
-            "readyStage": "glb-structural-validated-pending-visual-review",
+            "readyStage": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
             "runtimeReady": false,
             "backendSelectionVerified": false,
             "defaultChanged": false,
@@ -69904,9 +69950,9 @@
             "conversionEvidenceSha256": "4dee56878827658da2753a42c0f5bb8371797d49ac3351dec2b04e1c0666a424",
             "limitations": [
               "No native animation, audio or standalone VFX assets were present in the source bundle.",
-              "Visual identity, shader fidelity and three-view preview are pending; no candidate is registered in the runtime dropdown.",
+              "Three WebGL views validate only static-body completeness and basic material visibility; original KOF shader parity is not proven.",
               "This is a community MOD source, not verified as a direct KOF game extraction or a licensed redistribution asset.",
-              "No GGD action retargeting, gameplay test, default selection or deployment has been performed."
+              "No GGD action retargeting, gameplay test, backend dropdown registration, default selection or deployment has been performed."
             ],
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/iori-community-body-v1/e263478c47d498bda68253ebd7db64e350cb77e7fb47e770c0176c80a5f3daf1.tar.gz",
             "s3ArchiveMember": "body.glb",
@@ -69921,7 +69967,53 @@
                 "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/iori-community-body-v1/latest-receipt.json",
                 "backupReceiptSha256": "83f0b3e5320cd089f4bf2442ee2ae5266b92ff2da2e08189181c4f966555ffee"
               }
-            ]
+            ],
+            "manualVisualReview": "reviewed-static-body-only",
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/review.json",
+                "bytes": 3429,
+                "sha256": "f8b413271fb52531d3f9d34dba0713dd1f006eada5b03a6594e2184a9a3df527"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/proof.json",
+                "bytes": 3695,
+                "sha256": "d18a378b37e36736c90e39b5c49148a46404c7c395df237d30b6e67633b5b587"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/run.json",
+                "bytes": 335,
+                "sha256": "4082374cd2465c5c5f7e3cd3c4248e7321d0f3a2e2650d98e83b143befb97531"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/front.png",
+                  "bytes": 202374,
+                  "sha256": "33d05dc592818c77a373ed49bf7a472903fd7ecde3e2fc07bda3aecd787da8be"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/back.png",
+                  "bytes": 184462,
+                  "sha256": "bf86c31e09640c28647e8f113a4fe6c9ae6cde5b8f5f89b0a74409e22f6d68fc"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/iori-community-body-v1/webgl-visual-review-v1/isometric.png",
+                  "bytes": 199763,
+                  "sha256": "b99d6b1c4416efa46ed19f1be7082be1e1a444b11cc5a5ebd9a60cbbb2a8dc88"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/iori-community-webgl-visual-v1/a5b8adcedfff8dba8296c09c28c8f64b59de0433e8f39f6011628458acb07b87.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/iori-community-webgl-visual-v1/latest-receipt.json",
+                "backupReceiptSha256": "e5e492a6bb3477b316387c0cc6e3b1c4304aff44a44e90ae14b9ca73aebd5c97"
+              }
+            }
           }
         ],
         "assetKinds": [

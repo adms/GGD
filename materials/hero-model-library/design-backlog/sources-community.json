@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "8f7ee2d8f4d7751fb09de7be10f6ae64eba0e371250b2a3b5ef6a6a7e5876ea6",
-      "bytes": 2076242
+      "sha256": "55c88b0bb0468e5b4ea19d766049c79a5b239ad6abcfac092eaabd75f37cc266",
+      "bytes": 2185749
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "85e6690d42b2e518d9c7f444553d708f94875f8eed49c59b26d03880704394db",
-      "bytes": 5173122
+      "sha256": "4a714d4d76184a56502120242346e930c38a393d71da8294552e285648b6bb9e",
+      "bytes": 5793148
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -27,8 +27,8 @@
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "68a8215e434076c31d2d079e4063ed39e06e9d14eb4897f5b3bf771e75bcb0a7",
-      "bytes": 29363808
+      "sha256": "d2daf8efcfa64cfab69b2630523fa12c27ae875543890bc09447830011909e75",
+      "bytes": 29418833
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
@@ -502,7 +502,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -663,7 +663,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -813,7 +813,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -968,7 +968,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -12045,7 +12045,7 @@
           "library": "community",
           "sourceId": "thunderstore-iori",
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
-          "readiness": "glb-structural-validated-pending-visual-review",
+          "readiness": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -12060,7 +12060,7 @@
           "library": "community",
           "sourceId": "thunderstore-iori",
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
-          "readiness": "glb-structural-validated-pending-visual-review",
+          "readiness": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": false,
           "identityReviewRequired": false
         },
@@ -12118,7 +12118,7 @@
           "library": "community",
           "sourceId": "thunderstore-iori",
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
-          "readiness": "converted-structural-validation-pending-visual-review",
+          "readiness": "converted-glb-structural-and-webgl-static-body-validated-pending-rights-action-integration",
           "converted": false,
           "identityReviewRequired": false
         },
@@ -12137,7 +12137,7 @@
           "library": "community",
           "sourceId": "thunderstore-iori",
           "sourceUrl": "https://thunderstore.io/c/lethal-company/p/TonyPizza/Iori/",
-          "readiness": "converted-structural-validation-pending-visual-review",
+          "readiness": "converted-glb-structural-and-webgl-static-body-validated-pending-rights-action-integration",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -12149,7 +12149,7 @@
       "evidence": [
         "Explicit acquired source candidate manifest",
         "workflow-model-options candidate identity status: [('community-review-02-20260907', 'character-labelled-by-delivering-workflow')]",
-        "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。原始AnimationClip=0，未取得音效/語音/VFX。視覺驗收尚未完成，不能登錄後台下拉或自動預選。"
+        "已將 IoriKOF bundle 的2個蒙皮網格轉為自包含GLB：26,795頂點、14,704三角面、2材質/2貼圖、2組各100骨節；所有權重、關節引用、有限值及座標轉換檢查通過。Babylon WebGL 已載入兩個GPU蒙皮網格與兩張來源 albedo 貼圖，前／後／等角三視圖的靜態身體、四肢連接與材質可見性已人工驗收。原始AnimationClip=0，未取得音效/語音/VFX；未驗證原作KOF shader、權利、動作整合、後台下拉、預設選擇、遊戲測試或部署。"
       ],
       "aliases": [
         "八神庵 / Iori Yagami",
@@ -35550,7 +35550,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35598,7 +35598,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35646,7 +35646,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35694,7 +35694,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35742,7 +35742,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35791,7 +35791,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         },
@@ -35860,7 +35860,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35908,7 +35908,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -35956,7 +35956,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
@@ -36049,7 +36049,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "raw-source-pending-standardization",
+          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
           "converted": false,
           "identityReviewRequired": false
         }
