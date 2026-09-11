@@ -143,9 +143,15 @@ def validate(paths):
         "process.stdout.write(JSON.stringify(out));\n"
     )
     shared = os.path.join(ROOT, "packages", "shared")
-    with tempfile.NamedTemporaryFile("w", suffix=".mjs", dir=shared, delete=False) as fh:
+    # ⚠️ ⭐ 這個檔**必須**住在 `packages/shared/`（node 要從那裡解析 `gltf-validator`），
+    #    ⛔ 所以它躲不進系統暫存區。⇒ 給它一個**固定**的名字，而不是隨機名：
+    #    ⭐ 隨機名 ＋ 被 kill（SIGKILL 跳過 `finally`）＝ repo 裡每次多一顆垃圾，
+    #    而它是 `.mjs` ⇒ vitest／tsc 掃得到 ⇒ ⛔ 會變成一個看起來很怪的假紅。
+    #    ⭐ 固定名字讓「上一次被中斷」這件事**自動被下一次蓋掉**。
+    #    （2026-09-11 實際撿到 4 顆 `tmp*.mjs`，全是我中斷的那幾次留下的。）
+    tmp = os.path.join(shared, ".ggd-gltf-validate.tmp.mjs")
+    with open(tmp, "w", encoding="utf-8") as fh:
         fh.write(script)
-        tmp = fh.name
     try:
         res = {}
         for i in range(0, len(paths), 60):                     # ⛔ 一次全塞會爆 ARG_MAX
@@ -156,7 +162,10 @@ def validate(paths):
             res.update(json.loads(out.stdout))
         return res, None
     finally:
-        os.unlink(tmp)
+        try:
+            os.unlink(tmp)
+        except FileNotFoundError:
+            pass
 
 
 def merge(path):

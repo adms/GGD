@@ -4,7 +4,10 @@ import {resample, dedup, prune} from '@gltf-transform/functions';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-const base=process.argv[2]??'/private/tmp/ggd-lol-models';
+import os from 'node:os';
+// ⭐ GH#1003 —— ⛔ `/private/tmp` 是 macOS 專屬：Linux 上那個目錄**建不出來**
+//    ⇒ 這支在 CI 會靜默走到一個不存在的路徑，而錯誤訊息會指向 manifest 讀不到。
+const base=process.argv[2]??path.join(os.tmpdir(),'ggd-lol-models');
 const manifest=JSON.parse(await fs.readFile(path.join(base,'ggd-selected-manifest.json'),'utf8'));
 const io=new NodeIO().registerExtensions(ALL_EXTENSIONS);
 const tolerance={translation:1e-4,rotation:1e-5,scale:1e-4};

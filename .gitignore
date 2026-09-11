@@ -118,9 +118,5 @@ docs/傳說武器道具.xlsx
 #   ⭐ 而一個永遠髒的工作樹會讓「乾淨」這個訊號失去意義（下一個人會學會忽略它）。
 .content-tree.lock
 
-# Model release binaries are hydrated from the Git-pinned S3 release.
-/content/assets/models/community/*.glb
-/content/assets/models/**/versions/*.glb
-
-# Full local JSONL remains available; Git carries its complete gzip control index.
-/materials/hero-model-library/voice-files.jsonl
+# model_intake.py 的暫存驗證腳本（固定名，中斷後會被下一次蓋掉）
+.ggd-gltf-validate.tmp.mjs

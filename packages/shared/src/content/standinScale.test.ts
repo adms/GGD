@@ -227,8 +227,14 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       const ov = OVERRIDES[id]!;
       expect(modelRelativeScaleOf(ov), `${id} 其實就等於地圖 usca`).not.toBe(ov.usca);
       if (!ids.has(id)) continue; // 歸檔的:引擎讀不到,不會走回退,以下不適用
+      // ⭐⭐ 2026-09-11（GH#1211）：**第三種「不適用」—— 畢業**。
+      // `godie-ubal`／`godie-o030` 拿到了自己的 `version.body.*` 模型
+      // ⇒ ⛔ 它們**不再走體素回退**，這一格 override 因此**休眠**（⛔ 不是死條目）。
+      // ⚠️ ⛔ 刻意**不刪**：那些數字是 owner 調過的 lore 值（#77／#150），
+      // ⭐ 而「哪天它退回體素」時我們要的正是這個值。⇒ 休眠，⛔ 不是刪除。
+      // ⭐ 而它仍然通過上面那條「必須與地圖 usca 不同」—— 資料本身照驗。
+      if (!STANDIN_IDS.includes(id)) continue;
       liveExemptions++;
-      expect(STANDIN_IDS.includes(id), `${id} 不會走回退,不該掛在這裡`).toBe(true);
     }
     // 不是「豁免名單整份都歸檔了所以上面每一條都空過」
     expect(liveExemptions).toBeGreaterThan(0);
@@ -267,9 +273,13 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       .filter(([, s]) => s > 2)
       .map(([id]) => id)
       .sort();
-    expect(tall, "多了一位回退時比 3.6u 還高的方塊人 —— 是地圖真的這樣寫嗎?").toEqual(
-      Object.keys(DELIBERATE_GIANTS).sort(),
-    );
+    // ⭐⭐ 2026-09-11（GH#1211）：`godie-o030` **畢業了**（拿到 `version.body.def15fb0…`）
+    // ⇒ 它不再走體素回退 ⇒ ⛔ 它不在 `STANDIN_IDS` 裡 ⇒ `tall` 今天是**空的**。
+    // ⭐ 所以比對的是「巨人名單裡**還會走回退**的那些」，⛔ 不是整份 `DELIBERATE_GIANTS`
+    // —— ⭐ 那份名單**留著**（它記的是「地圖真的把它寫成巨人」這個事實，
+    //    ⛔ 而畢業並不會讓那個事實變假；哪天它退回體素，這一條會自己醒過來）。
+    const giantsOnVoxel = Object.keys(DELIBERATE_GIANTS).filter((id) => STANDIN_IDS.includes(id)).sort();
+    expect(tall, "多了一位回退時比 3.6u 還高的方塊人 —— 是地圖真的這樣寫嗎?").toEqual(giantsOnVoxel);
     for (const [id, why] of Object.entries(DELIBERATE_GIANTS)) {
       expect(why.length).toBeGreaterThan(20);
       // 而且真的是照抄地圖,不是誰手滑打大的
