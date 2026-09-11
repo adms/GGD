@@ -189,6 +189,13 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
 };
 
 const EXEMPT: Record<string, string> = {
+  "secrets:check":
+    "🔐 public repo 的憑證掃描（owner 2026-09-11：「以後可以定期呼叫這個script檢查就好」)—— " +
+    "它驗的是**一份工作樹／一段歷史與一張規則表的關係**,⛔ 沒有任何檔案是它寫的," +
+    "「重生成」對它不成立。⚠️ 也刻意**不**進 `skills:check`:那一支是**技能改動的新鮮度**閘," +
+    "而一把金鑰跟技能改不改動無關 —— 混進去會讓每一次 `skills:sync` 都多背一次全樹掃描。" +
+    "⭐ 反駁法：哪天技能內容開始夾帶憑證（例如外部素材 API key 寫進 ability JSON)," +
+    "這一列就要刪掉並把 `secrets:check` 接進 `skills:check`。",
   // ⭐ 2026-09-06 GH#990 —— vfx-script 的子模組正規化器
   "vfxsub:check":
     "⭐ **不是新鮮度閘、沒有產物**：`tools/vfx-subtypes/callify.mjs --check` **不寫任何檔（0 個寫入呼叫）**，" +

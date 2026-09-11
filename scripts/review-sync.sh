@@ -21,12 +21,13 @@
 # 用法：
 #   bash scripts/review-sync.sh              # 拉線上結果回來（預設）
 #   bash scripts/review-sync.sh --check      # 只比對：線上有幾筆、本機有幾筆、差在哪
-#   bash scripts/review-sync.sh --host user@ip --remote-path /home/can/GGD
+#   bash scripts/review-sync.sh --host user@ip --remote-path /path/to/GGD
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-HOST="${GGD_REVIEW_HOST:-can@34.81.104.163}"
-RPATH="${GGD_REVIEW_REMOTE:-/home/can/GGD}"
+. "$(dirname "$0")/_hosts.sh"
+HOST="$(ggd_host GGD_REVIEW_HOST '批核結果的來源主機')" || exit 1
+RPATH="${GGD_REVIEW_REMOTE:?⛔ 請設 GGD_REVIEW_REMOTE（遠端 repo 路徑）}"
 REL="docs/_review/verdicts/live.json"           # 本機：repo 裡的**存檔**（git 追蹤）
 # ⭐ 線上那一份住 `data/`（gitignored · bind-mount），⛔ 不在 repo 的工作樹裡 ——
 #   否則容器每寫一次，host 就多一筆未提交改動，而 host-deploy 是 `git merge --ff-only`。

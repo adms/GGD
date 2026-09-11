@@ -2287,9 +2287,9 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
 
 > ⛔⛔ **先讀這一格再往下讀。**
 >
-> | 要部署到玩家 | ⭐ `bash scripts/mini-deploy.sh deploy` —— **Mac mini M4**（`192.168.0.133`），⭐ 玩家連到的就是這台 |
+> | 要部署到玩家 | ⭐ `bash scripts/mini-deploy.sh deploy` —— **Mac mini M4**（`$GGD_MINI_HOST`），⭐ 玩家連到的就是這台 |
 > |---|---|
-> | 要操作回滾機 | `scripts/host-deploy.sh` —— GCP `34.81.104.163`，**觀察期到 2026-09-05** |
+> | 要操作回滾機 | `scripts/host-deploy.sh` —— GCP `$GGD_DEPLOY_SSH`，**觀察期到 2026-09-05** |
 >
 > ⚠️ ⭐ 底下**大部分歷史事故註記提到的是 `host-deploy.sh`**（那一支服務了很久）——
 > ⛔ 那些不是「部署指令」，是**事故紀錄**。完整的部署指令在本節的「⭐ 部署（唯一入口）」。
@@ -2445,20 +2445,25 @@ deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就�
 
 | | 機器 | 角色 | 指令 |
 |---|---|---|---|
-| ⭐ **正式站** | `192.168.0.133`（LAN）· 對外 `122.116.95.244` HiNet | **玩家連到的就是這台** | ⭐ `scripts/mini-deploy.sh` |
-| 舊 GCP | `34.81.104.163` | **回滾機**（觀察期到 **2026-09-05**） | `scripts/host-deploy.sh` |
+| ⭐ **正式站** | `$GGD_MINI_HOST`（LAN）· 對外 HiNet | **玩家連到的就是這台** | ⭐ `scripts/mini-deploy.sh` |
+| 舊 GCP | `$GGD_DEPLOY_SSH` | **回滾機**（觀察期到 **2026-09-05**） | `scripts/host-deploy.sh` |
+
+⚠️⚠️ ⭐ **實際位址⛔不寫在這份文件裡** —— `github.com/adms/GGD` 是 **public** 的,
+一個寫死的 `user@ip` 等於公開 ssh 憑證的一半。它們住 `scripts/hosts.local.sh`（⛔ 不進 git,
+`cp scripts/hosts.local.sh.example` 再填）,而每一支部署腳本都 `source scripts/_hosts.sh` 讀它。
+⛔ 沒設就**乾淨地死並說要做什麼**,⛔ 不是靜默退回一個寫死的預設。
+⚠️ 環境變數仍然優先 ⇒ 一次性覆寫與 rollback 照舊。
 
 ### ⭐ 部署（唯一入口）
 
 ```bash
 GGD_PUBLIC_HOST=ggd.adms.ai GGD_SITE_HOSTS="ggd.adms.ai test.adms.ai" \
-GGD_MINI_USER=genieacceler GGD_MINI_HOST=192.168.0.133 \
 bash scripts/mini-deploy.sh deploy
 ```
 
 ⚠️ ⭐ **mini 會換網路**（owner 逐字：「這台 mac mini **有時候**會放在同一個區網 (maybe 192.168.0.x)」）
-⇒ ⛔ 連不上先 `nc -z 192.168.0.133 22`，⛔ 不要假設那個 IP 永遠對。
-金鑰 `~/.ssh/ggd_mini`（ed25519，密碼短語在鑰匙圈）。
+⇒ ⛔ 連不上先 `nc -z "$GGD_MINI_HOST" 22`，⛔ 不要假設那個位址永遠對。
+金鑰：ed25519，路徑與密碼短語在鑰匙圈／`scripts/hosts.local.sh`（⛔ 不在這份文件裡）。
 
 ⭐ 這支腳本自己驗六段，第 5 段逐字是「**前門（caddy）—— ⛔ edge 通不代表玩家連得到**」
 （`https://ggd.adms.ai/ → HTTP 200`）⇒ ⭐ 它問的是**關係**，⛔ 不是名詞。
@@ -2489,7 +2494,7 @@ bash scripts/mini-deploy.sh deploy
 
 ```bash
 # ⚠️ 這是**回滾**用的,⛔ 不是正式部署
-ssh -A can@34.81.104.163 'cd /home/can/GGD && bash scripts/host-deploy.sh'
+ssh -A "$GGD_DEPLOY_SSH" "cd \"\${GGD_DEPLOY_REMOTE:-\$HOME/GGD}\" && bash scripts/host-deploy.sh"
 ```
 
 只改 `content/` 的話加 `--content-only`（`content/` 是 live bind-mount，

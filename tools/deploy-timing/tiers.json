@@ -114,8 +114,8 @@
     "   任何一邊改了另一邊沒改就會紅(同 ENTITY_FLAG 那條守衛的形狀)。"
   ],
   "deploy": {
-    "sshTarget": "can@34.81.104.163",
-    "remoteDir": "/home/can/GGD",
+    "sshTarget": "$GGD_DEPLOY_SSH",
+    "remoteDir": "$GGD_DEPLOY_REMOTE",
     "targetEnv": "GGD_DEPLOY_SSH"
   },
 

@@ -1,0 +1,10 @@
+# 我們自己主機的位址 —— ⭐ 複製成 `hosts.local.tsv`（⛔ 它不進 git）再填。
+# 欄位: id <TAB> 值 <TAB> 這台是什麼
+#
+# ⚠️ 為什麼是本機檔：`github.com/adms/GGD` 是 **public** 的。
+#    把 IP 寫進 rules.tsv 去偵測它,等於**為了偵測洩漏而再洩漏一次**。
+# ⚠️ 沒有這個檔時,`--infra` 仍然會跑**通用**規則（ssh 帳號@主機 · 私鑰檔名),
+#    ⛔ 但主機那一族會**明說自己沒在驗** —— 一個靜默跳過的閘等於沒有閘。
+prod-public	<正式站對外 IP>	正式站對外位址
+rollback-public	<回滾機對外 IP>	回滾機對外位址
+prod-lan	<正式站 LAN IP>	正式站內網位址
