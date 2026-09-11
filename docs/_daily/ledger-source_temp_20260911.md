@@ -141,3 +141,19 @@ Takuro@iPhone6sProMax GGD % bash scripts/enable-git-hooks.sh
 bash: scripts/enable-git-hooks.sh: No such file or directory
 %                                                  
 Takuro@iPhone6sProMax GGD %
+
+## 19:53
+
+我要關機 先暫停一下
+
+## 19:56
+
+我的目標是 153名全部上架
+
+## 22:51
+
+回來了
+
+## 23:26
+
+上架檢核 模型 每個音效 等都應該分開選項接受或拒絕 也有全部接受 全部拒絕 像你之前做過的那樣
