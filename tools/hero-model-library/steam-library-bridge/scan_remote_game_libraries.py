@@ -16,9 +16,11 @@ from pathlib import Path
 
 SCHEMA = "ggd-remote-game-library-index@1"
 PRIORITY = re.compile(
-    r"jump\s*force|jump.*大亂鬥|king\s*of\s*fighters|\bkof|"
+    r"jump\s*force|j-?stars(?:\s+victory)?|jump.*大亂鬥|king[\s_-]*of[\s_-]*fighters|\bkof|maximum\s*impact|"
     r"infinity\s*strash|無限神速斬|fate.?unlimited.?codes?|"
-    r"super\s*smash|smash\s*bros|任天堂.*大亂鬥",
+    r"super\s*smash|smash\s*bros|任天堂.*大亂鬥|"
+    r"magical\s*battle\s*arena|魔法少女武鬥祭|300\s*(?:heroes|英雄)|"
+    r"palworld|palserver|幻獸帕魯",
     re.I,
 )
 FIELD = re.compile(r'^\s*"([^"]+)"\s+"([^"]*)"\s*$')

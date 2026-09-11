@@ -40,6 +40,8 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 產生的 ZIP 只含 Steam 目錄、appmanifest、遊戲目錄、ROM／封裝候選與掃描收據，不讀 ROM／PAK 內容。交付 ZIP 後用 `build_windows_game_inventory.py` 正規化；Git 的 `materials/hero-model-library/source-inventories/windows-game-library.json` 是共編查詢入口，原始 CSV 與 ZIP 留在本機素材庫及待辦 S3 `legacy/` 備份。
 
+目前索引內的 `sourceCoverage` 是實際掃描範圍，不以使用者口述或掛載名稱補數。2026-09-12 第一份收據只涵蓋 `F:\SteamLibrary\steamapps\common` 與 `E:\Game\單機遊戲`；Palworld 本體與 Dedicated Server 已分開建檔，但其他三顆 Steam 硬碟仍要由下方第二階段自動發現掃描補齊。
+
 第一次清單只證明遊戲／ROM 入口存在。要徹查每個遊戲使用哪種素材容器，再執行第二階段的唯讀 metadata 掃描：
 
 ```powershell

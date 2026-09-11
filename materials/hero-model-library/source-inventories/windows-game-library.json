@@ -132,6 +132,16 @@
       "deployed"
     ]
   },
+  "sourceCoverage": {
+    "observedSteamRoots": [
+      "F:\\SteamLibrary\\steamapps\\common"
+    ],
+    "observedGameRoots": [
+      "E:\\Game\\單機遊戲"
+    ],
+    "coverageStatus": "receipt-roots-only",
+    "note": "Only roots named by the source scan receipt are proven enumerated. Other disks or shares require a scan receipt of their own."
+  },
   "summary": {
     "steamInstallCount": 312,
     "steamManifestCount": 311,
@@ -142,7 +152,7 @@
     "directoryCollectionCount": 33,
     "normalizedRomCandidateCount": 847,
     "excludedFalsePositiveCount": 2,
-    "priorityRecordCount": 19,
+    "priorityRecordCount": 30,
     "catalogRecordCount": 1215,
     "platformCounts": {
       "Arcade": 52,
@@ -175,15 +185,33 @@
     "jump-force": [
       "steam:816020"
     ],
+    "jump-crossover": [
+      "steam:816020",
+      "windows-rom-scan:0663",
+      "windows-rom-scan:0664"
+    ],
     "kof": [
       "steam:222440",
       "steam:571260",
       "windows-rom-scan:0434",
       "windows-rom-scan:0538",
       "windows-rom-scan:0539",
-      "windows-rom-scan:0540"
+      "windows-rom-scan:0540",
+      "windows-rom-scan:0634"
+    ],
+    "kof-3d": [
+      "steam:571260"
     ],
     "fate-unlimited-codes": [
+      "windows-rom-scan:0607",
+      "windows-rom-scan:0608"
+    ],
+    "fate-series": [
+      "steam:1902690",
+      "windows-rom-scan:0008",
+      "windows-rom-scan:0604",
+      "windows-rom-scan:0605",
+      "windows-rom-scan:0606",
       "windows-rom-scan:0607",
       "windows-rom-scan:0608"
     ],
@@ -196,6 +224,12 @@
       "windows-rom-scan:0588",
       "windows-rom-scan:0589"
     ],
+    "magical-battle-arena": [
+      "windows-rom-scan:0009",
+      "windows-rom-scan:0010",
+      "windows-game-directory:magical-battle-arena"
+    ],
+    "300-heroes": [],
     "palworld": [
       "steam:2394010",
       "steam:1623730"
@@ -216,7 +250,8 @@
       "rawManifestTitle": null,
       "lastWriteTimeUtc": "2026-09-11T06:11:02.8967799Z",
       "priorityTags": [
-        "jump-force"
+        "jump-force",
+        "jump-crossover"
       ],
       "inventoryStatus": "inventory-only",
       "extractionStatus": "not-started",
@@ -258,7 +293,8 @@
       "rawManifestTitle": null,
       "lastWriteTimeUtc": "2026-09-11T06:09:24.2032949Z",
       "priorityTags": [
-        "kof"
+        "kof",
+        "kof-3d"
       ],
       "inventoryStatus": "inventory-only",
       "extractionStatus": "not-started",
@@ -1684,7 +1720,9 @@
       "manifestMatched": true,
       "rawManifestTitle": null,
       "lastWriteTimeUtc": "2026-09-11T06:09:19.6160116Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "fate-series"
+      ],
       "inventoryStatus": "inventory-only",
       "extractionStatus": "not-started",
       "conversionStatus": "not-started",
@@ -6330,7 +6368,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\fate\\fatalfake.rar",
       "relativePath": "fate\\fatalfake.rar",
       "lastWriteTimeUtc": "2006-04-22T08:17:50.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "fate-series"
+      ],
       "classification": "archive-unverified",
       "classificationNote": "Archive outside emulator library; may be a game, tool, or asset pack",
       "contentHash": null,
@@ -6352,7 +6392,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\Magical Battle Arena\\Magical Battle Arena SC.zip",
       "relativePath": "Magical Battle Arena\\Magical Battle Arena SC.zip",
       "lastWriteTimeUtc": "2022-12-28T08:07:12.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "magical-battle-arena"
+      ],
       "classification": "archive-unverified",
       "classificationNote": "Archive outside emulator library; may be a game, tool, or asset pack",
       "contentHash": null,
@@ -6374,7 +6416,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\Magical Battle Arena\\Magical Battle Arena.zip",
       "relativePath": "Magical Battle Arena\\Magical Battle Arena.zip",
       "lastWriteTimeUtc": "2022-12-28T08:07:06.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "magical-battle-arena"
+      ],
       "classification": "archive-unverified",
       "classificationNote": "Archive outside emulator library; may be a game, tool, or asset pack",
       "contentHash": null,
@@ -19778,7 +19822,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Extra CCC (Japan) (v1.01).zip",
       "relativePath": "模擬器\\PSP\\ROM\\Fate-Extra CCC (Japan) (v1.01).zip",
       "lastWriteTimeUtc": "2022-12-29T08:08:16.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "fate-series"
+      ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
       "contentHash": null,
@@ -19802,7 +19848,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Tiger Colosseum (Japan) (v1.01).7z",
       "relativePath": "模擬器\\PSP\\ROM\\Fate-Tiger Colosseum (Japan) (v1.01).7z",
       "lastWriteTimeUtc": "2023-01-01T08:29:18.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "fate-series"
+      ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
       "contentHash": null,
@@ -19826,7 +19874,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Tiger Colosseum Upper (Japan) (v1.01).7z",
       "relativePath": "模擬器\\PSP\\ROM\\Fate-Tiger Colosseum Upper (Japan) (v1.01).7z",
       "lastWriteTimeUtc": "2023-01-01T08:44:04.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "fate-series"
+      ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
       "contentHash": null,
@@ -19851,7 +19901,8 @@
       "relativePath": "模擬器\\PSP\\ROM\\Fate-Unlimited Codes Portable (Japan).zip",
       "lastWriteTimeUtc": "2026-09-11T15:17:29.8091213Z",
       "priorityTags": [
-        "fate-unlimited-codes"
+        "fate-unlimited-codes",
+        "fate-series"
       ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
@@ -19877,7 +19928,8 @@
       "relativePath": "模擬器\\PSP\\ROM\\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
       "lastWriteTimeUtc": "2013-07-09T05:40:18.0000000Z",
       "priorityTags": [
-        "fate-unlimited-codes"
+        "fate-unlimited-codes",
+        "fate-series"
       ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
@@ -20502,7 +20554,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan.iso",
       "relativePath": "模擬器\\PSP\\ROM\\The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan.iso",
       "lastWriteTimeUtc": "2013-07-07T09:32:44.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "kof"
+      ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
       "contentHash": null,
@@ -21198,7 +21252,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSV\\J-STARS Victory VS (PCSE00595) (NTSC).7z",
       "relativePath": "模擬器\\PSV\\J-STARS Victory VS (PCSE00595) (NTSC).7z",
       "lastWriteTimeUtc": "2024-10-19T19:17:09.2900022Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "jump-crossover"
+      ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
       "contentHash": null,
@@ -21223,7 +21279,9 @@
       "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSV\\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk",
       "relativePath": "模擬器\\PSV\\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk",
       "lastWriteTimeUtc": "2022-12-29T07:20:56.0000000Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "jump-crossover"
+      ],
       "classification": "rom-high-confidence",
       "classificationNote": null,
       "contentHash": null,
@@ -25814,7 +25872,9 @@
       "relativePath": "Magical Battle Arena",
       "collectionKind": "game-root-child",
       "lastWriteTimeUtc": "2023-03-11T19:48:13.1475262Z",
-      "priorityTags": [],
+      "priorityTags": [
+        "magical-battle-arena"
+      ],
       "inventoryStatus": "directory-collection-only",
       "contentInspected": false
     },

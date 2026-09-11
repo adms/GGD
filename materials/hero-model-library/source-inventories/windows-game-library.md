@@ -13,7 +13,16 @@
 - 原始目錄列：**11866**；保留為入口集合：**33**
 - 正規化候選：**847**
 - 排除明確假陽性：**2**
-- 優先來源命中記錄：**19**
+- 優先來源命中記錄：**30**
+- 實際列舉：**287548** entries；**29574.05 entries/s**
+- 已證明掃描的 Steam root：**1**
+
+> 掃描範圍以收據列出的 root 為準；未列入收據的其他硬碟或分享仍須補掃，不能由本表推定已涵蓋。
+
+### 已掃描根目錄
+
+- Steam：`F:\SteamLibrary\steamapps\common`
+- 遊戲／模擬器：`E:\Game\單機遊戲`
 
 ## 優先來源
 
@@ -21,14 +30,26 @@
 |---|---|---|---|---|---|
 | infinity-strash | steam-install | Infinity Strash: DRAGON QUEST The Adventure of Dai | Windows (Steam) | 12283352 | `F:\SteamLibrary\steamapps\common\Strash` |
 | jump-force | steam-install | JUMP FORCE | Windows (Steam) | 8523149 | `F:\SteamLibrary\steamapps\common\JUMP FORCE` |
+| jump-crossover | steam-install | JUMP FORCE | Windows (Steam) | 8523149 | `F:\SteamLibrary\steamapps\common\JUMP FORCE` |
+| jump-crossover | rom-or-game-archive | J-STARS Victory VS (PCSE00595) (NTSC) | Sony PS Vita | 1755203440 | `E:\Game\單機遊戲\模擬器\PSV\J-STARS Victory VS (PCSE00595) (NTSC).7z` |
+| jump-crossover | rom-or-game-archive | J-STARS Victory VS+ [PCSE00595] (v01.00)  | Sony PS Vita | 1523427255 | `E:\Game\單機遊戲\模擬器\PSV\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk` |
 | kof | steam-install | THE KING OF FIGHTERS 2002 UNLIMITED MATCH | Windows (Steam) | 8463197 | `F:\SteamLibrary\steamapps\common\The King of Fighters 2002 Unlimited Match` |
 | kof | steam-install | THE KING OF FIGHTERS XIV STEAM EDITION | Windows (Steam) | 3452034 | `F:\SteamLibrary\steamapps\common\THE KING OF FIGHTERS XIV` |
 | kof | rom-or-game-archive | King of Fighters R-2 Version 2 - Pocket Fighting Series (World) (En,Ja) (Demo) | Neo Geo Pocket Color | 922335 | `E:\Game\單機遊戲\模擬器\Geo Pocket Color\King of Fighters R-2 Version 2 - Pocket Fighting Series (World) (En,Ja) (Demo).zip` |
 | kof | rom-or-game-archive | kof10th | Neo Geo/Arcade | 43049878 | `E:\Game\單機遊戲\模擬器\NeoRAGEx_5.4\Roms\kof10th.zip` |
 | kof | rom-or-game-archive | kof10thep | Neo Geo/Arcade | 42326084 | `E:\Game\單機遊戲\模擬器\NeoRAGEx_5.4\Roms\kof10thep.zip` |
 | kof | rom-or-game-archive | kof10thu | Neo Geo/Arcade | 43158889 | `E:\Game\單機遊戲\模擬器\NeoRAGEx_5.4\Roms\kof10thu.zip` |
+| kof | rom-or-game-archive | The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan | Sony PSP | 667516928 | `E:\Game\單機遊戲\模擬器\PSP\ROM\The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan.iso` |
+| kof-3d | steam-install | THE KING OF FIGHTERS XIV STEAM EDITION | Windows (Steam) | 3452034 | `F:\SteamLibrary\steamapps\common\THE KING OF FIGHTERS XIV` |
 | fate-unlimited-codes | rom-or-game-archive | Fate-Unlimited Codes Portable (Japan) | Sony PSP | 509977835 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Unlimited Codes Portable (Japan).zip` |
 | fate-unlimited-codes | rom-or-game-archive | Fate_Unlimited_Codes_USA_PSP-EMiNENT | Sony PSP | 738394112 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso` |
+| fate-series | steam-install | Fate/Samurai Remnant | Windows (Steam) | 15597839 | `F:\SteamLibrary\steamapps\common\FateSamuraiRemnant` |
+| fate-series | rom-or-game-archive | fatalfake | 待確認 | 71741851 | `E:\Game\單機遊戲\fate\fatalfake.rar` |
+| fate-series | rom-or-game-archive | Fate-Extra CCC (Japan) (v1.01) | Sony PSP | 1104813403 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Extra CCC (Japan) (v1.01).zip` |
+| fate-series | rom-or-game-archive | Fate-Tiger Colosseum (Japan) (v1.01) | Sony PSP | 393038220 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Tiger Colosseum (Japan) (v1.01).7z` |
+| fate-series | rom-or-game-archive | Fate-Tiger Colosseum Upper (Japan) (v1.01) | Sony PSP | 771016134 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Tiger Colosseum Upper (Japan) (v1.01).7z` |
+| fate-series | rom-or-game-archive | Fate-Unlimited Codes Portable (Japan) | Sony PSP | 509977835 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Unlimited Codes Portable (Japan).zip` |
+| fate-series | rom-or-game-archive | Fate_Unlimited_Codes_USA_PSP-EMiNENT | Sony PSP | 738394112 | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso` |
 | smash-bros | rom-or-game-archive | N64 全明星大亂鬥 | Nintendo 64 | 41897954 | `E:\Game\單機遊戲\模擬器\N64\N64 全明星大亂鬥.7z` |
 | smash-bros | rom-or-game-archive | Super Smash Bros. (Australia) | Nintendo 64 | 12543026 | `E:\Game\單機遊戲\模擬器\N64\N64 全明星大亂鬥\Super Smash Bros. (Australia).zip` |
 | smash-bros | rom-or-game-archive | Super Smash Bros. (Europe) (En,Fr,De) | Nintendo 64 | 16058110 | `E:\Game\單機遊戲\模擬器\N64\N64 全明星大亂鬥\Super Smash Bros. (Europe) (En,Fr,De).zip` |
@@ -36,6 +57,9 @@
 | smash-bros | rom-or-game-archive | Super Smash Bros Ultimate[01006A800016E000][US][v0] | Nintendo Switch | 14638743603 | `E:\Game\單機遊戲\模擬器\NSandNS2\Super Smash Bros Ultimate[01006A800016E000][US][v0].nsp` |
 | smash-bros | rom-or-game-archive | Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200 | Nintendo Switch | 38366835 | `E:\Game\單機遊戲\模擬器\NSandNS2\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200.zip` |
 | smash-bros | rom-or-game-archive | Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500 | Nintendo Switch | 38366835 | `E:\Game\單機遊戲\模擬器\NSandNS2\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500.zip` |
+| magical-battle-arena | rom-or-game-archive | Magical Battle Arena SC | 待確認 | 228997358 | `E:\Game\單機遊戲\Magical Battle Arena\Magical Battle Arena SC.zip` |
+| magical-battle-arena | rom-or-game-archive | Magical Battle Arena | 待確認 | 272493500 | `E:\Game\單機遊戲\Magical Battle Arena\Magical Battle Arena.zip` |
+| magical-battle-arena | windows-game-directory | Magical Battle Arena | game-root-child |  | `E:\Game\單機遊戲\Magical Battle Arena` |
 | palworld | steam-install | Palworld Dedicated Server | Windows (Steam) | 25080279 | `F:\SteamLibrary\steamapps\common\PalServer` |
 | palworld | steam-install | Palworld | Windows (Steam) | 25094871 | `F:\SteamLibrary\steamapps\common\Palworld` |
 
@@ -75,9 +99,9 @@
 
 | 名稱 | App ID | Build ID | manifest | 優先群組 | 路徑 |
 |---|---|---|---|---|---|
-| JUMP FORCE | 816020 | 8523149 | matched | jump-force | `F:\SteamLibrary\steamapps\common\JUMP FORCE` |
+| JUMP FORCE | 816020 | 8523149 | matched | jump-force, jump-crossover | `F:\SteamLibrary\steamapps\common\JUMP FORCE` |
 | THE KING OF FIGHTERS 2002 UNLIMITED MATCH | 222440 | 8463197 | matched | kof | `F:\SteamLibrary\steamapps\common\The King of Fighters 2002 Unlimited Match` |
-| THE KING OF FIGHTERS XIV STEAM EDITION | 571260 | 3452034 | matched | kof | `F:\SteamLibrary\steamapps\common\THE KING OF FIGHTERS XIV` |
+| THE KING OF FIGHTERS XIV STEAM EDITION | 571260 | 3452034 | matched | kof, kof-3d | `F:\SteamLibrary\steamapps\common\THE KING OF FIGHTERS XIV` |
 | 7 Sexy Sins | 1023740 | 6423310 | matched |  | `F:\SteamLibrary\steamapps\common\7SexySins` |
 | 7th Domain:Tree of Chaos | 3088410 | 18050505 | matched |  | `F:\SteamLibrary\steamapps\common\7th DomainTree of Chaos` |
 | 9 Years of Shadows | 1402120 | 18181340 | matched |  | `F:\SteamLibrary\steamapps\common\9 Years of Shadows` |
@@ -152,7 +176,7 @@
 | FailedAdventure | 1349850 | 7084230 | matched |  | `F:\SteamLibrary\steamapps\common\FailedAdventure` |
 | Fairy Biography4 : Affair | 2387590 | 11536275 | matched |  | `F:\SteamLibrary\steamapps\common\Fairy Biography4  Affair` |
 | Fantasy Match -Make a H match with cute young woman- | 2651500 | 15791782 | matched |  | `F:\SteamLibrary\steamapps\common\FantasyMatch` |
-| Fate/Samurai Remnant | 1902690 | 15597839 | matched |  | `F:\SteamLibrary\steamapps\common\FateSamuraiRemnant` |
+| Fate/Samurai Remnant | 1902690 | 15597839 | matched | fate-series | `F:\SteamLibrary\steamapps\common\FateSamuraiRemnant` |
 | Fetish Locator Week One | 1360980 | 24652676 | matched |  | `F:\SteamLibrary\steamapps\common\Fetish Locator Week One - Extended Edition` |
 | Fight of Animals | 1160330 | 13194598 | matched |  | `F:\SteamLibrary\steamapps\common\Fight of Animals` |
 | Fight of Gods | 612930 | 5367760 | matched |  | `F:\SteamLibrary\steamapps\common\Fight of Gods` |
@@ -427,9 +451,9 @@
 | RPG Maker 2003 20251010 | 待確認 | archive-unverified | 32330725910 |  | `E:\Game\單機遊戲\RPG Maker 2003 20251010.zip` |
 | ultimate_0.1.5.336_release | 待確認 | archive-unverified | 2723654 |  | `E:\Game\單機遊戲\ultimate_0.1.5.336_release.rar` |
 | 英雄砍殺hero-pack-free_version | 待確認 | archive-unverified | 18742 |  | `E:\Game\單機遊戲\英雄砍殺hero-pack-free_version.zip` |
-| fatalfake | 待確認 | archive-unverified | 71741851 |  | `E:\Game\單機遊戲\fate\fatalfake.rar` |
-| Magical Battle Arena SC | 待確認 | archive-unverified | 228997358 |  | `E:\Game\單機遊戲\Magical Battle Arena\Magical Battle Arena SC.zip` |
-| Magical Battle Arena | 待確認 | archive-unverified | 272493500 |  | `E:\Game\單機遊戲\Magical Battle Arena\Magical Battle Arena.zip` |
+| fatalfake | 待確認 | archive-unverified | 71741851 | fate-series | `E:\Game\單機遊戲\fate\fatalfake.rar` |
+| Magical Battle Arena SC | 待確認 | archive-unverified | 228997358 | magical-battle-arena | `E:\Game\單機遊戲\Magical Battle Arena\Magical Battle Arena SC.zip` |
+| Magical Battle Arena | 待確認 | archive-unverified | 272493500 | magical-battle-arena | `E:\Game\單機遊戲\Magical Battle Arena\Magical Battle Arena.zip` |
 | GHW_OpenBOR | 待確認 | archive-unverified | 171712738 |  | `E:\Game\單機遊戲\OpenBOR\GHW_OpenBOR.zip` |
 | OpenBOR_V4.0_7612 | 待確認 | archive-unverified | 1576782 |  | `E:\Game\單機遊戲\OpenBOR\OpenBOR_V4.0_7612.zip` |
 | solv2_~1 | 待確認 | archive-unverified | 1354718 |  | `E:\Game\單機遊戲\OpenBOR\OpenBOR\Data\chars\newchar\solv2_~1.rar` |
@@ -1021,11 +1045,11 @@
 | DJ Max Portable - Black Square (Japan) (v1.01) | Sony PSP | rom-high-confidence | 1441150677 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\DJ Max Portable - Black Square (Japan) (v1.01).7z` |
 | Dungeon Maker - Hunting Ground (USA) | Sony PSP | rom-high-confidence | 49168054 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Dungeon Maker - Hunting Ground (USA).7z` |
 | Entaku no Seito - The Eternal Legend (Japan) | Sony PSP | rom-high-confidence | 370607468 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Entaku no Seito - The Eternal Legend (Japan).7z` |
-| Fate-Extra CCC (Japan) (v1.01) | Sony PSP | rom-high-confidence | 1104813403 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Extra CCC (Japan) (v1.01).zip` |
-| Fate-Tiger Colosseum (Japan) (v1.01) | Sony PSP | rom-high-confidence | 393038220 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Tiger Colosseum (Japan) (v1.01).7z` |
-| Fate-Tiger Colosseum Upper (Japan) (v1.01) | Sony PSP | rom-high-confidence | 771016134 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Tiger Colosseum Upper (Japan) (v1.01).7z` |
-| Fate-Unlimited Codes Portable (Japan) | Sony PSP | rom-high-confidence | 509977835 | fate-unlimited-codes | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Unlimited Codes Portable (Japan).zip` |
-| Fate_Unlimited_Codes_USA_PSP-EMiNENT | Sony PSP | rom-high-confidence | 738394112 | fate-unlimited-codes | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso` |
+| Fate-Extra CCC (Japan) (v1.01) | Sony PSP | rom-high-confidence | 1104813403 | fate-series | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Extra CCC (Japan) (v1.01).zip` |
+| Fate-Tiger Colosseum (Japan) (v1.01) | Sony PSP | rom-high-confidence | 393038220 | fate-series | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Tiger Colosseum (Japan) (v1.01).7z` |
+| Fate-Tiger Colosseum Upper (Japan) (v1.01) | Sony PSP | rom-high-confidence | 771016134 | fate-series | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Tiger Colosseum Upper (Japan) (v1.01).7z` |
+| Fate-Unlimited Codes Portable (Japan) | Sony PSP | rom-high-confidence | 509977835 | fate-unlimited-codes, fate-series | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate-Unlimited Codes Portable (Japan).zip` |
+| Fate_Unlimited_Codes_USA_PSP-EMiNENT | Sony PSP | rom-high-confidence | 738394112 | fate-unlimited-codes, fate-series | `E:\Game\單機遊戲\模擬器\PSP\ROM\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso` |
 | Grand Knights History (Japan) (v1.01) | Sony PSP | rom-high-confidence | 550043831 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Grand Knights History (Japan) (v1.01).7z` |
 | Hatsune_Miku_Project_Diva_2nd_Okaidoku_Ban_JPN_PSP-BAHAMUT | Sony PSP | rom-high-confidence | 1618280448 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Hatsune_Miku_Project_Diva_2nd_Okaidoku_Ban_JPN_PSP-BAHAMUT.iso` |
 | Hayarigami 3 - Keishichou Kaii Jiken File (Japan) (v1.01) | Sony PSP | rom-high-confidence | 208819000 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Hayarigami 3 - Keishichou Kaii Jiken File (Japan) (v1.01).7z` |
@@ -1051,7 +1075,7 @@
 | Taiko_no_Tatsujin_Portable_v2_JPN_PSP-Googlecus | Sony PSP | rom-high-confidence | 430866432 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Taiko_no_Tatsujin_Portable_v2_JPN_PSP-Googlecus.iso` |
 | Tales of VS. (Japan) (v1.02) | Sony PSP | rom-high-confidence | 614379059 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Tales of VS. (Japan) (v1.02).7z` |
 | Tears to Tiara - Kakan no Daichi Portable (Japan) (v1.04) | Sony PSP | rom-high-confidence | 1259338867 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Tears to Tiara - Kakan no Daichi Portable (Japan) (v1.04).7z` |
-| The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan | Sony PSP | rom-high-confidence | 667516928 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan.iso` |
+| The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan | Sony PSP | rom-high-confidence | 667516928 | kof | `E:\Game\單機遊戲\模擬器\PSP\ROM\The_King_of_Fighters_Portable_94_98_Chapter_of_Orochi_JPN_PSP-Caravan.iso` |
 | Tobidase Trouble Hanafuda Douchuuki (Japan) (v1.02) | Sony PSP | rom-high-confidence | 345468495 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\Tobidase Trouble Hanafuda Douchuuki (Japan) (v1.02).7z` |
 | ULJS-00360 | Sony PSP | rom-high-confidence | 329146073 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\ULJS-00360.rar` |
 | World_Heroes_JPN_PSN_PSP-PLAYASiA | Sony PSP | rom-high-confidence | 12887331 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\World_Heroes_JPN_PSN_PSP-PLAYASiA.7z` |
@@ -1080,8 +1104,8 @@
 | b-taikodx.part3 | Sony PSP | rom-high-confidence | 200569079 |  | `E:\Game\單機遊戲\模擬器\PSP\ROM\DLed\Taiko no Tatsujin Portable DX (JPN) PSP\b-taikodx.part3.rar` |
 | Dragons Crown (PCSE00019) (NTSC) | Sony PS Vita | rom-high-confidence | 1041218915 |  | `E:\Game\單機遊戲\模擬器\PSV\Dragons Crown (PCSE00019) (NTSC).7z` |
 | Grand Kingdom (PCSE00879) (NTSC) | Sony PS Vita | rom-high-confidence | 1561525396 |  | `E:\Game\單機遊戲\模擬器\PSV\Grand Kingdom (PCSE00879) (NTSC).7z` |
-| J-STARS Victory VS (PCSE00595) (NTSC) | Sony PS Vita | rom-high-confidence | 1755203440 |  | `E:\Game\單機遊戲\模擬器\PSV\J-STARS Victory VS (PCSE00595) (NTSC).7z` |
-| J-STARS Victory VS+ [PCSE00595] (v01.00)  | Sony PS Vita | rom-high-confidence | 1523427255 |  | `E:\Game\單機遊戲\模擬器\PSV\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk` |
+| J-STARS Victory VS (PCSE00595) (NTSC) | Sony PS Vita | rom-high-confidence | 1755203440 | jump-crossover | `E:\Game\單機遊戲\模擬器\PSV\J-STARS Victory VS (PCSE00595) (NTSC).7z` |
+| J-STARS Victory VS+ [PCSE00595] (v01.00)  | Sony PS Vita | rom-high-confidence | 1523427255 | jump-crossover | `E:\Game\單機遊戲\模擬器\PSV\J-STARS Victory VS+ [PCSE00595] (v01.00) .vpk` |
 | Muramasa Rebirth (PCSE00240) (NTSC) | Sony PS Vita | rom-high-confidence | 478026937 |  | `E:\Game\單機遊戲\模擬器\PSV\Muramasa Rebirth (PCSE00240) (NTSC).7z` |
 | quad_dracrown-20210421-0745 | Sony PS Vita | rom-high-confidence | 36765622 |  | `E:\Game\單機遊戲\模擬器\PSV\quad_dracrown-20210421-0745.7z` |
 | quad_mobile_v05_beta-20240404-2000 | Sony PS Vita | rom-high-confidence | 39221383 |  | `E:\Game\單機遊戲\模擬器\PSV\quad_mobile_v05_beta-20240404-2000.7z` |

@@ -40,6 +40,17 @@ class MountedSteamScanTest(unittest.TestCase):
             self.assertEqual(result['games'][0]['name'], 'THE KING OF FIGHTERS XV')
             self.assertTrue(result['games'][0]['prioritySource'])
 
+    def test_marks_palworld_as_priority_source(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            share = Path(tmp) / 'GGDSteam01'
+            (share / 'common' / 'Palworld').mkdir(parents=True)
+            (share / 'appmanifest_1623730.acf').write_text(
+                '"AppState"\n{\n"appid" "1623730"\n"name" "Palworld"\n'
+                '"installdir" "Palworld"\n"buildid" "25094871"\n}\n'
+            )
+            result = scan([share])
+            self.assertTrue(result['games'][0]['prioritySource'])
+
 
 if __name__ == '__main__':
     unittest.main()

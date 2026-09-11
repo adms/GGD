@@ -9,7 +9,12 @@ from pathlib import Path
 
 
 FIELD = re.compile(r'^\s*"([^"]+)"\s+"([^"]*)"\s*$')
-PRIORITY = re.compile(r'jump\s*force|king\s*of\s*fighters|\bkof\b|infinity\s*strash', re.I)
+PRIORITY = re.compile(
+    r'jump\s*force|j-?stars(?:\s+victory)?|king[\s_-]*of[\s_-]*fighters|\bkof\b|maximum\s*impact|'
+    r'infinity\s*strash|fate.?unlimited.?codes?|super\s*smash|smash\s*bros|'
+    r'magical\s*battle\s*arena|300\s*(?:heroes|英雄)|palworld|palserver|幻獸帕魯',
+    re.I,
+)
 
 
 def parse_manifest(path: Path) -> dict:

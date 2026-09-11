@@ -16,9 +16,14 @@ from pathlib import Path
 PRIORITY_PATTERNS = (
     ("infinity-strash", re.compile(r"infinity\s*strash|\\strash(?:\\|$)|無限神速斬", re.I)),
     ("jump-force", re.compile(r"jump\s*force", re.I)),
-    ("kof", re.compile(r"king\s*of\s*fighters|(?:^|[^a-z])kof", re.I)),
+    ("jump-crossover", re.compile(r"jump\s*force|j-?stars(?:\s+victory)?", re.I)),
+    ("kof", re.compile(r"king[\s_-]*of[\s_-]*fighters|(?:^|[^a-z])kof", re.I)),
+    ("kof-3d", re.compile(r"king[\s_-]*of[\s_-]*fighters.{0,20}(?:xiv|xv|maximum\s*impact)|kof(?:xiv|xv)|maximum\s*impact", re.I)),
     ("fate-unlimited-codes", re.compile(r"fate.{0,24}unlimited|unlimited.{0,12}codes", re.I)),
+    ("fate-series", re.compile(r"(?:^|[\\ /])fate(?:[/\\_-]|\s*/)|fatal.?fake|tiger.?colosseum", re.I)),
     ("smash-bros", re.compile(r"super.?smash|全明星大亂鬥|任天堂.*大亂鬥", re.I)),
+    ("magical-battle-arena", re.compile(r"magical\s*battle\s*arena|魔法少女武鬥祭", re.I)),
+    ("300-heroes", re.compile(r"300\s*(?:heroes|英雄)", re.I)),
     ("palworld", re.compile(r"palworld|\\Palworld(?:\\|$)|\\PalServer(?:\\|$)|幻獸帕魯", re.I)),
 )
 
@@ -296,7 +301,7 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
         }
         (excluded if classification == "excluded-non-rom" else rom_candidates).append(normalized)
 
-    all_rows = steam_games + orphan_manifests + rom_candidates
+    all_rows = steam_games + orphan_manifests + rom_candidates + directory_collections
     priority_views = {
         tag: [row["id"] for row in all_rows if tag in row["priorityTags"]]
         for tag, _ in PRIORITY_PATTERNS
@@ -307,6 +312,13 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
     for path in sorted(scan_dir.iterdir()):
         if path.is_file():
             source_files.append({"path": str(path), "bytes": path.stat().st_size, "sha256": sha256(path)})
+
+    observed_steam_roots = list(receipt.get("steamRoots") or [])
+    if receipt.get("steamRoot") and receipt["steamRoot"] not in observed_steam_roots:
+        observed_steam_roots.append(receipt["steamRoot"])
+    observed_game_roots = list(receipt.get("gameRoots") or [])
+    if receipt.get("gameRoot") and receipt["gameRoot"] not in observed_game_roots:
+        observed_game_roots.append(receipt["gameRoot"])
 
     return {
         "schema": "ggd-windows-game-source-inventory@1",
@@ -322,6 +334,12 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
         "statusSemantics": {
             "current": "inventory-only",
             "doesNotMean": ["downloaded-to-mac", "extracted", "converted", "accepted", "registered", "switchable", "deployed"],
+        },
+        "sourceCoverage": {
+            "observedSteamRoots": observed_steam_roots,
+            "observedGameRoots": observed_game_roots,
+            "coverageStatus": "receipt-roots-only",
+            "note": "Only roots named by the source scan receipt are proven enumerated. Other disks or shares require a scan receipt of their own.",
         },
         "summary": {
             "steamInstallCount": len(steam_games),
@@ -349,6 +367,7 @@ def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | N
 
 def markdown(index: dict) -> str:
     summary = index["summary"]
+    receipt = index.get("sourceScan", {}).get("receipt", {})
     lines = [
         "# Windows 遊戲來源盤點索引",
         "",
@@ -366,19 +385,37 @@ def markdown(index: dict) -> str:
         f"- 正規化候選：**{summary['normalizedRomCandidateCount']}**",
         f"- 排除明確假陽性：**{summary['excludedFalsePositiveCount']}**",
         f"- 優先來源命中記錄：**{summary['priorityRecordCount']}**",
+        f"- 實際列舉：**{receipt.get('gameEntriesVisited', 0)}** entries；**{receipt.get('gameEntriesPerSecond', 0)} entries/s**",
+        f"- 已證明掃描的 Steam root：**{len(index.get('sourceCoverage', {}).get('observedSteamRoots', []))}**",
+        "",
+        "> 掃描範圍以收據列出的 root 為準；未列入收據的其他硬碟或分享仍須補掃，不能由本表推定已涵蓋。",
+        "",
+        "### 已掃描根目錄",
+        "",
+    ]
+    for root in index.get("sourceCoverage", {}).get("observedSteamRoots", []):
+        lines.append(f"- Steam：`{root}`")
+    for root in index.get("sourceCoverage", {}).get("observedGameRoots", []):
+        lines.append(f"- 遊戲／模擬器：`{root}`")
+    lines.extend([
         "",
         "## 優先來源",
         "",
         "| 群組 | 類型 | 名稱 | 平台 | 版本／大小 | Windows 路徑 |",
         "|---|---|---|---|---|---|",
-    ]
-    by_id = {row["id"]: row for row in index["steamGames"] + index["orphanSteamManifests"] + index["romCandidates"]}
+    ])
+    by_id = {
+        row["id"]: row
+        for row in index["steamGames"] + index["orphanSteamManifests"]
+        + index["romCandidates"] + index.get("directoryCollections", [])
+    }
     for tag, ids in index["priorityViews"].items():
         for row_id in ids:
             row = by_id[row_id]
             version = row.get("buildId") or row.get("sizeBytes") or ""
             source_path = row.get("sourcePath") or row.get("manifestPath") or ""
-            lines.append(f"| {tag} | {row['sourceKind']} | {row['title']} | {row['platform']} | {version} | `{source_path}` |")
+            platform = row.get("platform") or row.get("collectionKind") or ""
+            lines.append(f"| {tag} | {row['sourceKind']} | {row['title']} | {platform} | {version} | `{source_path}` |")
     palworld_rows = [row for row in index["steamGames"] if "palworld" in row["priorityTags"]]
     container_inventory = index.get("containerInventory")
     if container_inventory:

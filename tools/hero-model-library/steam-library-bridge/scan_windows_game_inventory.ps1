@@ -21,7 +21,7 @@ if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
 $steamAppsRoot = Split-Path -Parent $SteamRoot
-$priorityPattern = '(?i)jump\s*force|king\s*of\s*fighters|\bkof|infinity\s*strash|無限神速斬|fate.?unlimited.?codes?|super\s*smash|smash\s*bros|全明星大亂鬥|palworld|幻獸帕魯'
+$priorityPattern = '(?i)jump\s*force|j-?stars(?:\s+victory)?|king[\s_-]*of[\s_-]*fighters|\bkof|maximum\s*impact|infinity\s*strash|無限神速斬|fate.?unlimited.?codes?|super\s*smash|smash\s*bros|全明星大亂鬥|magical\s*battle\s*arena|魔法少女武鬥祭|300\s*(?:heroes|英雄)|palworld|palserver|幻獸帕魯'
 $romExtensions = @(
     '.iso', '.cso', '.pbp', '.xci', '.nsp', '.nsz', '.xcz',
     '.wux', '.wud', '.rpx', '.rvz', '.wbfs', '.wia', '.gcz',

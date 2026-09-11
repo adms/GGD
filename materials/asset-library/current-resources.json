@@ -5519,7 +5519,7 @@
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
   "windowsGameSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json",
-    "sha256": "2691e82ec8522999b7af3e598b406a2f08a4aa073334fd2bba8d2befe81ac2d1",
+    "sha256": "7841c03d12cb233be4a12e4767eba1510a19bdaafef5c4c3ff036e30b65cf8a1",
     "status": "inventory-only",
     "summary": {
       "steamInstallCount": 312,
@@ -5531,7 +5531,7 @@
       "directoryCollectionCount": 33,
       "normalizedRomCandidateCount": 847,
       "excludedFalsePositiveCount": 2,
-      "priorityRecordCount": 19,
+      "priorityRecordCount": 30,
       "catalogRecordCount": 1215,
       "platformCounts": {
         "Arcade": 52,
