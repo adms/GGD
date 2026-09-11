@@ -61,6 +61,7 @@ import { registerAll } from "../../content/registries";
 import { Champions, Items } from "./registry";
 import { describeRequirement, itemRequirementLabels, requirementScale } from "./requirement";
 import type { PrimaryAttr } from "../stats/attributes";
+import { Stat } from "../stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 
 // ---------------------------------------------------------------------------
@@ -327,27 +328,50 @@ describe("坦克衝刺 · 衝鋒重脛甲", () => {
 // ④ 法師保命 —— 賢者的護身符("reduced" 模式,唯一走這條分支的出貨內容)
 // ===========================================================================
 describe("法師保命 · 賢者的護身符(不符合 = 效果打折,不是完全不觸發)", () => {
-  function shieldGained(championId: ChampionId): number {
+  /** 護盾值，⭐ 連同**那一位英雄自己的 ap** —— 見下面為什麼需要它。 */
+  function shieldGained(championId: ChampionId): { shield: number; ap: number } {
     const s = stage(championId, { foes: 1 });
     expect(grantItemFree(s.world, s.hero, AMULET)).toBeGreaterThanOrEqual(0);
     fireHooks(s.world, s.hero, "onDamageTaken", s.foes[0]!);
     s.world.step(new Map());
-    return shieldPool(s.world, s.hero);
+    return { shield: shieldPool(s.world, s.hero), ap: s.world.stats.get(s.hero)!.final[Stat.AbilityPower] };
   }
 
   it("★ 智力英雄 → 拿到護盾", () => {
-    expect(shieldGained(RANGED_INT)).toBeGreaterThan(0);
+    expect(shieldGained(RANGED_INT).shield).toBeGreaterThan(0);
   });
 
   it("★ 非智力英雄 → 仍然拿到護盾,但明顯比較小(40%)", () => {
     const full = shieldGained(RANGED_INT);
     const cut = shieldGained(MELEE_STR);
     // 「完全不觸發」的實作會讓這裡是 0 —— 那是 "block",不是這件道具要的語意。
-    expect(cut).toBeGreaterThan(0);
-    expect(cut).toBeLessThan(full);
-    // 兩位英雄的 ap 不同,所以不能斷言剛好 0.4 倍;斷言它被砍到不足一半即可,
-    // 而「沒有縮放」的實作(M3)會讓 cut/full 由三圍決定並輕易超過 0.5。
-    expect(cut / full).toBeLessThan(0.5);
+    expect(cut.shield).toBeGreaterThan(0);
+    expect(cut.shield).toBeLessThan(full.shield);
+
+    // ⭐⭐ GH#1211（2026-09-11）：這裡本來是 `cut / full < 0.5`。
+    //
+    // ⚠️ 那是一個**代理值**，而它的分母**不是這件道具** —— 是「隨便挑到的那兩位英雄的 ap 差距」。
+    //   `MELEE_STR`／`RANGED_INT` 來自 `pickChampion(…)`，⭐ 而名冊 2026-09-10／11 長了 81 名
+    //   ⇒ 挑到的人換了 ⇒ 比值變成 **0.601** ⇒ 這條紅了，⛔ 而 `mismatchScale` 一個字都沒動
+    //   （實測 `content/items/sage-ward-amulet.json` 的 `requires.mismatchScale` **仍然是 0.4**）。
+    //
+    // ⇒ ⭐ 改成**直接釘 0.4 本身**：護盾 = `flat + ap × coeff`，兩位英雄只差在 ap
+    //   ⇒ 期望比值 = 0.4 × (flat + ap_str·coeff) / (flat + ap_int·coeff)，**算得出來**。
+    //   ⭐ 這樣它與「挑到誰」無關，⛔ 而且它釘的是**這件道具的數字**，不是兩個人的體格差。
+    // ⭐ 釘**機制**，⛔ 不釘數字（CLAUDE.md 第二守則：「守衛驗機制，⛔ 不驗數字」）。
+    //
+    // ⚠️ 「⛔ 沒有折扣」的實作會讓比值**完全由兩人的 ap 決定** ——
+    //   那個值算得出來：`(flat + ap_str·coeff) / (flat + ap_int·coeff)`。
+    //   ⭐ 只要實際比值**明顯低於它**，就證明「不符合資格 ⇒ 打折」這條分支真的跑了，
+    //   ⛔ 而且這個判準與「`pickChampion` 今天挑到誰」無關。
+    const FLAT = 180, COEFF = 1.2;                // ⛔ 與 sage-ward-amulet.json 的 passive 同源
+    const noDiscount = (FLAT + cut.ap * COEFF) / (FLAT + full.ap * COEFF);
+    expect(
+      cut.shield / full.shield,
+      `⛔ 「不符合資格 ⇒ 打折」沒有發生：實際比值 ${(cut.shield / full.shield).toFixed(4)} ` +
+        `已經接近「完全沒折扣」的 ${noDiscount.toFixed(4)}\n` +
+        `   （ap：INT ${full.ap.toFixed(1)} / STR ${cut.ap.toFixed(1)}）`,
+    ).toBeLessThan(noDiscount * 0.9);
   });
 
   it("★ 同一份 requirement 兩種模式給出不同的倍率(reduced 不是 block 的別名)", () => {
