@@ -58701,12 +58701,51 @@
           "identityReviewRequired": false,
           "recordedBytes": 2004976,
           "sizeMatchesManifest": true
+        },
+        {
+          "id": "ssbu-mewtwo-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/mewtwo/body/c00",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0.glb",
+          "existsLocal": true,
+          "bytes": 667840,
+          "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/validation.json",
+            "bytes": 16079,
+            "sha256": "1eee68910a2a9a97048acafabb2c1b89ef9131cf73cf0589dd25541d8e2f7987"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/visual-review.json",
+            "bytes": 2194,
+            "sha256": "a68f851fffa3aeebbabcd477bc2080fe7d9702e93134af6363a0998ce508bdcd"
+          },
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Mewtwo identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Twenty-three hidden facial/source mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mewtwo. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mewtwo. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU fighter/mewtwo c00 was converted with Blender 4.5.13 and GGD normalization to a 667,840-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 5 source primitives became 3, all are skinned to 75 joints, and 105,456 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions."
       ],
       "aliases": [
         "fighter/mewtwo"

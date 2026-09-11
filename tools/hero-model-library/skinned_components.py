@@ -97,6 +97,7 @@ def validate_component(candidate, repo):
         expected_rebuild_schemas={
             'ssbu-zero-c00-static-skinned-v1': 'ggd.ssbu-zero-source-rebuild@1',
             'ssbu-mario-c00-static-skinned-v1': 'ggd.ssbu-mario-source-rebuild@1',
+            'ssbu-mewtwo-c00-static-skinned-v1': 'ggd.ssbu-mewtwo-source-rebuild@1',
         }
         require(rebuild.get('schema') == expected_rebuild_schemas.get(candidate['id']), 'Unexpected SSBU rebuild schema')
         require(rebuild.get('componentId') == candidate['id'], 'SSBU rebuild component ID mismatch')

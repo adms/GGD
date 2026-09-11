@@ -62,6 +62,29 @@ class SupplementalBackup(unittest.TestCase):
             readback=str(readback), manifest=str(manifest))))
         return receipt
 
+    def scoped_snapshot(self, name, members):
+        receipt = self.snapshot(name, members)
+        out = receipt.parent
+        archive = out / 'source.tar.gz'
+        readback = out / 'readback.tar.gz'
+        digest, size = sha(archive), archive.stat().st_size
+        uri = f's3://{BUCKET}/legacy/public-model-sources/conversion-source/{digest}.tar.gz'
+        rows = [dict(path=relative, bytes=(self.source / relative).stat().st_size,
+                     sha256=sha(self.source / relative)) for relative in sorted(members)]
+        manifest = out / 'scoped-manifest.json'
+        manifest.write_text(json.dumps(dict(schema='test-scoped-manifest@1', sourceId='conversion-source',
+            sourceRoot=str(self.source), absoluteLocalArchive=str(archive), archiveFormat='tar-gzip',
+            archiveMemberRoot='', bytes=size, sha256=digest, fileCount=len(rows), files=rows,
+            plannedS3Uri=uri, localPreserved=True)))
+        shutil.copyfile(manifest, out / 's3-manifest-readback.json')
+        receipt.write_text(json.dumps(dict(schema='ggd-scoped-tar-s3-receipt@1', id='conversion-source',
+            s3Uri=uri, manifestUri=uri.removesuffix('.tar.gz') + '.files.json', sha256=digest,
+            bytes=size, fileCount=len(rows), manifestSha256=sha(manifest), archiveFormat='tar-gzip',
+            archiveMemberRoot='', readbackVerified=True, fullGetVerified=True,
+            allArchiveMembersSha256Verified=True, localPreserved=True, localArchive=str(archive),
+            localReadback=str(readback), localManifest=str(manifest))))
+        return receipt
+
     def run_record(self, receipt=None, linked=True):
         args = [str(receipt or self.receipt), '--id', 'conversion-source', '--role', 'model-conversion-backup']
         if linked:
@@ -88,6 +111,21 @@ class SupplementalBackup(unittest.TestCase):
         self.assertEqual(len(component['backupLocations']), 1)
         self.assertEqual(index['sources'][0]['id'], 'original-source')
         self.assertEqual(index['sources'][1]['acquiredAssetPayloadCount'], 0)
+
+    def test_scoped_uploader_receipt_is_verified_and_registered(self):
+        scoped = self.scoped_snapshot('scoped', ['weapon.glb'])
+        self.run_record(scoped)
+        downloads, index = self.decoded()
+        component = downloads['publicSources'][0]['componentCandidates'][0]
+        self.assertEqual(component['s3ArchiveMember'], 'weapon.glb')
+        self.assertTrue(index['sources'][-1]['fullReadbackVerified'])
+        before = self.catalogs()
+        data = json.loads(scoped.read_text())
+        data['allArchiveMembersSha256Verified'] = False
+        scoped.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, 'not fully verified'):
+            self.run_record(scoped)
+        self.assertEqual(self.catalogs(), before)
 
     def test_repeating_same_receipt_is_byte_idempotent(self):
         self.run_record()

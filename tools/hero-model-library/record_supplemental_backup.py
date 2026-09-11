@@ -91,33 +91,59 @@ def main(argv=None, repo=None):
     if args.pending_manifest:
         return record_pending(args, repo)
     receipt = json.loads(args.receipt.read_text())
-    if any(receipt.get(key) is not True for key in ['fullGetVerified', 'allMemberSha256Verified', 'localUnchanged']):
-        raise ValueError('Supplemental backup is not fully verified')
-    if receipt.get('schema') != 'ggd-intake-backup-receipt@1':
+    schema = receipt.get('schema')
+    if schema == 'ggd-intake-backup-receipt@1':
+        if any(receipt.get(key) is not True for key in ['fullGetVerified', 'allMemberSha256Verified', 'localUnchanged']):
+            raise ValueError('Supplemental backup is not fully verified')
+        archive_sha256, archive_bytes = receipt['archiveSha256'], receipt['archiveBytes']
+        manifest_path = Path(receipt['manifest'])
+        manifest = json.loads(manifest_path.read_text())
+        manifest_readback = manifest_path.with_name('manifest-readback.json')
+        source_root = Path(receipt['source']).resolve()
+        readback = Path(receipt['readback'])
+        local_archive = Path(receipt['localArchive'])
+        manifest_source = manifest.get('source')
+        manifest_uri = manifest.get('s3Uri')
+        manifest_sha256 = manifest.get('archiveSha256')
+        manifest_bytes = manifest.get('archiveBytes')
+        if manifest.get('schema') != 'ggd-intake-backup-manifest@1':
+            raise ValueError('Unexpected supplemental manifest schema')
+    elif schema == 'ggd-scoped-tar-s3-receipt@1':
+        if any(receipt.get(key) is not True for key in
+               ['readbackVerified', 'fullGetVerified', 'allArchiveMembersSha256Verified', 'localPreserved']):
+            raise ValueError('Supplemental backup is not fully verified')
+        archive_sha256, archive_bytes = receipt['sha256'], receipt['bytes']
+        manifest_path = Path(receipt['localManifest'])
+        manifest = json.loads(manifest_path.read_text())
+        manifest_readback = manifest_path.with_name('s3-manifest-readback.json')
+        source_root = Path(manifest['sourceRoot']).resolve()
+        readback = Path(receipt['localReadback'])
+        local_archive = Path(receipt['localArchive'])
+        manifest_source = manifest.get('sourceRoot')
+        manifest_uri = manifest.get('plannedS3Uri')
+        manifest_sha256 = manifest.get('sha256')
+        manifest_bytes = manifest.get('bytes')
+        if (manifest.get('sourceId') != args.id or manifest.get('archiveFormat') != 'tar-gzip'
+                or manifest.get('archiveMemberRoot', '') != ''):
+            raise ValueError('Unexpected scoped supplemental manifest')
+    else:
         raise ValueError('Unexpected supplemental receipt schema')
     uri = receipt['s3Uri']
-    if not uri.startswith(f's3://{BUCKET}/legacy/') or not uri.endswith('/' + receipt['archiveSha256'] + '.tar.gz'):
+    if not uri.startswith(f's3://{BUCKET}/legacy/') or not uri.endswith('/' + archive_sha256 + '.tar.gz'):
         raise ValueError('Unexpected supplemental archive location')
     if receipt.get('manifestUri') != uri.removesuffix('.tar.gz') + '.files.json':
         raise ValueError('Supplemental manifest URI does not match archive')
-    manifest_path = Path(receipt['manifest'])
-    manifest = json.loads(manifest_path.read_text())
-    manifest_readback = manifest_path.with_name('manifest-readback.json')
-    if (manifest.get('schema') != 'ggd-intake-backup-manifest@1'
-            or not manifest_readback.is_file() or manifest_readback.read_bytes() != manifest_path.read_bytes()):
+    if (not manifest_readback.is_file() or manifest_readback.read_bytes() != manifest_path.read_bytes()
+            or receipt.get('manifestSha256') not in (None, sha(manifest_path))):
         raise ValueError('Supplemental manifest readback missing or changed')
-    readback = Path(receipt['readback'])
-    local_archive = Path(receipt['localArchive'])
     expected = [{key: row[key] for key in ['path', 'bytes', 'sha256']} for row in manifest['files']]
-    if (manifest['s3Uri'] != uri or manifest['archiveSha256'] != receipt['archiveSha256']
-            or manifest['archiveBytes'] != receipt['archiveBytes']
-            or len(expected) != receipt['fileCount'] or readback.stat().st_size != receipt['archiveBytes']
-            or local_archive.stat().st_size != receipt['archiveBytes'] or sha(local_archive) != receipt['archiveSha256']
-            or sha(readback) != receipt['archiveSha256'] or scoped_members(readback) != expected):
+    if (manifest_uri != uri or manifest_sha256 != archive_sha256 or manifest_bytes != archive_bytes
+            or len(expected) != receipt['fileCount'] or readback.stat().st_size != archive_bytes
+            or local_archive.stat().st_size != archive_bytes or sha(local_archive) != archive_sha256
+            or sha(readback) != archive_sha256 or scoped_members(readback) != expected):
         raise ValueError('Supplemental manifest or saved full readback changed')
     workspace_root = (args.workspace_root or repo.parent).resolve()
-    source_root = Path(receipt['source']).resolve()
-    if manifest['source'] != str(source_root) or not source_root.is_relative_to(workspace_root):
+    if manifest_source != str(source_root) or not source_root.is_relative_to(workspace_root):
         raise ValueError('Unexpected supplemental source root')
     # Check only this immutable snapshot's listed members. Later unlisted files
     # remain local and are neither rejected nor claimed to be in this backup.
@@ -135,7 +161,7 @@ def main(argv=None, repo=None):
     entry = dict(id=args.id, sourceId=args.source_id, resourceRole=args.role,
         localPath=source_root.relative_to(workspace_root).as_posix(), localArchive=receipt['localArchive'],
         readbackPath=str(readback), s3Uri=uri, manifestUri=receipt['manifestUri'],
-        bytes=receipt['archiveBytes'], sha256=receipt['archiveSha256'], fileCount=len(expected),
+        bytes=archive_bytes, sha256=archive_sha256, fileCount=len(expected),
         archiveFormat='tar-gzip', archiveMemberRoot='', files=expected,
         readbackVerified=True, fullReadbackVerified=True, s3ReadbackVerified=True,
         localPreserved=True, acquiredAssetPayloadCount=0,

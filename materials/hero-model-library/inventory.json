@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-12T07:30:38+08:00",
-  "inputsSha256": "92f90665a714d49ee454e19ce9e7f422fa9aab03641528da3c73df651d1c396a",
+  "generatedAt": "2026-09-12T07:45:52+08:00",
+  "inputsSha256": "a57bf1b5e822f5edb65501b480b78adaa1e71cbee496e2680572673c8464a2f5",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -90825,6 +90825,32 @@
             "receiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd",
             "manifestSha256": "7b5ebda340fa079151f60655f8887012cdc4e97e66406919b096274484d2dca9",
             "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "ssbu-mewtwo-c00-blender4513-v1-backup",
+            "sourceId": "gitlab-ssbu-models",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-full-readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.files.json",
+            "bytes": 3174041,
+            "sha256": "61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f",
+            "fileCount": 16,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-verified-receipt.json",
+            "receiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c",
+            "manifestSha256": "a95230d1424c66ca61e576a48928a17e3d6c4cb81ffc5317ac94919116437e90",
+            "s3Use": "backup-only-not-runtime-entry"
           }
         ],
         "conversionAttempts": [
@@ -90901,6 +90927,26 @@
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
             "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+          },
+          {
+            "id": "ssbu-mewtwo-c00-blender4513-v1",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1",
+            "rebuildPath": "/private/tmp/ssbu-mewtwo-c00-rebuild-v1",
+            "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/normalization.json",
+            "reportSha256": "c977e81287413ee40d602de3fbc85972cd42e2a45d2955385066b380402fbc4b",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+            "outputSha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
+            "nativeAnimationCount": 0,
+            "componentId": "ssbu-mewtwo-c00-static-skinned-v1",
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "backupStatus": "s3-full-readback-verified",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-verified-receipt.json",
+            "backupReceiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c"
           }
         ],
         "sourceClass": "original-game-extraction-community-repackage",
@@ -91141,6 +91187,114 @@
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
             "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+          },
+          {
+            "id": "ssbu-mewtwo-c00-static-skinned-v1",
+            "conversionCandidateId": "ssbu-mewtwo-c00-static-skinned-v1",
+            "sourceId": "gitlab-ssbu-models",
+            "sourceClass": "original-game-extraction-community-repackage",
+            "selectionClass": "canonical-game",
+            "nameZh": "超夢／Mewtwo",
+            "originalName": "Mewtwo",
+            "workZh": "任天堂明星大亂鬥 特別版（原作：寶可夢）",
+            "sourceGame": "Super Smash Bros. Ultimate",
+            "sourceGameReleasedAt": "2018-12-07",
+            "platform": "Nintendo Switch",
+            "nativeId": "fighter/mewtwo/body/c00",
+            "variant": "c00",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+            "bytes": 667840,
+            "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
+            "gitPath": "content/assets/models/community/cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ssbu-mewtwo"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 6972,
+            "drawPrimitives": 3,
+            "skinCount": 1,
+            "jointCount": 75,
+            "textureCount": 2,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "auditEvidence": "SSBU fighter/mewtwo c00 was converted with Blender 4.5.13 and GGD normalization to a 667,840-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 5 source primitives became 3, all are skinned to 75 joints, and 105,456 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions.",
+            "limitations": [
+              "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+              "No GGD hero definition or skill binding exists for this exact Mewtwo identity.",
+              "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+              "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+              "Twenty-three hidden facial/source mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
+              "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/delivery.json",
+              "bytes": 5108,
+              "sha256": "e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/acceptance.json",
+              "bytes": 1320,
+              "sha256": "8f037a223149a4502fe357bb3cd7930112f2ba17699e6f7ee70804c4f6b2aa86"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/validation.json",
+              "bytes": 16079,
+              "sha256": "1eee68910a2a9a97048acafabb2c1b89ef9131cf73cf0589dd25541d8e2f7987"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/visual-review.json",
+              "bytes": 2194,
+              "sha256": "a68f851fffa3aeebbabcd477bc2080fe7d9702e93134af6363a0998ce508bdcd"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/webgl-proof.json",
+              "bytes": 4479,
+              "sha256": "d055832f66d4c56a1a563f938b0ff7b701791bd2d6edcd807dd44534ddef5e1a"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/source-fidelity.json",
+              "bytes": 2327,
+              "sha256": "bff8e4dc68bb311cbe7694815840ba09b38f8ad9a06bb5a4b2cbec6dd109de23"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/source-rebuild.json",
+              "bytes": 4139,
+              "sha256": "9264b554ca5f2ddae52836e14f0612b43b25103f1ccb2631ff581757c9d94d86"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+                "s3ArchiveMember": "body.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-verified-receipt.json",
+                "backupReceiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-verified-receipt.json",
+            "backupReceiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c"
           }
         ]
       },
