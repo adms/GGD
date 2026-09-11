@@ -241,6 +241,12 @@ class Builder:
                 row.update({"id": entry.get("id"), "heroIds": entry.get("heroIds", []),
                             "sourceUrl": entry.get("url"), "sourceLineage": entry.get("sourceLineage"),
                             "readiness": entry.get("readiness"), "assetKinds": entry.get("assetKinds", [])})
+                observed_state = (entry.get("backendIntegration") or {}).get("state")
+                if observed_state:
+                    row["status"] = observed_state
+                retarget_validation = root / "retarget-validation.json"
+                if retarget_validation.is_file():
+                    row["retargetValidation"] = self.evidence(retarget_validation)
             if receipt_path.is_file():
                 receipt = self.read(receipt_path)
                 row["sourceCounts"] = {k: receipt[k] for k in
@@ -548,6 +554,10 @@ def supplement_summary(rows):
             counts = row.get("sourceCounts", {})
             description = (f"{row['character']} 動作來源仍待轉換"
                            f"（{counts.get('normalPortClips', 0)} Normal＋{counts.get('customVariantClips', 0)} Custom IFP）")
+        elif row["status"] == "retarget-rejected-visual":
+            counts = row.get("sourceCounts", {})
+            description = (f"{row['character']} 已完成 {counts.get('clipCount', 0)} 段 IFP 候選轉換，但 WebGL 姿勢抽樣失敗；"
+                           "候選已封存，不得登記或綁定遊戲事件")
         else:
             description = f"{row['character']} 原始來源已保留，尚待成品登記與轉換"
         receipt = runtime.get("receipt") or {}

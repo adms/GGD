@@ -1,9 +1,9 @@
 {
   "schema": "ggd.priority81.handoff@1",
   "generator": "tools/hero-model-library/build_priority81_handoff.py",
-  "generatorSha256": "5f6ee6159bf46033d2c8f200dbf5b6683eceb29f619e00aa7dbe400c3cec15e8",
+  "generatorSha256": "c68cb94bbd9f743c59112a4135cc7c4bf6f984a7c8492f818c9de58b86c87a30",
   "scope": "Main review and merge of existing 81-hero content; Root owns remaining conversions",
-  "inputsSha256": "6d6e379465b708f5eb10cb52d42ea111d634a7e50756ddb47f4778b744fdaeb8",
+  "inputsSha256": "0d6d882f007dea6c643607ed0a7e7e32265ac7794dbc2f3da8a6fa31a8779fa0",
   "inputs": [
     {
       "gitPath": null,
@@ -50,8 +50,16 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23/public-source-entry.json",
       "existsLocal": true,
       "gitTracked": false,
-      "bytes": 31626,
-      "sha256": "f7579769d952d43d7034f77e91a91fb815371ecd8e8bc9db760363afe5c55f0a"
+      "bytes": 32245,
+      "sha256": "00d87ccf1ccb9f002833d62d941405946f0b255078272bd2ef6d9a42157db576"
+    },
+    {
+      "gitPath": null,
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23/retarget-validation.json",
+      "existsLocal": true,
+      "gitTracked": false,
+      "bytes": 3215,
+      "sha256": "c0ce365e2f4d443f3856ea90c54e4bc9d8551139b2d393eeef9a3535b63ce103"
     },
     {
       "gitPath": null,
@@ -15034,8 +15042,8 @@
       "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
       "existsLocal": true,
       "gitTracked": true,
-      "bytes": 5045198,
-      "sha256": "96d7fffbf48ecce3a1bd7aa9480d5c96991056c280b8131f2420891c7a08addb"
+      "bytes": 5146797,
+      "sha256": "57d40833ddbbfae7778d49d954558b30163da7ce9937637a81a79f4b996115bd"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
@@ -120330,15 +120338,15 @@
     {
       "character": "不知火舞",
       "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23",
-      "status": "animation-pending-retargeting",
+      "status": "retarget-rejected-visual",
       "countsAsFinishedModelOrMotion": false,
       "entry": {
         "gitPath": null,
         "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23/public-source-entry.json",
         "existsLocal": true,
         "gitTracked": false,
-        "bytes": 31626,
-        "sha256": "f7579769d952d43d7034f77e91a91fb815371ecd8e8bc9db760363afe5c55f0a"
+        "bytes": 32245,
+        "sha256": "00d87ccf1ccb9f002833d62d941405946f0b255078272bd2ef6d9a42157db576"
       },
       "delivery": {
         "gitPath": null,
@@ -120354,10 +120362,18 @@
       ],
       "sourceUrl": "https://www.gtainside.com/sanandreas/mods/213671-dead-or-alive-6-animation-mai-shiranui/",
       "sourceLineage": "DOA6 → GTA SA community animation port; includes custom mirrored/edited/truncated variants.",
-      "readiness": "pending-standardization",
+      "readiness": "retarget-rejected-visual",
       "assetKinds": [
         "animation"
       ],
+      "retargetValidation": {
+        "gitPath": null,
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23/retarget-validation.json",
+        "existsLocal": true,
+        "gitTracked": false,
+        "bytes": 3215,
+        "sha256": "c0ce365e2f4d443f3856ea90c54e4bc9d8551139b2d393eeef9a3535b63ce103"
+      },
       "sourceCounts": {
         "ifpFiles": 162,
         "clipCount": 162,

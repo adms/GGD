@@ -42338,6 +42338,922 @@
         "s3ReadbackVerified": true
       },
       "verification": "56 個原生 patch3audio 配色路徑逐檔 SHA-256 核對，保留為 7 個 byte-identical bank alias；依 r2117 metadata 解出 19 個 stream。每段 WAV 皆核對 PCM frames/rate/channels、ffmpeg 全檔解碼與 vgmstream byte-identical 重播。S3 ZIP 及逐檔讀回另行驗證；se_ 名稱不作語言、說話者或技能事件確認。"
+    },
+    {
+      "id": "mai-doa6-gtasa-gtav06-motion",
+      "target": "不知火舞／DOA6 → GTA SA 社群移植動作包",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://www.gtainside.com/sanandreas/mods/213671-dead-or-alive-6-animation-mai-shiranui/",
+      "uploader": "GTAV06",
+      "format": "ZIP / 162 GTA SA ANP3 IFP animation files",
+      "accessStatus": "public-direct-download",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "retarget-rejected-visual",
+      "resourceRole": "animation-supplement",
+      "defaultEligible": false,
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/mai-doa6-gtasa-motion-round23",
+      "sourceGame": "Dead or Alive 6 (author-described animation origin)",
+      "targetGame": "Grand Theft Auto: San Andreas",
+      "platform": "GTA SA PC mod; original DOA6 platform/version unspecified",
+      "selectionClass": "community-mod",
+      "discoveryChannel": "mod-site-author-public-download",
+      "assetKinds": [
+        "animation"
+      ],
+      "publicationStatus": "s3-readback-verified",
+      "files": [
+        {
+          "path": "extracted/MAI/Custom/MAI00000_MAI (loop).ifp",
+          "bytes": 19468,
+          "sha256": "1c5daa1d55c65e7c9078ca0763360739d5351f257bfb40e2610e167d1d554442"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI00000_MAI (start).ifp",
+          "bytes": 6148,
+          "sha256": "0b279cdc6016401dd4b9aba597f81fce7638209c1afb7ea3d87ec89b75b0c656"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01051_MAI (mirrored).ifp",
+          "bytes": 16804,
+          "sha256": "02543f29909abb5bec8b45251b9e6df32b231250ea6f9319c64a45f044d198ce"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01060_MAI (mirrored).ifp",
+          "bytes": 18580,
+          "sha256": "136b1f8b6bdbe26aed264ddba268dcf8546887598bbaf28cdfb290ae589cd42e"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01081_MAI (mirrored).ifp",
+          "bytes": 19468,
+          "sha256": "b0d9143c788fb48d461ce31b62387381c9bb9b733f15925540931fa1ccbcf6dd"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01211_MAI (mirrored).ifp",
+          "bytes": 20060,
+          "sha256": "241e74f7b03ca7c664851c68079d883fc88cacb3877b44e2206be2956e221157"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01212_MAI (mirrored).ifp",
+          "bytes": 15916,
+          "sha256": "6597f4c987efbcd5ede76db0618ff03c206a2bf9da43fd796513b1edddb2b862"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01310_MAI (mirrored).ifp",
+          "bytes": 20948,
+          "sha256": "089645000f12f3f51615d49de9f66d54e6398222bac602a12b60a74e9ec98bf5"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01320_MAI (mirrored).ifp",
+          "bytes": 19468,
+          "sha256": "f500c4ab75d44d852364a7c4ccb0a37f9bbbf8011a0670d8cae84616de07ab66"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01330_MAI (mirrored).ifp",
+          "bytes": 24796,
+          "sha256": "ad840f7ce6ab2f1c10e95c6deb20004a8d66aa9c0688bb7810f0b83b21058c6d"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01340_MAI (mirrored).ifp",
+          "bytes": 25388,
+          "sha256": "3e209a7d694442790a92aeb8770069fbf1a8dede67a7262d1b054374693756a6"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI01600_MAI (GTA edit).ifp",
+          "bytes": 18580,
+          "sha256": "63044f0fc10a6479ffb5c2877dfa6711d67ffaeddddccc2ae69fe2171e4c7cb5"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI04001_CMN (first reaction only).ifp",
+          "bytes": 15916,
+          "sha256": "5ed9ff5e90cc726f766799910f094ef28cfff09dd296a722ab743271335c8f50"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI04015_CMN (first reaction only).ifp",
+          "bytes": 15916,
+          "sha256": "82053fb621b0cfb9947400fd03218aae2a54461bd42dc0361b4a30830e34b9f4"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI04501_CMN (first reaction only).ifp",
+          "bytes": 13844,
+          "sha256": "423787175f6e41ffea0c6b342d8a0ba194bda535fa47e139db493532273a0829"
+        },
+        {
+          "path": "extracted/MAI/Custom/MAI04507_CMN (first reaction only).ifp",
+          "bytes": 7628,
+          "sha256": "405eb0e3a8e0aa649fb9d1dd73dea5872c464739751e91964c88057fb6efcac0"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00000_MAI.ifp",
+          "bytes": 24204,
+          "sha256": "16ade741e038ae31fcf9f2d6b9543ba35b76257419ed09090493b34b34022a16"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00001_MAI.ifp",
+          "bytes": 38708,
+          "sha256": "43d5da4fe796fcbcbc8d430ad68171c892da6b56da82ded61292b768611e2871"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00400_MAI.ifp",
+          "bytes": 12660,
+          "sha256": "3790889b8d17f4bb49b23507c85b61cc8d77c2bd75adfea49bb84dbe68aa3019"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00401_MAI.ifp",
+          "bytes": 13548,
+          "sha256": "d32196955e76b34a41fa261fa609169fa51930ea6ff0ca8b4f1a4e4b9c5f3c16"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00402_MAI.ifp",
+          "bytes": 14732,
+          "sha256": "8bac7be6d73b77b514ab8f4488143ffa81bf96b68f94d5a37770f2ba7576d3c2"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00403_MAI.ifp",
+          "bytes": 15620,
+          "sha256": "de51488bd4d176e0999bd7a029f669eb07fe093d0970d0c09006d1ea38131727"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00404_MAI.ifp",
+          "bytes": 13844,
+          "sha256": "7a772542a6b68e1a331b95f2f69b954c203423676ff07a448b21393aae0bc538"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00407_MAI.ifp",
+          "bytes": 20948,
+          "sha256": "57963558c6cd6d29293e1e44c68579d6937c0cd902ad13e59bf62887cb16aaf7"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00420_MAI.ifp",
+          "bytes": 13548,
+          "sha256": "047111aa17712cc24cb73c8cb37cc5a7e778824031afd820c9d9d7957fc4b961"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00421_MAI.ifp",
+          "bytes": 13548,
+          "sha256": "adc8c565c6325e39c779e34ccf0545237b931beaf17741a9b63792dd0dcd9137"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI00422_MAI.ifp",
+          "bytes": 14140,
+          "sha256": "349c8f8084d25b1715236b0c74b1666175e92397523a697da188770d84b8c33b"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01000_MAI.ifp",
+          "bytes": 10884,
+          "sha256": "9948a2e2c2b0018f7bac46cecf94c14264ab387d7c2d195f76369c000d379436"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01001_MAI.ifp",
+          "bytes": 11476,
+          "sha256": "3ce05274c8959c25131424ac47a58f42f70f4dcd4efad8a52fd73b0afde33ec1"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01002_MAI.ifp",
+          "bytes": 15916,
+          "sha256": "aba4d4b472d1a7236e2ff01ae6ef69a8626fd0cd4e892a87cc6658b1a0ba8ee6"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01003_MAI.ifp",
+          "bytes": 19468,
+          "sha256": "9f73d8d30f927f51609de919139c7a10bdbf0ff7521e25409f3ecc83e6ee5c60"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01004_MAI.ifp",
+          "bytes": 25388,
+          "sha256": "8a105bd8e0bb67bfb2dfc1534e9f24eced9dd1c2deaf6cedc1bcfb79dba37431"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01010_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "5ae12e3e7172588426892a5021ac629043e46e9df50518729718521b90e49600"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01025_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "fe1d6919b4fc65d232b7134b73d6dcb4789ff86bfc012e5d763edca699efb9da"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01030_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "8ea5ef2db3f6ec6d7fd04ef14b9468b9ea705ef0f451a4530be63f0f71f51ac5"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01040_MAI.ifp",
+          "bytes": 15028,
+          "sha256": "4b14d00f639373bb4ee7ed1243085d949f915f066401d9d2b392625fb40ee342"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01050_MAI.ifp",
+          "bytes": 14436,
+          "sha256": "ae61cfd97933bb54def81822df2647e3919ee078eba30f756d1e4e7c397a3636"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01051_MAI.ifp",
+          "bytes": 16804,
+          "sha256": "575760fb3f04c22d062894fb1d180ac094a1e92d372dde305dbfb96e79c452a1"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01060_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "00c9d6153ef9b1ba4bb0e88f3727bf8a0c1f76f4318255be72dfa6fb9cbcd423"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01070_MAI.ifp",
+          "bytes": 15916,
+          "sha256": "665c430bb6dcd6316f349295e2b3025acff02a83832eb06d4c6ec5185e1e6468"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01080_MAI.ifp",
+          "bytes": 15916,
+          "sha256": "6507a592691cbe6144117491695257aed1938a1e63a31242311961494e7e2a33"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01081_MAI.ifp",
+          "bytes": 19468,
+          "sha256": "4cde9b063aabadff24fa16c10d8a8133d0c4642195dd5087372e400d40d60b1d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01090_MAI.ifp",
+          "bytes": 13844,
+          "sha256": "dbf36f53d5922d7eb77b81e5994c6d1a916fc20c9e25ffb3568235f9e3d4b18f"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01091_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "2b5a3e9dc962a9fcd9d90f1dba8932ee7f37bdf426b5a5c369737b3c194ec2e8"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01092_MAI.ifp",
+          "bytes": 14436,
+          "sha256": "f38a9a2b8392fc0c20418e60d8476ea0b0fa174ae4f234bc3f57f4e1c3e929db"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01100_MAI.ifp",
+          "bytes": 14140,
+          "sha256": "708a9a1f67217302d5e07462275b470fb41577588567714029c7175f39901b00"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01110_MAI.ifp",
+          "bytes": 15028,
+          "sha256": "64f60c1117bce3ec6c008d094fc5c1b848a68f609f59e9eeff10d8b6bcad4f96"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01111_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "5c735bd88cf0a79d5e555ee723d7c8c716105d4ae195641f34f4f6465fb7429f"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01120_MAI.ifp",
+          "bytes": 15620,
+          "sha256": "a69ea6aa051fb86f377c77fdb72781ecdbe6abf0d4ac58c51143b1836cae15c2"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01130_MAI.ifp",
+          "bytes": 17692,
+          "sha256": "40c48b7bba413d4ab06d8d46c5a19b2e8b7fe996533974f71b2c6ef9b3d16a27"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01131_MAI.ifp",
+          "bytes": 20356,
+          "sha256": "075c468d92ac4275420c1d372216da2d89dc90415e67392c71712899eabf25c3"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01140_MAI.ifp",
+          "bytes": 15028,
+          "sha256": "3f9e7851cad7c4b89c02a4917c368f07bd6e8791de1d1c3c058069662075cbd0"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01141_MAI.ifp",
+          "bytes": 15620,
+          "sha256": "91121c1bd65b68bd1f2ef9d70ce2081bd254591d72623cfcd2049bc26fa07c05"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01142_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "c9b893dcf55c0d6967904f37f45a65f3c9ef7c9cf4e9f35f3ab62fe3ff2848c4"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01150_MAI.ifp",
+          "bytes": 15620,
+          "sha256": "6a30af4770d2fb2cd933d5c0a857f283470d63e0a73e87d9064492821f0b2729"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01160_MAI.ifp",
+          "bytes": 16508,
+          "sha256": "31cad035040300e10e19a108817dbcabbb569c773fe760c7181227ff43dbf806"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01170_MAI.ifp",
+          "bytes": 17692,
+          "sha256": "c9889338770c71bf34f8ce1bf10aa763d21a0e3e1fcd588d44b91a9c796438f8"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01180_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "ded72f9830bd0beb292e5dcb94186b70839f9c553f51819b1f0f9b0e971e668a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01185_MAI.ifp",
+          "bytes": 19468,
+          "sha256": "7ed9906fbc33a1f6aa4a208b075fdd6d0240739898329f6fbdf65b896c5e9ce6"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01190_MAI.ifp",
+          "bytes": 15620,
+          "sha256": "8bc0b5e9564e79d766de9ac8df0463353de528bc502087a1eed393fd15bd585e"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01200_MAI.ifp",
+          "bytes": 15916,
+          "sha256": "da8a29381112ece90d2b7295c06872392dc30d6f07661a0f7fc19ab109493e25"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01201_MAI.ifp",
+          "bytes": 14140,
+          "sha256": "fd984f2d48b20668dee98e87d81982bd0dc73e0d9d35ce44ed75b40fa988aee8"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01202_MAI.ifp",
+          "bytes": 17100,
+          "sha256": "f9093794453720a8d8ba9c62b44ac79c4f3917e5883112219be6adc319b54f87"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01210_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "ad5892eabfb1db2182709fca5c714c8ee72668531e8d076c71b20103a3212574"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01211_MAI.ifp",
+          "bytes": 20060,
+          "sha256": "168f7506730b1c341ce4c4e7baf602185f532633350fc964beb0b637be6a92ad"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01212_MAI.ifp",
+          "bytes": 15916,
+          "sha256": "72b171022aaaebba5f79d50ac60ef8eb6b92d012f5bc9173f68b6d2ec7ab1a9a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01220_MAI.ifp",
+          "bytes": 23908,
+          "sha256": "b761f038439628830e9a6ce3927b496da846294dd522ea73cde6ca6f61d93720"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01221_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "9bc36febf2d0b445b7dfbd547d4aeeba7b8359681eb99a922748bc2cea215e7d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01230_MAI.ifp",
+          "bytes": 17692,
+          "sha256": "a29801c23bce43f436323e915a49321ddd0bb7ea275f17265ce458f41485c0e0"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01250_MAI.ifp",
+          "bytes": 17988,
+          "sha256": "8a62ed3d519c8855290d158266795caf5e1b7a406121477b8b6e132811ce1420"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01251_MAI.ifp",
+          "bytes": 14732,
+          "sha256": "2db7fd539b9a571b02bceb9d194769af04a0d1c90ca8d4f14680286493fbc937"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01260_MAI.ifp",
+          "bytes": 17100,
+          "sha256": "523a74be265dad6aa6322495eb2372da02c8f32720c85c5045377c4ae5a3a9fa"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01270_MAI.ifp",
+          "bytes": 16212,
+          "sha256": "a45a7f80e594c8182cd84710acb0f58d03dbf77f0b4106d851a432d0e9acfaaf"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01280_MAI.ifp",
+          "bytes": 19172,
+          "sha256": "1aeb53c2c8fb1d24a110d6ddec05f0d5e827643b3f97060d5aa7f4d424ec1d1a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01290_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "15d1373b3c68a670eba1f3e5a0b764ccc9c164295e5d3360b721af4e807505d6"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01300_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "33a04b54bffbb4519e3f4ec8c2a888af4c59a90aff9b967db5c9515d037b48a0"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01310_MAI.ifp",
+          "bytes": 20948,
+          "sha256": "8994ed821290c1a2da7790946900bea4abad48ce27cfdb515fd33b786158ce78"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01320_MAI.ifp",
+          "bytes": 19468,
+          "sha256": "de56bfe77d50c22db72d8cd214f7785d095781f28670dbc767fcbb506d7f9a2c"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01330_MAI.ifp",
+          "bytes": 24796,
+          "sha256": "c38e4b22cb41c592768fb74f5f27cea395b5d297ca3a7feea5575dd627588e77"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01340_MAI.ifp",
+          "bytes": 25388,
+          "sha256": "4f0bfc81b18fddc1cb7883767912abd89929492a1f4e59980ec94769f16e10aa"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01360_MAI.ifp",
+          "bytes": 13844,
+          "sha256": "9d28807c8ef1cc16ac9a072d55e34db8ba18a43b09af8906a8c00a0efbe10f93"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01370_MAI.ifp",
+          "bytes": 18876,
+          "sha256": "0472728e7e2d4cad40a5036af6110b2ebffe12e07a13318c294848421cdc20a3"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01380_MAI.ifp",
+          "bytes": 14436,
+          "sha256": "243b982a577dc701789501f8e8c08cbf57a6eec46099eab4b4a35a384a589b68"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01390_MAI.ifp",
+          "bytes": 14436,
+          "sha256": "c9569015591514c885da11f175f7272d4dc41cfb6bf4a7134895c24d8250bb8b"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01391_MAI.ifp",
+          "bytes": 20948,
+          "sha256": "c8b801bdeb233c702b1dc6de02ac8c410e1873fa988c111ced4a4dd34bfe16d2"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01420_MAI.ifp",
+          "bytes": 10884,
+          "sha256": "63d0d607f8a56912bc5491cf695b24ce58887b7f94623d4c5244b4abd5eb6d72"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01430_MAI.ifp",
+          "bytes": 14436,
+          "sha256": "0b8e09f8cd121fd1d39bfc9d3604d69c63d2464cdc9a57495618765846bf6c93"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01440_MAI.ifp",
+          "bytes": 14140,
+          "sha256": "c95a124e77d63a2bac1d3e80d9535af54ef4af0f9c6c0ba7efb981e32a3eb55a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01450_MAI.ifp",
+          "bytes": 16804,
+          "sha256": "d4315bb6063464cefa8e102f89dc0e663a746d36c33c212a6567851930650afa"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01460_MAI.ifp",
+          "bytes": 16212,
+          "sha256": "1861c596768556c144f014ee96030c383fa37f13caa031f79497d97c6c8c1a7d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01470_MAI.ifp",
+          "bytes": 17692,
+          "sha256": "effe4578571b80b2cea8bef2026f28943eef762f69a99b931805d7ff2160bb32"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01480_MAI.ifp",
+          "bytes": 17396,
+          "sha256": "3fa981c9f3b14dcb70ea29c8d1b6e4bc0b9e443e5d705d7590dd85fa924bd673"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01600_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "7f7df7a8f372b87abaa44a7b5e7e38bec297e1d1e72c39994a3b7df0ca6d7830"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01610_MAI.ifp",
+          "bytes": 15028,
+          "sha256": "4e3abfb10917c6f8150a6f07cde17a501b2f6cb4d262ab81379d6bc4dde8562f"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01611_MAI.ifp",
+          "bytes": 20356,
+          "sha256": "bc93322bcdf0159d0a27d7169c8143cd59c2915def2a81bc2be4f925a4561502"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01612_MAI.ifp",
+          "bytes": 18284,
+          "sha256": "cfbacd26eb74609ddd2871878ae0d7a65425292aca748fdfb61aab6a64074ff4"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01700_MAI.ifp",
+          "bytes": 36044,
+          "sha256": "082bd9eba9359ff01308de7ead2e698e6fbc7782e214898e10dd55eac552ff56"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01701_MAI.ifp",
+          "bytes": 39004,
+          "sha256": "079c41ec9e94c954dc11069e1d2da27b1683d01a2e82a4f9acad514acde11d69"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01702_MAI.ifp",
+          "bytes": 72452,
+          "sha256": "254bb0f7b7702a230c6a16fe01b3e39e2a7366606a562420fbd5250f4ef84fa2"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI01920_MAI.ifp",
+          "bytes": 26276,
+          "sha256": "03079e9ac6166d0fbbd0179fc1ec11e0c11ecabeda97306c4a5f24fe34722a4c"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04000_MAI.ifp",
+          "bytes": 32788,
+          "sha256": "1ef47b9036cc729ee9b21d12b708831b3e64126405eb644aafd50a0ff1c76cf8"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04001_CMN.ifp",
+          "bytes": 29828,
+          "sha256": "264074c256dd56306041c22d528c6cb1900e1ea6eb4bf6cffb4a3eea44b604af"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04002_MAI.ifp",
+          "bytes": 39004,
+          "sha256": "acc07846ee3756d6d6fbe765f330a075e5e4023564b0f2d68abe02125a67b1b4"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04003_CMN.ifp",
+          "bytes": 36044,
+          "sha256": "35ad5c9a4425a26af8866d6b9745d41222ce5cd24873e9b1110b090d01bc73d6"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04004_MAI.ifp",
+          "bytes": 25092,
+          "sha256": "da099cbb29471307fbb91268cb3b6828a1b86ce3877c0f2e9ef51642020a8c25"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04005_CMN.ifp",
+          "bytes": 39004,
+          "sha256": "93c301b4334138b205478bc9b78c5d5b846df578ec4ceb33dc479fde2fe18362"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04006_MAI.ifp",
+          "bytes": 36636,
+          "sha256": "f77c9bfe0cfab626b53cd6377cceae2053b9b21214b66cfa8cf770701bf45c75"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04007_CMN.ifp",
+          "bytes": 33972,
+          "sha256": "76231e4e7b481efa19e509646651a67f1db2aca8c6a9fe2d66c75e88c962f871"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04008_MAI.ifp",
+          "bytes": 38116,
+          "sha256": "1bf2306dd7b734610c565ad2cfc350c1ee613cdce3d5c52da0d56696c0d8d0e0"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04009_CMN.ifp",
+          "bytes": 35156,
+          "sha256": "24850bf26407f3ec4844845053d45184824797644c001932d466ba331821d811"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04010_MAI.ifp",
+          "bytes": 32788,
+          "sha256": "591c92e9c6ecc0b4de86c57e6b87ea998cd679e9cf35ba1e3f1ea83b9614fb35"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04011_CMN.ifp",
+          "bytes": 29828,
+          "sha256": "12efa99c4dbf36edab4e5190834d072134007c227b84451826f47429e7b3deb7"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04012_MAI.ifp",
+          "bytes": 34860,
+          "sha256": "bb7c58482a260143044f98aa4dacbca3d477595741d1a1624a99234a8fafc1ad"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04013_CMN.ifp",
+          "bytes": 32196,
+          "sha256": "b4b35f2423d21a604f521db81d57524aee7d0be446ed650545e784264321da38"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04014_MAI.ifp",
+          "bytes": 32788,
+          "sha256": "21fc7e9dbaec898f1aa6d18c643a2f32d985873f41a20453cc1159ae4d72a6bf"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04015_CMN.ifp",
+          "bytes": 29828,
+          "sha256": "29956e1ad912937e775839254a7e86e67d9b158322201075ddeb6c154df5cf1a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04016_MAI.ifp",
+          "bytes": 38116,
+          "sha256": "8fbbb74f01f8d64cb15f585d13bb1e60a2384e512cbf8904aaf45dc275c9e61d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04017_CMN.ifp",
+          "bytes": 35156,
+          "sha256": "e328a15aa6251837ea437e70fcd9a938f931e7f537ab5d6f2eb349a06be2a964"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04018_MAI.ifp",
+          "bytes": 36636,
+          "sha256": "16b3c1eaea103f99c8864c2bcce9eafdbb3f35b9cebc7ed48771836514f0ec1c"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04019_CMN.ifp",
+          "bytes": 33972,
+          "sha256": "8470cdd6d77d31518abcacd643531dc964d528aff9bc28f4db31bb355854dc63"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04020_MAI.ifp",
+          "bytes": 34860,
+          "sha256": "c89be408be6da574183b34fd2def8f570d312c332712d31f60af07620d813c61"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04021_CMN.ifp",
+          "bytes": 32196,
+          "sha256": "c02c6dd34b13e3465ef45654212756f5811771a8bf855733f43d6f84230b2367"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04022_MAI.ifp",
+          "bytes": 38116,
+          "sha256": "36e0b780a9b41a9e175dc3df10b7a05f95f021c6336be18c356c113081bc16f4"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04023_CMN.ifp",
+          "bytes": 35156,
+          "sha256": "a98ac679a84e43f5019b22b1a4a1cb2589bc6b5ca34e147698c1d5510076bb3f"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04024_MAI.ifp",
+          "bytes": 80444,
+          "sha256": "99ecc785d51b6aef971ded9713761205b746fe6ddc5f499fc9afc6b6f711ab62"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04025_CMN.ifp",
+          "bytes": 77484,
+          "sha256": "89adba7892f03feda9f5a109dbe3a4044ef34d4b984a4cf94b23c06f52c370bc"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04030_MAI.ifp",
+          "bytes": 14140,
+          "sha256": "3ffc202f5d0de6a0377cb555edc42aad1ef7e536fc8e4c2018e2072addc06ca8"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04031_CMN.ifp",
+          "bytes": 12660,
+          "sha256": "b50bdf4fed7d80f38addbc180f3be16fe306c27b64c2fbe98ff955c549f1bed4"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04500_MAI.ifp",
+          "bytes": 27756,
+          "sha256": "991cee4ad5fd0ab9d7aa593a4a906aaeb45a5c23c381803fe9ac057fbeb2312d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04501_CMN.ifp",
+          "bytes": 26276,
+          "sha256": "3cdc58c02a52026ec2da4988134405a57f6993a6fea984ced747c6d2238ed585"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04502_MAI.ifp",
+          "bytes": 35748,
+          "sha256": "e877f9333bb92cc595d18277ac61a148ad5c213ec12b73bf343d7f060611e865"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04503_CMN.ifp",
+          "bytes": 32492,
+          "sha256": "da91ef55015527985de7ba8cafe19bbb6058de1da912d65aa73f7372e3222a0a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04504_MAI.ifp",
+          "bytes": 31900,
+          "sha256": "1bcc6697a9e3c77c73a1e3d01738aef8ebf68cf7c7b166072e2e8927bcef624b"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04505_CMN.ifp",
+          "bytes": 28940,
+          "sha256": "54ae2d8edf5038c8889992aad56974e3c13313904541ddea59803eecba378251"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04506_MAI.ifp",
+          "bytes": 22724,
+          "sha256": "3495dd9dc233aaa5cf15ef48751d08bc1523fb7a3dc898b6861844ec4b4513a6"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04507_CMN.ifp",
+          "bytes": 19468,
+          "sha256": "69545ee09983ebde7af86b9885fe8d3d9ca8d9b7bda98cacc13684f74c48befc"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04508_MAI.ifp",
+          "bytes": 18284,
+          "sha256": "c2eb77fb900d55698bd1b06a9603685936c2d46746bd04f9e8537593cc996b56"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04509_CMN.ifp",
+          "bytes": 15324,
+          "sha256": "614db8ea14d10acb581488863aa960bc3fb51da5e7aeb1b81275eb9abdd55474"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04510_MAI.ifp",
+          "bytes": 36932,
+          "sha256": "976bebd23f30a4a8d25de2522d3fee2b62c9f1e090a65f58e09691b6ee8777a8"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04511_CMN.ifp",
+          "bytes": 34268,
+          "sha256": "1588ec81e2a5226fcfe64c1630d83971f3de1bd2a119c4776081ce0a5d05f883"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04512_MAI.ifp",
+          "bytes": 36636,
+          "sha256": "9184eb198849a4d11b9e3cd3685cfb091532405849ff877855633331b7a1276d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04513_CMN.ifp",
+          "bytes": 33676,
+          "sha256": "3ce417524e1d6515e1ead247787b409d88b13f1f24ac0f73d078fb993a3dc6eb"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04514_MAI.ifp",
+          "bytes": 32788,
+          "sha256": "0f376ce818a67fd8c3f6e45b9f38493fa7ee8d1707e1d52e45be4a8229626638"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI04515_CMN.ifp",
+          "bytes": 29828,
+          "sha256": "a14638aa97619baa9691f608f456269c60722a2a8c73a694d6670e07459b28b1"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05000_MAI.ifp",
+          "bytes": 21244,
+          "sha256": "f8c2908882091efdaf65dc1f16eb9e1b37a5ea1b96bae002776e3626d7fc47f1"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05200_MAI.ifp",
+          "bytes": 52916,
+          "sha256": "129f23ff8c30f4902e9d3a0fe1182744df4eecb7e04c8c8128fcb46543db341a"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05201_CMN.ifp",
+          "bytes": 69196,
+          "sha256": "7a005e6229cf0209f18df142acdef528de6eef581f686df07e237d3a2b5e9536"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05300_MAI.ifp",
+          "bytes": 28052,
+          "sha256": "53c7881c4a740cb7b6d79e2d085b19b5469b1c433783b276f15baed5b0f3c388"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05301_CMN.ifp",
+          "bytes": 31308,
+          "sha256": "f13f1f2df12926d0ef74ee93c25211f3d9440deb3922bdfbfb3b68e48ae2f2fd"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05311_CMN.ifp",
+          "bytes": 31308,
+          "sha256": "e7b7988dc5b08fbd5040e67d5a06b3516153b410ebd08306f3e855a15d094f5d"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05321_CMN.ifp",
+          "bytes": 31308,
+          "sha256": "6068522494834f9b5156f17a3fe17cb48ec53605d7ccf28eb30d161a5c335c24"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05331_CMN.ifp",
+          "bytes": 31308,
+          "sha256": "d076890be5e0f56dbd4b633ea274ebf24090eb22988926b64f824837ecfe20ce"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05390_MAI.ifp",
+          "bytes": 15620,
+          "sha256": "e29e077089aada9136f18dbb61aeb36baf3afa2f5a7860020d9963889bb054f0"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05500_MAI.ifp",
+          "bytes": 17988,
+          "sha256": "c7b00415d98cf09249ad6472bedc417c33bbf5e87b328b8703af84d572ac02ed"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05510_MAI.ifp",
+          "bytes": 23908,
+          "sha256": "7a032689bf15ced9fd644b94b4f18005e6afb6bffa86693bc29f196e160774af"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05520_MAI.ifp",
+          "bytes": 27164,
+          "sha256": "720b410a1506e1f2d4bbd4ed39be6d14f66145139c450252a69a29a91749f419"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05530_MAI.ifp",
+          "bytes": 25684,
+          "sha256": "121b193142e9473ec78c420c867726f993bc531ab39b0e500295852b00e219af"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05540_MAI.ifp",
+          "bytes": 21244,
+          "sha256": "500f7b5224c6f735d000ef61a66eea0fb52b1b2dc86bbac3ab8b35efb949b47e"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05600_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "1347a881623387d02f0d1d9fbd323e99d1976de4494cf791863104c055b42816"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05610_MAI.ifp",
+          "bytes": 18580,
+          "sha256": "88261b950c030bbfdaf9116a5bf48778a50b8772657173db064e2445458bd072"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05700_MAI.ifp",
+          "bytes": 20948,
+          "sha256": "9695082a883226fb247041017b3dba4eb24320444d4bdf45c96687e501ebb18c"
+        },
+        {
+          "path": "extracted/MAI/Normal/MAI05800_MAI.ifp",
+          "bytes": 17692,
+          "sha256": "27a9019334b86a5a6c381b14f06fd3e058300f7078de6b5a5b25c52305a2d280"
+        }
+      ],
+      "packages": [
+        {
+          "path": "original/1766434081_MAI.zip",
+          "bytes": 2385393,
+          "sha256": "cd1d361ba6cf2df4556d568012cf7189dec68f3ec3eba3e899e14fe97747a20c",
+          "archiveCrcVerified": true
+        }
+      ],
+      "animationFileIndex": {
+        "reportPath": "clip-analysis.json",
+        "reportSha256": "88b5ae72c06b0e5b0ae3fbe88085fc731248eff78aa1036fbe4eb8e5ee787009"
+      },
+      "localDelivery": {
+        "reportPath": "deliveries/local-animation-delivery-20260910T160627642325Z.json",
+        "reportSha256": "63655035581252a8d11abdbee7be0ef5b1412cdc49adb012d555ea1952196e5d"
+      },
+      "animationAcquisition": {
+        "ifpFiles": 162,
+        "clipCount": 162,
+        "normalPortClips": 146,
+        "customVariantClips": 16,
+        "totalBoneTracks": 4698,
+        "totalKeyframes": 356294,
+        "durationSecondsAt60TicksPerSecond": 202.06666666666666,
+        "allClipsHaveChangingTracks": true,
+        "distinctMotionByteHashes": 162,
+        "variants": {
+          "loop-excerpt": 1,
+          "start-excerpt": 1,
+          "mirrored": 9,
+          "gta-edit": 1,
+          "first-reaction-only": 4,
+          "normal-source-port": 146
+        },
+        "sourceModels": 0,
+        "sourceTextures": 0,
+        "sourceAudio": 0,
+        "standaloneVfx": 0,
+        "originalDoa6ContainerFiles": 0
+      },
+      "backendIntegration": {
+        "required": true,
+        "state": "retarget-rejected-visual",
+        "heroIds": [
+          "community-review-03-20260907"
+        ],
+        "ownerEntryIds": [],
+        "release": null,
+        "selectionVerified": false
+      },
+      "verification": "ZIP CRC and every file SHA verified; all 162 ANP3 clips consumed exactly, frame byte sizes and monotonic timelines verified. All clips contain changing transform tracks. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "mappingEvidence": "Author labels Mai Shiranui and DOA6; raw native IDs retained, visual identity and source-game completeness unverified.",
+      "sourceLineage": "DOA6 → GTA SA community animation port; includes custom mirrored/edited/truncated variants.",
+      "limitations": [
+        "No original DOA6 G1A containers or source skeleton supplied; completeness and direct DOA6 identity remain author-described.",
+        "162 source clips include 16 custom variants; do not describe all as unmodified native animations.",
+        "Every original IFP remains available by relative path and SHA for Main conversion.",
+        "A 162-clip core-rotation retarget candidate was structurally read back but rejected by visual WebGL review: sampled poses are horizontally inverted or severely contorted on the target bind pose.",
+        "The rejected candidate, source analysis and rendering evidence remain preserved locally and must be archived as legacy material; it is not runtime-ready, selectable, or event-bound."
+      ],
+      "retargetValidation": {
+        "path": "retarget-validation.json",
+        "sha256": "c0ce365e2f4d443f3856ea90c54e4bc9d8551139b2d393eeef9a3535b63ce103",
+        "outcome": "rejected-visual",
+        "runtimeRegistrationAllowed": false
+      },
+      "purchaseDecision": "hold-purchase-review-free-source",
+      "reuseTerms": "來源作者、版本與公開下載頁已保存；公開下載不等於跨遊戲轉換或再散布授權。",
+      "usage": "intake-only; rejected animation candidate has no automatic runtime selection",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/mai-doa6-gtasa-gtav06-motion/ede2c28779a95538105c6dacd11eb6d2196eba87c5f97d4f1f21a6891c99dfc3.zip",
+        "bytes": 17265101,
+        "sha256": "ede2c28779a95538105c6dacd11eb6d2196eba87c5f97d4f1f21a6891c99dfc3",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
