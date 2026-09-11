@@ -149,7 +149,15 @@ def validate(paths):
     #    而它是 `.mjs` ⇒ vitest／tsc 掃得到 ⇒ ⛔ 會變成一個看起來很怪的假紅。
     #    ⭐ 固定名字讓「上一次被中斷」這件事**自動被下一次蓋掉**。
     #    （2026-09-11 實際撿到 4 顆 `tmp*.mjs`，全是我中斷的那幾次留下的。）
-    tmp = os.path.join(shared, ".ggd-gltf-validate.tmp.mjs")
+    #    ⇒ ⭐ 落點選 `node_modules/.cache/`：node 解析 `gltf-validator` 時會**往上走**
+    #      （`.cache/node_modules` → `node_modules/node_modules` → `packages/shared/node_modules` ✔），
+    #      ⭐ 而 `node_modules/` 本來就不是原始碼、也已經被 gitignore
+    #      ⇒ ⛔ 不會被 `gitignoreDoesNotEatSources` 判成「被吃掉的原始碼」。
+    #      ⚠️ 放在 `packages/shared/` 底下並加進 .gitignore **是錯的**（我 2026-09-11 試過）：
+    #      那條閘問的正是「本機有、git 沒有」的 .mjs —— ⭐ 它做得對，⛔ 錯的是落點。
+    cache = os.path.join(shared, "node_modules", ".cache")
+    os.makedirs(cache, exist_ok=True)
+    tmp = os.path.join(cache, "ggd-gltf-validate.mjs")
     with open(tmp, "w", encoding="utf-8") as fh:
         fh.write(script)
     try:
