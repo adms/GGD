@@ -250,8 +250,13 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "screenFlash",
         "screenShake",
         "spawnModelFx",
+        // ⭐ GH#1190 鄂爾 Q【暫時障礙】—— 技能生出來的**真碰撞**圓柱。
+        //   ⚠️ 照這張名單上面的告誡：補 tag **不是修好**（`PreviewController.effectLines`
+        //   也學了它，`AbilityTerrainFx` 則負責把它畫出來）。
         "spawnObstacle",
         "spawnProjectile",
+        // ⭐ GH#1197 瑟雷西 R【邊界陣】—— ⚠️ 它在 union 裡**已經一陣子了**，
+        //   而這張名單一直沒補 ⇒ 這條絆線從那時起就紅著（⛔ 不是這一次新長出來的）。
         "spawnThresholds",
         "spawnVfx",
         "spendHealth",

@@ -92,14 +92,9 @@ const KNOWN_MISSING_GLB: readonly string[] = [
   "community-review-31-20260907",
   "community-review-32-20260907",
   "community-review-35-20260907",
-  // ── lol-*（GH#1158 七名：已入庫，⛔ 而「正式發布」那一步是 0/7）
-  "lol-karthus",
-  "lol-leesin",
-  "lol-lux",
-  "lol-missfortune",
-  "lol-warwick",
-  "lol-xerath",
-  "lol-yasuo",
+  // ── lol-* —— ⭐ **2026-09-11 七名全部找回來了**（合併 `codex/community-acquired-heroes`：
+  //   那條分支帶的 34 顆 GLB 裡有 7 顆正好是他們缺的）⇒ ⛔ 這一群已經空了。
+  //   ⭐ 而這條閘**正確地叫了**：它要求修好的那幾支從名單上劃掉，⛔ 不是留著變成過期的散文。
 ];
 
 interface HeroModel {

@@ -800,8 +800,8 @@ export function AbilityBar(): React.JSX.Element | null {
               <PassiveIcdChip slot={slot} size={m.s(9)} />
               {/* ⭐ GH#1208 —— 後段角標（還剩幾段／幾秒）。⛔ 直讀權威 seat 欄位，沒有本地預測。 */}
               <RecastChip
-                charges={learned ? (seat.recastCharges[i] ?? 0) : 0}
-                windowTicks={seat.recastWindow[i] ?? 0}
+                charges={learned ? (seat.recastCharges?.[i] ?? 0) : 0}
+                windowTicks={seat.recastWindow?.[i] ?? 0}
                 size={m.s(11)}
               />
               {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
