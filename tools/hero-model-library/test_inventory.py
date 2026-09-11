@@ -35,6 +35,18 @@ class InventoryHandoff(unittest.TestCase):
         self.assertLess(source_release_rank(older), source_release_rank({}))
         self.assertEqual(source_release_rank({'sourceGameReleasedAt':'2026-02-31'}),0)
 
+    def test_not_alias_cannot_attach_a_source_to_a_different_character(self):
+        from query import public_match_scope, source_matches
+        vearn_source = {
+            'id': 'vearn-research',
+            'heroIds': ['godie-ubal'],
+            'target': '巴恩大魔王',
+            'notAliases': ['Baran', '巴蘭', 'バラン'],
+        }
+        self.assertTrue(source_matches(vearn_source, '巴恩'))
+        self.assertFalse(source_matches(vearn_source, '巴蘭'))
+        self.assertEqual(public_match_scope([vearn_source], '巴蘭'), (set(), set()))
+
     def test_links_and_approved_defaults_are_complete(self):
         inventory = json.loads((DATA/'inventory.json').read_text())
         sources = json.loads((DATA/'download-sources.json').read_text())

@@ -19,12 +19,30 @@ def candidate_matches(candidate, query):
     return query in json.dumps([candidate.get(k) for k in fields],ensure_ascii=False).casefold()
 
 
+def source_matches(source, query):
+    """Match a source without treating an explicit identity exclusion as a hit.
+
+    ``notAliases`` records names which occurred during provenance research but
+    are explicitly *not* the source character.  It must remain searchable as
+    evidence in the raw index, while the public query entry point must not use
+    it to attach this source's hero IDs to another character.
+    """
+    if not query:
+        return True
+    if query == str(source.get('id', '')).casefold():
+        return True
+    excluded = {str(alias).casefold() for alias in source.get('notAliases', [])}
+    if query in excluded:
+        return False
+    return query in json.dumps(source, ensure_ascii=False).casefold()
+
+
 def public_match_scope(sources, query):
     hero_ids, entry_ids = set(), set()
     for source in sources:
         scoped = source.get('characters',[]) + source.get('modelCandidates',[])
         characters = [c for c in scoped if candidate_matches(c,query)]
-        matches = characters or ([source] if query in json.dumps(source,ensure_ascii=False).casefold() else [])
+        matches = characters or ([source] if source_matches(source, query) else [])
         for match in matches:
             hero_ids.update(match.get('heroIds',[]))
             entry_ids.update(match.get('ownerEntryIds',[]))
@@ -74,10 +92,11 @@ def main():
         # Keep deliveries outside the owner's original download list visible too.
         source_ids={sid for e in records for sid in e.get('acquiredSourceIds',[])}
         deliveries=[s for s in acquired_sources(data['downloadPlan'])
-            if s['id'] in source_ids or not query or query in json.dumps(s,ensure_ascii=False).casefold()]
+            if s['id'] in source_ids or source_matches(s, query)]
         delivery_ids={s['id'] for s in deliveries}
         lead_ids={sid for e in records for sid in e.get('publicSourceLeadIds',[])}
-        leads=[s for s in data['downloadPlan'].get('publicSourceLeads',[]) if s['id'] in lead_ids or not query or query in json.dumps(s,ensure_ascii=False).casefold()]
+        leads=[s for s in data['downloadPlan'].get('publicSourceLeads',[])
+               if s['id'] in lead_ids or source_matches(s, query)]
         if args.json:
             print(json.dumps({'release':data['release'], 'purchasePolicy':data['downloadPlan'].get('purchasePolicy',{}), 'ingestionPolicy':data['downloadPlan'].get('ingestionPolicy',{}), 'entries':records,
                 'publicSourceLeads':leads,
