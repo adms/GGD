@@ -340,7 +340,12 @@ services:
       dockerfile: docker/content-api.Dockerfile
     environment:
       APP_ENV: development
-      CONTENT_DIR: /srv/content
+      # ⭐ GH#1235 —— 程式讀的是 `GGD_CONTENT_DIR`（apps/content-api/src/index.ts:25）。
+      #    ⛔ 在此之前這裡設的是 `CONTENT_DIR` ⇒ 那個 bind mount 對 content-api **等於沒作用**，
+      #    它會安靜地退回映像裡的相對路徑 —— ⭐ 壞掉跟正常長得一模一樣。
+      #    ⚠️ 第 63／129 行的 `CONTENT_DIR` 是給 platform／game 的，⛔ 不要順手一起改：
+      #    game 真的讀 `process.env.CONTENT_DIR`（heroModelHealth.ts）。
+      GGD_CONTENT_DIR: /srv/content
     ports:
       - "127.0.0.1:8787:8787"
     volumes:
