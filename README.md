@@ -2188,7 +2188,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | **Sela, the Ember Sage**<br>`sela` | — | — | — | Ember Bolt | Cinder Ward | Scorch Ring | Firestorm | — |
 | **Thorne, the Bramble Knight**<br>`thorne` | — | — | — | Thorn Lash | Barkskin Bulwark | Root Snare | Bramble Burst | — |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_824afa79978e` 產生。 全量 153 名，其中開放 130 名。完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_6fbc4aae62ba` 產生。 全量 153 名，其中開放 130 名。完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:all-heroes -->
 
 <!-- BEGIN GENERATED:abilities -->

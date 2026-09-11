@@ -128,16 +128,21 @@ async function request(route: string, token: string | null, options: { method?: 
 }
 const json = async (route: string, token: string | null, options?: Parameters<typeof request>[2]): Promise<unknown> => (await request(route, token, options)).json();
 const login = async (username: string): Promise<Actor> => await json("/auth/login", null, { body: { username, password } }) as Actor;
-// A batch is bounded well inside the platform's 15-minute access-token TTL.
-// Sharing one in-flight login per account avoids turning a successful fast
-// importer into an authentication-rate-limit test. Server-side authorization
-// still runs for every request and any expired token fails closed.
-const actorLogins = new Map<string, Promise<Actor>>();
+// Long release batches can exceed the platform's 15-minute access-token TTL.
+// Share a recent login (and its in-flight request), then refresh it well before
+// expiry so a slow importer is not misreported as a failed hero submission.
+const ACTOR_CACHE_MS = 5 * 60_000;
+type CachedActor = { createdAt: number; pending: Promise<Actor> };
+const actorLogins = new Map<string, CachedActor>();
 const actorFor = (username: string): Promise<Actor> => {
+  const now = Date.now();
   const existing = actorLogins.get(username);
-  if (existing) return existing;
+  if (existing && now - existing.createdAt < ACTOR_CACHE_MS) return existing.pending;
   const pending = login(username);
-  actorLogins.set(username, pending);
+  actorLogins.set(username, { createdAt: now, pending });
+  void pending.catch(() => {
+    if (actorLogins.get(username)?.pending === pending) actorLogins.delete(username);
+  });
   return pending;
 };
 async function existingWork(workId: string, token: string): Promise<ReturnType<typeof zHeroWork.parse> | null> {
@@ -229,9 +234,8 @@ try {
       const project = input.project;
       assert(project.acceptedPlan, `${project.projectId} has no accepted plan.`);
       for (const slot of HERO_SLOTS) assert(project.acceptedPlan.slots[slot], `${project.projectId} is missing ${slot}.`);
-      // The platform access token is intentionally short-lived. A large batch
-      // must prove the whole workflow without treating an expired test session
-      // as a hero failure, so each independent work starts with a fresh login.
+      // actorFor refreshes the short-lived platform access token throughout a
+      // large batch without issuing one login for every individual request.
       const author = await actorFor(receipt.author);
       const bytes = await modelBytes(project);
       if (project.presentation.uploadedModel && bytes) {

@@ -132,7 +132,7 @@ describe("hero product condition editing", () => {
       return createElement(HeroSlotEditor, { project: value, slot: "W", templates, errors: {}, onChange(next: HeroProject) { project = next; setValue(next); } });
     }
     const form = mount(createElement(Host));
-    form.enter(form.field("acceptedPlan.slots.W.abilityOverrides.effects.0.amount.flat"), "175");
+    form.enter(form.field("acceptedPlan.slots.W.products.0.template.params.amount.flat"), "175");
     form.enter(form.field("acceptedPlan.slots.W.abilityOverrides.cooldownTier"), "中");
     const reopened = zHeroProject.parse(JSON.parse(JSON.stringify(project)));
     const materialized = compileHeroPackageProject(reopened, catalog, false);
