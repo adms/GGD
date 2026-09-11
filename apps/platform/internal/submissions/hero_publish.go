@@ -288,7 +288,16 @@ func (s *HeroService) Publish(ctx context.Context, id, operationID, action, reas
 	if err != nil {
 		return fail(err)
 	}
-	checked, err := s.bridge.Inspect(ctx, archive)
+	var checked HeroInspection
+	if snapshot.CanonicalTakeover {
+		bridge, ok := s.bridge.(HeroTakeoverBridge)
+		if !ok {
+			return fail(httpx.Err(503, "hero_takeover_unavailable", "英雄 canonical 接管服務未設定。"))
+		}
+		checked, err = bridge.InspectTakeover(ctx, snapshot.WorkID, archive)
+	} else {
+		checked, err = s.bridge.Inspect(ctx, archive)
+	}
 	if err != nil {
 		return fail(err)
 	}
@@ -296,7 +305,12 @@ func (s *HeroService) Publish(ctx context.Context, id, operationID, action, reas
 		return fail(heroConflict("重驗結果已漂移，不能替换真人審查的快照。"))
 	}
 	placementID := "hero-publish-" + strings.TrimPrefix(heroHash([]string{snapshot.WorkID, operationID}), "sha256:")[:40]
-	version, err := s.bridge.Prepare(ctx, snapshot.WorkID, placementID, archive)
+	var version HeroStoredVersion
+	if snapshot.CanonicalTakeover {
+		version, err = s.bridge.(HeroTakeoverBridge).PrepareTakeover(ctx, snapshot.WorkID, placementID, archive)
+	} else {
+		version, err = s.bridge.Prepare(ctx, snapshot.WorkID, placementID, archive)
+	}
 	if err != nil {
 		return fail(err)
 	}

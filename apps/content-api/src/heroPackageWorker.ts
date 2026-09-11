@@ -37,16 +37,17 @@ try {
     const documents = new Map(COLLECTION_NAMES.flatMap((collection) => loaded.store.all<Record<string, unknown>>(collection).map((doc) => [`${collection}/${doc.id}`, doc] as const)));
     catalog = { ...catalog, documents };
   }
+  if (job.canonicalTakeoverId) catalog = { ...catalog, canonicalTakeoverId: job.canonicalTakeoverId };
   const templateStore = new ImportStore({ dir: job.templateHistoryDir ?? resolve(root, "..", "data", "content-backups", "hero-catalog-versions") });
   retainHeroTemplates(templateStore, [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc));
   catalog = { ...catalog, resolveTemplateVersion: (id, digest) => readHeroTemplateVersion(templateStore, id, digest) };
   if (job.kind === "build") {
     if ((project as { presentation?: { uploadedModel?: unknown } } | null)?.presentation?.uploadedModel && catalog.documents.get("config/ugc")?.heroModelUploadsEnabled === false) throw new Error("目前未開放新的英雄模型上傳，原檔仍保存在草稿。");
-    catalog = await withUploadedHeroModel(catalog, project, job.sourcePackage);
+    catalog = await withUploadedHeroModel(catalog, project, job.sourcePackage, Boolean(job.canonicalTakeoverId));
   } else {
     const pkg = zEditorImportPackage.parse(job.input.raw);
     const roots = pkg.documents.filter((entry) => entry.path.startsWith("authoring/hero-projects/"));
-    if (roots.length === 1) catalog = await withUploadedHeroModel(catalog, roots[0]!.document, pkg);
+    if (roots.length === 1) catalog = await withUploadedHeroModel(catalog, roots[0]!.document, pkg, Boolean(job.canonicalTakeoverId));
   }
   const result = job.kind === "build"
     ? buildHeroImportPackage(project, catalog, job.target)

@@ -22,7 +22,7 @@ export function HeroAccountBar() {
   }}><label>遊戲帳號<input autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} /></label><label>密碼<input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} /></label><button disabled={busy || !username || !password}>登入以同步與投稿</button>{error ? <p role="alert">{error}</p> : null}</form>;
 }
 
-export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayload; prepared: { zip: Blob; inspection: HeroPackageInspection } | null }) {
+export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayload; prepared: { zip: Blob; inspection: HeroPackageInspection; canonicalTakeover?: boolean } | null }) {
   const { account } = useHeroAccount(); const [busy, setBusy] = useState(false); const [message, setMessage] = useState<string | null>(null);
   const [conflict, setConflict] = useState<HeroWork | null>(null); const [review, setReview] = useState<HeroReviewView | null>(null); const [allowRemix, setAllowRemix] = useState(value.submission?.allowAttributionRemix ?? false);
   const [policy, setPolicy] = useState<HeroIntakePolicy | null>(null);
@@ -69,11 +69,12 @@ export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayloa
         const prior = current.submission;
         const submission = prior?.packageDigest === prepared.inspection.packageDigest && prior.allowAttributionRemix === allowRemix ? prior : { operationId: crypto.randomUUID(), packageDigest: prepared.inspection.packageDigest, allowAttributionRemix: allowRemix };
         state.commit({ ...current, submission }); await autosave.flush();
-        const response = await heroPlatform.binaryResponse("/hero-submissions", prepared.zip, { contentType: "application/zip", headers: { "x-ggd-work-id": value.project.projectId, "x-ggd-operation-id": submission.operationId, "x-ggd-allow-attribution-remix": String(allowRemix) } });
+        if (prepared.canonicalTakeover && account.roles?.includes("admin") !== true) throw new Error("這份 canonical 接管 ZIP 只能由管理員送審。");
+        const response = await heroPlatform.binaryResponse(prepared.canonicalTakeover ? "/admin/hero-submissions/takeover" : "/hero-submissions", prepared.zip, { contentType: "application/zip", headers: { "x-ggd-work-id": value.project.projectId, "x-ggd-operation-id": submission.operationId, "x-ggd-allow-attribution-remix": String(allowRemix) } });
         const snapshot = zHeroSnapshot.parse(await response.json());
         const latest = useHeroStore.getState(); if (latest.value?.project.projectId === value.project.projectId) latest.commit({ ...latest.value, submission: { ...submission, id: snapshot.id } });
         await readReview(snapshot.id); setMessage("完整英雄已送審，後續修改會保留在草稿，不會改寫這份投稿。");
-      })}>提交這份完整英雄審查</button>
+      })}>{prepared?.canonicalTakeover ? "提交 canonical 接管審查" : "提交這份完整英雄審查"}</button>
       {!prepared ? <p>先建立完整英雄 ZIP，檢查正規化圖片後即可投稿。</p> : null}
       {prepared && policy && prepared.zip.size > archiveLimit ? <p role="alert">目前 ZIP 超過投稿大小上限；原稿與本機匯出仍可保存。</p> : null}
       {conflict ? <HeroDraftConflictView local={value} remote={conflict} busy={busy} onChoose={(choice) => void run(async () => {

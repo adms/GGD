@@ -28,4 +28,13 @@ it("compiles an uploaded body with its historical template and trusted generator
   expect(result.compiled.champion.modelKey).toBe(prepared.document.id);
   expect(() => compileHeroPackageProject(project, { ...merged, resolveTemplateVersion: undefined }, false)).toThrow("模板");
   expect(catalog.documents.has(`models/${prepared.document.id}`)).toBe(false);
+
+  const publishedDocuments = new Map(trusted.documents);
+  publishedDocuments.set(`models/${prepared.document.id}`, prepared.document);
+  await expect(withUploadedHeroModel({ ...trusted, documents: publishedDocuments }, project, source)).rejects.toThrow("不能覆蓋");
+  const takeover = await withUploadedHeroModel({ ...trusted, documents: publishedDocuments }, project, source, true);
+  expect(takeover.validatedUploadedModel).toEqual({ projectId: project.projectId, model: prepared.model });
+  const conflictingDocuments = new Map(publishedDocuments);
+  conflictingDocuments.set(`models/${prepared.document.id}`, { ...prepared.document, yawOffsetDeg: 30 });
+  await expect(withUploadedHeroModel({ ...trusted, documents: conflictingDocuments }, project, source, true)).rejects.toThrow("內容不同");
 });

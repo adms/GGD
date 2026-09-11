@@ -14,6 +14,15 @@ const target = { gameRevision: "fixture-revision", contentVersion: "fixture-cont
 const project = heroPackageProject(catalog);
 
 describe("complete hero through Main's package representation", () => {
+  it("allows only the exact server-authorized canonical takeover identity", () => {
+    const occupied = new Map(catalog.documents);
+    occupied.set(`champions/${project.projectId}`, { id: project.projectId, schema: "champion@1" });
+    expect(() => compileHeroPackageProject(project, { ...catalog, documents: occupied }, false)).toThrow("不能佔用既有官方英雄");
+    expect(compileHeroPackageProject(project, { ...catalog, documents: occupied, canonicalTakeoverId: project.projectId }, false).project.projectId).toBe(project.projectId);
+    expect(() => compileHeroPackageProject(project, { ...catalog, documents: occupied, canonicalTakeoverId: "another-hero" }, false)).toThrow("授權的接管身分");
+    expect(() => compileHeroPackageProject(project, { ...catalog, canonicalTakeoverId: project.projectId }, false)).toThrow("只能用於既有正式英雄");
+  });
+
   it("round trips a generated counterpart as owned content and rejects an existing identity collision", async () => {
     const authored = structuredClone(project);
     authored.acceptedPlan!.slots.Q.products = [{ instanceId: "form", template: { ref: "tpl-transform", inheritDefaults: true, params: {} } }];
@@ -27,6 +36,10 @@ describe("complete hero through Main's package representation", () => {
     expect(validated.result!.compiled.champion.transform?.counterpartId).toBe(alternate.id);
     const occupied = new Map(catalog.documents); occupied.set(`champions/${alternate.id}`, { ...alternate });
     expect(() => compileHeroPackageProject(authored, { ...catalog, documents: occupied }, false)).toThrow("身分衝突");
+    occupied.set(`champions/${authored.projectId}`, { id: authored.projectId, schema: "champion@1" });
+    expect(compileHeroPackageProject(authored, { ...catalog, documents: occupied, canonicalTakeoverId: authored.projectId }, false).compiled.relatedChampions[0]?.id).toBe(alternate.id);
+    occupied.set(`champions/${alternate.id}`, { ...alternate, transform: { role: "alternate", counterpartId: "some-other-hero" } });
+    expect(() => compileHeroPackageProject(authored, { ...catalog, documents: occupied, canonicalTakeoverId: authored.projectId }, false)).toThrow("身分衝突");
   });
   const buildSources = { generatorVersion: `sha256:${"a".repeat(64)}`, processorVersion: `sha256:${"b".repeat(64)}`, processorFingerprint: "123456abcdef" };
   const versionedCatalog = { ...catalog, buildSources };

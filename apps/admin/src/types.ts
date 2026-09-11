@@ -7,7 +7,7 @@ export interface TokenPair {
 }
 
 export interface SessionResp {
-  account: { id: string; username: string };
+  account: { id: string; username: string; roles?: string[] };
   tokens: TokenPair;
 }
 

@@ -29,6 +29,7 @@ import { uploadedHeroModelDoc } from "../modelUpload/heroModel";
 import type { UploadedHeroModel } from "../modelUpload/heroModelSchema";
 import type { HeroTemplateProduct } from "../heroForge/plan";
 import { zHeroBuildProvenance, type HeroBuildProvenance } from "./heroBuildProvenance";
+import { heroCounterpartId } from "../heroForge/forms";
 
 export const HERO_PACKAGE_COLLECTION = "hero-projects";
 export const HERO_RESOLVER_CONFIG_IDS = [
@@ -58,6 +59,8 @@ export interface HeroPackageCatalog {
   readAsset: (path: string) => Uint8Array | undefined;
   /** Added by Main after checking the GLB; never populated from submitted metadata alone. */
   validatedUploadedModel?: { projectId: string; model: UploadedHeroModel };
+  /** Exact canonical hero identity authorized by the server-side admin takeover route. */
+  canonicalTakeoverId?: string;
 }
 export interface HeroPackageTarget {
   gameRevision: string;
@@ -85,7 +88,10 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   if (!project.acceptedPlan) throw new Error("英雄尚未接受完整六槽方案。");
   if (project.acceptedPlan.generatorVersion && catalog.buildSources && project.acceptedPlan.generatorVersion !== catalog.buildSources.generatorVersion) throw new Error("生成器版本已變更；請保留原草稿，明確採用目前生成器並重新檢查後再投稿。");
   const buildProvenance = catalog.buildSources ? zHeroBuildProvenance.parse({ schema: "ggd-hero-build-provenance@1", ...catalog.buildSources, planGeneratorVersion: project.acceptedPlan.generatorVersion ?? null }) : undefined;
-  if (catalog.documents.has(`champions/${project.projectId}`)) throw new Error("社群作品不能佔用既有官方英雄的身分，請建立改作草稿。");
+  const existingCanonical = catalog.documents.has(`champions/${project.projectId}`);
+  if (catalog.canonicalTakeoverId && catalog.canonicalTakeoverId !== project.projectId) throw new Error("管理員授權的接管身分與英雄來源不一致。");
+  if (catalog.canonicalTakeoverId && !existingCanonical) throw new Error("管理員接管只能用於既有正式英雄的 canonical ID。");
+  if (existingCanonical && catalog.canonicalTakeoverId !== project.projectId) throw new Error("社群作品不能佔用既有官方英雄的身分，請建立改作草稿。");
   if (project.presentation.uploadedModel) {
     const body = uploadedHeroModelDoc(project.presentation.uploadedModel), verified = catalog.validatedUploadedModel;
     if (!verified || verified.projectId !== project.projectId || contentSha256(verified.model) !== contentSha256(project.presentation.uploadedModel) || project.presentation.modelKey !== body.id || contentSha256(catalog.documents.get(`models/${body.id}`) ?? null) !== contentSha256(body)) throw new Error("上傳模型尚未通過這份英雄的資產檢查，或動作對應已變更。");
@@ -128,7 +134,14 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   if (!result.ok) throw new Error(result.failures.map((failure) => `${failure.slot}: ${failure.message}`).join("；"));
   const compiled = result.draft;
   for (const body of compiled.relatedChampions) {
-    if (catalog.documents.has(`champions/${body.id}`)) throw new Error(`生成的英雄對應體與既有內容身分衝突：${body.id}`);
+    const existing = catalog.documents.get(`champions/${body.id}`);
+    if (!existing) continue;
+    const transform = existing.transform as { role?: unknown; counterpartId?: unknown } | undefined;
+    const ownsExistingCounterpart = catalog.canonicalTakeoverId === project.projectId
+      && body.id === heroCounterpartId(project.projectId)
+      && transform?.role === "alternate"
+      && transform.counterpartId === project.projectId;
+    if (!ownsExistingCounterpart) throw new Error(`生成的英雄對應體與既有內容身分衝突：${body.id}`);
   }
   // Named counters and buffs may be declared by this kit itself. They do not
   // need a separate status-effects document; missing visual assets still do.

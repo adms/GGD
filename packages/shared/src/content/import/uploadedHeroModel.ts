@@ -3,9 +3,10 @@ import { zEditorImportPackage } from "./packageSchema";
 import type { HeroPackageCatalog } from "./heroPackage";
 import { uploadedHeroModelPath } from "../modelUpload/heroModelSchema";
 import { verifyUploadedHeroModel } from "../modelUpload/heroModel";
+import { contentSha256 } from "./jcs";
 
 /** Per-request catalog overlay. No global approval, disk write, or shipping mutation. */
-export async function withUploadedHeroModel(catalog: HeroPackageCatalog, rawProject: unknown, rawPackage: unknown): Promise<HeroPackageCatalog> {
+export async function withUploadedHeroModel(catalog: HeroPackageCatalog, rawProject: unknown, rawPackage: unknown, allowExistingIdentical = false): Promise<HeroPackageCatalog> {
   const project = zHeroProject.parse(rawProject), model = project.presentation.uploadedModel;
   if (!model) return catalog;
   const pkg = zEditorImportPackage.parse(rawPackage), path = uploadedHeroModelPath(model);
@@ -14,7 +15,9 @@ export async function withUploadedHeroModel(catalog: HeroPackageCatalog, rawProj
   if (candidates.length !== 1 || !asset || asset.path !== path || !(asset.bytes instanceof Uint8Array)) throw new Error("完整英雄需包含唯一且相符的上傳 GLB。");
   const verified = await verifyUploadedHeroModel(model, asset.bytes);
   if (project.presentation.modelKey !== verified.document.id) throw new Error("英雄模型身分與動作對應不符。");
-  if (catalog.documents.has(`models/${verified.document.id}`)) throw new Error("上傳模型不能覆蓋既有內容目錄。");
+  const existing = catalog.documents.get(`models/${verified.document.id}`);
+  if (existing && !allowExistingIdentical) throw new Error("上傳模型不能覆蓋既有內容目錄。");
+  if (existing && contentSha256(existing) !== contentSha256(verified.document)) throw new Error("canonical 接管引用的既有模型身分相同但內容不同。");
   const documents = new Map(catalog.documents);
   documents.set(`models/${verified.document.id}`, verified.document);
   const bytes = asset.bytes.slice();

@@ -35,6 +35,15 @@ type HeroAuthoringBridge interface {
 	Build(context.Context, []byte) ([]byte, error)
 }
 
+// HeroTakeoverBridge is reachable only from platform admin handlers. The
+// distinct signed paths keep canonical takeover authority out of ZIP metadata
+// and out of every ordinary authoring request.
+type HeroTakeoverBridge interface {
+	BuildTakeover(context.Context, string, []byte) ([]byte, error)
+	InspectTakeover(context.Context, string, []byte) (HeroInspection, error)
+	PrepareTakeover(context.Context, string, string, []byte) (HeroStoredVersion, error)
+}
+
 // Catalog uses the same signed private transport as approved hero packages.
 // The platform supplies the overlay snapshot; the private service only prepares
 // immutable data and cannot activate the production overlay.
@@ -54,6 +63,10 @@ func (b *contentAPIHeroBridge) Target(ctx context.Context) (json.RawMessage, err
 }
 func (b *contentAPIHeroBridge) Build(ctx context.Context, source []byte) ([]byte, error) {
 	raw, _, err := b.request(ctx, http.MethodPost, "/hero-package", "application/zip", source, nil, MaxHeroArchiveBytes)
+	return raw, err
+}
+func (b *contentAPIHeroBridge) BuildTakeover(ctx context.Context, workID string, source []byte) ([]byte, error) {
+	raw, _, err := b.request(ctx, http.MethodPost, "/admin/hero-package-takeover", "application/zip", source, map[string]string{"x-ggd-work-id": workID}, MaxHeroArchiveBytes)
 	return raw, err
 }
 
@@ -133,8 +146,18 @@ func signHeroImport(req *http.Request, input []byte, secret string, now int64) {
 	req.Header.Set("x-ggd-import-auth", hex.EncodeToString(mac.Sum(nil)))
 }
 func (b *contentAPIHeroBridge) Inspect(ctx context.Context, archive []byte) (HeroInspection, error) {
+	return b.inspect(ctx, "/inspect-hero-package", "", archive)
+}
+func (b *contentAPIHeroBridge) InspectTakeover(ctx context.Context, workID string, archive []byte) (HeroInspection, error) {
+	return b.inspect(ctx, "/admin/inspect-hero-package-takeover", workID, archive)
+}
+func (b *contentAPIHeroBridge) inspect(ctx context.Context, path, workID string, archive []byte) (HeroInspection, error) {
 	var inspection HeroInspection
-	raw, _, err := b.request(ctx, http.MethodPost, "/inspect-hero-package", "application/zip", archive, nil, 4<<20)
+	headers := map[string]string(nil)
+	if workID != "" {
+		headers = map[string]string{"x-ggd-work-id": workID}
+	}
+	raw, _, err := b.request(ctx, http.MethodPost, path, "application/zip", archive, headers, 4<<20)
 	if err != nil {
 		return inspection, err
 	}
@@ -154,12 +177,18 @@ func (b *contentAPIHeroBridge) Inspect(ctx context.Context, archive []byte) (Her
 	return inspection, err
 }
 func (b *contentAPIHeroBridge) Prepare(ctx context.Context, workID, operationID string, archive []byte) (HeroStoredVersion, error) {
+	return b.prepare(ctx, "/prepare-work", workID, operationID, archive)
+}
+func (b *contentAPIHeroBridge) PrepareTakeover(ctx context.Context, workID, operationID string, archive []byte) (HeroStoredVersion, error) {
+	return b.prepare(ctx, "/admin/prepare-work-takeover", workID, operationID, archive)
+}
+func (b *contentAPIHeroBridge) prepare(ctx context.Context, path, workID, operationID string, archive []byte) (HeroStoredVersion, error) {
 	var result struct {
 		Schema  string            `json:"schema"`
 		Status  string            `json:"status"`
 		Version HeroStoredVersion `json:"version"`
 	}
-	raw, _, err := b.request(ctx, http.MethodPost, "/prepare-work", "application/zip", archive, map[string]string{"x-ggd-work-id": workID, "x-ggd-operation-id": operationID}, 2<<20)
+	raw, _, err := b.request(ctx, http.MethodPost, path, "application/zip", archive, map[string]string{"x-ggd-work-id": workID, "x-ggd-operation-id": operationID}, 2<<20)
 	if err != nil {
 		return result.Version, err
 	}

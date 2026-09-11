@@ -68,6 +68,9 @@ func (h *HeroHandlers) Mount(r chi.Router) {
 	r.Post("/hero-submissions/{id}/withdraw", h.withdraw)
 	r.Group(func(admin chi.Router) {
 		admin.Use(h.adminOnly)
+		admin.Post("/admin/hero-import/build", h.buildTakeover)
+		admin.Post("/admin/hero-import/inspect", h.inspectTakeover)
+		admin.Post("/admin/hero-submissions/takeover", h.submitTakeover)
 		admin.Get("/admin/hero-submissions", h.queue)
 		admin.Get("/admin/hero-submissions/{id}", h.review)
 		admin.Get("/admin/hero-submissions/{id}/package", h.adminPackage)
@@ -175,6 +178,27 @@ func (h *HeroHandlers) build(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	_, _ = w.Write(result)
 }
+
+func (h *HeroHandlers) buildTakeover(w http.ResponseWriter, r *http.Request) {
+	bridge, ok := h.svc.bridge.(HeroTakeoverBridge)
+	if !ok {
+		heroError(w, httpx.Err(503, "hero_takeover_unavailable", "英雄 canonical 接管服務未設定。"))
+		return
+	}
+	archive, err := readHeroArchive(w, r)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	result, err := bridge.BuildTakeover(r.Context(), r.Header.Get("x-ggd-work-id"), archive)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/zip")
+	w.WriteHeader(200)
+	_, _ = w.Write(result)
+}
 func (h *HeroHandlers) inspect(w http.ResponseWriter, r *http.Request) {
 	if !h.ugcGate(w) {
 		return
@@ -189,6 +213,25 @@ func (h *HeroHandlers) inspect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	result, err := h.svc.bridge.Inspect(r.Context(), archive)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, 200, result)
+}
+
+func (h *HeroHandlers) inspectTakeover(w http.ResponseWriter, r *http.Request) {
+	bridge, ok := h.svc.bridge.(HeroTakeoverBridge)
+	if !ok {
+		heroError(w, httpx.Err(503, "hero_takeover_unavailable", "英雄 canonical 接管服務未設定。"))
+		return
+	}
+	archive, err := readHeroArchive(w, r)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	result, err := bridge.InspectTakeover(r.Context(), r.Header.Get("x-ggd-work-id"), archive)
 	if err != nil {
 		heroError(w, err)
 		return
@@ -288,6 +331,29 @@ func (h *HeroHandlers) submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	out, err := h.svc.Submit(r.Context(), auth.MustIdentity(r.Context()).AccountID, r.Header.Get("x-ggd-work-id"), r.Header.Get("x-ggd-operation-id"), archive, allow == "true")
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, 200, out)
+}
+
+func (h *HeroHandlers) submitTakeover(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("Content-Type") != "application/zip" {
+		heroError(w, httpx.BadRequest("完整英雄需要 ZIP。"))
+		return
+	}
+	allow := r.Header.Get("x-ggd-allow-attribution-remix")
+	if allow != "true" && allow != "false" {
+		heroError(w, httpx.BadRequest("請明確選擇是否允許署名改作。"))
+		return
+	}
+	archive, err := io.ReadAll(http.MaxBytesReader(w, r.Body, MaxHeroArchiveBytes))
+	if err != nil {
+		heroError(w, httpx.BadRequest("英雄 ZIP 超過大小限制或傳輸不完整。"))
+		return
+	}
+	out, err := h.svc.SubmitTakeover(r.Context(), auth.MustIdentity(r.Context()).AccountID, r.Header.Get("x-ggd-work-id"), r.Header.Get("x-ggd-operation-id"), archive, allow == "true")
 	if err != nil {
 		heroError(w, err)
 		return
