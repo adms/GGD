@@ -78,10 +78,16 @@ describe("roster audit follows frozen model provenance", () => {
     expect(report.skeletonStaleDeclarations).toEqual([HERO]);
   });
 
-  it.each([
+  const invalidProvenanceCases: Array<{
+    name: string;
+    models: Record<string, object>;
+    message: string;
+  }> = [
     { name: "missing source document", models: { [ACTIVE]: { bodyVersion: { sourceModelKey: "community.body.missing" } } }, message: "Missing model document" },
     { name: "provenance cycle", models: { [ACTIVE]: { bodyVersion: { sourceModelKey: "version.body.loop" } }, "version.body.loop": { bodyVersion: { sourceModelKey: ACTIVE } } }, message: "Model provenance cycle" },
-  ])("fails visibly on $name rather than counting the hero as completed", ({ models, message }) => {
+  ];
+
+  it.each(invalidProvenanceCases)("fails visibly on $name rather than counting the hero as completed", ({ models, message }) => {
     const result = auditFixture(models);
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain(HERO);
