@@ -12357,7 +12357,8 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "unclassified": 223
+        "sound-effect": 13,
+        "voice-source-label-unreviewed": 210
       }
     },
     {
@@ -12389,7 +12390,8 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "unclassified": 261
+        "sound-effect": 14,
+        "voice-source-label-unreviewed": 247
       }
     },
     {
@@ -12421,7 +12423,8 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "unclassified": 217
+        "sound-effect": 3,
+        "voice-source-label-unreviewed": 214
       }
     },
     {
@@ -33840,7 +33843,7 @@
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "sound-effect": 27
+        "unclassified": 27
       }
     },
     {
@@ -41683,7 +41686,7 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "voice-label-unreviewed": 97
+        "unclassified": 97
       }
     },
     {
@@ -43363,11 +43366,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "8f7ee2d8f4d7751fb09de7be10f6ae64eba0e371250b2a3b5ef6a6a7e5876ea6"
+      "sha256": "2c619214c630a957b6953022f60cfccdff6275943b016dc7229c5000021a8ec2"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "68a8215e434076c31d2d079e4063ed39e06e9d14eb4897f5b3bf771e75bcb0a7"
+      "sha256": "cf27fa55f8b0f31d5a8f8fb5f2d862a8453dbe27cba49cf42c832253df4f9247"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -94358,6 +94361,6 @@
     "alternateFormatFiles": 168,
     "prefetchAliases": 47
   },
-  "sourceFileManifestSha256": "2f6fa6cbf0bdbf1e350b3eb6cf5a3e5bf9beb96f1965300648ad815b54200a85",
-  "uncompressedFileManifestSha256": "69369a777b6316975e35a67aaf95507f153459466e28b194db28b69fc80b4124"
+  "sourceFileManifestSha256": "4f6c397372d2d917fcae11d29099c0d998c9d2b3700c206828f75a6dfcad504c",
+  "uncompressedFileManifestSha256": "3635fed278f743107c113033c7aae6edc9c85ec3275a520614d1dcf0552e3fa4"
 }

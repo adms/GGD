@@ -109,6 +109,25 @@ def excluded_from_speech(role, source_is_synthetic=None, source_contains_synthet
     return role in {'music', 'sound-effect'} or source_is_synthetic is True or source_contains_synthetic is True
 
 
+def decoded_source_category(value):
+    """Translate a decoder's narrow source label without inventing a review result.
+
+    ``ActVoice`` and ``ActSE`` are useful native-directory evidence, but neither
+    proves a clip's language, speaker, transcript, or gameplay event.  Preserve
+    that distinction in the portable index instead of flattening every decoded
+    public clip to ``unclassified``.
+    """
+    if value is None:
+        return None
+    labels = {
+        'sfx': 'sound-effect',
+        'sound-effect': 'sound-effect',
+        'music': 'music',
+        'voice': 'voice-source-label-unreviewed',
+    }
+    return labels.get(str(value).strip().casefold(), 'unclassified')
+
+
 def primary_audio(archived, declared=None, formats=None):
     """A full backup does not add alternate formats to an explicit delivery."""
     saved={f['path']:f for f in archived}
@@ -412,9 +431,13 @@ def main():
                 assert decoded['sha256']==f['sha256'] and decoded['bytes']==f['bytes']
                 bank=decoded.get('sourceBank')
                 if bank and bank not in g['originalBanks']:g['originalBanks'].append(bank)
+            # Decoder metadata is more specific than a source-wide fallback.
+            # It is only a native directory/container label, never listening
+            # evidence, so `voice` remains explicitly unreviewed.
+            decoded_role=decoded_source_category(decoded.get('sourceCategory'))
             add(g,source['localPath']+'/'+member,f['sha256'],f['bytes'],sid,public_archive_member(receipt,member),
                 seconds=decoded.get('seconds', decoded.get('durationSeconds')),original_bank=decoded.get('sourceBank'),
-                role=(part or {}).get('audioCategory',source.get('audioCategory','unclassified')),
+                role=decoded_role or (part or {}).get('audioCategory',source.get('audioCategory','unclassified')),
                 source_is_synthetic=decoded.get('sourceIsSynthetic',(part or {}).get('sourceIsSynthetic',source.get('sourceIsSynthetic'))),
                 source_contains_synthetic=(part or {}).get('sourceContainsSynthetic',source.get('sourceContainsSynthetic')))
             for field in ['sampleRate','channels','frames','sampleFormat','bitsPerSample',
@@ -507,6 +530,7 @@ def main():
         status=('含合成播報的混合來源；排除語音輸入' if g.get('sourceContainsSynthetic') is True else
                 '音樂；排除語音輸入' if g['categoryCounts'].get('music')==g['fileCount'] else
                 '音效；排除語音輸入' if g['categoryCounts'].get('sound-effect')==g['fileCount'] else
+                f'來源目錄標示語音 {g["categoryCounts"].get("voice-source-label-unreviewed", 0)} 檔；未逐段聽審' if g['categoryCounts'].get('voice-source-label-unreviewed') else
                 f'Vo_ 檔名候選 {g["voiceFilenameCandidates"]}；待聽審' if g['voiceFilenameCandidates'] else '待聽審分類')
         language='作者標示 '+g['reportedLanguage']+'；逐段待核' if g.get('reportedLanguage') else '語言待核'
         lines.append(f'| {g["name"].replace("|","／")} | `{g["id"]}`<br>{ids} | {g["fileCount"]} | {status}；{language} | '+ '、'.join('`'+b+'`' for b in g['backupIds'])+' |')

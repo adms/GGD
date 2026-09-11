@@ -8,7 +8,8 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from voice_index import primary_audio, excluded_from_speech, source_audio_spec, audio_index_files, shared_audio_owner
+from voice_index import (primary_audio, excluded_from_speech, source_audio_spec,
+                         audio_index_files, shared_audio_owner, decoded_source_category)
 from query_voice import read_voice_files
 
 
@@ -53,6 +54,14 @@ class VoiceDelivery(unittest.TestCase):
         self.assertFalse(excluded_from_speech('unclassified', None, None))
         with self.assertRaises(AssertionError):
             excluded_from_speech('unclassified', 'unknown')
+
+    def test_native_directory_labels_remain_unreviewed(self):
+        self.assertEqual(decoded_source_category('sfx'), 'sound-effect')
+        self.assertEqual(decoded_source_category('voice'), 'voice-source-label-unreviewed')
+        self.assertEqual(decoded_source_category('music'), 'music')
+        self.assertIsNone(decoded_source_category(None))
+        self.assertEqual(decoded_source_category('unknown-label'), 'unclassified')
+        self.assertFalse(excluded_from_speech('voice-source-label-unreviewed'))
 
     def test_backup_preserves_original_without_counting_it_twice(self):
         original=dict(path='source.ogg',sha256='source-hash',bytes=12)
