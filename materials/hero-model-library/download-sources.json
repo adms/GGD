@@ -38270,7 +38270,7 @@
       "format": "Minecraft cuboid geometry JSON / TenshiLib keyed animations / PNG / Ogg Vorbis",
       "accessStatus": "public-direct-download",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "partial-native-motion-reserve-13-of-14-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+      "readiness": "partial-native-motion-reserve-14-of-14-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
       "purchaseDecision": "hold-purchase-review-acquired-source",
       "defaultEligible": false,
       "resourceRole": "community-model-animation-audio-reserve",
@@ -38962,10 +38962,10 @@
           },
           "boneCount": 36,
           "cubeCount": 40,
-          "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+          "readyStage": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "runtimeReady": false,
           "backendSelectionVerified": false,
-          "manualVisualReview": "reviewed-static-body-only",
+          "manualVisualReview": "accepted-native-motion-reserve-midpoint-only",
           "defaultEligible": false,
           "defaultChanged": false,
           "license": "ARR",
@@ -38979,6 +38979,24 @@
             "nativeAnimationConverted": false,
             "visualReview": "reviewed-static-body-only",
             "rightsReview": "pending",
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "defaultEligible": false
+          },
+          "nativeMotionStandardization": {
+            "attemptId": "fateubw-heracles_berserker-native-motion-reserve-v1",
+            "status": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
+            "rigConverted": true,
+            "nativeAnimationConverted": true,
+            "sourceClipCount": 17,
+            "convertedClipCount": 14,
+            "unconvertedClipCount": 3,
+            "restPosePolicy": "unanimated-terminal-static-rotations-baked-with-full-inverse-bind",
+            "visualReview": "accepted-native-motion-reserve-midpoint-only",
+            "continuousPlaybackAccepted": false,
+            "sourceEngineCurveParity": false,
+            "rightsReview": "pending",
+            "eventMapComplete": false,
             "runtimeReady": false,
             "backendSelectionVerified": false,
             "defaultEligible": false
@@ -39470,7 +39488,7 @@
         }
       ],
       "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
-      "verification": "14名英靈靜態模型已完成結構、Khronos與WebGL驗證。13名平移休息骨架英靈另轉為剛性蒙皮GLB，115個來源片段中98段數值原生動作已轉換；全部Khronos 0錯誤/0警告、GGD預算0錯誤，Babylon WebGL完成98組、392張分段播放證據。人工檢視98張中點圖未見爆模或非有限姿勢；6段summon只動到未納入身體GLB的配件骨節，17段公式或無時長片段未轉換。Heracles因來源休息骨架含旋轉仍待獨立轉換。ARR再散布權、連續播放/來源引擎曲線一致性、武器配件、GGD事件映射、後台選項與部署均未完成。",
+      "verification": "14名英靈靜態模型均已完成結構、Khronos與WebGL驗證，並各有骨架及原生動作GLB。14名英靈132個來源片段中112段數值原生動作已轉換，20段公式／無時長片段保留未轉；全部Khronos 0錯誤/0警告、GGD預算0錯誤，Babylon WebGL共完成112組、448張分段播放證據。Heracles的9個靜態旋轉骨節均為未被動作命中的末端骨，採休息姿勢烘焙及完整逆綁定矩陣；與已接受靜態GLB的頂點及法線誤差皆為0。人工檢視112張中點圖未見爆模或非有限姿勢；6段summon只動到未納入身體GLB的配件骨節。ARR再散布權、連續播放/來源引擎曲線一致性、武器配件、GGD事件映射、後台選項與部署均未完成。",
       "mappingEvidence": "Exact named character mappings: Artoria to godie-e002/godie-e00l, Gilgamesh to community-review-18-20260907, Heracles to godie-hapm, Medusa to godie-hvsh. Archer is not automatically assigned to Shirou. Unknowns remain empty; no defaults changed.",
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
@@ -39650,6 +39668,32 @@
           "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-native-motion-batch-v1/latest-receipt.json",
           "receiptSha256": "5994cf098e0bfe781ed096e792a05019d1380e44d534d81249e5412263b5a1db",
           "manifestSha256": "5c88c8df7f4df72782d6488250d7a1f248f6d4249d52ab3e3ce762c6b1d7ff4d",
+          "s3Use": "backup-only-not-runtime-entry"
+        },
+        {
+          "id": "fateubw-heracles-native-motion-v1",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-native-motion-v1/ae1eb242491af7f3168c7fbe003eefe54dc6c7c2e16b1749f1fe724c9fef413e/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-native-motion-v1/ae1eb242491af7f3168c7fbe003eefe54dc6c7c2e16b1749f1fe724c9fef413e/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-native-motion-v1/564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-native-motion-v1/564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3.files.json",
+          "bytes": 3855030,
+          "sha256": "564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3",
+          "fileCount": 69,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-native-motion-v1/latest-receipt.json",
+          "receiptSha256": "1a52294f3e69371edb815866f437de24a1be3766b10a51dd1bf5989e8e371a7b",
+          "manifestSha256": "05e28289c52bf02c0d4f37fb592f987d4451cd114b045b33d2a4b4d65dca3e32",
           "s3Use": "backup-only-not-runtime-entry"
         }
       ],
@@ -42400,6 +42444,161 @@
             "continuous playback review and source-engine curve parity",
             "weapon and held-item attachment geometry",
             "unsupported formula and no-duration source clips",
+            "GGD action and event mapping",
+            "GGD backend import and selection verification"
+          ]
+        },
+        {
+          "id": "fateubw-heracles_berserker-native-motion-reserve-v1",
+          "candidateId": "fateubw-heracles_berserker",
+          "conversionInstanceId": "fateubw-heracles-native-motion-v1",
+          "status": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
+          "sourceClass": "community-mod",
+          "platform": "Minecraft Java 1.21.1",
+          "nativeFucPsp": false,
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1",
+          "body": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/body.glb",
+            "sha256": "8b0d8c8ee9ba2f7a61664dac2d7b6f01fc389145c5302b8528dbf754cd84eb67",
+            "bytes": 465616
+          },
+          "converterReport": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/conversion-report.json",
+            "sha256": "778708f294632f4f616e6979cf1450fb4e0d4060221c78d9ee934d3e0110ef59",
+            "bytes": 55464
+          },
+          "structuralReadback": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/native-structural-readback.json",
+            "sha256": "d0665a0dacecf5e8bfc8cc9a0f0306bfb796bb65ffd426915256f619b5f04494",
+            "bytes": 1620
+          },
+          "contractValidation": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/contract-validation.json",
+            "sha256": "aa732bbfbd277cbf7e9969193fcb1238f228fc2b5f4c55b4e7bbb1ec73d45193",
+            "bytes": 5570
+          },
+          "restPoseParity": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/rest-pose-parity-v2.json",
+            "sha256": "79a6aa31d0533fb76563a0117af5676e426862aab4933de94c88e2036809da76",
+            "bytes": 984
+          },
+          "nativeAnimations": {
+            "classification": "community-mod-native-animation-json",
+            "sourceClipCount": 17,
+            "convertedClipCount": 14,
+            "unconvertedClipCount": 3,
+            "convertedClipNames": [
+              "walk",
+              "run",
+              "one_hand_heavy_1",
+              "one_hand_heavy_2",
+              "one_hand_heavy_3",
+              "two_hand_heavy_1",
+              "two_hand_heavy_2",
+              "upper_cut",
+              "jump",
+              "leap",
+              "leap_slash",
+              "fake_death",
+              "death",
+              "summon"
+            ],
+            "retainedUnconvertedClips": [
+              {
+                "name": "idle",
+                "sourceLoop": true,
+                "sourceLength": null,
+                "converted": false,
+                "reason": "source pose has no animation_length; retained without inventing playback duration"
+              },
+              {
+                "name": "jump_hit",
+                "sourceLoop": "hold_on_last_frame",
+                "sourceLength": 0.6,
+                "converted": false,
+                "reason": "unsupported source curve retained: jump_hit/BodyUpper/rotation@0.6: formula/nonfinite channel is outside this converter"
+              },
+              {
+                "name": "land",
+                "sourceLoop": "hold_on_last_frame",
+                "sourceLength": 0.44,
+                "converted": false,
+                "reason": "unsupported source curve retained: land/BodyUpper/rotation@0.0: formula/nonfinite channel is outside this converter"
+              }
+            ],
+            "rotationSamplingFps": 60,
+            "eventMapComplete": false
+          },
+          "restPosePolicy": {
+            "classification": "unanimated-terminal-static-rotations-baked-with-full-inverse-bind",
+            "restRotatedBones": [
+              "Hair6",
+              "Hair7",
+              "LeftArmArmor",
+              "LeftShinLower",
+              "LeftShinLower2",
+              "Nose",
+              "RightArmArmor",
+              "RightShinLower",
+              "RightShinLower2"
+            ],
+            "allTerminal": true,
+            "allUntargetedByNativeClips": true,
+            "reviewedStaticMeshPositionError": 0.0,
+            "reviewedStaticMeshNormalError": 0.0
+          },
+          "webglPhaseReview": {
+            "proof": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/webgl-native-v1/proof.json",
+              "sha256": "b20ca9898bcaf59deb010067761c19f3822fff6f1f77cd8614eadb65c3fb7add",
+              "bytes": 36576
+            },
+            "run": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/webgl-native-v1/run.json",
+              "sha256": "951a12da5a3964d301cf2814d9ccf50790b1af3257e53fc6c0f2d8669bd3c967",
+              "bytes": 336
+            },
+            "visualAssessment": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/visual-assessment.json",
+              "sha256": "a244eb538eb1cb20a586af6ec0e0d78fcca1ea80743210c6408a74783cae16e2",
+              "bytes": 43207
+            },
+            "manualReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/manual-visual-review.json",
+              "sha256": "8265abeed4862bdef8ec8b9894073c6e27396f0c27b41fe60a774f3b0d096ded",
+              "bytes": 2047
+            },
+            "contactSheet": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/midpoint-contact-sheet.png",
+              "sha256": "0dd3a2321b7ed8c1947908c2174c5ea6f9dfda245a9dccaa69f6a595ff74cbb4",
+              "bytes": 225562
+            },
+            "animationGroups": 14,
+            "shots": 56,
+            "sampledVisibleBodyMotionGroups": 14,
+            "sampledUnchangedBodyGroups": 0,
+            "continuousPlaybackAccepted": false,
+            "sourceEngineCurveParity": false
+          },
+          "legacyBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-native-motion-v1/564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-native-motion-v1/564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3.files.json",
+            "archiveSha256": "564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3",
+            "readbackVerified": true,
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-native-motion-v1/latest-receipt.json",
+            "receiptSha256": "1a52294f3e69371edb815866f437de24a1be3766b10a51dd1bf5989e8e371a7b",
+            "s3Use": "backup-only-not-runtime-entry"
+          },
+          "runtimeReady": false,
+          "backendSelectionVerified": false,
+          "defaultEligible": false,
+          "deploymentStatus": "not-deployed",
+          "missing": [
+            "redistribution permission for ARR source",
+            "continuous playback review and source-engine curve parity",
+            "weapon and held-item attachment geometry",
+            "idle no-duration clip and two formula-driven clips",
             "GGD action and event mapping",
             "GGD backend import and selection verification"
           ]

@@ -58,13 +58,27 @@ def node_world_matrices(document):
                 raise ValueError("node has multiple parents")
             parents[child] = parent
     cache = {}
+    def quaternion_matrix(value):
+        quaternion = np.asarray(value, dtype=float)
+        norm = float(np.dot(quaternion, quaternion))
+        if not np.isfinite(norm) or norm <= 0:
+            raise ValueError("invalid node quaternion")
+        x, y, z, w = quaternion / np.sqrt(norm)
+        return np.array([
+            [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+            [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+            [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
+        ])
     def build(index):
         if index in cache:
             return cache[index]
         node = nodes[index]
-        if any(key in node for key in ("rotation", "scale", "matrix")):
-            raise ValueError("expected translation-only static skeleton")
+        if "matrix" in node:
+            raise ValueError("generated skeleton must use decomposed TRS")
+        if not np.allclose(node.get("scale", [1, 1, 1]), [1, 1, 1]):
+            raise ValueError("generated rest skeleton must not scale bones")
         local = np.eye(4)
+        local[:3, :3] = quaternion_matrix(node.get("rotation", [0, 0, 0, 1]))
         local[:3, 3] = node.get("translation", [0, 0, 0])
         world = build(parents[index]) @ local if index in parents else local
         cache[index] = world

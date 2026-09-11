@@ -38,6 +38,8 @@ def add_path(paths, value):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--workspace", type=Path,
+                        help="workspace containing GGD-Asset-Library when using an isolated Git worktree")
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[4]
     library = repo / "materials/hero-model-library"
@@ -45,7 +47,8 @@ def main():
     coverage_path = library / "design-backlog/resource-coverage.json"
     source_doc = read(source_path)
     source = next(row for row in source_doc["publicSources"] if row["id"] == SOURCE_ID)
-    source_root = repo.parent / source["localPath"]
+    workspace = args.workspace.resolve() if args.workspace else repo.parent
+    source_root = workspace / source["localPath"]
     candidates = [row for row in source["modelCandidates"] if "/servant/" in row.get("sourceModel", "")]
     if len(candidates) != 14 or {row["character"] for row in candidates} != set(IDENTITIES):
         raise ValueError("FateUBW servant set drifted; review identity mapping before synchronization")
@@ -53,12 +56,12 @@ def main():
     coverage = read(coverage_path)
     family = next(row for row in coverage["sourceFamilies"] if row["id"] == "fateubw-community")
     family["model"] = (
-        "14名英靈均已轉為靜態GLB並通過結構、Khronos與WebGL驗證；其中13名另有骨架及原生動作GLB。"
+        "14名英靈均已轉為靜態GLB並通過結構、Khronos與WebGL驗證，並各有骨架及原生動作GLB。"
         "5個道具／生物仍保留原始幾何JSON。全部待權利、來源引擎比對、事件映射與後台驗收。"
     )
     family["motion"] = (
-        "20個動畫JSON共156項：14名英靈合計132項；其中13名一般骨架含115項，已轉換98項、"
-        "保留17項公式／無時長片段；Heracles另17項因來源休息骨架含旋轉待獨立轉換。"
+        "20個動畫JSON共156項：14名英靈合計132項，已轉換112項原生動作、"
+        "保留20項公式／無時長片段。Heracles的9個靜態旋轉末端骨已採休息姿勢烘焙及完整逆綁定矩陣轉換。"
         "5個道具／生物20項及共用4項仍為原始格式；非FUC PSP。"
     )
     for candidate in candidates:
@@ -83,11 +86,18 @@ def main():
             )
             attempt = attempts[candidate["bodyStandardization"]["attemptId"]]
         paths = override.setdefault("evidencePaths", [])
+        # An isolated worktree used to derive the sibling asset-library path
+        # from /private/tmp.  Remove only those impossible generated locators;
+        # preserve every curated or valid workspace path.
+        paths[:] = [value for value in paths if not value.startswith("/private/tmp/GGD-Asset-Library/")]
         add_path(paths, str((source_root / candidate["sourceAnimation"]["path"]).resolve()))
         add_path(paths, attempt.get("body"))
         add_path(paths, attempt.get("contractValidation"))
         add_path(paths, attempt.get("structuralReadback"))
-        add_path(paths, (attempt.get("webglPhaseReview") or {}).get("proof"))
+        add_path(paths, attempt.get("restPoseParity"))
+        phase = attempt.get("webglPhaseReview") or {}
+        for key in ("proof", "run", "visualAssessment", "manualReview", "contactSheet"):
+            add_path(paths, phase.get(key))
         batch = attempt.get("batchEvidence") or {}
         for key in ("manifest", "webgl", "visualAssessment", "manualReview", "contactSheet"):
             add_path(paths, batch.get(key))
@@ -97,13 +107,13 @@ def main():
     if args.check:
         if current != encoded:
             raise SystemExit("FateUBW resource coverage is stale; run sync_backlog_resources.py")
-        print(json.dumps({"status": "current", "servants": len(candidates), "nativeMotionConverted": 13,
-                          "staticOnly": 1}, ensure_ascii=False))
+        print(json.dumps({"status": "current", "servants": len(candidates), "nativeMotionConverted": 14,
+                          "staticOnly": 0}, ensure_ascii=False))
         return
     coverage_path.write_bytes(encoded)
     print(json.dumps({"status": "updated" if current != encoded else "unchanged",
-                      "servants": len(candidates), "nativeMotionConverted": 13,
-                      "staticOnly": 1}, ensure_ascii=False))
+                      "servants": len(candidates), "nativeMotionConverted": 14,
+                      "staticOnly": 0}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

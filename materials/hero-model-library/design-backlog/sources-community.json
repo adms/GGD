@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "15a29e742cd3a212890455abd1982fd8559803e79f5735e4a4555e7d82f2a4d0",
-      "bytes": 2391347
+      "sha256": "5c09e33fb04378ee12aa2df8f1b1a77635a7dcb6fff0e658f83c365e4bb73849",
+      "bytes": 2402748
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "d30d7c10a17bf5e5b35fc204edcc66e15a42357a7c4cd5d9baa1c450c225f57f",
-      "bytes": 6838641
+      "sha256": "c2e484cf127046863943530013d088ad7abe6506715dbd3c056ae7a581245ed9",
+      "bytes": 6911425
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -27,8 +27,8 @@
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "853529842405efef4bfb3c243ad192b20dfa9b78c612dae1208db9da6775c50d",
-      "bytes": 29852293
+      "sha256": "801482bab87aea49a44334a0679341de04d8eebee5638f14f04591552c84cfcb",
+      "bytes": 29867578
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
@@ -1234,7 +1234,7 @@
           "library": "community",
           "sourceId": "github-flemmli97-fateubw-07e9d79b",
           "sourceUrl": "https://github.com/Flemmli97/FateUBW",
-          "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+          "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
           "converted": false,
           "resourceRole": "character-body-mesh-source",
           "isStandaloneModelCandidate": false,
@@ -1308,6 +1308,110 @@
           "readbackVerified": true,
           "identityReviewRequired": false,
           "recordedBytes": 38480,
+          "sizeMatchesManifest": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/body.glb",
+          "existsLocal": true,
+          "bytes": 465616,
+          "sha256": "8b0d8c8ee9ba2f7a61664dac2d7b6f01fc389145c5302b8528dbf754cd84eb67",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000d01a0700",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 14
+          },
+          "id": "fateubw-heracles_berserker-native-motion-reserve-v1",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
+          "converted": true,
+          "resourceRole": "character-body",
+          "format": "glTF Binary",
+          "componentReady": false,
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 17,
+          "nativeAnimationCount": 14,
+          "unconvertedAnimationCount": 3,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback review and source-engine curve parity",
+            "weapon and held-item attachment geometry",
+            "idle no-duration clip and two formula-driven clips",
+            "GGD action and event mapping",
+            "GGD backend import and selection verification"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/conversion-report.json",
+              "sha256": "778708f294632f4f616e6979cf1450fb4e0d4060221c78d9ee934d3e0110ef59",
+              "bytes": 55464
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/native-structural-readback.json",
+              "sha256": "d0665a0dacecf5e8bfc8cc9a0f0306bfb796bb65ffd426915256f619b5f04494",
+              "bytes": 1620
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/contract-validation.json",
+              "sha256": "aa732bbfbd277cbf7e9969193fcb1238f228fc2b5f4c55b4e7bbb1ec73d45193",
+              "bytes": 5570
+            },
+            "restPoseParity": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/rest-pose-parity-v2.json",
+              "sha256": "79a6aa31d0533fb76563a0117af5676e426862aab4933de94c88e2036809da76",
+              "bytes": 984
+            }
+          },
+          "visualEvidence": {
+            "webglPhaseReview": {
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/webgl-native-v1/proof.json",
+                "sha256": "b20ca9898bcaf59deb010067761c19f3822fff6f1f77cd8614eadb65c3fb7add",
+                "bytes": 36576
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/webgl-native-v1/run.json",
+                "sha256": "951a12da5a3964d301cf2814d9ccf50790b1af3257e53fc6c0f2d8669bd3c967",
+                "bytes": 336
+              },
+              "visualAssessment": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/visual-assessment.json",
+                "sha256": "a244eb538eb1cb20a586af6ec0e0d78fcca1ea80743210c6408a74783cae16e2",
+                "bytes": 43207
+              },
+              "manualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/manual-visual-review.json",
+                "sha256": "8265abeed4862bdef8ec8b9894073c6e27396f0c27b41fe60a774f3b0d096ded",
+                "bytes": 2047
+              },
+              "contactSheet": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/midpoint-contact-sheet.png",
+                "sha256": "0dd3a2321b7ed8c1947908c2174c5ea6f9dfda245a9dccaa69f6a595ff74cbb4",
+                "bytes": 225562
+              },
+              "animationGroups": 14,
+              "shots": 56,
+              "sampledVisibleBodyMotionGroups": 14,
+              "sampledUnchangedBodyGroups": 0,
+              "continuousPlaybackAccepted": false,
+              "sourceEngineCurveParity": false
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-native-motion-v1/564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3.tar.gz",
+          "s3ArchiveMember": "body.glb",
+          "archiveSha256": "564a546de039484d6daeeeb942c98e8a5d2d18c79dc936358c9edcb11aebb0d3",
+          "readbackVerified": true,
+          "identityReviewRequired": false,
+          "recordedBytes": 465616,
           "sizeMatchesManifest": true
         }
       ],
@@ -80377,12 +80481,12 @@
     "not-defined": 149,
     "identity-review": 249,
     "characterGroups": 444,
-    "actualModelCandidateFiles": 2386,
+    "actualModelCandidateFiles": 2387,
     "missingCandidatePaths": 0,
     "publicSourcesInspected": 106,
     "nativeSSBUGroups": 278,
     "ssbuBlendFiles": 1793,
-    "uniqueExistingModelPaths": 2335,
+    "uniqueExistingModelPaths": 2336,
     "knownNotDefinedGroups": 149,
     "historicalMutableManifestMismatchCount": 33
   },

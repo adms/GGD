@@ -25,8 +25,9 @@ def record_pending(args, repo):
     expected = [{key: row[key] for key in ['path', 'bytes', 'sha256']} for row in manifest['files']]
     if archive.stat().st_size != manifest['archiveBytes'] or sha(archive) != digest or scoped_members(archive) != expected:
         raise ValueError('Pending local archive changed')
+    workspace_root = (getattr(args, 'workspace_root', None) or repo.parent).resolve()
     source_root = Path(manifest['source']).resolve()
-    if not source_root.is_relative_to(repo.parent):
+    if not source_root.is_relative_to(workspace_root):
         raise ValueError('Pending source is outside workspace')
     for row in expected:
         local = source_root / row['path']
@@ -42,7 +43,7 @@ def record_pending(args, repo):
     if any((row['id'], row['sha256']) == key for row in index['sources']):
         raise ValueError('Cannot downgrade verified supplemental snapshot')
     entry = dict(id=args.id, sourceId=args.source_id, resourceRole=args.role,
-        localPath=source_root.relative_to(repo.parent).as_posix(), localArchive=str(archive),
+        localPath=source_root.relative_to(workspace_root).as_posix(), localArchive=str(archive),
         plannedS3Uri=uri, bytes=manifest['archiveBytes'], sha256=digest, fileCount=len(expected),
         archiveFormat='tar-gzip', archiveMemberRoot='', files=expected,
         readbackVerified=False, fullReadbackVerified=False, s3ReadbackVerified=False,
@@ -80,6 +81,8 @@ def main(argv=None, repo=None):
     parser.add_argument('--id', required=True)
     parser.add_argument('--role', choices=['source-intake-backup', 'model-conversion-backup', 'audio-conversion-backup', 'integration-evidence-backup'], required=True)
     parser.add_argument('--source-id')
+    parser.add_argument('--workspace-root', type=Path,
+                        help='workspace containing GGD-Asset-Library when the Git checkout is an isolated worktree')
     parser.add_argument('--primary-source-backup', action='store_true',
                         help='Attach this verified archive as the source primary backup; requires --id == --source-id.')
     parser.add_argument('--pending-manifest', action='store_true', help='The positional path is an intake manifest; remote readback is not yet verified.')
@@ -112,8 +115,9 @@ def main(argv=None, repo=None):
             or local_archive.stat().st_size != receipt['archiveBytes'] or sha(local_archive) != receipt['archiveSha256']
             or sha(readback) != receipt['archiveSha256'] or scoped_members(readback) != expected):
         raise ValueError('Supplemental manifest or saved full readback changed')
+    workspace_root = (args.workspace_root or repo.parent).resolve()
     source_root = Path(receipt['source']).resolve()
-    if manifest['source'] != str(source_root) or not source_root.is_relative_to(repo.parent):
+    if manifest['source'] != str(source_root) or not source_root.is_relative_to(workspace_root):
         raise ValueError('Unexpected supplemental source root')
     # Check only this immutable snapshot's listed members. Later unlisted files
     # remain local and are neither rejected nor claimed to be in this backup.
@@ -129,7 +133,7 @@ def main(argv=None, repo=None):
     initial = [path.read_bytes() for path in paths]
     downloads, index = [json.loads(blob) for blob in initial]
     entry = dict(id=args.id, sourceId=args.source_id, resourceRole=args.role,
-        localPath=source_root.relative_to(repo.parent).as_posix(), localArchive=receipt['localArchive'],
+        localPath=source_root.relative_to(workspace_root).as_posix(), localArchive=receipt['localArchive'],
         readbackPath=str(readback), s3Uri=uri, manifestUri=receipt['manifestUri'],
         bytes=receipt['archiveBytes'], sha256=receipt['archiveSha256'], fileCount=len(expected),
         archiveFormat='tar-gzip', archiveMemberRoot='', files=expected,

@@ -49,6 +49,37 @@ class NativeAnimationConversionTest(unittest.TestCase):
         self.assertEqual(times[0], 0.0)
         self.assertEqual(times[-1], 1.0)
 
+    def test_leaf_rest_rotation_requires_explicit_mode(self):
+        bones = [
+            {"name": "root"},
+            {"name": "armor", "parent": "root", "rotation": [0, 0, 25]},
+        ]
+        by_name = {bone["name"]: index for index, bone in enumerate(bones)}
+        with self.assertRaisesRegex(ValueError, "static rest rotations"):
+            native.validate_leaf_rest_rotations(bones, by_name, {"walk": {"bones": {}}}, False)
+        self.assertEqual(
+            native.validate_leaf_rest_rotations(bones, by_name, {"walk": {"bones": {"root": {}}}}, True),
+            ["armor"],
+        )
+
+    def test_animated_or_parent_rest_rotation_remains_rejected(self):
+        animated = [
+            {"name": "root"},
+            {"name": "armor", "parent": "root", "rotation": [0, 0, 25]},
+        ]
+        by_name = {bone["name"]: index for index, bone in enumerate(animated)}
+        with self.assertRaisesRegex(ValueError, "has an animation track"):
+            native.validate_leaf_rest_rotations(
+                animated, by_name, {"walk": {"bones": {"armor": {"rotation": [0, 0, 0]}}}}, True)
+
+        parent = [
+            {"name": "root", "rotation": [0, 0, 25]},
+            {"name": "child", "parent": "root"},
+        ]
+        by_name = {bone["name"]: index for index, bone in enumerate(parent)}
+        with self.assertRaisesRegex(ValueError, "must be terminal"):
+            native.validate_leaf_rest_rotations(parent, by_name, {"walk": {"bones": {}}}, True)
+
 
 if __name__ == "__main__":
     unittest.main()

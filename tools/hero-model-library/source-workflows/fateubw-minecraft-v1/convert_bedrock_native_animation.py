@@ -3,10 +3,13 @@
 
 This converter is deliberately narrower than a general Bedrock/Molang reader.
 It accepts translation-only source rest rigs and numeric animation channels.
-Formula-driven channels, pre/post discontinuities and static rest rotations are
-rejected instead of guessed.  Rotations are sampled in Euler space before they
-are encoded as glTF quaternions, preserving the source's component-wise linear
-interpolation more closely than interpolating only the source key quaternions.
+Formula-driven channels and pre/post discontinuities are rejected instead of
+guessed.  Static rest rotations remain rejected by default.  The explicit
+leaf-rest-rotation mode only accepts unanimated terminal bones, bakes their
+reviewed rest transform into their vertices, and writes full inverse bind
+matrices.  Rotations are sampled in Euler space before they are encoded as
+glTF quaternions, preserving the source's component-wise linear interpolation
+more closely than interpolating only the source key quaternions.
 """
 import argparse
 import hashlib
@@ -17,7 +20,14 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from convert_bedrock_geometry import GLB, cube_faces, mapped, mapped_normal, rotation_matrix_degrees
+from convert_bedrock_geometry import (
+    GLB,
+    cube_faces,
+    mapped,
+    mapped_normal,
+    rotation_matrix_degrees,
+    source_bone_world_matrices,
+)
 
 
 def sha256(path):
@@ -105,6 +115,42 @@ def mapped_rotation(rotation):
     return matrix_quaternion(reflection @ rotation_matrix_degrees(rotation) @ reflection)
 
 
+def mapped_rotation_matrix(rotation):
+    reflection = np.diag([1.0, 1.0, -1.0])
+    return reflection @ rotation_matrix_degrees(rotation) @ reflection
+
+
+def validate_leaf_rest_rotations(bones, bones_by_name, clips, allowed):
+    """Return rotated bone names after enforcing the narrow reviewed case.
+
+    An animated rest-rotated bone would require source-engine proof of how the
+    default and keyed Euler rotations compose.  A rotated bone with children
+    would likewise require proof for pivot inheritance.  Neither is inferred.
+    """
+    children = {bone["name"]: [] for bone in bones}
+    for bone in bones:
+        parent = bone.get("parent")
+        require(not parent or parent in bones_by_name, "missing parent bone")
+        if parent:
+            children[parent].append(bone["name"])
+    rotated = {
+        bone["name"] for bone in bones
+        if any(float(value) for value in bone.get("rotation", []))
+    }
+    if not rotated:
+        return []
+    require(allowed, "static rest rotations are outside this native-animation converter")
+    targets = {
+        bone_name
+        for clip in clips.values()
+        for bone_name in clip.get("bones", {})
+    }
+    for name in sorted(rotated):
+        require(not children[name], name + ": rest-rotated bone must be terminal")
+        require(name not in targets, name + ": rest-rotated bone has an animation track")
+    return sorted(rotated)
+
+
 def sampled_times(keys, duration, fps, rotation):
     if not rotation:
         return sorted({0.0, duration, *(time for time, _ in keys)})
@@ -187,6 +233,8 @@ def main():
     parser.add_argument("--rotation-fps", type=int, default=60)
     parser.add_argument("--skip-unsupported-clips", action="store_true",
                         help="retain unsupported source clips in the report while converting the numeric subset")
+    parser.add_argument("--allow-untargeted-leaf-rest-rotations", action="store_true",
+                        help="accept only unanimated terminal rest-rotated bones and bake their reviewed bind pose")
     args = parser.parse_args()
     geometry_path, texture_path, animation_path = (args.geometry.resolve(), args.texture.resolve(), args.animation.resolve())
     output, report = args.output.resolve(), args.report.resolve()
@@ -201,22 +249,21 @@ def main():
     names = [bone["name"] for bone in bones]
     require(len(names) == len(set(names)), "duplicate bone names")
     bones_by_name = {name: index for index, name in enumerate(names)}
-    for bone in bones:
-        require(not any(float(value) for value in bone.get("rotation", [])),
-                "static rest rotations are outside this native-animation converter")
-        require(not bone.get("parent") or bone["parent"] in bones_by_name, "missing parent bone")
-        for cube in bone.get("cubes", []):
-            require(isinstance(cube.get("uv"), list) and len(cube["uv"]) == 2,
-                    "only ordinary [u,v] cube UV is implemented")
-
     animation_doc = json.loads(animation_path.read_text())
     clips = animation_doc.get("animations")
     require(isinstance(clips, dict) and clips, "animation file has no clips")
+    rest_rotated_bones = validate_leaf_rest_rotations(
+        bones, bones_by_name, clips, args.allow_untargeted_leaf_rest_rotations)
+    for bone in bones:
+        for cube in bone.get("cubes", []):
+            require(isinstance(cube.get("uv"), list) and len(cube["uv"]) == 2,
+                    "only ordinary [u,v] cube UV is implemented")
     image = Image.open(texture_path).convert("RGBA")
     width, height = image.size
     glb = GLB()
 
     base_translations = []
+    rest_world_matrices = []
     for index, bone in enumerate(bones):
         pivot = mapped(bone.get("pivot", [0, 0, 0]))
         parent_name = bone.get("parent")
@@ -224,11 +271,23 @@ def main():
         base = pivot - parent_pivot
         base_translations.append(base)
         node = {"name": bone["name"], "translation": base.tolist()}
+        rest_rotation = bone.get("rotation", [0, 0, 0])
+        local_matrix = np.eye(4, dtype=float)
+        local_matrix[:3, :3] = mapped_rotation_matrix(rest_rotation)
+        local_matrix[:3, 3] = base
+        if any(float(value) for value in rest_rotation):
+            node["rotation"] = mapped_rotation(rest_rotation).tolist()
         glb.g["nodes"].append(node)
         if parent_name:
             glb.g["nodes"][bones_by_name[parent_name]].setdefault("children", []).append(index)
+            rest_world_matrices.append(rest_world_matrices[bones_by_name[parent_name]] @ local_matrix)
         else:
             glb.g["scenes"][0]["nodes"].append(index)
+            rest_world_matrices.append(local_matrix)
+
+    source_rest_world = source_bone_world_matrices(
+        bones, {bone["name"]: (index, bone) for index, bone in enumerate(bones)}) \
+        if rest_rotated_bones else [None] * len(bones)
 
     positions, normals, texcoords, joints, weights, indices = [], [], [], [], [], []
     for bone_index, bone in enumerate(bones):
@@ -236,7 +295,9 @@ def main():
             inflate = float(cube.get("inflate", 0))
             origin = np.asarray(cube["origin"], dtype=float) - inflate
             size = np.asarray(cube["size"], dtype=float) + 2 * inflate
-            for points, normal, uv in cube_faces(origin, size, cube["uv"], (width, height), bool(cube.get("mirror", False))):
+            for points, normal, uv in cube_faces(
+                    origin, size, cube["uv"], (width, height), bool(cube.get("mirror", False)),
+                    source_rest_world[bone_index]):
                 base = len(positions)
                 positions.extend(points); normals.extend([normal] * 4); texcoords.extend(uv)
                 joints.extend([[bone_index, 0, 0, 0]] * 4); weights.extend([[1, 0, 0, 0]] * 4)
@@ -264,11 +325,10 @@ def main():
     glb.g["meshes"].append({"name": args.candidate_id,
                              "primitives": [{"attributes": attributes, "indices": index_accessor, "material": 0}]})
 
-    inverse_bind = []
-    for bone in bones:
-        matrix = np.eye(4, dtype=np.float32)
-        matrix[:3, 3] = -mapped(bone.get("pivot", [0, 0, 0]))
-        inverse_bind.append(matrix.T.reshape(-1))
+    inverse_bind = [
+        np.linalg.inv(matrix).astype(np.float32).T.reshape(-1)
+        for matrix in rest_world_matrices
+    ]
     inverse_accessor = glb.acc(inverse_bind, "MAT4")
     glb.g["skins"].append({"name": args.candidate_id + " Bedrock rigid-cube skin",
                             "joints": list(range(len(bones))), "inverseBindMatrices": inverse_accessor})
@@ -293,6 +353,8 @@ def main():
     glb.g["extras"] = {"ggd": {"sourceId": args.source_id, "candidateId": args.candidate_id,
         "format": "Bedrock geometry plus TenshiLib numeric animation JSON", "unitScale": "1/16",
         "nativeAnimationIncluded": True, "nativeAnimationClassification": "community-mod-native-animation-json",
+        "restPosePolicy": "unanimated-terminal-static-rotations-baked-with-full-inverse-bind" if rest_rotated_bones else "translation-only-rest-rig",
+        "restRotatedBones": rest_rotated_bones,
         "rotationSamplingFps": args.rotation_fps, "runtimeReady": False,
         "rightsStatus": "ARR; redistribution permission pending"}}
     output.parent.mkdir(parents=True, exist_ok=True); report.parent.mkdir(parents=True, exist_ok=True)
@@ -318,6 +380,8 @@ def main():
         "clips": clip_rows,
         "transformPolicy": {"sourceEulerOrder": "Rz @ Ry @ Rx, inherited from reviewed static-rest converter",
                             "handedness": "source [x,y,z] to glTF [x,y,-z]",
+                            "restPose": "static rotations accepted only on unanimated terminal bones; affected source vertices are baked and full inverse bind matrices preserve the reviewed rest pose" if rest_rotated_bones else "translation-only source rest rig",
+                            "restRotatedBones": rest_rotated_bones,
                             "position": "additive source bone position converted at 1/16 and added to rest local translation",
                             "rotation": "numeric source Euler curves linearly evaluated and resampled to glTF quaternions",
                             "scale": "numeric source scale encoded directly"},

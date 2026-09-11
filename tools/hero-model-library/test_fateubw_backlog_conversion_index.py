@@ -52,10 +52,10 @@ class FateUbwBacklogConversionIndexTest(unittest.TestCase):
             self.assertFalse(static["runtimeSelectable"])
             self.assertFalse(static["defaultEligible"])
 
-    def test_thirteen_native_motion_glbs_total_ninety_eight_clips(self):
+    def test_fourteen_native_motion_glbs_total_one_hundred_twelve_clips(self):
         servants = [row for row in self.source["modelCandidates"] if "/servant/" in row.get("sourceModel", "")]
         native = [row for row in servants if row.get("nativeMotionStandardization")]
-        self.assertEqual(13, len(native))
+        self.assertEqual(14, len(native))
         converted_total = 0
         for source_candidate in native:
             metadata = source_candidate["nativeMotionStandardization"]
@@ -68,19 +68,22 @@ class FateUbwBacklogConversionIndexTest(unittest.TestCase):
             self.assertFalse(candidate["runtimeSelectable"])
             self.assertFalse(candidate["defaultEligible"])
             converted_total += candidate["nativeAnimationCount"]
-        self.assertEqual(98, converted_total)
+        self.assertEqual(112, converted_total)
 
-    def test_heracles_remains_explicit_static_only_gap(self):
+    def test_heracles_leaf_rest_rotation_conversion_remains_non_runtime(self):
         heracles = next(row for row in self.source["modelCandidates"] if row["character"] == "heracles_berserker")
-        self.assertNotIn("nativeMotionStandardization", heracles)
+        metadata = heracles["nativeMotionStandardization"]
+        self.assertEqual(14, metadata["convertedClipCount"])
+        self.assertEqual(3, metadata["unconvertedClipCount"])
+        self.assertEqual("unanimated-terminal-static-rotations-baked-with-full-inverse-bind",
+                         metadata["restPosePolicy"])
+        self.assertFalse(metadata["runtimeReady"])
         motion = self.coverage["characterOverrides"]["heracles"]["motion"]
-        self.assertIn("17 個片段尚未轉成原生動作 GLB", motion)
-        self.assertIn("來源休息骨架含旋轉", motion)
+        self.assertIn("已轉換 14 個原生動作", motion)
+        self.assertIn("3 個公式／無時長等片段保留未轉換", motion)
 
     def test_converted_servant_summaries_no_longer_claim_pending_conversion(self):
         for character, identity in IDENTITIES.items():
-            if character == "heracles_berserker":
-                continue
             motion = self.coverage["characterOverrides"][identity]["motion"]
             self.assertIn("已轉換", motion)
             self.assertNotIn("待轉換", motion)
@@ -90,7 +93,7 @@ class FateUbwBacklogConversionIndexTest(unittest.TestCase):
         self.assertIn("14名英靈均已轉為靜態GLB", family["model"])
         self.assertIn("20個動畫JSON共156項", family["motion"])
         self.assertIn("14名英靈合計132項", family["motion"])
-        self.assertIn("已轉換98項", family["motion"])
+        self.assertIn("已轉換112項", family["motion"])
         self.assertIn("5個道具／生物20項及共用4項", family["motion"])
 
 

@@ -182,7 +182,7 @@ for s in sources:
     if not body_path:continue
     native=attempt.get('nativeAnimations') or {}
     backup=attempt.get('legacyBackup') or {}
-    validation={k:attempt[k] for k in ['converterReport','structuralReadback','contractValidation','batchEvidence'] if k in attempt}
+    validation={k:attempt[k] for k in ['converterReport','structuralReadback','contractValidation','restPoseParity','batchEvidence'] if k in attempt}
     visual={k:attempt[k] for k in ['webglPhaseReview','batchEvidence'] if k in attempt}
     paths.append({
      'id':attempt_id,
