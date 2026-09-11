@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "7bf1c622b2d3314af346b87520829a56c6bae1737db2e27942bf451308b608af"
+      "sha256": "8ea13ccee44d78ac48b9dfae0c04ad5b2fd25670097521a6c2e40e557b6d15f0"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "4bf7a3bc0215b4c1925a74803176008faf86623c6c0cafead2f34cae6dbbaae8"
+      "sha256": "a42418d9261cf2b0ccae352949a43414eb8fdd920a61c068c311a818b9dfbfec"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "55c88b0bb0468e5b4ea19d766049c79a5b239ad6abcfac092eaabd75f37cc266"
+      "sha256": "91a9a194d05b455c5a733655d4b1a7fff6a5cf847896ea26e59b50788b4aa107"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -91003,7 +91003,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/01-casual/body.glb",
@@ -91027,7 +91027,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/02-homurahara/body.glb",
@@ -91051,7 +91051,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/03-casual-b/body.glb",
@@ -91075,7 +91075,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/models/04-satsujinki/body.glb",
@@ -91306,7 +91306,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/01-rin/body.glb",
@@ -91330,7 +91330,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/02-homurahara/body.glb",
@@ -91354,7 +91354,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/03-rinb/body.glb",
@@ -91378,7 +91378,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/models/04-extra/body.glb",

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T11:29:08+08:00",
-  "inputsSha256": "3c9573d016b74ec3257e83041c4526d10a4e02ffcbb7f3db2f4adb20f0d583bf",
+  "generatedAt": "2026-09-11T11:40:47+08:00",
+  "inputsSha256": "8333532db4a86e3be34fe178578395607ef37fd15d2a1a720d536359d8142f70",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -42207,7 +42207,7 @@
           "format": "UnityFS / 4 skinned textured GLB / PCM WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "converted-candidate-pending-runtime-review",
+          "readiness": "converted-webgl-static-body-validated-pending-rights-actions-backend",
           "purchaseDecision": "hold-purchase-review-free-source",
           "defaultEligible": false,
           "resourceRole": "character-model-and-audio",
@@ -42225,7 +42225,7 @@
           "publicationStatus": "s3-legacy-readback-verified",
           "backendIntegration": {
             "required": true,
-            "state": "pending-runtime-and-visual-validation",
+            "state": "pending-rights-action-integration-and-backend-selection",
             "selectionVerified": false
           },
           "audioFileIndex": {
@@ -42263,7 +42263,7 @@
               "model": "converted/models/01-casual/body.glb",
               "bytes": 265432,
               "sha256": "4144b7480e638f2749b6a9731a1fa68d19dd7e79afb2ea689043425f3eeabad0",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -42274,13 +42274,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-shirou-casual"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/proof.json",
+                  "bytes": 2434,
+                  "sha256": "dd4c03bab7ebbe7c41a9ea39999c209fddc1237dec15283cab2ee05f967bcce5"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/run.json",
+                  "bytes": 402,
+                  "sha256": "8a67c1e2b5cedafb166224b8897a1e15381781b57c1aac52dfb4f20bbec28cc7"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/front.png",
+                    "bytes": 150353,
+                    "sha256": "26d925af78aa3efce1ce735f86505a3c37298777811662ca0097008588b37827"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/back.png",
+                    "bytes": 137171,
+                    "sha256": "9fce0ba47b4766b38fc5c420922b4176ee4cd73d7dafb9bba9b536db21694d6a"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/isometric.png",
+                    "bytes": 148271,
+                    "sha256": "1b1b58b5411a0a0a213b1cc64cbc284d24ddf0efe64074338bdf80d763867796"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             },
             {
               "candidateId": "fuc-mod-shirou-homurahara",
@@ -42297,7 +42346,7 @@
               "model": "converted/models/02-homurahara/body.glb",
               "bytes": 283920,
               "sha256": "7227e2e6473af1a421fbda807b925701e86308db06a194e8f0d692e396611bfd",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -42308,13 +42357,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-shirou-homurahara"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/proof.json",
+                  "bytes": 2434,
+                  "sha256": "98ae17551392c0bef4579546826be2025fb11b1a789bc7dab4aa3d131bc00780"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/run.json",
+                  "bytes": 406,
+                  "sha256": "e108d4e5fe6d4b452df23e25664694a8978a8355b044248878c15b9e58abe355"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/front.png",
+                    "bytes": 160874,
+                    "sha256": "78d0c247d2d80daa18c1b647db436e4eebb1ddb5c8cb938e9afbcaba3865d765"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/back.png",
+                    "bytes": 134581,
+                    "sha256": "116feea6907e410ffb37e365c8e97c2d603e1c179da961a57ef7c3c69942b585"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/isometric.png",
+                    "bytes": 154390,
+                    "sha256": "4dc7845c01179cbed118e4707c841403934bf029e4c4069f267b6188f71fcbb7"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             },
             {
               "candidateId": "fuc-mod-shirou-casual-b",
@@ -42331,7 +42429,7 @@
               "model": "converted/models/03-casual-b/body.glb",
               "bytes": 263308,
               "sha256": "d9032ab91ef51d44d0192caf5e8522c7a6577d7c3ec557482f4e876d04895f43",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -42342,13 +42440,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-shirou-casual-b"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/proof.json",
+                  "bytes": 2446,
+                  "sha256": "8168f5fe7d04f906623a0327b7150460cc77b94ce06607080e1a4b2c36eb822a"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/run.json",
+                  "bytes": 404,
+                  "sha256": "81d2e8b0149eb838842e5848460832df4240154b040eb06d6ce540bb856e9294"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/front.png",
+                    "bytes": 141584,
+                    "sha256": "7a5474edf9ed54842c46b95db81a6cb419bada8220d68255996ead1c9051f9f9"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/back.png",
+                    "bytes": 129664,
+                    "sha256": "e67726043ce3814268528cb608e61d5f20e43178ce346440375cc3065132d3af"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/isometric.png",
+                    "bytes": 138508,
+                    "sha256": "855b9f16056788740981fcf3a374277b297a180f2af90dbde301ab543c4c1cbd"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             },
             {
               "candidateId": "fuc-mod-shirou-satsujinki",
@@ -42365,7 +42512,7 @@
               "model": "converted/models/04-satsujinki/body.glb",
               "bytes": 273544,
               "sha256": "d8c3e6114f5c3dcc94272983f11c8ec46d752c7240047ee89aea697635c3a027",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -42376,13 +42523,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-shirou-satsujinki"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/proof.json",
+                  "bytes": 2446,
+                  "sha256": "83d6b693a34d311907a1f17eba78d6074d40d255309d6c109c0c37d4ebe9caa7"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/run.json",
+                  "bytes": 406,
+                  "sha256": "a9b05eb583aa72a323ea226c6bb631e0c48e4ca1c37d820303ad286dc5b940f6"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/front.png",
+                    "bytes": 120628,
+                    "sha256": "dae5270931303e7a91c804c9039b67d5e7d2e7fb6fef2124ba5617e5e0d86ce4"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/back.png",
+                    "bytes": 92002,
+                    "sha256": "91fe0abadade0904657f112d3013cb1586b514ba0973493b106410f560850458"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/isometric.png",
+                    "bytes": 121063,
+                    "sha256": "74adbb57e3f01fae4e7528b76e6a4b0c551f28224d612f21bc5551e77f6d0426"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             }
           ],
           "candidateManifest": {
@@ -42407,7 +42603,7 @@
             "confirmedVoiceCount": null
           },
           "rightsStatus": "Author publicly distributes this MOD; no additional commercial/republication permission inferred.",
-          "verification": "完整 MOD 原包、4服裝 GLB、16 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。MOD重綁骨架；PSP/PS2來源平台未證明，原生動作與VFX 0，不代表PSP原生庫已完成。",
+          "verification": "完整 MOD 原包、4服裝 GLB與來源標示 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。Babylon WebGL 已對4套服裝完成前／後／等角三視圖的靜態身體、四肢連接及材質可見性驗收。此為 Bomb Rush Cyberfunk 社群 MOD 轉接，PSP/PS2來源平台、原生骨架、原生動作與VFX均未證明；不代表 Fate/unlimited codes 原生庫已完成，也未完成權利、動作、後台或部署驗收。",
           "mappingEvidence": "來源角色標示對照現有 manifest hero name：衛宮士郎；非逐段聲音身分／模型畫面驗收證明",
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-shirou-473819/1efab5148cd6c209b07d4fb60cb9836edb0f29f1bfd30680df56fe474bc52fd0.zip",
@@ -49799,7 +49995,7 @@
           "format": "UnityFS / 4 skinned textured GLB / PCM WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "converted-candidate-pending-runtime-review",
+          "readiness": "converted-webgl-static-body-validated-pending-rights-actions-backend",
           "purchaseDecision": "hold-purchase-review-free-source",
           "defaultEligible": false,
           "resourceRole": "character-model-and-audio",
@@ -49817,7 +50013,7 @@
           "publicationStatus": "s3-legacy-readback-verified",
           "backendIntegration": {
             "required": true,
-            "state": "pending-runtime-and-visual-validation",
+            "state": "pending-rights-action-integration-and-backend-selection",
             "selectionVerified": false
           },
           "audioFileIndex": {
@@ -49855,7 +50051,7 @@
               "model": "converted/models/01-rin/body.glb",
               "bytes": 351712,
               "sha256": "c79d8e3dc652ad4049a704bc3fbd6a2108a9acf05d79069ffc4a7a01d6a3591a",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -49866,13 +50062,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-rin-rin"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/proof.json",
+                  "bytes": 2411,
+                  "sha256": "2c29d9568d9ef28d3fff69ab0d1da6abee38492c6dae587e30af35e8690a8882"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/run.json",
+                  "bytes": 396,
+                  "sha256": "e824dff5bf3d99c921a74ad7975b8d0b7305660099f49d4e881974b583eb246a"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/front.png",
+                    "bytes": 144351,
+                    "sha256": "5ac5f38b8895ceb98227573d411abe6e6eaae3f3d5361ec406feb40a786cd63f"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/back.png",
+                    "bytes": 128454,
+                    "sha256": "74771d61f62631bba0e62345957348f789725ab1e8c45d1defa049e90e9c5b0c"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/isometric.png",
+                    "bytes": 140039,
+                    "sha256": "ceec74d34c6a9988fe14b95bc2a52ea84992f85f5d60197424cf336feba4e86a"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             },
             {
               "candidateId": "fuc-mod-rin-homurahara",
@@ -49889,7 +50134,7 @@
               "model": "converted/models/02-homurahara/body.glb",
               "bytes": 326624,
               "sha256": "c01588bd7e8a57144c75e977837923b3e383e26ff5ed1db9a1b78757dbd26c29",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -49900,13 +50145,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-rin-homurahara"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/proof.json",
+                  "bytes": 2428,
+                  "sha256": "8393321c28cc16e20ab0a97ab05e3b9f27dbc92f7d525846f70af30e038a8e68"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/run.json",
+                  "bytes": 403,
+                  "sha256": "a406539ae74fd896d2a6e1adf3c5eda73d0d3779e9a93d5d52f6ec375b93fe94"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/front.png",
+                    "bytes": 130451,
+                    "sha256": "b1c6aa566cf18686790d88faedd73130ca4cc898e1c12973552ec8bd68e31e87"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/back.png",
+                    "bytes": 110576,
+                    "sha256": "396adf38f6252a618482aaee910f6c43a9ce0c4b0f947423a35142dbd6ee8b6a"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/isometric.png",
+                    "bytes": 127389,
+                    "sha256": "6929f77a3e0467d1c49d8fac7a471bd8750d9a2f0d5b1f26eaae05d17f694663"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             },
             {
               "candidateId": "fuc-mod-rin-rinb",
@@ -49923,7 +50217,7 @@
               "model": "converted/models/03-rinb/body.glb",
               "bytes": 350520,
               "sha256": "a29efb2969360a6140d63aa384008456332d2998f6ab0d0e34ed138873dd8a6b",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -49934,13 +50228,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-rin-rinb"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/proof.json",
+                  "bytes": 2417,
+                  "sha256": "caa02a874a930ca9835d0fbfc26313e064f0ce7bcf183525d5067c10c0bae75a"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/run.json",
+                  "bytes": 397,
+                  "sha256": "7af73b4a922510fe027c6a573e0ca28f83ebf7ef0f262f74aef0f36e6640a63d"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/front.png",
+                    "bytes": 140668,
+                    "sha256": "350bc6e3797f77f691c52be74cc8126cc8ec86167e218464f9142841d4aa059b"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/back.png",
+                    "bytes": 126574,
+                    "sha256": "b5f5f156b303d4edda5d8d046c4915040cc49b16e8211e91cbfb817fba750342"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/isometric.png",
+                    "bytes": 138546,
+                    "sha256": "197fe2b6ad1c096721a7a8c0413ae99f3f44626b9764bb9bba6f8f9e4812505d"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             },
             {
               "candidateId": "fuc-mod-rin-extra",
@@ -49957,7 +50300,7 @@
               "model": "converted/models/04-extra/body.glb",
               "bytes": 338012,
               "sha256": "cead2370d211d2705e4296475d62b05e16d0879328d652449a5378f8f54beacd",
-              "readyStage": "standard-glb-candidate",
+              "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
               "meshCount": 1,
               "skinCount": 1,
               "jointCounts": [
@@ -49968,13 +50311,62 @@
               "sourceSkeleton": "MOD-retargeted",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultChanged": false,
               "limitations": [
-                "Original game source platform, skeleton and animations not proven.",
-                "Custom toon shader reduced to base-color PBR.",
-                "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-              ]
+                "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+                "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+                "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+                "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+              ],
+              "webglVisualReview": {
+                "review": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                  "bytes": 19728,
+                  "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                  "candidateId": "fuc-mod-rin-extra"
+                },
+                "proof": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/proof.json",
+                  "bytes": 2420,
+                  "sha256": "482eb63a716aaec979c8a8aa950301ba3675377e1f3719f55532d5cd8fc5a5f7"
+                },
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/run.json",
+                  "bytes": 398,
+                  "sha256": "52160663fb8ba17668567866d8f52d19ac592148c3cdbf6f000e8e83a6d47507"
+                },
+                "images": {
+                  "front": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/front.png",
+                    "bytes": 141210,
+                    "sha256": "205f2cf908f77e9a41abf304c66103fa379a95f153198cb1b1e5ae7eb85b1701"
+                  },
+                  "back": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/back.png",
+                    "bytes": 120162,
+                    "sha256": "de8f80660fdf333ce12e53bb46a910b08e937d73a4d7d85d3a48e2a1d0907adf"
+                  },
+                  "isometric": {
+                    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/isometric.png",
+                    "bytes": 135255,
+                    "sha256": "4450c97aa08124598a74df974287fbdfa1bd518c42c98220aef977003f870d9f"
+                  }
+                },
+                "engine": "Babylon 7.54.3",
+                "scope": "reviewed-static-body-only",
+                "sourceGameShaderParity": false,
+                "gameplayAcceptance": false,
+                "backup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                  "s3ArchiveMember": "review.json",
+                  "s3Use": "evidence-backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                  "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+                }
+              },
+              "defaultEligible": false,
+              "automaticEligible": false
             }
           ],
           "candidateManifest": {
@@ -49999,7 +50391,7 @@
             "confirmedVoiceCount": null
           },
           "rightsStatus": "Author publicly distributes this MOD; no additional commercial/republication permission inferred.",
-          "verification": "完整 MOD 原包、4服裝 GLB、12 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。MOD重綁骨架；PSP/PS2來源平台未證明，原生動作與VFX 0，不代表PSP原生庫已完成。",
+          "verification": "完整 MOD 原包、4服裝 GLB與來源標示 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。Babylon WebGL 已對4套服裝完成前／後／等角三視圖的靜態身體、四肢連接及材質可見性驗收。此為 Bomb Rush Cyberfunk 社群 MOD 轉接，PSP/PS2來源平台、原生骨架、原生動作與VFX均未證明；不代表 Fate/unlimited codes 原生庫已完成，也未完成權利、動作、後台或部署驗收。",
           "mappingEvidence": "來源角色標示對照現有 manifest hero name：遠坂凜；非逐段聲音身分／模型畫面驗收證明",
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-rin-474593/6a2af492e7df0e96a1f7ed6bc2b04df8c5322e724bb5cb9ae4bf4d379a68988e.zip",
@@ -86786,7 +87178,7 @@
         "format": "UnityFS / 4 skinned textured GLB / PCM WAV",
         "accessStatus": "public-direct-download",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "converted-candidate-pending-runtime-review",
+        "readiness": "converted-webgl-static-body-validated-pending-rights-actions-backend",
         "purchaseDecision": "hold-purchase-review-free-source",
         "defaultEligible": false,
         "resourceRole": "character-model-and-audio",
@@ -86804,7 +87196,7 @@
         "publicationStatus": "s3-legacy-readback-verified",
         "backendIntegration": {
           "required": true,
-          "state": "pending-runtime-and-visual-validation",
+          "state": "pending-rights-action-integration-and-backend-selection",
           "selectionVerified": false
         },
         "audioFileIndex": {
@@ -86842,7 +87234,7 @@
             "model": "converted/models/01-casual/body.glb",
             "bytes": 265432,
             "sha256": "4144b7480e638f2749b6a9731a1fa68d19dd7e79afb2ea689043425f3eeabad0",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -86853,13 +87245,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-shirou-casual"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/proof.json",
+                "bytes": 2434,
+                "sha256": "dd4c03bab7ebbe7c41a9ea39999c209fddc1237dec15283cab2ee05f967bcce5"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/run.json",
+                "bytes": 402,
+                "sha256": "8a67c1e2b5cedafb166224b8897a1e15381781b57c1aac52dfb4f20bbec28cc7"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/front.png",
+                  "bytes": 150353,
+                  "sha256": "26d925af78aa3efce1ce735f86505a3c37298777811662ca0097008588b37827"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/back.png",
+                  "bytes": 137171,
+                  "sha256": "9fce0ba47b4766b38fc5c420922b4176ee4cd73d7dafb9bba9b536db21694d6a"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-01/isometric.png",
+                  "bytes": 148271,
+                  "sha256": "1b1b58b5411a0a0a213b1cc64cbc284d24ddf0efe64074338bdf80d763867796"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           },
           {
             "candidateId": "fuc-mod-shirou-homurahara",
@@ -86876,7 +87317,7 @@
             "model": "converted/models/02-homurahara/body.glb",
             "bytes": 283920,
             "sha256": "7227e2e6473af1a421fbda807b925701e86308db06a194e8f0d692e396611bfd",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -86887,13 +87328,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-shirou-homurahara"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/proof.json",
+                "bytes": 2434,
+                "sha256": "98ae17551392c0bef4579546826be2025fb11b1a789bc7dab4aa3d131bc00780"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/run.json",
+                "bytes": 406,
+                "sha256": "e108d4e5fe6d4b452df23e25664694a8978a8355b044248878c15b9e58abe355"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/front.png",
+                  "bytes": 160874,
+                  "sha256": "78d0c247d2d80daa18c1b647db436e4eebb1ddb5c8cb938e9afbcaba3865d765"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/back.png",
+                  "bytes": 134581,
+                  "sha256": "116feea6907e410ffb37e365c8e97c2d603e1c179da961a57ef7c3c69942b585"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-02/isometric.png",
+                  "bytes": 154390,
+                  "sha256": "4dc7845c01179cbed118e4707c841403934bf029e4c4069f267b6188f71fcbb7"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           },
           {
             "candidateId": "fuc-mod-shirou-casual-b",
@@ -86910,7 +87400,7 @@
             "model": "converted/models/03-casual-b/body.glb",
             "bytes": 263308,
             "sha256": "d9032ab91ef51d44d0192caf5e8522c7a6577d7c3ec557482f4e876d04895f43",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -86921,13 +87411,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-shirou-casual-b"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/proof.json",
+                "bytes": 2446,
+                "sha256": "8168f5fe7d04f906623a0327b7150460cc77b94ce06607080e1a4b2c36eb822a"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/run.json",
+                "bytes": 404,
+                "sha256": "81d2e8b0149eb838842e5848460832df4240154b040eb06d6ce540bb856e9294"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/front.png",
+                  "bytes": 141584,
+                  "sha256": "7a5474edf9ed54842c46b95db81a6cb419bada8220d68255996ead1c9051f9f9"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/back.png",
+                  "bytes": 129664,
+                  "sha256": "e67726043ce3814268528cb608e61d5f20e43178ce346440375cc3065132d3af"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-03/isometric.png",
+                  "bytes": 138508,
+                  "sha256": "855b9f16056788740981fcf3a374277b297a180f2af90dbde301ab543c4c1cbd"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           },
           {
             "candidateId": "fuc-mod-shirou-satsujinki",
@@ -86944,7 +87483,7 @@
             "model": "converted/models/04-satsujinki/body.glb",
             "bytes": 273544,
             "sha256": "d8c3e6114f5c3dcc94272983f11c8ec46d752c7240047ee89aea697635c3a027",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -86955,13 +87494,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-shirou-satsujinki"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/proof.json",
+                "bytes": 2446,
+                "sha256": "83d6b693a34d311907a1f17eba78d6074d40d255309d6c109c0c37d4ebe9caa7"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/run.json",
+                "bytes": 406,
+                "sha256": "a9b05eb583aa72a323ea226c6bb631e0c48e4ca1c37d820303ad286dc5b940f6"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/front.png",
+                  "bytes": 120628,
+                  "sha256": "dae5270931303e7a91c804c9039b67d5e7d2e7fb6fef2124ba5617e5e0d86ce4"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/back.png",
+                  "bytes": 92002,
+                  "sha256": "91fe0abadade0904657f112d3013cb1586b514ba0973493b106410f560850458"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/shirou-04/isometric.png",
+                  "bytes": 121063,
+                  "sha256": "74adbb57e3f01fae4e7528b76e6a4b0c551f28224d612f21bc5551e77f6d0426"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           }
         ],
         "candidateManifest": {
@@ -86986,7 +87574,7 @@
           "confirmedVoiceCount": null
         },
         "rightsStatus": "Author publicly distributes this MOD; no additional commercial/republication permission inferred.",
-        "verification": "完整 MOD 原包、4服裝 GLB、16 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。MOD重綁骨架；PSP/PS2來源平台未證明，原生動作與VFX 0，不代表PSP原生庫已完成。",
+        "verification": "完整 MOD 原包、4服裝 GLB與來源標示 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。Babylon WebGL 已對4套服裝完成前／後／等角三視圖的靜態身體、四肢連接及材質可見性驗收。此為 Bomb Rush Cyberfunk 社群 MOD 轉接，PSP/PS2來源平台、原生骨架、原生動作與VFX均未證明；不代表 Fate/unlimited codes 原生庫已完成，也未完成權利、動作、後台或部署驗收。",
         "mappingEvidence": "來源角色標示對照現有 manifest hero name：衛宮士郎；非逐段聲音身分／模型畫面驗收證明",
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-shirou-473819/1efab5148cd6c209b07d4fb60cb9836edb0f29f1bfd30680df56fe474bc52fd0.zip",
@@ -87008,7 +87596,7 @@
         "format": "UnityFS / 4 skinned textured GLB / PCM WAV",
         "accessStatus": "public-direct-download",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "converted-candidate-pending-runtime-review",
+        "readiness": "converted-webgl-static-body-validated-pending-rights-actions-backend",
         "purchaseDecision": "hold-purchase-review-free-source",
         "defaultEligible": false,
         "resourceRole": "character-model-and-audio",
@@ -87026,7 +87614,7 @@
         "publicationStatus": "s3-legacy-readback-verified",
         "backendIntegration": {
           "required": true,
-          "state": "pending-runtime-and-visual-validation",
+          "state": "pending-rights-action-integration-and-backend-selection",
           "selectionVerified": false
         },
         "audioFileIndex": {
@@ -87064,7 +87652,7 @@
             "model": "converted/models/01-rin/body.glb",
             "bytes": 351712,
             "sha256": "c79d8e3dc652ad4049a704bc3fbd6a2108a9acf05d79069ffc4a7a01d6a3591a",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -87075,13 +87663,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-rin-rin"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/proof.json",
+                "bytes": 2411,
+                "sha256": "2c29d9568d9ef28d3fff69ab0d1da6abee38492c6dae587e30af35e8690a8882"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/run.json",
+                "bytes": 396,
+                "sha256": "e824dff5bf3d99c921a74ad7975b8d0b7305660099f49d4e881974b583eb246a"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/front.png",
+                  "bytes": 144351,
+                  "sha256": "5ac5f38b8895ceb98227573d411abe6e6eaae3f3d5361ec406feb40a786cd63f"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/back.png",
+                  "bytes": 128454,
+                  "sha256": "74771d61f62631bba0e62345957348f789725ab1e8c45d1defa049e90e9c5b0c"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-01/isometric.png",
+                  "bytes": 140039,
+                  "sha256": "ceec74d34c6a9988fe14b95bc2a52ea84992f85f5d60197424cf336feba4e86a"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           },
           {
             "candidateId": "fuc-mod-rin-homurahara",
@@ -87098,7 +87735,7 @@
             "model": "converted/models/02-homurahara/body.glb",
             "bytes": 326624,
             "sha256": "c01588bd7e8a57144c75e977837923b3e383e26ff5ed1db9a1b78757dbd26c29",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -87109,13 +87746,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-rin-homurahara"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/proof.json",
+                "bytes": 2428,
+                "sha256": "8393321c28cc16e20ab0a97ab05e3b9f27dbc92f7d525846f70af30e038a8e68"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/run.json",
+                "bytes": 403,
+                "sha256": "a406539ae74fd896d2a6e1adf3c5eda73d0d3779e9a93d5d52f6ec375b93fe94"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/front.png",
+                  "bytes": 130451,
+                  "sha256": "b1c6aa566cf18686790d88faedd73130ca4cc898e1c12973552ec8bd68e31e87"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/back.png",
+                  "bytes": 110576,
+                  "sha256": "396adf38f6252a618482aaee910f6c43a9ce0c4b0f947423a35142dbd6ee8b6a"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-02/isometric.png",
+                  "bytes": 127389,
+                  "sha256": "6929f77a3e0467d1c49d8fac7a471bd8750d9a2f0d5b1f26eaae05d17f694663"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           },
           {
             "candidateId": "fuc-mod-rin-rinb",
@@ -87132,7 +87818,7 @@
             "model": "converted/models/03-rinb/body.glb",
             "bytes": 350520,
             "sha256": "a29efb2969360a6140d63aa384008456332d2998f6ab0d0e34ed138873dd8a6b",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -87143,13 +87829,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-rin-rinb"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/proof.json",
+                "bytes": 2417,
+                "sha256": "caa02a874a930ca9835d0fbfc26313e064f0ce7bcf183525d5067c10c0bae75a"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/run.json",
+                "bytes": 397,
+                "sha256": "7af73b4a922510fe027c6a573e0ca28f83ebf7ef0f262f74aef0f36e6640a63d"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/front.png",
+                  "bytes": 140668,
+                  "sha256": "350bc6e3797f77f691c52be74cc8126cc8ec86167e218464f9142841d4aa059b"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/back.png",
+                  "bytes": 126574,
+                  "sha256": "b5f5f156b303d4edda5d8d046c4915040cc49b16e8211e91cbfb817fba750342"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-03/isometric.png",
+                  "bytes": 138546,
+                  "sha256": "197fe2b6ad1c096721a7a8c0413ae99f3f44626b9764bb9bba6f8f9e4812505d"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           },
           {
             "candidateId": "fuc-mod-rin-extra",
@@ -87166,7 +87901,7 @@
             "model": "converted/models/04-extra/body.glb",
             "bytes": 338012,
             "sha256": "cead2370d211d2705e4296475d62b05e16d0879328d652449a5378f8f54beacd",
-            "readyStage": "standard-glb-candidate",
+            "readyStage": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "meshCount": 1,
             "skinCount": 1,
             "jointCounts": [
@@ -87177,13 +87912,62 @@
             "sourceSkeleton": "MOD-retargeted",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultChanged": false,
             "limitations": [
-              "Original game source platform, skeleton and animations not proven.",
-              "Custom toon shader reduced to base-color PBR.",
-              "Dynamic hair/skirt MonoBehaviours preserved as source data; not executed or simulated in GLB."
-            ]
+              "Original Fate/UC game platform, skeleton and animations are not proven; this is a Bomb Rush Cyberfunk community-MOD port.",
+              "Three WebGL views validate only static-body completeness and embedded material visibility; source-game toon-shader parity is not proven.",
+              "Dynamic hair/skirt MonoBehaviours are retained source data and were not executed or simulated in the GLB review.",
+              "No rights/republication approval, GGD action integration, backend dropdown registration, default selection, gameplay validation or deployment has been performed."
+            ],
+            "webglVisualReview": {
+              "review": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/review.json",
+                "bytes": 19728,
+                "sha256": "3e924de47b051add91b2c1ebb5074159c45cbd298ae5a984863d48c67408d69e",
+                "candidateId": "fuc-mod-rin-extra"
+              },
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/proof.json",
+                "bytes": 2420,
+                "sha256": "482eb63a716aaec979c8a8aa950301ba3675377e1f3719f55532d5cd8fc5a5f7"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/run.json",
+                "bytes": 398,
+                "sha256": "52160663fb8ba17668567866d8f52d19ac592148c3cdbf6f000e8e83a6d47507"
+              },
+              "images": {
+                "front": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/front.png",
+                  "bytes": 141210,
+                  "sha256": "205f2cf908f77e9a41abf304c66103fa379a95f153198cb1b1e5ae7eb85b1701"
+                },
+                "back": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/back.png",
+                  "bytes": 120162,
+                  "sha256": "de8f80660fdf333ce12e53bb46a910b08e937d73a4d7d85d3a48e2a1d0907adf"
+                },
+                "isometric": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fuc-community-webgl-review-v1/rin-04/isometric.png",
+                  "bytes": 135255,
+                  "sha256": "4450c97aa08124598a74df974287fbdfa1bd518c42c98220aef977003f870d9f"
+                }
+              },
+              "engine": "Babylon 7.54.3",
+              "scope": "reviewed-static-body-only",
+              "sourceGameShaderParity": false,
+              "gameplayAcceptance": false,
+              "backup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fuc-community-webgl-review-v1/c1547616ddcab37fc85901039cc32f14ce40b68c8e36c00ec5cbc14ecc92239b.tar.gz",
+                "s3ArchiveMember": "review.json",
+                "s3Use": "evidence-backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fuc-community-webgl-review-v1/latest-receipt.json",
+                "backupReceiptSha256": "d42558eb8d615f3ee25ecb4fbf18e6b6861bcb1bfe2048f1f307b6b490db7c55"
+              }
+            },
+            "defaultEligible": false,
+            "automaticEligible": false
           }
         ],
         "candidateManifest": {
@@ -87208,7 +87992,7 @@
           "confirmedVoiceCount": null
         },
         "rightsStatus": "Author publicly distributes this MOD; no additional commercial/republication permission inferred.",
-        "verification": "完整 MOD 原包、4服裝 GLB、12 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。MOD重綁骨架；PSP/PS2來源平台未證明，原生動作與VFX 0，不代表PSP原生庫已完成。",
+        "verification": "完整 MOD 原包、4服裝 GLB與來源標示 PCM 已驗證；Khronos 0 error/0 warning、內嵌貼圖 SHA 通過。Babylon WebGL 已對4套服裝完成前／後／等角三視圖的靜態身體、四肢連接及材質可見性驗收。此為 Bomb Rush Cyberfunk 社群 MOD 轉接，PSP/PS2來源平台、原生骨架、原生動作與VFX均未證明；不代表 Fate/unlimited codes 原生庫已完成，也未完成權利、動作、後台或部署驗收。",
         "mappingEvidence": "來源角色標示對照現有 manifest hero name：遠坂凜；非逐段聲音身分／模型畫面驗收證明",
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/gamebanana-fuc-rin-474593/6a2af492e7df0e96a1f7ed6bc2b04df8c5322e724bb5cb9ae4bf4d379a68988e.zip",

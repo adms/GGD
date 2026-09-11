@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "55c88b0bb0468e5b4ea19d766049c79a5b239ad6abcfac092eaabd75f37cc266",
-      "bytes": 2185749
+      "sha256": "91a9a194d05b455c5a733655d4b1a7fff6a5cf847896ea26e59b50788b4aa107",
+      "bytes": 2213940
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "4a714d4d76184a56502120242346e930c38a393d71da8294552e285648b6bb9e",
-      "bytes": 5793148
+      "sha256": "22afa8ec52543989e22c0b05ef7f1926289034eaf395eda379e503ce9c8eec13",
+      "bytes": 5851882
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -1228,7 +1228,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -1250,7 +1250,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -1272,7 +1272,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -1294,7 +1294,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-shirou-473819",
           "sourceUrl": "https://gamebanana.com/mods/473819",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         }
@@ -1457,7 +1457,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -1479,7 +1479,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -1501,7 +1501,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         },
@@ -1523,7 +1523,7 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-rin-474593",
           "sourceUrl": "https://gamebanana.com/mods/474593",
-          "readiness": "standard-glb-candidate",
+          "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
           "converted": true,
           "identityReviewRequired": false
         }
