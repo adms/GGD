@@ -537,6 +537,39 @@ unchanged: no new mandatory attribution** (the CC-BY login dragon stays the only
 > wake. (d) **`Death_A`/`Death_B` are full-body collapses, not a per-plate disassembly** — the
 > "comes apart plate by plate" is a client VFX job (detach the plate submeshes), not a baked clip.
 
+## Third-party character models (`models/ou99/`, `models/community/`, `models/imported/`) — GH#1234
+
+⚠️ **This section was missing entirely until 2026-09-11.** 129 `ou99.*` models were
+shipping — bound to hero cards, selectable in the admin and editor model dropdowns,
+`heroBody: true` — with **zero** lines anywhere in this file. `community` had zero
+lines too, and `imported` had two passing mentions about unrelated props.
+
+⭐ Counts are **measured**, not asserted (`content/models/*.json` → `glbPath`, and the
+`modelKey` each of the 153 champion cards actually points at):
+
+| directory | model docs | referenced by a hero card | what it is |
+| --- | ---: | ---: | --- |
+| `assets/models/ou99/` | 129 | 2 | Third-party WC3 models obtained from the **ou99.com** forum. Per-thread provenance (149 threads: thread id, title, preview, upload date) is recorded in `docs/ou99模組metadata.md`. |
+| `assets/models/ou99/versions/` | 54 | 47 | Pinned/frozen copies of the above, kept so a hero can roll back to the exact model it shipped with. |
+| `assets/models/community/` | 75 | 45 | Models contributed through the community hero forge and uploaded via the editor. Each is content-addressed (`community.body.<sha>`). |
+| `assets/models/imported/` | 140 | 54 | Assets extracted from the original GoGoDie Warcraft III custom map — the same provenance as the rest of the w3x import. |
+| `assets/models/imported/versions/` | 2 | 0 | Frozen copies of the above. |
+| `models/champions/versions/` | 3 | 0 | Frozen copies of the first-party champion models credited under **Characters** above — same rights, pinned bytes. |
+
+⛔ **The usage terms for the `ou99` batch are NOT stated here, because nobody has
+stated them.** The models were obtained by the repo owner from a forum that charges
+in site currency (元宝). Writing a licence claim we cannot support would be worse
+than writing nothing — this file's job is to record provenance truthfully, and an
+invented terms line would be a claim this project cannot stand behind.
+
+⇒ **Pending:** one sentence from the owner (the purchaser) on how this batch may be
+used and redistributed. Until then this section states only what is measurable:
+where the files came from, how many there are, and which heroes depend on them.
+
+⭐ Guard: `packages/shared/src/ops/externalModelProvenance.test.ts` walks every
+shipping model doc and checks both directions — a `glbPath` directory with no row
+here goes red, and a row here with no files on disk goes red.
+
 ## Particle textures (`textures/particles/*.png`)
 
 **Particle Pack (1.1)** by Kenney Vleugels (kenney.nl)
