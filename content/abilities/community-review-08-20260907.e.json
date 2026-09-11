@@ -22,11 +22,6 @@
   "range": 0.0,
   "effects": [
     {
-      "kind": "applyBuff",
-      "modifiers": [],
-      "duration": 3
-    },
-    {
       "kind": "restore",
       "manaPct": 0.15,
       "applyTo": "self"

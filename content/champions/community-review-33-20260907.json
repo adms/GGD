@@ -293,11 +293,6 @@
       "cooldownTier": "大",
       "effects": [
         {
-          "kind": "applyBuff",
-          "modifiers": [],
-          "duration": 3
-        },
-        {
           "kind": "heal",
           "amount": {
             "flat": 100,
