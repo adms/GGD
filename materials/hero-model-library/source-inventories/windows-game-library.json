@@ -53,7 +53,72 @@
         "bytes": 40270,
         "sha256": "f883bbe313dc0312a6a3484aa3c150ae60f7c629bc4f45f15b533b7ffafa3c9e"
       }
-    ]
+    ],
+    "s3Backup": {
+      "schema": "ggd-windows-game-inventory-backup-manifest@1",
+      "sourceScanGeneratedAt": "2026-09-11T19:06:37.1477340+00:00",
+      "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625",
+      "files": [
+        {
+          "relativePath": "source/GGD-Game-Inventory-20260912-030625.zip",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
+          "bytes": 266062,
+          "sha256": "2e541e26cb2b5bb2bdc5923398c16332b9313da01476a8a0c0f72f4f76a8ffab",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
+          "readbackVerified": true,
+          "readbackSha256": "2e541e26cb2b5bb2bdc5923398c16332b9313da01476a8a0c0f72f4f76a8ffab"
+        },
+        {
+          "relativePath": "extracted/game-directories.csv",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/extracted/game-directories.csv",
+          "bytes": 3378636,
+          "sha256": "cd39b86f07d4da31b1b6f9da8c0938f46692604580df069bff4656fa6679b650",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625/extracted/game-directories.csv",
+          "readbackVerified": true,
+          "readbackSha256": "cd39b86f07d4da31b1b6f9da8c0938f46692604580df069bff4656fa6679b650"
+        },
+        {
+          "relativePath": "extracted/rom-files.csv",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/extracted/rom-files.csv",
+          "bytes": 253567,
+          "sha256": "e5d07bb9c0ccb9e60a9182302b238feb05b1680095b66accff1b08587baee0fd",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625/extracted/rom-files.csv",
+          "readbackVerified": true,
+          "readbackSha256": "e5d07bb9c0ccb9e60a9182302b238feb05b1680095b66accff1b08587baee0fd"
+        },
+        {
+          "relativePath": "extracted/scan-receipt.json",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/extracted/scan-receipt.json",
+          "bytes": 709,
+          "sha256": "c1fec7d73400faaf785ebd961ef20b66d6b3b28ffae5f5e2723c2d2ca39751ce",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625/extracted/scan-receipt.json",
+          "readbackVerified": true,
+          "readbackSha256": "c1fec7d73400faaf785ebd961ef20b66d6b3b28ffae5f5e2723c2d2ca39751ce"
+        },
+        {
+          "relativePath": "extracted/steam-games.csv",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/extracted/steam-games.csv",
+          "bytes": 40059,
+          "sha256": "5bb71a39c39aeadb0d9b35b9acf96ea50ff62b2cf8d1e420f52f1716d4f5de18",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625/extracted/steam-games.csv",
+          "readbackVerified": true,
+          "readbackSha256": "5bb71a39c39aeadb0d9b35b9acf96ea50ff62b2cf8d1e420f52f1716d4f5de18"
+        },
+        {
+          "relativePath": "extracted/steam-manifests.csv",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/extracted/steam-manifests.csv",
+          "bytes": 40270,
+          "sha256": "f883bbe313dc0312a6a3484aa3c150ae60f7c629bc4f45f15b533b7ffafa3c9e",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/game-source-inventories/windows-scan-20260912-030625/extracted/steam-manifests.csv",
+          "readbackVerified": true,
+          "readbackSha256": "f883bbe313dc0312a6a3484aa3c150ae60f7c629bc4f45f15b533b7ffafa3c9e"
+        }
+      ],
+      "status": "uploaded-readback-verified",
+      "verifiedAt": "2026-09-11T19:20:00Z",
+      "verifiedIdentityArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789154323",
+      "readbackMethod": "aws s3 cp prefix to isolated local directory; SHA-256 recomputed for every file"
+    }
   },
   "statusSemantics": {
     "current": "inventory-only",

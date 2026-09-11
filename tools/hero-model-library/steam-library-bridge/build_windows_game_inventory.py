@@ -151,7 +151,7 @@ def classify_rom(row: dict[str, str], platform: str) -> tuple[str, str | None]:
     return "rom-candidate", "Platform or payload remains unverified"
 
 
-def normalize(scan_dir: Path, source_zip: Path | None) -> dict:
+def normalize(scan_dir: Path, source_zip: Path | None, backup_manifest: Path | None = None) -> dict:
     receipt = json.loads((scan_dir / "scan-receipt.json").read_text(encoding="utf-8-sig"))
     steam_dirs = load_csv(scan_dir / "steam-games.csv")
     manifests = load_csv(scan_dir / "steam-manifests.csv")
@@ -258,6 +258,8 @@ def normalize(scan_dir: Path, source_zip: Path | None) -> dict:
             "zip": ({"path": str(source_zip), "bytes": source_zip.stat().st_size, "sha256": sha256(source_zip)}
                     if source_zip else None),
             "files": source_files,
+            "s3Backup": (json.loads(backup_manifest.read_text(encoding="utf-8-sig"))
+                         if backup_manifest else None),
         },
         "statusSemantics": {
             "current": "inventory-only",
@@ -341,11 +343,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scan-dir", type=Path, required=True)
     parser.add_argument("--source-zip", type=Path)
+    parser.add_argument("--backup-manifest", type=Path)
     parser.add_argument("--local-output", type=Path, required=True)
     parser.add_argument("--git-json", type=Path, required=True)
     parser.add_argument("--git-markdown", type=Path, required=True)
     args = parser.parse_args()
-    index = normalize(args.scan_dir.resolve(), args.source_zip.resolve() if args.source_zip else None)
+    index = normalize(
+        args.scan_dir.resolve(),
+        args.source_zip.resolve() if args.source_zip else None,
+        args.backup_manifest.resolve() if args.backup_manifest else None,
+    )
     args.local_output.mkdir(parents=True, exist_ok=True)
     args.git_json.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(index, ensure_ascii=False, indent=2) + "\n"
