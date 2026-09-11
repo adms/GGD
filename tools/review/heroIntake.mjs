@@ -30,7 +30,10 @@ export function buildHeroIntakeQueue(repoRoot, batchFilter = null) {
   const batches = [];
   for (const f of files) {
     const doc = readJson(join(dir, f));
-    if (!doc?.heroes) continue;
+    // ⛔⛔ 收「任何有 heroes 的 json」會把**名單檔**（那一批的輸入）也讀成一個批次 ——
+    // 2026-09-11 真的發生：頁面上出現兩個 `ship34`，其中一個每一格都是空的。
+    // ⇒ ⭐ 認 schema，⛔ 不認形狀。
+    if (doc?.schema !== "ggd-hero-intake@1" || !Array.isArray(doc.heroes)) continue;
     const batch = doc.batch ?? f.slice(0, -5);
     if (batchFilter && batch !== batchFilter) continue;
     const heroes = doc.heroes.map((h) => {

@@ -74,12 +74,20 @@ describe("新英雄上架一頁檢核 (hero-intake-review)", () => {
     }
   });
 
-  it("⭐ ④ 空的交付列有兩個相反的意思，而 join key 一列只能被一位英雄認領", () => {
+  it("⭐ ④ 空的交付列有兩個相反的意思，而 join key 一列只能被一位英雄認領", async () => {
+    const queue = (await import(join(REPO, "tools/review/heroIntake.mjs"))).buildHeroIntakeQueue(REPO) as {
+      batches: { batch: string; digest: string }[];
+    };
     const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8")) as {
       delivery: { rows: number; claimed: number; unclaimed: string[]; doubleClaimed: string[] };
       heroes: { id: string; model: { files?: number; modelKey?: string | null; severity?: string; gap?: string } }[];
     };
     expect(doc.delivery.doubleClaimed, "⛔ 同一列交付被兩位英雄認領 —— 那是 join key 漂掉的樣子").toEqual([]);
+    // ⭐ 同一個材料目錄底下還住著那一批的**名單檔**（輸入）—— 它⛔ 不可以被讀成第二個同名批次
+    // （2026-09-11 真的發生：頁面上兩個 ship34，其中一個每一格都是空的）
+    const names = queue.batches.map((b) => b.batch);
+    expect(new Set(names).size, `⛔ 批次名重複了：${names.join("、")} —— 材料目錄裡有東西被讀成了批次`).toBe(names.length);
+    for (const b of queue.batches) expect(b.digest, `${b.batch} 沒有 digest ⇒ 它不是批核材料`).not.toBe("");
     expect(doc.delivery.claimed, "對不上的交付列會讓整張表不能被相信").toBe(doc.delivery.rows);
     const empty = doc.heroes.filter((h) => h.model.files === 0);
     expect(empty.length, "ship34 裡本來就有『交付列是空的』那一族（10 位沿用既有＋8 位還沒做）").toBeGreaterThan(0);
