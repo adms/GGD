@@ -343,10 +343,18 @@ def register(args):
     if len(old) != 1:
         raise ValueError('Expected one source-level aggregate-pending record')
     source['preservedPendingBackups'] = [row for row in source['preservedPendingBackups'] if row not in old]
-    source.setdefault('preservedAggregateBackups', []).append({**old[0], 'aggregateId': args.aggregate_id,
-        's3Uri': uri, 'manifestUri': receipt['manifestUri'], 'readbackVerified': True,
-        'allMemberSha256Verified': True, 'coveredSourceIds': args.source_ids,
-        'extraMetadataMembers': extra, 'status': 's3-readback-verified-cross-source-aggregate-not-primary'})
+    prior = old[0]
+    carried = {key: value for key, value in prior.items()
+               if key not in {'plannedS3Uri', 'readbackVerified', 'status', 'reason'}}
+    source.setdefault('preservedAggregateBackups', []).append({**carried,
+        'priorPendingRecord': {'plannedS3Uri': prior.get('plannedS3Uri'),
+            'readbackVerified': prior.get('readbackVerified'), 'status': prior.get('status'),
+            'reason': prior.get('reason')},
+        'aggregateId': args.aggregate_id, 's3Uri': uri, 'manifestUri': receipt['manifestUri'],
+        'readbackVerified': True, 'allMemberSha256Verified': True,
+        'coveredSourceIds': args.source_ids, 'extraMetadataMembers': extra,
+        'status': 's3-readback-verified-cross-source-aggregate-not-primary',
+        'reason': 'Cross-source aggregate retained separately; every covered source keeps its primary backup.'})
     (root / 'download-sources.json').write_text(json.dumps(downloads, ensure_ascii=False, indent=2) + '\n')
     (root / 'public-source-files.json').write_text(json.dumps(index, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({'aggregateId': args.aggregate_id, 's3Uri': uri, 'members': len(pending['files']),

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T11:40:47+08:00",
-  "inputsSha256": "8333532db4a86e3be34fe178578395607ef37fd15d2a1a720d536359d8142f70",
+  "generatedAt": "2026-09-11T13:54:25+08:00",
+  "inputsSha256": "187a8392fcfb1abd158a005a0615088bf5af141c47f065ff4bbfc008a80dff06",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -87032,17 +87032,7 @@
           "confirmedVoiceCount": null
         },
         "verification": "完整批次最後3包；2,271 OGG，來源原包 SHA/大小與安全解包通過、逐檔 SHA 重算、OGG 結構與分類抽樣 FFmpeg 解碼通過；尚未全檔解碼或逐段聽審。 此固定交付與其 manifest 已重新逐檔 SHA-256 核對，S3 完整讀回及逐成員驗證通過；同根目錄的其他交付不在此備份範圍。",
-        "preservedPendingBackups": [
-          {
-            "localArchive": "outputs/model-source-backups/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
-            "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
-            "bytes": 872691517,
-            "sha256": "66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15",
-            "readbackVerified": false,
-            "status": "preserved-scope-conflict-not-primary",
-            "reason": "archive member list exceeds this fixed source delivery; retained locally and unuploaded"
-          }
-        ],
+        "preservedPendingBackups": [],
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/0c79411d103a651bd31d1e436a0232bfdbee9ee0b9af5f6d766079a859975f5f.tar.gz",
           "bytes": 183860394,
@@ -87052,7 +87042,45 @@
           "readbackVerified": true,
           "fullGetVerified": true,
           "s3ReadbackVerified": true
-        }
+        },
+        "preservedAggregateBackups": [
+          {
+            "localArchive": "outputs/model-source-backups/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
+            "bytes": 872691517,
+            "sha256": "66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15",
+            "readbackVerified": true,
+            "status": "s3-readback-verified-cross-source-aggregate-not-primary",
+            "aggregateId": "jumpforce-audio-workspace-aggregate-20260910-v1",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/workflow-aggregates/jumpforce-audio-workspace-aggregate-20260910-v1/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/workflow-aggregates/jumpforce-audio-workspace-aggregate-20260910-v1/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.manifest.json",
+            "allMemberSha256Verified": true,
+            "coveredSourceIds": [
+              "parallel-ps-jumpforce-local-10",
+              "parallel-ps-jumpforce-local-second10",
+              "parallel-ps-jumpforce-local-next32",
+              "parallel-ps-jumpforce-local-final3"
+            ],
+            "extraMetadataMembers": [
+              "batch-status.json",
+              "catalog-files.json",
+              "retry-history-20260910/JForce_DIO-acquisition.json",
+              "retry-history-20260910/JForce_Kane-acquisition.json",
+              "retry-history-20260910/JForce_Kane-download-page.html",
+              "retry-history-20260910/JForce__Common Sounds-acquisition.json",
+              "retry-history-20260910/JForce__Common Sounds-download-page.html",
+              "retry-history-20260910/prior-report.json",
+              "source-page.html",
+              "validation-method.json"
+            ],
+            "priorPendingRecord": {
+              "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-ps-jumpforce-local-final3/66e17639f974c0a43f5a4c02b10eb55bdba353b3b7d32397636c65b29e1e9c15.zip",
+              "readbackVerified": false,
+              "status": "preserved-scope-conflict-not-primary",
+              "reason": "archive member list exceeds this fixed source delivery; retained locally and unuploaded"
+            },
+            "reason": "Cross-source aggregate retained separately; every covered source keeps its primary backup."
+          }
+        ]
       },
       {
         "id": "kof-xiv-mai-audio",
