@@ -89,9 +89,16 @@ export const SELA: ChampionDef = {
     str: 18,
     agi: 16,
     int: 26,
-    strGrowth: 3.6,
-    agiGrowth: 2.031,
-    intGrowth: 3,
+    // ⭐⭐ GH#1211（2026-09-11）：骨架**漏掉了 2026-08-21 的歸零**。
+    // owner 2026-08-21 逐字：「我決定**廢掉三屬性 純用十出身的五級距表來代表每級屬性成長**
+    //  就好⋯**所有角色的 力敏智成長都歸 0** 不是真的沒作用」
+    // ⇒ `content/champions/sela.json` 已經是 0（`da73cdebf` 把 84 名補齊），
+    //   ⛔ 而這一份 TS 骨架還帶著舊值 ⇒ **同一個值兩個住處，而它們不一致**。
+    // ⚠️ ⭐ 它走的是 fail-open 那條路（內容載入失敗 ⇒ `main.tsx` 註冊骨架）
+    //   ⇒ ⛔ 事故當下玩家拿到的 sela，每級成長與正常時**不一樣** —— 而那是最不該再多一個變數的時刻。
+    strGrowth: 0,
+    agiGrowth: 0,
+    intGrowth: 0,
     primary: "INT",
     source: "authored",
   },
@@ -264,9 +271,10 @@ export const THORNE: ChampionDef = {
     str: 24,
     agi: 18,
     int: 14,
-    strGrowth: 4.4,
-    agiGrowth: 2.429,
-    intGrowth: 2,
+    // ⭐ 同上（GH#1211）：thorne 骨架也漏掉 2026-08-21 的歸零。
+    strGrowth: 0,
+    agiGrowth: 0,
+    intGrowth: 0,
     primary: "STR",
     source: "authored",
   },
