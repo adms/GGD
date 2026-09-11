@@ -53,7 +53,44 @@ def mapped(v): return np.array([v[0] / 16, v[1] / 16, -v[2] / 16], dtype=float)
 def mapped_normal(v): return np.array([v[0], v[1], -v[2]], dtype=float)
 
 
-def cube_faces(origin, size, uv, tex_size, mirror):
+def rotation_matrix_degrees(rotation):
+    """Bedrock rest-pose Euler rotation, in the documented XYZ component order.
+
+    The static mesh path only bakes the rest pose.  It does not reinterpret
+    TenshiLib animation rotations or make a glTF rig claim.
+    """
+    x, y, z = np.deg2rad(np.asarray(rotation, dtype=float))
+    cx, sx, cy, sy, cz, sz = np.cos(x), np.sin(x), np.cos(y), np.sin(y), np.cos(z), np.sin(z)
+    rx = np.array([[1, 0, 0], [0, cx, -sx], [0, sx, cx]])
+    ry = np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]])
+    rz = np.array([[cz, -sz, 0], [sz, cz, 0], [0, 0, 1]])
+    return rz @ ry @ rx
+
+
+def source_bone_world_matrices(bones, by_name):
+    """Return source-coordinate rest transforms for a validated bone forest."""
+    cache = {}
+    visiting = set()
+    def build(index):
+        if index in cache:
+            return cache[index]
+        if index in visiting:
+            raise ValueError('cycle in Bedrock bone parents')
+        visiting.add(index)
+        bone = bones[index]
+        pivot = np.asarray(bone.get('pivot', [0, 0, 0]), dtype=float)
+        local = np.eye(4)
+        local[:3, :3] = rotation_matrix_degrees(bone.get('rotation', [0, 0, 0]))
+        local[:3, 3] = pivot - local[:3, :3] @ pivot
+        parent = bone.get('parent')
+        world = build(by_name[parent][0]) @ local if parent else local
+        visiting.remove(index)
+        cache[index] = world
+        return world
+    return [build(index) for index in range(len(bones))]
+
+
+def cube_faces(origin, size, uv, tex_size, mirror, transform=None):
     o, s = np.array(origin, dtype=float), np.array(size, dtype=float); lo, hi = o, o + s
     x0, y0, z0 = lo; x1, y1, z1 = hi; w, h, d = s; u, v = uv
     # Bedrock's ordinary [u, v] box layout.  Per-face UV objects are rejected
@@ -69,6 +106,9 @@ def cube_faces(origin, size, uv, tex_size, mirror):
               ([(x0,y1,z1),(x1,y1,z1),(x1,y1,z0),(x0,y1,z0)], (0,1,0))]
     for (corners, normal), (u0,v0,u1,v1) in zip(points, layouts):
         if mirror: u0, u1 = u1, u0
+        if transform is not None:
+            corners = [(transform @ np.append(point, 1.0))[:3] for point in corners]
+            normal = transform[:3, :3] @ np.asarray(normal, dtype=float)
         # glTF and Bedrock geometry JSON both address image data from the
         # top-left.  Do not flip V here: image loaders apply their own GPU
         # convention and an extra flip samples transparent atlas regions.
@@ -83,20 +123,24 @@ def main():
     ap.add_argument('--source-id', required=True); ap.add_argument('--candidate-id', required=True)
     ap.add_argument('--static-mesh-only', action='store_true',
                     help='emit the verified static model without a glTF skin; source bones remain a conversion gap')
+    ap.add_argument('--bake-static-bone-rotations', action='store_true',
+                    help='only with --static-mesh-only: bake source rest-pose bone rotations into mesh vertices')
     args = ap.parse_args(); geo, texture, out, report = args.geometry.resolve(), args.texture.resolve(), args.output.resolve(), args.report.resolve()
     if out.exists() or report.exists(): raise ValueError('output and report must be new')
     doc = json.loads(geo.read_text()); geos = doc.get('minecraft:geometry', [])
     if len(geos) != 1: raise ValueError('expected exactly one Bedrock geometry')
     geometry = geos[0]; desc, bones = geometry['description'], geometry['bones']; names = [b['name'] for b in bones]
     if len(names) != len(set(names)): raise ValueError('duplicate bone names')
-    if any('rotation' in b and any(float(x) for x in b['rotation']) for b in bones):
-        raise ValueError('static bone rotations require an explicit reviewed transform implementation')
+    has_static_rotations = any('rotation' in b and any(float(x) for x in b['rotation']) for b in bones)
+    if has_static_rotations and not (args.static_mesh_only and args.bake_static_bone_rotations):
+        raise ValueError('static bone rotations require --static-mesh-only --bake-static-bone-rotations')
     by_name = {b['name']: (i, b) for i, b in enumerate(bones)}
     for _, b in by_name.values():
         if b.get('parent') and b['parent'] not in by_name: raise ValueError('missing parent bone: ' + b['parent'])
         for c in b.get('cubes', []):
             if not isinstance(c.get('uv'), list) or len(c['uv']) != 2: raise ValueError('only ordinary [u,v] cube UV is implemented')
     image = Image.open(texture).convert('RGBA'); width, height = image.size
+    rest_world = source_bone_world_matrices(bones, by_name) if has_static_rotations else [None] * len(bones)
     g = GLB()
     if args.static_mesh_only:
         # glTF treats an empty top-level array as an invalid empty entity; omit
@@ -106,7 +150,7 @@ def main():
     for bone_i, bone in enumerate(bones):
         for cube in bone.get('cubes', []):
             inflate = float(cube.get('inflate', 0)); origin = np.array(cube['origin'], float) - inflate; size = np.array(cube['size'], float) + 2*inflate
-            for pts, normal, uv in cube_faces(origin, size, cube['uv'], (width,height), bool(cube.get('mirror', False))):
+            for pts, normal, uv in cube_faces(origin, size, cube['uv'], (width,height), bool(cube.get('mirror', False)), rest_world[bone_i]):
                 base=len(positions); positions += pts; normals += [normal]*4; texcoords += uv
                 if not args.static_mesh_only:
                     joints += [[bone_i,0,0,0]]*4; weights += [[1,0,0,0]]*4
@@ -152,11 +196,11 @@ def main():
         g.g['skins'].append({'name':args.candidate_id+' Bedrock rigid-cube skin','joints':list(range(len(bones))),'inverseBindMatrices':inv})
         mesh['skin']=0
     g.g['nodes'].append(mesh); g.g['scenes'][0]['nodes'].append(mesh_node)
-    g.g['extras']={'ggd':{'sourceId':args.source_id,'candidateId':args.candidate_id,'format':'Bedrock geometry JSON','unitScale':'1/16','nativeAnimationIncluded':False,'nativeAnimationReason':'TenshiLib animation JSON preserved separately; not reinterpreted by this static converter','staticMeshOnly':args.static_mesh_only,'sourceBoneCount':len(bones),'sourceBoneHierarchyPreservedIn':str(geo)}}
+    g.g['extras']={'ggd':{'sourceId':args.source_id,'candidateId':args.candidate_id,'format':'Bedrock geometry JSON','unitScale':'1/16','nativeAnimationIncluded':False,'nativeAnimationReason':'TenshiLib animation JSON preserved separately; not reinterpreted by this static converter','staticMeshOnly':args.static_mesh_only,'bakedStaticBoneRotations':has_static_rotations,'sourceBoneCount':len(bones),'sourceBoneHierarchyPreservedIn':str(geo)}}
     out.parent.mkdir(parents=True,exist_ok=True); report.parent.mkdir(parents=True,exist_ok=True); digest=g.write(out)
     receipt={'schema':'ggd-bedrock-static-glb-conversion@1','sourceId':args.source_id,'candidateId':args.candidate_id,
              'input':{'geometry':{'path':str(geo),'sha256':sha(geo),'bytes':geo.stat().st_size},'texture':{'path':str(texture),'sha256':sha(texture),'bytes':texture.stat().st_size,'width':width,'height':height}},
-             'output':{'path':str(out),'sha256':digest,'bytes':out.stat().st_size,'meshCount':1,'skinCount':0 if args.static_mesh_only else 1,'jointCount':0 if args.static_mesh_only else len(bones),'sourceBoneCount':len(bones),'cubeCount':sum(len(b.get('cubes',[])) for b in bones),'vertices':len(positions),'triangles':len(indices)//3,'textureCount':1,'animationCount':0,'staticMeshOnly':args.static_mesh_only},
+             'output':{'path':str(out),'sha256':digest,'bytes':out.stat().st_size,'meshCount':1,'skinCount':0 if args.static_mesh_only else 1,'jointCount':0 if args.static_mesh_only else len(bones),'sourceBoneCount':len(bones),'cubeCount':sum(len(b.get('cubes',[])) for b in bones),'vertices':len(positions),'triangles':len(indices)//3,'textureCount':1,'animationCount':0,'staticMeshOnly':args.static_mesh_only,'bakedStaticBoneRotations':has_static_rotations},
              'animationProvenance':'No animation converted. Source TenshiLib JSON is retained as native MOD motion reserve and must be converted/reviewed independently.','skeletonProvenance':'No glTF skin in static-mesh-only output; source Bedrock bones are retained in the source geometry and animation reserve.' if args.static_mesh_only else 'Rigid rest skin generated from source Bedrock bone pivots.','runtimeReady':False,'backendSelectionVerified':False,'visualReview':'pending','rightsStatus':'Author MOD metadata marks ARR; no separate redistribution permission found.'}
     report.write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n'); print(json.dumps(receipt,ensure_ascii=False))
 

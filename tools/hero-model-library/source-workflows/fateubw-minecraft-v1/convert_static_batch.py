@@ -27,6 +27,7 @@ COMPATIBLE = [
     "fateubw-medea_caster", "fateubw-medusa_rider",
     "fateubw-nero_claudius_saber", "fateubw-sasaki_kojiro_assassin",
 ]
+REST_ROTATION_COMPATIBLE = ["fateubw-heracles_berserker"]
 
 
 def sha256(path):
@@ -54,6 +55,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--only", action="append", default=[], metavar="CANDIDATE_ID",
                         help="Convert only declared compatible candidate IDs; repeat as needed.")
+    parser.add_argument("--include-static-rest-rotations", action="store_true",
+                        help="Permit reviewed rotation-bearing candidates as baked static meshes only; never emits a glTF rig.")
     args = parser.parse_args()
     repo, intake, output = args.repo.resolve(), args.intake.resolve(), args.output.resolve()
     if output.exists():
@@ -63,10 +66,12 @@ def main():
     if source is None or source.get("sourceCommit") != SOURCE_COMMIT:
         raise ValueError("frozen FateUBW source is not present")
     candidates = {row["candidateId"]: row for row in source["modelCandidates"]}
-    if set(COMPATIBLE) - candidates.keys():
+    declared = COMPATIBLE + REST_ROTATION_COMPATIBLE
+    if set(declared) - candidates.keys():
         raise ValueError("declared compatible candidate missing from source index")
-    selected = COMPATIBLE if not args.only else args.only
-    if not selected or len(selected) != len(set(selected)) or set(selected) - set(COMPATIBLE):
+    allowed = declared if args.include_static_rest_rotations else COMPATIBLE
+    selected = allowed if not args.only else args.only
+    if not selected or len(selected) != len(set(selected)) or set(selected) - set(allowed):
         raise ValueError("--only must be a unique nonempty subset of declared compatible candidates")
     converter = Path(__file__).with_name("convert_bedrock_geometry.py")
     inspector = Path(__file__).with_name("inspect_tenshilib_animation.py")
@@ -82,8 +87,9 @@ def main():
         if len(geometries) != 1:
             raise ValueError(candidate_id + ": expected one geometry")
         bones = geometries[0].get("bones", [])
-        if any(any(float(value) for value in bone.get("rotation", [])) for bone in bones):
-            raise ValueError(candidate_id + ": nonzero rotation is outside this batch")
+        has_static_rotations = any(any(float(value) for value in bone.get("rotation", [])) for bone in bones)
+        if has_static_rotations and candidate_id not in REST_ROTATION_COMPATIBLE:
+            raise ValueError(candidate_id + ": nonzero rotation is outside this reviewed static-rest-pose batch")
         cubes = [cube for bone in bones for cube in bone.get("cubes", [])]
         if not all(isinstance(cube.get("uv"), list) and len(cube["uv"]) == 2 for cube in cubes):
             raise ValueError(candidate_id + ": per-face or invalid UV is outside this batch")
@@ -91,9 +97,12 @@ def main():
         directory.mkdir()
         body, conversion, reserve, structural = (directory / "body.glb", directory / "conversion-report.json",
                                                   directory / "animation-reserve.json", directory / "structural-readback.json")
-        subprocess.run([sys.executable, str(converter), "--geometry", str(geometry), "--texture", str(texture),
+        converter_args = [sys.executable, str(converter), "--geometry", str(geometry), "--texture", str(texture),
                         "--output", str(body), "--report", str(conversion), "--source-id", SOURCE_ID,
-                        "--candidate-id", candidate_id + "-static-v2", "--static-mesh-only"], check=True)
+                        "--candidate-id", candidate_id + "-static-v2", "--static-mesh-only"]
+        if has_static_rotations:
+            converter_args.append("--bake-static-bone-rotations")
+        subprocess.run(converter_args, check=True)
         subprocess.run([sys.executable, str(inspector), "--geometry", str(geometry), "--animation", str(animation),
                         "--output", str(reserve)], check=True)
         subprocess.run([sys.executable, str(Path(__file__).with_name("validate_bedrock_static_glb.py")),
@@ -112,12 +121,13 @@ def main():
                        "structuralReadback": {"path": str(structural), "sha256": sha256(structural), "valid": True},
                        "nativeAnimationReserve": {"path": str(reserve), "sha256": sha256(reserve),
                                                    "clipCount": reserve_doc["clipCount"], "convertedToGlb": False}},
-            "geometry": conversion_doc["output"], "sourceRigRetained": True, "glbRigConverted": False, "runtimeReady": False,
+            "geometry": conversion_doc["output"], "sourceRigRetained": True, "glbRigConverted": False,
+            "bakedStaticBoneRotations": has_static_rotations, "runtimeReady": False,
             "backendSelectionVerified": False, "defaultEligible": False,
             "status": "static-body-structural-validated-pending-khronos-visual-rights-animation-rig",
         })
     summary = {"schema": "ggd-fateubw-compatible-static-batch@1", "sourceId": SOURCE_ID,
-               "sourceCommit": SOURCE_COMMIT, "scope": "translation-only ordinary-UV servant meshes; source rigs retained but not converted; no rotation-bearing models",
+               "sourceCommit": SOURCE_COMMIT, "scope": "ordinary-UV servant static meshes; source rigs retained but not converted; only explicitly reviewed rest-pose rotation candidates are baked",
                "records": records, "counts": {"converted": len(records), "nativeAnimationConverted": 0,
                "runtimeReady": 0, "backendRegistered": 0, "deployed": 0}}
     (output / "batch-manifest.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T10:43:59+08:00",
-  "inputsSha256": "5344d7a3fe0acd11f50342ffb0f61b7d51dd51a24f49cd5e2ab708f4cfd53b2b",
+  "generatedAt": "2026-09-11T10:54:50+08:00",
+  "inputsSha256": "12e9b3f0e0941134e2adfc51c8afbdfa49efc20af7da88ab74479284eb500569",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -792,15 +792,27 @@
               },
               "boneCount": 36,
               "cubeCount": 40,
-              "readyStage": "raw-source-pending-standardization",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
-              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
+              "bodyStandardization": {
+                "attemptId": "fateubw-heracles_berserker-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+                "bodyConverted": true,
+                "glbRigConverted": false,
+                "nativeAnimationConverted": false,
+                "visualReview": "reviewed-static-body-only",
+                "rightsReview": "pending",
+                "runtimeReady": false,
+                "backendSelectionVerified": false,
+                "defaultEligible": false
+              }
             },
             {
               "candidateId": "fateubw-iskander_rider",
@@ -1314,6 +1326,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
               "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
               "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-heracles-static-mesh-v1",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+              "bytes": 1991654,
+              "sha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+              "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
+              "manifestSha256": "26c5a2d3add4941e849742cd1607bedfafd6ce230a6a2d1df72303e8fa5b9839",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -2340,6 +2378,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
                 "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-heracles_berserker-static-mesh-v2",
+              "candidateId": "fateubw-heracles_berserker",
+              "conversionInstanceId": "fateubw-heracles_berserker-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+                "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+                "bytes": 38480
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+                "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+                "bytes": 2156
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+                "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+                "bytes": 1591
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+                "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+                "bytes": 3220
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+                "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+                "bytes": 17487,
+                "clipCount": 17,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+                "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+                "bytes": 2235,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+                  "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+                  "bytes": 360
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+                "archiveSha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+                "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -3249,15 +3359,27 @@
               },
               "boneCount": 36,
               "cubeCount": 40,
-              "readyStage": "raw-source-pending-standardization",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
-              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
+              "bodyStandardization": {
+                "attemptId": "fateubw-heracles_berserker-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+                "bodyConverted": true,
+                "glbRigConverted": false,
+                "nativeAnimationConverted": false,
+                "visualReview": "reviewed-static-body-only",
+                "rightsReview": "pending",
+                "runtimeReady": false,
+                "backendSelectionVerified": false,
+                "defaultEligible": false
+              }
             },
             {
               "candidateId": "fateubw-iskander_rider",
@@ -3771,6 +3893,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
               "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
               "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-heracles-static-mesh-v1",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+              "bytes": 1991654,
+              "sha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+              "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
+              "manifestSha256": "26c5a2d3add4941e849742cd1607bedfafd6ce230a6a2d1df72303e8fa5b9839",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -4797,6 +4945,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
                 "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-heracles_berserker-static-mesh-v2",
+              "candidateId": "fateubw-heracles_berserker",
+              "conversionInstanceId": "fateubw-heracles_berserker-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+                "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+                "bytes": 38480
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+                "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+                "bytes": 2156
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+                "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+                "bytes": 1591
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+                "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+                "bytes": 3220
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+                "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+                "bytes": 17487,
+                "clipCount": 17,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+                "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+                "bytes": 2235,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+                  "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+                  "bytes": 360
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+                "archiveSha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+                "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -18183,15 +18403,27 @@
               },
               "boneCount": 36,
               "cubeCount": 40,
-              "readyStage": "raw-source-pending-standardization",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
-              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
+              "bodyStandardization": {
+                "attemptId": "fateubw-heracles_berserker-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+                "bodyConverted": true,
+                "glbRigConverted": false,
+                "nativeAnimationConverted": false,
+                "visualReview": "reviewed-static-body-only",
+                "rightsReview": "pending",
+                "runtimeReady": false,
+                "backendSelectionVerified": false,
+                "defaultEligible": false
+              }
             },
             {
               "candidateId": "fateubw-iskander_rider",
@@ -18705,6 +18937,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
               "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
               "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-heracles-static-mesh-v1",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+              "bytes": 1991654,
+              "sha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+              "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
+              "manifestSha256": "26c5a2d3add4941e849742cd1607bedfafd6ce230a6a2d1df72303e8fa5b9839",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -19731,6 +19989,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
                 "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-heracles_berserker-static-mesh-v2",
+              "candidateId": "fateubw-heracles_berserker",
+              "conversionInstanceId": "fateubw-heracles_berserker-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+                "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+                "bytes": 38480
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+                "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+                "bytes": 2156
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+                "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+                "bytes": 1591
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+                "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+                "bytes": 3220
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+                "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+                "bytes": 17487,
+                "clipCount": 17,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+                "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+                "bytes": 2235,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+                  "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+                  "bytes": 360
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+                "archiveSha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+                "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -31090,15 +31420,27 @@
               },
               "boneCount": 36,
               "cubeCount": 40,
-              "readyStage": "raw-source-pending-standardization",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
-              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
+              "bodyStandardization": {
+                "attemptId": "fateubw-heracles_berserker-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+                "bodyConverted": true,
+                "glbRigConverted": false,
+                "nativeAnimationConverted": false,
+                "visualReview": "reviewed-static-body-only",
+                "rightsReview": "pending",
+                "runtimeReady": false,
+                "backendSelectionVerified": false,
+                "defaultEligible": false
+              }
             },
             {
               "candidateId": "fateubw-iskander_rider",
@@ -31612,6 +31954,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
               "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
               "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-heracles-static-mesh-v1",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+              "bytes": 1991654,
+              "sha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+              "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
+              "manifestSha256": "26c5a2d3add4941e849742cd1607bedfafd6ce230a6a2d1df72303e8fa5b9839",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -32638,6 +33006,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
                 "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-heracles_berserker-static-mesh-v2",
+              "candidateId": "fateubw-heracles_berserker",
+              "conversionInstanceId": "fateubw-heracles_berserker-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+                "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+                "bytes": 38480
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+                "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+                "bytes": 2156
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+                "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+                "bytes": 1591
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+                "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+                "bytes": 3220
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+                "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+                "bytes": 17487,
+                "clipCount": 17,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+                "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+                "bytes": 2235,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+                  "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+                  "bytes": 360
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+                "archiveSha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+                "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -43558,15 +43998,27 @@
               },
               "boneCount": 36,
               "cubeCount": 40,
-              "readyStage": "raw-source-pending-standardization",
+              "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
               "runtimeReady": false,
               "backendSelectionVerified": false,
-              "manualVisualReview": "pending",
+              "manualVisualReview": "reviewed-static-body-only",
               "defaultEligible": false,
               "defaultChanged": false,
               "license": "ARR",
               "nativeFucPsp": false,
-              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+              "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
+              "bodyStandardization": {
+                "attemptId": "fateubw-heracles_berserker-static-mesh-v2",
+                "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+                "bodyConverted": true,
+                "glbRigConverted": false,
+                "nativeAnimationConverted": false,
+                "visualReview": "reviewed-static-body-only",
+                "rightsReview": "pending",
+                "runtimeReady": false,
+                "backendSelectionVerified": false,
+                "defaultEligible": false
+              }
             },
             {
               "candidateId": "fateubw-iskander_rider",
@@ -44080,6 +44532,32 @@
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
               "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
               "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            {
+              "id": "fateubw-heracles-static-mesh-v1",
+              "sourceId": "github-flemmli97-fateubw-07e9d79b",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+              "bytes": 1991654,
+              "sha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+              "fileCount": 14,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+              "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
+              "manifestSha256": "26c5a2d3add4941e849742cd1607bedfafd6ce230a6a2d1df72303e8fa5b9839",
               "s3Use": "backup-only-not-runtime-entry"
             }
           ],
@@ -45106,6 +45584,78 @@
                 "readbackVerified": true,
                 "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
                 "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+                "s3Use": "backup-only-not-runtime-entry"
+              },
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false,
+              "deploymentStatus": "not-deployed",
+              "missing": [
+                "redistribution permission for ARR source",
+                "glTF skeleton conversion",
+                "TenshiLib animation conversion and event mapping",
+                "GGD backend import and selection verification"
+              ]
+            },
+            {
+              "id": "fateubw-heracles_berserker-static-mesh-v2",
+              "candidateId": "fateubw-heracles_berserker",
+              "conversionInstanceId": "fateubw-heracles_berserker-static-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "sourceClass": "community-mod",
+              "platform": "Minecraft Java 1.21.1",
+              "nativeFucPsp": false,
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker",
+              "body": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+                "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+                "bytes": 38480
+              },
+              "converterReport": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+                "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+                "bytes": 2156
+              },
+              "structuralReadback": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+                "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+                "bytes": 1591
+              },
+              "contractValidation": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+                "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+                "bytes": 3220
+              },
+              "nativeAnimationReserve": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+                "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+                "bytes": 17487,
+                "clipCount": 17,
+                "convertedToGlb": false
+              },
+              "webglVisualReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+                "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+                "bytes": 2235,
+                "run": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+                  "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+                  "bytes": 360
+                },
+                "reviewedViews": [
+                  "front",
+                  "back",
+                  "isometric"
+                ],
+                "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+                "archiveSha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+                "readbackVerified": true,
+                "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+                "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
                 "s3Use": "backup-only-not-runtime-entry"
               },
               "runtimeReady": false,
@@ -103685,15 +104235,27 @@
             },
             "boneCount": 36,
             "cubeCount": 40,
-            "readyStage": "raw-source-pending-standardization",
+            "readyStage": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "runtimeReady": false,
             "backendSelectionVerified": false,
-            "manualVisualReview": "pending",
+            "manualVisualReview": "reviewed-static-body-only",
             "defaultEligible": false,
             "defaultChanged": false,
             "license": "ARR",
             "nativeFucPsp": false,
-            "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report."
+            "mappingEvidence": "Author model ID and localized identity matched inventory; preserve variants/defaults. See mapping report.",
+            "bodyStandardization": {
+              "attemptId": "fateubw-heracles_berserker-static-mesh-v2",
+              "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+              "bodyConverted": true,
+              "glbRigConverted": false,
+              "nativeAnimationConverted": false,
+              "visualReview": "reviewed-static-body-only",
+              "rightsReview": "pending",
+              "runtimeReady": false,
+              "backendSelectionVerified": false,
+              "defaultEligible": false
+            }
           },
           {
             "candidateId": "fateubw-iskander_rider",
@@ -104207,6 +104769,32 @@
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
             "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
             "manifestSha256": "1744b46fbcef9704e5a4b4bfbed215fcc8a1ee001319232e9fa4c9a24d88665c",
+            "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "fateubw-heracles-static-mesh-v1",
+            "sourceId": "github-flemmli97-fateubw-07e9d79b",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/13cbc17e50cc527cc00bfdf22408331f4888c181e96c129bb122eb7228826ea9/readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+            "bytes": 1991654,
+            "sha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+            "fileCount": 14,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+            "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
+            "manifestSha256": "26c5a2d3add4941e849742cd1607bedfafd6ce230a6a2d1df72303e8fa5b9839",
             "s3Use": "backup-only-not-runtime-entry"
           }
         ],
@@ -105233,6 +105821,78 @@
               "readbackVerified": true,
               "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-artoria-static-mesh-v3/latest-receipt.json",
               "receiptSha256": "df16b0872a23341182e4aeaa3cddd420c5e4a5ad6f8af0d00ac4a60a13bf40d6",
+              "s3Use": "backup-only-not-runtime-entry"
+            },
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "defaultEligible": false,
+            "deploymentStatus": "not-deployed",
+            "missing": [
+              "redistribution permission for ARR source",
+              "glTF skeleton conversion",
+              "TenshiLib animation conversion and event mapping",
+              "GGD backend import and selection verification"
+            ]
+          },
+          {
+            "id": "fateubw-heracles_berserker-static-mesh-v2",
+            "candidateId": "fateubw-heracles_berserker",
+            "conversionInstanceId": "fateubw-heracles_berserker-static-v2",
+            "status": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
+            "sourceClass": "community-mod",
+            "platform": "Minecraft Java 1.21.1",
+            "nativeFucPsp": false,
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker",
+            "body": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+              "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+              "bytes": 38480
+            },
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+              "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+              "bytes": 2156
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+              "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+              "bytes": 1591
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+              "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+              "bytes": 3220
+            },
+            "nativeAnimationReserve": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+              "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+              "bytes": 17487,
+              "clipCount": 17,
+              "convertedToGlb": false
+            },
+            "webglVisualReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+              "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+              "bytes": 2235,
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+                "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+                "bytes": 360
+              },
+              "reviewedViews": [
+                "front",
+                "back",
+                "isometric"
+              ],
+              "scope": "Static body visible with embedded source texture in Babylon WebGL; not source-engine shader parity or gameplay acceptance."
+            },
+            "legacyBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.files.json",
+              "archiveSha256": "29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178",
+              "readbackVerified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-heracles-static-mesh-v1/latest-receipt.json",
+              "receiptSha256": "2d8cf95d03401c92db401e4d77f52ceb455aec5bf7e3a4c86f11c50b6a467766",
               "s3Use": "backup-only-not-runtime-entry"
             },
             "runtimeReady": false,
