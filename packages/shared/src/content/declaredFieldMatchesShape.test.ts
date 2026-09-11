@@ -77,6 +77,58 @@ const CEIL = Object.freeze({
   basicAttackHookNotOnCard: 3,
 });
 
+/**
+ * ⭐⭐ `onBasicAttack` **被當成別的 hook 的替身**的那 29 支（GH#1239）。
+ *
+ * ⛔ 這張名單**只能變短** —— ⛔ 而它**不是**「卡面忘了寫攻擊時」：
+ * 逐支讀完卡面之後，它們描述的觸發條件**根本不是普攻**：
+ *
+ * | 卡面說的 | 擋住幾支 |
+ * |---|---:|
+ * | 資源／能源 | 6 · 其他 6 · 技能命中（非普攻）5 · 受擊／交鋒 5 |
+ * | 友軍互動 3 · 助攻／擊殺 2 · 召喚物／陷阱 1 · 靜止／位移 1 | |
+ *
+ * 逐字例：`community-review-01`「**召喚物命中與陷阱成功觸發**」·
+ * `community-review-09`「**參與有效助攻**」·`community-review-13`「**保持穩定姿勢**」。
+ *
+ * ⇒ ⭐⭐ **把「攻擊時」寫上這 29 張卡，只會讓它們用另一種方式說謊。**
+ *   ⛔ 錯的不是文字，是引擎**沒有那些 hook** ⇒ 走第〇·五守則：
+ *   盤點 → 按**擋住的支數**做機制 ⇒ 7 個機制解鎖 29 支，⛔ 不是 29 輪改文案。
+ *
+ * ⚠️ ⭐ 名單在這裡而**不是把上限從 3 調到 29** —— 上限調大會讓**下一支**
+ *   真的「卡面忘了寫」的技能靜靜地混進來，⭐ 而那正是這條閘要抓的東西。
+ */
+const BASIC_ATTACK_PLACEHOLDER: ReadonlySet<string> = new Set([
+  "community-review-01-20260907.passive",
+  "community-review-02-20260907.passive",
+  "community-review-04-20260907.passive",
+  "community-review-05-20260907.passive",
+  "community-review-07-20260907.passive",
+  "community-review-09-20260907.passive",
+  "community-review-10-20260907.passive",
+  "community-review-12-20260907.passive",
+  "community-review-13-20260907.passive",
+  "community-review-15-20260907.passive",
+  "community-review-16-20260907.passive",
+  "community-review-18-20260907.passive",
+  "community-review-19-20260907.passive",
+  "community-review-20-20260907.passive",
+  "community-review-21-20260907.passive",
+  "community-review-23-20260907.passive",
+  "community-review-24-20260907.passive",
+  "community-review-26-20260907.passive",
+  "community-review-27-20260907.passive",
+  "community-review-28-20260907.passive",
+  "community-review-29-20260907.passive",
+  "community-review-30-20260907.passive",
+  "community-review-32-20260907.passive",
+  "community-review-34-20260907.passive",
+  "community-review-36-20260907.passive",
+  "community-review-37-20260907.passive",
+  "godie-e00w.ex",
+  "godie-h02v.r",
+  "godie-o030.ex",]);
+
 describe("宣告的欄位與實際結構相符（GH#948）", () => {
   it("⭐ 儀器：普查真的掃到了技能（⛔ 否則下面全是 0 ≤ 上限）", () => {
     expect(census.counts["abilities"], "⛔ 一支技能都沒掃到").toBeGreaterThan(300);
@@ -84,12 +136,41 @@ describe("宣告的欄位與實際結構相符（GH#948）", () => {
 
   it("⭐⭐ 四條規則都**只能變少**（⛔ 新增一支不符就紅）", () => {
     for (const [k, cap] of Object.entries(CEIL)) {
+      // ⭐ `basicAttackHookNotOnCard` 走**名單**而不是數字（見上面那段）——
+      //   ⛔ 名單外的任何一支仍然紅，⭐ 而名單上修好的也要被拿掉（下一條）。
+      if (k === "basicAttackHookNotOnCard") continue;
       expect(
         census.counts[k],
         `⛔ ${k}：${census.counts[k]} > 上限 ${cap} ⇒ 又多了一支「宣告與實際不符」的技能。\n` +
           "   ⇒ 修那一支，⛔ 不是把上限調大。",
       ).toBeLessThanOrEqual(cap);
     }
+  });
+
+  it("⭐ `onBasicAttack` 替身：名單外的一律紅（⛔ 不是把上限調大）", () => {
+    const extra = census.basicAttackHookNotOnCard
+      .map((r) => r.id)
+      .filter((id) => !BASIC_ATTACK_PLACEHOLDER.has(id));
+    expect(
+      extra,
+      "⛔⛔ 這幾支掛了 `onBasicAttack` 而卡面沒說「普通攻擊」——\n" +
+        "   ⭐ 兩種可能，先分清楚再動手：\n" +
+        "   ① 卡面**其實說了**但用了新的詞 ⇒ 去 `tools/declared-shape/gen.ts` 把那個詞加進\n" +
+        "      `ON_BASIC_ATTACK_SAID`（⚠️ 這個病 2026-09-07 與 09-12 已經各犯過一次）\n" +
+        "   ② 這支的觸發條件**根本不是普攻** ⇒ 它借了 `onBasicAttack` 頂著（GH#1239）\n" +
+        "      ⇒ 補進 `BASIC_ATTACK_PLACEHOLDER` 並在那一段寫下它**真正**要的 hook。\n" +
+        "   ⛔ 兩者都**不是**「把『攻擊時』寫上卡面」。",
+    ).toEqual([]);
+  });
+
+  it("⭐ 替身名單只能變短（⛔ 修好了還留在名單上也紅）", () => {
+    const live = new Set(census.basicAttackHookNotOnCard.map((r) => r.id));
+    const healed = [...BASIC_ATTACK_PLACEHOLDER].filter((id) => !live.has(id));
+    expect(
+      healed,
+      "⭐ 這幾支已經不在普查裡了 —— 把 id 從 `BASIC_ATTACK_PLACEHOLDER` 拿掉。\n" +
+        "⛔ 不拿掉的話，這張名單會與世界脫節，而脫節的名單會讓上面那條開始放行真的缺陷。",
+    ).toEqual([]);
   });
 
   it("⭐⭐⭐ **③ 的承重條**：級距真的會把 `cooldown` 陣列覆寫掉", () => {
