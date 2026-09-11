@@ -2,8 +2,8 @@
 import argparse, base64, html, json, pathlib, re
 
 ap = argparse.ArgumentParser(description="上架檢核頁：材料＋模型實拍＋語音精靈＋三份缺口清單 → 一頁自足的 HTML")
-ap.add_argument("--material", required=True, help="docs/_review/material/hero-intake/<批次>.json")
-ap.add_argument("--work", required=True, help="工作目錄（collect-review-inputs.py 的輸出＋review34/{webp,audio}）")
+ap.add_argument("--material", required=True)
+ap.add_argument("--work", required=True, help="collect-review-inputs.py 的輸出＋review34/{webp,audio}")
 ap.add_argument("--out", required=True)
 A = ap.parse_args()
 
@@ -39,21 +39,26 @@ for h in sorted(mat['heroes'], key=lambda x: (x['ready'], x['id'])):
     if shot.exists():
         origin = mf.get(hid,{}).get('from','')
         pic = (f'<img class="shot" src="{b64(shot,"image/webp")}" alt="{e(h["name"])}" loading="lazy" width="320" height="320">'
-               f'<div class="shotnote">實拍自 {e(origin)}・畫面覆蓋 {cov.get(hid,0)*100:.1f}%</div>')
+               f'<div class="shotnote">實拍自 {e(origin)}・畫面覆蓋 {cov.get(hid,0)*100:.1f}%</div>'
+               f'<div class="item" data-item="model"><span class="ilabel">🧍 這顆模型</span>'
+               f'<button class="yes" title="採用">✓</button><button class="no" title="不採用">✗</button></div>')
     else:
         pic = '<div class="noshot">⛔ 沒有模型<br><span>連交付表都沒有檔</span></div>'
 
     s = spr.get(hid)
     if s:
         mark, ccls, why = CONF.get(s['confidence'], ("·","dim",s['confidence']))
-        btns = "".join(
-            f'<button class="clip" data-a="{c["start"]}" data-b="{c["end"]}" title="{e(c["label"])}">'
-            f'{e(c["bucket"])} <i>{c["end"]-c["start"]:.1f}s</i></button>'
-            for c in sorted(s['marks'], key=lambda c: BUCKET_ORDER.index(c['bucket']) if c['bucket'] in BUCKET_ORDER else 99))
+        rows_ = ""
+        for i, c in enumerate(sorted(s['marks'], key=lambda c: BUCKET_ORDER.index(c['bucket']) if c['bucket'] in BUCKET_ORDER else 99)):
+            rows_ += (f'<div class="item" data-item="clip-{i}">'
+                      f'<button class="clip" data-a="{c["start"]}" data-b="{c["end"]}" title="{e(c["label"])}">▶</button>'
+                      f'<span class="ilabel">{e(c["bucket"])}<i>{c["end"]-c["start"]:.1f}s</i></span>'
+                      f'<button class="yes" title="採用這一段">✓</button><button class="no" title="不採用">✗</button>'
+                      f'</div>')
         audio = (f'<div class="voice {ccls}">'
                  f'<div class="vhead"><b>{mark} {e(s["group"])}</b>「{e(s["groupName"])}」<span class="why">{e(why)}</span></div>'
                  f'<audio preload="none" src="{b64(HERE/"review34/audio"/s["file"],"audio/mpeg")}"></audio>'
-                 f'<div class="clips">{btns}</div></div>')
+                 f'<div class="items">{rows_}</div></div>')
     else:
         audio = '<div class="voice dim"><div class="vhead">🎙 全庫找不到這位角色的原作語音</div></div>'
 
@@ -69,8 +74,8 @@ for h in sorted(mat['heroes'], key=lambda x: (x['ready'], x['id'])):
   {audio}
   <div class="chips">{chips or '<span class="chip ok">沒有擋住的事</span>'}</div>
   <div class="verdict">
-   <button class="ap">通過</button><button class="rj">退回</button>
-   <input class="why-in" placeholder="退回原因（必填）" />
+   <button class="allyes">全部接受</button><button class="allno">全部拒絕</button>
+   <input class="why-in" placeholder="備註／退回原因（選填）" />
    <span class="state"></span>
   </div>
  </div></article>''')
@@ -90,8 +95,9 @@ for r in resc:
   <div class="meta"><span class="badge ok">位元組已進 git</span><span class="badge dim">{r["bytes"]/1024/1024:.1f} MB</span>
    <span class="badge dim">sha256 驗過</span></div>
   <div class="chips"><span class="chip ok">在這一版之前：玩家看到的是程序化體素替身</span></div>
-  <div class="verdict"><button class="ap">看起來對</button><button class="rj">不對</button>
-   <input class="why-in" placeholder="哪裡不對（必填）"><span class="state"></span></div>
+  <div class="verdict"><div class="item" data-item="model"><span class="ilabel">🧍 這顆模型</span>
+   <button class="yes" title="看起來對">✓</button><button class="no" title="不對">✗</button></div>
+   <input class="why-in" placeholder="哪裡不對（選填）"><span class="state"></span></div>
  </div></article>''')
 
 # 💬 60 名沒有角色對白 —— ⭐ owner 2026-09-10：「請你給我名單就好 不要自己產 我會手動填寫」
@@ -123,7 +129,7 @@ for pr in pairs:
  <div class="body"><h3>{'⭐ 同一角色' if same else '⚠️ 不同角色共用一顆'}</h3>
   <div class="meta"><code>{e(pr['modelKey'][:40])}</code></div>
   <div class="chips"><span class="chip {'ok' if same else 'warn'}">{who}</span></div>
-  {'' if same else '<div class="verdict"><button class="ap">刻意的・保留</button><button class="rj">要各自一顆</button><input class="why-in" placeholder="理由（必填）"><span class="state"></span></div>'}
+  {'' if same else '<div class="verdict"><div class="item" data-item="model"><span class="ilabel">刻意共用？</span><button class="yes" title="刻意的・保留">✓</button><button class="no" title="要各自一顆">✗</button></div><input class="why-in" placeholder="理由（選填）"><span class="state"></span></div>'}
  </div></article>''')
 
 D = mat['delivery']
@@ -172,11 +178,25 @@ h3{{font-family:"Noto Serif TC",serif;font-size:17px;margin:0 0 3px}}
 .voice.warn{{border-color:var(--warn)}} .voice.dim{{color:var(--dim)}}
 .vhead{{font-size:12px;margin-bottom:6px}} .vhead b{{font-family:ui-monospace,Menlo,monospace;font-size:11.5px}}
 .why{{color:var(--dim);margin-left:6px}} .voice.warn .why{{color:var(--warn)}}
-.clips{{display:flex;flex-wrap:wrap;gap:5px}}
-.clip{{background:var(--soft);border:1px solid transparent;color:var(--ink);border-radius:6px;
- padding:4px 9px;font-size:12px;cursor:pointer}}
-.clip:hover{{border-color:var(--teal)}} .clip[aria-pressed="true"]{{border-color:var(--teal);color:var(--teal);font-weight:700}}
-.clip i{{color:var(--dim);font-style:normal;font-size:10.5px}}
+.items{{display:flex;flex-direction:column;gap:3px}}
+.item{{display:flex;align-items:center;gap:6px;background:var(--soft);border:1px solid transparent;
+ border-radius:6px;padding:3px 6px}}
+.item[data-v="ok"]{{border-color:var(--ok)}} .item[data-v="no"]{{border-color:var(--bad);opacity:.62}}
+.ilabel{{flex:1;font-size:12px;display:flex;gap:6px;align-items:center;min-width:0}}
+.ilabel i{{color:var(--dim);font-style:normal;font-size:10.5px}}
+.clip{{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:5px;
+ width:26px;height:22px;font-size:11px;cursor:pointer;flex:0 0 auto;padding:0}}
+.clip:hover{{border-color:var(--teal);color:var(--teal)}}
+.clip[aria-pressed="true"]{{border-color:var(--teal);background:var(--teal);color:#fff}}
+.yes,.no{{background:transparent;border:1px solid var(--line);border-radius:5px;width:26px;height:22px;
+ font-size:12px;cursor:pointer;flex:0 0 auto;padding:0;color:var(--dim);font-weight:700}}
+.yes:hover,.item[data-v="ok"] .yes{{border-color:var(--ok);color:var(--ok)}}
+.no:hover,.item[data-v="no"] .no{{border-color:var(--bad);color:var(--bad)}}
+.item[data-v="ok"] .yes{{background:var(--ok);color:#fff}} .item[data-v="no"] .no{{background:var(--bad);color:#fff}}
+.allyes,.allno{{font-size:12px;padding:3px 10px;border-radius:6px;background:transparent;cursor:pointer;font-weight:700}}
+.allyes{{border:1px solid var(--ok);color:var(--ok)}} .allno{{border:1px solid var(--bad);color:var(--bad)}}
+.bulk{{display:flex;gap:6px;align-items:center;margin-left:auto}}
+.bulk b{{font-size:12px;color:var(--dim);font-weight:400}}
 .chips{{display:flex;flex-direction:column;gap:3px;margin-bottom:9px}}
 .chip{{font-size:11.5px;line-height:1.45}} .chip.bad{{color:var(--bad)}} .chip.warn{{color:var(--warn)}} .chip.ok{{color:var(--ok)}}
 .verdict{{display:flex;gap:6px;align-items:center;flex-wrap:wrap}}
@@ -229,6 +249,7 @@ h3{{font-family:"Noto Serif TC",serif;font-size:17px;margin:0 0 3px}}
 </div>
 
 <section id="s1">
+<div class="bar sub-bar"><b>整批：</b><span class="bulk"><button class="allyes" data-scope="#s1">本頁全部接受</button><button class="allno" data-scope="#s1">本頁全部拒絕</button></span></div>
 <div class="keyline">🔑 <b>模型交付表對帳</b>：{D['rows']} 列・對上 {D['claimed']} 列・沒有人認領 {len(D['unclaimed'])} 列・被兩位認領 {len(D['doubleClaimed'])} 列。
 模型預覽是**真的把那顆 glb 載進 three.js 拍的**，⛔ 不是示意圖；每一張都量過非透明像素（空白的會被擋下）。</div>
 <div class="grid">
@@ -237,6 +258,7 @@ h3{{font-family:"Noto Serif TC",serif;font-size:17px;margin:0 0 3px}}
 </section>
 
 <section id="s2" hidden>
+<div class="bar sub-bar"><b>整批：</b><span class="bulk"><button class="allyes" data-scope="#s2">本頁全部接受</button><button class="allno" data-scope="#s2">本頁全部拒絕</button></span></div>
 <div class="keyline">🧍 這 38 名在**這一版之前**是**程序化體素替身** —— 它們的 GLB 只在 <code>assets-offdisk.json</code> 裡「宣告」過，
 ⛔ 而部署是 <code>git fetch + checkout</code>、全 repo **沒有任何一步把 S3 的位元組拉回來** ⇒ 伺服器上那顆檔不存在。
 ⭐ 已從 S3 取回 37 顆（39.1 MB），<b>sha256 與位元組數兩個軸都驗過</b>，進 git。下面每一張都是拿**入庫後那顆 glb** 拍的。</div>
@@ -259,6 +281,7 @@ h3{{font-family:"Noto Serif TC",serif;font-size:17px;margin:0 0 3px}}
 </section>
 
 <section id="s4" hidden>
+<div class="bar sub-bar"><b>整批：</b><span class="bulk"><button class="allyes" data-scope="#s4">本頁全部接受</button><button class="allno" data-scope="#s4">本頁全部拒絕</button></span></div>
 <div class="keyline">🔁 36 名英雄共用 18 顆模型。⭐ 其中 <b>15 對是同一角色</b>（本體↔變身態，或同一位英雄的兩個編號）——那是**正常**的。
 ⚠️ 另外 <b>3 對是不同角色共用一顆</b>，那要你看一眼決定：是刻意的惡搞／替身，還是該各自一顆。
 <br>⚠️ 我量到 15 對，你說 14 對 —— 差的那一對是悟空（「超級賽亞人 - 悟空」＋「賽亞人 - 悟空」），名字前綴不同但是同一位角色。</div>
@@ -304,35 +327,90 @@ for (const card of cards) {{
   }});
 }}
 
-/* ── 裁決：寫進 db（⭐ 跨裝置、跨重新整理都在），db 不在時退成本機暫存 ──── */
-function paint(id, v) {{
-  const card = document.getElementById("c-" + id);
-  if (!card) return;
-  const ap = card.querySelector(".ap"), rj = card.querySelector(".rj"), st = card.querySelector(".state");
-  ap.setAttribute("aria-pressed", String(v?.verdict === "approve"));
-  rj.setAttribute("aria-pressed", String(v?.verdict === "reject"));
-  if (v?.reason && !card.querySelector(".why-in").value) card.querySelector(".why-in").value = v.reason;
-  const when = v?.at ? new Date(v.at).toLocaleString("zh-TW", {{ month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }}) : "";
-  st.textContent = v ? `已${{v.verdict === "approve" ? "通過" : "退回"}}${{when ? " · " + when : ""}}${{v.reason ? " · " + v.reason : ""}}` : "";
-  card.dataset.done = v ? "1" : "0";
+/* ── 逐項判定 ──────────────────────────────────────────────────
+   ⭐ owner 2026-09-11：「模型 每個音效 等都應該**分開選項**接受或拒絕，
+      也有**全部接受 全部拒絕**」⇒ 一個模型是一項、一段音效是一項。
+   ⛔ 一位英雄一個裁決會把「模型對但這段語音不對」壓成一個字，那正是他要拆開的東西。
+   db：集合 `items`，文件 id = `<區>__<英雄>__<項>`（⭐ 一項一份 ⇒ ⛔ 兩個項目不會互相蓋掉）。 */
+const itemId = (el) => {{
+  const card = el.closest(".card");
+  return `${{card.closest("section").id}}__${{card.dataset.id}}__${{el.dataset.item}}`;
+}};
+function paintItem(el, v) {{
+  el.dataset.v = v?.v ?? "";
+  const card = el.closest(".card");
+  card.dataset.done = card.querySelectorAll('.item:not([data-v=""])').length === card.querySelectorAll(".item").length ? "1" : "0";
   refreshProg();
 }}
-async function decide(card, verdict) {{
-  const id = card.dataset.id;
-  const reason = card.querySelector(".why-in").value.trim();
-  if (verdict === "reject" && !reason) {{
-    card.querySelector(".state").textContent = "⛔ 退回要填原因 —— 沒有理由的退回，下一輪沒有人知道要修什麼";
-    card.querySelector(".why-in").focus(); return;
-  }}
-  const body = {{ verdict, reason, at: new Date().toISOString(), batch: "ship34" }};
-  local[id] = body; paint(id, body);
+async function setItem(el, v, note) {{
+  paintItem(el, {{ v }});
   if (!DB) return;
-  try {{ await DB.doc("ship34/" + id).set(body); }}
-  catch (err) {{ card.querySelector(".state").textContent = "⚠️ 存不進去：" + (err?.code || err?.message || err); }}
+  if (!(await writeItem(el, v, note))) {{
+    const st = el.closest(".card").querySelector(".state");
+    if (st) st.textContent = "⛔ 這一項沒存進去 —— 再按一次";
+    el.dataset.v = "";                                   // ⛔ 不要留一個「看起來判定了」的假狀態
+    refreshProg();
+  }}
 }}
-for (const card of cards) {{
-  card.querySelector(".ap")?.addEventListener("click", () => decide(card, "approve"));
-  card.querySelector(".rj")?.addEventListener("click", () => decide(card, "reject"));
+for (const el of document.querySelectorAll(".item")) {{
+  el.querySelector(".yes")?.addEventListener("click", () => setItem(el, "ok"));
+  el.querySelector(".no")?.addEventListener("click", () => setItem(el, "no",
+    el.closest(".card").querySelector(".why-in")?.value.trim()));
+}}
+
+/* ⭐ 整批：先全部畫好（⛔ 不要讓人等網路），再**限流**寫回去 —— 一次 179 筆會撞速率上限。
+   ⛔⛔ 單筆失敗**不可以靜默吞掉** —— 那會變成「畫面說已接受、資料庫沒有」，
+   而那正是 CLAUDE.md 的「fail-open 沒錯，**靜默**才是缺陷」。⇒ 退避重試 ＋ 沒成功就大聲講。 */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+async function writeItem(el, v, note) {{
+  for (let i = 0; i < 3; i += 1) {{
+    try {{ await DB.doc(`items/${{itemId(el)}}`).set({{ v, at: new Date().toISOString(), note: note ?? "" }}); return true; }}
+    catch (err) {{
+      if (err?.code !== "resource_exhausted" && i === 2) return false;
+      await sleep(400 * (i + 1) * (i + 1));            // 400 / 1600 / 3600ms
+    }}
+  }}
+  return false;
+}}
+async function bulk(scopeSel, v, btn) {{
+  const els = [...document.querySelectorAll(`${{scopeSel}} .item`)].filter((el) => !el.closest(".card").hidden);
+  for (const el of els) paintItem(el, {{ v }});
+  if (!DB) return;
+  const label = btn?.textContent; let done = 0; const failed = [];
+  const queue = els.slice();
+  const worker = async () => {{
+    while (queue.length) {{
+      const el = queue.shift();
+      if (!(await writeItem(el, v))) failed.push(el);
+      done += 1;
+      if (btn && done % 10 === 0) btn.textContent = `${{label}}… ${{done}}/${{els.length}}`;
+    }}
+  }};
+  await Promise.all([worker(), worker(), worker(), worker()]);
+  if (btn) btn.textContent = label;
+  if (failed.length) {{
+    dbstate.innerHTML = `⛔ <b>${{failed.length}} 筆沒存進去</b>（畫面上看起來判定了，資料庫沒有）`;
+    const again = document.createElement("button");
+    again.textContent = "重試這幾筆"; again.className = "allyes"; again.style.marginLeft = "6px";
+    again.addEventListener("click", async () => {{
+      again.disabled = true;
+      const still = [];
+      for (const el of failed) if (!(await writeItem(el, v))) still.push(el);
+      dbstate.textContent = still.length ? `⛔ 還有 ${{still.length}} 筆存不進去` : "✓ 補存完成";
+      again.remove();
+    }});
+    dbstate.appendChild(again);
+  }} else {{
+    dbstate.textContent = `✓ ${{els.length}} 筆都存好了`;
+  }}
+}}
+document.querySelectorAll("[data-scope]").forEach((b) => b.addEventListener("click", () =>
+  bulk(b.dataset.scope, b.classList.contains("allyes") ? "ok" : "no", b)));
+for (const card of document.querySelectorAll(".card")) {{
+  card.querySelector(".allyes:not([data-scope])")?.addEventListener("click", (ev) =>
+    bulk(`#${{card.id}}`, "ok", ev.currentTarget));
+  card.querySelector(".allno:not([data-scope])")?.addEventListener("click", (ev) =>
+    bulk(`#${{card.id}}`, "no", ev.currentTarget));
 }}
 
 /* ── 篩選 ─────────────────────────────────────────────────────── */
@@ -360,39 +438,15 @@ document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("cli
 }}));
 function refreshProg() {{
   const open = SECT.find((id) => !document.getElementById(id).hidden);
-  const scope = [...document.querySelectorAll(`#${{open}} .card`)];
-  const done = scope.filter((c) => c.dataset.done === "1").length;
-  prog.textContent = `已判定 ${{done}} / ${{scope.length}}`;
-}}
-
-/* ── 救回來的模型／共用模型：同一組通過-退回 ─────────────────────── */
-async function decideGeneric(card, verdict) {{
-  const kind = card.dataset.kind, id = card.dataset.id;
-  const input = card.querySelector(".why-in");
-  const reason = input ? input.value.trim() : "";
-  if (verdict === "reject" && !reason) {{
-    card.querySelector(".state").textContent = "⛔ 要填理由";
-    input && input.focus(); return;
+  if (open === "s3") {{                                   // 名言那一區數的是卡片（一位一句）
+    const cs = [...document.querySelectorAll("#s3 .card")];
+    prog.textContent = `已填 ${{cs.filter((c) => c.dataset.done === "1").length}} / ${{cs.length}}`;
+    return;
   }}
-  const body = {{ verdict, reason, at: new Date().toISOString() }};
-  paintGeneric(card, body);
-  if (!DB) return;
-  try {{ await DB.doc(`${{kind}}/${{id}}`).set(body); }}
-  catch (err) {{ card.querySelector(".state").textContent = "⚠️ 存不進去：" + (err?.code || err?.message || err); }}
-}}
-function paintGeneric(card, v) {{
-  const ap = card.querySelector(".ap"), rj = card.querySelector(".rj"), st = card.querySelector(".state");
-  if (!ap || !st) return;
-  ap.setAttribute("aria-pressed", String(v?.verdict === "approve"));
-  rj && rj.setAttribute("aria-pressed", String(v?.verdict === "reject"));
-  const when = v?.at ? new Date(v.at).toLocaleString("zh-TW", {{ month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }}) : "";
-  st.textContent = v ? `已記下：${{v.verdict === "approve" ? ap.textContent : rj.textContent}}${{when ? " · " + when : ""}}${{v.reason ? " · " + v.reason : ""}}` : "";
-  card.dataset.done = v ? "1" : "0";
-  refreshProg();
-}}
-for (const card of document.querySelectorAll('.card[data-kind="rescued"], .card[data-kind="shared"]')) {{
-  card.querySelector(".ap")?.addEventListener("click", () => decideGeneric(card, "approve"));
-  card.querySelector(".rj")?.addEventListener("click", () => decideGeneric(card, "reject"));
+  // ⭐ 其餘三區數的是**項目**（一顆模型一項、一段音效一項），⛔ 不是卡片
+  const items = [...document.querySelectorAll(`#${{open}} .item`)];
+  const done = items.filter((el) => el.dataset.v).length;
+  prog.textContent = `已判定 ${{done}} / ${{items.length}} 項`;
 }}
 
 /* ── 60 句名言：owner 自己寫，⛔ 我不代筆 ────────────────────────── */
@@ -435,15 +489,14 @@ refreshProg();   // ⭐ 一載入就算一次，⛔ 不要等使用者點分頁�
   if (!DB) {{ dbstate.textContent = "⚠️ 這一份存不進共用資料庫（判定只留在這個分頁）"; return; }}
   dbstate.textContent = "✓ 判定會即時存下來";
   const onErr = (err) => {{ dbstate.textContent = "⚠️ 同步中斷：" + (err?.code || ""); }};
-  DB.collection("ship34").onSnapshot((snap) => {{ for (const d of snap.docs) paint(d.id, d.data()); }}, onErr);
-  for (const kind of ["rescued", "shared"]) {{
-    DB.collection(kind).onSnapshot((snap) => {{
-      for (const d of snap.docs) {{
-        const card = document.querySelector(`.card[data-kind="${{kind}}"][data-id="${{CSS.escape(d.id)}}"]`);
-        if (card) paintGeneric(card, d.data());
-      }}
-    }}, onErr);
-  }}
+  // ⭐ 一個 listener 收全部逐項判定（文件 id 自己帶著「哪一區・哪一位・哪一項」）
+  DB.collection("items").onSnapshot((snap) => {{
+    for (const d of snap.docs) {{
+      const [sec, hero, item] = d.id.split("__");
+      const el = document.querySelector(`#${{sec}} .card[data-id="${{CSS.escape(hero)}}"] .item[data-item="${{CSS.escape(item)}}"]`);
+      if (el) paintItem(el, d.data());
+    }}
+  }}, onErr);
   DB.collection("quotes").onSnapshot((snap) => {{
     for (const d of snap.docs) {{
       const card = document.querySelector(`.card[data-kind="quotes"][data-id="${{CSS.escape(d.id)}}"]`);
