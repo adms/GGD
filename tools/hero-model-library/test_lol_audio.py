@@ -3,7 +3,7 @@ import struct
 import unittest
 
 from extract_lol_audio import wpk_media
-from voice_index import language_rank
+from voice_index import apply_native_event_binding, language_rank
 
 
 class LocalAudio(unittest.TestCase):
@@ -36,6 +36,22 @@ class LocalAudio(unittest.TestCase):
         self.assertEqual(language_rank('Japanese (JP filename label)'), 1)
         self.assertEqual(language_rank('Japanese / English mixed'), 3)
         self.assertEqual(language_rank(None), 3)
+
+    def test_event_binding_keeps_listening_and_skill_claims_pending(self):
+        row = {'sha256': 'abc', 'bytes': 12, 'category': 'unclassified',
+               'synthesisReady': False, 'excludedFromSpeechInput': False}
+        evidence = {'sha256': 'abc', 'bytes': 12, 'categories': ['ability-cast'],
+                    'abilitySlotCandidates': ['R'], 'eventBindings': [{'eventName': 'Play_R'}],
+                    'eventBindingsVerified': True, 'speakerVerified': False,
+                    'perClipLanguageVerified': False,
+                    'skillSemanticBindingStatus': 'native-event-name-only-pending-ggd-audit'}
+        result = apply_native_event_binding(row, evidence)
+        self.assertEqual(result['category'], 'ability-cast')
+        self.assertEqual(result['abilitySlotCandidates'], ['R'])
+        self.assertTrue(result['eventBindingsVerified'])
+        self.assertFalse(result['speakerVerified'])
+        self.assertFalse(result['perClipLanguageVerified'])
+        self.assertFalse(result['synthesisReady'])
 
 
 if __name__ == '__main__':

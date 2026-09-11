@@ -1,0 +1,103 @@
+{
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+  "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+  "manifestSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
+  "voiceIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/seven-voice-index.json",
+  "voiceIndexSha256": "eeae23e884a9da362f54e6c0693b06c7006fb9d61cb820157f38e706441e77f5",
+  "gitHandoffPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/git-handoff-files.json",
+  "gitHandoffSha256": "d6b78ae95e29bcf6952d906a2aa01b390e054118b3495ea2a7b3f55ca7d1b28d",
+  "scopeControlPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/control/allowlist.json",
+  "totals": {
+    "completeWads": 7,
+    "completeAudioWads": 7,
+    "nonAudioWads": 0,
+    "pcmWavCount": 4927,
+    "audioSeconds": 18611.429133078203,
+    "audioBytes": 5429873080,
+    "nativeWemFiles": 4927,
+    "nativeBanks": 113,
+    "filesWithSamplesAboveUnity": 2264,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "exactPcm16Recoveries": 0,
+    "packagesWithUnresolvedErrors": 0,
+    "nativeEventBindingReports": 1,
+    "nativeEventBoundUniqueFiles": 135,
+    "nativeEventMappedEvents": 35
+  },
+  "characters": [
+    {
+      "heroId": "example:karthus",
+      "name": "卡爾瑟斯",
+      "nativeId": "Karthus.ja_JP",
+      "pcmWavCount": 225,
+      "seconds": 1102.4895918367351,
+      "nativeEventBoundFiles": 135,
+      "nativeEventMappedEvents": 35,
+      "eventBindingCoverage": "partial-by-skin"
+    },
+    {
+      "heroId": "example:leesin",
+      "name": "李星",
+      "nativeId": "LeeSin.ja_JP",
+      "pcmWavCount": 1069,
+      "seconds": 4757.531111111111,
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started"
+    },
+    {
+      "heroId": "example:lux",
+      "name": "拉克絲",
+      "nativeId": "Lux.ja_JP",
+      "pcmWavCount": 1142,
+      "seconds": 3473.1046712018183,
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started"
+    },
+    {
+      "heroId": "example:missfortune",
+      "name": "好運姐",
+      "nativeId": "MissFortune.ja_JP",
+      "pcmWavCount": 695,
+      "seconds": 2130.2731972789097,
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started"
+    },
+    {
+      "heroId": "example:warwick",
+      "name": "沃維克",
+      "nativeId": "Warwick.ja_JP",
+      "pcmWavCount": 531,
+      "seconds": 1848.2423303571418,
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started"
+    },
+    {
+      "heroId": "example:xerath",
+      "name": "齊勒斯",
+      "nativeId": "Xerath.ja_JP",
+      "pcmWavCount": 223,
+      "seconds": 1060.2127210884355,
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started"
+    },
+    {
+      "heroId": "example:yasuo",
+      "name": "犽宿",
+      "nativeId": "Yasuo.ja_JP",
+      "pcmWavCount": 1042,
+      "seconds": 4239.575510204076,
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started"
+    }
+  ],
+  "defaultChanged": false,
+  "centralFilesChanged": true
+}

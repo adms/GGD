@@ -1,7 +1,8 @@
 {
   "schema": "ggd.project-seven-voice-subset@1",
   "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
+  "sourceMetadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
   "scopeConfig": "project-seven-config.json",
   "sourceDelivery": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
@@ -35,6 +36,12 @@
       "sourceWadSha256": "2df91dd179c3ef23221b443319bfda4ff6472c003df10ec1bdc6f2fdea4fcdb2",
       "nativeAudioBanks": 9,
       "nativeWemCount": 225,
+      "nativeEventBindingReports": [
+        "event-bindings/karthus-base.json"
+      ],
+      "nativeEventBoundFiles": 135,
+      "nativeEventMappedEvents": 35,
+      "eventBindingCoverage": "partial-by-skin",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -63,6 +70,10 @@
       "sourceWadSha256": "8d76a9b90e941135a59b2ff9c3a805cc73580b1e6d8e7ba17e24120292257ef3",
       "nativeAudioBanks": 24,
       "nativeWemCount": 1069,
+      "nativeEventBindingReports": [],
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -91,6 +102,10 @@
       "sourceWadSha256": "4c40d659dc32937835aeabd0dd10e7b08660430a5b2304b92fa54f96387f2ca9",
       "nativeAudioBanks": 18,
       "nativeWemCount": 1142,
+      "nativeEventBindingReports": [],
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -119,6 +134,10 @@
       "sourceWadSha256": "00377249616a0f1021c4d56eee9ab2ed214fb88138c82ed0ffc55fc03f5a6da6",
       "nativeAudioBanks": 15,
       "nativeWemCount": 695,
+      "nativeEventBindingReports": [],
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -147,6 +166,10 @@
       "sourceWadSha256": "ddcd7b2eb8dcc3ddc3018112e40fbbaee6454c84d390c35d34e745bf01c15817",
       "nativeAudioBanks": 15,
       "nativeWemCount": 531,
+      "nativeEventBindingReports": [],
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -175,6 +198,10 @@
       "sourceWadSha256": "bde0ced1ff6858fd410767ad792a2bb532e49bff04c880936aed4c8fff483efb",
       "nativeAudioBanks": 8,
       "nativeWemCount": 223,
+      "nativeEventBindingReports": [],
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -203,6 +230,10 @@
       "sourceWadSha256": "3f3a63baac496f2ae63a3e0b83a081654da7385f8e82044a36e3377f01f697e0",
       "nativeAudioBanks": 24,
       "nativeWemCount": 1042,
+      "nativeEventBindingReports": [],
+      "nativeEventBoundFiles": 0,
+      "nativeEventMappedEvents": 0,
+      "eventBindingCoverage": "not-started",
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
@@ -312,6 +343,21 @@
       "languageVerified": false
     }
   ],
+  "nativeEventBindingReports": [
+    {
+      "path": "event-bindings/karthus-base.json",
+      "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+      "heroId": "example:karthus",
+      "nativeId": "Karthus",
+      "skinId": "skin0",
+      "mappedEvents": 35,
+      "mappedWemIds": 135,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    }
+  ],
   "totals": {
     "completeWads": 7,
     "completeAudioWads": 7,
@@ -325,7 +371,10 @@
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "exactPcm16Recoveries": 0,
-    "packagesWithUnresolvedErrors": 0
+    "packagesWithUnresolvedErrors": 0,
+    "nativeEventBindingReports": 1,
+    "nativeEventBoundUniqueFiles": 135,
+    "nativeEventMappedEvents": 35
   },
   "scope": {
     "fullRosterEnabled": false,
@@ -343,6 +392,7 @@
   "notes": [
     "Resolve every PCM path from sourceDelivery.files against localRoot.",
     "This index references complete original native and PCM files; no audio is synthesized or duplicated.",
+    "Native event reports prove only the listed skin and WEM relationships; speaker, per-clip language, transcript and GGD skill binding remain pending.",
     "Seven Japanese source packages only; older full-roster files remain preserved outside this subset."
   ]
 }

@@ -39475,8 +39475,17 @@
       "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 135,
       "categoryCounts": {
-        "unclassified": 225
+        "unclassified": 90,
+        "attack": 20,
+        "move": 27,
+        "ability-cast": 23,
+        "encounter": 15,
+        "death": 9,
+        "item": 21,
+        "emote": 17,
+        "recall": 3
       }
     },
     {
@@ -41920,8 +41929,17 @@
       "sourceIsSynthetic": false,
       "languagePreferenceRank": 1,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "nativeEventBoundFiles": 135,
       "categoryCounts": {
-        "unclassified": 225
+        "unclassified": 90,
+        "attack": 20,
+        "move": 27,
+        "ability-cast": 23,
+        "encounter": 15,
+        "death": 9,
+        "item": 21,
+        "emote": 17,
+        "recall": 3
       }
     },
     {
@@ -43366,11 +43384,11 @@
   "inputs": [
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "20295ab15557d15f74e07dff6c53392001327c87b8de80e0307941a47a54941c"
+      "sha256": "f49fd62bdcd55a6daebf6d08cb9d9e652431f8f0c2c6efc55f80ef95e89a845f"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "93a89623d6f5cd3e478af910c942ba9732781bab3e8d0bf97275448af7775749"
+      "sha256": "f82e54d29c6696f58330723a29ce41ee965bb573959edf1be3d80bbf2a923909"
     },
     {
       "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
@@ -43383,6 +43401,10 @@
     {
       "path": "GGD-Asset-Library/backups/20260908T075704221576Z/manifest-path-correction-20260908.json",
       "sha256": "91cbf8b1ac290bfee179988c1e4cfdc5117f90777d4deccbe0aa1526ce5c51ac"
+    },
+    {
+      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+      "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
     },
     {
       "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
@@ -94211,6 +94233,21 @@
       "bytes": 6385084
     }
   ],
+  "nativeEventBindingSources": [
+    {
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+      "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+      "heroId": "example:karthus",
+      "nativeId": "Karthus",
+      "skinId": "skin0",
+      "mappedEvents": 35,
+      "mappedWemIds": 135,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    }
+  ],
   "acquisitionPolicy": {
     "archiveEveryAcquiredResource": true,
     "preserveAllSourcesAndVersions": true,
@@ -94359,8 +94396,12 @@
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
     "alternateFormatFiles": 168,
-    "prefetchAliases": 47
+    "prefetchAliases": 47,
+    "nativeEventBindingReports": 1,
+    "nativeEventBoundUniqueFiles": 135,
+    "nativeEventBoundRelationshipRows": 270,
+    "nativeEventMappedEvents": 35
   },
-  "sourceFileManifestSha256": "4f6c397372d2d917fcae11d29099c0d998c9d2b3700c206828f75a6dfcad504c",
-  "uncompressedFileManifestSha256": "3635fed278f743107c113033c7aae6edc9c85ec3275a520614d1dcf0552e3fa4"
+  "sourceFileManifestSha256": "0502e07e6b4994b2ba38b132c52335af71f8827cfc41b00a60628ee056e6f8d7",
+  "uncompressedFileManifestSha256": "dab7a0d615caa1aff4e26f0e9854b53501fa20fdcd1596f3b5c6d571a16240e3"
 }

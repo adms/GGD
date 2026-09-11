@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-11T13:54:25+08:00",
-  "inputsSha256": "187a8392fcfb1abd158a005a0615088bf5af141c47f065ff4bbfc008a80dff06",
+  "generatedAt": "2026-09-11T15:39:51+08:00",
+  "inputsSha256": "22b7047a7828e007964a8d9d826804bdf7e9de6ee3b821aa10924423a3b597e0",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -56305,7 +56305,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -56347,7 +56347,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -56721,22 +56726,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -56811,7 +56810,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -56841,7 +56883,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -56883,7 +56925,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -57257,22 +57304,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -57347,7 +57388,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -57475,7 +57559,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -57517,7 +57601,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -57891,22 +57980,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -57981,7 +58064,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -58011,7 +58137,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -58053,7 +58179,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -58427,22 +58558,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -58517,7 +58642,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -58668,7 +58836,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -58710,7 +58878,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -59084,22 +59257,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -59174,7 +59341,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -59204,7 +59414,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -59246,7 +59456,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -59620,22 +59835,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -59710,7 +59919,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -59861,7 +60113,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -59903,7 +60155,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -60277,22 +60534,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -60367,7 +60618,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -60397,7 +60691,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -60439,7 +60733,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -60813,22 +61112,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -60903,7 +61196,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -61031,7 +61367,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -61073,7 +61409,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -61447,22 +61788,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -61537,7 +61872,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -61567,7 +61945,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -61609,7 +61987,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -61983,22 +62366,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -62073,7 +62450,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -62224,7 +62644,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -62266,7 +62686,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -62640,22 +63065,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -62730,7 +63149,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -62760,7 +63222,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -62802,7 +63264,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -63176,22 +63643,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -63266,7 +63727,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -63394,7 +63898,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -63436,7 +63940,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -63810,22 +64319,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -63900,7 +64403,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ],
       "audioSources": [
@@ -63930,7 +64476,7 @@
           "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
           "accessStatus": "public-direct-download",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+          "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
           "purchaseDecision": "no-purchase-existing-local-audio",
           "defaultEligible": false,
           "automaticEligible": false,
@@ -63972,7 +64518,12 @@
               "eventBindingsVerified": false,
               "synthesisReady": false,
               "pcmWavCount": 225,
-              "filesWithSamplesAboveUnity": 51
+              "filesWithSamplesAboveUnity": 51,
+              "eventBindingCoverage": "partial-base-skin",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
             },
             {
               "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -64346,22 +64897,16 @@
             "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
             "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
             "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-            "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-            "uploadObservation": {
-              "observedAt": "2026-09-10T19:59:39.994541+00:00",
-              "phase": "uploaded-full-get-in-progress",
-              "putObjectCompleted": true,
-              "fullGetVerified": false,
-              "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-            }
+            "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
           },
-          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+          "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
           "limitations": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
             "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
             "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
             "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-            "English not acquired in this scoped delivery."
+            "English not acquired in this scoped delivery.",
+            "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
           ],
           "files": [
             {
@@ -64436,7 +64981,50 @@
             "localPreserved": true,
             "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
             "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-          }
+          },
+          "eventBindingEvidence": {
+            "state": "partial-base-skin",
+            "completeForSource": false,
+            "reports": [
+              {
+                "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+                "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+                "heroId": "example:karthus",
+                "nativeId": "Karthus",
+                "skinId": "skin0",
+                "eventBoundWavCount": 135,
+                "mappedNativeEventCount": 35,
+                "eventBindingsVerified": true,
+                "speakerVerified": false,
+                "perClipLanguageVerified": false,
+                "ggdSkillSemanticBindingsVerified": false
+              }
+            ],
+            "nativeEventBoundUniqueFiles": 135,
+            "mappedNativeEventCount": 35,
+            "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+          },
+          "supplementalBackups": [
+            {
+              "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+              "resourceRole": "source-event-metadata-and-toolchain-backup",
+              "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+              "bytes": 7543735,
+              "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+              "fileCount": 722,
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "allMemberSha256Verified": true,
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+              "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+              "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+              "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+              "s3Use": "backup-only-not-runtime-entry",
+              "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+            }
+          ]
         }
       ]
     },
@@ -110044,7 +110632,7 @@
         "format": "Original CDN ZSTD / WAD / BNK / WPK / WEM / Float32 WAV",
         "accessStatus": "public-direct-download",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "local-audio-hash-verified-pending-listening-gain-and-event-binding",
+        "readiness": "local-audio-hash-verified-karthus-base-event-partial-pending-listening-gain-and-remaining-event-binding",
         "purchaseDecision": "no-purchase-existing-local-audio",
         "defaultEligible": false,
         "automaticEligible": false,
@@ -110086,7 +110674,12 @@
             "eventBindingsVerified": false,
             "synthesisReady": false,
             "pcmWavCount": 225,
-            "filesWithSamplesAboveUnity": 51
+            "filesWithSamplesAboveUnity": 51,
+            "eventBindingCoverage": "partial-base-skin",
+            "eventBoundWavCount": 135,
+            "mappedNativeEventCount": 35,
+            "eventBindingReport": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+            "eventBindingReportSha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
           },
           {
             "id": "lol-leesin-ja-jp-16-18-8159717",
@@ -110460,22 +111053,16 @@
           "manifestSha256": "a1854f39b1a3346456c3b33a223f27ba413be999640f4201af7f021ac8f6c9f2",
           "perMemberLocalReadbackAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/per-member-local-readback.json",
           "perMemberLocalReadbackSha256": "78e889200d969ede42c3526f894bcc2a79cbf1ab1363c1c6a7a8b8b9b16357e6",
-          "note": "All 15,690 frozen seven-scope files plus byte-identical delivery are in the local TAR.GZ. This is local readback only; no S3 action was performed.",
-          "uploadObservation": {
-            "observedAt": "2026-09-10T19:59:39.994541+00:00",
-            "phase": "uploaded-full-get-in-progress",
-            "putObjectCompleted": true,
-            "fullGetVerified": false,
-            "evidence": "Uploader emitted phase=full-get only after its checked s3:PutObject command completed. Receipt is not yet available."
-          }
+          "note": "All 15,690 frozen seven-scope files plus the byte-identical delivery are preserved locally and in the scoped S3 archive; full GET and every archive member passed SHA-256 readback verification."
         },
-        "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files and one exact delivery JSON were archived as 15,691 ordinary members; every member passed a streamed local TAR.GZ readback SHA and size check. 2,264 over-unity Float32 WAV files remain pending gain decisions. No S3 readback, listening, speaker identity, event binding, backend playback or deployment claim.",
+        "verification": "4,927 exact-seven Float32 WAV files passed fresh SHA checks. All 15,690 frozen raw/container/intermediate/control files plus one exact delivery JSON were archived and passed local plus S3 full-GET per-member SHA-256 readback. Karthus base has 135 exact WAVs mapped through 35 verified native events. Listening, speaker identity, per-clip language, transcript, GGD skill semantic binding, other Karthus skins, the other six heroes, backend playback and deployment remain pending.",
         "limitations": [
           "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath, Yasuo; no new full-roster acquisition.",
           "sourceIsSynthetic=false describes native game extraction and does not establish that all samples are character dialogue.",
           "Dialogue/shout/SFX/music classification pending; unverified clips remain unclassified.",
           "Float32 samples above unity are preserved; gain decisions precede integer encoding/gameplay usage.",
-          "English not acquired in this scoped delivery."
+          "English not acquired in this scoped delivery.",
+          "Karthus event mapping currently covers only base skin0: 135 exact WAVs through 35 native events; it is not complete for all Karthus skins or the other six heroes."
         ],
         "files": [
           {
@@ -110550,7 +111137,50 @@
           "localPreserved": true,
           "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-project-seven-scoped-20260911/s3-verified-receipt.json",
           "receiptSha256": "5758826cd165d7af8c693941669fcf4926a4a69da4a7b88c4044ad63593af66a"
-        }
+        },
+        "eventBindingEvidence": {
+          "state": "partial-base-skin",
+          "completeForSource": false,
+          "reports": [
+            {
+              "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+              "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+              "heroId": "example:karthus",
+              "nativeId": "Karthus",
+              "skinId": "skin0",
+              "eventBoundWavCount": 135,
+              "mappedNativeEventCount": 35,
+              "eventBindingsVerified": true,
+              "speakerVerified": false,
+              "perClipLanguageVerified": false,
+              "ggdSkillSemanticBindingsVerified": false
+            }
+          ],
+          "nativeEventBoundUniqueFiles": 135,
+          "mappedNativeEventCount": 35,
+          "note": "Only Karthus base skin is partially mapped. Other Karthus skins and the other six project heroes remain incomplete."
+        },
+        "supplementalBackups": [
+          {
+            "id": "lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1",
+            "resourceRole": "source-event-metadata-and-toolchain-backup",
+            "localPath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-binding-batches/karthus-base-v1",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/lol-project-seven-ja-jp-16.18.8159717-event-bindings-karthus-base-v1/1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426.files.json",
+            "bytes": 7543735,
+            "sha256": "1bdd86a05cda1fba64a5e0c44edf2c871064aa1ae4e91df2205354f0c3754426",
+            "fileCount": 722,
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "allMemberSha256Verified": true,
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/latest-receipt.json",
+            "receiptSha256": "eba35d12688d015f755fafb79303b92670646da7343200ef8ba8f8626a4237d5",
+            "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/lol-karthus-event-bindings-v1/c07d9d9986afef8f016e8fcb0c5dc79e81dcdbd85e18189eb908c10509664bcd/manifest.json",
+            "manifestSha256": "9bb9718cc4e06601381e24efc6c64f375383749161d1ea2bc5fa29068df75384",
+            "s3Use": "backup-only-not-runtime-entry",
+            "claimBoundary": "Karthus base skin0 native event graph only; not speaker, per-clip language, transcript, GGD skill semantic, all-skin or seven-hero completion."
+          }
+        ]
       },
       {
         "id": "parallel-ns-alucard-ssbu-audio-decoded-v1",

@@ -1,6 +1,6 @@
 {
   "schema": "ggd.seven-voice-git-handoff@1",
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
   "sourceLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
   "allowedContent": "scripts, settings, immutable index manifests, SHA-256 and docs only",
   "files": [
@@ -15,19 +15,24 @@
       "sha256": "457e2ac08f4130e4fc043d28900f91458957d97e06ca066ebaa5c6b167859ba0"
     },
     {
+      "path": "control/shared-event-metadata.json",
+      "bytes": 2182,
+      "sha256": "29869d088d30d3a0658003e9d29e7eb659fcadebf02fbb681db8e9c7df0b9627"
+    },
+    {
       "path": "guard-validation.json",
       "bytes": 396,
       "sha256": "9cd0c5a425d1158998961c2f64b28c0124c6423ad78d6cfe18a400b3a82d7597"
     },
     {
       "path": "README.md",
-      "bytes": 2360,
-      "sha256": "cb259a49ea189bb3003dd83f80499bd2dd3c18131ed1974f20b84ec44179364b"
+      "bytes": 3254,
+      "sha256": "5d8d5b527f72b650e0e301b42cf79d32851b841121e38042b909c956113a688a"
     },
     {
       "path": "seven-voice-index.json",
-      "bytes": 12562,
-      "sha256": "5765ddb9cb6bd9f385bb1325649eb7dc388991ee8d7610eed534f1c67de49fad"
+      "bytes": 14613,
+      "sha256": "eeae23e884a9da362f54e6c0693b06c7006fb9d61cb820157f38e706441e77f5"
     },
     {
       "path": "latest-seven-delivery-receipt.json",
@@ -35,9 +40,24 @@
       "sha256": "6735ade96148c515d456bf99bb560863e80da96109b697a9fe0480410c2e4807"
     },
     {
+      "path": "event-bindings/karthus-base.json",
+      "bytes": 184827,
+      "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
+    },
+    {
       "path": "tools/acquire_project_ja.py",
       "bytes": 6009,
       "sha256": "42599afa9f640bac92aeb0c08c3d5f3cef56c3aad6ce4ff741465bdcb3908db0"
+    },
+    {
+      "path": "tools/acquire_shared_event_metadata.py",
+      "bytes": 16567,
+      "sha256": "3d1ae14a4ec9d496b7332f5b8dd52a972370c0e3163c350748f66b69c8a5b558"
+    },
+    {
+      "path": "tools/build_event_bindings.py",
+      "bytes": 12286,
+      "sha256": "b9170b36db9441463c2d790073c355671a19e2753398479ee7d1316a54e153b6"
     },
     {
       "path": "tools/decode_project_ja.py",
@@ -66,8 +86,8 @@
     },
     {
       "path": "tools/make_seven_handoff.py",
-      "bytes": 4318,
-      "sha256": "a84c950f3eb9a12b202d62b068631823097e7234a58577904a88b3e33ced5fff"
+      "bytes": 6211,
+      "sha256": "e5c9af845fdb5635589a68d79fc55bd0cd7d804dc6c318e7687b2b4253d73322"
     },
     {
       "path": "tools/recover_project_ja.py",
@@ -83,12 +103,23 @@
       "path": "tools/scope_guard.py",
       "bytes": 882,
       "sha256": "6d71f7e1d0d5d03409f08b57b238ff1f7e3f54426fcc75253fadca15ee55ac0c"
+    },
+    {
+      "path": "tools/test_acquire_shared_event_metadata.py",
+      "bytes": 2164,
+      "sha256": "d4487aa3168f636fb1db90e721fc156952077e86534733de60069849f5469ae0"
+    },
+    {
+      "path": "tools/test_build_event_bindings.py",
+      "bytes": 1446,
+      "sha256": "edce557a1c02e140b59e6b25dfde5ba5ae3b357865f22b4262ba33f0c63e8444"
     }
   ],
   "audioBinaryCount": 0,
   "nativeBinaryCount": 0,
   "largeNativeDeliveryIndex": {
     "path": "deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
     "bytes": 7853255,
     "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
     "storage": "keep local; root may archive separately; compact Git index references this receipt"

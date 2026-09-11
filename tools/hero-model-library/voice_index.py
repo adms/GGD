@@ -183,6 +183,26 @@ def audio_file_counts(files):
                 uniqueLocalPathBytes=sum(payload[1] for payload in paths.values()))
 
 
+def apply_native_event_binding(row, evidence):
+    """Attach exact native event evidence without upgrading listening claims."""
+    assert (row['sha256'], row['bytes']) == (evidence['sha256'], evidence['bytes'])
+    assert evidence['eventBindingsVerified'] is True
+    assert evidence['speakerVerified'] is False
+    assert evidence['perClipLanguageVerified'] is False
+    categories = sorted(set(evidence['categories']))
+    row['nativeEventCategories'] = categories
+    row['abilitySlotCandidates'] = sorted(set(evidence['abilitySlotCandidates']))
+    row['eventBindings'] = evidence['eventBindings']
+    row['eventBindingsVerified'] = True
+    row['skillSemanticBindingStatus'] = evidence['skillSemanticBindingStatus']
+    row['speakerVerified'] = False
+    row['perClipLanguageVerified'] = False
+    row['category'] = categories[0] if len(categories) == 1 else 'native-event-multi'
+    row['synthesisReady'] = False
+    row['excludedFromSpeechInput'] = excluded_from_speech(row['category'])
+    return row
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=REPO.parent)
@@ -208,6 +228,30 @@ def main():
     backup = read(backup_path)
     assert '/legacy/' in backup['backup_uri'] and '/leagcy/' not in backup['backup_uri']
     groups, files, stores, native_audio, alternate_audio = {}, [], {}, [], []
+    event_bindings, event_binding_sources = {}, []
+    for path in sorted((OUT/'lol-project-seven/event-bindings').glob('*.json')):
+        report = read(path)
+        assert report['schema'] == 'ggd-lol-native-event-bindings@1'
+        assert report['sourceId'] == 'lol-project-seven-ja-jp-16.18.8159717'
+        assert report['validation']['eventBindingsVerified'] is True
+        assert report['validation']['speakerVerified'] is False
+        assert report['validation']['perClipLanguageVerified'] is False
+        assert report['validation']['ggdSkillSemanticBindingsVerified'] is False
+        for evidence in report['files']:
+            local = (ws/evidence['path']).resolve()
+            assert local.is_relative_to(ws) and str(local) == evidence['absolutePath']
+            assert local.is_file() and local.stat().st_size == evidence['bytes'] and sha(local) == evidence['sha256']
+            prior = event_bindings.get(evidence['path'])
+            if prior is not None:
+                assert prior == evidence, 'Conflicting native event binding for '+evidence['path']
+            event_bindings[evidence['path']] = evidence
+        event_binding_sources.append(dict(
+            path=str(path.relative_to(REPO)), sha256=sha(path), heroId=report['heroId'],
+            nativeId=report['nativeId'], skinId=report['skinId'],
+            mappedEvents=report['validation']['mappedEvents'],
+            mappedWemIds=report['validation']['mappedWemIds'],
+            eventBindingsVerified=True, speakerVerified=False,
+            perClipLanguageVerified=False, ggdSkillSemanticBindingsVerified=False))
     source_models = {m['id']:m for m in models['models']}
 
     def hero_ids(source_id):
@@ -465,11 +509,23 @@ def main():
             verify_prefetch_alias(row,primary_by_relationship)
             prefetch_aliases.append(row)
 
+    bound_relationship_rows = 0
+    bound_groups = Counter()
+    for row in files:
+        evidence = event_bindings.get(row['path'])
+        if evidence is None:
+            continue
+        apply_native_event_binding(row, evidence)
+        bound_relationship_rows += 1
+        bound_groups[row['groupId']] += 1
+
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
     for g in groups.values():
         g['languagePreferenceRank']=language_rank(g.get('reportedLanguage'))
         g['languagePreferenceBasis']='reported-language-only; listening review still required'
+        if bound_groups[g['id']]:
+            g['nativeEventBoundFiles']=bound_groups[g['id']]
     categories={key:Counter() for key in groups}
     for f in files:categories[f['groupId']][f['category']]+=1
     for key,g in groups.items():g['categoryCounts']=dict(categories[key])
@@ -482,6 +538,7 @@ def main():
         scope='All indexed 300/MBA audio and verified local public/paid source audio; S3 backup readiness is tracked separately. Not all files are character voices.',
         groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
         alternateAudioSources=alternate_audio,prefetchAliases=prefetch_aliases,
+        nativeEventBindingSources=event_binding_sources,
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
@@ -489,7 +546,11 @@ def main():
         summary=dict(groups=len(groups),**counts,
             missingOrSizeChanged=sum(not f['localSizeVerified'] for f in files),
             confirmedVoiceCount=None,synthesisReadyGroups=0,
-            alternateFormatFiles=sum(len(s['files']) for s in alternate_audio),prefetchAliases=len(prefetch_aliases)))
+            alternateFormatFiles=sum(len(s['files']) for s in alternate_audio),prefetchAliases=len(prefetch_aliases),
+            nativeEventBindingReports=len(event_binding_sources),
+            nativeEventBoundUniqueFiles=len(event_bindings),
+            nativeEventBoundRelationshipRows=bound_relationship_rows,
+            nativeEventMappedEvents=sum(row['mappedEvents'] for row in event_binding_sources)))
     manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
     (OUT/'voice-files.jsonl').write_text(manifest)
     compressed=gzip.compress(manifest.encode(),mtime=0)
@@ -497,6 +558,12 @@ def main():
     summary['sourceFileManifestSha256']=hashlib.sha256(compressed).hexdigest()
     summary['uncompressedFileManifestSha256']=hashlib.sha256(manifest.encode()).hexdigest()
     (OUT/'voice-index.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
+    event_binding_lines=[
+        (f'{source["nativeId"]} {source["skinId"]}：{source["mappedWemIds"]} 個不同本機 WAV、'
+         f'{source["mappedEvents"]} 個原生事件；原生事件圖關係已驗證。'
+         '說話者、逐段語言／聽審與 GGD 技能語義綁定仍待完成。')
+        for source in event_binding_sources
+    ]
     lines=['# 角色語音索引','',
         '固定共編入口：`materials/hero-model-library/角色語音索引.md`。機器讀 `voice-index.json`；逐檔路徑、SHA-256、大小、封包內路徑與歸屬，依 `sourceFileManifest` 讀取 `voice-files.jsonl.gz`。Git 保存完整 gzip 索引以免大量音訊清單超出單檔限制；解壓後為 JSONL，本機亦保留完整 `voice-files.jsonl`。`query_voice.py` 自動解壓並核對雜湊，無需另裝套件。', '',
         '**本機已驗證音訊立即供其他工作流讀取，不等待 S3 備份。** `query_voice.py --files --json` 回傳每檔 `absolutePath`；`voice-index.json.localWorkspace` 加上逐檔 `path` 也可直接定位。S3 狀態另列，待聽審不妨礙找檔、播放、轉錄及準備素材。', '',
@@ -504,6 +571,7 @@ def main():
         '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
         'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
         f'LoL 已核對 {len(prefetch_aliases)} 個 BNK 預載片段，逐位元組前綴與 RIFF 完整長度均對應同角色 WPK 的完整音訊。`prefetchAliases` 指向已計入的主要 WAV、完整 WEM 及原片段；查詢回傳三者本機路徑。原片段與失敗報告保留，不補零、不改 RIFF 標頭，也不另算新音訊。', '',
+        *event_binding_lines, *([''] if event_binding_lines else []),
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{counts["sourceFileRelationshipRows"]:,} 筆來源與檔案關係、{counts["uniqueLocalPaths"]:,} 個不同本機檔案路徑、{counts["uniqueSha256Payloads"]:,} 份不同 SHA-256 內容**。不同本機路徑的檔案大小合計 {counts["uniqueLocalPathBytes"]:,} bytes。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；以上均**不是已確認角色語音數**。同一路徑可保留原來源及指定角色子集的多筆關係，不能把新增來源關係當成新增音檔。', '',
         '相容欄位 `summary.audioFiles` 與 `summary.bytes` 仍依逐列來源關係加總；去重取檔請使用 `uniqueLocalPaths`／`uniqueLocalPathBytes`，內容去重數見 `uniqueSha256Payloads`。這些數字只涵蓋主要可播放音訊清單，原始容器、舊備份及診斷 PCM16 仍另外保留。', '',
         '**目前沒有完成逐段說話者、語言、逐字稿與品質驗收的合成輸入組。** 本索引供其他工作流找檔、聽審與製作輸入清單，不能把全部音效包直接當成角色語音訓練集。`Vo_` 僅是檔名線索；來源角色對應也不等於每段的說話者已確認。', '',

@@ -27,3 +27,9 @@
 git-handoff-files.json 列出窄版 Git 交付：程式、設定、精簡索引、SHA 與文件。含逐檔詳情的完整 delivery JSON 另留本機，精簡索引用路徑與 SHA 引用，交主工作流決定備份位置；實際音訊／WAD 依主工作流儲存規則處理，本輪不執行 Git 或 S3 操作。native banks、event 關聯、語系來源標記、逐段聽審是不同狀態；PCM 檔數不代表已確認角色台詞數。
 
 本輪僅 ja_JP 來源語系已由 manifest 確認；未逐段聽審、未確認說話者、未轉錄、未整理為可合成資料集。Float32 保留超過 1 的原始峰值，播放或轉整數格式前由使用者記錄 gain 決策。
+
+## 原生事件映射
+
+`control/shared-event-metadata.json` 固定七名角色與同一 Riot release。`tools/acquire_shared_event_metadata.py` 只擷取指定 shared WAD 的目錄及 skin BIN 所需官方 chunks，驗證 RMAN 大小、WAD 3.4 entry checksum、解碼大小與 SHA-256；稀疏擷取不代表完整 shared WAD 已取得。`tools/build_event_bindings.py` 再把 BIN 事件名稱經 `_events.bnk` HIRC 圖對應到同形態 WPK 的 WEM 與既有 Float32 WAV。
+
+Karthus base 已建立事件證據；`event-bindings/karthus-base.json` 的 `eventBindingsVerified=true` 只證明原生事件圖關係。`abilitySlotCandidate` 來自原生事件名稱 token，還不是 GGD 技能綁定；逐段語言、說話者、台詞與聽審仍為 false／pending。中央索引由 `tools/hero-model-library/voice_index.py` 讀取這些報告重建，不能只手改 `voice-files.jsonl.gz`。

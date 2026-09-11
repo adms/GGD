@@ -1,0 +1,90 @@
+{
+  "schema": "ggd.lol-shared-event-metadata-scope@1",
+  "scope": "project-seven-only",
+  "enabled": true,
+  "fullRosterEnabled": false,
+  "releaseId": "7CAC3C60C863BF12",
+  "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+  "maxCompressedRequestBytes": 100000000,
+  "maxParallelDownloads": 3,
+  "allowedFetchNames": [
+    "Karthus",
+    "LeeSin",
+    "Lux",
+    "MissFortune",
+    "Warwick",
+    "Xerath",
+    "Yasuo"
+  ],
+  "characters": [
+    {
+      "heroId": "example:karthus",
+      "nativeId": "Karthus",
+      "skinPaths": [
+        "data/characters/karthus/skins/skin0.bin"
+      ],
+      "eventAbilityTokens": {
+        "Q": [
+          "KarthusLayWaste"
+        ],
+        "W": [
+          "KarthusWallOfPain"
+        ],
+        "E": [
+          "KarthusDefileSoundDummy"
+        ],
+        "R": [
+          "KarthusFallenOne"
+        ]
+      }
+    },
+    {
+      "heroId": "example:leesin",
+      "nativeId": "LeeSin",
+      "skinPaths": [
+        "data/characters/leesin/skins/skin0.bin"
+      ]
+    },
+    {
+      "heroId": "example:lux",
+      "nativeId": "Lux",
+      "skinPaths": [
+        "data/characters/lux/skins/skin0.bin"
+      ]
+    },
+    {
+      "heroId": "example:missfortune",
+      "nativeId": "MissFortune",
+      "skinPaths": [
+        "data/characters/missfortune/skins/skin0.bin"
+      ]
+    },
+    {
+      "heroId": "example:warwick",
+      "nativeId": "Warwick",
+      "skinPaths": [
+        "data/characters/warwick/skins/skin0.bin"
+      ]
+    },
+    {
+      "heroId": "example:xerath",
+      "nativeId": "Xerath",
+      "skinPaths": [
+        "data/characters/xerath/skins/skin0.bin"
+      ]
+    },
+    {
+      "heroId": "example:yasuo",
+      "nativeId": "Yasuo",
+      "skinPaths": [
+        "data/characters/yasuo/skins/skin0.bin"
+      ]
+    }
+  ],
+  "rules": [
+    "Only the seven named non-localized champion WADs may be inspected.",
+    "Only manifest chunks required for the requested skin BIN files may be fetched.",
+    "A sparse extraction is partial source acquisition and must never be reported as a complete WAD.",
+    "No English locale WAD and no full-roster acquisition are allowed."
+  ]
+}
