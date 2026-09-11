@@ -107,15 +107,16 @@
     },
     {
       "kind": "confirmed",
-      "text": "模型反向閘已逐項分類既有模型幾何；本分支另以可重建工具修復 4 顆社群 GLB 的背景平面，並補齊 2 份 model doc 的隱藏幾何宣告。現在掃描 344 顆 GLB、24 處已宣告殘留幾何與 8 處已宣告離地分身，結果 0 問題。",
-      "commit": "6f11d4baa7140ca2380120995fcccf3d1c577f98",
+      "text": "模型反向閘已逐項分類目前模型幾何；本分支另以可重建工具修復 4 顆社群 GLB 的背景平面、補齊 2 份 model doc 的隱藏幾何宣告，並將 LoL 第一批 7 個成品 GLB 納入 Git。現在掃描 351 顆 GLB、24 處已宣告殘留幾何與 8 處已宣告離地分身，結果 0 問題；630 顆模型的 clip degradation 與 presentation receipt 也已由正式生成器刷新。",
+      "commit": "d75e98402a4ebff2ed15d074e8181c709613e981",
       "repro": {
         "command": "pnpm models:check",
         "expectedExit": 0
       },
       "evidence": [
-        "content/models/ou99.433442.json",
-        "content/models/ou99.470782.json",
+        "content/assets-offdisk.json",
+        "docs/editor-contract/ggd-clip-degradation.json",
+        "docs/editor-contract/ggd-presentation-receipt.json",
         "tools/editor-acceptance/repair-community-model-backdrops.py"
       ]
     },
