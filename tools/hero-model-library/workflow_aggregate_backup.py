@@ -13,6 +13,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 import zipfile
 from pathlib import Path
 
@@ -43,6 +44,73 @@ def digest_range(path, start, length):
     return h.hexdigest()
 
 
+def preserve_invalid(path):
+    """Move an invalid cache file aside without overwriting earlier evidence."""
+    path = Path(path)
+    suffix = '.invalid-' + digest(path)[:12]
+    destination = path.with_name(path.name + suffix)
+    counter = 2
+    while destination.exists():
+        destination = path.with_name(path.name + suffix + f'-{counter}')
+        counter += 1
+    path.rename(destination)
+    return destination
+
+
+def seed_range_parts(partial, expected, destination, size, chunk_bytes=32 * 1024 * 1024):
+    """Seed exact fixed ranges from an old partial readback without changing it."""
+    partial, expected, destination = Path(partial), Path(expected), Path(destination)
+    if not partial.is_file():
+        raise ValueError('Readback seed is not a regular file: ' + str(partial))
+    if partial.resolve() == expected.resolve():
+        raise ValueError('Readback seed must be separate from the frozen local archive')
+    parts = destination.with_name(destination.name + '.parts')
+    parts.mkdir(parents=True, exist_ok=True)
+    partial_size = partial.stat().st_size
+    seeded_parts = seeded_bytes = reused_parts = reused_bytes = mismatched_parts = 0
+    for start in range(0, size, chunk_bytes):
+        end = min(size, start + chunk_bytes) - 1
+        length = end - start + 1
+        if partial_size < end + 1:
+            continue
+        piece = parts / f'{start:012d}-{end:012d}.part'
+        expected_sha = digest_range(expected, start, length)
+        if piece.is_file() and piece.stat().st_size == length and digest(piece) == expected_sha:
+            reused_parts += 1
+            reused_bytes += length
+            continue
+        if digest_range(partial, start, length) != expected_sha:
+            mismatched_parts += 1
+            continue
+        if piece.exists():
+            preserve_invalid(piece)
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(dir=parts, prefix=piece.name + '.seed-', delete=False) as output:
+                temporary = Path(output.name)
+                with partial.open('rb') as source:
+                    source.seek(start)
+                    left = length
+                    while left:
+                        block = source.read(min(left, 1024 * 1024))
+                        if not block:
+                            raise ValueError('Readback seed ended during range copy')
+                        output.write(block)
+                        left -= len(block)
+            if temporary.stat().st_size != length or digest(temporary) != expected_sha:
+                raise ValueError(f'Seeded range differs from frozen local archive: {start}-{end}')
+            os.replace(temporary, piece)
+            temporary = None
+            seeded_parts += 1
+            seeded_bytes += length
+        finally:
+            if temporary is not None and temporary.exists():
+                preserve_invalid(temporary)
+    return {'seededParts': seeded_parts, 'seededBytes': seeded_bytes,
+            'reusedParts': reused_parts, 'reusedBytes': reused_bytes,
+            'mismatchedParts': mismatched_parts, 'seedSourceBytes': partial_size}
+
+
 def aws(args, action, resource):
     env = {**os.environ, 'AWS_PROFILE': 'vibe-coding', 'AWS_REGION': 'ap-east-2', 'AWS_PAGER': ''}
     result = subprocess.run(['aws', *args, '--profile', 'vibe-coding', '--region', 'ap-east-2', '--no-cli-pager'],
@@ -71,8 +139,7 @@ def range_readback(key, destination, expected, size, chunk_bytes=32 * 1024 * 102
     if destination.is_file():
         if destination.stat().st_size == size and digest(destination) == digest(expected):
             return destination
-        bad = destination.with_name(destination.name + '.invalid-' + digest(destination)[:12])
-        destination.rename(bad)
+        preserve_invalid(destination)
     parts = destination.with_name(destination.name + '.parts')
     parts.mkdir(parents=True, exist_ok=True)
     uri = f's3://{BUCKET}/{key}'
@@ -87,7 +154,7 @@ def range_readback(key, destination, expected, size, chunk_bytes=32 * 1024 * 102
             ordered.append(piece)
             continue
         if piece.exists():
-            piece.rename(piece.with_name(piece.name + '.invalid-' + digest(piece)[:12]))
+            preserve_invalid(piece)
         ordered.append(piece)
         pending.append((start, end, length, piece, expected_sha))
 
@@ -210,6 +277,9 @@ def upload(args):
         aws(['s3', 'cp', str(local_copy), uri, '--only-show-errors'], 's3:PutObject', uri)
     elif existing != pending['bytes']:
         raise ValueError('Existing aggregate object has an unexpected byte size')
+    if args.seed_readback is not None:
+        seeded = seed_range_parts(args.seed_readback, local_copy, out / 'readback.zip', pending['bytes'])
+        print(json.dumps({'phase': 'seed-readback', **seeded}, ensure_ascii=False), flush=True)
     readback = range_readback(key, out / 'readback.zip', local_copy, pending['bytes'])
     if readback.stat().st_size != pending['bytes'] or digest(readback) != pending['sha256']:
         raise ValueError('S3 aggregate readback SHA-256 mismatch')
@@ -294,9 +364,11 @@ def parse():
     parser.add_argument('--extra-member', dest='extra_member', action='append', default=[])
     parser.add_argument('--output', type=Path)
     parser.add_argument('--receipt', type=Path)
+    parser.add_argument('--seed-readback', type=Path)
     args = parser.parse_args()
     if args.mode == 'upload' and args.output is None: parser.error('upload requires --output')
     if args.mode == 'register' and args.receipt is None: parser.error('register requires --receipt')
+    if args.mode != 'upload' and args.seed_readback is not None: parser.error('--seed-readback is upload-only')
     return args
 
 

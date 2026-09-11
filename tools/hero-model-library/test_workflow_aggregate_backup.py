@@ -69,6 +69,36 @@ class WorkflowAggregateBackupTest(unittest.TestCase):
             self.assertEqual(first_calls, 6)
             self.assertEqual(len(calls), first_calls)
 
+    def test_seed_range_parts_copies_only_exact_ranges_and_preserves_sources(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            expected_bytes = bytes(range(48))
+            expected = root / 'expected.zip'; expected.write_bytes(expected_bytes)
+            seed_bytes = expected_bytes[:16] + (b'x' * 16) + expected_bytes[32:]
+            partial = root / 'old-readback.partial'; partial.write_bytes(seed_bytes)
+            destination = root / 'readback.zip'
+            parts = root / 'readback.zip.parts'; parts.mkdir()
+            first = parts / '000000000000-000000000015.part'
+            first.write_bytes(expected_bytes[:16])
+            first_inode = first.stat().st_ino
+            third = parts / '000000000032-000000000047.part'
+            third.write_bytes(b'bad')
+            expected_before = expected.read_bytes()
+            partial_before = partial.read_bytes()
+
+            result = mod.seed_range_parts(partial, expected, destination, len(expected_bytes), chunk_bytes=16)
+
+            self.assertEqual(result['seededParts'], 1)
+            self.assertEqual(result['seededBytes'], 16)
+            self.assertEqual(result['reusedParts'], 1)
+            self.assertEqual(result['reusedBytes'], 16)
+            self.assertEqual(result['mismatchedParts'], 1)
+            self.assertEqual(first.stat().st_ino, first_inode)
+            self.assertEqual(third.read_bytes(), expected_bytes[32:])
+            self.assertEqual(len(list(parts.glob(third.name + '.invalid-*'))), 1)
+            self.assertEqual(expected.read_bytes(), expected_before)
+            self.assertEqual(partial.read_bytes(), partial_before)
+
 
 if __name__ == '__main__':
     unittest.main()
