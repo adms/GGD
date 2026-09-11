@@ -37,7 +37,6 @@ assert.equal(khronos.issues.truncated, false, 'Khronos validation report truncat
 
 const inspection = await inspectModelUpload(new Uint8Array(bytes));
 const budget = heroModelBudgetIssues(inspection);
-assert.deepEqual(budget.errors, [], 'Current GGD model budget errors');
 assert(inspection.skins > 0, 'No skin in exported component');
 assert.equal(inspection.skinnedPrimitives, inspection.meshes, 'Every rendered primitive must be skinned');
 assert.equal(inspection.clips.length, conversion.sourceActionCount, 'Exported clip count differs from source action count');
@@ -105,7 +104,7 @@ const result = {
   },
   materials: (json.materials ?? []).map((material, index) => ({index, ...material})),
   primitives,
-  structuralValidationPassed: true,
+  structuralValidationPassed: budget.errors.length === 0,
   visualValidationPassed: false,
   runtimeReady: false,
   runtimeSelectable: false,
@@ -118,6 +117,7 @@ const result = {
 };
 mkdirSync(dirname(outputPath), {recursive: true});
 writeFileSync(outputPath, JSON.stringify(result, null, 2) + '\n');
+assert.deepEqual(budget.errors, [], 'Current GGD model budget errors');
 console.log(JSON.stringify({
   output: outputPath,
   sha256: result.glb.sha256,

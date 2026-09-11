@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "ssbu-mario-c00-static-skinned-v1",
+      "variant": "c00",
+      "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Mario identity.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+        "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
+        "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
+      ]
+    }
+  ]
+}

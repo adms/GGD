@@ -57492,13 +57492,52 @@
           "identityReviewRequired": false,
           "recordedBytes": 821992,
           "sizeMatchesManifest": true
+        },
+        {
+          "id": "ssbu-mario-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/mario/body/c00",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+          "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+          "existsLocal": true,
+          "bytes": 817900,
+          "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/validation.json",
+            "bytes": 27528,
+            "sha256": "d99eefd0e71bf0f1d17d3e36afe8421c4c6ecde16e10eae0291a6418993097ca"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/visual-review.json",
+            "bytes": 2227,
+            "sha256": "deda1cb9f32b290e572fe77ea789f3812d5e86218487d18ff2418c0c088e005d"
+          },
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Mario identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+            "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
+          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mario. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mariod. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mariod. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU fighter/mario c00 was converted with Blender 4.5.13 and GGD's official normalizer to an 817,900-byte GLB; two rebuilds are byte-identical. Khronos has 0 errors and 0 warnings; 9 source primitives were safely combined to 6 draw primitives, all skinned to 98 joints, and 101,330 float values are finite. Three WebGL views were accepted only as an independent static component. Source and output contain no actions."
       ],
       "aliases": [
         "fighter/mario",

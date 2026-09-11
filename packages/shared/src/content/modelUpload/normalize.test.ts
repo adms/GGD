@@ -46,7 +46,18 @@ describe("匯入模型的自動正規化", () => {
     src.json.bufferViews.push({ buffer: 0, byteOffset: src.bin.byteLength, byteLength: idx.byteLength, target: 34963 });
     src.json.accessors.push({ bufferView: src.json.bufferViews.length - 1, componentType: 5123, count, type: "SCALAR" });
     mesh.primitives[0]!.indices = src.json.accessors.length - 1;
-    src.bin = bin2;
+    // SSBU and many native game models store colors/weights as normalized integers.
+    // The merged accessor must retain `normalized: true`; otherwise Khronos rejects
+    // the output even though the source primitives were valid.
+    const colors = new Uint8Array(count * 4).fill(255);
+    const bin3 = new Uint8Array(bin2.byteLength + colors.byteLength);
+    bin3.set(bin2, 0); bin3.set(colors, bin2.byteLength);
+    src.json.bufferViews.push({ buffer: 0, byteOffset: bin2.byteLength, byteLength: colors.byteLength, target: 34962 });
+    src.json.accessors.push({
+      bufferView: src.json.bufferViews.length - 1, componentType: 5121, count, type: "VEC4", normalized: true,
+    });
+    mesh.primitives[0]!.attributes.COLOR_0 = src.json.accessors.length - 1;
+    src.bin = bin3;
     const before = await inspectModelUpload(encodeUploadGlb(src.json, src.bin));
     // ⛔ 同一份幾何畫兩次 —— 正是 WC3 匯入產生的形狀
     mesh.primitives.push({ ...mesh.primitives[0]! });
@@ -62,8 +73,10 @@ describe("匯入模型的自動正規化", () => {
     // ⭐ 合併後的 POSITION 界必須用真資料重算，⛔ 沿用任何一段都會超界
     const { json } = parseUploadGlb(bytes);
     const pos = json.accessors[json.meshes![0]!.primitives[0]!.attributes.POSITION!]!;
+    const color = json.accessors[json.meshes![0]!.primitives[0]!.attributes.COLOR_0!]!;
     expect(pos.min).toHaveLength(3);
     expect(pos.max!.every((v, i) => v >= pos.min![i]!)).toBe(true);
+    expect(color.normalized).toBe(true);
   });
 
   it("★ 長度為零的片段被丟掉（判準是**長度**，⛔ 不是名字）", async () => {

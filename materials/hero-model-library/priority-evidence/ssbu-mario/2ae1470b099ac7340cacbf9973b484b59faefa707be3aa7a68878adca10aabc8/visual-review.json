@@ -1,0 +1,47 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-mario-c00-static-skinned-v1",
+  "modelSha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Mario c00 head, hat, face, eyes, moustache, torso, overalls, hands and shoes.",
+    "No detached body part, missing primary material, opaque facial alpha card or obvious bind-pose collapse is visible.",
+    "This review covers the static bind pose only because source and output contain no animation clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/front.png",
+      "bytes": 244773,
+      "sha256": "11b8ad1967ac4ec05a8bd3a49347c16a3d83ccc8016aca41a391e2d7b9836383"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/back.png",
+      "bytes": 204487,
+      "sha256": "b9e065115b06ed7c72e5168a19e7a9aa1ad8e0adad2ea9d89e0112862675e666"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/isometric.png",
+      "bytes": 228520,
+      "sha256": "8edf762dc25e9c1500f2bb4e0f5fd37d6d609f178c560d70413cac40f16bf86d"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/contact-sheet.png",
+      "bytes": 423384,
+      "sha256": "9130b952b75a43587537882fb0eebbfd1386b7aec27d49436d37c216df16a132"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/webgl-proof.json",
+    "bytes": 7777,
+    "sha256": "f9b084a65b8aa53234b84e1259932ac62ec53f17deb70f93f840550285fe73be"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

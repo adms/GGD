@@ -1,0 +1,1128 @@
+{
+  "schema": "ggd-ssbu-blend-component-validation@1",
+  "candidateId": "ssbu-mario-c00-static-skinned-v2",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+    "bytes": 9190080,
+    "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+  },
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+    "bytes": 817900,
+    "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881"
+  },
+  "conversionReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/conversion.json",
+    "sha256": "3ee5d7aadb8ec92c71994bfbb5a8a14ab7cb621f094b8e7c2eccb0b8e3bf71cb"
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 51,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/2/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/2/attributes/TEXCOORD_2"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/3/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/99"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/100"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/101"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/102"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/103"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/104"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/105"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/106"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/1"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/2"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/4"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/5"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/6"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/7"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/9"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/10"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/11"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/12"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/13"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/14"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/15"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/16"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/44"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/45"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/46"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/47"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/48"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/49"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/50"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/51"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/52"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/53"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/54"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/55"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/56"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/57"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/58"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/59"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/66"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/67"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/68"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/69"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/70"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/71"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/72"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/73"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 7189,
+    "drawPrimitives": 6,
+    "skinnedPrimitives": 6,
+    "skinCount": 1,
+    "joints": [
+      98
+    ],
+    "textureCount": 5,
+    "textures": [
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 54479,
+        "sha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 43735,
+        "sha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 16971,
+        "sha256": "6370eb1f915094a9ea89c2830390c965d59e8c771f82a995eb11409ac3b6c999"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 878,
+        "sha256": "6c5c9633b5e93d51bda32f90601afc5b2bcf31c53d0aded73a58c03a1b4f52b5"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 52861,
+        "sha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    },
+    "uploadReport": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 8,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/99"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/100"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/101"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/102"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/103"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/104"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/105"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/106"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "GGD normalize_static_component.mts",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 777244
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 128,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/3",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/4",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 6,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 6,
+        "totalVertexCount": 4589,
+        "totalTriangleCount": 7189,
+        "maxUVs": 3,
+        "maxInfluences": 4,
+        "maxAttributes": 9
+      }
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 48,
+    "valueCount": 101330,
+    "accessors": [
+      {
+        "index": 0,
+        "type": "VEC3",
+        "count": 2664,
+        "values": 7992,
+        "minimum": -0.9550265669822693,
+        "maximum": 1.1390223503112793
+      },
+      {
+        "index": 1,
+        "type": "VEC3",
+        "count": 2664,
+        "values": 7992,
+        "minimum": -1,
+        "maximum": 0.9999710917472839
+      },
+      {
+        "index": 2,
+        "type": "VEC2",
+        "count": 2664,
+        "values": 5328,
+        "minimum": 0.0031909942626953125,
+        "maximum": 0.99951171875
+      },
+      {
+        "index": 6,
+        "type": "VEC4",
+        "count": 2664,
+        "values": 10656,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 8,
+        "type": "MAT4",
+        "count": 98,
+        "values": 1568,
+        "minimum": -13.249702453613281,
+        "maximum": 10.367119789123535
+      },
+      {
+        "index": 9,
+        "type": "VEC3",
+        "count": 48,
+        "values": 144,
+        "minimum": -0.14865295588970184,
+        "maximum": 1.1793525218963623
+      },
+      {
+        "index": 10,
+        "type": "VEC3",
+        "count": 48,
+        "values": 144,
+        "minimum": -0.9852265119552612,
+        "maximum": 0.9852265119552612
+      },
+      {
+        "index": 11,
+        "type": "VEC2",
+        "count": 48,
+        "values": 96,
+        "minimum": 0.4599609375,
+        "maximum": 0.6240234375
+      },
+      {
+        "index": 15,
+        "type": "VEC4",
+        "count": 48,
+        "values": 192,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 17,
+        "type": "VEC3",
+        "count": 31,
+        "values": 93,
+        "minimum": 0.04009384661912918,
+        "maximum": 1.451674222946167
+      },
+      {
+        "index": 18,
+        "type": "VEC3",
+        "count": 31,
+        "values": 93,
+        "minimum": -0.42477816343307495,
+        "maximum": 0.9958752989768982
+      },
+      {
+        "index": 19,
+        "type": "VEC2",
+        "count": 31,
+        "values": 62,
+        "minimum": 0.10614013671875,
+        "maximum": 0.8671875
+      },
+      {
+        "index": 20,
+        "type": "VEC2",
+        "count": 31,
+        "values": 62,
+        "minimum": 0.1103515625,
+        "maximum": 0.91796875
+      },
+      {
+        "index": 21,
+        "type": "VEC2",
+        "count": 31,
+        "values": 62,
+        "minimum": 0.10614013671875,
+        "maximum": 0.8671875
+      },
+      {
+        "index": 25,
+        "type": "VEC4",
+        "count": 31,
+        "values": 124,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 27,
+        "type": "VEC3",
+        "count": 31,
+        "values": 93,
+        "minimum": -0.13784871995449066,
+        "maximum": 1.451674222946167
+      },
+      {
+        "index": 28,
+        "type": "VEC3",
+        "count": 31,
+        "values": 93,
+        "minimum": -0.6941887140274048,
+        "maximum": 0.9958752989768982
+      },
+      {
+        "index": 29,
+        "type": "VEC2",
+        "count": 31,
+        "values": 62,
+        "minimum": 0.10614013671875,
+        "maximum": 0.8671875
+      },
+      {
+        "index": 30,
+        "type": "VEC2",
+        "count": 31,
+        "values": 62,
+        "minimum": 0.1103515625,
+        "maximum": 0.91796875
+      },
+      {
+        "index": 34,
+        "type": "VEC4",
+        "count": 31,
+        "values": 124,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 36,
+        "type": "VEC3",
+        "count": 209,
+        "values": 627,
+        "minimum": -0.1907217800617218,
+        "maximum": 1.5209619998931885
+      },
+      {
+        "index": 37,
+        "type": "VEC3",
+        "count": 209,
+        "values": 627,
+        "minimum": -0.9920564293861389,
+        "maximum": 0.9970722198486328
+      },
+      {
+        "index": 38,
+        "type": "VEC2",
+        "count": 209,
+        "values": 418,
+        "minimum": 0.0105133056640625,
+        "maximum": 0.99072265625
+      },
+      {
+        "index": 42,
+        "type": "VEC4",
+        "count": 209,
+        "values": 836,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 44,
+        "type": "VEC3",
+        "count": 424,
+        "values": 1272,
+        "minimum": -0.33649829030036926,
+        "maximum": 1.5505963563919067
+      },
+      {
+        "index": 45,
+        "type": "VEC3",
+        "count": 424,
+        "values": 1272,
+        "minimum": -0.9999583959579468,
+        "maximum": 0.9999977946281433
+      },
+      {
+        "index": 46,
+        "type": "VEC2",
+        "count": 424,
+        "values": 848,
+        "minimum": 0.002899169921875,
+        "maximum": 0.994140625
+      },
+      {
+        "index": 50,
+        "type": "VEC4",
+        "count": 424,
+        "values": 1696,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 52,
+        "type": "VEC3",
+        "count": 239,
+        "values": 717,
+        "minimum": -0.2388671487569809,
+        "maximum": 1.3066304922103882
+      },
+      {
+        "index": 53,
+        "type": "VEC3",
+        "count": 239,
+        "values": 717,
+        "minimum": -0.999130129814148,
+        "maximum": 0.9954774379730225
+      },
+      {
+        "index": 54,
+        "type": "VEC2",
+        "count": 239,
+        "values": 478,
+        "minimum": 0.010040283203125,
+        "maximum": 0.994140625
+      },
+      {
+        "index": 58,
+        "type": "VEC4",
+        "count": 239,
+        "values": 956,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 60,
+        "type": "VEC3",
+        "count": 609,
+        "values": 1827,
+        "minimum": -0.3050241768360138,
+        "maximum": 1.5996549129486084
+      },
+      {
+        "index": 61,
+        "type": "VEC3",
+        "count": 609,
+        "values": 1827,
+        "minimum": -0.9998334646224976,
+        "maximum": 0.9998317956924438
+      },
+      {
+        "index": 62,
+        "type": "VEC2",
+        "count": 609,
+        "values": 1218,
+        "minimum": 0.005016326904296875,
+        "maximum": 0.99658203125
+      },
+      {
+        "index": 64,
+        "type": "VEC4",
+        "count": 609,
+        "values": 2436,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 66,
+        "type": "VEC3",
+        "count": 334,
+        "values": 1002,
+        "minimum": -0.37747883796691895,
+        "maximum": 1.7999998331069946
+      },
+      {
+        "index": 67,
+        "type": "VEC3",
+        "count": 334,
+        "values": 1002,
+        "minimum": -0.999588131904602,
+        "maximum": 0.9940782785415649
+      },
+      {
+        "index": 68,
+        "type": "VEC2",
+        "count": 334,
+        "values": 668,
+        "minimum": 0.012115478515625,
+        "maximum": 0.74609375
+      },
+      {
+        "index": 72,
+        "type": "VEC4",
+        "count": 334,
+        "values": 1336,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 77,
+        "type": "VEC3",
+        "count": 2998,
+        "values": 8994,
+        "minimum": -1,
+        "maximum": 0.9999710917472839
+      },
+      {
+        "index": 78,
+        "type": "VEC3",
+        "count": 2998,
+        "values": 8994,
+        "minimum": -0.9550265669822693,
+        "maximum": 1.7999998331069946
+      },
+      {
+        "index": 79,
+        "type": "VEC2",
+        "count": 2998,
+        "values": 5996,
+        "minimum": 0.0031909942626953125,
+        "maximum": 0.99951171875
+      },
+      {
+        "index": 80,
+        "type": "VEC4",
+        "count": 2998,
+        "values": 11992,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 85,
+        "type": "VEC3",
+        "count": 711,
+        "values": 2133,
+        "minimum": -0.9999583959579468,
+        "maximum": 0.9999977946281433
+      },
+      {
+        "index": 86,
+        "type": "VEC3",
+        "count": 711,
+        "values": 2133,
+        "minimum": -0.33649829030036926,
+        "maximum": 1.5505963563919067
+      },
+      {
+        "index": 87,
+        "type": "VEC2",
+        "count": 711,
+        "values": 1422,
+        "minimum": 0.002899169921875,
+        "maximum": 0.994140625
+      },
+      {
+        "index": 88,
+        "type": "VEC4",
+        "count": 711,
+        "values": 2844,
+        "minimum": 0,
+        "maximum": 1
+      }
+    ]
+  },
+  "materials": [
+    {
+      "index": 0,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "phong0_sfx_0x9a011063_____VTC___TANGENT___BINORMAL_101",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 1,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "skin_mario_001",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 2,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "EyeL",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2,
+          "texCoord": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 3,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "EyeR",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3,
+          "texCoord": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 4,
+      "alphaMode": "BLEND",
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "alp_mario_002",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 4
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 5,
+      "alphaMode": "BLEND",
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "alp_mario_001",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 5
+        },
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "primitives": [
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 0
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 1,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 1
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 2,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "TEXCOORD_1",
+        "TEXCOORD_2",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 2
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 3,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "TEXCOORD_1",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 3
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 4,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 4
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 5,
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 5
+    }
+  ],
+  "structuralValidationPassed": true,
+  "visualValidationPassed": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "Structural validation does not establish visual identity or source-game shader parity.",
+    "The source contains no actions; no native, procedural, or retargeted action was added.",
+    "Backend registration and runtime switching were not performed."
+  ]
+}

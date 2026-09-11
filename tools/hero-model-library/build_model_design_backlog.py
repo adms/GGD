@@ -160,6 +160,7 @@ def build():
 
 def friendly_stage(value):
     value=str(value or 'unknown')
+    if value=='accepted-independent-static-skinned-component-actions-missing':return '靜態蒙皮元件已驗收；動作、英雄綁定與後台切換仍缺'
     if value=='native-body-identity-unreviewed':return '原生模型；外觀身份待核'
     if 'backend-standardized-option' in value:return '已登記後台選項；程序化動作另標'
     if 'shared-upload-and-runtime-motion' in value:return '已通過匯入與動作檢查'

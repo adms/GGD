@@ -192,7 +192,7 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
     tail.push(blob); offset += blob.byteLength;
     return json.bufferViews.length - 1;
   };
-  const raw = (index: number): { bytes: Uint8Array; count: number; width: number; unit: number; componentType: number; type: string } | null => {
+  const raw = (index: number): { bytes: Uint8Array; count: number; width: number; unit: number; componentType: number; type: string; normalized: boolean } | null => {
     const a = json.accessors[index];
     if (!a || a.sparse || a.bufferView === undefined) return null;              // ⛔ 稀疏資料不接
     const width = WIDTH[a.type], unit = BYTES[a.componentType];
@@ -200,7 +200,15 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
     const view = json.bufferViews[a.bufferView]!;
     if (view.byteStride && view.byteStride !== width * unit) return null;        // ⛔ 交錯排列不接
     const start = (view.byteOffset ?? 0) + (a.byteOffset ?? 0);
-    return { bytes: bin.subarray(start, start + a.count * width * unit), count: a.count, width, unit, componentType: a.componentType, type: a.type };
+    return {
+      bytes: bin.subarray(start, start + a.count * width * unit),
+      count: a.count,
+      width,
+      unit,
+      componentType: a.componentType,
+      type: a.type,
+      normalized: (a as typeof a & { normalized?: boolean }).normalized === true,
+    };
   };
   const primitives: GlbPrimitive[] = [];
   for (const group of groups) {
@@ -213,12 +221,16 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
       const parts = group.map((p) => raw(p.attributes[name]!));
       if (parts.some((x) => x === null)) return null;
       const first = parts[0]!;
-      if (parts.some((x) => x!.componentType !== first.componentType || x!.type !== first.type)) return null;
+      if (parts.some((x) => x!.componentType !== first.componentType || x!.type !== first.type
+        || x!.normalized !== first.normalized)) return null;
       const blob = new Uint8Array(parts.reduce((n, x) => n + x!.bytes.byteLength, 0));
       let at = 0;
       for (const part of parts) { blob.set(part!.bytes, at); at += part!.bytes.byteLength; }
       const count = parts.reduce((n, x) => n + x!.count, 0);
-      const accessor: GlbDocument["accessors"][number] = { bufferView: push(blob, 34962), componentType: first.componentType, count, type: first.type };
+      const accessor: GlbDocument["accessors"][number] = {
+        bufferView: push(blob, 34962), componentType: first.componentType, count, type: first.type,
+        ...(first.normalized ? { normalized: true } : {}),
+      };
       if (name === "POSITION") {
         // ⭐ 邊界要用真的資料重算 —— ⛔ 沿用任何一段的 min/max 都會「超界」。
         const values = new Float32Array(blob.buffer, blob.byteOffset, count * 3);

@@ -5828,9 +5828,9 @@
         "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
       },
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-        "bytes": 9683,
-        "sha256": "ef01587f4749e799d66ae99807d8f54061206e4e00273452fb8d1e0355eb114b"
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
+        "bytes": 9632,
+        "sha256": "de246e4b078a222484207701b1f620ff50decc83d5e0f18f1ecfdab88dc2f7ce"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -5913,9 +5913,9 @@
         "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
       },
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-validation.json",
-        "bytes": 9671,
-        "sha256": "9011ece6487343995f3c8f03f26063be8654e0269add591207d66536d543be97"
+        "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-back-256-v1-validation.json",
+        "bytes": 9620,
+        "sha256": "7ec62dfb00d7d2021e49d9698db139f294e13263100d44611e0d711b0ffb6aa7"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
@@ -6056,6 +6056,125 @@
       },
       "auditEvidence": "SSBU assist/zero c00 was converted with Blender 4.5.13 to a 596,332-byte GLB; two rebuilds are byte-identical. Khronos validation has 0 errors and 0 warnings; all 6 primitives are skinned to a 75-joint skeleton, 64,788 float values are finite, and front/back/isometric WebGL views were accepted only as an independent static component. Source and output contain no actions.",
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb"
+    },
+    {
+      "id": "ssbu-mario-c00-static-skinned-v1",
+      "conversionCandidateId": "ssbu-mario-c00-static-skinned-v2",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "nameZh": "Mario／瑪利歐",
+      "originalName": "Mario",
+      "workZh": "任天堂明星大亂鬥 特別版（原作：超級瑪利歐系列）",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/mario/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+      "bytes": 817900,
+      "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+      "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-mario"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 7189,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 98,
+      "textureCount": 5,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "SSBU fighter/mario c00 was converted with Blender 4.5.13 and GGD's official normalizer to an 817,900-byte GLB; two rebuilds are byte-identical. Khronos has 0 errors and 0 warnings; 9 source primitives were safely combined to 6 draw primitives, all skinned to 98 joints, and 101,330 float values are finite. Three WebGL views were accepted only as an independent static component. Source and output contain no actions.",
+      "limitations": [
+        "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Mario identity.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+        "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
+        "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/delivery.json",
+        "bytes": 5569,
+        "sha256": "2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/acceptance.json",
+        "bytes": 1335,
+        "sha256": "379ce3d99972ec10f47db303cc123d8f75747f4847a7d75f2e103d8a223d3115"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/validation.json",
+        "bytes": 27528,
+        "sha256": "d99eefd0e71bf0f1d17d3e36afe8421c4c6ecde16e10eae0291a6418993097ca"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/visual-review.json",
+        "bytes": 2227,
+        "sha256": "deda1cb9f32b290e572fe77ea789f3812d5e86218487d18ff2418c0c088e005d"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/webgl-proof.json",
+        "bytes": 7777,
+        "sha256": "f9b084a65b8aa53234b84e1259932ac62ec53f17deb70f93f840550285fe73be"
+      },
+      "sourceFidelityEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/source-fidelity.json",
+        "bytes": 10693,
+        "sha256": "4f72846efc6fcf8a165ec5a3e72c1d794da7fd53f67ae48d2c871d0f48b78a73"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/source-rebuild.json",
+        "bytes": 4852,
+        "sha256": "67ce77cbf98a6ed3ee6e459daea91311ab82a1d817e28e2ec6244892c39de5af"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "toolchainBackup": {
+        "name": "Blender 4.5.13 LTS macOS arm64",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/dependencies/blender/4.5.13/13a899d5cb374c9fcdc26b9c4c39489efbd424ed0e9b9bac1a2bcb3160a23131.tar.gz",
+        "s3ArchiveMember": "blender-4.5.13-macos-arm64.dmg",
+        "sha256": "663ce944257c61ff1d6aa09e15c8f57bbd8d59023adb2fa7edde33a9ed960b53",
+        "bytes": 311910354,
+        "s3Use": "backup-only-not-runtime-entry",
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/dependencies/blender-4.5.13/latest-receipt.json",
+        "backupReceiptSha256": "7d23602b384626dcc727dcddb25ae3402c52093ff26fa2c66d8721453e4a87c3"
+      },
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+          "s3ArchiveMember": "body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
+          "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+      "s3ArchiveMember": "body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
+      "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb"
     },
     {
       "id": "zero-lancer-p1-static-skinned-v1",
@@ -6361,9 +6480,9 @@
       "currentReplacementGitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
       "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
-        "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
-        "bytes": 65157
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
+        "bytes": 65157,
+        "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -6469,9 +6588,9 @@
       "currentReplacementGitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
       "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
-        "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
-        "bytes": 65157
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
+        "bytes": 65157,
+        "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -6575,9 +6694,9 @@
       "currentReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
       "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
-        "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
-        "bytes": 65157
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
+        "bytes": 65157,
+        "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -6705,9 +6824,9 @@
       "currentReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
       "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation.json",
-        "sha256": "5ddcb32bc7dd09a76a05f22062ef46769d982e93a774b24f5d9568456916cbbd",
-        "bytes": 65157
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
+        "bytes": 65157,
+        "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
       },
       "visualEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -6765,7 +6884,7 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb"
     }
   ],
-  "modelComponentCount": 12,
+  "modelComponentCount": 13,
   "historicalModelSourceArtifacts": [
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
@@ -6863,14 +6982,14 @@
   "historicalModelSourceArtifactCount": 2,
   "historicalModelRestorationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/restoration-receipt.json",
-    "sha256": "daf078a845d91dafdd8c6884e6c2ede5b7bc89780b1e10a811affac84c8d0278"
+    "sha256": "8a0659e08fca61c50766c2f76da1ea5f0061b6cd1023bfe3733c39904a84be86"
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "dca9fa9485e38fa54ea5ba3260ac552b9ef979a98e33ea03e3e75e0aa3625268"
+    "sha256": "60e466a69c449a3cb517f66fca94ed688369bca46fc970f9cfeeb52b471bd6ae"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "3e8bd84e02ebdbc0b2d46ec4bfdc56434d5db9d4f0540a0e06e0a9939b62db09"
+    "sha256": "7f04cd023c9e5122877d755f6d4a9c829ae5dd8c9ef4b4b5dbfe0d5e4a52f736"
   }
 }

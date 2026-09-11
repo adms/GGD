@@ -29,7 +29,7 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "zero-megaman": (1, 1, 0),
             "ram": (1, 0, 1),
             "beatrice": (1, 0, 1),
-            "ssbu-mario": (16, 9, 0),
+            "ssbu-mario": (16, 10, 0),
             "ssbu-mewtwo": (8, 1, 0),
             "ssbu-ptrainer": (8, 1, 0),
             "ssbu-ryu": (8, 1, 0),
@@ -59,6 +59,13 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
         self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
         self.assertFalse(candidate["runtimeSelectable"])
         self.assertEqual(candidate["modelProof"]["animationEntries"], 0)
+
+    def test_mario_validated_component_survives_source_regeneration(self):
+        candidate = next(row for row in self.source["ssbu-mario"]["modelCandidates"] if row["id"] == "ssbu-mario-c00-static-skinned-v1")
+        self.assertEqual(candidate["sha256"], "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881")
+        self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
+        self.assertFalse(candidate["runtimeSelectable"])
+        self.assertEqual(candidate["nativeAnimationCount"], 0)
 
     def test_palworld_converted_paths_are_grouped_under_integrated_rows(self):
         source_document = json.loads(SOURCE.read_text())

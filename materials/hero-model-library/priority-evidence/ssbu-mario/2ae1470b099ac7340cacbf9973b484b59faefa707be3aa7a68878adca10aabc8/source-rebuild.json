@@ -1,0 +1,101 @@
+{
+  "schema": "ggd.ssbu-mario-source-rebuild@1",
+  "componentId": "ssbu-mario-c00-static-skinned-v1",
+  "sourceSha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d",
+  "outputSha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+    "bytes": 817900,
+    "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881"
+  },
+  "secondBuild": {
+    "absolutePath": "/private/tmp/ssbu-mario-c00-rebuild-check-v2/body.glb",
+    "bytes": 817900,
+    "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881"
+  },
+  "firstBlenderExport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/blender-export.glb",
+    "bytes": 544500,
+    "sha256": "c6375f099d5958e500a692e1512966f253773a1b7022e5ea12c102d2df7cb355"
+  },
+  "secondBlenderExport": {
+    "absolutePath": "/private/tmp/ssbu-mario-c00-rebuild-check-v2/blender-export.glb",
+    "bytes": 544500,
+    "sha256": "c6375f099d5958e500a692e1512966f253773a1b7022e5ea12c102d2df7cb355"
+  },
+  "derivedTextures": [
+    {
+      "name": "alp_mario_001_col.png.ggd-256.png",
+      "first": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/derived-textures/alp_mario_001_col.png.ggd-256.png",
+        "bytes": 52861,
+        "sha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e"
+      },
+      "second": {
+        "absolutePath": "/private/tmp/ssbu-mario-c00-rebuild-check-v2/derived-textures/alp_mario_001_col.png.ggd-256.png",
+        "bytes": 52861,
+        "sha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e"
+      }
+    },
+    {
+      "name": "def_mario_001_col.png.ggd-256.png",
+      "first": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/derived-textures/def_mario_001_col.png.ggd-256.png",
+        "bytes": 54479,
+        "sha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023"
+      },
+      "second": {
+        "absolutePath": "/private/tmp/ssbu-mario-c00-rebuild-check-v2/derived-textures/def_mario_001_col.png.ggd-256.png",
+        "bytes": 54479,
+        "sha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023"
+      }
+    },
+    {
+      "name": "skin_mario_001_col.png.ggd-256.png",
+      "first": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/derived-textures/skin_mario_001_col.png.ggd-256.png",
+        "bytes": 43735,
+        "sha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7"
+      },
+      "second": {
+        "absolutePath": "/private/tmp/ssbu-mario-c00-rebuild-check-v2/derived-textures/skin_mario_001_col.png.ggd-256.png",
+        "bytes": 43735,
+        "sha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7"
+      }
+    }
+  ],
+  "byteIdenticalRebuild": true,
+  "blenderExportByteIdenticalRebuild": true,
+  "derivedTexturesByteIdenticalRebuild": true,
+  "bothValidationsPassed": true,
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "f5652b4db8fce114d1e8b1aa39706b9a400e3c8b51aebb10251838289f76275a"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/normalize_static_component.mts",
+      "sha256": "38292868500638ffd63a406fa0e78e48f142b71daaab6c98c6691a623144276b"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "sha256": "1cd199b1853322c882d42aba0715b8ecbffc92f50516e702d51a6aad11c25b93"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.py",
+      "sha256": "ca465944cb995b3614d5abf708d85d6e27490aec030b385fdd1e939beace8013"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.mjs",
+      "sha256": "29a3daac6b06bcf13ad1d8d6f0007b42293b642666b2ba3a67eba3dfb17dd4c2"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "7b404bcd2f050dbe6fc78c0d06d29fe2999d08d198179d2619839da8cc0303c9"
+    }
+  ],
+  "limitations": [
+    "Absolute paths differ between receipts; delivered GLB and all derived texture bytes are identical.",
+    "Deterministic static output does not establish gameplay animation readiness."
+  ]
+}

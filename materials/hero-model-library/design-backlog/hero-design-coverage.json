@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-11T23:01:16.424780+00:00",
+  "generatedAt": "2026-09-11T23:30:40.110583+00:00",
   "repo": "/private/tmp/ggd-pr1152-merge-audit",
-  "revision": "7a29f3445127fe54fd2675bb42e08cc1e4165b17",
+  "revision": "37dad3b51f475ac5cb8b5b7df4e8f0a5dfbd3c1c",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "7be30739bcd2db8f0a5dcf47420761a13f87d67afb63e5198007508a0d4080e2",
-      "bytes": 6936977
+      "sha256": "31718a6853e9670d1e9963773070bed0200ec89c35779aceb7b891239cc4a35b",
+      "bytes": 6952582
     },
     {
       "path": "package.json",
@@ -7792,13 +7792,13 @@
     },
     {
       "path": "packages/shared/src/content/modelUpload/normalize.test.ts",
-      "bytes": 7696,
-      "sha256": "ad4df79488cbb45961df967d1ba859d8314c797cd2ed009544c127050cd3df9e"
+      "bytes": 8589,
+      "sha256": "b19edf529bc1fc428d2b5a52d4f7e32d9ee5c9a208f2d8134605593d89ebf232"
     },
     {
       "path": "packages/shared/src/content/modelUpload/normalize.ts",
-      "bytes": 15995,
-      "sha256": "6fecf94e6fd034afd6ae95d69fb2f55f87ce8b422121f4101896116026d12141"
+      "bytes": 16259,
+      "sha256": "7b404bcd2f050dbe6fc78c0d06d29fe2999d08d198179d2619839da8cc0303c9"
     },
     {
       "path": "packages/shared/src/content/modelUpload/provenance.ts",
@@ -14717,8 +14717,8 @@
     }
   ],
   "sourceReport": {
-    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full-pr1152-kirei.json",
-    "sha256": "9aab0b446ef8e3da533cd9cd3b471ef2661623a89c8b133dd518569994e06328"
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
+    "sha256": "d79452dc7ae667d2ba6e46fde7279083e8ad80a1117d68dc49f72e8178c56146"
   },
   "heroes": [
     {

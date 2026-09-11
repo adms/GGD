@@ -1,0 +1,101 @@
+{
+  "schema": "ggd-ssbu-static-component-normalization@1",
+  "candidateId": "ssbu-mario-c00-static-skinned-v2",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+    "bytes": 9190080,
+    "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+  },
+  "sourceActionCount": 0,
+  "blenderExport": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/blender-export.glb",
+    "bytes": 544500,
+    "sha256": "c6375f099d5958e500a692e1512966f253773a1b7022e5ea12c102d2df7cb355",
+    "conversionReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/blender-conversion.json",
+      "bytes": 9249,
+      "sha256": "2683ab8713084af9abc49f78d86e8550413cb2ce3bae744dd62531235680cfa1"
+    },
+    "drawPrimitives": 9,
+    "triangles": 7189,
+    "skins": 1
+  },
+  "structuralCoalescing": {
+    "meshNodesBefore": 9,
+    "meshNodesAfter": 1,
+    "primitivesBefore": 9,
+    "primitivesAfter": 9,
+    "sharedSkinIndex": 0,
+    "sourceTransformsRequired": "identity",
+    "geometryBinaryReencoded": false
+  },
+  "officialNormalization": {
+    "drawCalls": {
+      "before": 9,
+      "after": 6
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": true
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+    "bytes": 817900,
+    "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+    "drawPrimitives": 6,
+    "triangles": 7189,
+    "skins": 1,
+    "skinnedPrimitives": 6,
+    "textures": [
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 54479,
+        "sha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 43735,
+        "sha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 16971,
+        "sha256": "6370eb1f915094a9ea89c2830390c965d59e8c771f82a995eb11409ac3b6c999"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 878,
+        "sha256": "6c5c9633b5e93d51bda32f90601afc5b2bcf31c53d0aded73a58c03a1b4f52b5"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 52861,
+        "sha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e"
+      }
+    ],
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    }
+  },
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This applies GGD normalization to an independent static skinned component; it does not create a complete hero model.",
+    "The source and output contain zero animation clips, so six-state gameplay readiness is not established.",
+    "Hero binding, backend dropdown registration, runtime switching and deployment were not performed."
+  ]
+}

@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "c3a3ed26cb414c0ad6ae75ca67bcc767366594a22c0680857f6338d300a9ce98"
+      "sha256": "e46f4c05a73f391758c47f6e73fe92a83c382c69afc56c323ce1dbdfb65a1d15"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "ef34008eb98e119b41e5d02df12bf46a756b73de2dee70e1bf5c035c59b5db49"
+      "sha256": "8b2f29d072b4da93734209c69eeeb5fe1fe66684fc48e3b36e64691a0d54feb0"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "3e8bd84e02ebdbc0b2d46ec4bfdc56434d5db9d4f0540a0e06e0a9939b62db09"
+      "sha256": "7f04cd023c9e5122877d755f6d4a9c829ae5dd8c9ef4b4b5dbfe0d5e4a52f736"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -164824,13 +164824,54 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mariod/model/stethoscope/c00/stethoscope-c00.blend",
           "localSizeMatches": true
+        },
+        {
+          "id": "ssbu-mario-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/mario/body/c00",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+          "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+          "existsLocal": true,
+          "bytes": 817900,
+          "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/validation.json",
+            "bytes": 27528,
+            "sha256": "d99eefd0e71bf0f1d17d3e36afe8421c4c6ecde16e10eae0291a6418993097ca"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/visual-review.json",
+            "bytes": 2227,
+            "sha256": "deda1cb9f32b290e572fe77ea789f3812d5e86218487d18ff2418c0c088e005d"
+          },
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Mario identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+            "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mario. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mariod. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mariod. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU fighter/mario c00 was converted with Blender 4.5.13 and GGD's official normalizer to an 817,900-byte GLB; two rebuilds are byte-identical. Khronos has 0 errors and 0 warnings; 9 source primitives were safely combined to 6 draw primitives, all skinned to 98 joints, and 101,330 float values are finite. Three WebGL views were accepted only as an independent static component. Source and output contain no actions."
       ],
       "aliases": [
         "fighter/mario",
@@ -164853,7 +164894,7 @@
       "candidateBreakdown": {
         "characterBodySources": 16,
         "standaloneCharacterBodies": 16,
-        "componentsOrProps": 9,
+        "componentsOrProps": 10,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -164883,7 +164924,16 @@
         ],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [],
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-mario-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
         "nativeMotionSources": [],
         "evidencePaths": [
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",

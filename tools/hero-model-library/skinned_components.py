@@ -94,7 +94,12 @@ def validate_component(candidate, repo):
         verify_pin(candidate[evidence],repo)
     if schema == 'ggd-ssbu-blend-component-validation@1':
         rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
-        require(rebuild.get('schema') == 'ggd.ssbu-zero-source-rebuild@1', 'Unexpected SSBU rebuild schema')
+        expected_rebuild_schemas={
+            'ssbu-zero-c00-static-skinned-v1': 'ggd.ssbu-zero-source-rebuild@1',
+            'ssbu-mario-c00-static-skinned-v1': 'ggd.ssbu-mario-source-rebuild@1',
+        }
+        require(rebuild.get('schema') == expected_rebuild_schemas.get(candidate['id']), 'Unexpected SSBU rebuild schema')
+        require(rebuild.get('componentId') == candidate['id'], 'SSBU rebuild component ID mismatch')
         require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('bothValidationsPassed') is True,
                 'SSBU deterministic rebuild proof failed')
         require(rebuild.get('outputSha256') == candidate['sha256'], 'SSBU rebuild output pin mismatch')
