@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ggd:writes docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle.json
+// ggd:writes docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle-landed.json
 
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -12,7 +12,7 @@ import { unchangedHistoricalReceipt } from "./editor-form-receipt-history.mjs";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const BRICKS = join(ROOT, "docs/editor-contract/ggd-bricks.json");
 const TYPE_CATALOG = join(ROOT, "docs/editor-contract/ggd-type-catalog.json");
-const OUTPUT = join(ROOT, "docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle.json");
+const OUTPUT = join(ROOT, "docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle-landed.json");
 const CHECK = process.argv.includes("--check");
 
 function option(name) {
@@ -75,7 +75,7 @@ const typeCatalogSha256 = sha256(TYPE_CATALOG);
 
 const packet = {
   schema: "ggd-coord-packet@1",
-  dedupeKey: "claim.editor-form-receipts-spawn-obstacle",
+  dedupeKey: "claim.editor-form-receipts-spawn-obstacle-landed",
   kind: "claim",
   from: "codex",
   to: "main",

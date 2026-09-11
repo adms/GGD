@@ -7,6 +7,9 @@
  *
  *   node --import tsx tools/voice-gen/src/build-combat-lines.mjs           # write
  *   node --import tsx tools/voice-gen/src/build-combat-lines.mjs --check   # stale ⇒ exit 1
+ *   node --import tsx tools/voice-gen/src/build-combat-lines.mjs --use-pinned-reference-status
+ *     # maintenance-only write: keep the committed reference identity/SHA when
+ *     # local reference WAVs are unavailable; does not render or verify them
  *
  * ⭐ NOTHING HERE IS INVENTED (81 英雄語音補檔計劃書 §3, owner 2026-09-10
  * 「要講什麼名言 請你給我名單就好 不要自己產 我會手動填寫」):
@@ -41,6 +44,7 @@ import {
 } from "./combatLinesLib.mjs";
 
 const CHECK = process.argv.includes("--check");
+const ALLOW_PINNED_REFERENCE_STATUS = CHECK || process.argv.includes("--use-pinned-reference-status");
 const SLOTS = ["q", "w", "e", "r", "ex"];
 /** Real kana letters (ぁ-ゖ, ァ-ヺ, ー). ⛔ NOT the block range: ・(U+30FB) is a
  *  separator that Chinese skill names use constantly (百八式・闇拂). */
@@ -136,7 +140,7 @@ function originalLine(id, cat) {
   if (!o) return null;
   const mp3 = clipPath(id, cat);
   if (!existsSync(mp3)) return { error: `COMBAT_ORIGINALS.json 說 ${id}/${cat} 用原檔，但 ${relative(ROOT, mp3)} 不存在（跑 import_originals）` };
-  return { lang: "ja", text: `（原檔）${o.name ?? o.src}`, origin: `original:${o.group ?? "?"}/${o.src}`, original: o, mp3 };
+  return { lang: o.lang ?? "und", text: `（原檔）${o.name ?? o.src}`, origin: `original:${o.group ?? "?"}/${o.src}`, original: o, mp3 };
 }
 
 /** Merge a derived line onto the previous record, keeping render state iff the text is unchanged. */
@@ -178,20 +182,59 @@ const originalsOnlyIds = Object.keys(originals ?? {}).filter(
   (id) => !heroes.includes(id) && Object.keys(originals[id] ?? {}).length > 0 && !existsSync(statusPath(id)),
 );
 
-const summary = { heroes: 0, lines: 0, toRender: 0, ownerPending: [], stale: [], skippedZh: [] };
+const summary = {
+  heroes: 0,
+  lines: 0,
+  toRender: 0,
+  ownerPending: [],
+  stale: [],
+  skippedZh: [],
+  referencePinsNotReadBack: [],
+};
 for (const id of [...heroes, ...originalsOnlyIds].sort()) {
   const name = championName(id);
   const originalsOnly = !!casting.excluded?.[id] || originalsOnlyIds.includes(id);
   const cast = casting.champions[id] ?? { voiceClass: "unknown" };
-  const ref = originalsOnly ? null : referenceFor(id, casting);
+  const prev = readJson(statusPath(id), { championId: id, reference: null, lines: {} });
+  let ref = originalsOnly ? null : referenceFor(id, casting);
+  // Reference WAVs are build inputs kept in the local asset workspace; shipped
+  // clips and status.json are the Git products. CI can still prove that the
+  // generated status is current when its pinned reference identity and SHA are
+  // unchanged. A normal build remains strict and must read the WAV bytes; the
+  // explicit maintenance flag can rewrite metadata while retaining the pin.
+  if (ALLOW_PINNED_REFERENCE_STATUS && ref?.error) {
+    const donor = cast.donor;
+    const pinned = prev.reference;
+    const ownSource = `voice-reference-pipeline/approved/processed/${id}.wav`;
+    const donorSource = donor ? `voice-reference-pipeline/approved/processed/${donor}.wav` : null;
+    const isOwnPin = pinned?.source === ownSource
+      && pinned?.sourceKind === "repo"
+      && (pinned?.donor ?? null) === null;
+    const isDonorPin = donorSource
+      && pinned?.source === donorSource
+      && pinned?.sourceKind === "donor"
+      && pinned?.donor === donor;
+    if (
+      (isOwnPin || isDonorPin)
+      && /^[a-f0-9]{64}$/.test(pinned?.sha256 ?? "")
+    ) {
+      ref = {
+        source: pinned.source,
+        sourceKind: pinned.sourceKind,
+        donor: pinned.donor ?? null,
+        sha256: pinned.sha256,
+        pinnedWithoutLocalReadback: true,
+      };
+      summary.referencePinsNotReadBack.push(`${id}:${pinned.sha256}`);
+    }
+  }
   if (!originalsOnly && (!ref || ref.error)) { fail(`${id}（${name}）：${ref?.error ?? "沒有參考音也沒有 donor"}`); continue; }
 
-  const prev = readJson(statusPath(id), { championId: id, reference: null, lines: {} });
   // ⭐ A NEW REFERENCE INVALIDATES EVERY CLIP. The prompt wav is an input of every
   // render (synth.py keys on its sha256 too), so when the reference changes —
   // the hero's own take landing in approved/processed/, or the donor swapped —
   // every line goes back to `pending` even though its text did not move.
-  const refShaNow = ref ? sha256(readFileSync(ref.path)) : "";
+  const refShaNow = ref ? (ref.sha256 ?? sha256(readFileSync(ref.path))) : "";
   const refChanged = !!ref && !!prev.reference?.sha256 && prev.reference.sha256 !== refShaNow;
   if (refChanged && !CHECK) {
     for (const rec of Object.values(prev.lines ?? {})) {
@@ -207,6 +250,7 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
     //   3. derived synthesis (skill name / grunt) — only when 1 and 2 are both empty
     // The pool is capped at three takes, written as cat / cat.2 / cat.3 (random playback).
     const pool = [];
+    let skippedOwnerLine = false;
     for (const key of TAKE_KEYS(cat)) {
       const orig = originalLine(id, key);
       if (orig?.error) { fail(orig.error); continue; }
@@ -214,11 +258,11 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
     }
     for (const key of TAKE_KEYS(cat)) {
       const owned = ownerLine(id, key);
-      if (owned?.skip) { summary.skippedZh.push(owned.skip); continue; }
+      if (owned?.skip) { summary.skippedZh.push(owned.skip); skippedOwnerLine = true; continue; }
       if (owned?.error) { fail(owned.error); continue; }
       if (owned) pool.push({ line: owned, source: "authored" });
     }
-    if (pool.length === 0 && !originalsOnly) {
+    if (pool.length === 0 && !originalsOnly && !skippedOwnerLine) {
       let line = null;
       if (cat.startsWith("skill-name.")) {
         const s = skillLine(id, cat.slice("skill-name.".length));
@@ -238,11 +282,11 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
         // Not rendered by anyone: the clip IS the source. Stamp `current` from disk so
         // index-lines' byte gate and needsRender() both see it as final.
         const buf = readFileSync(line.mp3);
-        const cur = lines[key].current;
+        const cur = prev.lines?.[key]?.current;
         if (!cur || cur.bytes !== buf.length || cur.hash !== sha256(buf)) {
           const pr = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", line.mp3], { encoding: "utf8" });
           lines[key].current = { take: 0, engine: "original", engineVersion: line.original.group ?? "original", stub: false, bytes: buf.length, seconds: Number(pr.stdout.trim()) || 0, lufs: null, hash: sha256(buf), at: lines[key].current?.at ?? Date.now() };
-        }
+        } else lines[key].current = cur;
         lines[key].state = "generated"; lines[key].lastError = null;
       } else if (needsRender(lines[key], clipPath(id, key))) summary.toRender++;
     });
@@ -255,7 +299,7 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
 
   const refSha = refShaNow;
   const sameRef = !!ref && prev.reference?.sha256 === refSha && prev.reference?.sourceKind === ref.sourceKind;
-  const reference = !ref ? { sha256: null, sourceKind: "none", donor: null, note: casting.excluded?.[id] ? "originals only — owner excluded this hero from synthesis (COMBAT_CASTING.json.excluded)" : "originals only — no casting entry and no reference: every clip is an ORIGINAL the owner adopted (COMBAT_ORIGINALS.json)", path: null } : {
+  const reference = !ref ? { sha256: null, sourceKind: "none", donor: null, note: casting.excluded?.[id] ? "originals only — owner excluded this hero from synthesis (COMBAT_CASTING.json.excluded)" : "originals only — no casting entry and no reference: every clip is an ORIGINAL the owner adopted (COMBAT_ORIGINALS.json)", path: null } : (ref.pinnedWithoutLocalReadback || sameRef) ? prev.reference : {
     sha256: refSha, seconds: 0, sampleRate: 24000, source: ref.source, sourceKind: ref.sourceKind,
     donor: ref.donor,
     licence: "", licenceUrl: "",
@@ -297,7 +341,7 @@ for (const id of Object.keys(originals ?? {}).sort()) {
     if (prev.textSource === "original" && prev.current?.bytes === buf.length && prev.current?.hash === sha256(buf)) continue;
     const pr = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", line.mp3], { encoding: "utf8" });
     doc.lines[cat] = {
-      ...prev, text: line.text, lang: "ja", textSource: "original", origin: line.origin, state: "generated", lastError: null,
+      ...prev, text: line.text, lang: line.lang, textSource: "original", origin: line.origin, state: "generated", lastError: null,
       takes: Array.isArray(prev.takes) ? prev.takes : [],
       current: { take: 0, engine: "original", engineVersion: line.original.group ?? "original", stub: false, bytes: buf.length, seconds: Number(pr.stdout.trim()) || 0, lufs: null, hash: sha256(buf), at: Date.now() },
     };
@@ -312,6 +356,12 @@ if (summary.ownerPending.length) {
 }
 if (summary.skippedZh.length) {
   console.log(`${tag} ⚠️ ${summary.skippedZh.length} 句中文台詞跳過（合成只講日文）:\n  ${summary.skippedZh.join("\n  ")}`);
+}
+if (summary.referencePinsNotReadBack.length) {
+  console.log(
+    `${tag} ⚠️ ${summary.referencePinsNotReadBack.length} 個本機參考 WAV 不在此 checkout；` +
+    `只核對 status.json 固定的來源關係與 SHA，沒有宣稱重新讀回參考音。`,
+  );
 }
 if (problems.length) {
   console.error(`${tag} ⛔ ${problems.length} problem(s):\n  ${problems.join("\n  ")}`);
