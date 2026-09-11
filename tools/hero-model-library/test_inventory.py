@@ -60,6 +60,19 @@ class InventoryHandoff(unittest.TestCase):
         self.assertTrue(current['legacyBackup']['readbackVerified'])
         self.assertFalse(current['runtimeReady'])
 
+    def test_candidate_query_matches_palworld_native_aliases(self):
+        script = REPO / 'tools/hero-model-library/query.py'
+        expectations = {
+            'WorldTreeDragon': 'opgg-palworld-astralym-2026081102.body',
+            'JetDragon': 'opgg-palworld-jetragon.original-glb',
+            'PinkCat': 'palworld-cattiva-atlasforge.body',
+        }
+        for query, candidate_id in expectations.items():
+            with self.subTest(query=query):
+                result = json.loads(subprocess.check_output(
+                    [sys.executable, str(script), query, '--candidates', '--json'], text=True))
+                self.assertIn(candidate_id, [row['candidateId'] for row in result['candidates']])
+
     def test_links_and_approved_defaults_are_complete(self):
         inventory = json.loads((DATA/'inventory.json').read_text())
         sources = json.loads((DATA/'download-sources.json').read_text())

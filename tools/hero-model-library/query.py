@@ -12,10 +12,10 @@ REPO = Path(__file__).resolve().parents[2]
 def candidate_matches(candidate, query):
     # Shared provenance paragraphs can mention siblings (e.g. a Dissidia pack's
     # Cloud filename). Only this candidate's identity and own paths scope a hit.
-    fields=['candidateId','id','name','label','character','nativeCharacter','sourceLabel',
+    fields=['candidateId','id','name','label','character','nativeCharacter','nativeCharacterId','originalName','sourceLabel','aliases',
             'heroIds','ownerEntryIds','unitId','sourceRigNode','variant','variantSlot',
             'nativeModel','model','modelPath','convertedPath','convertedFile',
-            'sourceBodyNodes','sourceWork','sourceGame']
+            'sourceModel','sourceModelPath','sourceBodyNodes','sourceWork','sourceGame']
     return query in json.dumps([candidate.get(k) for k in fields],ensure_ascii=False).casefold()
 
 
