@@ -29,8 +29,12 @@ FROM node:22-alpine
 #      症狀一模一樣（build 過、跑起來 ENOENT）。
 #   ⭐ `cwebp -version` 是**會回非零**的自證（CLAUDE.md：選 fail-open 就要有東西喊）——
 #      套件改名／被拿掉 ⇒ **build 當場紅**，⛔ 不是等到第一次轉檔才靜默失敗。
-RUN apk add --no-cache tini libwebp-tools \
- && cwebp -version > /dev/null
+#   ⭐ 2026-09-11（GH#1211）：加上 **ffmpeg** —— `resizeImage.node.ts` 直接呼叫它，
+#      而它 fail-open（找不到就回 null）⇒ ⛔ 少裝的症狀是**貼圖悄悄沒縮**，
+#      ⛔ 不是一個會喊的錯。而那正是 256 貼圖上限那條路在用的。
+RUN apk add --no-cache tini libwebp-tools ffmpeg \
+ && cwebp -version > /dev/null \
+ && ffmpeg -version > /dev/null
 ENV NODE_ENV=development \
     CONTENT_DIR=/srv/content
 WORKDIR /app
