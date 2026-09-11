@@ -4,6 +4,7 @@ import { SimWorld } from "./SimWorld";
 import { apDamageMult } from "./combat/apDamageScaling";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
+import { Champions } from "./content/registry";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type EntityId, type SeatId, type ItemId, type AugmentId, type ChampionId } from "../ids";
 import { DEFAULT_STAT_CAPS, capFor } from "./statCaps";
@@ -192,8 +193,18 @@ describe("stat pipeline", () => {
     // literal: it is an IMPORTED number (war3mapMisc.txt StrHitPointBonus),
     // and this test is about the LAYERS, not about which value that field
     // holds. attributeCoefficients.test.ts is what pins the value itself.
-    const growthLayer = 90; // sela.growth[MaxHealth]
-    const attrLayer = ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * 3.6; // × sela.attributes.strGrowth
+    // ⭐⭐ GH#1211（2026-09-11）：這兩個本來是**字面值** `90` 與 `3.6`。
+    // ⚠️ 而上面那段註解自己剛講完為什麼不可以：
+    //   「The coefficient is READ from the shipped table rather than typed as a literal」
+    //   —— ⛔ 然後下一行就把 `strGrowth` 打成字面值。2026-08-13 的 `strToAttackDamage`
+    //   已經因為同一件事用**錯誤的訊息**紅過一次（它說「每級成長壞了」，
+    //   真相是一個出貨值被調過）。
+    // ⇒ 2026-09-11 owner 的三圍歸零（所有角色 `strGrowth` → 0）讓它**第二次**這樣紅。
+    // ⇒ ⭐ 兩個都改成從**出貨的骨架**讀 —— 這條測試問的是**層的分解**，
+    //   ⛔ 不是那些值是多少（那些有 `attributeCoefficients.test.ts` 在釘）。
+    const selaDef = Champions.get("sela" as ChampionId);
+    const growthLayer = selaDef.growth[Stat.MaxHealth] ?? 0;
+    const attrLayer = ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * (selaDef.attributes?.strGrowth ?? 0);
     expect(hp.maxHp).toBeCloseTo(maxAt1 + growthLayer + attrLayer, 6);
     expect(hp.hp / hp.maxHp).toBeCloseTo(0.5, 6); // ratio preserved
     // Same decomposition on a stat whose two layers DISAGREE, so the test can
@@ -205,8 +216,13 @@ describe("stat pipeline", () => {
     // 它說「每級成長壞了」，真相是一個出貨係數被調過。⭐ 和上面 maxHealth 那一層
     // 一樣改成從表裡讀：這一條測的是**分層**，⛔ 不是那個係數的值是多少
     // （值由 attributeCoefficients.test.ts 釘）。
+    // ⭐ 同上（GH#1211）：`3` 與 `3.6` 兩個都改成從**出貨的骨架**讀。
+    //   ⛔ 兩層仍然刻意**不相等**（growth.ad ≠ 屬性曲線），所以這條測試
+    //   照樣分得出它們 —— ⭐ 那是它存在的理由，而它沒有被放寬。
     expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(
-      adAt1 + 3 + ATTRIBUTE_ENV_DEFAULTS.strToAttackDamage * 3.6,
+      adAt1
+        + (selaDef.growth[Stat.AttackDamage] ?? 0)
+        + ATTRIBUTE_ENV_DEFAULTS.strToAttackDamage * (selaDef.attributes?.strGrowth ?? 0),
       6,
     );
   });
