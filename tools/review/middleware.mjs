@@ -16,7 +16,8 @@
  *
  * owner 2026-09-11 —— **新英雄上架一頁檢核**（同一個通道，⛔ 不造第三套）：
  *   GET  /__review/hero-intake           → { counts, batches: [{ batch, heroes: [模型／圖示／語音 ＋ 裁決] }] }
- *   GET  /__review/hero-asset?p=<rel>    → 一張圖示（**只**從 docs/_review/material/hero-intake/ 底下取）
+ *   GET  /__review/hero-asset?p=<rel>    → 一張圖示（柵欄：`docs/_review/material/hero-intake/**`
+ *                                          或 ⭐ **出貨樹的** `content/assets/icons/**` —— ⛔ 不複製第二份進材料）
  *   POST /__review/hero-intake-verdict   → body { batch, heroId, digest, verdict: "approve"|"reject", reason? }
  *     ⭐ 退回**必填原因**；材料重跑過（digest 不同）⇒ 舊裁決在頁面上標 stale。
  *
