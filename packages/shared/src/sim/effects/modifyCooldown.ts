@@ -148,6 +148,27 @@ function applyToHookIcd(
   }
 }
 
+/**
+ * ⭐ GH#1203 —— 冷卻真的被改了就**說出來**。
+ *
+ * ⚠️ 在此之前這個 kind **一個事件都不發** ⇒ 「那一格按鈕提早三秒亮起來」
+ * 這件事在引擎外面**沒有任何觀察者知道**（失敗形態②：做了但從沒送出去）。
+ * ⛔ 而它不是裝飾：玩家看得到冷卻圈跳了一段。
+ *
+ * 只在**數字真的變了**的時候發 —— ⛔ 一發被夾成 0 的「縮短」不會發。
+ */
+function noteCooldownChange(
+  world: SimWorld,
+  body: EntityId,
+  slot: CastableSlot,
+  was: number,
+  now: number,
+  origin: string,
+): void {
+  if (was === now) return;
+  world.emit("cooldownModified", { target: body, slot, fromTicks: was, toTicks: now, origin });
+}
+
 /** 一個身體的某一格 —— 六格（Q/W/E/R/EX/天生技）用同一個讀法。 */
 function instanceAt(ab: AbilitiesComp, slot: CastableSlot): AbilityInstance | undefined {
   if (slot === "EX") return ab.exSlot ?? undefined;
@@ -188,7 +209,9 @@ export const modifyCooldownEffect: EffectKindSpec<"modifyCooldown"> = {
         if (inst.cooldownRemainingTicks <= 0) continue;
 
         if (e.mode === "reset") {
+          const was = inst.cooldownRemainingTicks;
           inst.cooldownRemainingTicks = 0;
+          noteCooldownChange(world, body, slot, was, 0, ctx.origin);
           continue;
         }
 
@@ -218,7 +241,9 @@ export const modifyCooldownEffect: EffectKindSpec<"modifyCooldown"> = {
         }
         // 夾在 [0, ∞)：一發「延長」不可以把冷卻推成負數，一發「縮短」不可以
         // 把它推過頭變成負的剩餘量（`tickCooldowns` 只在 > 0 時減，負數會永遠留著）。
+        const was = inst.cooldownRemainingTicks;
         inst.cooldownRemainingTicks = Math.max(0, inst.cooldownRemainingTicks - cut);
+        noteCooldownChange(world, body, slot, was, inst.cooldownRemainingTicks, ctx.origin);
       }
     }
   },

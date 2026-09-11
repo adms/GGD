@@ -69,6 +69,22 @@ export const EFFECT_EVENTS: ReadonlySet<string> = new Set([
   // 門檻與其他每一個一樣：它**只從 `effects/swapResource.ts` 的交換那一行**發出來，
   // ⛔ 回血／upkeep／移動都偽造不了。
   "resourceSwap",
+  // ⭐⭐ GH#1203（2026-09-11）—— `statusApplied` / `stunApplied`。
+  //
+  // 在此之前「狀態」這個頻道**只比對數量**（`after.statuses > before.statuses`），
+  // ⛔ 而一支「吃掉【X】，換上【致盲】」的技能是 **−1 ＋1 = 0** ⇒ ⭐ 淨數量不動
+  // ⇒ 量尺看起來與「什麼都沒做」**一模一樣**。實測三格正是這個形狀
+  //（b2-matthias EX 吃【破魔】換【致盲】· b2-misery W 吃【狂暴】換【致盲】·
+  //  b2-yogiri EX 吃【詛咒】換【沉默】）。
+  //
+  // 門檻與其他每一個相同：這兩個事件**只從 `effects/applyStatus.ts` 真的掛上去**
+  // 那一行發出來 —— ⛔ 回血／upkeep／移動都偽造不了。
+  "statusApplied",
+  "stunApplied",
+  // ⭐ GH#1203 —— `cooldownModified`（「那一格按鈕提早亮起來」）。
+  //   `modifyCooldown` 在此之前**一個事件都不發**，而它改的數字玩家看得到（冷卻圈跳一段）。
+  //   它只從 `effects/modifyCooldown.ts` **數字真的變了**那一行發出來 ⇒ ⛔ 自然遞減偽造不了。
+  "cooldownModified",
 ]);
 
 /**
@@ -219,6 +235,26 @@ export interface CastObservation {
   after: ChannelSnapshot;
   /** the caster physically left its anchor (or has a nav override) */
   moved: boolean;
+  /**
+   * ⭐ GH#1203 —— **被施法者搬走的是別人**（`pull` / `knockback` / 拋投）。
+   *
+   * ⛔ 在此之前這一格不存在，而 {@link moved} 只看**施法者自己** ⇒ 一支
+   * 「把敵人拉過來」的技能在量尺上與**什麼都沒做**完全一樣。
+   * ⚠️ 而普查每一 tick 都把假人**釘回原位**（免得被擊退推出圈外）——
+   * ⇒ ⭐ 那顆釘子把唯一的證據也一起擦掉了：量到再釘，⛔ 不是釘了再量。
+   *
+   * 實測（2026-09-11 探針，出貨內容）：`b2-shadow` Q 把敵人搬了 **2.50 格**、
+   * `b2-kisaragi` Q 搬了 **2.00 格** —— ⭐ 兩支都被記成 no-op。
+   */
+  victimMoved: boolean;
+  /**
+   * ⭐ GH#1203 —— **行動鎖**（`world.knockdown`：擊倒／被拉走時不能動）。
+   *
+   * ⚠️ `knockdown` **事件**只從 `combat/damage.ts` 發得出來（＝只有打到人才會有），
+   * ⛔ 而 `pull` / `knockback` 走的是 `lockOut()`，它**只寫 `world.knockdown`、不發事件**
+   * ⇒ 一支「定住對手 1.5 秒」而不造成傷害的技能，在此之前一格數字都量不到。
+   */
+  victimLocked: boolean;
   /** how many effects the ability actually authored (0 = empty effect list) */
   effectsAuthored: number;
 }
@@ -259,7 +295,15 @@ export const CAST_CHANNEL_ORDER: readonly CastChannelRule[] = [
   //   位置照 codex 原本的順序（`manaRestore` 之後、`shield` 之前）。
   { channel: "healthSpend", zh: "耗血", fired: (o) => o.events.includes("healthSpend") },
   { channel: "shield", zh: "護盾", fired: (o) => o.after.shields > o.before.shields },
-  { channel: "status", zh: "狀態", fired: (o) => o.after.statuses > o.before.statuses },
+  {
+    channel: "status",
+    zh: "狀態",
+    // ⭐ GH#1203：數量變多**或**真的掛上去過一次 —— 後者才看得到「換一個」那一族。
+    fired: (o) =>
+      o.after.statuses > o.before.statuses ||
+      o.events.includes("statusApplied") ||
+      o.events.includes("stunApplied"),
+  },
   { channel: "buff", zh: "buff", fired: (o) => o.after.buffs > o.before.buffs },
   { channel: "taunt", zh: "嘲弄", fired: (o) => o.after.taunts > o.before.taunts },
   // 金幣與 `dash` / `championForm` 同一列、同一個理由：它是 gameplay 頻道
@@ -269,6 +313,13 @@ export const CAST_CHANNEL_ORDER: readonly CastChannelRule[] = [
   // 會走會打的身體），⛔ 不是裝飾，所以排在 `vfx` 上面（GH#1087）。
   { channel: "summon", zh: "召喚", fired: (o) => o.after.summons > o.before.summons },
   { channel: "dash", zh: "位移", fired: (o) => o.moved },
+  // ⭐ GH#1203 —— 「把**別人**搬走／定住」與 `dash` 同一列、同一個理由：
+  //   場上真的有一具身體被移動或被鎖住行動，⛔ 那不是裝飾。
+  //   ⚠️ 排在 `dash` **後面**：施法者自己動了的時候，報告仍然記在 `dash` 上。
+  { channel: "displace", zh: "搬動他人", fired: (o) => o.victimMoved },
+  { channel: "lock", zh: "行動鎖", fired: (o) => o.victimLocked },
+  // ⭐ GH#1203 —— 冷卻被改短／重置也是 gameplay 頻道（按鈕提早亮），⛔ 不是裝飾。
+  { channel: "cooldown", zh: "冷卻", fired: (o) => o.events.includes("cooldownModified") },
   // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
   // gameplay channel (the body's whole stat sheet is replaced), and the report's
   // "if everything passes on vfx the measurement is too loose" note would
@@ -294,7 +345,7 @@ export function castChannelOrderProse(sep = "＞"): string {
  * ⭐ 順序住 {@link CAST_CHANNEL_ORDER}（⛔ 不在這個函式裡）。
  */
 export function classifyCastOutcome(o: CastObservation): CastOutcome {
-  const { events, before, after, moved } = o;
+  const { events, before, after, moved, victimMoved, victimLocked } = o;
 
   let channel = "";
   for (const rule of CAST_CHANNEL_ORDER) {
@@ -313,7 +364,9 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
     after.taunts > before.taunts ||
     after.gold > before.gold ||
     after.summons > before.summons ||
-    moved;
+    moved ||
+    victimMoved || // ⭐ GH#1203：被搬走的是別人
+    victimLocked; // ⭐ GH#1203：行動鎖（lockOut 不發事件）
 
   if (anyEvent || anyState) return { verdict: "PASS", channel };
 

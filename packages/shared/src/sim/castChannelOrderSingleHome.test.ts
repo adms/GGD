@@ -31,6 +31,8 @@ const EVERYTHING: CastObservation = {
   before: { shields: 0, statuses: 0, buffs: 0, projectiles: 0, taunts: 0, gold: 0, summons: 0 },
   after: { shields: 1, statuses: 1, buffs: 1, projectiles: 1, taunts: 1, gold: 1, summons: 1 },
   moved: true,
+  victimMoved: false,
+  victimLocked: false,
   effectsAuthored: 1,
 };
 
