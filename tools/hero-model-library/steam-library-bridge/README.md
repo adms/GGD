@@ -65,3 +65,5 @@ python3 tools/hero-model-library/steam-library-bridge/merge_windows_asset_contai
 ```
 
 合併器依 Steam App ID 與完整安裝路徑對應多硬碟重複安裝；逐檔資料寫入 `asset-container-files.jsonl.gz`，不塞進 Git 摘要。若尚未完成 S3 備份，`s3Backup` 保持空值，不能把預定位置寫成已上傳。
+
+《Infinity Strash》優先來源可使用 `RUN_INFINITY_STRASH_PROBE.cmd`。它固定從 `F:\SteamLibrary\steamapps\common\Strash` 唯讀雜湊 Unreal 容器、量實際讀取速度；同資料夾、桌面或 Downloads 若有官方 `umodel.exe`，另以 `-list *.uasset` 產生 package 清單，不匯出或複製遊戲內容。用 `build_infinity_strash_probe_bundle.py` 可重建給 Windows 使用的小型 ZIP。探測結果只提升到「容器已雜湊／package 已列舉」，仍不能算角色已擷取、身份已確認、已轉換或已上架。
