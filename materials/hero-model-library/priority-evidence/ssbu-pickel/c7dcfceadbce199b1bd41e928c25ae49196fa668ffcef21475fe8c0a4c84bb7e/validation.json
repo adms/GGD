@@ -1,0 +1,369 @@
+{
+  "schema": "ggd-ssbu-blend-component-validation@1",
+  "candidateId": "ssbu-pickel-alex-c01-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c01/pickel-alex-c01.blend",
+    "bytes": 4168692,
+    "sha256": "32da26ff5d5bc9c2581447348f74ce0ea5472dcdf736c8137fc7ada651cfe445"
+  },
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
+    "bytes": 51960,
+    "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177"
+  },
+  "conversionReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/normalization.json",
+    "sha256": "0e4da32d2b48ff255a717667782140ee1f5d02ff38277b5070329d7d4cb15253"
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 4,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_1"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_1"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/32"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/33"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 828,
+    "drawPrimitives": 3,
+    "skinnedPrimitives": 3,
+    "skinCount": 1,
+    "joints": [
+      31
+    ],
+    "textureCount": 1,
+    "textures": [
+      {
+        "width": 64,
+        "height": 64,
+        "bytes": 2342,
+        "sha256": "2977e12f66a4eb58cc8a2f95e773aa72fb844c7f6ac1964c7bd750d602cb9686"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": []
+    },
+    "uploadReport": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 2,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/32"
+          },
+          {
+            "code": "NODE_EMPTY",
+            "message": "Empty node encountered.",
+            "severity": 2,
+            "pointer": "/nodes/33"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "GGD normalize_static_component.mts",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 41504
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 64,
+              "height": 64,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 3,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 3,
+        "totalVertexCount": 618,
+        "totalTriangleCount": 828,
+        "maxUVs": 2,
+        "maxInfluences": 4,
+        "maxAttributes": 6
+      }
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 15,
+    "valueCount": 7936,
+    "accessors": [
+      {
+        "index": 0,
+        "type": "VEC3",
+        "count": 6,
+        "values": 18,
+        "minimum": 0.056249991059303284,
+        "maximum": 1.5749996900558472
+      },
+      {
+        "index": 1,
+        "type": "VEC3",
+        "count": 6,
+        "values": 18,
+        "minimum": -3.0294629027594056e-7,
+        "maximum": 1
+      },
+      {
+        "index": 2,
+        "type": "VEC2",
+        "count": 6,
+        "values": 12,
+        "minimum": 0.1875,
+        "maximum": 0.234375
+      },
+      {
+        "index": 3,
+        "type": "VEC2",
+        "count": 6,
+        "values": 12,
+        "minimum": 0.1875,
+        "maximum": 0.234375
+      },
+      {
+        "index": 5,
+        "type": "VEC4",
+        "count": 6,
+        "values": 24,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 7,
+        "type": "MAT4",
+        "count": 31,
+        "values": 496,
+        "minimum": -12.00100040435791,
+        "maximum": 11.00000286102295
+      },
+      {
+        "index": 8,
+        "type": "VEC3",
+        "count": 6,
+        "values": 18,
+        "minimum": -0.16874997317790985,
+        "maximum": 1.5749996900558472
+      },
+      {
+        "index": 9,
+        "type": "VEC3",
+        "count": 6,
+        "values": 18,
+        "minimum": -3.0294629027594056e-7,
+        "maximum": 1
+      },
+      {
+        "index": 10,
+        "type": "VEC2",
+        "count": 6,
+        "values": 12,
+        "minimum": 0.140625,
+        "maximum": 0.203125
+      },
+      {
+        "index": 11,
+        "type": "VEC2",
+        "count": 6,
+        "values": 12,
+        "minimum": 0.140625,
+        "maximum": 0.203125
+      },
+      {
+        "index": 13,
+        "type": "VEC4",
+        "count": 6,
+        "values": 24,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 14,
+        "type": "VEC3",
+        "count": 606,
+        "values": 1818,
+        "minimum": -0.8999998569488525,
+        "maximum": 1.7999998331069946
+      },
+      {
+        "index": 15,
+        "type": "VEC3",
+        "count": 606,
+        "values": 1818,
+        "minimum": -1,
+        "maximum": 1
+      },
+      {
+        "index": 16,
+        "type": "VEC2",
+        "count": 606,
+        "values": 1212,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 18,
+        "type": "VEC4",
+        "count": 606,
+        "values": 2424,
+        "minimum": 0,
+        "maximum": 1
+      }
+    ]
+  },
+  "materials": [
+    {
+      "index": 0,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "EyeL",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 1,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "EyeR",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 2,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "def_pickel_001",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "primitives": [
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 0,
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "TEXCOORD_1",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 0
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 1,
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "TEXCOORD_1",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 1
+    },
+    {
+      "meshIndex": 0,
+      "meshName": "GGD combined render-visible skinned source meshes",
+      "primitiveIndex": 2,
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 2
+    }
+  ],
+  "structuralValidationPassed": true,
+  "visualValidationPassed": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "Structural validation does not establish visual identity or source-game shader parity.",
+    "The source contains no actions; no native, procedural, or retargeted action was added.",
+    "Backend registration and runtime switching were not performed."
+  ]
+}

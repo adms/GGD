@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "464d27e9fb20ac6db43d35a2d055515a21ec9354a8d10e6d30dae0542cada39a"
+      "sha256": "a84034d9e8d89db6e2e92db9920596799e63eb3bfa29d2fbf51e3fbf36a89754"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "0204ceb7a507b15466bdc498642906f89d41aee23b8339b0de6345a85552ed71"
+      "sha256": "3459275f6df41915b002f5c008d63d03cb2ecaed377a0f0e23c1f1e6a401feb0"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "ac3b7008b82d90ded95075ec58328d3ca2e24b351210dc756e02c29130c69e0f"
+      "sha256": "58f21eb667d4a057b3953c59d5fa1e79fad7a3bb4864b07a4384ea5f4cb8fc29"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -183673,12 +183673,105 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/wing/c00/wing-c00.blend",
           "localSizeMatches": true
+        },
+        {
+          "id": "ssbu-pickel-steve-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/pickel/body/c00",
+          "variantSlot": "c00",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
+          "existsLocal": true,
+          "bytes": 51664,
+          "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/validation.json",
+            "bytes": 9000,
+            "sha256": "06ec16050cfdcc8e671f659705f0f1d4dc5cbbec66ec335a58db45cecae37e3a"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/visual-review.json",
+            "bytes": 2258,
+            "sha256": "f615cc5557cc2cebcfbdc45a23308c8b57393e033e7f7ea6b3d91089d0fe214b"
+          },
+          "equivalentSourceVariants": [
+            "c00",
+            "c02",
+            "c04"
+          ],
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/body.glb",
+          "localSizeMatches": true
+        },
+        {
+          "id": "ssbu-pickel-alex-c01-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/pickel/body/c01",
+          "variantSlot": "c01",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+          "existsLocal": true,
+          "bytes": 51960,
+          "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/c7dcfceadbce199b1bd41e928c25ae49196fa668ffcef21475fe8c0a4c84bb7e/validation.json",
+            "bytes": 8969,
+            "sha256": "262239d564b983d8afde30bb8491164ba57327f8f884374375c614ea59c59f7c"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/c7dcfceadbce199b1bd41e928c25ae49196fa668ffcef21475fe8c0a4c84bb7e/visual-review.json",
+            "bytes": 2255,
+            "sha256": "a0fd584b85a31f58cbfc48e22926ea2d16800635f957991438c939952f119200"
+          },
+          "equivalentSourceVariants": [
+            "c01",
+            "c03"
+          ],
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/pickel. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/pickel. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU fighter/pickel c00 Steve was converted with Blender 4.5.13 and GGD normalization to a 51,664-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 3 primitives are skinned to 31 joints, and 7,936 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions.",
+        "SSBU fighter/pickel c01 Alex was converted with Blender 4.5.13 and GGD normalization to a 51,960-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 3 primitives are skinned to 31 joints, and 7,936 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions."
       ],
       "aliases": [
         "fighter/pickel"
@@ -183699,7 +183792,7 @@
       "candidateBreakdown": {
         "characterBodySources": 8,
         "standaloneCharacterBodies": 8,
-        "componentsOrProps": 23,
+        "componentsOrProps": 25,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -183726,7 +183819,24 @@
         ],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [],
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-pickel-steve-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "ssbu-pickel-alex-c01-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
         "nativeMotionSources": [],
         "evidencePaths": [
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",

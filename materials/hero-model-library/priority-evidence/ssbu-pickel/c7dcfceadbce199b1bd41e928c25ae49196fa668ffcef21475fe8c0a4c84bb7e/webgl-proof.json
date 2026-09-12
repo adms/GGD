@@ -1,0 +1,211 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.8999996960163372,
+      -4.9589764710850325e-08,
+      -0.22499950012544298
+    ],
+    "max": [
+      0.899999749660509,
+      1.8000000920046426,
+      0.22500054828353055
+    ],
+    "extent": [
+      1.7999994456768462,
+      1.8000001415944074,
+      0.45000004840897356
+    ]
+  },
+  "geometry": [
+    {
+      "name": "pickel_Openblink_VIS_O_OBJShape_primitive0",
+      "vertices": 6,
+      "indices": 12,
+      "worldBounds": {
+        "min": [
+          0.05625002458691064,
+          1.5187499117204462,
+          0.22500046307987612
+        ],
+        "max": [
+          0.16875001341103868,
+          1.5749997917661227,
+          0.225000480120568
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 31,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "pickel_Openblink_VIS_O_OBJShape_primitive1",
+      "vertices": 6,
+      "indices": 12,
+      "worldBounds": {
+        "min": [
+          -0.16874993294478102,
+          1.5187499117204462,
+          0.22500046307987612
+        ],
+        "max": [
+          -0.056249950826174455,
+          1.5749998990544591,
+          0.2250004801206005
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 31,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "pickel_Openblink_VIS_O_OBJShape_primitive2",
+      "vertices": 606,
+      "indices": 2460,
+      "worldBounds": {
+        "min": [
+          -0.8999996960163372,
+          -4.9589764710850325e-08,
+          -0.22499950012544298
+        ],
+        "max": [
+          0.899999749660509,
+          1.8000000920046426,
+          0.22500054828353055
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 31,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "EyeL",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 64,
+          "height": 64
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeR",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeR (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 64,
+          "height": 64
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "def_pickel_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_pickel_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 64,
+          "height": 64
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 128,
+        "height": 1
+      }
+    },
+    {
+      "name": "EyeL (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "name": "EyeR (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    },
+    {
+      "name": "def_pickel_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 64,
+        "height": 64
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}
