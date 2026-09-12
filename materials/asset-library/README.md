@@ -16,7 +16,7 @@
 
 本次優先交付 **81 名（37＋37＋7）**：先讀 [81英雄優先合併清單](../hero-model-library/81英雄優先合併清單.md)，程序讀 [priority-81-handoff.json](../hero-model-library/priority-81-handoff.json)。逐角色列模型、動作、音訊檔案與尚缺項目；其他來源不阻擋此批審查。完整歷程保留於 [模型整合交付](../hero-model-library/priority-release.md)。
 
-本次優先交付：先讀 [全角色模型盤點](../hero-model-library/全角色模型盤點.md)、[後台版本登記](../hero-model-library/priority-registration.json)、[其他工作流模型](../hero-model-library/workflow-model-options.json) 與 [新轉換成品](../hero-model-library/priority-runtime-options.json)。成品實檔在 `content/assets/models/`，舊不可變 release 保留；不要只讀舊 release 而漏掉本次選項。七名 LOL 日文音訊直接讀 [七名索引](../hero-model-library/lol-project-seven/seven-voice-index.json)，不再擴抓全人物。
+本次優先交付：先讀 [全角色模型盤點](../hero-model-library/全角色模型盤點.md)、[後台版本登記](../hero-model-library/priority-registration.json)、[其他工作流模型](../hero-model-library/workflow-model-options.json) 與 [新轉換成品](../hero-model-library/priority-runtime-options.json)。成品實檔在 `content/assets/models/`，舊不可變 release 保留；不要只讀舊 release 而漏掉本次選項。七名 LOL 日文音訊直接讀 [七名索引](../hero-model-library/lol-project-seven/seven-voice-index.json)；逐檔原生事件聽審讀 [七名聽審佇列](../hero-model-library/lol-project-seven/listening-review-queue.md) 與同名 JSON，不再擴抓全人物。
 
 
 **本機已驗證音訊可立即讀取，不等待 S3。** `query_voice.py <角色或來源群組> --files --json` 回傳逐檔 `absolutePath` 及 SHA-256；`voice-index.json.localWorkspace` 是本機工作區根目錄。S3 備份進度獨立追蹤，未上傳或未讀回不阻擋其他工作流聽審、轉錄及準備素材。
