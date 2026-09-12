@@ -66,21 +66,21 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
 
     def test_mario_validated_component_survives_source_regeneration(self):
         candidate = next(row for row in self.source["ssbu-mario"]["modelCandidates"] if row["id"] == "ssbu-mario-c00-static-skinned-v1")
-        self.assertEqual(candidate["sha256"], "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881")
+        self.assertEqual(candidate["sha256"], "bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6")
         self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
         self.assertFalse(candidate["runtimeSelectable"])
         self.assertEqual(candidate["nativeAnimationCount"], 0)
 
     def test_mewtwo_validated_component_survives_source_regeneration(self):
         candidate = next(row for row in self.source["ssbu-mewtwo"]["modelCandidates"] if row["id"] == "ssbu-mewtwo-c00-static-skinned-v1")
-        self.assertEqual(candidate["sha256"], "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0")
+        self.assertEqual(candidate["sha256"], "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9")
         self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
         self.assertFalse(candidate["runtimeSelectable"])
         self.assertEqual(candidate["nativeAnimationCount"], 0)
 
     def test_ryu_validated_component_survives_source_regeneration(self):
         candidate = next(row for row in self.source["ssbu-ryu"]["modelCandidates"] if row["id"] == "ssbu-ryu-c00-static-skinned-v1")
-        self.assertEqual(candidate["sha256"], "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6")
+        self.assertEqual(candidate["sha256"], "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c")
         self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
         self.assertFalse(candidate["runtimeSelectable"])
         self.assertEqual(candidate["nativeAnimationCount"], 0)
@@ -101,8 +101,8 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
 
     def test_ptrainer_validated_components_survive_source_regeneration(self):
         expected = {
-            "ssbu-ptrainer-male-c00-static-skinned-v1": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
-            "ssbu-ptrainer-female-c01-static-skinned-v1": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+            "ssbu-ptrainer-male-c00-static-skinned-v1": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b",
+            "ssbu-ptrainer-female-c01-static-skinned-v1": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec",
         }
         candidates = {row["id"]: row for row in self.source["ssbu-ptrainer"]["modelCandidates"]}
         for component_id, digest in expected.items():

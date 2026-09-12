@@ -1,6 +1,6 @@
 {
   "schema": "ggd-undesigned-community-audit@1",
-  "generatedAt": "2026-09-12T03:26:14.645973+00:00",
+  "generatedAt": "2026-09-12T03:36:29.586586+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
   "scope": "READONLY acquired public/community/paid-OU99/console/MOD model candidates excluding primary 300/MBA models. Retargets using those animations remain as community-body versions. Original local LoL corpus is audited by the root workflow separately.",
   "policy": {
@@ -6784,6 +6784,61 @@
           "identityReviewRequired": false
         },
         {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/subaru/body.glb",
+          "existsLocal": true,
+          "bytes": 497032,
+          "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c54460200000088950700",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 2,
+            "primitives": 3,
+            "skins": 2,
+            "animationEntries": 0
+          },
+          "id": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+          "library": "community",
+          "sourceId": "thunderstore-rezero",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "subaruPrefab",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "The source face renderer contains no bones, bind poses, joint indices or weights; it is preserved as a one-joint hierarchy-rigid skin below the native head.",
+            "The rejected Z-up conversion is retained in the S3 archive; Subaru is visually verified as Y-up."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/validation.json",
+            "bytes": 2685,
+            "sha256": "8c9da7fb9edb731eef149fc34e9031a9e75e9ed3eab8d49f14bac69e5766438f"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/visual-review.json",
+            "bytes": 2373,
+            "sha256": "af799ec9423ab149c6d1b0933c0b96a61a3862e3157067b72c945de6332ad703"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/subaru/body.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 497032,
+          "sizeMatchesManifest": true
+        },
+        {
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
           "existsLocal": true,
           "bytes": 1531624,
@@ -6814,6 +6869,7 @@
       "designStatus": "designed",
       "evidence": [
         "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 subaruPrefab was converted from Y-up Unity data to an upright 1.8 m GGD GLB: 8,122 triangles, 3 skinned draw primitives, [41, 1] glTF joints across 2 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 70,968 float values are finite, and three WebGL views were accepted as a static component only.",
         "workflow-model-options candidate identity status: [('community-review-22-20260907', 'character-labelled-by-delivering-workflow')]"
       ],
       "aliases": [
@@ -6983,6 +7039,60 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/rem/body.glb",
+          "existsLocal": true,
+          "bytes": 1173224,
+          "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000e8e61100",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+          "library": "community",
+          "sourceId": "thunderstore-rezero",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "remPrefab",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/validation.json",
+            "bytes": 2552,
+            "sha256": "a0606767964648a2bc3cb013f758b2085e4a74d5bc4f548e8e3828bcac2a8132"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/visual-review.json",
+            "bytes": 2290,
+            "sha256": "b1c7d179dad26cadf1b5249b6c788c90d588ad75f74bfbcf08f05dbd27dc86ca"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/rem/body.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 1173224,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [
@@ -6990,7 +7100,8 @@
       ],
       "designStatus": "designed",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 remPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,328 triangles, 1 skinned draw primitives, [151] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 184,720 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "rem"
@@ -40146,6 +40257,8 @@
             "bytes": 1950,
             "sha256": "3fadc0a3a275b06d9080479ff6a5ce42e7ce3600f55af366aeac3ed34039b915"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-zero-blender4513-v1-v5/1c6d9ff346d4d64c454a1cf7c8fc0e94ab7c12d7a3de767e5011828d32d6a5c2.tar.gz",
+          "s3ArchiveMember": "stages/v4-final/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 596332,
           "sizeMatchesManifest": true
@@ -40918,12 +41031,68 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/emilia/body.glb",
+          "existsLocal": true,
+          "bytes": 1037796,
+          "sha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000e4d50f00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+          "library": "community",
+          "sourceId": "thunderstore-rezero",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "emiliaPrefab",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "No GGD hero definition or skill binding exists for this exact identity.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit.",
+            "The uploader reports an Emilia rig problem. The static bind pose passed three-view review, but motion and retargeting remain unverified and are not accepted."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/validation.json",
+            "bytes": 2561,
+            "sha256": "74cdb7a39913d798b18cd05f1318eb765c84ac1217c101842c3f852f2daead74"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/visual-review.json",
+            "bytes": 2414,
+            "sha256": "e1e7acb6e11ff6d162fce6a5d3becf2acac154bb45fc98958b7a1949dd3bba79"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/emilia/body.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 1037796,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 emiliaPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,137 triangles, 1 skinned draw primitives, [171] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 157,560 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "emiliashuiyi"
@@ -40980,12 +41149,67 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+          "existsLocal": true,
+          "bytes": 1180240,
+          "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c54460200000050021200",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+          "library": "community",
+          "sourceId": "thunderstore-rezero",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "ramPrefab",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "No GGD hero definition or skill binding exists for this exact identity.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/validation.json",
+            "bytes": 2530,
+            "sha256": "4ed161528a987e60c1e91def771c1fca0de561a3c783f987e6feacceba1ceba5"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/visual-review.json",
+            "bytes": 2353,
+            "sha256": "6032881df738ce81ec4632524e488fd4d877aa05939fce793f0c8e35cd6c1ac6"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+          "s3ArchiveMember": "conversion/final/ram/body.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 1180240,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 ramPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,454 triangles, one skinned primitive, 166 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 185,692 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "ram"
@@ -41042,12 +41266,67 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+          "existsLocal": true,
+          "bytes": 1246640,
+          "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000b0051300",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+          "library": "community",
+          "sourceId": "thunderstore-rezero",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "beatricePrefab",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "No GGD hero definition or skill binding exists for this exact identity.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/validation.json",
+            "bytes": 2545,
+            "sha256": "1f1de627f44ff7bd741ea63dd65a9cbdad207e50b44f7777a1839eb31b72ee10"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/visual-review.json",
+            "bytes": 2363,
+            "sha256": "9434d9445e936700c1faca9ca4552176110eab1033ed060411b1b0884e504f41"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+          "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 1246640,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 beatricePrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 20,932 triangles, one skinned primitive, 228 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 188,460 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "beatrice"
@@ -41104,12 +41383,67 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/felix/body.glb",
+          "existsLocal": true,
+          "bytes": 948284,
+          "sha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c5446020000003c780e00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 1,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+          "library": "community",
+          "sourceId": "thunderstore-rezero",
+          "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Tacocat12/ReZero_Playermodels/v/0.1.1/",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "felixPrefab",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "No GGD hero definition or skill binding exists for this exact identity.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/validation.json",
+            "bytes": 2557,
+            "sha256": "af47f5f23be6e96328df9999b07de6df23236796ec1a43ec9c399d5992a19ece"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/visual-review.json",
+            "bytes": 2301,
+            "sha256": "85726322ab643500c4fcb40dbb1845726b75b3b06712390216691d0695faae8a"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/felix/body.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 948284,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 felixPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 16,444 triangles, 1 skinned draw primitives, [137] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 145,040 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "felix"
@@ -57543,6 +57877,8 @@
             "bytes": 2227,
             "sha256": "deda1cb9f32b290e572fe77ea789f3812d5e86218487d18ff2418c0c088e005d"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 818052,
           "sizeMatchesManifest": true
@@ -58766,6 +59102,8 @@
             "bytes": 2194,
             "sha256": "a68f851fffa3aeebbabcd477bc2080fe7d9702e93134af6363a0998ce508bdcd"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 667904,
           "sizeMatchesManifest": true
@@ -66444,6 +66782,8 @@
             "bytes": 2315,
             "sha256": "037ea89f2f24d5a5800ac44427d50dec14a7f7c264836440b69483bb775947ad"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1317084,
           "sizeMatchesManifest": true
@@ -66496,6 +66836,8 @@
             "bytes": 2321,
             "sha256": "4e1dfb85dd5b63b174684a6e5b5e81316f74671a6184133a85592a191c147a5c"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1373732,
           "sizeMatchesManifest": true
@@ -69651,6 +69993,8 @@
             "bytes": 2187,
             "sha256": "8ed952c0dc2f02236f20f43e7c61b5880cf04180f1516c9a0687c49499f137ef"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-blender4513-v3-backup/21820fa83bbe4f0703f8471ba8325fa06c99b5b2d124e89e7a26c03529dfcfe6.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1005808,
           "sizeMatchesManifest": true
@@ -73841,6 +74185,8 @@
             "bytes": 2258,
             "sha256": "f615cc5557cc2cebcfbdc45a23308c8b57393e033e7f7ea6b3d91089d0fe214b"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-steve-c00-blender4513-v1-backup/ec511ab6217a007d094bf99939a632bfd01f9590e5a7a53cdbc8599383b72f3e.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 51664,
           "sizeMatchesManifest": true
@@ -73893,6 +74239,8 @@
             "bytes": 2255,
             "sha256": "a0fd584b85a31f58cbfc48e22926ea2d16800635f957991438c939952f119200"
           },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-alex-c01-blender4513-v1-backup/13beca9a10a77aa080d8e234d8ca5d36ff7c30517cc53ade2dc315434c8c1b29.tar.gz",
+          "s3ArchiveMember": "body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 51960,
           "sizeMatchesManifest": true
@@ -80860,12 +81208,12 @@
     "not-defined": 149,
     "identity-review": 249,
     "characterGroups": 444,
-    "actualModelCandidateFiles": 2394,
+    "actualModelCandidateFiles": 2400,
     "missingCandidatePaths": 0,
     "publicSourcesInspected": 106,
     "nativeSSBUGroups": 278,
     "ssbuBlendFiles": 1793,
-    "uniqueExistingModelPaths": 2343,
+    "uniqueExistingModelPaths": 2349,
     "knownNotDefinedGroups": 149,
     "historicalMutableManifestMismatchCount": 33
   },

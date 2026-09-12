@@ -370,18 +370,21 @@ for native,fs in sorted(groups.items()):
  add(key,name,work,s,paths,hh,unknown,'Pinned SSBU exported repository '+s['commit']+'; Blender ME datablock checks establish mesh. nativeGroup='+native+'. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.',[native],cid=s['id']+':'+native,readiness='native-Blender-source-reserve')
  rows[key].setdefault('nativeGroups',[]).append(native)
 
-# Converted SSBU components are stored on the source record by the conversion
-# workflow. Re-attach them from that durable source metadata so regenerating the
-# audit never discards a validated delivery.
-for c in s.get('componentCandidates',[]):
- for identity_id in c.get('identityIds',[]):
-  row=rows.get(identity_id)
-  if row is None:continue
-  item={field:c[field] for field in ['path','bytes','sha256','resourceRole','nativeId','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence'] if field in c}
-  item['format']='glTF Binary' if pathlib.Path(c['path']).suffix.lower()=='.glb' else c.get('format')
-  add(identity_id,row['name'],row['work'],s,[item],row.get('mappedHeroIds',[]),False,
-      c.get('auditEvidence') or 'Converted component retained from download-sources componentCandidates; validation and limitations remain attached to the candidate.',
-      cid=c['id'],readiness=c.get('readiness'))
+# Converted components are stored on their source record by each conversion
+# workflow. Re-attach every explicitly identified component from that durable
+# metadata; limiting this to the last SSBU source silently dropped validated
+# Re:Zero and other-source deliveries whenever the audit was regenerated.
+for source in sources:
+ for c in source.get('componentCandidates',[]):
+  for identity_id in c.get('identityIds',[]):
+   row=rows.get(identity_id)
+   if row is None:continue
+   item={field:c[field] for field in ['path','bytes','sha256','resourceRole','nativeId','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','acceptanceEvidence','deliveryEvidence','webglProofEvidence','sourceFidelityEvidence','sourceRebuildEvidence','normalizationEvidence','s3Uri','s3ArchiveMember','readbackVerified'] if field in c}
+   item['path']=c.get('path',c.get('absolutePath'))
+   item['format']='glTF Binary' if pathlib.Path(item['path']).suffix.lower()=='.glb' else c.get('format')
+   add(identity_id,row['name'],row['work'],source,[item],row.get('mappedHeroIds',[]),False,
+       c.get('auditEvidence') or 'Converted component retained from download-sources componentCandidates; validation and limitations remain attached to the candidate.',
+       cid=c['id'],readiness=c.get('readiness'))
 
 # Source coverage is explicit: audio/texture/tool-only and unparsed containers are not models.
 for s in sources:
