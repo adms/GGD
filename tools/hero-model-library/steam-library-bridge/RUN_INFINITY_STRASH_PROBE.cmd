@@ -4,4 +4,3 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0probe_infinity_str
 echo.
 echo The probe ZIP is on your Desktop. No game payload was copied or modified.
 pause
-
