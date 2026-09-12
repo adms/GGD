@@ -1,0 +1,47 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-ryu-c00-static-skinned-v1",
+  "modelSha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Ryu head, eyes, torso, arms, hands, legs, feet, gi, belt and headband.",
+    "No detached body part, missing primary material, opaque facial card or obvious bind-pose collapse is visible.",
+    "Review covers the static bind pose only because source and output contain no clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/front.png",
+      "bytes": 216471,
+      "sha256": "d1d4f785b20c8ea3b916b85da93cc2c1b80d47ef356a5900ddd14459f91ac9f4"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/back.png",
+      "bytes": 201477,
+      "sha256": "35a999d31599e6a3bc2b2b62f1b44f032bd09090d213bc11c8efbb5da6f13766"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/isometric.png",
+      "bytes": 213143,
+      "sha256": "f384176d4a6ed2d1adcbadb76468be280e1ad590da72fd60c55f30317980fc74"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/contact-sheet.png",
+      "bytes": 396346,
+      "sha256": "87eedbc85b11385708da7d51e049d93b55b5bb7d6d90006f95ad0b788d583d5d"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/webgl-proof.json",
+    "bytes": 6645,
+    "sha256": "1dbef60b9b03581065c6d3f249e9e2a6423ae7db8f247c395cc01e36601c4ffd"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

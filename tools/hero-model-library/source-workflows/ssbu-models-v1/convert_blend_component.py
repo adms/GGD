@@ -104,6 +104,15 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--candidate-id", required=True)
     parser.add_argument("--source-id", default="gitlab-ssbu-models")
     parser.add_argument("--target-height", type=float, default=1.8)
+    parser.add_argument(
+        "--join-visible-by-material",
+        action="store_true",
+        help=(
+            "Join render-visible, single-material skinned meshes that use the same "
+            "material. The source analysis remains pre-join and the receipt records "
+            "every joined group."
+        ),
+    )
     return parser.parse_args(blender_arguments())
 
 
@@ -172,6 +181,7 @@ for collection in (
 
 all_meshes = [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]
 meshes = [obj for obj in all_meshes if not obj.hide_render and obj.visible_get()]
+hidden_or_nonrender_mesh_names = [obj.name for obj in all_meshes if obj not in meshes]
 if not meshes:
     raise RuntimeError("Source has no render-visible mesh objects")
 
@@ -318,6 +328,77 @@ if not math.isfinite(height) or height <= 0:
 scale = args.target_height / height
 center = (minimum + maximum) * 0.5
 
+material_join_adjustments = []
+if args.join_visible_by_material:
+    groups = {}
+    for mesh in meshes:
+        material_slots = [slot.material for slot in mesh.material_slots]
+        if len(material_slots) != 1 or material_slots[0] is None:
+            raise RuntimeError(
+                "Material joining requires exactly one non-null material per visible mesh: "
+                + mesh.name
+            )
+        if mesh.data.shape_keys is not None:
+            raise RuntimeError(
+                "Material joining refuses source morph targets: " + mesh.name
+            )
+        modifiers = [
+            modifier.object
+            for modifier in mesh.modifiers
+            if modifier.type == "ARMATURE" and modifier.object is not None
+        ]
+        if len(modifiers) != 1:
+            raise RuntimeError(
+                "Material joining requires one armature modifier: " + mesh.name
+            )
+        groups.setdefault((material_slots[0], modifiers[0]), []).append(mesh)
+    for (material, armature), group in sorted(
+        groups.items(), key=lambda item: item[0][0].name
+    ):
+        if len(group) < 2:
+            continue
+        parents = {mesh.parent for mesh in group}
+        if parents != {armature}:
+            raise RuntimeError(
+                "Material joining requires the shared armature to be the direct parent: "
+                + material.name
+            )
+        before = [
+            {
+                "name": mesh.name,
+                "vertices": len(mesh.data.vertices),
+                "polygons": len(mesh.data.polygons),
+            }
+            for mesh in sorted(group, key=lambda item: item.name)
+        ]
+        for obj in bpy.context.scene.objects:
+            obj.select_set(False)
+        active = sorted(group, key=lambda item: item.name)[0]
+        for mesh in group:
+            mesh.hide_set(False)
+            mesh.select_set(True)
+        bpy.context.view_layer.objects.active = active
+        bpy.ops.object.join()
+        active.name = "GGD_joined_" + material.name
+        for polygon in active.data.polygons:
+            polygon.material_index = 0
+        while len(active.data.materials) > 1:
+            active.data.materials.pop(index=len(active.data.materials) - 1)
+        if len(active.data.materials) != 1 or active.data.materials[0] != material:
+            raise RuntimeError("Joined mesh did not preserve its material: " + material.name)
+        material_join_adjustments.append(
+            {
+                "material": material.name,
+                "armature": armature.name,
+                "sourceMeshes": before,
+                "outputMesh": active.name,
+                "outputVertices": len(active.data.vertices),
+                "outputPolygons": len(active.data.polygons),
+                "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry.",
+            }
+        )
+    meshes = [obj for obj in bpy.context.scene.objects if obj.type == "MESH" and not obj.hide_render and obj.visible_get()]
+
 export_objects = set(meshes) | armatures
 for obj in list(export_objects):
     parent = obj.parent
@@ -389,9 +470,7 @@ analysis = {
     "embeddedTextBlockCount": len(bpy.data.texts),
     "mutedDrivers": muted_drivers,
     "visibleMeshes": source_geometry,
-    "hiddenOrNonrenderMeshes": [
-        obj.name for obj in all_meshes if obj not in meshes
-    ],
+    "hiddenOrNonrenderMeshes": hidden_or_nonrender_mesh_names,
     "armatures": [
         {
             "name": obj.name,
@@ -416,6 +495,7 @@ analysis = {
     ],
     "usedImages": image_inputs,
     "materialCompatibilityAdjustments": material_compatibility_adjustments,
+    "materialJoinAdjustments": material_join_adjustments,
     "textureCompatibilityAdjustments": texture_compatibility_adjustments,
     "hierarchyCompatibilityAdjustments": hierarchy_compatibility_adjustments,
     "sourceUnits": {
@@ -442,6 +522,7 @@ receipt = {
         "backgroundFactoryStartupRequired": True,
         "embeddedScriptsExecuted": False,
         "driversMuted": len(muted_drivers),
+        "visibleMeshesJoinedByMaterial": args.join_visible_by_material,
     },
     "output": {
         "path": str(glb_path),
@@ -461,6 +542,7 @@ receipt = {
     "sourceActionCount": len(bpy.data.actions),
     "sourceImageCountUsed": len(used_images),
     "materialCompatibilityAdjustments": material_compatibility_adjustments,
+    "materialJoinAdjustments": material_join_adjustments,
     "textureCompatibilityAdjustments": texture_compatibility_adjustments,
     "hierarchyCompatibilityAdjustments": hierarchy_compatibility_adjustments,
     "sourceBytesUnchanged": True,

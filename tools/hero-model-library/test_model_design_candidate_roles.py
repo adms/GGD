@@ -32,7 +32,7 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "ssbu-mario": (16, 10, 0),
             "ssbu-mewtwo": (8, 2, 0),
             "ssbu-ptrainer": (8, 1, 0),
-            "ssbu-ryu": (8, 1, 0),
+            "ssbu-ryu": (8, 2, 0),
             "ssbu-pickel": (8, 23, 0),
         }
         for identity, counts in expected.items():
@@ -70,6 +70,13 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
     def test_mewtwo_validated_component_survives_source_regeneration(self):
         candidate = next(row for row in self.source["ssbu-mewtwo"]["modelCandidates"] if row["id"] == "ssbu-mewtwo-c00-static-skinned-v1")
         self.assertEqual(candidate["sha256"], "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0")
+        self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
+        self.assertFalse(candidate["runtimeSelectable"])
+        self.assertEqual(candidate["nativeAnimationCount"], 0)
+
+    def test_ryu_validated_component_survives_source_regeneration(self):
+        candidate = next(row for row in self.source["ssbu-ryu"]["modelCandidates"] if row["id"] == "ssbu-ryu-c00-static-skinned-v1")
+        self.assertEqual(candidate["sha256"], "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6")
         self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
         self.assertFalse(candidate["runtimeSelectable"])
         self.assertEqual(candidate["nativeAnimationCount"], 0)

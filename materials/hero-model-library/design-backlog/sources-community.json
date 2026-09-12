@@ -69466,12 +69466,51 @@
           "identityReviewRequired": false,
           "recordedBytes": 945752,
           "sizeMatchesManifest": true
+        },
+        {
+          "id": "ssbu-ryu-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/ryu/body/c00",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+          "gitPath": "content/assets/models/community/57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6.glb",
+          "existsLocal": true,
+          "bytes": 1005688,
+          "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/validation.json",
+            "bytes": 14709,
+            "sha256": "3c5a624f9960113a7baf521f2c10165acafd35b415e3621f2a5f3a38dc315229"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/visual-review.json",
+            "bytes": 2187,
+            "sha256": "8ed952c0dc2f02236f20f43e7c61b5880cf04180f1516c9a0687c49499f137ef"
+          },
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Thirty-eight hidden costume, facial and expression mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/ryu. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/ryu. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU fighter/ryu c00 was converted with Blender 4.5.13 and GGD normalization to a 1,005,688-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 11 visible source meshes were consolidated only within matching materials to 5 primitives, all are skinned to 154 joints, and 117,948 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions."
       ],
       "aliases": [
         "fighter/ryu"

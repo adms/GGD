@@ -109,7 +109,11 @@ assert.equal(after.triangles, before.triangles, 'Official normalization changed 
 assert.equal(after.clips.length, 0, 'Official normalization added animation clips');
 assert.equal(after.skinnedPrimitives, after.meshes, 'Official normalization left an unskinned primitive');
 assert.deepEqual(heroModelBudgetIssues(after).errors, [], 'Normalized component still violates GGD budget');
-assert(normalized.report.drawCalls.after < normalized.report.drawCalls.before, 'Official normalizer did not merge draw calls');
+assert(
+  normalized.report.drawCalls.after < normalized.report.drawCalls.before ||
+    heroModelBudgetIssues(before).errors.length === 0,
+  'Official normalizer did not merge draw calls and the Blender export was not already within budget',
+);
 assert.deepEqual(normalized.report.droppedZeroClips, [], 'Static component unexpectedly dropped clips');
 assert.deepEqual(normalized.report.texturesOverCap, [], 'Normalized component retains oversized textures');
 
