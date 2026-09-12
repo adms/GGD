@@ -40,11 +40,11 @@
       "damageType": "magic",
       "statusId": "burnstun",
       "statusDurationSec": 0.75,
-      "castTimeSec": 0.767
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.firestorm",
-  "castTimeSec": 0.767,
+  "castTimeSec": 1.0,
   "provenance": "w3x-import",
   "rangeTier": "大",
   "range": 8,

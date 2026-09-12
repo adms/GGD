@@ -95,12 +95,12 @@
       "length": 14,
       "width": 2,
       "aim": "facing",
-      "castTimeSec": 0.833
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.ki.beam-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.0,
   "rangeTier": "極大",
   "range": 12,
   "castTimeTier": "極大"

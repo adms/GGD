@@ -109,7 +109,7 @@
           "stacking": "refresh"
         }
       ],
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "icon": "assets/icons/abilities/godie-edem.q.webp",
@@ -117,6 +117,6 @@
   "cooldownTier": "小",
   "manaCostTier": "小",
   "rangeTier": "極大",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "castTimeTier": "極大"
 }

@@ -95,7 +95,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -136,7 +136,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.fire.explosion",
@@ -238,7 +238,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 2.433
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.fire.explosion-lg",

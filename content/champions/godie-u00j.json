@@ -224,7 +224,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.pulse",
@@ -281,7 +281,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.explosion-lg",

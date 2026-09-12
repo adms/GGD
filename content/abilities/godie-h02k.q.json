@@ -169,5 +169,6 @@
   },
   "icon": "assets/icons/abilities/godie-h02k.q.webp",
   "vfxKey": "fx.prim.physical.shockwave",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

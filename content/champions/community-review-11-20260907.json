@@ -127,7 +127,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -187,7 +187,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -248,7 +248,7 @@
               "msBonusTier": "極小"
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -320,7 +320,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "magic",
-          "castTimeSec": 1.433,
+          "castTimeSec": 0.5,
           "radius": 4.5
         },
         "inheritDefaults": true

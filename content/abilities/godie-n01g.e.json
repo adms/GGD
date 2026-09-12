@@ -30,12 +30,12 @@
         "damageTier": "大"
       },
       "damageType": "magic",
-      "castTimeSec": 1.7
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.ice.bolt",
   "schema": "ability@1",
-  "castTimeSec": 1.7,
+  "castTimeSec": 1.0,
   "rangeTier": "極大",
   "range": 12,
   "castTimeTier": "極大"

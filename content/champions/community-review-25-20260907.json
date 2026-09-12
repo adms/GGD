@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -264,7 +264,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -341,7 +341,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         },
         "inheritDefaults": true
       },

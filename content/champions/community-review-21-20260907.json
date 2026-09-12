@@ -127,7 +127,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -187,7 +187,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -248,7 +248,7 @@
               "msBonusTier": "極小"
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -313,7 +313,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.7
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },

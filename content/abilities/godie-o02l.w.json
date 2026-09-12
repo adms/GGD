@@ -35,12 +35,12 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 0.233
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.233,
+  "castTimeSec": 0.3,
   "passive": {
     "name": "58-02 鋼鐵尾巴",
     "ranks": [

@@ -45,11 +45,11 @@
         "stun": true
       },
       "radius": 245.45,
-      "castTimeSec": 1.7
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.earth.nova-lg",
-  "castTimeSec": 1.7,
+  "castTimeSec": 1.0,
   "radiusTier": "小",
   "castTimeTier": "極大"
 }

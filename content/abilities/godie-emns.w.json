@@ -49,5 +49,6 @@
   },
   "icon": "assets/icons/abilities/godie-emns.w.webp",
   "vfxKey": "fx.prim.void.pulse",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

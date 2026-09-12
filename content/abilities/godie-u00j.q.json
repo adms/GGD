@@ -55,7 +55,7 @@
   "targetsEnemies": true,
   "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 0.8,
+  "castTimeSec": 1.0,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 6,

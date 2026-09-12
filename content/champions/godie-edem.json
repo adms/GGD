@@ -162,7 +162,7 @@
               "stacking": "refresh"
             }
           ],
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-edem.q.webp",
@@ -273,7 +273,7 @@
               "moveSpeedMult": 0.5
             }
           ],
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-edem.w.webp",

@@ -69,5 +69,6 @@
   },
   "schema": "ability@1",
   "icon": "assets/icons/abilities/lol-warwick.passive.webp",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

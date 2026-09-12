@@ -36,7 +36,7 @@
       "applyTo": "self"
     }
   ],
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "icon": "assets/icons/abilities/community-review-37-20260907.e.webp",
   "template": {
@@ -44,7 +44,7 @@
     "params": {
       "duration": 3,
       "modifiers": [],
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     },
     "inheritDefaults": true
   },

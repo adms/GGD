@@ -51,7 +51,7 @@
   ],
   "vfxKey": "fx.prim.arcane.slash",
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "passive": {
     "name": "79-02 月牙斬擊",
     "ranks": [

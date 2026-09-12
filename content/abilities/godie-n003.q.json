@@ -37,7 +37,7 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1.0,
       "statusId": "slow40",
       "statusDurationSec": 1.5
     }
@@ -46,7 +46,7 @@
   "targetsEnemies": true,
   "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.0,
   "rangeTier": "極大",
   "range": 12,
   "radiusTier": "中",

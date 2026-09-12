@@ -50,12 +50,12 @@
       "length": 11.67,
       "width": 1.4,
       "aim": "facing",
-      "castTimeSec": 0.833
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.0,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,

@@ -105,7 +105,7 @@
           },
           "damageType": "magic",
           "invulnerableSec": 0.24,
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -184,7 +184,7 @@
           "damageType": "magic",
           "statusId": "slow40",
           "statusDurationSec": 1.5,
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -351,7 +351,7 @@
               "value": -10
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"

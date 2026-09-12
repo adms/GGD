@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     45.0
@@ -32,7 +32,7 @@
       "amount": {
         "flat": 120
       },
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "target": "ally"
     },
     "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"

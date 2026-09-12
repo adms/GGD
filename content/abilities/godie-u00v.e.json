@@ -54,7 +54,7 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.8,
+      "castTimeSec": 1.0,
       "statusId": "burnstun",
       "statusDurationSec": 0.8
     }
@@ -64,7 +64,7 @@
   "targetsEnemies": true,
   "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 0.8,
+  "castTimeSec": 1.0,
   "radiusTier": "中",
   "castTimeTier": "極大"
 }

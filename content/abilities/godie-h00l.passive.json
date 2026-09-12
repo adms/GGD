@@ -64,5 +64,6 @@
   },
   "icon": "assets/icons/abilities/godie-h00l.passive.webp",
   "vfxKey": "fx.prim.holy.pulse-lg",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

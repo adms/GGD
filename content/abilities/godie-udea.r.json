@@ -62,7 +62,7 @@
   ],
   "vfxKey": "fx.prim.lightning.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "range": 0.0,
   "castTimeTier": "大"
 }

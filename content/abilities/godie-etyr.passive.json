@@ -34,11 +34,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.133
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.arcane.summon",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.0,
   "rangeTier": "大",
   "range": 8,
   "radiusTier": "中",

@@ -226,5 +226,6 @@
   "icon": "assets/icons/abilities/godie-h02k.e.webp",
   "vfxKey": "fx.prim.physical.swarm",
   "sfxKey": "wc3.pandarenbrewmasterwarcry1",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

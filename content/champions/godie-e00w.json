@@ -149,7 +149,7 @@
             "modelKey": "imported.earthtornado2",
             "soundKey": "wc3.blademasterwhirlwind"
           },
-          "castTimeSec": 0.667
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.q.webp",
@@ -158,7 +158,7 @@
       "cooldownTier": "小",
       "manaCostTier": "極小",
       "castTimeSec": 0.667,
-      "castTimeTier": "大"
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-e00w.w",
@@ -396,7 +396,7 @@
             "preset": "tpl-locust-strike",
             "modelKey": "w3x.stock.monsoonbolttarget"
           },
-          "castTimeSec": 2
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.r.webp",

@@ -20,11 +20,11 @@
   "template": {
     "ref": "tpl-blink",
     "params": {
-      "castTimeSec": 0.467
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.lightning.dash",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.5,
   "rangeTier": "極大",
   "range": 12,
   "castTimeTier": "大"

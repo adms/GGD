@@ -268,7 +268,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.5,
+          "castTimeSec": 1.0,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }

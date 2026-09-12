@@ -25,11 +25,11 @@
     "params": {
       "to": "alternate",
       "durationSec": 6,
-      "castTimeSec": 0.667
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.lightning.explosion-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.667,
-  "castTimeTier": "大"
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

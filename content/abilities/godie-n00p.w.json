@@ -45,13 +45,13 @@
         "durationSec": 2,
         "stacking": "refresh"
       },
-      "castTimeSec": 1.133
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.nature.swarm",
   "sfxKey": "wc3.spiritofvengeanceyes3",
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.0,
   "rangeTier": "大",
   "range": 8,
   "castTimeTier": "極大"

@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -158,7 +158,7 @@
           "maxAlive": 1,
           "onOwnerDeath": "despawn",
           "cleanse": "none",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -223,7 +223,7 @@
         "ref": "tpl-teleport",
         "params": {
           "destination": "castPoint",
-          "castTimeSec": 1.033,
+          "castTimeSec": 0.1,
           "travelSec": 0.15,
           "arriveRadius": 150,
           "damage": {
@@ -288,7 +288,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 3.367
+          "castTimeSec": 1.0
         },
         "inheritDefaults": true
       },

@@ -40,13 +40,13 @@
         "duration": 1,
         "stun": true
       },
-      "castTimeSec": 0.567
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.physical.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "rangeTier": "中",
   "range": 6,
   "castTimeTier": "大"

@@ -187,7 +187,7 @@
           "cleanse": "all",
           "formation": "ring",
           "spread": 2,
-          "castTimeSec": 0.267
+          "castTimeSec": 0.3
         }
       },
       "vfxKey": "fx.prim.arcane.swarm",
@@ -258,7 +258,7 @@
             "duration": 5,
             "moveSpeedMult": 0.65
           },
-          "castTimeSec": 2.267
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

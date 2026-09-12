@@ -42,11 +42,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.167
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.ember-bolt-cast",
-  "castTimeSec": 0.167,
+  "castTimeSec": 0.1,
   "provenance": "w3x-import",
   "rangeTier": "極大",
   "range": 12,

@@ -87,7 +87,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.433
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.explosion",
@@ -136,7 +136,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
       "vfxKey": "fx.prim.void.beam",
@@ -183,7 +183,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.swarm",
@@ -229,7 +229,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.nova-lg",

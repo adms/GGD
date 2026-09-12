@@ -36,14 +36,14 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 1.633
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.physical.swarm",
   "targetsEnemies": true,
   "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1.0,
   "rangeTier": "極小",
   "range": 3,
   "radiusTier": "中",

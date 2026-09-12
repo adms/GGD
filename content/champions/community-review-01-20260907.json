@@ -101,7 +101,7 @@
           "maxAlive": 1,
           "onOwnerDeath": "despawn",
           "cleanse": "none",
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -167,7 +167,7 @@
           "maxAlive": 1,
           "onOwnerDeath": "despawn",
           "cleanse": "none",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -228,7 +228,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -286,7 +286,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 3.367
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },

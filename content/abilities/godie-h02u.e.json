@@ -289,5 +289,6 @@
   },
   "icon": "assets/icons/abilities/godie-h02u.e.webp",
   "vfxKey": "fx.prim.arcane.nova",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

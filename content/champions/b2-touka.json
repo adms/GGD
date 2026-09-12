@@ -45,7 +45,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },
@@ -121,7 +121,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "castType": "ground",
           "effects": [
             {
@@ -215,7 +215,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.633,
+          "castTimeSec": 1.0,
           "castType": "targeted",
           "effects": [
             {
@@ -310,7 +310,7 @@
         "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d",
         "params": {
           "apexHeight": 100,
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "durationSec": 0.4,
           "grabMode": "dragToCaster",
           "landDamageTier": "小",

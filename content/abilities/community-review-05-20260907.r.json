@@ -35,7 +35,7 @@
       "tickOnApply": true
     }
   ],
-  "castTimeSec": 1.767,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-05-20260907.r.webp",
   "template": {
@@ -51,7 +51,7 @@
       "impactRadius": 150,
       "scatterRadius": 120,
       "payout": "perImpact",
-      "castTimeSec": 1.767
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

@@ -30,13 +30,13 @@
       "durationSec": 20,
       "formation": "ring",
       "spread": 2,
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.arcane.pulse",
   "sfxKey": "wc3.spellbreakerpissed4",
   "targetsEnemies": true,
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.3,
   "rangeTier": "極大",
   "range": 12,
   "castTimeTier": "中"

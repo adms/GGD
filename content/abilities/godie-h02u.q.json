@@ -50,6 +50,6 @@
   ],
   "vfxKey": "fx.prim.physical.shockwave",
   "schema": "ability@1",
-  "castTimeSec": 0.067,
-  "castTimeTier": "小"
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

@@ -38,11 +38,11 @@
           "value": 3
         }
       ],
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.sound.explosion",
   "schema": "ability@1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.3,
   "castTimeTier": "中"
 }

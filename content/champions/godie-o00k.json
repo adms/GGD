@@ -91,7 +91,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
@@ -137,7 +137,7 @@
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"
@@ -178,7 +178,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 2.267
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.nova",

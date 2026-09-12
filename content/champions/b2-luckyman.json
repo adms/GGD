@@ -37,7 +37,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -101,7 +101,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -199,7 +199,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1.0,
           "castType": "self",
           "effects": [
             {
@@ -300,7 +300,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },

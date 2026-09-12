@@ -199,7 +199,7 @@
             "duration": 1.25,
             "root": true
           },
-          "castTimeSec": 0.333
+          "castTimeSec": 0.3
         }
       },
       "castTimeTier": "中"
@@ -249,7 +249,7 @@
           "damageType": "physical",
           "statusId": "slow40",
           "statusDurationSec": 2,
-          "castTimeSec": 1.833
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

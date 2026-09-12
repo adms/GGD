@@ -102,7 +102,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.233
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -168,7 +168,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -247,7 +247,7 @@
           "landDamageTier": "小",
           "landApRatio": 0,
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -304,7 +304,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 2.233
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },

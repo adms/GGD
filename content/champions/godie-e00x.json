@@ -110,7 +110,7 @@
           "damageType": "physical",
           "statusId": "burnstun",
           "statusDurationSec": 0.8,
-          "castTimeSec": 0.8
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -298,7 +298,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.233
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

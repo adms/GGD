@@ -124,5 +124,6 @@
   "vfxKey": "fx.prim.void.pulse-lg",
   "sfxKey": "wc3.thunderboltmissiledeath",
   "icon": "assets/icons/abilities/godie-edem.r.png",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -157,7 +157,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -217,7 +217,7 @@
               "msBonusTier": "極小"
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -280,7 +280,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.8
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },

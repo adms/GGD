@@ -90,7 +90,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.holy.pulse",
@@ -138,7 +138,7 @@
           "intervalSec": 1,
           "durationSec": 10,
           "stacking": "refresh",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"
@@ -176,7 +176,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.holy.nova",
@@ -228,7 +228,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1.0,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }

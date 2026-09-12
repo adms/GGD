@@ -143,7 +143,7 @@
               "duration": 45
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "castTimeTier": "小"
@@ -282,7 +282,7 @@
             "duration": 5,
             "moveSpeedMult": 0.4
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"
@@ -324,7 +324,7 @@
             }
           ],
           "buffDurationSec": 7,
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"

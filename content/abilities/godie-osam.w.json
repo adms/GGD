@@ -35,11 +35,11 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 0.233
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.wind.slash",
   "schema": "ability@1",
-  "castTimeSec": 0.233,
+  "castTimeSec": 0.3,
   "castTimeTier": "中"
 }

@@ -848,6 +848,21 @@ export const zAbilityDef = z
      * （靠投射物碰撞打到很多人），或一支帶 AoE 但定位是單體的技能。
      */
     cooldownShape: z.enum(COOLDOWN_SHAPES).optional(),
+    /**
+     * 這一招打**敵方**還是**友方／自己**。
+     *
+     * ⭐⭐ **省略 ＝ `true`**（⛔ 不是 `false`、⛔ 也不是「沒有意見」）——
+     * 出貨的判準逐字是 `targetsEnemies !== false`
+     * （`sim/abilities/abilitySystem.ts`：「省略 = true，73 支 ground 技能裡的 72 支」）。
+     *
+     * ⇒ ⭐ 要讓一招**不打敵人**（治療／護盾／增益），必須**明寫 `false`** ——
+     * ⛔ 留空不會有那個效果，它會被當成打敵人的。
+     *
+     * ⚠️ ⭐ 這一行 2026-09-12 以前**不存在**，而它的代價量得到：
+     * ⛔ 同一支技能的兩個載體，一邊寫 `true`、一邊留空 ⇒ 逐位元組比對報成「分歧」，
+     * ⭐ 而它們的**行為逐位元相同** ⇒ 一個假的缺陷（GH#1245 最後那一筆）。
+     * ⇒ ⭐ 比對這個欄位時要**先套預設再比**，⛔ 不要比 JSON 的字面值。
+     */
     targetsEnemies: z.boolean().optional(),
     effects: z.array(zEffectDef),
     /**

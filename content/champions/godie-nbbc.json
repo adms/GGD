@@ -99,7 +99,7 @@
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "castTimeTier": "小"
@@ -154,7 +154,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.slash",
@@ -222,7 +222,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

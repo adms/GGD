@@ -71,5 +71,6 @@
   "icon": "assets/icons/abilities/godie-h00l.ex.webp",
   "vfxKey": "fx.prim.holy.beam-lg",
   "cooldownTier": "極大",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

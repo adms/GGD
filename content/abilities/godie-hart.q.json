@@ -54,7 +54,7 @@
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "rangeTier": "大",
   "range": 8,
   "castTimeTier": "大"

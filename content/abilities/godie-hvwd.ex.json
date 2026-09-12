@@ -46,13 +46,13 @@
         "duration": 3,
         "moveSpeedMult": 0.6
       },
-      "castTimeSec": 1.833
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.holy.pulse-lg",
   "schema": "ability@1",
   "targetsEnemies": true,
-  "castTimeSec": 1.833,
+  "castTimeSec": 1.0,
   "rangeTier": "中",
   "range": 6,
   "castTimeTier": "極大"

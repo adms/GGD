@@ -107,7 +107,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
@@ -172,7 +172,7 @@
               "value": 0.2
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
@@ -240,7 +240,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "magic",
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "radius": 4.5
         },
         "inheritDefaults": true,
@@ -301,7 +301,7 @@
           "impactRadius": 150,
           "scatterRadius": 150,
           "payout": "perImpact",
-          "castTimeSec": 1
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:960958a07d7fef432d3c6192f3bd6c19209fa428159b622b0e3fb6a68ade487b"

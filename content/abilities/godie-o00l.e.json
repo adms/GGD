@@ -47,7 +47,7 @@
   "targetsEnemies": false,
   "radius": 8,
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "radiusTier": "大",
   "castTimeTier": "小"
 }

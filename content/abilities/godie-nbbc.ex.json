@@ -29,11 +29,11 @@
         }
       ],
       "buffDurationSec": 20,
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.arcane.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "castTimeTier": "極大"
 }

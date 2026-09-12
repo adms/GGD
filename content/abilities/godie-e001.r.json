@@ -33,11 +33,11 @@
         }
       ],
       "buffDurationSec": 7,
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.blood.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castTimeTier": "大"
 }

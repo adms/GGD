@@ -47,12 +47,12 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.soulpreservation",
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castTimeTier": "大"
 }

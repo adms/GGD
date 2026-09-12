@@ -127,7 +127,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -200,7 +200,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },

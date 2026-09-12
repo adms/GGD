@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.0,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -50,7 +50,7 @@
     "params": {
       "apexHeight": 250,
       "applyTo": "self",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1.0,
       "damage": {
         "damageTier": "極小"
       },

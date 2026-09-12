@@ -84,5 +84,6 @@
   },
   "icon": "assets/icons/abilities/godie-h02v.ex.webp",
   "vfxKey": "fx.prim.nature.pulse-lg",
-  "castTimeTier": "極小"
+  "castTimeTier": "極大",
+  "castTimeSec": 1.0
 }

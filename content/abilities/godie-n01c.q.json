@@ -39,13 +39,13 @@
           }
         ]
       },
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.prim.fire.pulse",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "rangeTier": "極大",
   "range": 12,
   "castTimeTier": "小"

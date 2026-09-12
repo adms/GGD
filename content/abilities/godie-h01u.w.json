@@ -128,7 +128,7 @@
         "scale": 2,
         "distance": 4.5
       },
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
   },
   "icon": "assets/icons/abilities/godie-h01u.w.webp",
@@ -136,6 +136,6 @@
   "sfxKey": "wc3.defendcaster",
   "cooldownTier": "中",
   "manaCostTier": "極小",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castTimeTier": "大"
 }

@@ -120,7 +120,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -194,7 +194,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -259,7 +259,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -317,7 +317,7 @@
               "msBonusTier": "極小"
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },

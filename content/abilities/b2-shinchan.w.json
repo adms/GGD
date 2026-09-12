@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -35,7 +35,7 @@
   "template": {
     "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
     "params": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "status": {
         "duration": 2.5,
         "root": true,

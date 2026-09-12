@@ -72,5 +72,6 @@
   },
   "icon": "assets/icons/abilities/godie-e00w.ex.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
-  "castTimeTier": "極小"
+  "castTimeTier": "極大",
+  "castTimeSec": 1.0
 }

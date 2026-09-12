@@ -50,6 +50,6 @@
   "icon": "assets/icons/abilities/godie-e00s.e.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
   "cooldownTier": "小",
-  "castTimeSec": 0.667,
-  "castTimeTier": "大"
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

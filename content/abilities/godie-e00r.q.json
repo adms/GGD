@@ -135,5 +135,6 @@
   "icon": "assets/icons/abilities/godie-e00r.q.webp",
   "vfxKey": "fx.prim.void.explosion",
   "cooldownTier": "極小",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

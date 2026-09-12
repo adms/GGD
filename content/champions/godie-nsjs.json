@@ -87,7 +87,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.wind.nova",
@@ -150,7 +150,7 @@
             "durationSec": 2,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -187,10 +187,10 @@
         "params": {
           "to": "alternate",
           "durationSec": 8,
-          "castTimeSec": 0.267
+          "castTimeSec": 1.0
         }
       },
-      "castTimeTier": "中"
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-nsjs.r",

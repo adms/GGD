@@ -91,7 +91,7 @@
               "value": 0.1
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "cooldownTier": "極小",
@@ -135,7 +135,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
       "cooldownTier": "極小",
@@ -176,7 +176,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
       "vfxKey": "fx.prim.void.explosion",

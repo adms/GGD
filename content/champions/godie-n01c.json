@@ -96,7 +96,7 @@
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "castTimeTier": "小"
@@ -146,10 +146,10 @@
           },
           "damageType": "physical",
           "arriveVfxId": "fx.prim.lightning.slash",
-          "castTimeSec": 0.267
+          "castTimeSec": 1.0
         }
       },
-      "castTimeTier": "中"
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-n01c.e",
@@ -207,7 +207,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

@@ -103,7 +103,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "cooldownTier": "極小",
@@ -151,7 +151,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1.0,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
@@ -327,7 +327,7 @@
               "value": 0.4
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "cooldownTier": "極大",

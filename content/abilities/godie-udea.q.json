@@ -24,12 +24,12 @@
   "template": {
     "ref": "tpl-blink",
     "params": {
-      "castTimeSec": 0.467
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.5,
   "rangeTier": "極大",
   "range": 12,
   "castTimeTier": "大"

@@ -38,14 +38,14 @@
       },
       "damageType": "physical",
       "arriveVfxId": "fx.prim.lightning.slash",
-      "castTimeSec": 0.267
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.lightning.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 1.0,
   "rangeTier": "中",
   "range": 6,
-  "castTimeTier": "中"
+  "castTimeTier": "極大"
 }

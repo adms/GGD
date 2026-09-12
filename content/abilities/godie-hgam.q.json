@@ -31,7 +31,7 @@
       "applyTo": "enemies",
       "damageTier": "小",
       "damageType": "magic",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.nature.slash",
@@ -62,7 +62,7 @@
   ],
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "radiusTier": "小",
   "castTimeTier": "大"
 }

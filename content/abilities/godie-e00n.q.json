@@ -35,11 +35,11 @@
           "msBonusTier": "大"
         }
       ],
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.prim.void.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castTimeTier": "小"
 }

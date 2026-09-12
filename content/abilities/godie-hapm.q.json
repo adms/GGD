@@ -129,6 +129,6 @@
   "icon": "assets/icons/abilities/godie-hapm.q.webp",
   "vfxKey": "fx.prim.physical.pulse",
   "cooldownTier": "極大",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castTimeTier": "小"
 }

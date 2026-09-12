@@ -92,7 +92,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
@@ -265,7 +265,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
       "castTimeTier": "中"
@@ -351,10 +351,10 @@
         "params": {
           "to": "alternate",
           "durationSec": 6,
-          "castTimeSec": 0.667
+          "castTimeSec": 1.0
         }
       },
-      "castTimeTier": "大"
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

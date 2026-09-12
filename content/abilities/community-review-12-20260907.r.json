@@ -45,7 +45,7 @@
       "targetMode": "reresolve"
     }
   ],
-  "castTimeSec": 1.433,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-12-20260907.r.webp",
   "template": {
@@ -58,7 +58,7 @@
       "applyTo": "enemies",
       "damageTier": "極小",
       "damageType": "physical",
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.5,
       "radius": 4.5
     },
     "inheritDefaults": true

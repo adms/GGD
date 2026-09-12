@@ -34,12 +34,12 @@
         "duration": 1,
         "root": true
       },
-      "castTimeSec": 0.567
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.void.pulse-sm",
   "sfxKey": "wc3.headhunteryes4",
   "schema": "ability@1",
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "castTimeTier": "大"
 }

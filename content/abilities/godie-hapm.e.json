@@ -169,5 +169,6 @@
   },
   "icon": "assets/icons/abilities/godie-hapm.e.webp",
   "vfxKey": "fx.prim.physical.slash",
-  "castTimeTier": "極小"
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

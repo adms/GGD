@@ -114,7 +114,7 @@
             "durationSec": 10,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.7
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -149,7 +149,7 @@
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"
@@ -300,7 +300,7 @@
           "length": 14,
           "width": 2,
           "aim": "facing",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

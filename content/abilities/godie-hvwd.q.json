@@ -33,11 +33,11 @@
           "value": 30
         }
       ],
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.prim.holy.beam",
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castTimeTier": "小"
 }

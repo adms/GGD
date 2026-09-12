@@ -110,7 +110,7 @@
           "applyTo": "enemies",
           "damageTier": "小",
           "damageType": "magic",
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "manaCostTier": "極小",
@@ -154,7 +154,7 @@
             "moveSpeedMult": 0.4
           },
           "radius": 327.27,
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -201,7 +201,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.233
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -276,7 +276,7 @@
           "length": 11.67,
           "width": 1.4,
           "aim": "facing",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "targetsEnemies": true,

@@ -50,7 +50,7 @@
       ]
     }
   ],
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "icon": "assets/icons/abilities/community-review-07-20260907.e.webp",
   "template": {
@@ -66,7 +66,7 @@
       "landDamageTier": "小",
       "landApRatio": 0,
       "damageType": "physical",
-      "castTimeSec": 0.567
+      "castTimeSec": 0.1
     },
     "inheritDefaults": true
   },

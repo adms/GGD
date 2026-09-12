@@ -41,7 +41,7 @@
         }
       ],
       "buffDurationSec": 20,
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   },
   "augment": {
@@ -70,6 +70,6 @@
   },
   "vfxKey": "fx.prim.blood.pulse-lg",
   "sfxKey": "wc3.trollwoodworkswhat1",
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.3,
   "castTimeTier": "中"
 }

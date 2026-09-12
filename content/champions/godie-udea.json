@@ -84,7 +84,7 @@
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"
@@ -133,7 +133,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "vfxKey": "fx.prim.ice.nova",
@@ -195,7 +195,7 @@
             "duration": 1,
             "moveSpeedMult": 0.6
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
       },
       "castTimeTier": "大"

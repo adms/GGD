@@ -48,7 +48,7 @@
       "maxTotalJumps": 3
     }
   ],
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "icon": "assets/icons/abilities/community-review-20-20260907.w.webp",
   "template": {
@@ -59,7 +59,7 @@
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.567
+      "castTimeSec": 0.1
     },
     "inheritDefaults": true
   },

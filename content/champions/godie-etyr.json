@@ -104,7 +104,7 @@
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "castTimeTier": "小"
@@ -239,7 +239,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "cooldownTier": "極小",
