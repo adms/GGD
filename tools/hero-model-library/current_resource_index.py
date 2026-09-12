@@ -5,6 +5,7 @@ from build_palworld_index import model_components
 from weapon_components import source_weapon_components
 from skinned_components import source_skinned_components
 from historical_components import source_historical_artifacts, source_historical_components
+from animated_components import source_animated_components
 ROOT=Path(__file__).resolve().parents[2]
 def read(path):return json.loads(path.read_text())
 def verify_component_git_contents(components, repo=ROOT):
@@ -77,6 +78,7 @@ def build():
         raise ValueError('Refresh Ultimate14 native motion index relationship')
     components.extend(source_weapon_components(component_sources,ROOT))
     components.extend(source_skinned_components(component_sources,ROOT))
+    components.extend(source_animated_components(component_sources,ROOT))
     components.extend(source_historical_components(component_sources,ROOT))
     historical_artifacts=source_historical_artifacts(component_sources,ROOT)
     restoration_receipt_path=base/'priority-evidence/historical-model-recovery/restoration-receipt.json'

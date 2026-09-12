@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c",
-      "bytes": 2601569
+      "sha256": "e69d5275528c0d389ac9d3fb9fd2e0244a42e2872b8dd26f173750e0227222ef",
+      "bytes": 2611291
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "bf1964aa4c15a8619cd839a8d16e6ec447c10f58f93e794fe9ed3333211e6892",
-      "bytes": 7179558
+      "sha256": "033dda1cce9594403a0655ae9e88c336a92ff95f01fc1d9a7a39616eaf150c7f",
+      "bytes": 7185951
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -27,8 +27,8 @@
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "4c8efa24cd3cc5206eb6c288aa8d380795ef6b7e0b9798154bafe6cd0fa06438",
-      "bytes": 29974268
+      "sha256": "8712cba0b05952a22c7e7080573633251815e39ee14eb2956134c537829db4c3",
+      "bytes": 30003437
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
@@ -57185,7 +57185,8 @@
       "name": "Mario",
       "work": "Super Smash Bros. Ultimate",
       "sourceIds": [
-        "gitlab-ssbu-models"
+        "gitlab-ssbu-models",
+        "parallel-ns-ultimate14"
       ],
       "modelCandidates": [
         {
@@ -57830,6 +57831,62 @@
           "sizeMatchesManifest": true
         },
         {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+          "existsLocal": true,
+          "bytes": 1148100,
+          "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000c4841100",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 6,
+            "primitives": 6,
+            "skins": 1,
+            "animationEntries": 5
+          },
+          "id": "ssbu-mario-c00-ultimate14-motion-v1",
+          "library": "community",
+          "sourceId": "parallel-ns-ultimate14",
+          "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+          "readiness": "accepted-independent-native-motion-five-clips-incomplete-action-set",
+          "converted": true,
+          "resourceRole": "independent-skinned-model-motion-component",
+          "nativeId": "fighter/mario/body/c00 + fighter/mario/motion/body/c00/d01special*",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+          "componentReady": true,
+          "sourceAnimationCount": 5,
+          "nativeAnimationCount": 5,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-not-original-game",
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Only five Ultimate14 community MOD body motions are present; idle, walk/run, normal attacks, hurt, death and the remaining gameplay action set are missing.",
+            "The motions are native to the acquired Ultimate14 MOD package, not verified original Nintendo game animations and not procedural or retargeted animations.",
+            "Visibility and material animation tracks remain in the original NUANMB sources and were not imported into this Transform-only body component.",
+            "Mario has no GGD hero definition or skill mapping, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+            "Source-game shader parity and semantic action-event mapping remain unverified; six draw primitives pass the hard budget but exceed the warning threshold of three."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/validation.json",
+            "bytes": 6944,
+            "sha256": "36e43da65674b03cf0a89459bc50b9e6b91c851aed052701154db268b60ced37"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+            "bytes": 7592,
+            "sha256": "57a9bdebf5c54ab02917235b2e486e6f4af61b1fa0eea077f45c53ba605a3ef0"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
+          "s3ArchiveMember": "normalized-01/component.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 1148100,
+          "sizeMatchesManifest": true
+        },
+        {
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mario-c00-static-skinned-v1/component.glb",
           "existsLocal": true,
           "bytes": 818052,
@@ -57889,6 +57946,7 @@
       "evidence": [
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mario. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mariod. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "Mario c00 combines the validated SSBU body with five distinct Transform motions from Ultimate14. All clips target 98 skin joints with 294 TRS channels, Khronos reports 0 errors/0 warnings, and 15 WebGL samples were visually accepted. The five motions are community-MOD-native and incomplete; no GGD hero ID, gameplay mapping, dropdown registration or deployment exists.",
         "SSBU fighter/mario c00 was converted with Blender 4.5.13 and GGD's official normalizer to an 817,900-byte GLB; two rebuilds are byte-identical. Khronos has 0 errors and 0 warnings; 9 source primitives were safely combined to 6 draw primitives, all skinned to 98 joints, and 101,330 float values are finite. Three WebGL views were accepted only as an independent static component. Source and output contain no actions."
       ],
       "aliases": [
@@ -81208,12 +81266,12 @@
     "not-defined": 149,
     "identity-review": 249,
     "characterGroups": 444,
-    "actualModelCandidateFiles": 2400,
+    "actualModelCandidateFiles": 2401,
     "missingCandidatePaths": 0,
     "publicSourcesInspected": 106,
     "nativeSSBUGroups": 278,
     "ssbuBlendFiles": 1793,
-    "uniqueExistingModelPaths": 2349,
+    "uniqueExistingModelPaths": 2350,
     "knownNotDefinedGroups": 149,
     "historicalMutableManifestMismatchCount": 33
   },

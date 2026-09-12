@@ -1,0 +1,22 @@
+{
+  "schema": "ggd.animated-component-acceptance@1",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "ssbu-mario-c00-ultimate14-motion-v1",
+      "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+      "accepted": true,
+      "scope": "independent-skinned-model-motion-component",
+      "completeGameplayActionSet": false,
+      "reviewedMotionCount": 5,
+      "reviewedSampleCount": 15,
+      "limitationsAccepted": [
+        "Only five Ultimate14 community MOD body motions are present; idle, walk/run, normal attacks, hurt, death and the remaining gameplay action set are missing.",
+        "The motions are native to the acquired Ultimate14 MOD package, not verified original Nintendo game animations and not procedural or retargeted animations.",
+        "Visibility and material animation tracks remain in the original NUANMB sources and were not imported into this Transform-only body component.",
+        "Mario has no GGD hero definition or skill mapping, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+        "Source-game shader parity and semantic action-event mapping remain unverified; six draw primitives pass the hard budget but exceed the warning threshold of three."
+      ]
+    }
+  ]
+}

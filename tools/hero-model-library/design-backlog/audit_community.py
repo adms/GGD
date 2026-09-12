@@ -85,7 +85,7 @@ def add(key,name,work,s,paths,heroes=None,unknown=False,evidence=None,aliases=No
   # Candidate roles are source evidence, not display-only labels. Preserve them
   # so downstream indexes can distinguish a complete body from a prop, a
   # shared bundle, or an independently accepted component.
-  for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','isStandaloneModelCandidate','sourceAnimationCount','nativeAnimationCount','unconvertedAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','s3Uri','s3ArchiveMember','archiveSha256','readbackVerified']:
+  for field in ['resourceRole','variantSlot','nativeId','format','gitPath','componentReady','isStandaloneModelCandidate','sourceAnimationCount','nativeAnimationCount','unconvertedAnimationCount','proceduralAnimationCount','animationProvenance','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','s3Uri','s3ArchiveMember','archiveSha256','readbackVerified']:
    if field in item:e[field]=item[field]
   e['identityReviewRequired']=unknown
   if parts:e['sourceScope']=parts
@@ -379,7 +379,7 @@ for source in sources:
   for identity_id in c.get('identityIds',[]):
    row=rows.get(identity_id)
    if row is None:continue
-   item={field:c[field] for field in ['path','bytes','sha256','resourceRole','nativeId','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','acceptanceEvidence','deliveryEvidence','webglProofEvidence','sourceFidelityEvidence','sourceRebuildEvidence','normalizationEvidence','s3Uri','s3ArchiveMember','readbackVerified'] if field in c}
+   item={field:c[field] for field in ['path','bytes','sha256','resourceRole','nativeId','gitPath','componentReady','nativeAnimationCount','proceduralAnimationCount','sourceAnimationCount','unconvertedAnimationCount','animationProvenance','runtimeSelectable','defaultEligible','fullHeroModel','limitations','validationEvidence','visualEvidence','acceptanceEvidence','deliveryEvidence','webglProofEvidence','sourceFidelityEvidence','sourceRebuildEvidence','normalizationEvidence','s3Uri','s3ArchiveMember','readbackVerified'] if field in c}
    item['path']=c.get('path',c.get('absolutePath'))
    item['format']='glTF Binary' if pathlib.Path(item['path']).suffix.lower()=='.glb' else c.get('format')
    add(identity_id,row['name'],row['work'],source,[item],row.get('mappedHeroIds',[]),False,

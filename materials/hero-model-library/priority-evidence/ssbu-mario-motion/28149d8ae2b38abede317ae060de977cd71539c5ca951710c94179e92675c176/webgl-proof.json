@@ -1,0 +1,484 @@
+{
+  "schema": "ggd.ssbu-mario-ultimate14-motion-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader; each animation sampled at start, middle and end with CPU-skinned finite world bounds",
+  "animationGroups": [
+    {
+      "name": "d01specialairsdash",
+      "from": 0,
+      "to": 137.50000476837158,
+      "targetedAnimations": 294
+    },
+    {
+      "name": "d01specialairsend",
+      "from": 0,
+      "to": 97.5,
+      "targetedAnimations": 294
+    },
+    {
+      "name": "d01specialairsjump",
+      "from": 0,
+      "to": 77.49999761581421,
+      "targetedAnimations": 294
+    },
+    {
+      "name": "d01specialsdash",
+      "from": 0,
+      "to": 190.00000476837158,
+      "targetedAnimations": 294
+    },
+    {
+      "name": "d01specialsend",
+      "from": 0,
+      "to": 97.5,
+      "targetedAnimations": 294
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "model-armature",
+      "bones": 98
+    }
+  ],
+  "samples": [
+    {
+      "group": "d01specialairsdash",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialairsdash-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.42044738857948616,
+          -0.626074625159949,
+          0.21903263562138514
+        ],
+        "max": [
+          0.40373657544351005,
+          0.3311942459954157,
+          1.628833681602035
+        ],
+        "extent": [
+          0.8241839640229962,
+          0.9572688711553647,
+          1.4098010459806498
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsdash",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 68.75000238418579,
+      "file": "d01specialairsdash-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.4237862649922448,
+          -4.378567737341038,
+          1.791106381146414
+        ],
+        "max": [
+          0.4060408418903556,
+          -2.5886518185513565,
+          2.619595556193689
+        ],
+        "extent": [
+          0.8298271068826004,
+          1.7899159187896818,
+          0.8284891750472747
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsdash",
+      "label": "end",
+      "fraction": 1,
+      "frame": 137.50000476837158,
+      "file": "d01specialairsdash-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.4001510959916956,
+          -5.545800014671014,
+          -0.13606144606481219
+        ],
+        "max": [
+          0.4040820387764903,
+          -4.593529149356172,
+          1.1993914626813464
+        ],
+        "extent": [
+          0.8042331347681859,
+          0.9522708653148415,
+          1.3354529087461586
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsend",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialairsend-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.8789462419554965,
+          -0.6362220673358153,
+          -0.008114368572189959
+        ],
+        "max": [
+          -0.0976420343915807,
+          1.3844235862915129,
+          1.9257510580046024
+        ],
+        "extent": [
+          0.7813042075639158,
+          2.0206456536273283,
+          1.9338654265767925
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsend",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 48.75,
+      "file": "d01specialairsend-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7157771867411071,
+          -0.6890947470627187,
+          -0.2061479430330753
+        ],
+        "max": [
+          0.3372225742317987,
+          0.28664020091172826,
+          1.309422580226781
+        ],
+        "extent": [
+          1.0529997609729058,
+          0.9757349479744469,
+          1.5155705232598562
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsend",
+      "label": "end",
+      "fraction": 1,
+      "frame": 97.5,
+      "file": "d01specialairsend-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7135557602928557,
+          -0.6068060366625665,
+          -0.08083985699319951
+        ],
+        "max": [
+          0.8863441139905461,
+          0.6028655295931538,
+          1.668942345554113
+        ],
+        "extent": [
+          1.5998998742834019,
+          1.2096715662557203,
+          1.7497822025473124
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsjump",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialairsjump-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.42343694035685076,
+          -0.5663932719587577,
+          -0.20735768460739445
+        ],
+        "max": [
+          0.5013876537730866,
+          0.3750883404079157,
+          1.555420701471772
+        ],
+        "extent": [
+          0.9248245941299373,
+          0.9414816123666734,
+          1.7627783860791664
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsjump",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 38.749998807907104,
+      "file": "d01specialairsjump-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.8549171653384917,
+          -0.6414709861441767,
+          0.27721080814341614
+        ],
+        "max": [
+          0.9071409792508334,
+          1.185961858458681,
+          1.1463865308581145
+        ],
+        "extent": [
+          1.762058144589325,
+          1.8274328446028578,
+          0.8691757227146983
+        ]
+      }
+    },
+    {
+      "group": "d01specialairsjump",
+      "label": "end",
+      "fraction": 1,
+      "frame": 77.49999761581421,
+      "file": "d01specialairsjump-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7130838598446658,
+          -0.6023873925052101,
+          -0.0913851317519696
+        ],
+        "max": [
+          0.8799310109985541,
+          0.5764142002866149,
+          1.6672814944351597
+        ],
+        "extent": [
+          1.59301487084322,
+          1.178801592791825,
+          1.7586666261871293
+        ]
+      }
+    },
+    {
+      "group": "d01specialsdash",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialsdash-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.4204538240835092,
+          -0.9232826343843223,
+          -0.03963268860777955
+        ],
+        "max": [
+          0.403729482696523,
+          0.31967907702380755,
+          1.1602208084698955
+        ],
+        "extent": [
+          0.8241833067800322,
+          1.24296171140813,
+          1.199853497077675
+        ]
+      }
+    },
+    {
+      "group": "d01specialsdash",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 95.00000238418579,
+      "file": "d01specialsdash-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5740462468389325,
+          -4.982684238978267,
+          -0.3508600274771531
+        ],
+        "max": [
+          0.35130082806230334,
+          -3.9578650276701115,
+          1.0597825375802103
+        ],
+        "extent": [
+          0.9253470749012358,
+          1.0248192113081558,
+          1.4106425650573635
+        ]
+      }
+    },
+    {
+      "group": "d01specialsdash",
+      "label": "end",
+      "fraction": 1,
+      "frame": 190.00000476837158,
+      "file": "d01specialsdash-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5570706469418951,
+          -8.707361990097498,
+          -0.05991333239758889
+        ],
+        "max": [
+          0.3612853345507112,
+          -7.6939878184638415,
+          1.673615251924864
+        ],
+        "extent": [
+          0.9183559814926063,
+          1.0133741716336564,
+          1.7335285843224528
+        ]
+      }
+    },
+    {
+      "group": "d01specialsend",
+      "label": "start",
+      "fraction": 0,
+      "frame": 0,
+      "file": "d01specialsend-start.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.8789465158067316,
+          -0.6362219577953948,
+          -0.015860595439618937
+        ],
+        "max": [
+          -0.09764184954199706,
+          1.3844243530749212,
+          1.9257510580048347
+        ],
+        "extent": [
+          0.7813046662647345,
+          2.020646310870316,
+          1.9416116534444536
+        ]
+      }
+    },
+    {
+      "group": "d01specialsend",
+      "label": "middle",
+      "fraction": 0.5,
+      "frame": 48.75,
+      "file": "d01specialsend-middle.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.7157769676601191,
+          -0.689094473211601,
+          -0.044927170808958375
+        ],
+        "max": [
+          0.3372225742317987,
+          0.3187981405741154,
+          1.3094232374697024
+        ],
+        "extent": [
+          1.0529995418919178,
+          1.0078926137857165,
+          1.3543504082786608
+        ]
+      }
+    },
+    {
+      "group": "d01specialsend",
+      "label": "end",
+      "fraction": 1,
+      "frame": 97.5,
+      "file": "d01specialsend-end.png",
+      "renderCenterTranslation": [
+        0,
+        0,
+        0
+      ],
+      "worldSkinnedBounds": {
+        "min": [
+          -0.5570676893485569,
+          -0.6576208712625718,
+          -0.03652428855310429
+        ],
+        "max": [
+          0.36129061987954714,
+          0.45949029788941886,
+          1.697018605575052
+        ],
+        "extent": [
+          0.918358309228104,
+          1.1171111691519906,
+          1.7335428941281563
+        ]
+      }
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "semanticActionMappingVerified": false,
+  "completeGameplayActionSet": false,
+  "gameplayAcceptance": false
+}

@@ -1,0 +1,251 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-mario-c00-ultimate14-motion-v1",
+  "sourceId": "parallel-ns-ultimate14",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/import-01/mario-c00-ultimate14-actions.blend",
+    "bytes": 24142181,
+    "sha256": "da0cfc794c8227842b0edd673c721a3d92be51e175696d3b578967d55f4087e8"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": true
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 1148060,
+    "sha256": "9df1d4eba2fb3f15c4f1476037413c8671b3e9782d9b0172c5850144f7c728ef"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -8.31527042388916,
+        -3.799772024154663,
+        -0.07000146806240082
+      ],
+      [
+        8.313909530639648,
+        2.772996664047241,
+        15.601041793823242
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.11486152963267439,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    98
+  ],
+  "sourceActionCount": 6,
+  "sourceImageCountUsed": 6,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "phong0_sfx_0x9a011063_____VTC___TANGENT___BINORMAL_101",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_mario_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "alp_mario_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "alp_mario_002",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [
+    {
+      "material": "phong0_sfx_0x9a011063_____VTC___TANGENT___BINORMAL_101",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "Mario_Hathead_VIS_O_OBJShape",
+          "vertices": 334,
+          "polygons": 496
+        },
+        {
+          "name": "c00bodyShape",
+          "vertices": 2664,
+          "polygons": 4124
+        }
+      ],
+      "outputMesh": "GGD_joined_phong0_sfx_0x9a011063_____VTC___TANGENT___BINORMAL_1",
+      "outputVertices": 2998,
+      "outputPolygons": 4620,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "skin_mario_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "Mario_FaceNMClose_VIS_O_OBJShape",
+          "vertices": 239,
+          "polygons": 354
+        },
+        {
+          "name": "Mario_FaceN_VIS_O_OBJShape.001",
+          "vertices": 424,
+          "polygons": 702
+        },
+        {
+          "name": "c00bodyShape.001",
+          "vertices": 48,
+          "polygons": 56
+        }
+      ],
+      "outputMesh": "GGD_joined_skin_mario_001",
+      "outputVertices": 711,
+      "outputPolygons": 1112,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "alp_mario_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/derived-textures/alp_mario_001_col.png.ggd-256.png",
+      "derivedBytes": 52861,
+      "derivedSha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "def_mario_001_col.png",
+      "sourceDimensions": [
+        1024,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        128
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/derived-textures/def_mario_001_col.png.ggd-256.png",
+      "derivedBytes": 54479,
+      "derivedSha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_mario_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/derived-textures/skin_mario_001_col.png.ggd-256.png",
+      "derivedBytes": 43735,
+      "derivedSha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 98,
+      "nodeName": "GGD_joined_phong0_sfx_0x9a011063_____VTC___TANGENT___BINORMAL_1",
+      "previousParentIndex": 104,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 99,
+      "nodeName": "GGD_joined_skin_mario_001",
+      "previousParentIndex": 104,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 100,
+      "nodeName": "Mario_Eye_VIS_O_OBJShape",
+      "previousParentIndex": 104,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 101,
+      "nodeName": "Mario_Eye_VIS_O_OBJShape.001",
+      "previousParentIndex": 104,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 102,
+      "nodeName": "Mario_FaceN_VIS_O_OBJShape",
+      "previousParentIndex": 104,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 103,
+      "nodeName": "Mario_Hair_VIS_O_OBJShape",
+      "previousParentIndex": 104,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

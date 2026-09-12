@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "f1481e01aa4713a9b216cde3d36906fa728294d6d1c699554c4d72a1bd746d31"
+      "sha256": "1675a157a138fdb6e29ccceb6c89710174d6fc59ed0fe3912a4a697eb8ed0f6d"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "34535ad265436f5dbee66d53396bcd845cce45b792c77ffce1b8b69a43158dee"
+      "sha256": "9e9e09da6451782591bc39382ae65895a21eb1834d88d840c77a7970b998a448"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c"
+      "sha256": "e69d5275528c0d389ac9d3fb9fd2e0244a42e2872b8dd26f173750e0227222ef"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -90471,6 +90471,7 @@
             "count": 0,
             "sourceCount": 9,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -90479,6 +90480,7 @@
             "count": 0,
             "sourceCount": 9,
             "unconvertedCount": 9,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -90487,6 +90489,7 @@
             "count": 8,
             "sourceCount": 9,
             "unconvertedCount": 1,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -90926,6 +90929,7 @@
             "count": 0,
             "sourceCount": 11,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -90934,6 +90938,7 @@
             "count": 0,
             "sourceCount": 11,
             "unconvertedCount": 11,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -90942,6 +90947,7 @@
             "count": 10,
             "sourceCount": 11,
             "unconvertedCount": 1,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -91358,6 +91364,7 @@
             "count": 0,
             "sourceCount": 17,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -91366,6 +91373,7 @@
             "count": 0,
             "sourceCount": 17,
             "unconvertedCount": 17,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -91374,6 +91382,7 @@
             "count": 14,
             "sourceCount": 17,
             "unconvertedCount": 3,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -91937,6 +91946,7 @@
             "count": 0,
             "sourceCount": 10,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -91945,6 +91955,7 @@
             "count": 0,
             "sourceCount": 10,
             "unconvertedCount": 10,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -91953,6 +91964,7 @@
             "count": 8,
             "sourceCount": 10,
             "unconvertedCount": 2,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -92290,6 +92302,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -92298,6 +92311,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -92306,6 +92320,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -92314,6 +92329,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -92641,6 +92657,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -92649,6 +92666,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -92657,6 +92675,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -92665,6 +92684,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -93482,6 +93502,7 @@
             "count": 1,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-with-native-motion-reserve",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -93490,6 +93511,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-native-animation-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -94009,6 +94031,7 @@
             "count": 1,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-with-native-motion-reserve",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -94017,6 +94040,7 @@
             "count": 14,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -95221,6 +95245,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -95533,6 +95558,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -95541,6 +95567,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -95549,6 +95576,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -95557,6 +95585,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -96926,6 +96955,7 @@
             "count": 11,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -97951,6 +97981,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -97959,6 +97990,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -98248,6 +98280,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -98488,6 +98521,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -98496,6 +98530,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -99745,6 +99780,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99753,6 +99789,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99761,6 +99798,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99769,6 +99807,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99777,6 +99816,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99785,6 +99825,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99793,6 +99834,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99801,6 +99843,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99809,6 +99852,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99817,6 +99861,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99825,6 +99870,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99833,6 +99879,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99841,6 +99888,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99849,6 +99897,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99857,6 +99906,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99865,6 +99915,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99873,6 +99924,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99881,6 +99933,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99889,6 +99942,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99897,6 +99951,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "static-visual-reviewed-pending-runtime-motion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99905,6 +99960,7 @@
             "count": 2,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "review-sample-needs-foot-contact-loop-repair",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99913,6 +99969,7 @@
             "count": 2,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "review-sample-needs-foot-contact-loop-repair",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99921,6 +99978,7 @@
             "count": 2,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -99929,6 +99987,7 @@
             "count": 2,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "review-sample-ground-and-loop-improved-gameplay-pending",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -105676,6 +105735,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -105684,6 +105744,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structural-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -105692,6 +105753,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -107918,6 +107980,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -110570,6 +110633,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -110780,6 +110844,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -111406,6 +111471,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -111848,6 +111914,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -113062,6 +113129,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -113296,6 +113364,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -114214,6 +114283,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -114222,6 +114292,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -114230,6 +114301,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -114471,6 +114543,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -114751,6 +114824,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -114759,6 +114833,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -115001,6 +115076,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "extracted-native-pending-conversion",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -115009,6 +115085,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -115350,6 +115427,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -132578,6 +132656,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -132586,6 +132665,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -132714,6 +132794,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -132722,6 +132803,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -133046,6 +133128,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -133054,6 +133137,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -133182,6 +133266,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -133190,6 +133275,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -133318,6 +133404,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -133326,6 +133413,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -133454,6 +133542,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -133462,6 +133551,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -134371,6 +134461,7 @@
             "count": 1,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-with-native-motion-reserve",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -135867,6 +135958,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -135875,6 +135967,7 @@
             "count": 16,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -135994,6 +136087,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136002,6 +136096,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136121,6 +136216,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136129,6 +136225,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136248,6 +136345,7 @@
             "count": 10,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136256,6 +136354,7 @@
             "count": 10,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136376,6 +136475,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136384,6 +136484,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136503,6 +136604,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136511,6 +136613,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136630,6 +136733,7 @@
             "count": 30,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136638,6 +136742,7 @@
             "count": 30,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136757,6 +136862,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136765,6 +136871,7 @@
             "count": 12,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -136884,6 +136991,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -136892,6 +137000,7 @@
             "count": 9,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137012,6 +137121,7 @@
             "count": 18,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137020,6 +137130,7 @@
             "count": 18,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137139,6 +137250,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137147,6 +137259,7 @@
             "count": 9,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137266,6 +137379,7 @@
             "count": 4,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137274,6 +137388,7 @@
             "count": 4,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137393,6 +137508,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137401,6 +137517,7 @@
             "count": 7,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137520,6 +137637,7 @@
             "count": 4,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137528,6 +137646,7 @@
             "count": 4,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137647,6 +137766,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137655,6 +137775,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137774,6 +137895,7 @@
             "count": 36,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137782,6 +137904,7 @@
             "count": 36,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -137930,6 +138053,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137938,6 +138062,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -137946,6 +138071,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "backend-standardized-option; procedural motion provenance preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138065,6 +138191,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138073,6 +138200,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138192,6 +138320,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138200,6 +138329,7 @@
             "count": 9,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138319,6 +138449,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138327,6 +138458,7 @@
             "count": 8,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138446,6 +138578,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138454,6 +138587,7 @@
             "count": 43,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138573,6 +138707,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138581,6 +138716,7 @@
             "count": 7,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138700,6 +138836,7 @@
             "count": 10,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138708,6 +138845,7 @@
             "count": 10,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138827,6 +138965,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138835,6 +138974,7 @@
             "count": 28,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -138954,6 +139094,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -138962,6 +139103,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139081,6 +139223,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139089,6 +139232,7 @@
             "count": 14,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139208,6 +139352,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139216,6 +139361,7 @@
             "count": 13,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139335,6 +139481,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139343,6 +139490,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139462,6 +139610,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139470,6 +139619,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139589,6 +139739,7 @@
             "count": 6,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139597,6 +139748,7 @@
             "count": 24,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139716,6 +139868,7 @@
             "count": 14,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139724,6 +139877,7 @@
             "count": 14,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139843,6 +139997,7 @@
             "count": 5,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139851,6 +140006,7 @@
             "count": 7,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -139971,6 +140127,7 @@
             "count": 14,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standardized-runtime-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -139979,6 +140136,7 @@
             "count": 14,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "historical-staging-path; current GLB readable; frozen runtime variant separately retained",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -141155,6 +141313,7 @@
             "count": 0,
             "sourceCount": 11,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -141163,6 +141322,7 @@
             "count": 0,
             "sourceCount": 11,
             "unconvertedCount": 11,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -141171,6 +141331,7 @@
             "count": 11,
             "sourceCount": 11,
             "unconvertedCount": 0,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -141498,6 +141659,7 @@
             "count": 0,
             "sourceCount": 9,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -141506,6 +141668,7 @@
             "count": 0,
             "sourceCount": 9,
             "unconvertedCount": 9,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -141514,6 +141677,7 @@
             "count": 8,
             "sourceCount": 9,
             "unconvertedCount": 1,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -141841,6 +142005,7 @@
             "count": 0,
             "sourceCount": 11,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -141849,6 +142014,7 @@
             "count": 0,
             "sourceCount": 11,
             "unconvertedCount": 11,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -141857,6 +142023,7 @@
             "count": 10,
             "sourceCount": 11,
             "unconvertedCount": 1,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -142186,6 +142353,7 @@
             "count": 0,
             "sourceCount": 4,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -142194,6 +142362,7 @@
             "count": 0,
             "sourceCount": 4,
             "unconvertedCount": 4,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -142202,6 +142371,7 @@
             "count": 4,
             "sourceCount": 4,
             "unconvertedCount": 0,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -142531,6 +142701,7 @@
             "count": 0,
             "sourceCount": 8,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -142539,6 +142710,7 @@
             "count": 0,
             "sourceCount": 8,
             "unconvertedCount": 8,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -142547,6 +142719,7 @@
             "count": 8,
             "sourceCount": 8,
             "unconvertedCount": 0,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -142919,6 +143092,7 @@
             "count": 0,
             "sourceCount": 6,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -142927,6 +143101,7 @@
             "count": 0,
             "sourceCount": 6,
             "unconvertedCount": 6,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -142935,6 +143110,7 @@
             "count": 3,
             "sourceCount": 6,
             "unconvertedCount": 3,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -143262,6 +143438,7 @@
             "count": 0,
             "sourceCount": 8,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -143270,6 +143447,7 @@
             "count": 0,
             "sourceCount": 8,
             "unconvertedCount": 8,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -143278,6 +143456,7 @@
             "count": 7,
             "sourceCount": 8,
             "unconvertedCount": 1,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -143605,6 +143784,7 @@
             "count": 0,
             "sourceCount": 7,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -143613,6 +143793,7 @@
             "count": 0,
             "sourceCount": 7,
             "unconvertedCount": 7,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -143621,6 +143802,7 @@
             "count": 4,
             "sourceCount": 7,
             "unconvertedCount": 3,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -143948,6 +144130,7 @@
             "count": 0,
             "sourceCount": 13,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -143956,6 +144139,7 @@
             "count": 0,
             "sourceCount": 13,
             "unconvertedCount": 13,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -143964,6 +144148,7 @@
             "count": 11,
             "sourceCount": 13,
             "unconvertedCount": 2,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -144345,6 +144530,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -144353,6 +144539,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -144361,6 +144548,7 @@
             "count": 0,
             "sourceCount": 8,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -144369,6 +144557,7 @@
             "count": 0,
             "sourceCount": 8,
             "unconvertedCount": 8,
+            "provenance": null,
             "readiness": "static-mesh-khronos-webgl-validated-pending-rights-rig-animation-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -144377,6 +144566,7 @@
             "count": 6,
             "sourceCount": 8,
             "unconvertedCount": 2,
+            "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -144491,6 +144681,7 @@
             "count": 349,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "ggd-six-state-subset-contract-and-webgl-validated-pending-rights-semantic-gameplay-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -144631,6 +144822,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -144639,6 +144831,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-current-budget-and-webgl-static-body-validated-pending-rights-actions-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -144995,6 +145188,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -145162,6 +145356,7 @@
             "count": 9,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -145170,6 +145365,7 @@
             "count": 4,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -145430,6 +145626,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -145595,6 +145792,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -145760,6 +145958,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -145925,6 +146124,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -146153,6 +146353,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -146161,6 +146362,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -146293,6 +146495,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -146301,6 +146504,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -146431,6 +146635,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -146439,6 +146644,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -146569,6 +146775,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -146577,6 +146784,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "glb-structure-validated-awaiting-visual-motion-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -164542,7 +164750,8 @@
       "name": "Mario",
       "work": "Super Smash Bros. Ultimate",
       "sourceIds": [
-        "gitlab-ssbu-models"
+        "gitlab-ssbu-models",
+        "parallel-ns-ultimate14"
       ],
       "modelCandidates": [
         {
@@ -165237,6 +165446,64 @@
           "localSizeMatches": true
         },
         {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+          "existsLocal": true,
+          "bytes": 1148100,
+          "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000c4841100",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 6,
+            "primitives": 6,
+            "skins": 1,
+            "animationEntries": 5
+          },
+          "id": "ssbu-mario-c00-ultimate14-motion-v1",
+          "library": "community",
+          "sourceId": "parallel-ns-ultimate14",
+          "sourceUrl": "https://github.com/CSharpM7/Ultimate14-release/releases/tag/1.0",
+          "readiness": "accepted-independent-native-motion-five-clips-incomplete-action-set",
+          "converted": true,
+          "resourceRole": "independent-skinned-model-motion-component",
+          "nativeId": "fighter/mario/body/c00 + fighter/mario/motion/body/c00/d01special*",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+          "componentReady": true,
+          "sourceAnimationCount": 5,
+          "nativeAnimationCount": 5,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-not-original-game",
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Only five Ultimate14 community MOD body motions are present; idle, walk/run, normal attacks, hurt, death and the remaining gameplay action set are missing.",
+            "The motions are native to the acquired Ultimate14 MOD package, not verified original Nintendo game animations and not procedural or retargeted animations.",
+            "Visibility and material animation tracks remain in the original NUANMB sources and were not imported into this Transform-only body component.",
+            "Mario has no GGD hero definition or skill mapping, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+            "Source-game shader parity and semantic action-event mapping remain unverified; six draw primitives pass the hard budget but exceed the warning threshold of three."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/validation.json",
+            "bytes": 6944,
+            "sha256": "36e43da65674b03cf0a89459bc50b9e6b91c851aed052701154db268b60ced37"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+            "bytes": 7592,
+            "sha256": "57a9bdebf5c54ab02917235b2e486e6f4af61b1fa0eea077f45c53ba605a3ef0"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
+          "s3ArchiveMember": "normalized-01/component.glb",
+          "identityReviewRequired": false,
+          "recordedBytes": 1148100,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+          "localSizeMatches": true
+        },
+        {
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mario-c00-static-skinned-v1/component.glb",
           "existsLocal": true,
           "bytes": 818052,
@@ -165298,6 +165565,7 @@
       "evidence": [
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mario. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/mariod. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "Mario c00 combines the validated SSBU body with five distinct Transform motions from Ultimate14. All clips target 98 skin joints with 294 TRS channels, Khronos reports 0 errors/0 warnings, and 15 WebGL samples were visually accepted. The five motions are community-MOD-native and incomplete; no GGD hero ID, gameplay mapping, dropdown registration or deployment exists.",
         "SSBU fighter/mario c00 was converted with Blender 4.5.13 and GGD's official normalizer to an 817,900-byte GLB; two rebuilds are byte-identical. Khronos has 0 errors and 0 warnings; 9 source primitives were safely combined to 6 draw primitives, all skinned to 98 joints, and 101,330 float values are finite. Three WebGL views were accepted only as an independent static component. Source and output contain no actions."
       ],
       "aliases": [
@@ -165321,7 +165589,7 @@
       "candidateBreakdown": {
         "characterBodySources": 16,
         "standaloneCharacterBodies": 16,
-        "componentsOrProps": 10,
+        "componentsOrProps": 11,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -165335,7 +165603,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：mario: 本體 40檔／5種內容、配件 16檔／2種內容、模型預設無Transform資料 8檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "來源 5 個片段；已轉換 5 個社群 MOD 來源原生動作（非任天堂原版動作）；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -165347,16 +165615,27 @@
         "unclassifiedAudioFileCount": 68,
         "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
-          "大亂鬥特別版／NS：Worldblender 模型整庫"
+          "大亂鬥特別版／NS：Worldblender 模型整庫",
+          "大亂鬥特別版／NS：社群 MOD"
         ],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
         "motionCandidateCounts": [
           {
+            "candidateId": "ssbu-mario-c00-ultimate14-motion-v1",
+            "count": 5,
+            "sourceCount": 5,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-not-original-game",
+            "readiness": "accepted-independent-native-motion-five-clips-incomplete-action-set",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
             "candidateId": "ssbu-mario-c00-static-skinned-v1",
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -166801,6 +167080,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -175751,6 +176031,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -175759,6 +176040,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -179508,6 +179790,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -184441,6 +184724,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -184449,6 +184733,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -188699,6 +188984,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-needs-appearance-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -188707,6 +188993,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-needs-appearance-review",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -188715,6 +189002,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-material-repaired-runtime-review-pending",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -188723,6 +189011,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "standard-glb-candidate-material-repaired-runtime-review-pending",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -192521,6 +192810,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "acquired-rigged-source-pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -194679,6 +194969,7 @@
             "count": 57,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "acquired-rigged-animated-source-pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -194687,6 +194978,7 @@
             "count": 57,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "acquired-rigged-animated-source-pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -194695,6 +194987,7 @@
             "count": 57,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "acquired-rigged-animated-source-pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -194703,6 +194996,7 @@
             "count": 57,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -194711,6 +195005,7 @@
             "count": 2,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -194719,6 +195014,7 @@
             "count": 2,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-component-pending-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -195616,6 +195912,7 @@
             "count": 1,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195624,6 +195921,7 @@
             "count": 1,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195632,6 +195930,7 @@
             "count": 1,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195640,6 +195939,7 @@
             "count": 33,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-material-binding-and-GGD-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195648,6 +195948,7 @@
             "count": 33,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-material-binding-and-GGD-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195656,6 +195957,7 @@
             "count": 33,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "pending-material-binding-and-GGD-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195664,6 +195966,7 @@
             "count": 33,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -195672,6 +195975,7 @@
             "count": 33,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-component-pending-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -196051,6 +196355,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "acquired-rigged-source-pending-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196059,6 +196364,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "diagnostic-invalid-preserved",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196067,6 +196373,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "reserve-pending-ggd-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196075,6 +196382,7 @@
             "count": 29,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "acquired-animated-source-pending-material-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196083,6 +196391,7 @@
             "count": 29,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "diagnostic-decoded-pending-extension-declaration",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196091,6 +196400,7 @@
             "count": 29,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "reserve-pending-material-binding-and-ggd-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196099,6 +196409,7 @@
             "count": 29,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           },
@@ -196107,6 +196418,7 @@
             "count": 29,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "material-bound-component-pending-hero-binding",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
@@ -196236,6 +196548,7 @@
             "count": 0,
             "sourceCount": null,
             "unconvertedCount": null,
+            "provenance": null,
             "readiness": "native-character-body-identity-verified-pending-dependency-and-standardization",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }

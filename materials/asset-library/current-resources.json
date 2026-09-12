@@ -8136,6 +8136,123 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb"
     },
     {
+      "id": "ssbu-mario-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "sourceIds": [
+        "gitlab-ssbu-models",
+        "parallel-ns-ultimate14"
+      ],
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "Mario／瑪利歐",
+      "originalName": "Mario",
+      "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch MOD",
+      "nativeId": "fighter/mario/body/c00 + fighter/mario/motion/body/c00/d01special*",
+      "variant": "c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "animation"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+      "bytes": 1148100,
+      "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+      "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-mario"
+      ],
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": "community-mod-native-not-original-game",
+      "animationNames": [
+        "d01specialairsdash",
+        "d01specialairsend",
+        "d01specialairsjump",
+        "d01specialsdash",
+        "d01specialsend"
+      ],
+      "triangles": 7189,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 98,
+      "textureCount": 5,
+      "readiness": "accepted-independent-native-motion-five-clips-incomplete-action-set",
+      "auditEvidence": "Mario c00 combines the validated SSBU body with five distinct Transform motions from Ultimate14. All clips target 98 skin joints with 294 TRS channels, Khronos reports 0 errors/0 warnings, and 15 WebGL samples were visually accepted. The five motions are community-MOD-native and incomplete; no GGD hero ID, gameplay mapping, dropdown registration or deployment exists.",
+      "limitations": [
+        "Only five Ultimate14 community MOD body motions are present; idle, walk/run, normal attacks, hurt, death and the remaining gameplay action set are missing.",
+        "The motions are native to the acquired Ultimate14 MOD package, not verified original Nintendo game animations and not procedural or retargeted animations.",
+        "Visibility and material animation tracks remain in the original NUANMB sources and were not imported into this Transform-only body component.",
+        "Mario has no GGD hero definition or skill mapping, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+        "Source-game shader parity and semantic action-event mapping remain unverified; six draw primitives pass the hard budget but exceed the warning threshold of three."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/delivery.json",
+        "bytes": 7712,
+        "sha256": "28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/acceptance.json",
+        "bytes": 1311,
+        "sha256": "32438b09436358e8ecddf3e6e863fa99fce0fce9b6ebff165c4acccd434cca46"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/validation.json",
+        "bytes": 6944,
+        "sha256": "36e43da65674b03cf0a89459bc50b9e6b91c851aed052701154db268b60ced37"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+        "bytes": 7592,
+        "sha256": "57a9bdebf5c54ab02917235b2e486e6f4af61b1fa0eea077f45c53ba605a3ef0"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/webgl-proof.json",
+        "bytes": 10614,
+        "sha256": "bf667b53f53d92e60a339d5f024d120966bda782d000b42fa4634ffb0e610f5b"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/source-rebuild.json",
+        "bytes": 4047,
+        "sha256": "5435899da05dc45d6dd5bb7a24bc17d1515acc58e86bb1a1356a93af6c42cea9"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "sourceAnimationCount": 5,
+      "unconvertedAnimationCount": 0,
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
+          "s3ArchiveMember": "normalized-01/component.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-ultimate14-motion-v1/87f3253c29af4d6be477a64061b0f408d20dd2ec62430c7cca176c2ef0c1ac42/receipt.json",
+          "backupReceiptSha256": "44910d815de4b1d61731d761b39cbf017c1b4755ba34cf992139863bd9fc2a82"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
+      "s3ArchiveMember": "normalized-01/component.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-ultimate14-motion-v1/87f3253c29af4d6be477a64061b0f408d20dd2ec62430c7cca176c2ef0c1ac42/receipt.json",
+      "backupReceiptSha256": "44910d815de4b1d61731d761b39cbf017c1b4755ba34cf992139863bd9fc2a82",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb"
+    },
+    {
       "id": "historical-astralym-7bc2fa3f8",
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
       "sourceClass": "integration-recovery",
@@ -8617,7 +8734,7 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb"
     }
   ],
-  "modelComponentCount": 25,
+  "modelComponentCount": 26,
   "historicalModelSourceArtifacts": [
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
@@ -8719,10 +8836,10 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "9ad83b4ec6674cd3b991368a586f085dcb5fe7f2c8d571f35ea3cb3f700b8d8c"
+    "sha256": "796c3a2481fb0f7ff76f2f40900eea3a566c1fd1b54d310aa15ddd8de9f4a574"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c"
+    "sha256": "e69d5275528c0d389ac9d3fb9fd2e0244a42e2872b8dd26f173750e0227222ef"
   }
 }

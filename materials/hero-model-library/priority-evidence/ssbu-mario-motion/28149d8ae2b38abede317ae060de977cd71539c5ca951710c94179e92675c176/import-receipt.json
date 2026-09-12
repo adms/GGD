@@ -1,0 +1,210 @@
+{
+  "schema": "ggd-ssbu-mario-ultimate14-action-import@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+    "bytes": 9190080,
+    "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+  },
+  "motionIndex": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+    "bytes": 593008,
+    "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23"
+  },
+  "tool": {
+    "blenderVersion": "4.5.13 LTS",
+    "addon": "Smash Ultimate Blender",
+    "addonVersion": "3.0.4",
+    "addonRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/extracted/smash-ultimate-blender",
+    "addonZip": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/smash-ultimate-blender-3_0_4.zip",
+    "addonZipSha256": "813cd5af33b5c74d7bdc88a81095ee09cff3662d0ac50f858d8d6dc596237248",
+    "embeddedScriptsExecuted": false,
+    "transformTracksOnly": true
+  },
+  "armature": {
+    "name": "model-armature",
+    "boneCount": 98,
+    "boneNames": [
+      "ArmL",
+      "ArmR",
+      "Bust",
+      "ClavicleC",
+      "ClavicleL",
+      "ClavicleR",
+      "DownlipC",
+      "DownlipC_offset",
+      "DownlipL",
+      "DownlipL_offset",
+      "DownlipR",
+      "DownlipR_offset",
+      "Face",
+      "FingerL10",
+      "FingerL11",
+      "FingerL12",
+      "FingerL13",
+      "FingerL20",
+      "FingerL21",
+      "FingerL22",
+      "FingerL23",
+      "FingerL30",
+      "FingerL31",
+      "FingerL32",
+      "FingerL33",
+      "FingerL40",
+      "FingerL41",
+      "FingerL42",
+      "FingerL43",
+      "FingerL51",
+      "FingerL52",
+      "FingerL53",
+      "FingerR10",
+      "FingerR11",
+      "FingerR12",
+      "FingerR13",
+      "FingerR20",
+      "FingerR21",
+      "FingerR22",
+      "FingerR23",
+      "FingerR30",
+      "FingerR31",
+      "FingerR32",
+      "FingerR33",
+      "FingerR40",
+      "FingerR41",
+      "FingerR42",
+      "FingerR43",
+      "FingerR51",
+      "FingerR52",
+      "FingerR53",
+      "FootL",
+      "FootR",
+      "H_ArmtwistL",
+      "H_ArmtwistR",
+      "H_LegL",
+      "H_LegR",
+      "H_SholderL",
+      "H_SholderR",
+      "H_Waist",
+      "H_WristL",
+      "H_WristR",
+      "HandL",
+      "HandR",
+      "Hat",
+      "HaveL",
+      "HaveR",
+      "Head",
+      "Hip",
+      "Jaw",
+      "Jaw_offset",
+      "KneeL",
+      "KneeR",
+      "LegC",
+      "LegL",
+      "LegR",
+      "Mouth_group",
+      "Neck",
+      "Rot",
+      "ShoulderL",
+      "ShoulderR",
+      "Throw",
+      "ToeL",
+      "ToeR",
+      "Trans",
+      "UplipC",
+      "UplipC_offset",
+      "UplipL1",
+      "UplipL1_offset",
+      "UplipL2",
+      "UplipL2_offset",
+      "UplipR1",
+      "UplipR1_offset",
+      "UplipR2",
+      "UplipR2_offset",
+      "Waist",
+      "mustacheL",
+      "mustacheR"
+    ]
+  },
+  "imports": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsdash.nuanmb",
+      "bytes": 72833,
+      "sha256": "2247d9422dcbe9d4b0a5bec4461783b0b8d8587281f8490aaa9c313f322ae8c7",
+      "action": "d01specialairsdash",
+      "frameRange": [
+        1.0,
+        55.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsend.nuanmb",
+      "bytes": 53388,
+      "sha256": "63d49bc1470daf9a268c664556168295b6d495d720bed7a3b428f73203f073b1",
+      "action": "d01specialairsend",
+      "frameRange": [
+        1.0,
+        39.0
+      ],
+      "fCurveCount": 800,
+      "transformNodeCount": 80,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsjump.nuanmb",
+      "bytes": 46756,
+      "sha256": "343b2b2ea5294c97496c34204117c047c2f59aee7f592a82d7273d3d46ecc927",
+      "action": "d01specialairsjump",
+      "frameRange": [
+        1.0,
+        31.0
+      ],
+      "fCurveCount": 800,
+      "transformNodeCount": 80,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsdash.nuanmb",
+      "bytes": 89477,
+      "sha256": "7b7d0071d8074b0cc6c4ae5a2561fac0a936c4dbe3c4f940ee83a7a05295a49e",
+      "action": "d01specialsdash",
+      "frameRange": [
+        1.0,
+        76.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsend.nuanmb",
+      "bytes": 52569,
+      "sha256": "c27e9d9566b5d99625af7cca1010fa722b8b81f840f41762d5e04d2ab2d1e5b5",
+      "action": "d01specialsend",
+      "frameRange": [
+        1.0,
+        39.0
+      ],
+      "fCurveCount": 800,
+      "transformNodeCount": 80,
+      "missingArmatureBones": []
+    }
+  ],
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/import-01/mario-c00-ultimate14-actions.blend",
+    "bytes": 24142181,
+    "sha256": "da0cfc794c8227842b0edd673c721a3d92be51e175696d3b578967d55f4087e8"
+  },
+  "status": {
+    "nativeTransformTracksImported": true,
+    "visualPlaybackValidated": false,
+    "convertedToGgdGlb": false,
+    "runtimeSelectable": false
+  },
+  "gaps": [
+    "Ultimate14 contains five distinct Mario body motion payloads, not a complete gameplay action set.",
+    "Visibility and material tracks are preserved in the original NUANMB files but are not imported into this body-motion intermediate.",
+    "Visual playback, normalized GLB export, GGD validation, semantic action mapping, hero binding, runtime selection and deployment remain pending."
+  ]
+}

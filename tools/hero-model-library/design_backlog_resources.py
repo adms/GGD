@@ -30,6 +30,7 @@ def resource_view(row, coverage, voice_groups, public_sources):
             motion_entries.append(dict(candidateId=c['id'], count=value,
                 sourceCount=c.get('sourceAnimationCount'),
                 unconvertedCount=c.get('unconvertedAnimationCount'),
+                provenance=c.get('animationProvenance'),
                 readiness=c.get('readiness'),
                 evidence='existing-candidate-metadata; not runtime acceptance'))
     motion = '尚未逐角色解析／建檔'
@@ -61,7 +62,10 @@ def resource_view(row, coverage, voice_groups, public_sources):
         best = max(converted_native, key=lambda entry: entry['count'])
         source_count = best.get('sourceCount')
         unconverted_count = best.get('unconvertedCount')
-        counts = f"已轉換 {best['count']} 個原生動作"
+        if best.get('provenance') == 'community-mod-native-not-original-game':
+            counts = f"已轉換 {best['count']} 個社群 MOD 來源原生動作（非任天堂原版動作）"
+        else:
+            counts = f"已轉換 {best['count']} 個原生動作"
         if isinstance(source_count, int):
             counts = f"來源 {source_count} 個片段；" + counts
         if isinstance(unconverted_count, int) and unconverted_count:
