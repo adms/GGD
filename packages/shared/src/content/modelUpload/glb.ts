@@ -1,6 +1,8 @@
 /** The uncompressed glTF subset used by community bodies and animation libraries. */
 export interface GlbAccessor {
   bufferView?: number; byteOffset?: number; componentType: number; count: number; type: string;
+  /** glTF integer accessors may request normalized floating-point decoding. */
+  normalized?: boolean;
   /** glTF 規範的逐分量精確界。⚠️ POSITION **必填**；合併幾何時一定要用真資料重算，⛔ 沿用任何一段的界都會讓真實資料「超界」。 */
   min?: number[]; max?: number[];
   sparse?: { count: number; indices: { bufferView: number; byteOffset?: number; componentType: number }; values: { bufferView: number; byteOffset?: number } };

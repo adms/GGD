@@ -21,6 +21,7 @@ import type { SourceGrantFields } from "../stats/sourceGrants";
 // import `AbilityDef` 之間沒有 runtime 環（`effectRegistry.ts` 檔頭記的那一種
 // 「不是編譯錯誤、是某個打包順序下的執行期 undefined」在這裡不成立）。
 import type { AbilityAugment } from "../abilities/abilityAugment";
+import type { SkillTierName } from "../../content/skillTiers";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 
@@ -250,6 +251,8 @@ export interface AbilityDef {
    * cooldown up-front, and effects resolve `round(ct/dt)` ticks later.
    */
   castTimeSec?: number;
+  /** Five-step authoring source retained after runtime resolution. */
+  castTimeTier?: SkillTierName;
   /** Root the caster for the cast duration (default true). */
   rootWhileCasting?: boolean;
   /**
