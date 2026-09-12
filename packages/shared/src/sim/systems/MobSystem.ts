@@ -83,7 +83,7 @@ import { standstillBlocks } from "../combatFeel";
 import { forcedTargetOf, isMobTargetable } from "../targeting";
 import { isMindControlled } from "../mindControl";
 // ⭐ GH#577 / GH#602 —— 王的自動施法走**出貨的**施法入口，⛔ 不是第二條路徑。
-import { castAbility, groundAoeTargets, resolveAbilityRange } from "../abilities/abilitySystem";
+import { authoredAoeRadius, castAbility, groundAoeTargets, resolveAbilityRange } from "../abilities/abilitySystem";
 import { abilityInstanceFor } from "../abilities/innateActive";
 import { Abilities } from "../content/registry";
 import type { AbilityDef } from "../content/defs";
@@ -923,7 +923,8 @@ function kingAimAnchor(
   king: MobKingRules,
 ): EntityId {
   if ((king.situationalAiming ?? DEFAULT_KING_SITUATIONAL_AIMING) === false) return primary;
-  if ((def.radius ?? 0) <= 0) return primary; // 單體 ⇒ 最近的敵人
+  // ⭐ 省略 ⇒ `ABILITY_RADIUS_WHEN_OMITTED`（GH#1246）—— ⛔ 不要在這裡寫字面預設。
+  if (authoredAoeRadius(def) <= 0) return primary; // 單體 ⇒ 最近的敵人
   const t = world.transform.get(id);
   if (!t) return primary;
   // ⛔ 射程怎麼算不在這裡重寫：`resolveAbilityRange` 是全專案唯一的答案

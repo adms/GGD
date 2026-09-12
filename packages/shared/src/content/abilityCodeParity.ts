@@ -80,6 +80,10 @@ export interface AbilityCodeDrift {
 const OMITTED_DEFAULTS: ReadonlyMap<string, unknown> = new Map<string, unknown>([
   // `sim/abilities/abilitySystem.ts`：`targetsEnemies !== false`（省略 = true）
   ["targetsEnemies", true],
+  // ⛔ `radius` **刻意不在這裡**（2026-09-12 更正）——
+  // ⚠️ 它的「省略」在兩個語境裡是**不同的值**（選人 1／它是不是 AoE 0），
+  // ⇒ ⭐ 比對端無法替它挑一個，⛔ 挑了就是再造一個第三種意思。
+  // 兩個具名解析器在 `sim/abilities/abilitySystem.ts`（`targetingRadius` / `authoredAoeRadius`）。
 ]);
 
 /** 省略 ⇒ 套 {@link OMITTED_DEFAULTS} 的值；其餘原樣回傳。 */

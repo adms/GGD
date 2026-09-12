@@ -86,6 +86,7 @@
 import { DEFAULT_CAST_TIME_RULES } from "../sim/castTimeRules";
 import { DEFAULT_CAST_TIME_TIERS } from "./castTimeTiers";
 import { SKILL_TIER_NAMES } from "./skillTiers";
+import { authoredAoeRadius } from "../sim/abilities/abilitySystem";
 import { DAMAGE_TIER_NAMES, DEFAULT_DAMAGE_TIERS } from "./damageTiers";
 import type { AbilityDef } from "../sim/content/defs";
 import { rankScalarMax } from "../sim/perRank";
@@ -334,7 +335,8 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
     hardCc,
     root,
     slow,
-    radius: def.radius ?? 0,
+    // ⭐ 省略 ⇒ `ABILITY_RADIUS_WHEN_OMITTED`（GH#1246）—— ⛔ 不要寫字面預設。
+    radius: authoredAoeRadius(def),
     dash,
     restore,
     effectDuration,
