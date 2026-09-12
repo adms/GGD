@@ -27,8 +27,8 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
     def test_priority_gap_sources_do_not_count_props_as_bodies(self):
         expected = {
             "zero-megaman": (1, 1, 0),
-            "ram": (1, 0, 1),
-            "beatrice": (1, 0, 1),
+            "ram": (1, 1, 1),
+            "beatrice": (1, 1, 1),
             "ssbu-mario": (16, 10, 0),
             "ssbu-mewtwo": (8, 2, 0),
             "ssbu-ptrainer": (8, 3, 0),
@@ -103,6 +103,26 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
         candidates = {row["id"]: row for row in self.source["ssbu-ptrainer"]["modelCandidates"]}
         for component_id, digest in expected.items():
             with self.subTest(component_id=component_id):
+                candidate = candidates[component_id]
+                self.assertEqual(candidate["sha256"], digest)
+                self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
+                self.assertFalse(candidate["runtimeSelectable"])
+                self.assertEqual(candidate["nativeAnimationCount"], 0)
+
+    def test_rezero_validated_components_survive_source_regeneration(self):
+        expected = {
+            "ram": (
+                "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+                "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+            ),
+            "beatrice": (
+                "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+                "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+            ),
+        }
+        for identity, (component_id, digest) in expected.items():
+            with self.subTest(identity=identity):
+                candidates = {row["id"]: row for row in self.source[identity]["modelCandidates"]}
                 candidate = candidates[component_id]
                 self.assertEqual(candidate["sha256"], digest)
                 self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")

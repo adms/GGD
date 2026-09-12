@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import numpy as np
 from convert_unity_prefab import (REFLECTION, converted_trs, decode_compressed_skin,
                                   has_materialized_morph_targets, skin_arrays, skin_positions,
-                                  trs_matrix)
+                                  source_orientation, trs_matrix)
 
 
 class PrefabSkin(unittest.TestCase):
@@ -26,6 +26,17 @@ class PrefabSkin(unittest.TestCase):
         np.testing.assert_allclose(trs_matrix(*converted_trs(tree)),REFLECTION@source@REFLECTION)
         for quaternion in [[0,0,0,0],[float('nan'),0,0,1]]:
             with self.assertRaises(ValueError): trs_matrix([0,0,0],quaternion,[1,1,1])
+
+    def test_explicit_z_up_orientation_maps_height_to_y(self):
+        matrix, quaternion = source_orientation('z')
+        source = np.array([2., 3., 5., 1.])
+        np.testing.assert_allclose(matrix @ source, [2., 5., -3., 1.])
+        np.testing.assert_allclose(
+            trs_matrix([0,0,0], quaternion, [1,1,1]),
+            matrix,
+            atol=1e-12,
+        )
+        with self.assertRaises(ValueError): source_orientation('x')
 
     def test_rigid_and_two_weight_channels_preserve_joint_order(self):
         joints,weights,rigid=skin_arrays([[4],[7]],None,2)

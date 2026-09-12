@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+      "nativeId": "beatricePrefab",
+      "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "No GGD hero definition or skill binding exists for this exact identity.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ]
+    }
+  ]
+}

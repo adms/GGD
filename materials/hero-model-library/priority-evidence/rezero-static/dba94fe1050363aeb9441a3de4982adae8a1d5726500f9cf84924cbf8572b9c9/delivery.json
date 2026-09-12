@@ -1,0 +1,94 @@
+{
+  "schema": "ggd.rezero-static-component-delivery@1",
+  "deliveryId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+  "sourceId": "thunderstore-rezero",
+  "sourceVersion": "0.1.1",
+  "character": {
+    "name": "Beatrice",
+    "nameZh": "碧翠絲",
+    "nativeId": "beatricePrefab",
+    "sourceWork": "Re:Zero",
+    "sourcePlatform": "PC Lethal Company community mod / Unity bundle"
+  },
+  "sourceArchiveSha256": "e846f2bf183ae9234c9ab675debfe62025e08e3aa2d8fa6871573185f9164a27",
+  "sourceBundle": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero/bundles/ReZeroModelReplacements.mbundle.bundle",
+    "sha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88"
+  },
+  "sourceConversion": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/source-conversion/beatrice/body.glb",
+    "bytes": 1455220,
+    "sha256": "cb0ad079f60ff8c0db0a7c77e0388c4f14821f8e82041e727e9629442c1a052b"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+    "bytes": 1246640,
+    "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c"
+  },
+  "finalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice",
+  "rebuildRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice",
+  "rebuildReceipt": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-ram-beatrice-thunderstore-0.1.1-v1/rebuild.json",
+    "bytes": 6331,
+    "sha256": "0da15e7c42a30bd7fd7d870b02521d6e0533f5b825283b85c7db34bfa5c6e327"
+  },
+  "metrics": {
+    "triangles": 20932,
+    "drawPrimitives": 1,
+    "skinCount": 1,
+    "jointCount": 228,
+    "textureCount": 1,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0,
+    "worldHeightMeters": 1.7999996700174594
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "finiteFloatValuesChecked": 188460,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+    "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+    "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+  },
+  "backupFileCount": 123,
+  "status": {
+    "downloaded": true,
+    "extracted": true,
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "c68ec3f4defa87ce5ca570ce7a3eca304825f2cba397c0c143f12a146ccc072c"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v1/normalize_validate.mts",
+      "sha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f"
+    }
+  ],
+  "gaps": [
+    "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+    "No GGD hero definition or skill binding exists for this exact identity.",
+    "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+    "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+    "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+    "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+  ]
+}

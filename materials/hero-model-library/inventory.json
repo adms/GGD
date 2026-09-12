@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-12T08:29:54+08:00",
-  "inputsSha256": "32a413f72c1c004bfdf34bc6ab75b9532b01ca68019c51c56211274b14a2c3c1",
+  "generatedAt": "2026-09-12T08:55:54+08:00",
+  "inputsSha256": "9fdbdff17fe1015bcb99becd2d129bc7853a613fdbe4ce2aadc3e7de0fb34750",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -57138,7 +57138,296 @@
             "release": null,
             "selectionVerified": false
           },
-          "selectionClass": "community-mod"
+          "selectionClass": "community-mod",
+          "supplementalDeliveries": [
+            {
+              "id": "rezero-ram-beatrice-thunderstore-0.1.1-v1-backup",
+              "sourceId": "thunderstore-rezero",
+              "resourceRole": "model-conversion-backup",
+              "localPath": "GGD-Asset-Library/staging/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup",
+              "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/source.tar.gz",
+              "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-full-readback.tar.gz",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.files.json",
+              "bytes": 47868710,
+              "sha256": "bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe",
+              "fileCount": 123,
+              "archiveFormat": "tar-gzip",
+              "archiveMemberRoot": "",
+              "readbackVerified": true,
+              "fullReadbackVerified": true,
+              "s3ReadbackVerified": true,
+              "localPreserved": true,
+              "acquiredAssetPayloadCount": 0,
+              "snapshotScope": "manifest-listed-files-only",
+              "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+              "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+              "receiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
+              "manifestSha256": "bab2ec77bee3306da81391366d74b26ed0ea3596f53540d6eb8555a7b596ffae",
+              "s3Use": "backup-only-not-runtime-entry"
+            }
+          ],
+          "componentCandidates": [
+            {
+              "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+              "conversionCandidateId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+              "sourceId": "thunderstore-rezero",
+              "sourceClass": "community-mod",
+              "selectionClass": "community-mod",
+              "nameZh": "拉姆",
+              "originalName": "Ram",
+              "workZh": "Re:Zero",
+              "sourceGame": "Lethal Company community model replacement",
+              "sourceGameReleasedAt": null,
+              "platform": "PC / Unity AssetBundle",
+              "nativeId": "ramPrefab",
+              "sourceVersion": "0.1.1",
+              "resourceRole": "independent-static-skinned-model-component",
+              "assetKinds": [
+                "model-component",
+                "skeleton",
+                "texture"
+              ],
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+              "bytes": 1180240,
+              "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+              "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+              "componentReady": true,
+              "converted": true,
+              "structuralValidationPassed": true,
+              "visualValidationPassed": true,
+              "runtimeReady": false,
+              "runtimeSelectable": false,
+              "defaultEligible": false,
+              "automaticEligible": false,
+              "fullHeroModel": false,
+              "runtimeDropdownRegistered": false,
+              "heroIds": [],
+              "relatedHeroIds": [],
+              "identityIds": [
+                "ram"
+              ],
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "triangles": 18454,
+              "drawPrimitives": 1,
+              "skinCount": 1,
+              "jointCount": 166,
+              "textureCount": 1,
+              "readiness": "accepted-independent-static-skinned-component-actions-missing",
+              "auditEvidence": "Thunderstore Re:Zero 0.1.1 ramPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,454 triangles, one skinned primitive, 166 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 185,692 float values are finite, and three WebGL views were accepted as a static component only.",
+              "limitations": [
+                "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+                "No GGD hero definition or skill binding exists for this exact identity.",
+                "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+                "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+                "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+                "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+              ],
+              "deliveryEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/delivery.json",
+                "bytes": 4483,
+                "sha256": "e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a"
+              },
+              "acceptanceEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/acceptance.json",
+                "bytes": 1224,
+                "sha256": "fdd81f1fbec72462272580d1c3330d410a9dfd2ce4f18c36fbc086436b982086"
+              },
+              "validationEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/validation.json",
+                "bytes": 2530,
+                "sha256": "4ed161528a987e60c1e91def771c1fca0de561a3c783f987e6feacceba1ceba5"
+              },
+              "visualEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/visual-review.json",
+                "bytes": 2353,
+                "sha256": "6032881df738ce81ec4632524e488fd4d877aa05939fce793f0c8e35cd6c1ac6"
+              },
+              "webglProofEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/webgl-proof.json",
+                "bytes": 2392,
+                "sha256": "d1af029b39a9f5627fa518a3323697c7b269bb9bf0a944e59959b56abb831d1e"
+              },
+              "sourceFidelityEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/source-fidelity.json",
+                "bytes": 1458,
+                "sha256": "1520bdf1162988456c39c6467bc65e9e7c6d58cb159366f38dad3ff0dec70f5c"
+              },
+              "sourceRebuildEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/source-rebuild.json",
+                "bytes": 1261,
+                "sha256": "0c17f04ec21ea3248367586e1e77c3300e2f59fd505791988498bca7b3a92d23"
+              },
+              "backupStatus": "s3-full-readback-verified",
+              "backupLocations": [
+                {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+                  "s3ArchiveMember": "conversion/final/ram/body.glb",
+                  "s3Use": "backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+                  "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+                }
+              ],
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+              "s3ArchiveMember": "conversion/final/ram/body.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+            },
+            {
+              "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+              "conversionCandidateId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+              "sourceId": "thunderstore-rezero",
+              "sourceClass": "community-mod",
+              "selectionClass": "community-mod",
+              "nameZh": "碧翠絲",
+              "originalName": "Beatrice",
+              "workZh": "Re:Zero",
+              "sourceGame": "Lethal Company community model replacement",
+              "sourceGameReleasedAt": null,
+              "platform": "PC / Unity AssetBundle",
+              "nativeId": "beatricePrefab",
+              "sourceVersion": "0.1.1",
+              "resourceRole": "independent-static-skinned-model-component",
+              "assetKinds": [
+                "model-component",
+                "skeleton",
+                "texture"
+              ],
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+              "bytes": 1246640,
+              "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+              "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+              "componentReady": true,
+              "converted": true,
+              "structuralValidationPassed": true,
+              "visualValidationPassed": true,
+              "runtimeReady": false,
+              "runtimeSelectable": false,
+              "defaultEligible": false,
+              "automaticEligible": false,
+              "fullHeroModel": false,
+              "runtimeDropdownRegistered": false,
+              "heroIds": [],
+              "relatedHeroIds": [],
+              "identityIds": [
+                "beatrice"
+              ],
+              "nativeAnimationCount": 0,
+              "proceduralAnimationCount": 0,
+              "triangles": 20932,
+              "drawPrimitives": 1,
+              "skinCount": 1,
+              "jointCount": 228,
+              "textureCount": 1,
+              "readiness": "accepted-independent-static-skinned-component-actions-missing",
+              "auditEvidence": "Thunderstore Re:Zero 0.1.1 beatricePrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 20,932 triangles, one skinned primitive, 228 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 188,460 float values are finite, and three WebGL views were accepted as a static component only.",
+              "limitations": [
+                "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+                "No GGD hero definition or skill binding exists for this exact identity.",
+                "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+                "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+                "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+                "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+              ],
+              "deliveryEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/delivery.json",
+                "bytes": 4526,
+                "sha256": "dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9"
+              },
+              "acceptanceEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/acceptance.json",
+                "bytes": 1234,
+                "sha256": "a3f703fd2d30307b29e1f23199e2d9311973afafae830cf9fff9b3a78d9cdf06"
+              },
+              "validationEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/validation.json",
+                "bytes": 2545,
+                "sha256": "1f1de627f44ff7bd741ea63dd65a9cbdad207e50b44f7777a1839eb31b72ee10"
+              },
+              "visualEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/visual-review.json",
+                "bytes": 2363,
+                "sha256": "9434d9445e936700c1faca9ca4552176110eab1033ed060411b1b0884e504f41"
+              },
+              "webglProofEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/webgl-proof.json",
+                "bytes": 2429,
+                "sha256": "364e35066f3f7d3adf18b77bbca52bbcd467e741fe1bccdb1ae5b0f9f623429d"
+              },
+              "sourceFidelityEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/source-fidelity.json",
+                "bytes": 1468,
+                "sha256": "e030b5d6a73897465e92dc68755d567c146497912a5e72715ac13bc23bd13dd8"
+              },
+              "sourceRebuildEvidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/source-rebuild.json",
+                "bytes": 1266,
+                "sha256": "ee7710d8dae41bfad8b548e202f00f0089e16f72d261b21df44b21e67b15b9ab"
+              },
+              "backupStatus": "s3-full-readback-verified",
+              "backupLocations": [
+                {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+                  "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+                  "s3Use": "backup-only-not-runtime-entry",
+                  "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+                  "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+                }
+              ],
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+              "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+            }
+          ],
+          "conversionAttempts": [
+            {
+              "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1-conversion",
+              "status": "accepted-independent-static-skinned-component-actions-missing",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram",
+              "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram",
+              "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/normalization.json",
+              "reportSha256": "02ead0d47c40f2e0628835023a746c025cba57ff50df165c57b65d4c355e1a91",
+              "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+              "outputSha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+              "nativeAnimationCount": 0,
+              "componentId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+              "runtimeReady": false,
+              "runtimeSelectable": false,
+              "backupStatus": "s3-full-readback-verified",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+              "s3ArchiveMember": "conversion/final/ram/body.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+            },
+            {
+              "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1-conversion",
+              "status": "accepted-independent-static-skinned-component-actions-missing",
+              "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice",
+              "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice",
+              "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/normalization.json",
+              "reportSha256": "2cf42e8195cc9a0efdc76d17d460fbc465c5f6c4f31a26ab0cbd69d3a1b0525f",
+              "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+              "outputSha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+              "nativeAnimationCount": 0,
+              "componentId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+              "runtimeReady": false,
+              "runtimeSelectable": false,
+              "backupStatus": "s3-full-readback-verified",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+              "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+            }
+          ],
+          "sourceClass": "community-mod"
         }
       ],
       "paidCandidates": [],
@@ -83756,7 +84045,296 @@
           "release": null,
           "selectionVerified": false
         },
-        "selectionClass": "community-mod"
+        "selectionClass": "community-mod",
+        "supplementalDeliveries": [
+          {
+            "id": "rezero-ram-beatrice-thunderstore-0.1.1-v1-backup",
+            "sourceId": "thunderstore-rezero",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "GGD-Asset-Library/staging/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-full-readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.files.json",
+            "bytes": 47868710,
+            "sha256": "bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe",
+            "fileCount": 123,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+            "receiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
+            "manifestSha256": "bab2ec77bee3306da81391366d74b26ed0ea3596f53540d6eb8555a7b596ffae",
+            "s3Use": "backup-only-not-runtime-entry"
+          }
+        ],
+        "componentCandidates": [
+          {
+            "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+            "conversionCandidateId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+            "sourceId": "thunderstore-rezero",
+            "sourceClass": "community-mod",
+            "selectionClass": "community-mod",
+            "nameZh": "拉姆",
+            "originalName": "Ram",
+            "workZh": "Re:Zero",
+            "sourceGame": "Lethal Company community model replacement",
+            "sourceGameReleasedAt": null,
+            "platform": "PC / Unity AssetBundle",
+            "nativeId": "ramPrefab",
+            "sourceVersion": "0.1.1",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+            "bytes": 1180240,
+            "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+            "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ram"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 18454,
+            "drawPrimitives": 1,
+            "skinCount": 1,
+            "jointCount": 166,
+            "textureCount": 1,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "auditEvidence": "Thunderstore Re:Zero 0.1.1 ramPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,454 triangles, one skinned primitive, 166 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 185,692 float values are finite, and three WebGL views were accepted as a static component only.",
+            "limitations": [
+              "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+              "No GGD hero definition or skill binding exists for this exact identity.",
+              "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+              "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+              "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+              "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/delivery.json",
+              "bytes": 4483,
+              "sha256": "e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/acceptance.json",
+              "bytes": 1224,
+              "sha256": "fdd81f1fbec72462272580d1c3330d410a9dfd2ce4f18c36fbc086436b982086"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/validation.json",
+              "bytes": 2530,
+              "sha256": "4ed161528a987e60c1e91def771c1fca0de561a3c783f987e6feacceba1ceba5"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/visual-review.json",
+              "bytes": 2353,
+              "sha256": "6032881df738ce81ec4632524e488fd4d877aa05939fce793f0c8e35cd6c1ac6"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/webgl-proof.json",
+              "bytes": 2392,
+              "sha256": "d1af029b39a9f5627fa518a3323697c7b269bb9bf0a944e59959b56abb831d1e"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/source-fidelity.json",
+              "bytes": 1458,
+              "sha256": "1520bdf1162988456c39c6467bc65e9e7c6d58cb159366f38dad3ff0dec70f5c"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/source-rebuild.json",
+              "bytes": 1261,
+              "sha256": "0c17f04ec21ea3248367586e1e77c3300e2f59fd505791988498bca7b3a92d23"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+                "s3ArchiveMember": "conversion/final/ram/body.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+                "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+            "s3ArchiveMember": "conversion/final/ram/body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+          },
+          {
+            "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+            "conversionCandidateId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+            "sourceId": "thunderstore-rezero",
+            "sourceClass": "community-mod",
+            "selectionClass": "community-mod",
+            "nameZh": "碧翠絲",
+            "originalName": "Beatrice",
+            "workZh": "Re:Zero",
+            "sourceGame": "Lethal Company community model replacement",
+            "sourceGameReleasedAt": null,
+            "platform": "PC / Unity AssetBundle",
+            "nativeId": "beatricePrefab",
+            "sourceVersion": "0.1.1",
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+            "bytes": 1246640,
+            "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+            "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "beatrice"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 20932,
+            "drawPrimitives": 1,
+            "skinCount": 1,
+            "jointCount": 228,
+            "textureCount": 1,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "auditEvidence": "Thunderstore Re:Zero 0.1.1 beatricePrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 20,932 triangles, one skinned primitive, 228 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 188,460 float values are finite, and three WebGL views were accepted as a static component only.",
+            "limitations": [
+              "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+              "No GGD hero definition or skill binding exists for this exact identity.",
+              "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+              "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+              "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+              "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/delivery.json",
+              "bytes": 4526,
+              "sha256": "dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/acceptance.json",
+              "bytes": 1234,
+              "sha256": "a3f703fd2d30307b29e1f23199e2d9311973afafae830cf9fff9b3a78d9cdf06"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/validation.json",
+              "bytes": 2545,
+              "sha256": "1f1de627f44ff7bd741ea63dd65a9cbdad207e50b44f7777a1839eb31b72ee10"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/visual-review.json",
+              "bytes": 2363,
+              "sha256": "9434d9445e936700c1faca9ca4552176110eab1033ed060411b1b0884e504f41"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/webgl-proof.json",
+              "bytes": 2429,
+              "sha256": "364e35066f3f7d3adf18b77bbca52bbcd467e741fe1bccdb1ae5b0f9f623429d"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/source-fidelity.json",
+              "bytes": 1468,
+              "sha256": "e030b5d6a73897465e92dc68755d567c146497912a5e72715ac13bc23bd13dd8"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/source-rebuild.json",
+              "bytes": 1266,
+              "sha256": "ee7710d8dae41bfad8b548e202f00f0089e16f72d261b21df44b21e67b15b9ab"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+                "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+                "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+            "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+          }
+        ],
+        "conversionAttempts": [
+          {
+            "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1-conversion",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram",
+            "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram",
+            "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/normalization.json",
+            "reportSha256": "02ead0d47c40f2e0628835023a746c025cba57ff50df165c57b65d4c355e1a91",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+            "outputSha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+            "nativeAnimationCount": 0,
+            "componentId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "backupStatus": "s3-full-readback-verified",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+            "s3ArchiveMember": "conversion/final/ram/body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+          },
+          {
+            "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1-conversion",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice",
+            "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice",
+            "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/normalization.json",
+            "reportSha256": "2cf42e8195cc9a0efdc76d17d460fbc465c5f6c4f31a26ab0cbd69d3a1b0525f",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+            "outputSha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+            "nativeAnimationCount": 0,
+            "componentId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "backupStatus": "s3-full-readback-verified",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
+            "s3ArchiveMember": "conversion/final/beatrice/body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92"
+          }
+        ],
+        "sourceClass": "community-mod"
       },
       {
         "id": "thunderstore-gon",

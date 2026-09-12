@@ -49,6 +49,23 @@ def converted_trs(tree):
     return [-t[0], t[1], t[2]], [q[0], -q[1], -q[2], q[3]], s
 
 
+def source_orientation(up_axis):
+    """Return the explicit source-up to glTF Y-up transform and quaternion."""
+    if up_axis == 'y':
+        return np.eye(4), [0., 0., 0., 1.]
+    if up_axis == 'z':
+        # Rotate -90 degrees around X: +Z becomes +Y and +Y becomes -Z.
+        matrix = np.array([
+            [1., 0., 0., 0.],
+            [0., 0., 1., 0.],
+            [0., -1., 0., 0.],
+            [0., 0., 0., 1.],
+        ])
+        half = np.sqrt(.5)
+        return matrix, [-half, 0., 0., half]
+    raise ValueError('Source up axis must be y or z')
+
+
 def skin_positions(positions, indices, weights, matrices):
     homogeneous = np.column_stack([positions, np.ones(len(positions))])
     transformed = np.einsum('nkij,nj->nki', matrices[indices], homogeneous)
@@ -184,7 +201,7 @@ class GLB:
         return hashlib.sha256(blob).hexdigest()
 
 
-def convert(bundle, output, root_name, height=1.8):
+def convert(bundle, output, root_name, height=1.8, source_up_axis='y'):
     import UnityPy
     from UnityPy.helpers.MeshHelper import MeshHandler
     if UnityPy.__version__ != '1.25.3':
@@ -360,23 +377,38 @@ def convert(bundle, output, root_name, height=1.8):
     if not meshes:
         raise ValueError('No skinned meshes below the selected root')
     positions = np.concatenate(all_positions)
-    minimum, maximum = positions.min(axis=0), positions.max(axis=0)
-    if not np.isfinite(positions).all() or maximum[1]-minimum[1] < 1e-8:
+    orientation, orientation_quaternion = source_orientation(source_up_axis)
+    # Use exact component selection for bounds. Some Accelerate/BLAS builds
+    # emit spurious overflow warnings for a zero-heavy 4x4 matrix multiply,
+    # even when every input and result is finite.
+    oriented_positions = (positions.copy() if source_up_axis == 'y'
+                          else positions[:, [0, 2, 1]] * [1., 1., -1.])
+    minimum, maximum = oriented_positions.min(axis=0), oriented_positions.max(axis=0)
+    if not np.isfinite(oriented_positions).all() or maximum[1]-minimum[1] < 1e-8:
         raise ValueError('Invalid or zero-height skinned bounds')
     scale = height/(maximum[1]-minimum[1])
     center = (minimum+maximum)*.5
-    glb.doc['nodes'][0].update(scale=[scale]*3, translation=(-np.array([center[0], minimum[1], center[2]])*scale).tolist())
+    glb.doc['nodes'][0].update(
+        scale=[scale]*3,
+        translation=(-np.array([center[0], minimum[1], center[2]])*scale).tolist(),
+        rotation=orientation_quaternion,
+    )
     output.mkdir(parents=True, exist_ok=True)
     glb_path = output/'body.glb'
     digest = glb.write(glb_path)
     receipt = {'schema': 'ggd-unity-prefab-conversion@1', 'source': {'path': str(bundle),
                'sha256': hashlib.sha256(bundle.read_bytes()).hexdigest()}, 'unityPy': UnityPy.__version__,
                'rootName': root_name, 'removedScenePlacement': transforms[root], 'meshes': meshes,
+               'sourceUpAxis': source_up_axis,
+               'sourceToGltfOrientation': {'rotation': orientation_quaternion,
+                                            'matrix': orientation.tolist()},
                'output': {'path': 'body.glb', 'sha256': digest, 'bytes': glb_path.stat().st_size,
                           'height': height, 'materials': len(glb.doc['materials']), 'textures': len(glb.doc['textures']),
                           'nodes': len(glb.doc['nodes']), 'animations': 0},
                'drawPrimitives': sum(len(m['primitives']) for m in glb.doc['meshes']),
                'sourceAnimationClips': sum(o.type.name == 'AnimationClip' for o in readers.values()),
+               'sourceBoundsBeforeOrientation': {'min': positions.min(axis=0).tolist(),
+                                                  'max': positions.max(axis=0).tolist()},
                'sourceBoundsBeforeNormalization': {'min': minimum.tolist(), 'max': maximum.tolist()},
                'limitations': limitations, 'runtimeReady': False, 'backendSelectionVerified': False}
     (output/'conversion.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2)+'\n')
@@ -389,5 +421,6 @@ if __name__ == '__main__':
     parser.add_argument('output', type=Path)
     parser.add_argument('--root-name', required=True)
     parser.add_argument('--height', type=float, default=1.8)
+    parser.add_argument('--source-up-axis', choices=('y', 'z'), default='y')
     args = parser.parse_args()
-    print(json.dumps(convert(args.bundle, args.output, args.root_name, args.height)['output'], ensure_ascii=False))
+    print(json.dumps(convert(args.bundle, args.output, args.root_name, args.height, args.source_up_axis)['output'], ensure_ascii=False))

@@ -74,6 +74,34 @@ def validate_component(candidate, repo):
                 'SSBU structural or finite-accessor validation failed')
         require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and validation.get('defaultEligible') is False,
                 'SSBU component validation cannot claim runtime readiness')
+    elif schema == 'ggd.rezero-static-component-validation@1':
+        require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'Re:Zero conversion candidate mismatch')
+        glb=validation.get('glb',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']),
+                'Re:Zero validation output pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require(inspection.get('skinCount') == candidate.get('skinCount') and
+                inspection.get('joints') == [candidate.get('jointCount')], 'Unexpected Re:Zero skin/joint shape')
+        require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'),
+                'Every Re:Zero model primitive must be skinned')
+        require(inspection.get('clips') == [] and inspection.get('clipCount') == 0,
+                'Static Re:Zero component cannot contain clips')
+        require(inspection.get('budget',{}).get('errors') == [], 'Re:Zero component exceeds current budget')
+        issues=validation.get('khronosIssues',{})
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
+                'Direct Re:Zero Khronos validation failed')
+        require(validation.get('structuralValidationPassed') is True and
+                validation.get('finiteFloatAccessors',{}).get('passed') is True and
+                validation.get('allAccessorBytesPreserved') is True,
+                'Re:Zero structural, finite-accessor or normalization preservation check failed')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and
+                validation.get('defaultEligible') is False, 'Re:Zero validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.rezero-static-component-source-rebuild@1' and
+                rebuild.get('componentId') == candidate['id'], 'Unexpected Re:Zero rebuild proof')
+        require(rebuild.get('sourceConversionByteIdentical') is True and
+                rebuild.get('normalizedGlbByteIdentical') is True and
+                rebuild.get('outputSha256') == candidate['sha256'], 'Re:Zero deterministic rebuild proof failed')
     else:
         raise ValueError('Unexpected skinned validation schema: '+str(schema))
     require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,

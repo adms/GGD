@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "1432d7404ed0dd000eb8be7c574541e9a5117f065cdff227198732358e9b50e3"
+      "sha256": "33f2c89342dac84639f263866359cea632621b0d2df418aa41355fdc458dd88e"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "03fc0117fd9f3c3a95b83118b318470d1efe0d3323f5cceda713bf827ccb5500"
+      "sha256": "71792e2dce5437f7936641745fa9708d3ab17acb1c523aadfe1844f4c30915bc"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "0953c28e2f29801b3c73d57ce790a4036cfd925ae0b113cff6d9f2cfd1bb5a69"
+      "sha256": "0d06b13139fe27c7ed6271aa2e95d381aabea1c57aff9d45f18d45bd048eb203"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -145279,12 +145279,53 @@
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero/bundles/ReZeroModelReplacements.mbundle.bundle",
           "localSizeMatches": true
+        },
+        {
+          "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+          "sourceId": "thunderstore-rezero",
+          "library": "community",
+          "nativeId": "ramPrefab",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+          "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+          "existsLocal": true,
+          "bytes": 1180240,
+          "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/validation.json",
+            "bytes": 2530,
+            "sha256": "4ed161528a987e60c1e91def771c1fca0de561a3c783f987e6feacceba1ceba5"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/visual-review.json",
+            "bytes": 2353,
+            "sha256": "6032881df738ce81ec4632524e488fd4d877aa05939fce793f0c8e35cd6c1ac6"
+          },
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "No GGD hero definition or skill binding exists for this exact identity.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 ramPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,454 triangles, one skinned primitive, 166 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 185,692 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "ram"
@@ -145302,7 +145343,7 @@
       "candidateBreakdown": {
         "characterBodySources": 1,
         "standaloneCharacterBodies": 0,
-        "componentsOrProps": 0,
+        "componentsOrProps": 1,
         "sharedContainers": 1,
         "otherCandidateFiles": 0
       },
@@ -145316,7 +145357,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "尚未逐角色解析／建檔",
+        "motion": "已核對版本未含動作；其他來源待核",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "尚未建立角色專屬音訊對應",
         "voice": "尚未建立角色專屬語音對應",
@@ -145327,7 +145368,16 @@
         "sourceLabels": [],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [],
+        "motionCandidateCounts": [
+          {
+            "candidateId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
         "nativeMotionSources": [],
         "evidencePaths": [],
         "classificationIsAcquisitionSnapshot": true
@@ -145378,12 +145428,53 @@
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero/bundles/ReZeroModelReplacements.mbundle.bundle",
           "localSizeMatches": true
+        },
+        {
+          "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+          "sourceId": "thunderstore-rezero",
+          "library": "community",
+          "nativeId": "beatricePrefab",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+          "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+          "existsLocal": true,
+          "bytes": 1246640,
+          "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/validation.json",
+            "bytes": 2545,
+            "sha256": "1f1de627f44ff7bd741ea63dd65a9cbdad207e50b44f7777a1839eb31b72ee10"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/visual-review.json",
+            "bytes": 2363,
+            "sha256": "9434d9445e936700c1faca9ca4552176110eab1033ed060411b1b0884e504f41"
+          },
+          "limitations": [
+            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+            "No GGD hero definition or skill binding exists for this exact identity.",
+            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
+        "Thunderstore Re:Zero 0.1.1 beatricePrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 20,932 triangles, one skinned primitive, 228 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 188,460 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "beatrice"
@@ -145401,7 +145492,7 @@
       "candidateBreakdown": {
         "characterBodySources": 1,
         "standaloneCharacterBodies": 0,
-        "componentsOrProps": 0,
+        "componentsOrProps": 1,
         "sharedContainers": 1,
         "otherCandidateFiles": 0
       },
@@ -145415,7 +145506,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "尚未逐角色解析／建檔",
+        "motion": "已核對版本未含動作；其他來源待核",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "尚未建立角色專屬音訊對應",
         "voice": "尚未建立角色專屬語音對應",
@@ -145426,7 +145517,16 @@
         "sourceLabels": [],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [],
+        "motionCandidateCounts": [
+          {
+            "candidateId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
         "nativeMotionSources": [],
         "evidencePaths": [],
         "classificationIsAcquisitionSnapshot": true
