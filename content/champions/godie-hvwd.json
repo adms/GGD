@@ -189,7 +189,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-hvwd.r",
@@ -223,9 +224,9 @@
           "modelKey": "imported.aquaspikeversion2",
           "clip": "idle",
           "soundKey": "wc3.nagabuildingcancel",
-          "scale": 3.0,
+          "scale": 3,
           "distance": 0.8,
-          "lifeSec": 6.0
+          "lifeSec": 6
         }
       ],
       "vfxKey": "fx.prim.void.swarm-lg",
@@ -250,7 +251,8 @@
           "damageType": "magic",
           "castTimeSec": 1.633
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

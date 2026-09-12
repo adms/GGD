@@ -101,15 +101,16 @@
             "damageType": "true",
             "applyTo": "self",
             "amountPerTick": {
-              "flat": 10.0
+              "flat": 10
             },
-            "intervalSec": 1.0,
-            "durationSec": 10.0,
+            "intervalSec": 1,
+            "durationSec": 10,
             "stacking": "refresh"
           },
           "castTimeSec": 1.7
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-ogrh.w",

@@ -58,7 +58,7 @@ def validate_component(candidate, repo):
     elif schema == 'ggd-ssbu-blend-component-validation@1':
         require(validation.get('candidateId') == candidate.get('conversionCandidateId'), 'SSBU conversion candidate mismatch')
         glb=validation.get('glb',{})
-        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']), 'SSBU validation output pin mismatch')
+        require((glb.get('sha256'),glb.get('bytes')) == (accepted_sha,accepted_bytes), 'SSBU validation source-output pin mismatch')
         inspection=validation.get('ggdInspection',{})
         require(inspection.get('skinCount') == candidate.get('skinCount') and inspection.get('joints') == [candidate.get('jointCount')],
                 'Unexpected SSBU skin/joint shape')
@@ -139,7 +139,7 @@ def validate_component(candidate, repo):
         require(rebuild.get('componentId') == candidate['id'], 'SSBU rebuild component ID mismatch')
         require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('bothValidationsPassed') is True,
                 'SSBU deterministic rebuild proof failed')
-        require(rebuild.get('outputSha256') == candidate['sha256'], 'SSBU rebuild output pin mismatch')
+        require(rebuild.get('outputSha256') == accepted_sha, 'SSBU rebuild source-output pin mismatch')
     return dict(candidate,gitAbsolutePath=str(path))
 
 

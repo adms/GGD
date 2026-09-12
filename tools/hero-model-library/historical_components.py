@@ -39,7 +39,7 @@ def source_historical_artifacts(downloads, repo):
             require(artifact_id not in seen, 'Duplicate historical source artifact ID: ' + artifact_id)
             seen.add(artifact_id)
             pin = {
-                'gitPath': artifact['gitPathAtIngest'],
+                'gitPath': artifact.get('gitArchivePath', artifact['gitPathAtIngest']),
                 'bytes': artifact['bytes'],
                 'sha256': artifact['sha256'],
             }
@@ -58,7 +58,7 @@ def source_historical_artifacts(downloads, repo):
                 'assetKinds': candidate['assetKinds'],
                 'bytes': artifact['bytes'],
                 'sha256': artifact['sha256'],
-                'gitPath': artifact['gitPathAtIngest'],
+                'gitPath': artifact.get('gitArchivePath', artifact['gitPathAtIngest']),
                 'gitAbsolutePath': str(model_path),
                 'recoveredFromGitCommit': candidate['recoveredFromGitCommit'],
                 'normalizedReplacementSha256': candidate['sha256'],

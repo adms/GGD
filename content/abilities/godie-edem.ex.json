@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    120.0
+    120
   ],
   "manaCost": [
-    600.0
+    600
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
@@ -21,9 +21,9 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "flat": 1.0
+        "flat": 1
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true,
       "onHitTargets": [
@@ -36,29 +36,29 @@
               "value": -0.4
             }
           ],
-          "duration": 10.0,
+          "duration": 10,
           "dispellable": true,
           "polarity": "debuff"
         },
         {
           "kind": "applyStatus",
           "statusId": "burn",
-          "duration": 10.0
+          "duration": 10
         },
         {
           "kind": "applyStatus",
           "statusId": "paralysis",
-          "duration": 10.0,
+          "duration": 10,
           "silenced": true
         },
         {
           "kind": "dot",
           "damageType": "magic",
           "amountPerTick": {
-            "flat": 400.0
+            "flat": 400
           },
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
+          "intervalSec": 1,
+          "durationSec": 10,
           "stacking": "refresh"
         }
       ]
@@ -70,8 +70,8 @@
       "modelKey": "imported.netherstrike",
       "clip": "idle",
       "soundKey": "wc3.flamestrikebirth1",
-      "scale": 4.0,
-      "lifeSec": 2.0
+      "scale": 4,
+      "lifeSec": 2
     }
   ],
   "template": {
@@ -80,9 +80,9 @@
       "castType": "self",
       "damageType": "magic",
       "damage": {
-        "flat": 1.0
+        "flat": 1
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true,
       "onHitTargets": [
@@ -95,29 +95,29 @@
               "value": -0.4
             }
           ],
-          "duration": 10.0,
+          "duration": 10,
           "dispellable": true,
           "polarity": "debuff"
         },
         {
           "kind": "applyStatus",
           "statusId": "burn",
-          "duration": 10.0
+          "duration": 10
         },
         {
           "kind": "applyStatus",
           "statusId": "paralysis",
-          "duration": 10.0,
+          "duration": 10,
           "silenced": true
         },
         {
           "kind": "dot",
           "damageType": "magic",
           "amountPerTick": {
-            "flat": 400.0
+            "flat": 400
           },
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
+          "intervalSec": 1,
+          "durationSec": 10,
           "stacking": "refresh"
         }
       ],
@@ -127,8 +127,8 @@
         "modelKey": "imported.netherstrike",
         "clip": "idle",
         "soundKey": "wc3.flamestrikebirth1",
-        "scale": 4.0,
-        "lifeSec": 2.0
+        "scale": 4,
+        "lifeSec": 2
       },
       "castTimeSec": 1.633
     }
@@ -137,5 +137,6 @@
   "vfxKey": "fx.prim.void.explosion-lg",
   "cooldownTier": "極大",
   "manaCostTier": "大",
-  "castTimeSec": 1.633
+  "castTimeSec": 1.633,
+  "castTimeTier": "極大"
 }

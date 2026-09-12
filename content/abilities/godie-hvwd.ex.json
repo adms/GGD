@@ -23,9 +23,9 @@
       "modelKey": "imported.aquaspikeversion2",
       "clip": "idle",
       "soundKey": "wc3.nagabuildingcancel",
-      "scale": 8.0,
+      "scale": 8,
       "distance": 1.6,
-      "lifeSec": 1.0
+      "lifeSec": 1
     }
   ],
   "template": {
@@ -43,7 +43,7 @@
       "damageType": "magic",
       "status": {
         "statusId": "slow40",
-        "duration": 3.0,
+        "duration": 3,
         "moveSpeedMult": 0.6
       },
       "castTimeSec": 1.833
@@ -54,5 +54,6 @@
   "targetsEnemies": true,
   "castTimeSec": 1.833,
   "rangeTier": "中",
-  "range": 6
+  "range": 6,
+  "castTimeTier": "極大"
 }

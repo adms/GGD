@@ -200,7 +200,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-yogiri.r.webp"
+      "icon": "assets/icons/abilities/b2-yogiri.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.7,
@@ -345,7 +346,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-yogiri.w.webp"
+      "icon": "assets/icons/abilities/b2-yogiri.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "mage",

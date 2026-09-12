@@ -14,10 +14,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
-  "radius": 12.0,
+  "radius": 12,
   "targetsEnemies": true,
   "effects": [
     {
@@ -34,7 +34,7 @@
           "effects": [
             {
               "kind": "grantGold",
-              "flat": 25.0,
+              "flat": 25,
               "to": "self"
             }
           ]
@@ -56,7 +56,7 @@
             {
               "kind": "applyBuff",
               "applyTo": "self",
-              "duration": 8.0,
+              "duration": 8,
               "modifiers": [
                 {
                   "stat": "ad",
@@ -76,12 +76,13 @@
     },
     {
       "kind": "taunt",
-      "durationSec": 3.0,
-      "radius": 12.0,
+      "durationSec": 3,
+      "radius": 12,
       "radiusTier": "極大"
     }
   ],
   "vfxKey": "fx.prim.arcane.summon",
   "castTimeSec": 1.033,
-  "radiusTier": "極大"
+  "radiusTier": "極大",
+  "castTimeTier": "極大"
 }

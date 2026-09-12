@@ -17,7 +17,7 @@
   ],
   "id": "b2-ned.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "本體沒批假也能撤",
@@ -39,5 +39,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-ned.ex.webp"
+  "icon": "assets/icons/abilities/b2-ned.ex.webp",
+  "castTimeTier": "極大"
 }

@@ -97,7 +97,8 @@
           "damageType": "magic",
           "castTimeSec": 1.033
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-o00l.w",
@@ -140,13 +141,14 @@
       },
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "radius": 3.0,
+      "radius": 3,
       "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-o00l.e",
@@ -242,9 +244,10 @@
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
       "castTimeSec": 2.433,
-      "range": 0.0,
+      "range": 0,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

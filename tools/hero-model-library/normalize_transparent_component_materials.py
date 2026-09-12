@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Normalize transparent body atlases without changing source geometry or images.
 
-The four inputs covered here were admitted before the repository-wide alpha
+The inputs covered here were admitted before the repository-wide alpha
 backdrop gate existed.  Their source bytes stay pinned in the local/S3 archive;
 the Git deliverable is a new content-addressed GLB whose only semantic change is
 ``material.alphaMode: OPAQUE -> BLEND``.
@@ -19,12 +19,16 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 INDEX = REPO / "materials/hero-model-library/download-sources.json"
 EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json"
-LOCAL_ROOT = REPO.parent / "GGD-Asset-Library/conversions/transparent-component-material-normalization-v1"
 TARGET_IDS = {
     "zero-lancer-p1-static-skinned-v1",
     "zero-lancer-p2-static-skinned-v1",
     "historical-kita-kita-7bc2fa3f8",
     "historical-lord-nightmares-7bc2fa3f8",
+    "ssbu-mario-c00-static-skinned-v1",
+    "ssbu-mewtwo-c00-static-skinned-v1",
+    "ssbu-ryu-c00-static-skinned-v1",
+    "ssbu-ptrainer-male-c00-static-skinned-v1",
+    "ssbu-ptrainer-female-c01-static-skinned-v1",
 }
 
 
@@ -54,7 +58,7 @@ def candidates(doc: dict):
                     yield candidate
 
 
-def build(index: dict) -> tuple[dict, dict, list[tuple[Path, bytes]]]:
+def build(index: dict, local_root: Path) -> tuple[dict, dict, list[tuple[Path, bytes]]]:
     module = alpha_module()
     updated = copy.deepcopy(index)
     rows = []
@@ -78,10 +82,17 @@ def build(index: dict) -> tuple[dict, dict, list[tuple[Path, bytes]]]:
         source_path = Path(source["absolutePath"])
         source_pin = pin(source_path)
         assert (source_pin["bytes"], source_pin["sha256"]) == (source["bytes"], source["sha256"]), candidate_id
+        if candidate.get("recoveredFromGitCommit") == "7bc2fa3f8":
+            archive_rel = (
+                "materials/hero-model-library/source-artifacts/"
+                f"historical-model-recovery-7bc2fa3f8/{source_pin['sha256']}.glb"
+            )
+            source["gitArchivePath"] = archive_rel
+            writes.append((REPO / archive_rel, source_path.read_bytes()))
         before, binary = module.chunks(source_path.read_bytes())
         after = copy.deepcopy(before)
         changes = module.repairs(after, binary)
-        assert len(changes) == 1, (candidate_id, changes)
+        assert changes, (candidate_id, changes)
         output = module.encode(after, binary)
         decoded, output_binary = module.chunks(output)
         assert output_binary == binary
@@ -89,7 +100,7 @@ def build(index: dict) -> tuple[dict, dict, list[tuple[Path, bytes]]]:
             if key != "materials":
                 assert before.get(key) == decoded.get(key), (candidate_id, key)
         out_sha = sha(output)
-        local_path = LOCAL_ROOT / candidate_id / "component.glb"
+        local_path = local_root / candidate_id / "component.glb"
         git_rel = f"content/assets/models/community/{out_sha}.glb"
         git_path = REPO / git_rel
         writes.extend([(local_path, output), (git_path, output)])
@@ -117,6 +128,7 @@ def build(index: dict) -> tuple[dict, dict, list[tuple[Path, bytes]]]:
             "nonMaterialJsonByteSemanticIdentical": True,
             "sourcePreservation": {
                 "local": source["absolutePath"],
+                "gitArchivePath": source.get("gitArchivePath"),
                 "s3Uri": source.get("s3Uri"),
                 "s3ArchiveMember": source.get("s3ArchiveMember"),
             },
@@ -142,9 +154,19 @@ def main() -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--check", action="store_true")
     mode.add_argument("--write", action="store_true")
+    parser.add_argument(
+        "--workspace-root",
+        type=Path,
+        default=REPO.parent,
+        help="Workspace containing GGD-Asset-Library; pass explicitly from an isolated worktree.",
+    )
     args = parser.parse_args()
+    local_root = (
+        args.workspace_root.resolve()
+        / "GGD-Asset-Library/conversions/transparent-component-material-normalization-v1"
+    )
     current = json.loads(INDEX.read_text())
-    updated, evidence, writes = build(current)
+    updated, evidence, writes = build(current, local_root)
     evidence_bytes = (json.dumps(evidence, ensure_ascii=False, indent=2) + "\n").encode()
     if args.check:
         assert current == updated, "download-sources.json needs transparent component normalization"

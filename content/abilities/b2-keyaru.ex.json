@@ -25,7 +25,7 @@
   ],
   "id": "b2-keyaru.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "電子帳單回饋魔力",
@@ -68,5 +68,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-keyaru.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

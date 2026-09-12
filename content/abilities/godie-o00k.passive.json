@@ -14,10 +14,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
-  "radius": 12.0,
+  "radius": 12,
   "sfxKey": "wc3.nocute",
   "targetsEnemies": true,
   "effects": [
@@ -28,11 +28,12 @@
     },
     {
       "kind": "taunt",
-      "durationSec": 3.0,
-      "radius": 12.0,
+      "durationSec": 3,
+      "radius": 12,
       "radiusTier": "極大"
     }
   ],
   "castTimeSec": 1.033,
-  "radiusTier": "極大"
+  "radiusTier": "極大",
+  "castTimeTier": "極大"
 }

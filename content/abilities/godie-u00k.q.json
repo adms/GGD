@@ -40,9 +40,10 @@
   },
   "vfxKey": "fx.prim.void.explosion",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "castTimeSec": 1.433,
   "rangeTier": "極大",
   "range": 12,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

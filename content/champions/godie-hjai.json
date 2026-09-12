@@ -197,13 +197,14 @@
       },
       "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.033,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "radiusTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-hjai.e",
@@ -357,7 +358,7 @@
                   }
                 ]
               },
-              "radius": 8.0,
+              "radius": 8,
               "radiusTier": "大",
               "includeOrigin": true,
               "onHitTargets": [
@@ -426,13 +427,14 @@
       ],
       "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
-      "radius": 8.0,
+      "radius": 8,
       "castTimeSec": 1.233,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
       "manaCostTier": "小",
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-hjai.r",
@@ -461,7 +463,7 @@
           "path": "orbit",
           "count": 1,
           "distance": 0.1,
-          "speed": 1.0,
+          "speed": 1,
           "lifeSec": 2.5
         }
       ],
@@ -497,12 +499,13 @@
           "damageType": "magic",
           "status": {
             "statusId": "slow40",
-            "duration": 2.0,
+            "duration": 2,
             "moveSpeedMult": 0.6
           },
           "castTimeSec": 2
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "exAbility": "godie-hjai.ex",

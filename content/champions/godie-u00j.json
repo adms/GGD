@@ -227,13 +227,14 @@
       },
       "vfxKey": "fx.prim.void.pulse",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.633,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00j.r",
@@ -262,7 +263,7 @@
           "modelKey": "imported.meteor",
           "clip": "idle",
           "soundKey": "wc3.infernalbirth1",
-          "scale": 5.0
+          "scale": 5
         }
       ],
       "template": {
@@ -287,7 +288,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

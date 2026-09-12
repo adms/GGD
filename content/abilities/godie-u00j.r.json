@@ -27,7 +27,7 @@
       "modelKey": "imported.meteor",
       "clip": "idle",
       "soundKey": "wc3.infernalbirth1",
-      "scale": 5.0
+      "scale": 5
     }
   ],
   "template": {
@@ -51,5 +51,6 @@
   "schema": "ability@1",
   "castTimeSec": 1.633,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

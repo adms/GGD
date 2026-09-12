@@ -262,7 +262,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-zenitsu.r.webp"
+      "icon": "assets/icons/abilities/b2-zenitsu.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -387,7 +388,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-zenitsu.w.webp"
+      "icon": "assets/icons/abilities/b2-zenitsu.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "fighter",

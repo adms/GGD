@@ -183,9 +183,9 @@
       ],
       "id": "b2-matthias.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "期末考禁止交頭接耳",
@@ -221,7 +221,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-matthias.r.webp"
+      "icon": "assets/icons/abilities/b2-matthias.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.567,

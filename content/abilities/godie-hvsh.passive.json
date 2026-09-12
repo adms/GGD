@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "radius": 4.5,
   "targetsEnemies": true,
   "effects": [
@@ -27,13 +27,13 @@
       "modelKey": "w3x.stock.tomeofretrainingcaster",
       "clip": "idle",
       "soundKey": "wc3.thunderclapcaster",
-      "scale": 4.0,
+      "scale": 4,
       "tint": [
-        1.0,
-        0.0,
-        1.0
+        1,
+        0,
+        1
       ],
-      "lifeSec": 2.0
+      "lifeSec": 2
     }
   ],
   "template": {
@@ -41,7 +41,7 @@
     "params": {
       "status": {
         "statusId": "burnstun",
-        "duration": 2.0,
+        "duration": 2,
         "stun": true
       },
       "radius": 245.45,
@@ -50,5 +50,6 @@
   },
   "vfxKey": "fx.prim.earth.nova-lg",
   "castTimeSec": 1.7,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

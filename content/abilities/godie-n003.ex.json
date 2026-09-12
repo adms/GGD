@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -20,7 +20,7 @@
     "ref": "tpl-transform",
     "params": {
       "to": "alternate",
-      "durationSec": 7.0,
+      "durationSec": 7,
       "modifiers": [
         {
           "stat": "ad",
@@ -28,11 +28,12 @@
           "value": 0.35
         }
       ],
-      "buffDurationSec": 6.0,
+      "buffDurationSec": 6,
       "castTimeSec": 1.033
     }
   },
   "vfxKey": "fx.prim.ice.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "castTimeTier": "極大"
 }

@@ -44,5 +44,6 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 2.433,
-  "range": 0.0
+  "range": 0,
+  "castTimeTier": "極大"
 }

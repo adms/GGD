@@ -27,7 +27,7 @@
   ],
   "id": "b2-yogiri.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "通知換成勿擾模式",
@@ -73,5 +73,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-yogiri.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

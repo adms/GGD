@@ -44,7 +44,7 @@
     "params": {
       "mode": "toPoint",
       "applyTo": "self",
-      "apexHeight": 600.0,
+      "apexHeight": 600,
       "durationSec": 0.82,
       "landRadius": 249.82,
       "damage": {
@@ -72,5 +72,6 @@
   "castTimeSec": 1.133,
   "rangeTier": "大",
   "range": 8,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

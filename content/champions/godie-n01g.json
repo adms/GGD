@@ -94,13 +94,14 @@
       ],
       "vfxKey": "fx.prim.ice.nova",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-n01g.w",
@@ -188,7 +189,8 @@
           "damageType": "magic",
           "castTimeSec": 1.7
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-n01g.r",
@@ -303,7 +305,7 @@
               "kind": "screenShake",
               "shape": "single",
               "amplitude": 0.8,
-              "durationSec": 1.0,
+              "durationSec": 1,
               "applyTo": "all"
             }
           ],
@@ -318,7 +320,7 @@
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 2.0,
+              "duration": 2,
               "moveSpeedMult": 0.5
             }
           ],
@@ -354,14 +356,15 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
           "damageType": "magic",
           "castTimeSec": 1.633
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

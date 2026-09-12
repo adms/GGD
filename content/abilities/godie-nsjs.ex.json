@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -32,5 +32,6 @@
   },
   "vfxKey": "fx.prim.blood.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "castTimeTier": "極大"
 }

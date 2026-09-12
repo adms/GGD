@@ -27,7 +27,7 @@
   ],
   "id": "b2-takopi.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "貼紙集滿換繃帶",
@@ -73,5 +73,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-takopi.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

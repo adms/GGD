@@ -73,7 +73,7 @@
           "sizeScale": 1.2,
           "riseSpeed": 1.6,
           "durationSec": 1.1,
-          "driftSpeed": 1.0,
+          "driftSpeed": 1,
           "driftAngleDeg": 0,
           "driftAngleStepDeg": 270,
           "driftFrom": "casterFacing"
@@ -154,7 +154,7 @@
       "modelKey": "imported.herocloudstrife",
       "alpha": 0.6,
       "path": "toTarget",
-      "speed": 30.0,
+      "speed": 30,
       "onArrive": [
         {
           "kind": "spawnVfx",
@@ -177,11 +177,12 @@
     "flashColor": [
       0.85,
       0.92,
-      1.0
+      1
     ],
     "flashMs": 211,
     "camKick": 0.526
   },
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

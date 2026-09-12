@@ -18,7 +18,7 @@
   ],
   "id": "b2-noor.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "把下一位考官拉近",
@@ -55,5 +55,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-noor.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

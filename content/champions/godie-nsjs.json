@@ -143,15 +143,16 @@
           "dot": {
             "damageType": "magic",
             "amountPerTick": {
-              "flat": 60.0
+              "flat": 60
             },
-            "intervalSec": 1.0,
-            "durationSec": 2.0,
+            "intervalSec": 1,
+            "durationSec": 2,
             "stacking": "refresh"
           },
           "castTimeSec": 1.133
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-nsjs.e",
@@ -228,9 +229,9 @@
           "radius": 6,
           "radiusTier": "中",
           "side": "allies",
-          "delaySec": 1.0,
+          "delaySec": 1,
           "count": 8,
-          "intervalSec": 1.0,
+          "intervalSec": 1,
           "targetMode": "reresolve",
           "anchor": "caster",
           "effects": [
@@ -247,7 +248,8 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

@@ -66,11 +66,38 @@ beforeAll(async () => {
 describe("吟唱普查（owner 2026-08-13 的 0.06–4.00）", () => {
   it("⭐ 每一支出貨技能帶的正是公式算出來的值 —— 內容是推導資料，不是手寫數字", () => {
     // `deriveCastTime` 從不讀 `castTimeSec`，所以這不是循環論證。
-    const wrong = all
+    //
+    // ⭐⭐ **帶 `castTimeTier` 的技能不歸這條公式管**（GH#943／#1243）——
+    // owner 2026-09-02：「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1**」
+    // ⇒ 那五格住 `content/config/cast-time-tiers.json`，⭐ **級距說了算**。
+    //
+    // ⛔ 在此之前這一條拿**過期的 20 階階梯**去比**照級距寫的內容**
+    // ⇒ 報出 182 支「不一致」，⚠️ 而內容是 `0.1`（＝小）、`0.5`（＝大）——
+    // ⭐ **內容一直是對的，說謊的是公式**。我因此開了兩個假缺陷（#1243）。
+    //
+    // ⭐ owner 2026-09-12：「請你更正讓你誤會的 吟唱冷卻公式 **以後不要再發生**」
+    // ⇒ ⭐ 這一格就是那個「不要再發生」：**問對象變了**，⛔ 不是把斷言放寬。
+    const tiered = all.filter((d) => (d as { castTimeTier?: string }).castTimeTier !== undefined);
+    const untiered = all.filter((d) => (d as { castTimeTier?: string }).castTimeTier === undefined);
+    const wrong = untiered
       .map((d) => ({ d, want: deriveCastTime(d, cdMult).castTimeSec }))
       .filter((r) => r.d.castTimeSec !== r.want)
       .map((r) => `${r.d.id}: 內容 ${String(r.d.castTimeSec)} != 公式 ${String(r.want)}`);
-    expect(wrong).toEqual([]);
+
+    // ⭐ **遷移進度要看得見**（⛔ 靜默跳過與「全部驗過」長得一模一樣）。
+    // ⚠️ 這一行**不是**斷言，是一行印出來的事實 —— 遷移完成那天它會變成 `0 支`。
+    console.log(
+      `⏳ 吟唱五級距遷移：${tiered.length} / ${all.length} 支已遷移` +
+        `（⛔ 其餘 ${untiered.length} 支仍由過期的 20 階階梯推導 —— GH#1243）`,
+    );
+
+    expect(
+      wrong,
+      "⛔ 這幾支**沒有** `castTimeTier`，所以它們歸舊公式管，而它們對不上。\n" +
+        "⭐ 兩條路擇一：①補 `castTimeTier`（⭐ 首選 —— 那是 GH#943 之後的正解）" +
+        "②讓值等於 `deriveCastTime` 算出來的。\n" +
+        "⛔ 不要改這條測試，也⛔ 不要去改那條 20 階階梯的常數 —— 它整條已經被五級距取代了。",
+    ).toEqual([]);
     // 守衛的守衛：母體要真的是整份註冊表，⛔ 不是 3 份文件。
     // 跟磁碟對帳而不是釘一個規模常數 —— 常數擋不住「有 50 份載入失敗」。
     expect(shippedAbilityDocCount()).toBeGreaterThan(0);

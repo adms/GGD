@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -34,8 +34,8 @@
         8,
         8
       ],
-      "intervalSec": 1.0,
-      "scatterRadius": 11.0,
+      "intervalSec": 1,
+      "scatterRadius": 11,
       "firstAtCast": true,
       "stopOnCasterDeath": true,
       "effects": [
@@ -45,7 +45,7 @@
           "amount": {
             "damageTier": "極小"
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true
         }
@@ -54,5 +54,6 @@
   ],
   "vfxKey": "fx.prim.fire.explosion-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.833
+  "castTimeSec": 1.833,
+  "castTimeTier": "極大"
 }

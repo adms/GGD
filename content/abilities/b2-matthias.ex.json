@@ -26,7 +26,7 @@
   ],
   "id": "b2-matthias.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "重修請先看黑板",
@@ -71,5 +71,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-matthias.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

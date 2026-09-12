@@ -30,7 +30,7 @@
   ],
   "id": "b2-klaus.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "強制結束順便保命",
@@ -78,5 +78,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-klaus.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

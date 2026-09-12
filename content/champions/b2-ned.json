@@ -285,7 +285,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-ned.w.webp"
+      "icon": "assets/icons/abilities/b2-ned.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "fighter",

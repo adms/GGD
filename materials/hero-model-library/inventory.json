@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-12T09:21:05+08:00",
-  "inputsSha256": "4764fd8c8e06d7c8eb95431c907a8ce0c64f002d7b2c090ac391c012c62bbfe5",
+  "generatedAt": "2026-09-12T11:25:55+08:00",
+  "inputsSha256": "456a18d78816988b4d3556006f13748d628f7dcaef3af63552c934ba116128fe",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -93086,11 +93086,11 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
-            "bytes": 817900,
-            "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
-            "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mario-c00-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mario-c00-static-skinned-v1/component.glb",
+            "bytes": 818052,
+            "sha256": "bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6",
+            "gitPath": "content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
             "componentReady": true,
             "converted": true,
             "structuralValidationPassed": true,
@@ -93182,7 +93182,32 @@
             "s3ArchiveMember": "body.glb",
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
-            "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+            "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd",
+            "sourceArtifact": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+              "bytes": 817900,
+              "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+              "gitPathAtIngest": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+              "s3ArchiveMember": "body.glb",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
+              "backupReceiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+            },
+            "materialNormalization": {
+              "schema": "ggd-transparent-component-material-normalization@1",
+              "revision": 1,
+              "changes": [
+                "mat2:EyeL transparent=81.61%",
+                "mat3:EyeR transparent=81.61%"
+              ],
+              "binaryChunkByteIdentical": true,
+              "nonMaterialJsonByteSemanticIdentical": true
+            },
+            "normalizationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
+            }
           },
           {
             "id": "ssbu-mewtwo-c00-static-skinned-v1",
@@ -93204,11 +93229,11 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
-            "bytes": 667840,
-            "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
-            "gitPath": "content/assets/models/community/cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mewtwo-c00-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mewtwo-c00-static-skinned-v1/component.glb",
+            "bytes": 667904,
+            "sha256": "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9",
+            "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
             "componentReady": true,
             "converted": true,
             "structuralValidationPassed": true,
@@ -93290,7 +93315,32 @@
             "s3ArchiveMember": "body.glb",
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-verified-receipt.json",
-            "backupReceiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c"
+            "backupReceiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c",
+            "sourceArtifact": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+              "bytes": 667840,
+              "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
+              "gitPathAtIngest": "content/assets/models/community/cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0.glb",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+              "s3ArchiveMember": "body.glb",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mewtwo-c00-blender4513-v1/s3-verified-receipt.json",
+              "backupReceiptSha256": "c6adf2357925d37ce2c846b514ac1fdd4a52c5217c7896b3c7ceba67eb23c27c"
+            },
+            "materialNormalization": {
+              "schema": "ggd-transparent-component-material-normalization@1",
+              "revision": 1,
+              "changes": [
+                "mat1:EyeL transparent=68.44%",
+                "mat2:EyeR transparent=68.44%"
+              ],
+              "binaryChunkByteIdentical": true,
+              "nonMaterialJsonByteSemanticIdentical": true
+            },
+            "normalizationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
+            }
           },
           {
             "id": "ssbu-ryu-c00-static-skinned-v1",
@@ -93312,11 +93362,11 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
-            "bytes": 1005688,
-            "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6",
-            "gitPath": "content/assets/models/community/57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ryu-c00-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ryu-c00-static-skinned-v1/component.glb",
+            "bytes": 1005808,
+            "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c",
+            "gitPath": "content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
             "componentReady": true,
             "converted": true,
             "structuralValidationPassed": true,
@@ -93398,7 +93448,32 @@
             "s3ArchiveMember": "body.glb",
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-blender4513-v3-backup/s3-verified-receipt.json",
-            "backupReceiptSha256": "28eb4f9adf99f949a7727b0ba04400587a69a36ede2204b78445a41a14def783"
+            "backupReceiptSha256": "28eb4f9adf99f949a7727b0ba04400587a69a36ede2204b78445a41a14def783",
+            "sourceArtifact": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+              "bytes": 1005688,
+              "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6",
+              "gitPathAtIngest": "content/assets/models/community/57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6.glb",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-blender4513-v3-backup/21820fa83bbe4f0703f8471ba8325fa06c99b5b2d124e89e7a26c03529dfcfe6.tar.gz",
+              "s3ArchiveMember": "body.glb",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ryu-c00-blender4513-v3-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "28eb4f9adf99f949a7727b0ba04400587a69a36ede2204b78445a41a14def783"
+            },
+            "materialNormalization": {
+              "schema": "ggd-transparent-component-material-normalization@1",
+              "revision": 1,
+              "changes": [
+                "mat3:EyeL transparent=89.58%",
+                "mat4:EyeR transparent=89.59%"
+              ],
+              "binaryChunkByteIdentical": true,
+              "nonMaterialJsonByteSemanticIdentical": true
+            },
+            "normalizationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
+            }
           },
           {
             "id": "ssbu-pickel-steve-c00-static-skinned-v1",
@@ -93825,11 +93900,11 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
-            "bytes": 1316992,
-            "sha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
-            "gitPath": "content/assets/models/community/953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-male-c00-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-male-c00-static-skinned-v1/component.glb",
+            "bytes": 1317084,
+            "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b",
+            "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
             "componentReady": true,
             "converted": true,
             "structuralValidationPassed": true,
@@ -93911,7 +93986,32 @@
             "s3ArchiveMember": "body.glb",
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-verified-receipt.json",
-            "backupReceiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3"
+            "backupReceiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3",
+            "sourceArtifact": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+              "bytes": 1316992,
+              "sha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
+              "gitPathAtIngest": "content/assets/models/community/953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc.glb",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+              "s3ArchiveMember": "body.glb",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3"
+            },
+            "materialNormalization": {
+              "schema": "ggd-transparent-component-material-normalization@1",
+              "revision": 1,
+              "changes": [
+                "mat3:EyeL transparent=61.21%",
+                "mat4:EyeR transparent=61.21%"
+              ],
+              "binaryChunkByteIdentical": true,
+              "nonMaterialJsonByteSemanticIdentical": true
+            },
+            "normalizationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
+            }
           },
           {
             "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
@@ -93997,11 +94097,11 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
-            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
-            "bytes": 1373696,
-            "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
-            "gitPath": "content/assets/models/community/8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-female-c01-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-female-c01-static-skinned-v1/component.glb",
+            "bytes": 1373732,
+            "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec",
+            "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
             "componentReady": true,
             "converted": true,
             "structuralValidationPassed": true,
@@ -94083,7 +94183,32 @@
             "s3ArchiveMember": "body.glb",
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-verified-receipt.json",
-            "backupReceiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f"
+            "backupReceiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f",
+            "sourceArtifact": {
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+              "bytes": 1373696,
+              "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+              "gitPathAtIngest": "content/assets/models/community/8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46.glb",
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+              "s3ArchiveMember": "body.glb",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f"
+            },
+            "materialNormalization": {
+              "schema": "ggd-transparent-component-material-normalization@1",
+              "revision": 1,
+              "changes": [
+                "mat4:EyeL transparent=66.49%",
+                "mat5:EyeR transparent=66.49%"
+              ],
+              "binaryChunkByteIdentical": true,
+              "nonMaterialJsonByteSemanticIdentical": true
+            },
+            "normalizationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
+            }
           }
         ]
       },
@@ -102297,8 +102422,8 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p1-static-skinned-v1/component.glb",
-            "path": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p1-static-skinned-v1/component.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p1-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p1-static-skinned-v1/component.glb",
             "bytes": 336752,
             "sha256": "ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184",
             "gitPath": "content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
@@ -102390,8 +102515,8 @@
             },
             "normalizationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
-              "bytes": 6326,
-              "sha256": "7f6c0bce5091a4d72e1e40bca3ecb2d9cbef5f8c923b418e02c64fc53339fad7"
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
             }
           },
           {
@@ -102410,8 +102535,8 @@
               "skeleton",
               "texture"
             ],
-            "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p2-static-skinned-v1/component.glb",
-            "path": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p2-static-skinned-v1/component.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p2-static-skinned-v1/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p2-static-skinned-v1/component.glb",
             "bytes": 337876,
             "sha256": "2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8",
             "gitPath": "content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
@@ -102503,8 +102628,8 @@
             },
             "normalizationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
-              "bytes": 6326,
-              "sha256": "7f6c0bce5091a4d72e1e40bca3ecb2d9cbef5f8c923b418e02c64fc53339fad7"
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
             }
           }
         ],
@@ -132144,8 +132269,8 @@
               "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
               "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
             ],
-            "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-kita-kita-7bc2fa3f8/component.glb",
-            "path": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-kita-kita-7bc2fa3f8/component.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-kita-kita-7bc2fa3f8/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-kita-kita-7bc2fa3f8/component.glb",
             "backupLocations": [
               {
                 "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
@@ -132168,7 +132293,8 @@
               "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
               "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
-              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
+              "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb"
             },
             "materialNormalization": {
               "schema": "ggd-transparent-component-material-normalization@1",
@@ -132181,8 +132307,8 @@
             },
             "normalizationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
-              "bytes": 6326,
-              "sha256": "7f6c0bce5091a4d72e1e40bca3ecb2d9cbef5f8c923b418e02c64fc53339fad7"
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
             }
           },
           {
@@ -132273,8 +132399,8 @@
               "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
               "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
             ],
-            "absolutePath": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-lord-nightmares-7bc2fa3f8/component.glb",
-            "path": "/private/tmp/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-lord-nightmares-7bc2fa3f8/component.glb",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-lord-nightmares-7bc2fa3f8/component.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-lord-nightmares-7bc2fa3f8/component.glb",
             "backupLocations": [
               {
                 "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
@@ -132297,7 +132423,8 @@
               "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
               "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
-              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+              "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
+              "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb"
             },
             "materialNormalization": {
               "schema": "ggd-transparent-component-material-normalization@1",
@@ -132310,8 +132437,8 @@
             },
             "normalizationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/transparent-component-material-normalization-v1.json",
-              "bytes": 6326,
-              "sha256": "7f6c0bce5091a4d72e1e40bca3ecb2d9cbef5f8c923b418e02c64fc53339fad7"
+              "bytes": 14624,
+              "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
             }
           }
         ],

@@ -37,7 +37,7 @@
       "damageType": "magic",
       "status": {
         "statusId": "alcohol-enema",
-        "duration": 8.0,
+        "duration": 8,
         "moveSpeedMult": 0.9
       },
       "castTimeSec": 1.133
@@ -48,5 +48,6 @@
   "schema": "ability@1",
   "castTimeSec": 1.133,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

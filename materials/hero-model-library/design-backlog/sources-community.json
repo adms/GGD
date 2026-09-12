@@ -1,6 +1,6 @@
 {
   "schema": "ggd-undesigned-community-audit@1",
-  "generatedAt": "2026-09-11T22:49:01.746533+00:00",
+  "generatedAt": "2026-09-12T03:26:14.645973+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
   "scope": "READONLY acquired public/community/paid-OU99/console/MOD model candidates excluding primary 300/MBA models. Retargets using those animations remain as community-body versions. Original local LoL corpus is audited by the root workflow separately.",
   "policy": {
@@ -12,13 +12,13 @@
   "inputPins": [
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "6ce67d2e6851cf35360712c1f891e4eb7f0c77f27d0d924a82e6559e8aaef79e",
-      "bytes": 2414758
+      "sha256": "3c21376a7bcaf342b7c5625dd233b2dd5cc382d41ee3e5407a3a389ccef03cd9",
+      "bytes": 2600241
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
-      "sha256": "a4ecda5ef81c4e8819b2449481a5a5e6511efadf273fc83db42a3694d05a8521",
-      "bytes": 6923783
+      "sha256": "d2e039d8c6fef0cef468b8572c998c63c95a39b6c5d161e189d02a37f5f75e96",
+      "bytes": 7178178
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
@@ -27,8 +27,8 @@
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "c26441f66968881a2fa33378a42028a41ca314660d8a9fc9648815661c8fc115",
-      "bytes": 29872853
+      "sha256": "4c8efa24cd3cc5206eb6c288aa8d380795ef6b7e0b9798154bafe6cd0fa06438",
+      "bytes": 29974268
     },
     {
       "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/priority-runtime-options.json",
@@ -280,7 +280,7 @@
               "name": "79-002 虛化",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-h01o.ex.json",
-              "sha256": "7bfdc8d34abb518ffa581f9601501e284d1a2c03226bdf2de149abf5a7469956",
+              "sha256": "fba1f8e4cddaa3aeea059fa420dfeb1ac390d708d8e06dc18dfc605ff349ad04",
               "provenance": "w3x-import",
               "effectKinds": [
                 "applyBuff"
@@ -371,7 +371,7 @@
           "runtimeHeroId": "godie-emns",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-emns.json",
-          "championSha256": "7ff921a1162dfe02cc9b228d0696d09247cc0e7c3ba4bdac262b12e82aeea48a",
+          "championSha256": "4c0e43c9650e548a4b86908779e7db1f966b67cfc0aeebc712a5f8f214801211",
           "name": "奇樂 - 夜神月",
           "skillCount": 6,
           "skills": [
@@ -415,7 +415,7 @@
               "name": "44-04 心臟麻痺",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-emns.r.json",
-              "sha256": "8361fa98617ce0f56e7101132872149ff9c0615f4aef27152f320ab114ee8866",
+              "sha256": "38362e5f030a8824b50972c1b95762c8fa6506be26bc7063f0df9404fbf3a3fc",
               "provenance": "owner-spec",
               "effectKinds": [
                 "applyStatus",
@@ -796,7 +796,7 @@
               "name": "〔王之財寶・齊射〕",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-18-20260907.ex.json",
-              "sha256": "8f025894f1a93ac688b40c8cb8f4d4dcae07219f8ee070e48cde9ab9b57c5347",
+              "sha256": "b69e95b23ca229cde6b8d86d7ae54aa8afdb44c563f3d9f12d10e7933b55cc10",
               "provenance": "editor-json",
               "effectKinds": [
                 "dot"
@@ -1107,7 +1107,7 @@
           "runtimeHeroId": "godie-hvsh",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-hvsh.json",
-          "championSha256": "fecd610faf6b4d6caac43b957adbadd69403197f983ce5e1caa5fc3e0c0d112b",
+          "championSha256": "702ca666e9957d6658e70492859843edc80fc8808c01be4ddeaca15daebe500d",
           "name": "梅杜莎 - Rider",
           "skillCount": 6,
           "skills": [
@@ -1137,7 +1137,7 @@
               "name": "48-03 鮮血神殿",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvsh.e.json",
-              "sha256": "058f1ae74e808cb02ffc4d09539135a0ffc92e04ca75f49e5d9c300edd94167f",
+              "sha256": "9ae4972348742bff52297647c8194012b9d400610a53e08922397a98c339d9de",
               "provenance": "w3x-import",
               "effectKinds": [
                 "applyBuff"
@@ -1149,7 +1149,7 @@
               "name": "48-04 騎英之疆繩",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvsh.r.json",
-              "sha256": "ecf6598a75f4ce5051bf39dfdf3fb9112b01555ca8329e01bf7c9bce7b91eadf",
+              "sha256": "97330272084c81a58aa84deba67318b0c7fcea5d70e3a18e1d3bc7250d197197",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -1161,7 +1161,7 @@
               "name": "48-002 騎英之疆繩MAX",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvsh.ex.json",
-              "sha256": "6621f7161680ebdb4f15b143c36a3dfb3294558f25b916f707c1ad90ffaaebd6",
+              "sha256": "74cedc3e1731bf8ce622b8f474d161af5ae6b6311276bd4062d0d87ecd6dc919",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -1171,7 +1171,7 @@
               "name": "48-00 石化之眼",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvsh.passive.json",
-              "sha256": "0d15eac5c28fe5dd350484420b2a71c20a23239a00b3488d2c18cf273e17d41c",
+              "sha256": "78fea551c8f53ae2ad779c789f687cc250b458ce55527ea1d0b3e4dc3f11aaf6",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -2431,7 +2431,7 @@
           "runtimeHeroId": "b2-rin",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-rin.json",
-          "championSha256": "f94e073ee04ab0d3b9e6e905c7db0028be1a3d11bf1e3ca0d01583bb277037a2",
+          "championSha256": "6a01d9b1d8e57c5a53a11f825ed72562930ab92ae3ba740eb625062c839ef67f",
           "name": "遠坂凜",
           "skillCount": 6,
           "skills": [
@@ -2466,7 +2466,7 @@
               "name": "刷爆卡才准退款",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-rin.r.json",
-              "sha256": "c11baaaa5790f3d00018cc255903f0b7d33c86fe502bc3d34f59fc98c9db9f53",
+              "sha256": "b00e7247cc5830ffe1d562b01c293152f66c22f31a20608e9284f123ed378716",
               "provenance": "editor-json",
               "effectKinds": [
                 "consumeStatus",
@@ -2479,7 +2479,7 @@
               "name": "刷卡成功請簽名",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-rin.w.json",
-              "sha256": "6b3b48af67e96df7f0d174d5111fe11deb100100b434ed3b637ba72080af1c23",
+              "sha256": "87a5b422b69c41ece5c4f8521f3e1fad875433c132ee08885085f0e83874c2a5",
               "provenance": "editor-json",
               "effectKinds": [
                 "consumeStatus",
@@ -3129,7 +3129,7 @@
           "runtimeHeroId": "godie-hart",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-hart.json",
-          "championSha256": "1c3b0e4227ce99baab99d6783369947942555534e8760715126f9fc4c0b87fd8",
+          "championSha256": "61b9d5144b9aa99d88b2d455fd98f5e5d8734ee22824021a5ab731b908d30cc4",
           "name": "最終幻想 - 克勞德",
           "skillCount": 6,
           "skills": [
@@ -3153,7 +3153,7 @@
               "name": "01-02 隕石擊",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hart.w.json",
-              "sha256": "3f8d8735fd9c69f799dd9734671b8754ac6e6024d1b63cca8d22d1f4c943a63a",
+              "sha256": "845a5b7e4380a39ae83da20ed73b4bf6fd7c7cb550b470fcc36096b7ff084d35",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -3165,7 +3165,7 @@
               "name": "01-03 畫龍點睛",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hart.e.json",
-              "sha256": "31ffcc3fad78e5d061b053024e2355ddf7a185f0d302f324b4e1503b121a1194",
+              "sha256": "c94a0f94136ff0a51b7fee541550d85ec33afb36fdc58d57feab7b889d8ad991",
               "provenance": "w3x-import",
               "effectKinds": [
                 "applyBuff",
@@ -3179,7 +3179,7 @@
               "name": "01-04 超究武神霸斬",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hart.r.json",
-              "sha256": "9999004f8253930ad966f2ec8d7f053675139f8f64a449bc3e51f8bc6e122078",
+              "sha256": "034b492f3d6ea6b0796aec058c052d3af6a49dadf11946d241dbdabd02226aaa",
               "provenance": "w3x-import",
               "effectKinds": [
                 "applyStatus",
@@ -3194,7 +3194,7 @@
               "name": "01-002 究極魔劍",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hart.ex.json",
-              "sha256": "9e487237b700475144426fa41d25afd83a51d3ffd588c7e1c370bc6f9cac0cdd",
+              "sha256": "10c70ca61762fe03bd25a390b3654c95a1400c1525ade1f209186265cd8903b8",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -3573,7 +3573,7 @@
           "runtimeHeroId": "godie-u00j",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-u00j.json",
-          "championSha256": "3ce3a8f3cd5541ce155516f7cc3fdb8eb187bb9be66fa5afe6e3e9735ebf2915",
+          "championSha256": "b1fd01eb75933eaca3702570efee2b713abfce907fee0a6539aa8e69e28c0515",
           "name": "神性的流失 - 賽菲洛斯",
           "skillCount": 6,
           "skills": [
@@ -3609,7 +3609,7 @@
               "name": "74-03 闇之天使",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-u00j.e.json",
-              "sha256": "2d4c5c1bb45fcc8deaa4f60efbcf30f1e605530768f0d1314ef3fb2c1878d12f",
+              "sha256": "63f4bd401daf9a33070fca5c9f44f10564f93b7ef0a222fbfe077530ec23cecc",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -3619,7 +3619,7 @@
               "name": "74-04 最終殞落星",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-u00j.r.json",
-              "sha256": "643d52278df30496c89a85a977fbd4b182cefc151a98c2288327eda65ff776c2",
+              "sha256": "a20ba1e270b4b671f37aaa47e21116dbf20ffd4501971da4d07b455f3f09a809",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -3719,7 +3719,7 @@
           "runtimeHeroId": "b2-goblin",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-goblin.json",
-          "championSha256": "7d6df06ee79926b2872aa3e6404e2d97ea250d15623c04ed9f80de9a0e46be8b",
+          "championSha256": "bba2428ed1c9be995535973c8783e5e99292b291dac6e8d2820c5082efdf5c56",
           "name": "哥布林殺手",
           "skillCount": 6,
           "skills": [
@@ -3754,7 +3754,7 @@
               "name": "盲目亂闖請走緊急出口",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-goblin.r.json",
-              "sha256": "43e681a04a881966e90b732e9595324b992cb57b3cd01debe247c422b76adec8",
+              "sha256": "5b9b7717d5963b6ae65f9e3489ee7a9eecec9a8d33725ed0c0fa4a7c041d1697",
               "provenance": "editor-json",
               "effectKinds": [
                 "damage",
@@ -3902,7 +3902,7 @@
           "runtimeHeroId": "godie-o02p",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-o02p.json",
-          "championSha256": "3786d204e63f9411779087555cd79d11ffa8cf136dc6b5cb4a514efc514e0784",
+          "championSha256": "6c02ff1e822ea963c19ea1b0cb05f748e27852c344148f39a610cb75fa69cbf2",
           "name": "夢幻之星 - 初音",
           "skillCount": 6,
           "skills": [
@@ -3912,7 +3912,7 @@
               "name": "99-01 甩蔥歌",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o02p.q.json",
-              "sha256": "be3152832cbc9d9cc6c416929cbb58948d60ecc0de01f5f81c956c6382988cba",
+              "sha256": "1bb70a77b044ff37b2cc58e0a167839534b76f096c5e95d9fa1658b22d485885",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -4110,7 +4110,7 @@
               "name": "06-00 猜猜拳",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-u034.passive.json",
-              "sha256": "e0e63da006536a656177be169843570090470d96e17c8a31de7f4cd2b598118c",
+              "sha256": "ae4f17606e37ee05768fade543d9843166b91950c19e18bd56e65baa905fc0ef",
               "provenance": "w3x-import",
               "effectKinds": [
                 "damage",
@@ -4210,7 +4210,7 @@
               "name": "06-00 猜猜拳",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-ucrl.passive.json",
-              "sha256": "facb5797de6b0a63ff5344c5b99d16c60e23af47728c87d1e1bfa19b8adc68c3",
+              "sha256": "0292683207d1b7cfc6c1d61fea1c30053be5886b0a2270afd214320ff62b5ac1",
               "provenance": "w3x-import",
               "effectKinds": [
                 "damage",
@@ -4593,7 +4593,7 @@
               "name": "輕薄的假象",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-07-20260907.ex.json",
-              "sha256": "0a6008ea563242ca848f877c434cf2f204600c7092fd3990aed5cd8c04351750",
+              "sha256": "05910cf77902c70ee489120d93d66b4c83cdc0b29e82a032de2d2cdc62256f95",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyBuff"
@@ -6078,7 +6078,7 @@
               "name": "〔特殊武器切換〕",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-05-20260907.ex.json",
-              "sha256": "764a08e8f4c211c8776d40298477a2a7f1d63128ca7a0f2c703bff9817b78a61",
+              "sha256": "c20b211d749d86e70cd928dfaea04ac856faa8287de715f74cb7e925f8df11d3",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyBuff"
@@ -6552,7 +6552,7 @@
           "runtimeHeroId": "godie-o02l",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-o02l.json",
-          "championSha256": "44a1c60b14fb0f2f42b3e34a6012a71e91c1a030126443ecb67178b8e818c1fa",
+          "championSha256": "d817020dbdc8add458dd96a9b07892b1cbe89cfac79036d84a8467ce6ff397bf",
           "name": "神騎寶貝 - 皮卡丘",
           "skillCount": 6,
           "skills": [
@@ -6562,7 +6562,7 @@
               "name": "58-01 十萬伏特",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o02l.q.json",
-              "sha256": "3d231b75b9e756252b0f2fd568a532e89ba856191a7217b6f2b6158693662fa7",
+              "sha256": "7ad48fd802a36ad1be3021738e21765058c3dd0e2b41db4c823675fd45817226",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -6592,7 +6592,7 @@
               "name": "58-04 瘋狂皮卡丘",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o02l.r.json",
-              "sha256": "03b2a7e86a0f1cca22c1be5623834f80eef014c7120408dda51bf64e28c55c1f",
+              "sha256": "354f55cfddaa288eb606c29e40319639979f33a81e6b3941519260dbb5045a61",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -6602,7 +6602,7 @@
               "name": "58-002 打雷絕招",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o02l.ex.json",
-              "sha256": "3469d8e6e5ef6e9ad7d87ed32dd2282f15da121ccb6a74262e1bf6e7189fd448",
+              "sha256": "4d2229224dfbfc718d730475c175f860467e52da638dbc9eb88d5cdb91a98348",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -6644,7 +6644,7 @@
           "runtimeHeroId": "godie-ofar",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-ofar.json",
-          "championSha256": "3e99e87976f802ac4628a8956275de3ce88a86cae286d8e66d895378af858bc6",
+          "championSha256": "c1dff0e7ba1047f531c45e7299f0cd95a4b95532ef9944d8a51ec8d4f368f880",
           "name": "神奇寶貝兒 - 皮卡丘",
           "skillCount": 6,
           "skills": [
@@ -6654,7 +6654,7 @@
               "name": "58-01 十萬伏特",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-ofar.q.json",
-              "sha256": "c11082302cd8a948befd87ab821a2ae173e2457ec268ce0597370d142222516e",
+              "sha256": "de729467ffe2755d2d5598155287d867df05e00f97bfd79edd4050d215b5c591",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -6694,7 +6694,7 @@
               "name": "58-002 打雷絕招",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-ofar.ex.json",
-              "sha256": "e9f06a9ee3d9cef3d1e494bb5b2c1a4fb77b3a80b542a0ddd653acd05f677216",
+              "sha256": "cc01d0d49668db6349cbc90d0a65c65a8b696244950f434f68d8f88430b4fb4f",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -6806,45 +6806,6 @@
           "identityReviewRequired": false,
           "recordedBytes": 1531624,
           "sizeMatchesManifest": true
-        },
-        {
-          "id": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
-          "sourceId": "thunderstore-rezero",
-          "library": "community",
-          "nativeId": "subaruPrefab",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/subaru/body.glb",
-          "gitPath": "content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
-          "existsLocal": true,
-          "bytes": 497032,
-          "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
-          "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/validation.json",
-            "bytes": 2685,
-            "sha256": "8c9da7fb9edb731eef149fc34e9031a9e75e9ed3eab8d49f14bac69e5766438f"
-          },
-          "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/visual-review.json",
-            "bytes": 2373,
-            "sha256": "af799ec9423ab149c6d1b0933c0b96a61a3862e3157067b72c945de6332ad703"
-          },
-          "limitations": [
-            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
-            "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
-            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
-            "The source face renderer contains no bones, bind poses, joint indices or weights; it is preserved as a one-joint hierarchy-rigid skin below the native head.",
-            "The rejected Z-up conversion is retained in the S3 archive; Subaru is visually verified as Y-up."
-          ]
         }
       ],
       "mappedHeroIds": [
@@ -6853,8 +6814,7 @@
       "designStatus": "designed",
       "evidence": [
         "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "workflow-model-options candidate identity status: [('community-review-22-20260907', 'character-labelled-by-delivering-workflow')]",
-        "Thunderstore Re:Zero 0.1.1 subaruPrefab was converted from Y-up Unity data to an upright 1.8 m GGD GLB: 8,122 triangles, 3 skinned draw primitives, [41, 1] glTF joints across 2 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 70,968 float values are finite, and three WebGL views were accepted as a static component only."
+        "workflow-model-options candidate identity status: [('community-review-22-20260907', 'character-labelled-by-delivering-workflow')]"
       ],
       "aliases": [
         "ZHS002_Natsuki_Subaru",
@@ -7023,44 +6983,6 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
-        },
-        {
-          "id": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
-          "sourceId": "thunderstore-rezero",
-          "library": "community",
-          "nativeId": "remPrefab",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/rem/body.glb",
-          "gitPath": "content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
-          "existsLocal": true,
-          "bytes": 1173224,
-          "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
-          "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/validation.json",
-            "bytes": 2552,
-            "sha256": "a0606767964648a2bc3cb013f758b2085e4a74d5bc4f548e8e3828bcac2a8132"
-          },
-          "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/visual-review.json",
-            "bytes": 2290,
-            "sha256": "b1c7d179dad26cadf1b5249b6c788c90d588ad75f74bfbcf08f05dbd27dc86ca"
-          },
-          "limitations": [
-            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
-            "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
-            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
-            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
-          ]
         }
       ],
       "mappedHeroIds": [
@@ -7068,8 +6990,7 @@
       ],
       "designStatus": "designed",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "Thunderstore Re:Zero 0.1.1 remPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,328 triangles, 1 skinned draw primitives, [151] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 184,720 float values are finite, and three WebGL views were accepted as a static component only."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
       ],
       "aliases": [
         "rem"
@@ -7082,7 +7003,7 @@
           "runtimeHeroId": "b2-rem",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-rem.json",
-          "championSha256": "6be1a6ba5b81f950a227e13cf0aecc4975b72f30aeefd2f7106937b68772e9d7",
+          "championSha256": "56b2d5a55f977d46c252d9568fb821f86aa8b248d0b22e5cddcb49da047cde3f",
           "name": "蕾姆",
           "skillCount": 6,
           "skills": [
@@ -7130,7 +7051,7 @@
               "name": "鐵球拖把暫停你的普攻",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-rem.w.json",
-              "sha256": "5eb67fe6100d57466b7399bf7f2c046642c63698029b62bea81f3343529d9c84",
+              "sha256": "772c84265288ab5c2317afe968ca4aaec0421f92bafab868c6e751d23cecdc07",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyStatus",
@@ -7143,7 +7064,7 @@
               "name": "姊姊今天不在家",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-rem.ex.json",
-              "sha256": "355f9629cf3ac436fde8ed8375404a30a581b6c5c09ad6837e5324e94d2bd7b2",
+              "sha256": "1bacf90cd4ad31a7f732fb77eaf8aeac6b6339356490b2945233973672d55fe1",
               "provenance": "editor-json",
               "effectKinds": [
                 "leap"
@@ -7280,7 +7201,7 @@
           "runtimeHeroId": "godie-o00l",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-o00l.json",
-          "championSha256": "c76dc7d4db80fcd22dda81d82e301662deef8fa1ce1724c9b858f29f78814128",
+          "championSha256": "54aba91078b88db08408d85e594b13ab853e77cf2f2994c84832d159bf625dc3",
           "name": "獸神官 - 傑洛士",
           "skillCount": 6,
           "skills": [
@@ -7290,7 +7211,7 @@
               "name": "53-01 獸王牙操彈",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00l.q.json",
-              "sha256": "3bd732c4402461bda4cf4a0d4ab523331c928246c843ef1f362f190f40a1afd8",
+              "sha256": "c7b544e8adfaa487bb9fdb6b020d68ce80b3d222b03ff8c0f6e3116c8801ee60",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -7300,7 +7221,7 @@
               "name": "53-02 強化炸彈陣",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00l.w.json",
-              "sha256": "9cf7444b5ba994d77739b199daae4123c2dfa61a5cf5ee4cd2253144ba762531",
+              "sha256": "f3f9d8ba533b25394e1c86e8c53005d7bcfac302a75f4144239cada210b60469",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -7322,7 +7243,7 @@
               "name": "53-04 暴爆咒",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00l.r.json",
-              "sha256": "a892c970587b79ae49e342e5d689eb53de1fde9c547b66900cf26a20fddddff6",
+              "sha256": "4433b76fcb5219475e5488f4a4e24de46a851c46930b0eca60ba57b2ae59eaa4",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -7332,7 +7253,7 @@
               "name": "53-002 恐懼力量",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00l.ex.json",
-              "sha256": "b48753ec0cfab2458c7b7d22b9f75fd1aa52feee490b45cbcac2f6f78cd98683",
+              "sha256": "bf5d117055ee6d6f1c99aaccdfd7527cfda91e341f140cbb85fbf378180d9a79",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -8283,7 +8204,7 @@
           "runtimeHeroId": "godie-h020",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-h020.json",
-          "championSha256": "5d96d180041751e2a522a6ba014d211d7de765e3ae4be6f04c03ac1ded1e3074",
+          "championSha256": "d5f7bd31053ddc583807e72aa471797a61efe2a82b7cf91103a355b865cd611c",
           "name": "黑魔導士 - 莉娜因巴斯",
           "skillCount": 6,
           "skills": [
@@ -8303,7 +8224,7 @@
               "name": "04-02 炸彈陣",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-h020.w.json",
-              "sha256": "7255a9d0ecdb0073de560c3af15910df7abd484d14c0eede0ceded01abb81f7e",
+              "sha256": "e9980bed172c4c15270be17b25c03ff6aabe42a234546a8ad96b6cf12082d76f",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -8313,7 +8234,7 @@
               "name": "04-03 龍破斬",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-h020.e.json",
-              "sha256": "40b091c20bbe4a4ed7d7922d1816fcd0d52502adb6f6a7f81f7c71feb1ad9c00",
+              "sha256": "03618c205c1dd360eb1eceea3a78452dc0f7c6d97c07f4d01609505176c3ccd1",
               "provenance": "w3x-import",
               "effectKinds": [
                 "delayed",
@@ -8327,7 +8248,7 @@
               "name": "04-04 神滅斬",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-h020.r.json",
-              "sha256": "401430680c8514a8ac099b62da227e4ee670873ef57ce5b5fcef4c2357995976",
+              "sha256": "f7b68eba43fc749489f1310a70198738f8804a5a6f6d8de346437daf7bc4f19a",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -8339,7 +8260,7 @@
               "name": "04-002 惡夢魔王的碎片",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-h020.ex.json",
-              "sha256": "6d4d2bc562649c66fa6dc46b7049dca003b4e2c07fe3e38edfbd4dd0d34d9371",
+              "sha256": "306e7d7260f5e9f9c91cb7b7b84831946894b9c83ddea6251ba74b7b43c5ac17",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -8382,7 +8303,7 @@
           "runtimeHeroId": "godie-hjai",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-hjai.json",
-          "championSha256": "25b50b33cce9cfa559f630c1ceda3256209758a2c781dc46528698f3070fe051",
+          "championSha256": "d183db5c2590d24700122e23bb47aee5b4d451c37677097d18fb0f1aba098116",
           "name": "黑魔導士 - 莉娜因巴斯",
           "skillCount": 6,
           "skills": [
@@ -8402,7 +8323,7 @@
               "name": "04-02 炸彈陣",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hjai.w.json",
-              "sha256": "640db38f4e7d1de3c14e1e2f6f3fd4c90403495386011a93492665db1b93c106",
+              "sha256": "003d9a79dd6482255bdcdd27100e4e1d0bc47d2186f8f1f00aaf02ddea6e1676",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -8412,7 +8333,7 @@
               "name": "04-03 龍破斬",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hjai.e.json",
-              "sha256": "33179707df6d6e716fd6fa93ee49e6d21a78453819855ff564432dffb4a0a5dd",
+              "sha256": "0a04bbb4b4a50936b2c4fdbc27e684e7f15eb4ede1755ccc92910fd918867571",
               "provenance": "w3x-import",
               "effectKinds": [
                 "delayed",
@@ -8426,7 +8347,7 @@
               "name": "04-04 神滅斬",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hjai.r.json",
-              "sha256": "5fc380a67a618c69d45c601c0e566a29a695e9a44d5aeaf78f8a557dd956ae0a",
+              "sha256": "9a0b6655e94d9480cc4523ed3326023f9c7685179fcbb28a777c268e67be7dd9",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -8438,7 +8359,7 @@
               "name": "04-002 惡夢魔王的碎片",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hjai.ex.json",
-              "sha256": "0f505a11b5776ada9bf2365ab3f01e3aa817a3f9eead17a11d893b25361d93d3",
+              "sha256": "7387ed930f6479cfc54a66228d6f7233dbea33fb10a5521d300188ecab35494f",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -13156,7 +13077,7 @@
               "name": "複製能力",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-06-20260907.ex.json",
-              "sha256": "bfdddf4fcd79bc94684de112e130901fec860979f0cef98928a038088f2d9a15",
+              "sha256": "cabd69b6915b86535d26495254037e033430689e473b16db9906630c7d8c157d",
               "provenance": "editor-json",
               "effectKinds": [
                 "damage"
@@ -13316,7 +13237,7 @@
               "name": "The Eclipse",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-19-20260907.ex.json",
-              "sha256": "ff40384e64c6c8729cf6497d8ead3c60fa7f2df852bd96733ab8d61583167005",
+              "sha256": "0ab94535f25e92e93357c0cdcc645482ca3f075a3bc6f2ee3016b44329770c6a",
               "provenance": "editor-json",
               "effectKinds": [
                 "dot",
@@ -13806,7 +13727,7 @@
               "name": "陽炎之舞",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-03-20260907.ex.json",
-              "sha256": "873d57ad85e1bd53781bbcf7b9e421448d95942a1d40dea48ec880d78946c90f",
+              "sha256": "1aafd5fd5448266a5086f08351b780a8f49e9506576aace00c992e715780b0d5",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyBuff"
@@ -16859,7 +16780,7 @@
           "runtimeHeroId": "godie-o00x",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-o00x.json",
-          "championSha256": "ec3d47a57087dc60666cb02600e63dec85e2abb6b51e003321ee86c185fa3459",
+          "championSha256": "1cce94bc5699a3fd8997688f322e99d4dff1c7a52dc8f1757080ca8502ede7a2",
           "name": "超級賽亞人 - 悟空",
           "skillCount": 6,
           "skills": [
@@ -16869,7 +16790,7 @@
               "name": "09-01 界王拳",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00x.q.json",
-              "sha256": "1805885b236a3ae047236c70b0efab4cd239add9d957a112b745eeecc4e65297",
+              "sha256": "c2c4274654f67425d7cd6f2b8642140c68ed4e2d81c50deeebae7a70611b5dee",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -16889,7 +16810,7 @@
               "name": "09-03 超級賽亞人",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00x.e.json",
-              "sha256": "13da983c4d58a6ef722671488b6d3ab1f470ae7c2f3a1960389bb69bb7754ddb",
+              "sha256": "9da71f6212b820c6c436fec382989bd5f40f770fddc022e9f63f8dc7b277312d",
               "provenance": "w3x-import",
               "effectKinds": [
                 "damage"
@@ -16915,7 +16836,7 @@
               "name": "09-002 十倍龜派氣功",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-o00x.ex.json",
-              "sha256": "fd1c53afec47a436fb219c0ca444ef5008898265b5266bdb19810d6c28dedb78",
+              "sha256": "2ecf250f98868dd1294b3b272c90c09c2aa8a2faaef7cb08937bcf72593ebd26",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -16957,7 +16878,7 @@
           "runtimeHeroId": "godie-ogrh",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-ogrh.json",
-          "championSha256": "c5668ddd8d153c503dde9d6d3a0f574b2e1e916f3d4eabd784cba2184e21a721",
+          "championSha256": "23a07c5e5bde64f4b5fb7d5074130b2a2ea8c49e9fac04b2c150988181dc1cf1",
           "name": "賽亞人 - 悟空",
           "skillCount": 6,
           "skills": [
@@ -16967,7 +16888,7 @@
               "name": "09-01 界王拳",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-ogrh.q.json",
-              "sha256": "09eb443d7148175a7502e3ee7cbb41ab1f4d54e51e2658b2667d8265083c7564",
+              "sha256": "1000fe37dac874ba4edde08cc1af5ae244598709798ea3b46ed22713ca98bba5",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17014,7 +16935,7 @@
               "name": "09-002 十倍龜派氣功",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-ogrh.ex.json",
-              "sha256": "e0cebea5ca7c97e540b3bbf03814ff7804f0dca1676460e9155991e2a30c6665",
+              "sha256": "ddef0da2be1a1acfd5e676fca89c91d8909a61939bedffa56205b59c3949d068",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17376,7 +17297,7 @@
           "runtimeHeroId": "godie-u00l",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-u00l.json",
-          "championSha256": "b252791892d5a9bc7777ec6690e8998570876222e6938ab885cd53c3176a18a0",
+          "championSha256": "dc8f4162d97721e0aca8b560bbab40022ceee2c5b970f7f5ed6c733fbe457cc9",
           "name": "北斗之鼠 - 拳四郎",
           "skillCount": 6,
           "skills": [
@@ -17406,7 +17327,7 @@
               "name": "25-03 北斗百裂拳",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-u00l.e.json",
-              "sha256": "c055e6236bb80246280ee3eac9ce6de2dbdae9e2f64d9d9183690ddb6d485ae2",
+              "sha256": "dc0b1e381163f2ab9d309946daa75ff0ab0006fe797b16dc0e818dad664865c0",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17416,7 +17337,7 @@
               "name": "25-04 ChangeDNA",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-u00l.r.json",
-              "sha256": "91f7b2619fabb5f7caeaf705944f0de06155017e71893995b74db1a3d06ee4d7",
+              "sha256": "79c05be417a79673fcd2eec2828c8969092b1345da23c21652eb36ee386677cd",
               "provenance": "w3x-import",
               "effectKinds": [
                 "damage",
@@ -17429,7 +17350,7 @@
               "name": "25-002 喔拉喔拉喔拉喔拉",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-u00l.ex.json",
-              "sha256": "40b2d415215b9aa2460966cbafe91b7b5e7ea8dd8a9a1bc10a5015767abe90ac",
+              "sha256": "f7e7ad0368d54821076c2de7794831a8d1dc0142b95964c42c3ba505a96faf30",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17471,7 +17392,7 @@
           "runtimeHeroId": "godie-umal",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-umal.json",
-          "championSha256": "bbe63083fd1f982246065dec95140128a711217d9a11396d21f996792f9543c7",
+          "championSha256": "d934426ff2e39e850228aa5735b344fd135c876f984852370737b1c7bcdf7a69",
           "name": "北斗神拳掌門人 - 拳四郎",
           "skillCount": 6,
           "skills": [
@@ -17501,7 +17422,7 @@
               "name": "25-03 北斗百裂拳",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-umal.e.json",
-              "sha256": "70eea732d1a77d1bf4d988afdf4194489e514e518ba8130ee93d0ca30da8597c",
+              "sha256": "f57620c1edce18b31fb4713e03b7efb21f99168b604302dd0a1411fc152ed4ae",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17524,7 +17445,7 @@
               "name": "25-002 喔拉喔拉喔拉喔拉",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-umal.ex.json",
-              "sha256": "d278c3deb53189d36bbcf47a808fc2bab03ec8c91e1ba8e11a3a71b18c61df2c",
+              "sha256": "cd496acf9cb7102b8aa576822b56ac6e52a399806920100dc6c875de7f86bbb4",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17842,7 +17763,7 @@
               "name": "57-002 時光機",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-n00b.ex.json",
-              "sha256": "8be74f1f412b5c56e59b3f6893a151a03ee6f3b29089ffd6ea46d2ecee162ce9",
+              "sha256": "1d74bb8d7bd13bc8301ea7c686a05583afaafdbb6e825f09c90a98a83e57e2d8",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -17852,7 +17773,7 @@
               "name": "57-00 四次元口袋",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-n00b.passive.json",
-              "sha256": "679fe5e182c049793cf4095b90abea06a49a41750b2cdd3ece2ad99075badafd",
+              "sha256": "87c0ab721abbf983f1b3685dae635b190a902b710af1ab6a9e3ec5cd3944e85d",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnVfx",
@@ -18000,7 +17921,7 @@
               "name": "謝幕後閃到你背前",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-shadow.ex.json",
-              "sha256": "dd675ee6d175d0eebdeed1c6acc7ebaa0b906abafd5d8dd4ded79c7247f7ec7e",
+              "sha256": "c3dbb7fe263897120790aa5bf408c89d04ab6214ef7520235740dec8da0c45b3",
               "provenance": "editor-json",
               "effectKinds": [
                 "blink"
@@ -18671,7 +18592,7 @@
               "name": "21-002 天破壤碎",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-e008.ex.json",
-              "sha256": "14a23ab2034973ef15dbcc3b246010373a4d58da8224c1df42d1d0b407fb78e7",
+              "sha256": "8b5fea185e0864ded5d13954bb24da2608f1d7ed9f830aa4d66bf74df22046a0",
               "provenance": "w3x-import",
               "effectKinds": [
                 "damage",
@@ -18791,7 +18712,7 @@
           "runtimeHeroId": "b2-guts",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-guts.json",
-          "championSha256": "f2f49ba76543951bb62cb9700f35b2e3466d11e6e4df0e7bd6acc05fbf0a9ab1",
+          "championSha256": "02303f4303d76f5cd5b5f94ddac5c8ee79af967fd4fb3f8cb17c3bb40477e3b2",
           "name": "凱茲",
           "skillCount": 6,
           "skills": [
@@ -18825,7 +18746,7 @@
               "name": "大型垃圾整排清運",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-guts.r.json",
-              "sha256": "87485c9331c752e8abb68747caae14b8b9b604b150767ae229ed535927c2ec0a",
+              "sha256": "8b3ec09b40f353d96ebd205780c7e20a828636336572250f473517ed76baa18a",
               "provenance": "editor-json",
               "effectKinds": [
                 "leap"
@@ -18967,7 +18888,7 @@
           "runtimeHeroId": "godie-hvwd",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-hvwd.json",
-          "championSha256": "d41b8107ec1ae1df31b0255a2beb66f538ad6d1374e86e28fb5992005ff71f95",
+          "championSha256": "0778cb3875b11c12fe73ac3d03d1806a72dcf519fd075a5d11d6f5302895a85e",
           "name": "除魔巫女 - 桔梗",
           "skillCount": 6,
           "skills": [
@@ -18997,7 +18918,7 @@
               "name": "02-03 魂飛魄散",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvwd.e.json",
-              "sha256": "ac80b71f4ca8a4832e99d204ea4f04f96d6098b3b426936145a660f8b522537f",
+              "sha256": "60ca0f4d0fb2b9ea72fbb25aebe37c48a5090d05f364edf59afc3209bdcbbe76",
               "provenance": "w3x-import",
               "effectKinds": []
             },
@@ -19007,7 +18928,7 @@
               "name": "02-04 死魂蟲",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvwd.r.json",
-              "sha256": "455c3441ac38fc0a3f8c02c294f5e5ab57576f9a43383ef2a60da2b72a46ee16",
+              "sha256": "40b03bd1494f051e532e0e830025b88843f848f4a35237394191406d3daac7ef",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx",
@@ -19020,7 +18941,7 @@
               "name": "02-002 神通眼",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/godie-hvwd.ex.json",
-              "sha256": "74e67657145299139b8ce44df42ba5637920f1e2077451f640ddd422ed76e99a",
+              "sha256": "3d4243eba25e3754edf92ddd60fdf9dd4c9e6a0848bc5ac82448b413b6507e3a",
               "provenance": "w3x-import",
               "effectKinds": [
                 "spawnModelFx"
@@ -20011,7 +19932,7 @@
           "runtimeHeroId": "b2-naofumi",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-naofumi.json",
-          "championSha256": "4477fe02bc426a6cfe1d516f89bc30b0f2ba7f71049730ccf49ca9df3f75f8de",
+          "championSha256": "02fc7b72a4fb74756ae31fbb8f59e3feffb9928025bb658107fffe9c6b1d753d",
           "name": "岩谷尚文",
           "skillCount": 6,
           "skills": [
@@ -20021,7 +19942,7 @@
               "name": "盾牌清空違停入口",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-naofumi.e.json",
-              "sha256": "1c480aa8a55a93354bc84742fdb0eca3b0cdcd459aa6e7a1c2e775b6bc0f50c1",
+              "sha256": "eb02ced8fb213f2d971e6f632e747047bf8c30e75dd5fe8fae2c5a5c1fdb3287",
               "provenance": "editor-json",
               "effectKinds": [
                 "damage",
@@ -20253,7 +20174,7 @@
               "name": "〔電磁過載〕",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-20-20260907.ex.json",
-              "sha256": "bd76818878b5935217460a52009e4cc88153a736fb77aad06d67d33bf6d5312e",
+              "sha256": "02140b61efa9913480baad2cbe3b359c3aa829114822d82a29642be42b07e7dd",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyBuff"
@@ -20837,7 +20758,7 @@
               "name": "〔百公里衝撞〕",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-34-20260907.ex.json",
-              "sha256": "fb28573e1567eed92167738542580e5fb21b25c333dd60e25b95f809b6f2e4cb",
+              "sha256": "9d21474e3c0c5b0f79b5d74f9d03ec4962812104607e3de751ec740a03521926",
               "provenance": "editor-json",
               "effectKinds": [
                 "leap"
@@ -20966,7 +20887,7 @@
           "runtimeHeroId": "b2-maomao",
           "status": "designed",
           "championPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-maomao.json",
-          "championSha256": "24c1efab72431db77c968e40150addfd3c0f886c2bba90c6130ed42937e63bea",
+          "championSha256": "0f7df045a39720d5bddf89c9c651184a3b449893e9a395d8940de04569b7d76c",
           "name": "貓貓",
           "skillCount": 6,
           "skills": [
@@ -20989,7 +20910,7 @@
               "name": "試藥員本人先簽到",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-maomao.q.json",
-              "sha256": "2f514830b00949d4ce83a51a8fc4bec6d4e797a387f42e13542a49c7b669320d",
+              "sha256": "fdd2896e340a63b13414789315176ddf81fdf9940ddeb1ef5704c59f7465ab54",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyStatus",
@@ -21002,7 +20923,7 @@
               "name": "憑樣本換一張處方",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-maomao.r.json",
-              "sha256": "746f559b4f064d493093bbe245fc075530f133637a0a01e448828f64671d82f0",
+              "sha256": "a7e37354f39b915225cc511493ec8db95530f04a5b7e79aaf924ddac7f18c0b1",
               "provenance": "editor-json",
               "effectKinds": [
                 "consumeStatus"
@@ -21027,7 +20948,7 @@
               "name": "受療打五折警示",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-maomao.ex.json",
-              "sha256": "68426311c3ee07cdc390ab5621ee8611669a08c14b2a09968124c4b6abf2a8f6",
+              "sha256": "f3d99506c9cd6e534822eea2abfb3ff4d5f95c76524ee0d609aef5bf18738da7",
               "provenance": "editor-json",
               "effectKinds": [
                 "applyStatus"
@@ -21258,7 +21179,7 @@
               "name": "玩具箱彈簧送客",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/b2-shinchan.ex.json",
-              "sha256": "5db6eae2dea3a47abd63dfb3346911442854964c63b104f37339c4013b5f9dab",
+              "sha256": "a5b2a676e1dff69b2d6bee81ca214d92ddf1449a164dd354f49d79d0b785b935",
               "provenance": "editor-json",
               "effectKinds": [
                 "consumeStatus"
@@ -21727,7 +21648,7 @@
               "name": "〔解析完成・能力再現〕",
               "standaloneExists": true,
               "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/abilities/community-review-11-20260907.ex.json",
-              "sha256": "73bfbf697ac2fd5a80ea72a4c7b3fe346e8bb20cab7872746921d1008339f1c3",
+              "sha256": "c162231a8358b9ab493ddd90cd1395efe2f22545914320d91ab11e1b64b0fff8",
               "provenance": "editor-json",
               "effectKinds": [
                 "damage"
@@ -39913,13 +39834,15 @@
           "library": "community",
           "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
           "sourceUrl": "https://gamebanana.com/mods/291438",
-          "readiness": "standard-glb-candidate",
+          "readiness": "ggd-six-state-subset-contract-and-webgl-validated-pending-rights-semantic-gameplay-backend",
           "converted": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
           "limitations": [
-            "Original platform PSP/PS2 not proven.",
-            "MOD sequence events, controller mixing and root linear-movement behavior are preserved as metadata, not executed.",
-            "GoldSrc additive/chrome/shading semantics are not fully recreated by base-color PBR.",
-            "Sven model bodypart metadata is preserved in the original and Assimp nodes; backend bodygroup selection is not integrated."
+            "Original Fate/unlimited codes PSP/PS2 platform is not proven; this is a Sven Co-op/GoldSrc community-MOD body and motion set.",
+            "Six GGD role mappings are provisional; gutshot falls to the ground and needs gameplay recovery/transition review.",
+            "Continuous playback, loop seams, root-motion policy, source-engine events/controllers and shader parity are not accepted.",
+            "Redistribution permission, backend selection and deployment remain pending."
           ],
           "identityReviewRequired": false,
           "recordedBytes": 18728816,
@@ -40995,52 +40918,12 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
-        },
-        {
-          "id": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
-          "sourceId": "thunderstore-rezero",
-          "library": "community",
-          "nativeId": "emiliaPrefab",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/emilia/body.glb",
-          "gitPath": "content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
-          "existsLocal": true,
-          "bytes": 1037796,
-          "sha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
-          "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/validation.json",
-            "bytes": 2561,
-            "sha256": "74cdb7a39913d798b18cd05f1318eb765c84ac1217c101842c3f852f2daead74"
-          },
-          "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/visual-review.json",
-            "bytes": 2414,
-            "sha256": "e1e7acb6e11ff6d162fce6a5d3becf2acac154bb45fc98958b7a1949dd3bba79"
-          },
-          "limitations": [
-            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
-            "No GGD hero definition or skill binding exists for this exact identity.",
-            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
-            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit.",
-            "The uploader reports an Emilia rig problem. The static bind pose passed three-view review, but motion and retargeting remain unverified and are not accepted."
-          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "Thunderstore Re:Zero 0.1.1 emiliaPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,137 triangles, 1 skinned draw primitives, [171] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 157,560 float values are finite, and three WebGL views were accepted as a static component only."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
       ],
       "aliases": [
         "emiliashuiyi"
@@ -41097,51 +40980,12 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
-        },
-        {
-          "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
-          "sourceId": "thunderstore-rezero",
-          "library": "community",
-          "nativeId": "ramPrefab",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
-          "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
-          "existsLocal": true,
-          "bytes": 1180240,
-          "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
-          "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/validation.json",
-            "bytes": 2530,
-            "sha256": "4ed161528a987e60c1e91def771c1fca0de561a3c783f987e6feacceba1ceba5"
-          },
-          "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/visual-review.json",
-            "bytes": 2353,
-            "sha256": "6032881df738ce81ec4632524e488fd4d877aa05939fce793f0c8e35cd6c1ac6"
-          },
-          "limitations": [
-            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
-            "No GGD hero definition or skill binding exists for this exact identity.",
-            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
-            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
-          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "Thunderstore Re:Zero 0.1.1 ramPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,454 triangles, one skinned primitive, 166 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 185,692 float values are finite, and three WebGL views were accepted as a static component only."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
       ],
       "aliases": [
         "ram"
@@ -41198,51 +41042,12 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
-        },
-        {
-          "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
-          "sourceId": "thunderstore-rezero",
-          "library": "community",
-          "nativeId": "beatricePrefab",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
-          "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
-          "existsLocal": true,
-          "bytes": 1246640,
-          "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
-          "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/validation.json",
-            "bytes": 2545,
-            "sha256": "1f1de627f44ff7bd741ea63dd65a9cbdad207e50b44f7777a1839eb31b72ee10"
-          },
-          "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/visual-review.json",
-            "bytes": 2363,
-            "sha256": "9434d9445e936700c1faca9ca4552176110eab1033ed060411b1b0884e504f41"
-          },
-          "limitations": [
-            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
-            "No GGD hero definition or skill binding exists for this exact identity.",
-            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
-            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
-          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "Thunderstore Re:Zero 0.1.1 beatricePrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 20,932 triangles, one skinned primitive, 228 glTF joints, one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 188,460 float values are finite, and three WebGL views were accepted as a static component only."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
       ],
       "aliases": [
         "beatrice"
@@ -41299,51 +41104,12 @@
           "converted": false,
           "resourceRole": "shared-source-container",
           "identityReviewRequired": false
-        },
-        {
-          "id": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
-          "sourceId": "thunderstore-rezero",
-          "library": "community",
-          "nativeId": "felixPrefab",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/felix/body.glb",
-          "gitPath": "content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
-          "existsLocal": true,
-          "bytes": 948284,
-          "sha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
-          "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/validation.json",
-            "bytes": 2557,
-            "sha256": "af47f5f23be6e96328df9999b07de6df23236796ec1a43ec9c399d5992a19ece"
-          },
-          "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/visual-review.json",
-            "bytes": 2301,
-            "sha256": "85726322ab643500c4fcb40dbb1845726b75b3b06712390216691d0695faae8a"
-          },
-          "limitations": [
-            "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
-            "No GGD hero definition or skill binding exists for this exact identity.",
-            "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Unity custom shader behavior is represented only by a portable base-color PBR material.",
-            "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
-          ]
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "Thunderstore Re:Zero 0.1.1 felixPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 16,444 triangles, 1 skinned draw primitives, [137] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 145,040 float values are finite, and three WebGL views were accepted as a static component only."
+        "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip."
       ],
       "aliases": [
         "felix"
@@ -57730,24 +57496,43 @@
           "sizeMatchesManifest": true
         },
         {
-          "id": "ssbu-mario-c00-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/mario/body/c00",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
-          "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mario-c00-static-skinned-v1/component.glb",
           "existsLocal": true,
-          "bytes": 817900,
-          "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
+          "bytes": 818052,
+          "sha256": "bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000847b0c00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 6,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-mario-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/mario/body/c00",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
           "componentReady": true,
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "runtimeSelectable": false,
           "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Mario identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
+            "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/validation.json",
             "bytes": 27528,
@@ -57758,14 +57543,9 @@
             "bytes": 2227,
             "sha256": "deda1cb9f32b290e572fe77ea789f3812d5e86218487d18ff2418c0c088e005d"
           },
-          "limitations": [
-            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
-            "No GGD hero definition or skill binding exists for this exact Mario identity.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
-            "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
-            "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
-          ]
+          "identityReviewRequired": false,
+          "recordedBytes": 818052,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
@@ -58939,24 +58719,43 @@
           "sizeMatchesManifest": true
         },
         {
-          "id": "ssbu-mewtwo-c00-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/mewtwo/body/c00",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
-          "gitPath": "content/assets/models/community/cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mewtwo-c00-static-skinned-v1/component.glb",
           "existsLocal": true,
-          "bytes": 667840,
-          "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
+          "bytes": 667904,
+          "sha256": "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c54460200000000310a00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-mewtwo-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/mewtwo/body/c00",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
           "componentReady": true,
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "runtimeSelectable": false,
           "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Mewtwo identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Twenty-three hidden facial/source mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/validation.json",
             "bytes": 16079,
@@ -58967,14 +58766,9 @@
             "bytes": 2194,
             "sha256": "a68f851fffa3aeebbabcd477bc2080fe7d9702e93134af6363a0998ce508bdcd"
           },
-          "limitations": [
-            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
-            "No GGD hero definition or skill binding exists for this exact Mewtwo identity.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
-            "Twenty-three hidden facial/source mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
-            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-          ]
+          "identityReviewRequired": false,
+          "recordedBytes": 667904,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
@@ -66603,25 +66397,43 @@
           "sizeMatchesManifest": true
         },
         {
-          "id": "ssbu-ptrainer-male-c00-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/ptrainer/model/ptrainer/c00",
-          "variantSlot": "c00",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
-          "gitPath": "content/assets/models/community/953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-male-c00-static-skinned-v1/component.glb",
           "existsLocal": true,
-          "bytes": 1316992,
-          "sha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
+          "bytes": 1317084,
+          "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000dc181400",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 5,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-ptrainer-male-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
           "componentReady": true,
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "runtimeSelectable": false,
           "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "25 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/validation.json",
             "bytes": 33780,
@@ -66632,41 +66444,48 @@
             "bytes": 2315,
             "sha256": "037ea89f2f24d5a5800ac44427d50dec14a7f7c264836440b69483bb775947ad"
           },
-          "equivalentSourceVariants": [
-            "c00",
-            "c02",
-            "c04",
-            "c06"
-          ],
-          "limitations": [
-            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
-            "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
-            "25 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
-            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-          ]
+          "identityReviewRequired": false,
+          "recordedBytes": 1317084,
+          "sizeMatchesManifest": true
         },
         {
-          "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/ptrainer/model/ptrainer/c01",
-          "variantSlot": "c01",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
-          "gitPath": "content/assets/models/community/8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-female-c01-static-skinned-v1/component.glb",
           "existsLocal": true,
-          "bytes": 1373696,
-          "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
+          "bytes": 1373732,
+          "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c54460200000024f61400",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 6,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/ptrainer/model/ptrainer/c01",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
           "componentReady": true,
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "runtimeSelectable": false,
           "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/validation.json",
             "bytes": 40238,
@@ -66677,20 +66496,9 @@
             "bytes": 2321,
             "sha256": "4e1dfb85dd5b63b174684a6e5b5e81316f74671a6184133a85592a191c147a5c"
           },
-          "equivalentSourceVariants": [
-            "c01",
-            "c03",
-            "c05",
-            "c07"
-          ],
-          "limitations": [
-            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
-            "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
-            "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
-            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-          ]
+          "identityReviewRequired": false,
+          "recordedBytes": 1373732,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
@@ -69796,24 +69604,43 @@
           "sizeMatchesManifest": true
         },
         {
-          "id": "ssbu-ryu-c00-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/ryu/body/c00",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
-          "gitPath": "content/assets/models/community/57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ryu-c00-static-skinned-v1/component.glb",
           "existsLocal": true,
-          "bytes": 1005688,
-          "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
+          "bytes": 1005808,
+          "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000f0580f00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 5,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-ryu-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/ryu/body/c00",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
           "componentReady": true,
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "runtimeSelectable": false,
           "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Thirty-eight hidden costume, facial and expression mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/validation.json",
             "bytes": 14709,
@@ -69824,14 +69651,9 @@
             "bytes": 2187,
             "sha256": "8ed952c0dc2f02236f20f43e7c61b5880cf04180f1516c9a0687c49499f137ef"
           },
-          "limitations": [
-            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
-            "No GGD hero definition or skill binding exists for this exact Ryu identity.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
-            "Thirty-eight hidden costume, facial and expression mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
-            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-          ]
+          "identityReviewRequired": false,
+          "recordedBytes": 1005808,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
@@ -73972,25 +73794,43 @@
           "sizeMatchesManifest": true
         },
         {
-          "id": "ssbu-pickel-steve-c00-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/pickel/body/c00",
-          "variantSlot": "c00",
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/body.glb",
-          "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
           "existsLocal": true,
           "bytes": 51664,
           "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000d0c90000",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-pickel-steve-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/pickel/body/c00",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
           "componentReady": true,
           "nativeAnimationCount": 0,
           "proceduralAnimationCount": 0,
           "runtimeSelectable": false,
           "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115/validation.json",
             "bytes": 9000,
@@ -74001,11 +73841,40 @@
             "bytes": 2258,
             "sha256": "f615cc5557cc2cebcfbdc45a23308c8b57393e033e7f7ea6b3d91089d0fe214b"
           },
-          "equivalentSourceVariants": [
-            "c00",
-            "c02",
-            "c04"
-          ],
+          "identityReviewRequired": false,
+          "recordedBytes": 51664,
+          "sizeMatchesManifest": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
+          "existsLocal": true,
+          "bytes": 51960,
+          "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
+          "sha256Status": "recorded-manifest; this audit checks local size/header",
+          "magicHex": "676c544602000000f8ca0000",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 3,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "ssbu-pickel-alex-c01-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeId": "fighter/pickel/body/c01",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
           "limitations": [
             "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
             "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
@@ -74013,28 +73882,7 @@
             "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
             "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
             "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-          ]
-        },
-        {
-          "id": "ssbu-pickel-alex-c01-static-skinned-v1",
-          "sourceId": "gitlab-ssbu-models",
-          "library": "community",
-          "nativeId": "fighter/pickel/body/c01",
-          "variantSlot": "c01",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
-          "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
-          "existsLocal": true,
-          "bytes": 51960,
-          "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
-          "format": "glTF Binary",
-          "resourceRole": "independent-static-skinned-model-component",
-          "readiness": "accepted-independent-static-skinned-component-actions-missing",
-          "converted": true,
-          "componentReady": true,
-          "nativeAnimationCount": 0,
-          "proceduralAnimationCount": 0,
-          "runtimeSelectable": false,
-          "defaultEligible": false,
+          ],
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-pickel/c7dcfceadbce199b1bd41e928c25ae49196fa668ffcef21475fe8c0a4c84bb7e/validation.json",
             "bytes": 8969,
@@ -74045,18 +73893,9 @@
             "bytes": 2255,
             "sha256": "a0fd584b85a31f58cbfc48e22926ea2d16800635f957991438c939952f119200"
           },
-          "equivalentSourceVariants": [
-            "c01",
-            "c03"
-          ],
-          "limitations": [
-            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
-            "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
-            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
-            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
-            "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
-            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-          ]
+          "identityReviewRequired": false,
+          "recordedBytes": 51960,
+          "sizeMatchesManifest": true
         }
       ],
       "mappedHeroIds": [],
@@ -81021,12 +80860,12 @@
     "not-defined": 149,
     "identity-review": 249,
     "characterGroups": 444,
-    "actualModelCandidateFiles": 2387,
+    "actualModelCandidateFiles": 2394,
     "missingCandidatePaths": 0,
     "publicSourcesInspected": 106,
     "nativeSSBUGroups": 278,
     "ssbuBlendFiles": 1793,
-    "uniqueExistingModelPaths": 2336,
+    "uniqueExistingModelPaths": 2343,
     "knownNotDefinedGroups": 149,
     "historicalMutableManifestMismatchCount": 33
   },

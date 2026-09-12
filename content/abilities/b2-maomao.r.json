@@ -46,9 +46,9 @@
   ],
   "id": "b2-maomao.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "憑樣本換一張處方",
@@ -111,5 +111,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-maomao.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

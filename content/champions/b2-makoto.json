@@ -252,7 +252,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-makoto.r.webp"
+      "icon": "assets/icons/abilities/b2-makoto.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -327,7 +328,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-makoto.w.webp"
+      "icon": "assets/icons/abilities/b2-makoto.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "mage",

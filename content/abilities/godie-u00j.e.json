@@ -41,10 +41,11 @@
   },
   "vfxKey": "fx.prim.void.pulse",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
   "castTimeSec": 1.633,
   "rangeTier": "中",
   "range": 6,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

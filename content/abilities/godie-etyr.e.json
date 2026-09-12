@@ -21,7 +21,7 @@
     75.0
   ],
   "manaCostTier": "極小",
-  "range": 0.0,
+  "range": 0,
   "effects": [],
   "template": {
     "ref": "tpl-orbit-array",
@@ -44,8 +44,9 @@
   },
   "vfxKey": "fx.prim.holy.explosion",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
   "castTimeSec": 1.133,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

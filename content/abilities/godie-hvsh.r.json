@@ -27,13 +27,13 @@
       "modelKey": "w3x.stock.tomeofretrainingcaster",
       "clip": "idle",
       "soundKey": "wc3.thunderclapcaster",
-      "scale": 4.0,
+      "scale": 4,
       "tint": [
-        1.0,
-        0.0,
-        1.0
+        1,
+        0,
+        1
       ],
-      "lifeSec": 2.0
+      "lifeSec": 2
     },
     {
       "kind": "spawnModelFx",
@@ -42,8 +42,8 @@
       "modelKey": "w3x.stock.tomeofretrainingcaster",
       "clip": "idle",
       "soundKey": "wc3.thunderclapcaster",
-      "scale": 5.0,
-      "lifeSec": 3.0
+      "scale": 5,
+      "lifeSec": 3
     },
     {
       "kind": "spawnModelFx",
@@ -54,12 +54,12 @@
       "soundKey": "wc3.thunderclapcaster",
       "scale": 1.5,
       "tint": [
-        1.0,
+        1,
         0.3922,
         0.3922
       ],
-      "distance": 1.0,
-      "lifeSec": 3.0
+      "distance": 1,
+      "lifeSec": 3
     }
   ],
   "template": {
@@ -83,5 +83,6 @@
   "schema": "ability@1",
   "castTimeSec": 1.633,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

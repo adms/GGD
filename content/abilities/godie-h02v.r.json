@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    90.0,
-    90.0,
-    90.0
+    90,
+    90,
+    90
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "大",
   "targetsEnemies": true,
   "effects": [
@@ -25,22 +25,22 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "flat": 1.0
+        "flat": 1
       },
-      "radius": 8.0,
+      "radius": 8,
       "radiusTier": "大",
       "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "applyStatus",
           "statusId": "slow50",
-          "duration": 6.0,
+          "duration": 6,
           "moveSpeedMult": 0.5
         },
         {
           "kind": "applyStatus",
           "statusId": "blind",
-          "duration": 6.0,
+          "duration": 6,
           "missChance": 0.5
         }
       ]
@@ -61,7 +61,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 }
@@ -88,7 +88,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 2.0
+                      "coeff": 2
                     }
                   ]
                 }
@@ -115,7 +115,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 3.0
+                      "coeff": 3
                     }
                   ]
                 }
@@ -135,5 +135,6 @@
   "icon": "assets/icons/abilities/godie-h02v.r.webp",
   "vfxKey": "fx.prim.nature.pulse-lg",
   "cooldownTier": "大",
-  "castTimeSec": 1.433
+  "castTimeSec": 1.433,
+  "castTimeTier": "極大"
 }

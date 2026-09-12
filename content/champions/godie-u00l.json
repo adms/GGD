@@ -189,7 +189,7 @@
       "effects": [],
       "vfxKey": "fx.prim.physical.swarm",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.633,
       "rangeTier": "極小",
       "range": 3,
@@ -212,7 +212,8 @@
           "damageType": "physical",
           "castTimeSec": 1.633
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00l.r",
@@ -253,11 +254,11 @@
           "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget",
           "anchor": "target",
-          "scale": 10.0,
+          "scale": 10,
           "tint": [
-            1.0,
-            0.0,
-            0.0
+            1,
+            0,
+            0
           ]
         }
       ],
@@ -268,7 +269,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

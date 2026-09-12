@@ -215,11 +215,11 @@
         75.0,
         75.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-orbit-array",
@@ -242,7 +242,8 @@
       },
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-etyr.r",

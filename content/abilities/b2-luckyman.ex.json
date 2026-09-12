@@ -17,7 +17,7 @@
   ],
   "id": "b2-luckyman.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "沒那麼幸運先搭便車",
@@ -39,5 +39,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-luckyman.ex.webp"
+  "icon": "assets/icons/abilities/b2-luckyman.ex.webp",
+  "castTimeTier": "極大"
 }

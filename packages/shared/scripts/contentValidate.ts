@@ -168,6 +168,10 @@ async function main(): Promise<void> {
   const cdMult = envDoc?.multipliers.cooldown ?? 1;
   const ctWrong: string[] = [];
   for (const def of AbilitiesRegistry.all()) {
+    // `castTimeTier` is the current five-step authoring source. Registration
+    // resolves it into castTimeSec, so the retired 20-step formula must only
+    // validate documents that have not migrated to a tier yet.
+    if (def.castTimeTier !== undefined) continue;
     const want = deriveCastTime(def, cdMult).castTimeSec;
     if (def.castTimeSec !== want) {
       ctWrong.push(
