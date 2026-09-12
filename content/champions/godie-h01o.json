@@ -125,7 +125,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-h01o.w",
@@ -196,7 +197,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -220,7 +221,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 2.0
+                          "coeff": 2
                         }
                       ]
                     }
@@ -238,7 +239,8 @@
         ]
       },
       "rangeTier": "小",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-h01o.e",
@@ -306,7 +308,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-h01o.r",
@@ -323,9 +326,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -338,12 +341,13 @@
               "value": 300
             }
           ],
-          "duration": 3.0
+          "duration": 3
         }
       ],
       "vfxKey": "fx.prim.void.pulse-lg",
       "castTimeSec": 0.667,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

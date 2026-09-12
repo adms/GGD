@@ -98,7 +98,8 @@
           },
           "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-u00o.w",
@@ -144,12 +145,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "burnstun",
-            "duration": 1.0,
+            "duration": 1,
             "stun": true
           },
           "castTimeSec": 0.567
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-u00o.e",

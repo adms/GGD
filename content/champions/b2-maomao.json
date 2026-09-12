@@ -38,10 +38,10 @@
       ],
       "id": "b2-maomao.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "樣本採好了別打翻",
@@ -91,7 +91,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-maomao.e.webp"
+      "icon": "assets/icons/abilities/b2-maomao.e.webp",
+      "castTimeTier": "小"
     },
     "Q": {
       "castTimeSec": 1.233,
@@ -337,10 +338,10 @@
       ],
       "id": "b2-maomao.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "先解毒再喝急救包",
@@ -402,7 +403,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-maomao.w.webp"
+      "icon": "assets/icons/abilities/b2-maomao.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "fighter",

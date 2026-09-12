@@ -36,10 +36,10 @@
   ],
   "id": "b2-fushi.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "把破掉的地方長回來",
@@ -90,5 +90,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-fushi.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

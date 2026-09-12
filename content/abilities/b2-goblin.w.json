@@ -21,10 +21,10 @@
   ],
   "id": "b2-goblin.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "把客人拉進施工區",
@@ -61,5 +61,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-goblin.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

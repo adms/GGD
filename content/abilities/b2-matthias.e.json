@@ -30,10 +30,10 @@
   ],
   "id": "b2-matthias.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "退回重寫保護欄",
@@ -78,5 +78,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-matthias.e.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

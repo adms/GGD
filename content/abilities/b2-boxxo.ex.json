@@ -30,7 +30,7 @@
   ],
   "id": "b2-boxxo.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "退貨順便消毒",
@@ -79,5 +79,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-boxxo.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

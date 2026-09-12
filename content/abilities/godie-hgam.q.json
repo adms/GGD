@@ -19,7 +19,7 @@
     75.0
   ],
   "manaCostTier": "極小",
-  "range": 0.0,
+  "range": 0,
   "effects": [],
   "template": {
     "ref": "tpl-periodic-field",
@@ -63,5 +63,6 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 0.667,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "大"
 }

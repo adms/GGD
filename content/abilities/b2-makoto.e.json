@@ -36,10 +36,10 @@
   ],
   "id": "b2-makoto.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "本店定點營業範圍",
@@ -90,5 +90,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-makoto.e.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

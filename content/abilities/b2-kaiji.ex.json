@@ -17,7 +17,7 @@
   ],
   "id": "b2-kaiji.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "地下勞動急救包",
@@ -44,5 +44,6 @@
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-kaiji.ex.webp"
+  "icon": "assets/icons/abilities/b2-kaiji.ex.webp",
+  "castTimeTier": "小"
 }

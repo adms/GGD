@@ -37,9 +37,9 @@
   ],
   "id": "b2-noor.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "收據換厚盾不找零",
@@ -92,5 +92,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-noor.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

@@ -30,10 +30,10 @@
   ],
   "id": "b2-nube.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "老師先幫你擋著",
@@ -79,5 +79,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-nube.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

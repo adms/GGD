@@ -26,7 +26,7 @@
       "preset": "tpl-beam-roll",
       "modelKey": "w3x.stock.revivehuman",
       "soundKey": "wc3.shockwave",
-      "scale": 2.0,
+      "scale": 2,
       "scaleAxis": [
         1,
         1,
@@ -72,5 +72,6 @@
   },
   "targetsEnemies": true,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

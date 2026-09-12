@@ -27,10 +27,10 @@
   ],
   "id": "b2-sinbad.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "合夥人早鳥紅利",
@@ -73,5 +73,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-sinbad.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

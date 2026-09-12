@@ -118,5 +118,6 @@
   "vfxKey": "fx.prim.holy.nova-lg",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

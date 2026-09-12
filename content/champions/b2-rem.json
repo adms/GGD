@@ -36,10 +36,10 @@
       ],
       "id": "b2-rem.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "鬼化加班先扣血",
@@ -87,7 +87,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-rem.e.webp"
+      "icon": "assets/icons/abilities/b2-rem.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -112,10 +113,10 @@
       ],
       "id": "b2-rem.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "這位客人請留步",
@@ -151,7 +152,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-rem.q.webp"
+      "icon": "assets/icons/abilities/b2-rem.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -203,9 +205,9 @@
       ],
       "id": "b2-rem.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "半條命換急救包",
@@ -268,7 +270,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-rem.r.webp"
+      "icon": "assets/icons/abilities/b2-rem.r.webp",
+      "castTimeTier": "小"
     },
     "W": {
       "castTimeSec": 1.233,

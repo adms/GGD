@@ -66,7 +66,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-touka.e.webp"
+      "icon": "assets/icons/abilities/b2-touka.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.667,
@@ -95,7 +96,7 @@
           ],
           "kind": "delayed",
           "maxTargets": 4,
-          "radius": 3.0,
+          "radius": 3,
           "shape": "circle",
           "side": "enemies",
           "stopOnCasterDeath": true,
@@ -105,10 +106,10 @@
       ],
       "id": "b2-touka.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "英雄招募延時坑",
@@ -157,7 +158,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-touka.q.webp"
+      "icon": "assets/icons/abilities/b2-touka.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 1.633,
@@ -326,7 +328,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-touka.w.webp"
+      "icon": "assets/icons/abilities/b2-touka.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",

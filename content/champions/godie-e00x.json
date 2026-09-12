@@ -70,7 +70,7 @@
         75.0,
         75.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "spawnModelFx",
@@ -83,7 +83,7 @@
       "vfxKey": "fx.prim.nature.slash",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.8,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
@@ -112,7 +112,8 @@
           "statusDurationSec": 0.8,
           "castTimeSec": 0.8
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-e00x.w",
@@ -124,16 +125,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -145,7 +146,7 @@
             "critStrike": {
               "chance": 0.1,
               "damageMult": 1.5,
-              "lifestealFraction": 0.0
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -162,7 +163,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -173,7 +174,8 @@
           }
         ]
       },
-      "targetsEnemies": false
+      "targetsEnemies": false,
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00x.e",
@@ -200,12 +202,12 @@
         {
           "kind": "applyBuff",
           "applyTo": "self",
-          "duration": 6.0,
+          "duration": 6,
           "modifiers": [
             {
               "stat": "armor",
               "op": "flat",
-              "value": -3.0
+              "value": -3
             }
           ],
           "hooks": [
@@ -236,7 +238,8 @@
       "castTimeSec": 0.267,
       "range": 0.0,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-e00x.r",

@@ -80,7 +80,7 @@
       "invulnerableSec": 0.1,
       "status": {
         "statusId": "moon-combo",
-        "duration": 1.0,
+        "duration": 1,
         "applyTo": "self"
       },
       "castTimeSec": 1
@@ -92,5 +92,6 @@
   "schema": "ability@1",
   "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

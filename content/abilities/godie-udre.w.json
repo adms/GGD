@@ -45,8 +45,9 @@
   },
   "vfxKey": "fx.prim.physical.nova",
   "targetsEnemies": true,
-  "radius": 3.0,
+  "radius": 3,
   "schema": "ability@1",
   "castTimeSec": 0.8,
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

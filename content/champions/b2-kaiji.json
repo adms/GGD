@@ -41,10 +41,10 @@
       ],
       "id": "b2-kaiji.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "不看牌先退桌",
@@ -97,7 +97,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.e.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -127,10 +128,10 @@
       ],
       "id": "b2-kaiji.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "午餐錢全押這次",
@@ -170,7 +171,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.q.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -223,9 +225,9 @@
       ],
       "id": "b2-kaiji.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "最後一把抽獎機",
@@ -289,7 +291,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.r.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.833,
@@ -364,7 +367,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.w.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "fighter",

@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -33,7 +33,7 @@
         0.3922,
         0.3922
       ],
-      "lifeSec": 6.0
+      "lifeSec": 6
     }
   ],
   "template": {
@@ -53,5 +53,6 @@
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.soulpreservation",
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

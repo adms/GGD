@@ -36,7 +36,7 @@
       "damageType": "magic",
       "status": {
         "statusId": "root",
-        "duration": 1.0,
+        "duration": 1,
         "root": true
       },
       "castTimeSec": 1
@@ -46,5 +46,6 @@
   "targetsEnemies": true,
   "castTimeSec": 1,
   "rangeTier": "中",
-  "range": 6
+  "range": 6,
+  "castTimeTier": "極大"
 }

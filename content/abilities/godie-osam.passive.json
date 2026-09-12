@@ -14,24 +14,25 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 5.0,
+      "duration": 5,
       "modifiers": [
         {
           "stat": "healthRegen",
           "op": "flat",
-          "value": 200.0
+          "value": 200
         }
       ],
       "castTimeSec": 0.267
     }
   },
   "vfxKey": "fx.prim.void.pulse",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "castTimeTier": "中"
 }

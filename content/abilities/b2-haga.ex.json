@@ -33,7 +33,7 @@
   ],
   "id": "b2-haga.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "熱修補丁先消毒",
@@ -85,5 +85,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-haga.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

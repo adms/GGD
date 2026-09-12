@@ -25,10 +25,10 @@
   ],
   "id": "b2-elma.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "重劍攻略追加七十點",
@@ -57,5 +57,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-elma.e.webp"
+  "icon": "assets/icons/abilities/b2-elma.e.webp",
+  "castTimeTier": "中"
 }

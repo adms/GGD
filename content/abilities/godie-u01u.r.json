@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -51,7 +51,7 @@
         ]
       },
       "length": 8.75,
-      "width": 2.0,
+      "width": 2,
       "aim": "facing",
       "fromCaster": true
     },
@@ -64,7 +64,7 @@
           "value": 0.4
         }
       ],
-      "duration": 3.0
+      "duration": 3
     },
     {
       "kind": "spawnModelFx",
@@ -89,15 +89,16 @@
       "modelKey": "w3x.stock.tornadoelemental",
       "clip": "idle",
       "soundKey": "wc3.blademasterwhirlwind",
-      "scale": 2.0,
+      "scale": 2,
       "tint": [
         0.3922,
         0.5882,
-        1.0
+        1
       ]
     }
   ],
   "vfxKey": "fx.prim.physical.slash-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

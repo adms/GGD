@@ -62,16 +62,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        6,
+        6,
+        6,
+        6
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 4.5,
       "targetsEnemies": true,
@@ -81,7 +81,7 @@
           "shape": "single",
           "to": "targetUnit",
           "applyTo": "self",
-          "stopShortUnits": 1.0,
+          "stopShortUnits": 1,
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -91,7 +91,7 @@
             {
               "kind": "applyStatus",
               "statusId": "blind",
-              "duration": 1.0,
+              "duration": 1,
               "missChance": 0.5
             }
           ]
@@ -115,7 +115,8 @@
       "recoverySec": 0.25,
       "cooldownTier": "極小",
       "rangeTier": "小",
-      "castTimeSec": 0.233
+      "castTimeSec": 0.233,
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-efur.w",
@@ -126,18 +127,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 3.0,
+      "range": 3,
       "targetsEnemies": true,
       "effects": [
         {
@@ -166,7 +167,7 @@
         },
         {
           "kind": "knockback",
-          "distance": 6.0,
+          "distance": 6,
           "speed": 16,
           "from": "caster"
         }
@@ -191,7 +192,8 @@
       "cooldownTier": "大",
       "manaCostTier": "極小",
       "rangeTier": "極小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-efur.e",
@@ -202,18 +204,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        150,
+        150,
+        150,
+        150
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -282,7 +284,8 @@
       ],
       "cooldownTier": "中",
       "manaCostTier": "小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-efur.r",
@@ -293,16 +296,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        120.0,
-        120.0,
-        120.0
+        120,
+        120,
+        120
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0
+        150,
+        150,
+        150
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "極小",
       "targetsEnemies": true,
       "effects": [
@@ -313,7 +316,7 @@
             10
           ],
           "intervalSec": 0.2,
-          "scatterRadius": 8.0,
+          "scatterRadius": 8,
           "firstAtCast": true,
           "stopOnCasterDeath": true,
           "effects": [
@@ -329,7 +332,7 @@
                   }
                 ]
               },
-              "radius": 3.0,
+              "radius": 3,
               "radiusTier": "極小",
               "includeOrigin": true
             }
@@ -362,7 +365,8 @@
       "recoverySec": 0.8,
       "cooldownTier": "極大",
       "manaCostTier": "小",
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

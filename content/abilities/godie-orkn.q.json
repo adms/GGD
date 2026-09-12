@@ -16,13 +16,13 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 6.0,
+  "range": 6,
   "rangeTier": "中",
   "targetsEnemies": true,
   "effects": [],
@@ -31,7 +31,7 @@
     "params": {
       "status": {
         "statusId": "root",
-        "duration": 1.0,
+        "duration": 1,
         "root": true
       },
       "castTimeSec": 0.567
@@ -40,5 +40,6 @@
   "vfxKey": "fx.prim.void.pulse-sm",
   "sfxKey": "wc3.headhunteryes4",
   "schema": "ability@1",
-  "castTimeSec": 0.567
+  "castTimeSec": 0.567,
+  "castTimeTier": "大"
 }

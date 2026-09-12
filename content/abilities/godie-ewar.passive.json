@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -31,5 +31,6 @@
       }
     ]
   },
-  "icon": "assets/icons/abilities/godie-ewar.passive.webp"
+  "icon": "assets/icons/abilities/godie-ewar.passive.webp",
+  "castTimeTier": "極小"
 }

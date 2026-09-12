@@ -27,10 +27,10 @@
   ],
   "id": "b2-aladdin.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "團員到齊才打節拍",
@@ -73,5 +73,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-aladdin.e.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

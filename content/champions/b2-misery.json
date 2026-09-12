@@ -22,10 +22,10 @@
       ],
       "id": "b2-misery.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "店長先移去門後",
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-misery.e.webp"
+      "icon": "assets/icons/abilities/b2-misery.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -71,10 +72,10 @@
       ],
       "id": "b2-misery.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "免費跑鞋條款另計",
@@ -110,7 +111,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-misery.q.webp"
+      "icon": "assets/icons/abilities/b2-misery.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -139,9 +141,9 @@
       ],
       "id": "b2-misery.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "櫃檯保固不是無敵",
@@ -181,7 +183,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-misery.r.webp"
+      "icon": "assets/icons/abilities/b2-misery.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -214,10 +217,10 @@
       ],
       "id": "b2-misery.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "七天鑑賞期不含眼睛",
@@ -261,7 +264,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-misery.w.webp"
+      "icon": "assets/icons/abilities/b2-misery.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",

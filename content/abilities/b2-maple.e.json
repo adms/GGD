@@ -30,10 +30,10 @@
   ],
   "id": "b2-maple.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "這個形狀看起來很耐打",
@@ -64,5 +64,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-maple.e.webp"
+  "icon": "assets/icons/abilities/b2-maple.e.webp",
+  "castTimeTier": "中"
 }

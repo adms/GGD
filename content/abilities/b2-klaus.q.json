@@ -21,10 +21,10 @@
   ],
   "id": "b2-klaus.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "已加入工作佇列",
@@ -60,5 +60,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-klaus.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

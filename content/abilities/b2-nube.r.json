@@ -28,7 +28,7 @@
         }
       ],
       "onHitTargetsMode": "perTarget",
-      "radius": 3.0,
+      "radius": 3,
       "radiusTier": "極小"
     }
   ],
@@ -86,5 +86,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-nube.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

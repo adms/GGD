@@ -8,31 +8,32 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    15.0
+    15
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "active",
   "targetsEnemies": false,
   "effects": [
     {
       "kind": "manaBarrier",
       "shape": "single",
-      "perMana": 3.0,
-      "durationSec": 6.0,
+      "perMana": 3,
+      "durationSec": 6,
       "damageTypes": [
         "physical",
         "magic",
         "true"
       ],
-      "minManaReserve": 0.0,
+      "minManaReserve": 0,
       "who": "self"
     }
   ],
   "icon": "assets/icons/abilities/godie-emns.passive.webp",
   "vfxKey": "fx.prim.void.pulse",
   "cooldownTier": "小",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "castTimeTier": "中"
 }

@@ -14,16 +14,16 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 8.0,
+      "duration": 8,
       "modifiers": [
         {
           "stat": "armor",
@@ -40,7 +40,7 @@
               "value": 25
             }
           ],
-          "duration": 8.0
+          "duration": 8
         },
         {
           "modifiers": [
@@ -50,7 +50,7 @@
               "value": 25
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
@@ -60,7 +60,7 @@
               "value": 25
             }
           ],
-          "duration": 16.0
+          "duration": 16
         }
       ],
       "castTimeSec": 0.667
@@ -68,5 +68,6 @@
   },
   "vfxKey": "fx.prim.holy.nova-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

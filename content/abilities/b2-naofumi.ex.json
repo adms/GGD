@@ -21,7 +21,7 @@
   ],
   "id": "b2-naofumi.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "糾察隊本人安全帽",
@@ -60,5 +60,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-naofumi.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

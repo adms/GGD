@@ -29,10 +29,10 @@
   ],
   "id": "b2-matthias.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "護甲答案扣二十分",
@@ -77,5 +77,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-matthias.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

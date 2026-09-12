@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -112,5 +112,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00r.w.webp",
-  "vfxKey": "fx.prim.physical.slash"
+  "vfxKey": "fx.prim.physical.slash",
+  "castTimeTier": "極小"
 }

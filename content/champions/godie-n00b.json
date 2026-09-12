@@ -95,7 +95,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-n00b.w",
@@ -112,9 +113,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "effects": [],
       "template": {
@@ -122,7 +123,7 @@
         "params": {
           "count": 1,
           "body": "self",
-          "damageMult": 1.0,
+          "damageMult": 1,
           "hpMult": 0.333,
           "durationSec": 20,
           "formation": "ring",
@@ -136,7 +137,8 @@
       "castTimeSec": 0.267,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-n00b.e",
@@ -155,11 +157,11 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -172,7 +174,8 @@
         "params": {
           "castTimeSec": 0.467
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-n00b.r",
@@ -216,12 +219,13 @@
           "damageType": "magic",
           "status": {
             "statusId": "root",
-            "duration": 1.0,
+            "duration": 1,
             "root": true
           },
           "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

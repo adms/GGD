@@ -20,10 +20,10 @@
   ],
   "id": "b2-misery.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "店長先移去門後",
@@ -45,5 +45,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-misery.e.webp"
+  "icon": "assets/icons/abilities/b2-misery.e.webp",
+  "castTimeTier": "大"
 }

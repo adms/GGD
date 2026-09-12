@@ -20,10 +20,10 @@
   ],
   "id": "b2-orphen.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "債務人請勿插話",
@@ -51,5 +51,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-orphen.e.webp"
+  "icon": "assets/icons/abilities/b2-orphen.e.webp",
+  "castTimeTier": "中"
 }

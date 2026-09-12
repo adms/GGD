@@ -100,7 +100,8 @@
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-umal.w",
@@ -112,16 +113,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse-sm",
@@ -167,7 +168,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-umal.e",
@@ -234,9 +236,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -251,18 +253,19 @@
           "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget",
           "anchor": "self",
-          "scale": 10.0,
+          "scale": 10,
           "tint": [
-            1.0,
-            0.0,
-            0.0
+            1,
+            0,
+            0
           ]
         }
       ],
       "vfxKey": "fx.prim.lightning.pulse-lg",
       "sfxKey": "wc3.nocute",
       "castTimeSec": 0.667,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

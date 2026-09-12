@@ -17,7 +17,7 @@
   ],
   "id": "b2-elma.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "攻略漏寫帶補包",
@@ -42,5 +42,6 @@
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-elma.ex.webp"
+  "icon": "assets/icons/abilities/b2-elma.ex.webp",
+  "castTimeTier": "小"
 }

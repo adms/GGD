@@ -34,10 +34,10 @@
   ],
   "id": "b2-guts.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "自願加班同意書",
@@ -86,5 +86,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-guts.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

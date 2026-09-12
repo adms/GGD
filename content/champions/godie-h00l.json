@@ -62,18 +62,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -100,8 +100,8 @@
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3.0,
-              "speed": 15.0,
+              "distance": 3,
+              "speed": 15,
               "from": "caster"
             }
           ]
@@ -132,8 +132,8 @@
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3.0,
-              "speed": 15.0,
+              "distance": 3,
+              "speed": 15,
               "from": "caster"
             }
           ],
@@ -145,7 +145,8 @@
       "sfxKey": "wc3.druidofthetalonmissilelaunch2",
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-h00l.w",
@@ -156,28 +157,28 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 12.0,
+      "range": 12,
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "leap",
           "applyTo": "self",
           "mode": "toPoint",
-          "apexHeight": 0.0,
+          "apexHeight": 0,
           "durationSec": 0.4,
-          "throwDistance": 11.0,
-          "landRadius": 3.0,
+          "throwDistance": 11,
+          "landRadius": 3,
           "onLand": [
             {
               "kind": "damage",
@@ -200,7 +201,8 @@
       "cooldownTier": "大",
       "manaCostTier": "極小",
       "rangeTier": "極大",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-h00l.e",
@@ -211,18 +213,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -242,7 +244,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -267,7 +269,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -295,7 +297,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -320,7 +322,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -348,7 +350,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -373,7 +375,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -401,7 +403,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -426,7 +428,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -443,7 +445,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-h00l.e.webp",
-      "vfxKey": "fx.prim.holy.pulse"
+      "vfxKey": "fx.prim.holy.pulse",
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-h00l.r",
@@ -454,22 +457,22 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "applyBuff",
           "modifiers": [],
-          "duration": 3.0,
+          "duration": 3,
           "hooks": [
             {
               "on": "onDamageTaken",
@@ -478,11 +481,11 @@
                   "kind": "damage",
                   "damageType": "magic",
                   "amount": {
-                    "flat": 0.0
+                    "flat": 0
                   },
                   "incomingPct": {
                     "perRank": [
-                      1.0
+                      1
                     ],
                     "negateOriginal": true
                   }
@@ -522,15 +525,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1.0
+                      "flat": 1
                     },
-                    "radius": 6.0,
+                    "radius": 6,
                     "radiusTier": "中",
                     "onHitTargets": [
                       {
                         "kind": "knockback",
-                        "distance": 4.0,
-                        "speed": 16.0,
+                        "distance": 4,
+                        "speed": 16,
                         "from": "caster"
                       }
                     ]
@@ -562,7 +565,8 @@
         "camKick": 0.466
       },
       "cooldownTier": "中",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

@@ -68,7 +68,7 @@
         75.0,
         75.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.nature.slash",
       "vfxLayers": [
@@ -113,7 +113,8 @@
           "castTimeSec": 0.667
         }
       },
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-h02r.w",
@@ -231,7 +232,7 @@
           "preset": "tpl-beam-roll",
           "modelKey": "w3x.stock.revivehuman",
           "soundKey": "wc3.shockwave",
-          "scale": 2.0,
+          "scale": 2,
           "scaleAxis": [
             1,
             1,
@@ -277,7 +278,9 @@
           "aim": "facing",
           "castTimeSec": 0.833
         }
-      }
+      },
+      "targetsEnemies": true,
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

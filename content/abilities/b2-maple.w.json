@@ -38,10 +38,10 @@
   ],
   "id": "b2-maple.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "盾後補餐退魔力",
@@ -94,5 +94,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-maple.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

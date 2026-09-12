@@ -48,10 +48,10 @@
   ],
   "id": "b2-fushi.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "記憶形狀先借一塊",
@@ -115,5 +115,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-fushi.e.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

@@ -14,7 +14,7 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -22,17 +22,18 @@
       "kind": "spawnVfx",
       "vfxId": "fx.prim.void.pulse",
       "at": "self",
-      "durationSec": 20.0
+      "durationSec": 20
     },
     {
       "kind": "applyBuff",
       "applyTo": "self",
       "modifiers": [],
-      "duration": 20.0,
+      "duration": 20,
       "vision": {
-        "stealthFadeDelaySec": 3.0
+        "stealthFadeDelaySec": 3
       }
     }
   ],
-  "castTimeSec": 0.233
+  "castTimeSec": 0.233,
+  "castTimeTier": "中"
 }

@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -24,7 +24,7 @@
           {
             "stat": "ad",
             "op": "pctAdd",
-            "value": 1.0
+            "value": 1
           },
           {
             "stat": "lifesteal",
@@ -37,12 +37,13 @@
             "physical"
           ],
           "chance": 0.3,
-          "fraction": 1.0
+          "fraction": 1
         },
         "whileForm": "alternate"
       }
     ]
   },
   "icon": "assets/icons/abilities/godie-h01n.ex.webp",
-  "vfxKey": "fx.prim.void.explosion-lg"
+  "vfxKey": "fx.prim.void.explosion-lg",
+  "castTimeTier": "極小"
 }

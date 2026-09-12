@@ -57,10 +57,10 @@
   ],
   "id": "b2-noor.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "這招物理技能我能擋",
@@ -132,5 +132,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-noor.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

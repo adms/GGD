@@ -27,10 +27,10 @@
       ],
       "id": "b2-elma.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "重劍攻略追加七十點",
@@ -58,7 +58,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-elma.e.webp"
+      "icon": "assets/icons/abilities/b2-elma.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -100,10 +101,10 @@
       ],
       "id": "b2-elma.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "攻略說先扣自己血",
@@ -155,7 +156,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-elma.q.webp"
+      "icon": "assets/icons/abilities/b2-elma.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 1.7,
@@ -268,10 +270,10 @@
       ],
       "id": "b2-elma.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "半血以下保固升級",
@@ -328,7 +330,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-elma.w.webp"
+      "icon": "assets/icons/abilities/b2-elma.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "tank",

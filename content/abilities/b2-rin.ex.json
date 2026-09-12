@@ -17,7 +17,7 @@
   ],
   "id": "b2-rin.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "退款只退生命值",
@@ -44,5 +44,6 @@
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-rin.ex.webp"
+  "icon": "assets/icons/abilities/b2-rin.ex.webp",
+  "castTimeTier": "小"
 }

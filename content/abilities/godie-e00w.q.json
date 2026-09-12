@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    45.0,
-    45.0,
-    45.0,
-    45.0
+    45,
+    45,
+    45,
+    45
   ],
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    75,
+    75,
+    75,
+    75
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
@@ -40,14 +40,14 @@
           }
         ]
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "knockback",
-          "distance": 3.0,
-          "speed": 15.0,
+          "distance": 3,
+          "speed": 15,
           "from": "caster"
         }
       ]
@@ -79,14 +79,14 @@
           }
         ]
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "knockback",
-          "distance": 3.0,
-          "speed": 15.0,
+          "distance": 3,
+          "speed": 15,
           "from": "caster"
         }
       ],
@@ -104,5 +104,6 @@
   "sfxKey": "wc3.darksummoninglaunch1",
   "cooldownTier": "小",
   "manaCostTier": "極小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

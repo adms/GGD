@@ -62,7 +62,7 @@
       "radius": 9.39,
       "applyTo": "nearby",
       "amplitude": 0.3,
-      "durationSec": 2.0
+      "durationSec": 2
     },
     {
       "kind": "spawnVfx",
@@ -93,7 +93,7 @@
       },
       "damageType": "magic",
       "length": 14,
-      "width": 2.0,
+      "width": 2,
       "aim": "facing",
       "castTimeSec": 0.833
     }
@@ -102,5 +102,6 @@
   "schema": "ability@1",
   "castTimeSec": 0.833,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

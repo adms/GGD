@@ -28,10 +28,10 @@
   ],
   "id": "b2-uncle.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "精靈把增益寄錯人",
@@ -75,5 +75,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-uncle.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

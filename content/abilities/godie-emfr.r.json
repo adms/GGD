@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    150.0,
-    150.0,
-    150.0
+    150,
+    150,
+    150
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -31,15 +31,15 @@
         {
           "stat": "as",
           "op": "pctAdd",
-          "value": 1.0
+          "value": 1
         },
         {
           "stat": "as",
           "op": "capRaise",
-          "value": 10.0
+          "value": 10
         }
       ],
-      "duration": 12.0,
+      "duration": 12,
       "exclusiveGroup": "emfr-form",
       "perRank": [
         {
@@ -47,27 +47,27 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "as",
               "op": "capRaise",
-              "value": 10.0
+              "value": 10
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "as",
@@ -77,30 +77,30 @@
             {
               "stat": "as",
               "op": "capRaise",
-              "value": 10.0
+              "value": 10
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 2.0
+              "value": 2
             },
             {
               "stat": "as",
               "op": "capRaise",
-              "value": 10.0
+              "value": 10
             }
           ],
-          "duration": 12.0
+          "duration": 12
         }
       ],
       "hooks": [
@@ -110,7 +110,7 @@
             {
               "kind": "applyBuff",
               "modifiers": [],
-              "duration": 3.0,
+              "duration": 3,
               "stackKey": "emfr-thunder-arm",
               "maxStacks": 1,
               "hooks": [
@@ -162,11 +162,11 @@
       "modelKey": "w3x.stock.tornadoelemental",
       "clip": "idle",
       "soundKey": "wc3.blademasterwhirlwind",
-      "scale": 2.0,
+      "scale": 2,
       "tint": [
-        1.0,
-        0.0,
-        1.0
+        1,
+        0,
+        1
       ]
     }
   ],
@@ -174,5 +174,6 @@
   "vfxKey": "fx.prim.lightning.beam-lg",
   "cooldownTier": "極大",
   "manaCostTier": "小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

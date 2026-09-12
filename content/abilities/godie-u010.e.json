@@ -27,10 +27,10 @@
       "shape": "single",
       "modelKey": "imported.darkraor",
       "path": "forward",
-      "speed": 30.0,
-      "distance": 14.0,
-      "spinDegPerSec": 240.0,
-      "scale": 2.0,
+      "speed": 30,
+      "distance": 14,
+      "spinDegPerSec": 240,
+      "scale": 2,
       "touchRadius": 4.58,
       "touchSide": "enemies",
       "touchOncePerTarget": true,
@@ -43,7 +43,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           }
@@ -78,9 +78,9 @@
       "path": "orbit",
       "count": 12,
       "distance": 6.42,
-      "speed": 30.0,
-      "lifeSec": 3.0,
-      "scale": 1.0,
+      "speed": 30,
+      "lifeSec": 3,
+      "scale": 1,
       "soundKey": "guardianSlam"
     }
   ],
@@ -103,5 +103,6 @@
     "camKick": 0.36
   },
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "中"
 }

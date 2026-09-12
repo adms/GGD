@@ -34,7 +34,7 @@
           }
         ]
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "onHitTargets": [
         {
@@ -49,15 +49,16 @@
           {
             "stat": "as",
             "op": "pctAdd",
-            "value": 4.0
+            "value": 4
           }
         ],
-        "duration": 4.0
+        "duration": 4
       },
       "castTimeSec": 0.833
     }
   },
   "vfxKey": "fx.prim.earth.shockwave",
   "castTimeSec": 0.833,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

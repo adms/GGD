@@ -15,7 +15,7 @@
       "destination": "caster",
       "kind": "pull",
       "maxTargets": 8,
-      "radius": 6.0,
+      "radius": 6,
       "shape": "circle",
       "side": "enemies",
       "speed": 20,
@@ -25,10 +25,10 @@
   ],
   "id": "b2-kisaragi.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "逃票乘客請先集合",
@@ -67,5 +67,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-kisaragi.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

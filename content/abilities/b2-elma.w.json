@@ -43,10 +43,10 @@
   ],
   "id": "b2-elma.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "半血以下保固升級",
@@ -104,5 +104,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-elma.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

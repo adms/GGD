@@ -38,10 +38,10 @@
       ],
       "id": "b2-noor.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "先備好防護收據",
@@ -91,7 +91,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-noor.e.webp"
+      "icon": "assets/icons/abilities/b2-noor.e.webp",
+      "castTimeTier": "小"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -152,10 +153,10 @@
       ],
       "id": "b2-noor.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "這招物理技能我能擋",
@@ -226,7 +227,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-noor.q.webp"
+      "icon": "assets/icons/abilities/b2-noor.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -267,9 +269,9 @@
       ],
       "id": "b2-noor.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "收據換厚盾不找零",
@@ -321,7 +323,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-noor.r.webp"
+      "icon": "assets/icons/abilities/b2-noor.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.233,

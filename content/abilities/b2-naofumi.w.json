@@ -36,10 +36,10 @@
   ],
   "id": "b2-naofumi.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "憑通行證補一口血",
@@ -91,5 +91,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-naofumi.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

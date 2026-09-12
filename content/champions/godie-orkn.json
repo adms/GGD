@@ -69,13 +69,13 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 6.0,
+      "range": 6,
       "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
@@ -88,12 +88,13 @@
         "params": {
           "status": {
             "statusId": "root",
-            "duration": 1.0,
+            "duration": 1,
             "root": true
           },
           "castTimeSec": 0.567
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-orkn.w",

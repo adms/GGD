@@ -74,7 +74,7 @@
         75.0,
         75.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "invulnerable",
@@ -106,7 +106,7 @@
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.8,
       "hitFeel": {
         "hitstopTicks": 4,
@@ -124,7 +124,8 @@
       },
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-u00j.w",
@@ -184,7 +185,8 @@
       "castTimeSec": 0.067,
       "rangeTier": "極大",
       "range": 12,
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-u00j.e",

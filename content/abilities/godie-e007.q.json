@@ -40,7 +40,7 @@
     {
       "kind": "applyStatus",
       "statusId": "confusion",
-      "duration": 1.0,
+      "duration": 1,
       "berserk": true,
       "targetsAllies": true
     }
@@ -48,5 +48,6 @@
   "icon": "assets/icons/abilities/godie-e007.q.webp",
   "vfxKey": "fx.prim.ki.pulse-sm",
   "rangeTier": "小",
-  "castTimeSec": 0.233
+  "castTimeSec": 0.233,
+  "castTimeTier": "中"
 }

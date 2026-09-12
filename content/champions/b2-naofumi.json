@@ -120,10 +120,10 @@
       ],
       "id": "b2-naofumi.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "友軍通行證附贈盾牌",
@@ -174,7 +174,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-naofumi.q.webp"
+      "icon": "assets/icons/abilities/b2-naofumi.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -237,9 +238,9 @@
       ],
       "id": "b2-naofumi.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "清完門口才能接隊友",
@@ -314,7 +315,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-naofumi.r.webp"
+      "icon": "assets/icons/abilities/b2-naofumi.r.webp",
+      "castTimeTier": "小"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -354,10 +356,10 @@
       ],
       "id": "b2-naofumi.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "憑通行證補一口血",
@@ -408,7 +410,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-naofumi.w.webp"
+      "icon": "assets/icons/abilities/b2-naofumi.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "tank",

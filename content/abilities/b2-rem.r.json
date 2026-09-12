@@ -48,9 +48,9 @@
   ],
   "id": "b2-rem.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "半條命換急救包",
@@ -114,5 +114,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-rem.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

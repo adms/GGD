@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    75,
+    75,
+    75,
+    75
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "小",
   "targetsEnemies": true,
   "effects": [
@@ -36,13 +36,13 @@
         {
           "kind": "knockback",
           "distance": 2.5,
-          "speed": 15.0,
+          "speed": 15,
           "from": "caster"
         },
         {
           "kind": "applyStatus",
           "statusId": "armor-break",
-          "duration": 1.0
+          "duration": 1
         },
         {
           "kind": "applyBuff",
@@ -50,10 +50,10 @@
             {
               "stat": "armor",
               "op": "pctAdd",
-              "value": -1.0
+              "value": -1
             }
           ],
-          "duration": 1.0,
+          "duration": 1,
           "dispellable": true,
           "polarity": "debuff"
         }
@@ -70,7 +70,7 @@
       "preset": "tpl-locust-travel",
       "modelKey": "imported.crescent",
       "clip": "idle",
-      "scale": 2.0,
+      "scale": 2,
       "distance": 4.5
     }
   ],
@@ -94,13 +94,13 @@
         {
           "kind": "knockback",
           "distance": 2.5,
-          "speed": 15.0,
+          "speed": 15,
           "from": "caster"
         },
         {
           "kind": "applyStatus",
           "statusId": "armor-break",
-          "duration": 1.0
+          "duration": 1
         },
         {
           "kind": "applyBuff",
@@ -108,10 +108,10 @@
             {
               "stat": "armor",
               "op": "pctAdd",
-              "value": -1.0
+              "value": -1
             }
           ],
-          "duration": 1.0,
+          "duration": 1,
           "dispellable": true,
           "polarity": "debuff"
         }
@@ -125,7 +125,7 @@
         "preset": "tpl-locust-travel",
         "modelKey": "imported.crescent",
         "clip": "idle",
-        "scale": 2.0,
+        "scale": 2,
         "distance": 4.5
       },
       "castTimeSec": 0.667
@@ -136,5 +136,6 @@
   "sfxKey": "wc3.defendcaster",
   "cooldownTier": "中",
   "manaCostTier": "極小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

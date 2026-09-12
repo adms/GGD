@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "effects": [],
   "template": {
@@ -27,15 +27,15 @@
       "target": "ally",
       "amount": {
         "perRank": [
-          200.0,
-          275.0,
-          350.0,
-          425.0
+          200,
+          275,
+          350,
+          425
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 1
           }
         ]
       },
@@ -47,5 +47,6 @@
   "schema": "ability@1",
   "castTimeSec": 0.067,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "小"
 }

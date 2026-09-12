@@ -68,7 +68,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 }
@@ -92,7 +92,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 2.0
+                      "coeff": 2
                     }
                   ]
                 }
@@ -110,5 +110,6 @@
     ]
   },
   "rangeTier": "小",
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeTier": "大"
 }

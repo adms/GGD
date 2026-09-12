@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -46,11 +46,12 @@
     "shakeStyle": "directional",
     "sparkKind": "heavy",
     "flashColor": [
-      1.0,
+      1,
       0.52,
       0.22
     ],
     "flashMs": 108,
     "camKick": 0.27
-  }
+  },
+  "castTimeTier": "小"
 }

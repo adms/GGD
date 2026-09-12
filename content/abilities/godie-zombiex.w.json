@@ -16,17 +16,17 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "effects": [
     {
       "kind": "dash",
       "mode": "forward",
       "speed": 16,
-      "maxDistance": 6.0
+      "maxDistance": 6
     },
     {
       "kind": "applyBuff",
@@ -34,19 +34,20 @@
         {
           "stat": "armor",
           "op": "flat",
-          "value": 35.0
+          "value": 35
         },
         {
           "stat": "mr",
           "op": "flat",
-          "value": 35.0
+          "value": 35
         }
       ],
-      "duration": 4.0
+      "duration": 4
     }
   ],
   "vfxKey": "fx.prim.void.dash",
   "castTimeSec": 0.067,
   "rangeTier": "中",
-  "range": 6
+  "range": 6,
+  "castTimeTier": "小"
 }

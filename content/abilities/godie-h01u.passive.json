@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -39,10 +39,10 @@
                     "value": 0.01
                   }
                 ],
-                "duration": 99999.0,
+                "duration": 99999,
                 "maxStat": {
                   "stat": "range",
-                  "value": 10.0,
+                  "value": 10,
                   "basis": "final"
                 }
               }
@@ -53,5 +53,6 @@
       }
     ]
   },
-  "icon": "assets/icons/abilities/godie-h01u.passive.webp"
+  "icon": "assets/icons/abilities/godie-h01u.passive.webp",
+  "castTimeTier": "極小"
 }

@@ -16,18 +16,18 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 12.0,
+      "duration": 12,
       "modifiers": [
         {
           "stat": "ms",
@@ -44,7 +44,7 @@
               "value": 0.5
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
@@ -54,7 +54,7 @@
               "value": 0.5
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
@@ -64,7 +64,7 @@
               "value": 0.5
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
@@ -74,17 +74,17 @@
               "value": 1.5
             }
           ],
-          "duration": 45.0
+          "duration": 45
         },
         {
           "modifiers": [
             {
               "stat": "ms",
               "op": "pctAdd",
-              "value": 3.0
+              "value": 3
             }
           ],
-          "duration": 45.0
+          "duration": 45
         }
       ],
       "castTimeSec": 0.067
@@ -92,5 +92,6 @@
   },
   "vfxKey": "fx.prim.void.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "castTimeTier": "小"
 }

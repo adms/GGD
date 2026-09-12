@@ -27,10 +27,10 @@
       ],
       "id": "b2-shadow.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "對鏡練習我是路人",
@@ -58,7 +58,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-shadow.e.webp"
+      "icon": "assets/icons/abilities/b2-shadow.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -87,10 +88,10 @@
       ],
       "id": "b2-shadow.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "觀眾請往舞台靠攏",
@@ -128,7 +129,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-shadow.q.webp"
+      "icon": "assets/icons/abilities/b2-shadow.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -200,7 +202,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-shadow.r.webp"
+      "icon": "assets/icons/abilities/b2-shadow.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -291,7 +294,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-shadow.w.webp"
+      "icon": "assets/icons/abilities/b2-shadow.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",

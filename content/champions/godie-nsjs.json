@@ -96,7 +96,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-nsjs.w",
@@ -170,10 +171,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -188,7 +189,8 @@
           "durationSec": 8,
           "castTimeSec": 0.267
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-nsjs.r",

@@ -20,10 +20,10 @@
   ],
   "id": "b2-kumoko.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "房東來了躲牆角",
@@ -45,5 +45,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-kumoko.e.webp"
+  "icon": "assets/icons/abilities/b2-kumoko.e.webp",
+  "castTimeTier": "大"
 }

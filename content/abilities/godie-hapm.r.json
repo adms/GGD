@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    120.0,
-    120.0,
-    120.0
+    120,
+    120,
+    120
   ],
   "manaCost": [
-    300.0,
-    300.0,
-    300.0
+    300,
+    300,
+    300
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
@@ -25,7 +25,7 @@
       "kind": "dash",
       "mode": "forward",
       "speed": 16,
-      "maxDistance": 5.0
+      "maxDistance": 5
     },
     {
       "kind": "damageArea",
@@ -37,7 +37,7 @@
           "中"
         ]
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true
     },
@@ -45,9 +45,9 @@
       "kind": "damageArea",
       "damageType": "physical",
       "amount": {
-        "flat": 0.0
+        "flat": 0
       },
-      "radius": 6.0,
+      "radius": 6,
       "radiusTier": "中",
       "includeOrigin": true,
       "victimCondition": {
@@ -69,5 +69,6 @@
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "cooldownTier": "極大",
   "manaCostTier": "中",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "castTimeTier": "小"
 }

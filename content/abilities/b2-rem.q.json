@@ -21,10 +21,10 @@
   ],
   "id": "b2-rem.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "這位客人請留步",
@@ -61,5 +61,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-rem.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

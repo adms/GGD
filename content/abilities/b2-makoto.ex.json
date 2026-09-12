@@ -17,7 +17,7 @@
   ],
   "id": "b2-makoto.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "售後服務含急救",
@@ -44,5 +44,6 @@
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-makoto.ex.webp"
+  "icon": "assets/icons/abilities/b2-makoto.ex.webp",
+  "castTimeTier": "小"
 }

@@ -110,7 +110,8 @@
           },
           "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-e008.w",
@@ -127,9 +128,9 @@
         30.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -139,7 +140,7 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 6.0,
+          "duration": 6,
           "modifiers": [
             {
               "stat": "ms",
@@ -156,7 +157,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -166,7 +167,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -176,12 +177,13 @@
                   "value": 1.5
                 }
               ],
-              "duration": 18.0
+              "duration": 18
             }
           ],
           "castTimeSec": 0.267
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-e008.e",
@@ -237,12 +239,13 @@
           "damageType": "magic",
           "status": {
             "statusId": "burnstun",
-            "duration": 1.0,
+            "duration": 1,
             "stun": true
           },
           "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-e008.r",
@@ -260,9 +263,9 @@
       ],
       "cooldownTier": "極大",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -279,7 +282,7 @@
             0.3922,
             0.3922
           ],
-          "lifeSec": 6.0
+          "lifeSec": 6
         }
       ],
       "template": {
@@ -298,7 +301,8 @@
       },
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.soulpreservation",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

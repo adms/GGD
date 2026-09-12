@@ -92,7 +92,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1.0,
+          "duration": 1,
           "moveSpeedMult": 0.6
         },
         {
@@ -109,7 +109,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-hart.w",

@@ -14,19 +14,19 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 20.0,
+      "duration": 20,
       "modifiers": [
         {
           "stat": "as",
           "op": "pctAdd",
-          "value": 1.0
+          "value": 1
         },
         {
           "stat": "ms",
@@ -36,7 +36,7 @@
         {
           "stat": "healthRegen",
           "op": "flat",
-          "value": -10.0
+          "value": -10
         }
       ],
       "castTimeSec": 0.267
@@ -68,5 +68,6 @@
   },
   "vfxKey": "fx.prim.blood.pulse-sm",
   "sfxKey": "wc3.trollwoodworkswhat1",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "castTimeTier": "中"
 }

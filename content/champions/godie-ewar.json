@@ -61,16 +61,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        6,
+        6,
+        6,
+        6
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
       "range": 4.5,
       "targetsEnemies": true,
@@ -91,7 +91,7 @@
         {
           "kind": "applyStatus",
           "statusId": "confusion",
-          "duration": 1.0,
+          "duration": 1,
           "berserk": true,
           "targetsAllies": true
         }
@@ -101,7 +101,8 @@
       "cooldownTier": "極小",
       "manaCostTier": "極小",
       "rangeTier": "小",
-      "castTimeSec": 0.233
+      "castTimeSec": 0.233,
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-ewar.w",
@@ -112,18 +113,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -149,7 +150,8 @@
       "icon": "assets/icons/abilities/godie-ewar.w.webp",
       "vfxKey": "fx.prim.ki.pulse-sm",
       "cooldownTier": "極大",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-ewar.e",
@@ -160,18 +162,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -201,7 +203,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -240,7 +242,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -279,7 +281,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -318,7 +320,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -336,7 +338,8 @@
         ]
       },
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "icon": "assets/icons/abilities/godie-ewar.e.png"
+      "icon": "assets/icons/abilities/godie-ewar.e.png",
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-ewar.r",
@@ -347,16 +350,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        300,
+        300,
+        300
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -372,18 +375,18 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 2.0
+                "coeff": 2
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true
         },
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 8.0,
+          "radius": 8,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {
@@ -412,7 +415,8 @@
       },
       "cooldownTier": "中",
       "manaCostTier": "中",
-      "castTimeSec": 1
+      "castTimeSec": 1,
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

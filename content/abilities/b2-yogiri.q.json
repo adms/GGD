@@ -21,10 +21,10 @@
   ],
   "id": "b2-yogiri.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "下班通知已讀未回",
@@ -61,5 +61,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-yogiri.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

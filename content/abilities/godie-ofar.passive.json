@@ -14,7 +14,7 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0
+    0
   ],
   "effects": [],
   "template": {
@@ -26,5 +26,6 @@
   "vfxKey": "fx.prim.lightning.dash",
   "castTimeSec": 0.467,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "大"
 }

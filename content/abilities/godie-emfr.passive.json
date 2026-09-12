@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -33,13 +33,13 @@
               {
                 "kind": "spendMana",
                 "amount": {
-                  "flat": 0.0
+                  "flat": 0
                 },
                 "pctMaxMana": 0.01,
                 "applyTo": "self"
               }
             ],
-            "internalCooldown": 1.0,
+            "internalCooldown": 1,
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -55,5 +55,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-emfr.passive.webp",
-  "vfxKey": "fx.prim.arcane.pulse"
+  "vfxKey": "fx.prim.arcane.pulse",
+  "castTimeTier": "極小"
 }

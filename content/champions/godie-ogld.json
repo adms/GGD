@@ -135,12 +135,13 @@
           "damageTier": "小",
           "apRatio": 0.6,
           "damageType": "magic",
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
+          "intervalSec": 1,
+          "durationSec": 10,
           "stacking": "refresh",
           "castTimeSec": 0.567
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-ogld.e",
@@ -184,7 +185,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-ogld.r",
@@ -209,7 +211,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "radius": 3.0,
+      "radius": 3,
       "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
@@ -233,7 +235,8 @@
       },
       "cooldownTier": "大",
       "manaCostTier": "小",
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

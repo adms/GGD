@@ -99,12 +99,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "slow40",
-            "duration": 1.0,
+            "duration": 1,
             "moveSpeedMult": 0.6
           },
           "castTimeSec": 0.567
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-u00h.w",
@@ -257,7 +258,8 @@
       },
       "cooldownTier": "中",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

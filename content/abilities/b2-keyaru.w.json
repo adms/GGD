@@ -39,10 +39,10 @@
   ],
   "id": "b2-keyaru.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "病歷換職災保險",
@@ -97,5 +97,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-keyaru.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

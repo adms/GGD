@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -33,5 +33,6 @@
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "sfxKey": "wc3.altarofelderswhat1",
   "schema": "ability@1",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "castTimeTier": "中"
 }

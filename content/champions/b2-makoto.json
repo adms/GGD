@@ -38,10 +38,10 @@
       ],
       "id": "b2-makoto.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "本店定點營業範圍",
@@ -91,7 +91,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-makoto.e.webp"
+      "icon": "assets/icons/abilities/b2-makoto.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -117,10 +118,10 @@
       ],
       "id": "b2-makoto.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "試射前客人請後退",
@@ -157,7 +158,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-makoto.q.webp"
+      "icon": "assets/icons/abilities/b2-makoto.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 2.433,

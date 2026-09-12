@@ -22,10 +22,10 @@
       ],
       "id": "b2-popp.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "隊友加油我先繞背",
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-popp.e.webp"
+      "icon": "assets/icons/abilities/b2-popp.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -112,7 +113,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-popp.q.webp"
+      "icon": "assets/icons/abilities/b2-popp.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -172,7 +174,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-popp.r.webp"
+      "icon": "assets/icons/abilities/b2-popp.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.233,

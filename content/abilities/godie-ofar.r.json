@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -30,5 +30,6 @@
   },
   "vfxKey": "fx.prim.lightning.explosion-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.667,
+  "castTimeTier": "大"
 }

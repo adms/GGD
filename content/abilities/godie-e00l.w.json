@@ -79,5 +79,6 @@
   ],
   "schema": "ability@1",
   "castTimeSec": 0.267,
-  "targetsEnemies": false
+  "targetsEnemies": false,
+  "castTimeTier": "中"
 }

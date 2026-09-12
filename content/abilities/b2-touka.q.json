@@ -25,7 +25,7 @@
       ],
       "kind": "delayed",
       "maxTargets": 4,
-      "radius": 3.0,
+      "radius": 3,
       "shape": "circle",
       "side": "enemies",
       "stopOnCasterDeath": true,
@@ -35,10 +35,10 @@
   ],
   "id": "b2-touka.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "英雄招募延時坑",
@@ -88,5 +88,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-touka.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

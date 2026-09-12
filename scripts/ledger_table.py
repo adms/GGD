@@ -280,6 +280,7 @@ def _find_row(
     text: str,
     when: str,
     authoritative_rows: list[tuple[str, str]] | None = None,
+    exact_time: bool = False,
 ) -> int | None:
     """找已存在的同一則訊息；transcript 明示為兩則時保留兩個時間。
 
@@ -297,8 +298,17 @@ def _find_row(
             continue
         if c[0] == when and _same_text(c[1], text):
             return i
-        if _same_message(c[1], c[0], text, when):
-            candidates.append((i, c))
+        # ⛔⛔ 【⛔ 不要合併 —— owner 2026-09-12 逐字】
+        #
+        # > 「我沒說過 我的原則**一定是詳實記錄不會合併** 這應該是你自己說的」
+        #
+        # ⭐ 他是對的，⭐ 而我查證過了：15 分鐘窗來自 `9396c38d1 帳本去重（#1028）`
+        # —— ⛔ **#1028 是我自己開的票**，`asked-before.sh` 掃遍他的原話零則支持合併。
+        # ⇒ ⭐ 這正是 CLAUDE.md「我的推測會變成他的需求」那一條的第四個載體。
+        #
+        # ⇒ ⭐ **只有逐字同一則**（同一分鐘 ＋ 同一段文字）才算已存在；
+        #   ⛔ 其餘一律各留一列。多一列無害，⭐ 少一列是把他的話弄丟。
+        continue
     for i, c in candidates:
         if authoritative_rows and any(
             c[0] == row_when and _same_text(c[1], row_text)
@@ -335,7 +345,7 @@ def insert(
     lines = ensure(path)
     added = 0
     for when, text, tk in rows:
-        hit = _find_row(lines, text, when, authoritative_rows)
+        hit = _find_row(lines, text, when, authoritative_rows, exact_time=prefer_incoming_text)
         if hit is not None:
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))
@@ -367,7 +377,25 @@ def dedupe(path: Path) -> int:
             continue
         for k in kept:
             kc = cells(lines[k])
-            if _same_message(kc[1], kc[0], c[1], c[0]):
+            # ⭐⭐ 【`--dedupe` 只准併**同一分鐘**的列】（GH#1238）
+            #
+            # ⛔ 在此之前這裡用 `_same_message`（文字相同 ＋ 15 分鐘窗）——
+            # ⚠️ 而那會**主動刪掉 owner 的訊息**：2026-09-11 他同一句話講了三次
+            # （17:45 / 17:47 / 17:56），`--dedupe` 把三列併成一列
+            # ⇒ ⭐ 「他重講了三遍」這個事實**當場消失**，而那本身就是重要資訊
+            #   （代表我沒聽懂）。
+            #
+            # ⭐ 判準是**來源**，⛔ 不是時間：
+            #   · `find_row`（追加那條路，上面 ~300 行）**保留**時間窗 ——
+            #     `ruling.sh` 記執行時間、建置器記訊息時間，兩者差幾分鐘，
+            #     ⭐ 那裡的窗是為了**不要寫出重複列**。
+            #   · ⭐ 這裡（`--dedupe`）是**刪列**，⇒ ⛔ 只准併逐字同一則：
+            #     同一分鐘 ＋ 同一段文字。窗外一律留兩列。
+            #
+            # ⚠️ ⭐ 而「寧可留兩列」是**安全的方向**：帳本是從 session transcript
+            # **重建**的（`message-ledger.sh` 檔頭：「唯一可靠的來源是 session
+            # transcript(它不會忘)」）⇒ ⭐ 多一列可以再併，⛔ 少一列要靠重建才回得來。
+            if kc[0] == c[0] and _same_text(kc[1], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
                 merged = _set_cell(merged, 1, _pick_text(_raw_cell(lines[k], 1), kc[0], _raw_cell(ln, 1), c[0]))
                 lines[k] = _set_cell(merged, 0, min(kc[0], c[0]))

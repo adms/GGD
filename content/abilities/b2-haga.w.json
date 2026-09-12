@@ -27,10 +27,10 @@
   ],
   "id": "b2-haga.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "跳到有我截圖的當事人",
@@ -73,5 +73,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-haga.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -49,8 +49,8 @@
               },
               {
                 "kind": "knockback",
-                "distance": 3.0,
-                "speed": 16.0,
+                "distance": 3,
+                "speed": 16,
                 "from": "pull"
               }
             ],
@@ -62,14 +62,14 @@
             "effects": [
               {
                 "kind": "knockback",
-                "distance": 2.0,
-                "speed": 14.0,
+                "distance": 2,
+                "speed": 14,
                 "from": "caster"
               },
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               }
             ],
@@ -82,7 +82,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "confusion",
-                "duration": 3.0,
+                "duration": 3,
                 "berserk": true,
                 "targetsAllies": true
               }
@@ -122,8 +122,8 @@
               },
               {
                 "kind": "knockback",
-                "distance": 3.0,
-                "speed": 16.0,
+                "distance": 3,
+                "speed": 16,
                 "from": "pull"
               }
             ],
@@ -135,14 +135,14 @@
             "effects": [
               {
                 "kind": "knockback",
-                "distance": 2.0,
-                "speed": 14.0,
+                "distance": 2,
+                "speed": 14,
                 "from": "caster"
               },
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               }
             ],
@@ -155,7 +155,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "confusion",
-                "duration": 3.0,
+                "duration": 3,
                 "berserk": true,
                 "targetsAllies": true
               }
@@ -195,8 +195,8 @@
               },
               {
                 "kind": "knockback",
-                "distance": 3.0,
-                "speed": 16.0,
+                "distance": 3,
+                "speed": 16,
                 "from": "pull"
               }
             ],
@@ -208,14 +208,14 @@
             "effects": [
               {
                 "kind": "knockback",
-                "distance": 2.0,
-                "speed": 14.0,
+                "distance": 2,
+                "speed": 14,
                 "from": "caster"
               },
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               }
             ],
@@ -228,7 +228,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "confusion",
-                "duration": 3.0,
+                "duration": 3,
                 "berserk": true,
                 "targetsAllies": true
               }
@@ -246,5 +246,6 @@
   },
   "icon": "assets/icons/abilities/godie-h02k.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
-  "sfxKey": "wc3.pandarenbrewmasteryes1"
+  "sfxKey": "wc3.pandarenbrewmasteryes1",
+  "castTimeTier": "極小"
 }

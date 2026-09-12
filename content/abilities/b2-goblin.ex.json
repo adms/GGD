@@ -21,7 +21,7 @@
   ],
   "id": "b2-goblin.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "裝備便宜保命要緊",
@@ -60,5 +60,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-goblin.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

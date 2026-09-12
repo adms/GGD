@@ -22,10 +22,10 @@
       ],
       "id": "b2-sinbad.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "巡迴剪綵走捷徑",
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-sinbad.e.webp"
+      "icon": "assets/icons/abilities/b2-sinbad.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -77,10 +78,10 @@
       ],
       "id": "b2-sinbad.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "合夥人早鳥紅利",
@@ -122,7 +123,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-sinbad.q.webp"
+      "icon": "assets/icons/abilities/b2-sinbad.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -182,7 +184,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-sinbad.r.webp"
+      "icon": "assets/icons/abilities/b2-sinbad.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -212,10 +215,10 @@
       ],
       "id": "b2-sinbad.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "商會代表自備保險",
@@ -255,7 +258,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-sinbad.w.webp"
+      "icon": "assets/icons/abilities/b2-sinbad.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",

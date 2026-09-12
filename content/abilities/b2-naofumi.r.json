@@ -59,9 +59,9 @@
   ],
   "id": "b2-naofumi.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "清完門口才能接隊友",
@@ -137,5 +137,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-naofumi.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

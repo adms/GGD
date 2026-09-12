@@ -21,10 +21,10 @@
   ],
   "id": "b2-haga.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "BUG-001截圖存證",
@@ -61,5 +61,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-haga.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

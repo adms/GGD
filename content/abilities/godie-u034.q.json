@@ -7,16 +7,16 @@
   "slot": "Q",
   "castType": "self",
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "effects": [],
@@ -140,5 +140,6 @@
   "vfxKey": "fx.prim.ki.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
   "schema": "ability@1",
-  "range": 0.0
+  "range": 0.0,
+  "castTimeTier": "極小"
 }

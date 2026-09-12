@@ -27,7 +27,7 @@
   ],
   "id": "b2-aladdin.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "暖風模式先照顧同學",
@@ -83,5 +83,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-aladdin.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

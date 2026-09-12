@@ -47,9 +47,9 @@
   ],
   "id": "b2-boxxo.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "搬家限定快閃補給站",
@@ -111,5 +111,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-boxxo.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

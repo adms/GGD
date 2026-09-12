@@ -17,11 +17,11 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0,
+    0
   ],
   "effects": [],
   "template": {
@@ -33,5 +33,6 @@
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "castTimeSec": 0.467,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "大"
 }

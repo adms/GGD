@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -29,7 +29,7 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 0.0
+                  "flat": 0
                 },
                 "resourcePct": {
                   "subject": "target",
@@ -67,5 +67,6 @@
       "delayMs": 300,
       "w3xScale": 1.1
     }
-  ]
+  ],
+  "castTimeTier": "極小"
 }

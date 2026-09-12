@@ -68,9 +68,9 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -80,7 +80,7 @@
           "preset": "tpl-locust-orb",
           "modelKey": "imported.oblivionaura",
           "count": 2,
-          "distance": 1.0,
+          "distance": 1,
           "soundKey": "wc3.blademasterwhirlwind"
         }
       ],
@@ -93,9 +93,9 @@
           "target": "self",
           "amount": {
             "perRank": [
-              150.0,
-              150.0,
-              150.0
+              150,
+              150,
+              150
             ],
             "ratios": [
               {
@@ -106,7 +106,8 @@
           },
           "castTimeSec": 0.067
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-etyr.w",
@@ -118,16 +119,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -192,7 +193,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-etyr.e",
@@ -300,7 +302,8 @@
       "range": 8,
       "cooldownTier": "極小",
       "castTimeSec": 0.667,
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

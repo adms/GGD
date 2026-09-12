@@ -21,7 +21,7 @@
   ],
   "id": "b2-bojji.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "勇氣不是肌肉量",
@@ -61,5 +61,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-bojji.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

@@ -26,8 +26,8 @@
       "preset": "tpl-locust-travel",
       "modelKey": "imported.crescent",
       "clip": "idle",
-      "scale": 2.0,
-      "distance": 12.0
+      "scale": 2,
+      "distance": 12
     },
     {
       "kind": "damageLine",
@@ -47,7 +47,7 @@
         {
           "kind": "applyStatus",
           "statusId": "aban-x-mark",
-          "duration": 1.0
+          "duration": 1
         }
       ]
     },
@@ -103,5 +103,6 @@
   "castTimeSec": 0.833,
   "rangeTier": "極大",
   "range": 12,
-  "cooldownShape": "單體"
+  "cooldownShape": "單體",
+  "castTimeTier": "極大"
 }

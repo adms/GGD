@@ -22,10 +22,10 @@
       ],
       "id": "b2-albus.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "這裡有捷徑",
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-albus.e.webp"
+      "icon": "assets/icons/abilities/b2-albus.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -101,7 +102,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-albus.q.webp"
+      "icon": "assets/icons/abilities/b2-albus.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -151,9 +153,9 @@
       ],
       "id": "b2-albus.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "走捷徑才趕得上急救",
@@ -215,7 +217,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-albus.r.webp"
+      "icon": "assets/icons/abilities/b2-albus.r.webp",
+      "castTimeTier": "小"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -241,10 +244,10 @@
       ],
       "id": "b2-albus.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "已花冷卻才准跳段",
@@ -280,7 +283,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-albus.w.webp"
+      "icon": "assets/icons/abilities/b2-albus.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",

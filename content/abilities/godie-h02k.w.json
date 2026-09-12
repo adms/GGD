@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -34,17 +34,17 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 0.0
+                  "flat": 0
                 },
                 "incomingPct": {
                   "perRank": [
-                    1.0
+                    1
                   ],
                   "negateOriginal": true
                 }
               }
             ],
-            "internalCooldown": 1.0,
+            "internalCooldown": 1,
             "chance": 0.03,
             "target": "event",
             "victim": "enemy"
@@ -56,7 +56,7 @@
                 "kind": "damageArea",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 1.0
+                  "flat": 1
                 },
                 "radius": 4.5,
                 "radiusTier": "小",
@@ -64,13 +64,13 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "paralysis",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "curse",
-                    "duration": 5.0,
+                    "duration": 5,
                     "missChance": 0.5
                   },
                   {
@@ -81,7 +81,7 @@
                       "statusId": "blind"
                     },
                     "statusId": "confusion",
-                    "duration": 10.0,
+                    "duration": 10,
                     "berserk": true,
                     "targetsAllies": true
                   }
@@ -96,5 +96,6 @@
   },
   "icon": "assets/icons/abilities/godie-h02k.w.webp",
   "vfxKey": "fx.prim.nature.explosion",
-  "sfxKey": "wc3.pandarenbrewmasterpissed8"
+  "sfxKey": "wc3.pandarenbrewmasterpissed8",
+  "castTimeTier": "極小"
 }

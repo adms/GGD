@@ -16,18 +16,18 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 3.0,
+      "duration": 3,
       "modifiers": [
         {
           "stat": "as",
@@ -52,7 +52,7 @@
                 "kind": "damage",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 75.0
+                  "flat": 75
                 }
               },
               {
@@ -75,7 +75,7 @@
                 "kind": "damage",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 150.0
+                  "flat": 150
                 }
               },
               {
@@ -98,7 +98,7 @@
                 "kind": "damage",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 225.0
+                  "flat": 225
                 }
               },
               {
@@ -121,7 +121,7 @@
                 "kind": "damage",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 300.0
+                  "flat": 300
                 }
               },
               {
@@ -144,7 +144,7 @@
                 "kind": "damage",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 300.0
+                  "flat": 300
                 }
               },
               {
@@ -160,5 +160,6 @@
     ]
   },
   "schema": "ability@1",
-  "castTimeSec": 0.233
+  "castTimeSec": 0.233,
+  "castTimeTier": "中"
 }

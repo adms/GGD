@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    60
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -31,12 +31,12 @@
                   {
                     "stat": "as",
                     "op": "pctAdd",
-                    "value": 1.0
+                    "value": 1
                   },
                   {
                     "stat": "lifesteal",
                     "op": "flat",
-                    "value": 1.0
+                    "value": 1
                   },
                   {
                     "stat": "evasion",
@@ -44,7 +44,7 @@
                     "value": 0.25
                   }
                 ],
-                "duration": 6.0,
+                "duration": 6,
                 "hooks": [
                   {
                     "on": "onInterval",
@@ -60,7 +60,7 @@
                         "polarity": "debuff"
                       }
                     ],
-                    "internalCooldown": 1.0,
+                    "internalCooldown": 1,
                     "target": "self"
                   },
                   {
@@ -85,7 +85,7 @@
               },
               {
                 "kind": "invulnerable",
-                "durationSec": 6.0,
+                "durationSec": 6,
                 "applyTo": "self",
                 "blocksDamage": "none",
                 "blocksControl": true
@@ -93,7 +93,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "berserk",
-                "duration": 6.0,
+                "duration": 6,
                 "applyTo": "self",
                 "berserk": true
               },
@@ -113,7 +113,7 @@
                 "stopOnCasterDeath": true
               }
             ],
-            "internalCooldown": 150.0,
+            "internalCooldown": 150,
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -129,5 +129,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00r.passive.webp",
-  "cooldownTier": "極大"
+  "cooldownTier": "極大",
+  "castTimeTier": "極小"
 }

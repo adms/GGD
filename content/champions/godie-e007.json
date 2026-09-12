@@ -89,7 +89,7 @@
         {
           "kind": "applyStatus",
           "statusId": "confusion",
-          "duration": 1.0,
+          "duration": 1,
           "berserk": true,
           "targetsAllies": true
         }
@@ -99,7 +99,8 @@
       "cooldownTier": "極小",
       "manaCostTier": "極小",
       "rangeTier": "小",
-      "castTimeSec": 0.233
+      "castTimeSec": 0.233,
+      "castTimeTier": "中"
     },
     "W": {
       "id": "godie-e007.w",
@@ -116,10 +117,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "targetsEnemies": false,
@@ -147,7 +148,8 @@
       "icon": "assets/icons/abilities/godie-e007.w.webp",
       "vfxKey": "fx.prim.nature.pulse",
       "cooldownTier": "極大",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-e007.e",
@@ -268,7 +270,8 @@
       },
       "cooldownTier": "中",
       "manaCostTier": "中",
-      "castTimeSec": 1
+      "castTimeSec": 1,
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

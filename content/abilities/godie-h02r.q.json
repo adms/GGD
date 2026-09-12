@@ -19,7 +19,7 @@
     75.0
   ],
   "manaCostTier": "極小",
-  "range": 0.0,
+  "range": 0,
   "effects": [],
   "vfxKey": "fx.prim.nature.slash",
   "vfxLayers": [
@@ -63,5 +63,6 @@
       "damageType": "magic",
       "castTimeSec": 0.667
     }
-  }
+  },
+  "castTimeTier": "大"
 }

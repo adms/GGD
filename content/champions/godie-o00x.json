@@ -135,10 +135,10 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.ki.pulse-sm",
@@ -151,7 +151,8 @@
         "params": {
           "castTimeSec": 0.467
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-o00x.e",
@@ -260,7 +261,7 @@
           "radius": 9.39,
           "applyTo": "nearby",
           "amplitude": 0.3,
-          "durationSec": 2.0
+          "durationSec": 2
         },
         {
           "kind": "spawnVfx",
@@ -297,11 +298,12 @@
           },
           "damageType": "magic",
           "length": 14,
-          "width": 2.0,
+          "width": 2,
           "aim": "facing",
           "castTimeSec": 0.833
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

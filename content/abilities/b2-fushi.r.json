@@ -29,9 +29,9 @@
   ],
   "id": "b2-fushi.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "耐用形狀保固四秒",
@@ -65,5 +65,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-fushi.r.webp"
+  "icon": "assets/icons/abilities/b2-fushi.r.webp",
+  "castTimeTier": "大"
 }

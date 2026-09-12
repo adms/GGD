@@ -118,11 +118,11 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -142,7 +142,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 75.0
+                      "flat": 75
                     }
                   },
                   {
@@ -165,7 +165,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 150.0
+                      "flat": 150
                     }
                   },
                   {
@@ -188,7 +188,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 225.0
+                      "flat": 225
                     }
                   },
                   {
@@ -211,7 +211,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 300.0
+                      "flat": 300
                     }
                   },
                   {
@@ -234,7 +234,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 300.0
+                      "flat": 300
                     }
                   },
                   {
@@ -252,7 +252,7 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 3.0,
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -262,7 +262,8 @@
           ],
           "castTimeSec": 0.233
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-o02l.e",
@@ -313,7 +314,8 @@
           },
           "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-o02l.r",

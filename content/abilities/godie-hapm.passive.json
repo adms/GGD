@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -59,7 +59,7 @@
             "shape": "single",
             "delaySec": 1.5,
             "count": 1,
-            "intervalSec": 1.0,
+            "intervalSec": 1,
             "effects": [
               {
                 "kind": "restore",
@@ -72,8 +72,8 @@
         "aoeEffects": [
           {
             "kind": "knockback",
-            "distance": 4.0,
-            "speed": 16.0,
+            "distance": 4,
+            "speed": 16,
             "from": "caster"
           },
           {
@@ -83,9 +83,10 @@
             "stun": true
           }
         ],
-        "aoeRadius": 6.0
+        "aoeRadius": 6
       }
     }
   ],
-  "icon": "assets/icons/abilities/godie-hapm.passive.webp"
+  "icon": "assets/icons/abilities/godie-hapm.passive.webp",
+  "castTimeTier": "極小"
 }

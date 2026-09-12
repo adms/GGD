@@ -27,7 +27,7 @@
       "intervalSec": 0.5,
       "kind": "delayed",
       "maxTargets": 4,
-      "radius": 3.0,
+      "radius": 3,
       "shape": "circle",
       "side": "enemies",
       "stopOnCasterDeath": true,
@@ -93,5 +93,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-goblin.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

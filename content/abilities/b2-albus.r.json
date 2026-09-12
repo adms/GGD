@@ -46,9 +46,9 @@
   ],
   "id": "b2-albus.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "走捷徑才趕得上急救",
@@ -111,5 +111,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-albus.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

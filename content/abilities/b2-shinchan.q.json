@@ -21,10 +21,10 @@
   ],
   "id": "b2-shinchan.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "春日部接力棒快傳",
@@ -61,5 +61,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-shinchan.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

@@ -241,9 +241,22 @@ def evaluate(day: str, tx: dict):
         ⇒ ⭐ 兩支工具必須問**同一個問題**（第〇·四守則：判準只有一個住處），
         ⛔ 否則這道閘要求的是一個工具拒絕產生的東西（同 genguard 那次「改產物被擋／改來源沒有來源」）。
         """
-        if t in row_times:
-            return True
-        return any(LT._same_message(m, t, rt_text, rt) for rt, rt_text in rows)
+        # ⭐⭐ 【逐字的 `HH:MM` 就是答案】（GH#1238）
+        #
+        # ⛔ 在此之前這裡還有一條模糊 fallback（`_same_message`，15 分鐘窗）——
+        # ⭐ 它是 2026-09-11 為了打破一個**死結**而加的：
+        #   建置器把 15 分鐘內同一句併成一列 ⇒ 閘要的時間產不出來
+        #   ⇒ 追加 → 被併掉 → 閘照樣說「漏了」→ 再追加…
+        #
+        # ⭐ 而那個死結的**根因已經修掉了**：`_find_row(exact_time=True)` 讓建置器
+        # 對 transcript 來的訊息**逐分鐘各留一列** ⇒ 閘要的時間現在真的產得出來
+        # ⇒ ⛔ 這條 fallback 不但不再需要，⭐ 它還會**遮住真的漏列**：
+        #   owner 17:45 講過一次、17:56 又講一次而帳本只有前者時，
+        #   模糊比對會說「有了」⇒ ⭐ 那一則就此從帳本上消失。
+        #
+        # ⚠️ owner 2026-09-11 同一句話講了三次 —— ⭐ 「他重講了三遍」本身就是資訊
+        # （代表我沒聽懂），⛔ 而那正是這個帳本存在的理由。
+        return t in row_times
 
     missing = [(t, m) for t, m in msgs if not (covered(m, hay) and has_row(t, m))]
     return msgs, missing, unmapped_rows(day), from_tx

@@ -22,10 +22,10 @@
       ],
       "id": "b2-shinchan.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "小白帶我換條路",
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-shinchan.e.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -71,10 +72,10 @@
       ],
       "id": "b2-shinchan.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "春日部接力棒快傳",
@@ -110,7 +111,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-shinchan.q.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -199,7 +201,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-shinchan.r.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.567,
@@ -223,10 +226,10 @@
       ],
       "id": "b2-shinchan.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "玩具散落請勿奔跑",
@@ -253,7 +256,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-shinchan.w.webp"
+      "icon": "assets/icons/abilities/b2-shinchan.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",

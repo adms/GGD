@@ -23,10 +23,10 @@
       ],
       "id": "b2-luckyman.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "剛好有張技能保單",
@@ -61,7 +61,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-luckyman.e.webp"
+      "icon": "assets/icons/abilities/b2-luckyman.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -86,10 +87,10 @@
       ],
       "id": "b2-luckyman.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "剛好香蕉皮滑了一下",
@@ -124,7 +125,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-luckyman.q.webp"
+      "icon": "assets/icons/abilities/b2-luckyman.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -184,9 +186,9 @@
       ],
       "id": "b2-luckyman.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "剛好天上掉贈品",
@@ -257,7 +259,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-luckyman.r.webp"
+      "icon": "assets/icons/abilities/b2-luckyman.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.567,
@@ -312,7 +315,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-luckyman.w.webp"
+      "icon": "assets/icons/abilities/b2-luckyman.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "tank",

@@ -95,7 +95,8 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-ubal.w",
@@ -185,7 +186,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-ubal.r",

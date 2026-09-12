@@ -51,7 +51,7 @@
       "damageType": "physical",
       "status": {
         "statusId": "burnstun",
-        "duration": 1.0,
+        "duration": 1,
         "stun": true
       },
       "castTimeSec": 1
@@ -62,5 +62,6 @@
   "schema": "ability@1",
   "castTimeSec": 1,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

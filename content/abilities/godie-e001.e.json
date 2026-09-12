@@ -37,7 +37,7 @@
       "damageType": "physical",
       "status": {
         "statusId": "slow60",
-        "duration": 5.0,
+        "duration": 5,
         "moveSpeedMult": 0.4
       },
       "castTimeSec": 0.567
@@ -48,5 +48,6 @@
   "schema": "ability@1",
   "castTimeSec": 0.567,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "大"
 }

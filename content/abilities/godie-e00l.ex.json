@@ -8,10 +8,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -79,11 +79,11 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 0.0
+                      "flat": 0
                     },
                     "incomingPct": {
                       "perRank": [
-                        7.0
+                        7
                       ],
                       "maxChainDepth": 1,
                       "negateOriginal": true
@@ -117,12 +117,12 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 7.0
+                          "coeff": 7
                         }
                       ]
                     },
                     "length": 14,
-                    "width": 2.0,
+                    "width": 2,
                     "aim": "target",
                     "fromCaster": true,
                     "includeOrigin": true,
@@ -131,7 +131,7 @@
                       "resource": "mana",
                       "basis": "current",
                       "perRank": [
-                        7.0
+                        7
                       ]
                     }
                   },
@@ -168,11 +168,12 @@
                 }
               }
             ],
-            "internalCooldown": 1.0,
+            "internalCooldown": 1,
             "target": "event"
           }
         ]
       }
     ]
-  }
+  },
+  "castTimeTier": "極小"
 }

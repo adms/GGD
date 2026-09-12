@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -45,5 +45,6 @@
   ],
   "icon": "assets/icons/abilities/godie-e007.w.webp",
   "vfxKey": "fx.prim.nature.pulse",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.067,
+  "castTimeTier": "小"
 }

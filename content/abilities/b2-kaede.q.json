@@ -30,10 +30,10 @@
   ],
   "id": "b2-kaede.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "安裝魔劍套件",
@@ -66,5 +66,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-kaede.q.webp"
+  "icon": "assets/icons/abilities/b2-kaede.q.webp",
+  "castTimeTier": "小"
 }

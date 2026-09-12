@@ -10,10 +10,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -32,12 +32,12 @@
             {
               "stat": "ms",
               "op": "pctAdd",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "healthRegen",
               "op": "flat",
-              "value": 30.0
+              "value": 30
             }
           ]
         },
@@ -67,5 +67,6 @@
         ]
       }
     ]
-  }
+  },
+  "castTimeTier": "極小"
 }

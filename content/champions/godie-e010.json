@@ -104,7 +104,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-e010.w",
@@ -116,16 +117,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -142,7 +143,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -150,7 +151,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -167,7 +168,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -175,7 +176,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -192,7 +193,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -200,7 +201,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -217,7 +218,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -225,7 +226,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -235,7 +236,8 @@
           }
         ]
       },
-      "targetsEnemies": false
+      "targetsEnemies": false,
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e010.e",
@@ -253,10 +255,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [
         {
@@ -271,7 +273,8 @@
       "castTimeSec": 0.833,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-e010.r",

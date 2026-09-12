@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -36,7 +36,7 @@
           {
             "stat": "critChance",
             "op": "flat",
-            "value": 1.0
+            "value": 1
           },
           {
             "stat": "critDamage",
@@ -52,7 +52,7 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 10.0,
+                  "flat": 10,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -80,7 +80,7 @@
           {
             "stat": "critChance",
             "op": "flat",
-            "value": 1.0
+            "value": 1
           },
           {
             "stat": "critDamage",
@@ -96,7 +96,7 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 10.0,
+                  "flat": 10,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -124,7 +124,7 @@
           {
             "stat": "critChance",
             "op": "flat",
-            "value": 1.0
+            "value": 1
           },
           {
             "stat": "critDamage",
@@ -140,7 +140,7 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 10.0,
+                  "flat": 10,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -168,12 +168,12 @@
           {
             "stat": "critChance",
             "op": "flat",
-            "value": 1.0
+            "value": 1
           },
           {
             "stat": "critDamage",
             "op": "override",
-            "value": 2.0
+            "value": 2
           }
         ],
         "hooks": [
@@ -184,7 +184,7 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 10.0,
+                  "flat": 10,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -246,5 +246,6 @@
   "icon": "assets/icons/abilities/godie-e002.w.webp",
   "vfxKey": "fx.prim.wind.tornado",
   "cooldownTier": "中",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.267,
+  "castTimeTier": "中"
 }

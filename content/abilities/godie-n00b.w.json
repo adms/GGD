@@ -15,9 +15,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "effects": [],
   "template": {
@@ -25,7 +25,7 @@
     "params": {
       "count": 1,
       "body": "self",
-      "damageMult": 1.0,
+      "damageMult": 1,
       "hpMult": 0.333,
       "durationSec": 20,
       "formation": "ring",
@@ -38,5 +38,6 @@
   "targetsEnemies": true,
   "castTimeSec": 0.267,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "中"
 }

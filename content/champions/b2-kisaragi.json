@@ -114,7 +114,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.e.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -133,7 +134,7 @@
           "destination": "caster",
           "kind": "pull",
           "maxTargets": 8,
-          "radius": 6.0,
+          "radius": 6,
           "shape": "circle",
           "side": "enemies",
           "speed": 20,
@@ -143,10 +144,10 @@
       ],
       "id": "b2-kisaragi.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "逃票乘客請先集合",
@@ -184,7 +185,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.q.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -499,7 +501,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.r.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.067,
@@ -540,10 +543,10 @@
       ],
       "id": "b2-kisaragi.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "緊急煞車先拉手閘",
@@ -594,7 +597,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.w.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "tank",

@@ -62,18 +62,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 8.0,
+      "range": 8,
       "targetsEnemies": true,
       "effects": [
         {
@@ -86,16 +86,16 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 1.0
+            "flat": 1
           },
-          "radius": 3.0,
+          "radius": 3,
           "radiusTier": "極小",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "magic-break",
-              "duration": 3.0
+              "duration": 3
             }
           ]
         },
@@ -105,10 +105,10 @@
             {
               "stat": "mr",
               "op": "pctAdd",
-              "value": -1.0
+              "value": -1
             }
           ],
-          "duration": 3.0,
+          "duration": 3,
           "dispellable": true,
           "polarity": "debuff"
         },
@@ -123,7 +123,8 @@
       "cooldownTier": "極小",
       "radiusTier": "極小",
       "rangeTier": "大",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-h01n.w",
@@ -134,16 +135,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
       "range": 4.5,
       "targetsEnemies": true,
@@ -190,7 +191,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -214,7 +215,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 2.0
+                          "coeff": 2
                         }
                       ]
                     }
@@ -236,7 +237,8 @@
       "cooldownTier": "極大",
       "manaCostTier": "極小",
       "rangeTier": "小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-h01n.e",
@@ -247,18 +249,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0,
-        300.0
+        300,
+        300,
+        300,
+        300
       ],
-      "range": 12.0,
+      "range": 12,
       "targetsEnemies": true,
       "effects": [
         {
@@ -273,7 +275,7 @@
             ]
           },
           "length": 11,
-          "width": 2.0,
+          "width": 2,
           "aim": "target",
           "fromCaster": true,
           "includeOrigin": true,
@@ -335,7 +337,8 @@
       "cooldownTier": "大",
       "manaCostTier": "中",
       "rangeTier": "極大",
-      "castTimeSec": 0.467
+      "castTimeSec": 0.467,
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-h01n.r",
@@ -346,22 +349,22 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        90,
+        90,
+        90
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 8.0
+          "durationSec": 8
         },
         {
           "kind": "applyBuff",
@@ -369,10 +372,10 @@
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 1.0
+              "value": 1
             }
           ],
-          "duration": 8.0,
+          "duration": 8,
           "statusId": "bankai",
           "perRank": [
             {
@@ -380,10 +383,10 @@
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 1.0
+                  "value": 1
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
@@ -393,17 +396,17 @@
                   "value": 1.5
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 2.0
+                  "value": 2
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             }
           ]
         },
@@ -419,7 +422,8 @@
       "icon": "assets/icons/abilities/godie-h01n.r.webp",
       "vfxKey": "fx.prim.void.pulse-lg",
       "cooldownTier": "大",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

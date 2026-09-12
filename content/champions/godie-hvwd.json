@@ -68,10 +68,10 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -91,7 +91,8 @@
           "castTimeSec": 0.067
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-hvwd.w",
@@ -109,10 +110,10 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -132,7 +133,8 @@
           "castTimeSec": 0.233
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-hvwd.e",

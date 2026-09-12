@@ -26,10 +26,10 @@
   ],
   "id": "b2-kaiji.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "午餐錢全押這次",
@@ -70,5 +70,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-kaiji.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

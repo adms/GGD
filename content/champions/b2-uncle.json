@@ -38,10 +38,10 @@
       ],
       "id": "b2-uncle.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "結界收據請保留",
@@ -91,7 +91,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-uncle.e.webp"
+      "icon": "assets/icons/abilities/b2-uncle.e.webp",
+      "castTimeTier": "小"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -123,10 +124,10 @@
       ],
       "id": "b2-uncle.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "精靈把增益寄錯人",
@@ -169,7 +170,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-uncle.q.webp"
+      "icon": "assets/icons/abilities/b2-uncle.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -207,9 +209,9 @@
       ],
       "id": "b2-uncle.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "收據換一位代理客服",
@@ -258,7 +260,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-uncle.r.webp"
+      "icon": "assets/icons/abilities/b2-uncle.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1,
@@ -293,10 +296,10 @@
       ],
       "id": "b2-uncle.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "請按一撤回贈品",
@@ -342,7 +345,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-uncle.w.webp"
+      "icon": "assets/icons/abilities/b2-uncle.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "mage",
