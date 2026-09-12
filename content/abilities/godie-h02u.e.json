@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "targetsEnemies": false,
@@ -34,7 +34,7 @@
                 "kind": "damageLine",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 20.0,
+                  "flat": 20,
                   "ratios": [
                     {
                       "stat": "ap",
@@ -51,7 +51,7 @@
                     "kind": "dot",
                     "damageType": "magic",
                     "amountPerTick": {
-                      "flat": 20.0,
+                      "flat": 20,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -59,14 +59,14 @@
                         }
                       ]
                     },
-                    "intervalSec": 1.0,
-                    "durationSec": 3.0,
+                    "intervalSec": 1,
+                    "durationSec": 3,
                     "stacking": "refresh"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "magic-break",
-                    "duration": 3.0
+                    "duration": 3
                   },
                   {
                     "kind": "applyBuff",
@@ -74,17 +74,17 @@
                       {
                         "stat": "mr",
                         "op": "pctAdd",
-                        "value": -1.0
+                        "value": -1
                       }
                     ],
-                    "duration": 3.0,
+                    "duration": 3,
                     "dispellable": true,
                     "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 2.0,
+            "internalCooldown": 2,
             "chance": 0.1,
             "target": "event"
           }
@@ -99,7 +99,7 @@
                 "kind": "damageLine",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 30.0,
+                  "flat": 30,
                   "ratios": [
                     {
                       "stat": "ap",
@@ -116,7 +116,7 @@
                     "kind": "dot",
                     "damageType": "magic",
                     "amountPerTick": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -124,14 +124,14 @@
                         }
                       ]
                     },
-                    "intervalSec": 1.0,
-                    "durationSec": 3.0,
+                    "intervalSec": 1,
+                    "durationSec": 3,
                     "stacking": "refresh"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "magic-break",
-                    "duration": 3.0
+                    "duration": 3
                   },
                   {
                     "kind": "applyBuff",
@@ -139,17 +139,17 @@
                       {
                         "stat": "mr",
                         "op": "pctAdd",
-                        "value": -1.0
+                        "value": -1
                       }
                     ],
-                    "duration": 3.0,
+                    "duration": 3,
                     "dispellable": true,
                     "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 2.0,
+            "internalCooldown": 2,
             "chance": 0.1,
             "target": "event"
           }
@@ -164,7 +164,7 @@
                 "kind": "damageLine",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 40.0,
+                  "flat": 40,
                   "ratios": [
                     {
                       "stat": "ap",
@@ -181,7 +181,7 @@
                     "kind": "dot",
                     "damageType": "magic",
                     "amountPerTick": {
-                      "flat": 40.0,
+                      "flat": 40,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -189,14 +189,14 @@
                         }
                       ]
                     },
-                    "intervalSec": 1.0,
-                    "durationSec": 3.0,
+                    "intervalSec": 1,
+                    "durationSec": 3,
                     "stacking": "refresh"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "magic-break",
-                    "duration": 3.0
+                    "duration": 3
                   },
                   {
                     "kind": "applyBuff",
@@ -204,17 +204,17 @@
                       {
                         "stat": "mr",
                         "op": "pctAdd",
-                        "value": -1.0
+                        "value": -1
                       }
                     ],
-                    "duration": 3.0,
+                    "duration": 3,
                     "dispellable": true,
                     "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 2.0,
+            "internalCooldown": 2,
             "chance": 0.1,
             "target": "event"
           }
@@ -229,7 +229,7 @@
                 "kind": "damageLine",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 50.0,
+                  "flat": 50,
                   "ratios": [
                     {
                       "stat": "ap",
@@ -246,7 +246,7 @@
                     "kind": "dot",
                     "damageType": "magic",
                     "amountPerTick": {
-                      "flat": 50.0,
+                      "flat": 50,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -254,14 +254,14 @@
                         }
                       ]
                     },
-                    "intervalSec": 1.0,
-                    "durationSec": 3.0,
+                    "intervalSec": 1,
+                    "durationSec": 3,
                     "stacking": "refresh"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "magic-break",
-                    "duration": 3.0
+                    "duration": 3
                   },
                   {
                     "kind": "applyBuff",
@@ -269,17 +269,17 @@
                       {
                         "stat": "mr",
                         "op": "pctAdd",
-                        "value": -1.0
+                        "value": -1
                       }
                     ],
-                    "duration": 3.0,
+                    "duration": 3,
                     "dispellable": true,
                     "polarity": "debuff"
                   }
                 ]
               }
             ],
-            "internalCooldown": 2.0,
+            "internalCooldown": 2,
             "chance": 0.1,
             "target": "event"
           }
@@ -288,5 +288,7 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-h02u.e.webp",
-  "vfxKey": "fx.prim.arcane.nova"
+  "vfxKey": "fx.prim.arcane.nova",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

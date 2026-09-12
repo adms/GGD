@@ -84,6 +84,9 @@
  * 0.35 s values did NOT have this property (10.5 ticks -> 11 -> 0.367 s).
  */
 import { DEFAULT_CAST_TIME_RULES } from "../sim/castTimeRules";
+import { DEFAULT_CAST_TIME_TIERS } from "./castTimeTiers";
+import { SKILL_TIER_NAMES } from "./skillTiers";
+import { authoredAoeRadius } from "../sim/abilities/abilitySystem";
 import { DAMAGE_TIER_NAMES, DEFAULT_DAMAGE_TIERS } from "./damageTiers";
 import type { AbilityDef } from "../sim/content/defs";
 import { rankScalarMax } from "../sim/perRank";
@@ -332,7 +335,8 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
     hardCc,
     root,
     slow,
-    radius: def.radius ?? 0,
+    // ⭐ 省略 ⇒ `ABILITY_RADIUS_WHEN_OMITTED`（GH#1246）—— ⛔ 不要寫字面預設。
+    radius: authoredAoeRadius(def),
     dash,
     restore,
     effectDuration,
@@ -415,15 +419,39 @@ export function punishScore(def: AbilityDef, f: CastTimeFeatures): number {
  *
  * ⇒ ⭐ **讀到這裡的人請先看那張票**，⛔ 不要拿這條階梯的輸出當作「應該是多少」。
  */
-const LADDER_STEPS = 20;
+/**
+ * ⭐⭐ 【吟唱五級距 —— ⛔ 20 階階梯已退場】
+ *
+ * owner 2026-09-02（逐字）：
+ * > 「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」
+ *
+ * owner 2026-09-12（逐字）：
+ * > 「照五級距 **最高就是1秒 有什麼好爭議的** 請你把推論污染根因修正.
+ * >  舊 20 階階梯 => **移到 legacy 區不要再被看到了**」
+ *
+ * ⇒ ⭐ 舊的 `LADDER_STEPS = 20` × `[CAST_FLOOR 0.06, CAST_CAP 4.00]` 整條退場，
+ *   ⭐ 完整的原文與它的 A/B 證據搬到 `docs/legacy/_cast-time-20-step-ladder.md`。
+ *
+ * ⛔ 它為什麼一定要被搬走（⛔ 不是註解一句「已棄用」就好）：
+ * ⚠️ 2026-09-12 它讓 `castTimeCoverage` 報出 **182 支假的「不一致」**
+ * —— ⭐ 而內容一直是對的（`0.1` ＝ 小、`0.5` ＝ 大），說謊的是這條階梯。
+ * ⇒ 我因此在 GH#1243 上連開**兩個假缺陷**，兩個都活過一次自我複驗。
+ * ⭐ 一份留在原地的過期公式，會被下一個人（包括未來的我）當成權威。
+ *
+ * ⭐ 級距值的唯一真源：`content/config/cast-time-tiers.json`。
+ * ⚠️ `snapTick` 仍然套用 —— 級距值要對齊整數 tick，⛔ 否則客戶端畫的預告
+ * 與 sim 真的吟唱的長度會差半個 tick。
+ */
+const CAST_TIME_TIER_SECONDS: readonly number[] = SKILL_TIER_NAMES.map(
+  (n) => DEFAULT_CAST_TIME_TIERS.seconds[n],
+);
 
 function ladder(score: number): number {
-  const steps = Math.min(
-    LADDER_STEPS,
-    Math.max(0, Math.round((LADDER_STEPS * score) / SCORE_AT_CAP)),
+  const i = Math.min(
+    CAST_TIME_TIER_SECONDS.length - 1,
+    Math.max(0, Math.round((score / SCORE_AT_CAP) * (CAST_TIME_TIER_SECONDS.length - 1))),
   );
-  const raw = CAST_FLOOR + (steps * (CAST_CAP - CAST_FLOOR)) / LADDER_STEPS;
-  return snapTick(raw);
+  return snapTick(CAST_TIME_TIER_SECONDS[i]!);
 }
 
 /**

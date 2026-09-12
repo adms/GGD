@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    120.0,
-    120.0,
-    120.0
+    120,
+    120,
+    120
   ],
   "manaCost": [
-    150.0,
-    150.0,
-    150.0
+    150,
+    150,
+    150
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "極小",
   "targetsEnemies": true,
   "effects": [
@@ -28,7 +28,7 @@
         10
       ],
       "intervalSec": 0.2,
-      "scatterRadius": 8.0,
+      "scatterRadius": 8,
       "firstAtCast": true,
       "stopOnCasterDeath": true,
       "effects": [
@@ -44,7 +44,7 @@
               }
             ]
           },
-          "radius": 3.0,
+          "radius": 3,
           "radiusTier": "極小",
           "includeOrigin": true
         }
@@ -77,5 +77,6 @@
   "recoverySec": 0.8,
   "cooldownTier": "極大",
   "manaCostTier": "小",
-  "castTimeSec": 0.833
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

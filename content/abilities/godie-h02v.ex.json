@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -28,9 +28,9 @@
               {
                 "kind": "delayed",
                 "shape": "single",
-                "delaySec": 1.0,
+                "delaySec": 1,
                 "count": 6,
-                "intervalSec": 1.0,
+                "intervalSec": 1,
                 "effects": [
                   {
                     "kind": "damageArea",
@@ -39,11 +39,11 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     },
-                    "radius": 8.0,
+                    "radius": 8,
                     "radiusTier": "大",
                     "resourcePct": {
                       "subject": "target",
@@ -58,7 +58,7 @@
                     "kind": "weightedBranch",
                     "shape": "circle",
                     "radiusTier": "大",
-                    "radius": 8.0,
+                    "radius": 8,
                     "side": "allies",
                     "maxTargets": 24,
                     "branches": [
@@ -83,5 +83,7 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-h02v.ex.webp",
-  "vfxKey": "fx.prim.nature.pulse-lg"
+  "vfxKey": "fx.prim.nature.pulse-lg",
+  "castTimeTier": "極大",
+  "castTimeSec": 1.0
 }

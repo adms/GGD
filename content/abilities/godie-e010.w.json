@@ -9,16 +9,16 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -35,7 +35,7 @@
                 "kind": "damageArea",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 30.0,
+                  "flat": 30,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -43,7 +43,7 @@
                     }
                   ]
                 },
-                "radius": 3.0,
+                "radius": 3,
                 "radiusTier": "極小"
               }
             ],
@@ -60,7 +60,7 @@
                 "kind": "damageArea",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 30.0,
+                  "flat": 30,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -68,7 +68,7 @@
                     }
                   ]
                 },
-                "radius": 3.0,
+                "radius": 3,
                 "radiusTier": "極小"
               }
             ],
@@ -85,7 +85,7 @@
                 "kind": "damageArea",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 30.0,
+                  "flat": 30,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -93,7 +93,7 @@
                     }
                   ]
                 },
-                "radius": 3.0,
+                "radius": 3,
                 "radiusTier": "極小"
               }
             ],
@@ -110,7 +110,7 @@
                 "kind": "damageArea",
                 "damageType": "physical",
                 "amount": {
-                  "flat": 30.0,
+                  "flat": 30,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -118,7 +118,7 @@
                     }
                   ]
                 },
-                "radius": 3.0,
+                "radius": 3,
                 "radiusTier": "極小"
               }
             ],
@@ -128,5 +128,7 @@
       }
     ]
   },
-  "targetsEnemies": false
+  "targetsEnemies": false,
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

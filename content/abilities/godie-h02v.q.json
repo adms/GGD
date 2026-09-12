@@ -8,29 +8,29 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
       "kind": "championForm",
       "to": "alternate",
-      "durationSec": 6.0
+      "durationSec": 6
     },
     {
       "kind": "applyStatus",
       "statusId": "root",
-      "duration": 6.0,
+      "duration": 6,
       "root": true,
       "disarmed": true
     },
@@ -43,7 +43,7 @@
           "value": 20
         }
       ],
-      "duration": 6.0,
+      "duration": 6,
       "perRank": [
         {
           "modifiers": [
@@ -53,7 +53,7 @@
               "value": 20
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -63,7 +63,7 @@
               "value": 40
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -73,7 +73,7 @@
               "value": 60
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -83,16 +83,16 @@
               "value": 80
             }
           ],
-          "duration": 6.0
+          "duration": 6
         }
       ]
     },
     {
       "kind": "delayed",
       "shape": "single",
-      "delaySec": 1.0,
+      "delaySec": 1,
       "count": 6,
-      "intervalSec": 1.0,
+      "intervalSec": 1,
       "effects": [
         {
           "kind": "restore",
@@ -110,5 +110,6 @@
   "icon": "assets/icons/abilities/godie-h02v.q.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
   "cooldownTier": "中",
-  "castTimeSec": 0.833
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

@@ -63,7 +63,8 @@
   "vfxKey": "fx.prim.void.dash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "大"
 }

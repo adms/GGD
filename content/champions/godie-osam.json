@@ -70,11 +70,11 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -91,10 +91,11 @@
               "value": 0.1
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-osam.w",
@@ -113,11 +114,11 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -134,10 +135,11 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-osam.e",
@@ -174,7 +176,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
       "vfxKey": "fx.prim.void.explosion",
@@ -183,7 +185,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-osam.r",
@@ -231,7 +234,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

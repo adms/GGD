@@ -25,12 +25,12 @@
     {
       "kind": "applyBuff",
       "applyTo": "self",
-      "duration": 6.0,
+      "duration": 6,
       "modifiers": [
         {
           "stat": "armor",
           "op": "flat",
-          "value": -3.0
+          "value": -3
         }
       ],
       "hooks": [
@@ -59,6 +59,7 @@
   "vfxKey": "fx.prim.physical.pulse-sm",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.267,
-  "range": 0.0
+  "castTimeSec": 0.3,
+  "range": 0.0,
+  "castTimeTier": "中"
 }

@@ -91,7 +91,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
@@ -122,11 +122,11 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.lightning.beam",
@@ -137,9 +137,10 @@
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-o00k.e",
@@ -177,7 +178,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 2.267
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
@@ -222,14 +223,14 @@
           "kind": "chainLightning",
           "shape": "circle",
           "centre": "point",
-          "radius": 6.0,
+          "radius": 6,
           "maxSources": 20,
           "damageType": "magic",
           "amount": {
             "damageTier": "小"
           },
           "jumps": 16,
-          "jumpRange": 24.0,
+          "jumpRange": 24,
           "decay": 0.9,
           "jumpIntervalSec": 0.05,
           "radiusTier": "中"
@@ -237,11 +238,12 @@
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.5,
       "cooldownTier": "中",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

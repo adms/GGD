@@ -49,5 +49,7 @@
       "vfxKey": "fx.prim.ice.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-35-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-35-20260907.passive.webp",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

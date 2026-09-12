@@ -98,9 +98,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.167
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "sela.w",
@@ -159,7 +160,8 @@
       ],
       "vfxKey": "fx.cinder-ward",
       "castTimeSec": 0.067,
-      "provenance": "w3x-import"
+      "provenance": "w3x-import",
+      "castTimeTier": "小"
     },
     "E": {
       "id": "sela.e",
@@ -216,7 +218,8 @@
           "statusDurationSec": 1.5,
           "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "R": {
       "id": "sela.r",
@@ -264,9 +267,10 @@
           "damageType": "magic",
           "statusId": "burnstun",
           "statusDurationSec": 0.75,
-          "castTimeSec": 0.767
+          "castTimeSec": 1.0
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "passive": {

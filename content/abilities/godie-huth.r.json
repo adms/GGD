@@ -53,13 +53,13 @@
         "duration": 5,
         "moveSpeedMult": 0.65
       },
-      "castTimeSec": 2.267
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 2.267,
+  "castTimeSec": 1.0,
   "rangeTier": "大",
   "range": 8,
   "castTimeTier": "極大"

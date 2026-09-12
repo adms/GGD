@@ -62,18 +62,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -93,7 +93,7 @@
                         "value": 0.1
                       }
                     ],
-                    "duration": 1.0,
+                    "duration": 1,
                     "statusId": "rage",
                     "stackKey": "lubu-tianxia",
                     "maxStacks": 20,
@@ -107,7 +107,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-h01u.q.webp",
-      "vfxKey": "fx.prim.physical.shockwave"
+      "vfxKey": "fx.prim.physical.shockwave",
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-h01u.w",
@@ -118,18 +119,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -146,13 +147,13 @@
             {
               "kind": "knockback",
               "distance": 2.5,
-              "speed": 15.0,
+              "speed": 15,
               "from": "caster"
             },
             {
               "kind": "applyStatus",
               "statusId": "armor-break",
-              "duration": 1.0
+              "duration": 1
             },
             {
               "kind": "applyBuff",
@@ -160,10 +161,10 @@
                 {
                   "stat": "armor",
                   "op": "pctAdd",
-                  "value": -1.0
+                  "value": -1
                 }
               ],
-              "duration": 1.0,
+              "duration": 1,
               "dispellable": true,
               "polarity": "debuff"
             }
@@ -180,7 +181,7 @@
           "preset": "tpl-locust-travel",
           "modelKey": "imported.crescent",
           "clip": "idle",
-          "scale": 2.0,
+          "scale": 2,
           "distance": 4.5
         }
       ],
@@ -204,13 +205,13 @@
             {
               "kind": "knockback",
               "distance": 2.5,
-              "speed": 15.0,
+              "speed": 15,
               "from": "caster"
             },
             {
               "kind": "applyStatus",
               "statusId": "armor-break",
-              "duration": 1.0
+              "duration": 1
             },
             {
               "kind": "applyBuff",
@@ -218,10 +219,10 @@
                 {
                   "stat": "armor",
                   "op": "pctAdd",
-                  "value": -1.0
+                  "value": -1
                 }
               ],
-              "duration": 1.0,
+              "duration": 1,
               "dispellable": true,
               "polarity": "debuff"
             }
@@ -235,10 +236,10 @@
             "preset": "tpl-locust-travel",
             "modelKey": "imported.crescent",
             "clip": "idle",
-            "scale": 2.0,
+            "scale": 2,
             "distance": 4.5
           },
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "icon": "assets/icons/abilities/godie-h01u.w.webp",
@@ -246,7 +247,8 @@
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "中",
       "manaCostTier": "極小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-h01u.e",
@@ -257,18 +259,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        150,
+        150,
+        150,
+        150
       ],
-      "range": 8.0,
+      "range": 8,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -276,7 +278,7 @@
           "kind": "dash",
           "mode": "toPoint",
           "speed": 16,
-          "maxDistance": 10.0
+          "maxDistance": 10
         },
         {
           "kind": "damageLine",
@@ -291,7 +293,7 @@
             ]
           },
           "length": 10,
-          "width": 2.0,
+          "width": 2,
           "aim": "target",
           "fromCaster": true,
           "includeOrigin": true,
@@ -308,7 +310,7 @@
                 "ratios": [
                   {
                     "stat": "ap",
-                    "coeff": 1.0
+                    "coeff": 1
                   }
                 ]
               }
@@ -321,7 +323,8 @@
       "cooldownTier": "中",
       "manaCostTier": "小",
       "rangeTier": "大",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     },
     "R": {
       "id": "godie-h01u.r",
@@ -332,16 +335,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -358,7 +361,7 @@
               "value": 0.5
             }
           ],
-          "duration": 8.0,
+          "duration": 8,
           "perRank": [
             {
               "modifiers": [
@@ -373,22 +376,22 @@
                   "value": 0.5
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
                 {
                   "stat": "ap",
                   "op": "pctMult",
-                  "value": 1.0
+                  "value": 1
                 },
                 {
                   "stat": "ad",
                   "op": "pctMult",
-                  "value": 1.0
+                  "value": 1
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
@@ -403,7 +406,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             }
           ],
           "hooks": [
@@ -449,7 +452,8 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "極大",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

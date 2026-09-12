@@ -54,5 +54,6 @@
   "schema": "ability@1",
   "rangeTier": "大",
   "range": 8,
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

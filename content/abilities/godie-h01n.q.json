@@ -8,18 +8,18 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    30.0,
-    30.0,
-    30.0,
-    30.0
+    30,
+    30,
+    30,
+    30
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 8.0,
+  "range": 8,
   "targetsEnemies": true,
   "effects": [
     {
@@ -32,16 +32,16 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "flat": 1.0
+        "flat": 1
       },
-      "radius": 3.0,
+      "radius": 3,
       "radiusTier": "極小",
       "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "applyStatus",
           "statusId": "magic-break",
-          "duration": 3.0
+          "duration": 3
         }
       ]
     },
@@ -51,10 +51,10 @@
         {
           "stat": "mr",
           "op": "pctAdd",
-          "value": -1.0
+          "value": -1
         }
       ],
-      "duration": 3.0,
+      "duration": 3,
       "dispellable": true,
       "polarity": "debuff"
     },
@@ -69,5 +69,6 @@
   "cooldownTier": "極小",
   "radiusTier": "極小",
   "rangeTier": "大",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

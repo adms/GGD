@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 5,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0,
+    0
   ],
   "effects": [],
   "vfxKey": "fx.prim.earth.pulse-sm",
@@ -56,5 +56,7 @@
         }
       }
     ]
-  }
+  },
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

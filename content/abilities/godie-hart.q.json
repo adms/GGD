@@ -40,7 +40,7 @@
     {
       "kind": "applyStatus",
       "statusId": "slow40",
-      "duration": 1.0,
+      "duration": 1,
       "moveSpeedMult": 0.6
     },
     {
@@ -54,7 +54,8 @@
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "大"
 }

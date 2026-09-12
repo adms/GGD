@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -36,7 +36,7 @@
           "value": 0.1
         }
       ],
-      "duration": 6.0,
+      "duration": 6,
       "statusId": "rage",
       "perRank": [
         {
@@ -52,7 +52,7 @@
               "value": 0.1
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -67,7 +67,7 @@
               "value": 0.15
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -82,7 +82,7 @@
               "value": 0.2
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -97,7 +97,7 @@
               "value": 0.25
             }
           ],
-          "duration": 6.0
+          "duration": 6
         }
       ]
     }
@@ -115,9 +115,9 @@
                 "shape": "single",
                 "who": "self",
                 "stackKey": "rage",
-                "addSec": 2.0,
+                "addSec": 2,
                 "perDamagePctOfMaxHealth": 0.05,
-                "maxRemainingSec": 30.0
+                "maxRemainingSec": 30
               }
             ],
             "target": "self"
@@ -129,5 +129,6 @@
   "icon": "assets/icons/abilities/godie-hapm.q.webp",
   "vfxKey": "fx.prim.physical.pulse",
   "cooldownTier": "極大",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.1,
+  "castTimeTier": "小"
 }

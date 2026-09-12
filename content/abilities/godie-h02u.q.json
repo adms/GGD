@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -31,14 +31,14 @@
           "value": 300
         }
       ],
-      "duration": 3.0
+      "duration": 3
     },
     {
       "kind": "delayed",
       "shape": "single",
-      "delaySec": 1.0,
+      "delaySec": 1,
       "count": 10,
-      "intervalSec": 1.0,
+      "intervalSec": 1,
       "effects": [
         {
           "kind": "restore",
@@ -50,5 +50,6 @@
   ],
   "vfxKey": "fx.prim.physical.shockwave",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

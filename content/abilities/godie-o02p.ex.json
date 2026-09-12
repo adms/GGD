@@ -12,13 +12,13 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0
+    0
   ],
   "effects": [
     {
       "kind": "restore",
-      "healthPct": 1.0,
-      "manaPct": 1.0
+      "healthPct": 1,
+      "manaPct": 1
     }
   ],
   "passive": {
@@ -35,7 +35,7 @@
                 "kind": "weightedBranch",
                 "shape": "circle",
                 "radiusTier": "極大",
-                "radius": 12.0,
+                "radius": 12,
                 "side": "allies",
                 "maxTargets": 24,
                 "branches": [
@@ -52,7 +52,7 @@
                             }
                           ]
                         },
-                        "duration": 15.0
+                        "duration": 15
                       }
                     ]
                   }
@@ -67,7 +67,8 @@
   "vfxKey": "fx.prim.sound.swarm-lg",
   "schema": "ability@1",
   "targetsEnemies": false,
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "小"
 }

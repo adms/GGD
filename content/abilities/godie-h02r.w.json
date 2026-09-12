@@ -31,14 +31,14 @@
         "moveSpeedMult": 0.4
       },
       "radius": 327.27,
-      "castTimeSec": 1.133
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.nature.swarm",
   "targetsEnemies": true,
   "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.0,
   "radiusTier": "中",
   "castTimeTier": "極大"
 }

@@ -62,18 +62,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        6,
+        6,
+        6,
+        6
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -87,7 +87,7 @@
                   {
                     "kind": "devour",
                     "shape": "circle",
-                    "radius": 12.0,
+                    "radius": 12,
                     "radiusTier": "極大",
                     "side": "enemies",
                     "maxTargets": 1,
@@ -97,7 +97,7 @@
                       0.07,
                       0.09
                     ],
-                    "healPct": 1.0,
+                    "healPct": 1,
                     "victim": "any",
                     "throughShields": true,
                     "onDevour": [
@@ -138,7 +138,7 @@
                   {
                     "kind": "devour",
                     "shape": "circle",
-                    "radius": 12.0,
+                    "radius": 12,
                     "radiusTier": "極大",
                     "side": "enemies",
                     "maxTargets": 1,
@@ -148,7 +148,7 @@
                       0.14,
                       0.18
                     ],
-                    "healPct": 1.0,
+                    "healPct": 1,
                     "victim": "any",
                     "throughShields": true,
                     "onDevour": [
@@ -188,7 +188,8 @@
       "cooldownShape": "單體",
       "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "vfxKey": "fx.prim.void.explosion",
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-e00r.w",
@@ -199,18 +200,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -303,7 +304,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-e00r.w.webp",
-      "vfxKey": "fx.prim.physical.slash"
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00r.e",
@@ -314,18 +316,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -339,13 +341,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 150.0
+                      "flat": 150
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ],
@@ -372,13 +374,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 250.0
+                      "flat": 250
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ],
@@ -405,13 +407,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 350.0
+                      "flat": 350
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ],
@@ -438,13 +440,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 450.0
+                      "flat": 450
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ],
@@ -480,7 +482,8 @@
         ],
         "flashMs": 120,
         "camKick": 0.3
-      }
+      },
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-e00r.r",
@@ -491,16 +494,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        300,
+        300,
+        300
       ],
-      "range": 8.0,
+      "range": 8,
       "targetsEnemies": true,
       "effects": [
         {
@@ -567,7 +570,8 @@
       "cooldownTier": "極大",
       "manaCostTier": "中",
       "rangeTier": "大",
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

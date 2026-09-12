@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    6,
+    6,
+    6,
+    6
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -33,7 +33,7 @@
               {
                 "kind": "devour",
                 "shape": "circle",
-                "radius": 12.0,
+                "radius": 12,
                 "radiusTier": "極大",
                 "side": "enemies",
                 "maxTargets": 1,
@@ -43,7 +43,7 @@
                   0.07,
                   0.09
                 ],
-                "healPct": 1.0,
+                "healPct": 1,
                 "victim": "any",
                 "throughShields": true,
                 "onDevour": [
@@ -84,7 +84,7 @@
               {
                 "kind": "devour",
                 "shape": "circle",
-                "radius": 12.0,
+                "radius": 12,
                 "radiusTier": "極大",
                 "side": "enemies",
                 "maxTargets": 1,
@@ -94,7 +94,7 @@
                   0.14,
                   0.18
                 ],
-                "healPct": 1.0,
+                "healPct": 1,
                 "victim": "any",
                 "throughShields": true,
                 "onDevour": [
@@ -134,5 +134,7 @@
   "cooldownShape": "單體",
   "icon": "assets/icons/abilities/godie-e00r.q.webp",
   "vfxKey": "fx.prim.void.explosion",
-  "cooldownTier": "極小"
+  "cooldownTier": "極小",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

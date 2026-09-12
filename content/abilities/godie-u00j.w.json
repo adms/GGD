@@ -54,8 +54,9 @@
   "sfxKey": "wc3.snapdragonmissilelaunch1",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "rangeTier": "極大",
   "range": 12,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "小"
 }

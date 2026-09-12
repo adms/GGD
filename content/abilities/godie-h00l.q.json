@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    30.0,
-    30.0,
-    30.0,
-    30.0
+    30,
+    30,
+    30,
+    30
   ],
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    75,
+    75,
+    75,
+    75
   ],
-  "range": 0.0,
+  "range": 0,
   "radiusTier": "小",
   "targetsEnemies": true,
   "effects": [
@@ -46,8 +46,8 @@
       "onHitTargets": [
         {
           "kind": "knockback",
-          "distance": 3.0,
-          "speed": 15.0,
+          "distance": 3,
+          "speed": 15,
           "from": "caster"
         }
       ]
@@ -78,12 +78,12 @@
       "onHitTargets": [
         {
           "kind": "knockback",
-          "distance": 3.0,
-          "speed": 15.0,
+          "distance": 3,
+          "speed": 15,
           "from": "caster"
         }
       ],
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
   },
   "icon": "assets/icons/abilities/godie-h00l.q.webp",
@@ -91,5 +91,6 @@
   "sfxKey": "wc3.druidofthetalonmissilelaunch2",
   "cooldownTier": "極小",
   "manaCostTier": "極小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

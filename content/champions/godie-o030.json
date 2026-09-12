@@ -67,13 +67,13 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 6.0,
+      "range": 6,
       "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
@@ -86,12 +86,13 @@
         "params": {
           "status": {
             "statusId": "root",
-            "duration": 1.0,
+            "duration": 1,
             "root": true
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-o030.w",
@@ -140,7 +141,7 @@
             "duration": 8,
             "moveSpeedMult": 0.9
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -183,7 +184,7 @@
           "intervalSec": 1,
           "durationSec": 7,
           "stacking": "refresh",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -227,7 +228,7 @@
             "duration": 1.2,
             "stun": true
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

@@ -36,7 +36,7 @@
       "onExisting": "keepLarger"
     }
   ],
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-14-20260907.r.webp",
   "template": {
@@ -44,7 +44,7 @@
     "params": {
       "duration": 3,
       "modifiers": [],
-      "castTimeSec": 0.067
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

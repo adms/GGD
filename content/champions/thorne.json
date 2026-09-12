@@ -83,7 +83,8 @@
       "castTimeSec": 0.067,
       "provenance": "w3x-import",
       "rangeTier": "中",
-      "range": 6
+      "range": 6,
+      "castTimeTier": "小"
     },
     "W": {
       "id": "thorne.w",
@@ -142,7 +143,8 @@
       ],
       "vfxKey": "fx.barkskin",
       "castTimeSec": 0.067,
-      "provenance": "w3x-import"
+      "provenance": "w3x-import",
+      "castTimeTier": "小"
     },
     "E": {
       "id": "thorne.e",
@@ -197,9 +199,10 @@
             "duration": 1.25,
             "root": true
           },
-          "castTimeSec": 0.333
+          "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "R": {
       "id": "thorne.r",
@@ -246,7 +249,7 @@
           "damageType": "physical",
           "statusId": "slow40",
           "statusDurationSec": 2,
-          "castTimeSec": 1.833
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

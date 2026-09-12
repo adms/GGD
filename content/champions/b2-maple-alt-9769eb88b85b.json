@@ -32,10 +32,10 @@
       ],
       "id": "b2-maple.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "這個形狀看起來很耐打",
@@ -45,7 +45,7 @@
         "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705",
         "params": {
           "buffDurationSec": 4,
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.3,
           "durationSec": 4,
           "modifiers": [
             {
@@ -65,7 +65,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-maple.e.webp"
+      "icon": "assets/icons/abilities/b2-maple.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -99,10 +100,10 @@
       ],
       "id": "b2-maple.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "防禦力輸入多一個零",
@@ -113,7 +114,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -146,7 +147,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-maple.q.webp"
+      "icon": "assets/icons/abilities/b2-maple.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 2.433,
@@ -212,7 +214,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 2.433,
+          "castTimeSec": 1.0,
           "castType": "targeted",
           "effects": [
             {
@@ -306,10 +308,10 @@
       ],
       "id": "b2-maple.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "盾後補餐退魔力",
@@ -320,7 +322,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -361,7 +363,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-maple.w.webp"
+      "icon": "assets/icons/abilities/b2-maple.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "tank",

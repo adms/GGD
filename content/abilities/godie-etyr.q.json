@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -26,7 +26,7 @@
       "preset": "tpl-locust-orb",
       "modelKey": "imported.oblivionaura",
       "count": 2,
-      "distance": 1.0,
+      "distance": 1,
       "soundKey": "wc3.blademasterwhirlwind"
     }
   ],
@@ -36,9 +36,9 @@
       "target": "self",
       "amount": {
         "perRank": [
-          150.0,
-          150.0,
-          150.0
+          150,
+          150,
+          150
         ],
         "ratios": [
           {
@@ -47,10 +47,11 @@
           }
         ]
       },
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.prim.wind.nova",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.1,
+  "castTimeTier": "小"
 }

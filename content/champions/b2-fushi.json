@@ -50,10 +50,10 @@
       ],
       "id": "b2-fushi.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "記憶形狀先借一塊",
@@ -65,7 +65,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -116,7 +116,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-fushi.e.webp"
+      "icon": "assets/icons/abilities/b2-fushi.e.webp",
+      "castTimeTier": "小"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -158,10 +159,10 @@
       ],
       "id": "b2-fushi.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "請溫柔敲擊測試",
@@ -172,7 +173,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -213,7 +214,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-fushi.q.webp"
+      "icon": "assets/icons/abilities/b2-fushi.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -246,9 +248,9 @@
       ],
       "id": "b2-fushi.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "耐用形狀保固四秒",
@@ -257,7 +259,7 @@
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "duration": 4,
           "modifiers": [
             {
@@ -281,7 +283,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-fushi.r.webp"
+      "icon": "assets/icons/abilities/b2-fushi.r.webp",
+      "castTimeTier": "大"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -321,10 +324,10 @@
       ],
       "id": "b2-fushi.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "把破掉的地方長回來",
@@ -335,7 +338,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -374,7 +377,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-fushi.w.webp"
+      "icon": "assets/icons/abilities/b2-fushi.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "tank",

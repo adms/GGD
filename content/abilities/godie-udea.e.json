@@ -39,17 +39,18 @@
       "damageType": "magic",
       "status": {
         "statusId": "slow40",
-        "duration": 1.0,
+        "duration": 1,
         "moveSpeedMult": 0.6
       },
-      "castTimeSec": 0.567
+      "castTimeSec": 0.5
     }
   },
   "vfxKey": "fx.prim.arcane.explosion",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "大"
 }

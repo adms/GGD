@@ -10,13 +10,13 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
-  "radius": 12.0,
+  "radius": 12,
   "effects": [],
   "passive": {
     "name": "99-00 可愛就是正義",
@@ -25,7 +25,7 @@
         "auras": [
           {
             "key": "cuteness-is-justice",
-            "radius": 12.0,
+            "radius": 12,
             "affects": "ally",
             "modifiers": [
               {
@@ -44,5 +44,7 @@
       }
     ]
   },
-  "radiusTier": "極大"
+  "radiusTier": "極大",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

@@ -22,7 +22,7 @@
     "params": {
       "to": "alternate",
       "durationSec": 15,
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "passive": {
@@ -62,6 +62,6 @@
   },
   "vfxKey": "fx.prim.void.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "castTimeTier": "極大"
 }

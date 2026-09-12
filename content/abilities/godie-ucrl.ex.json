@@ -8,10 +8,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -22,5 +22,7 @@
     "ranks": [
       {}
     ]
-  }
+  },
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

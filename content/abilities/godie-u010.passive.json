@@ -14,7 +14,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -24,7 +24,7 @@
         {
           "stat": "as",
           "op": "pctAdd",
-          "value": 1.0
+          "value": 1
         },
         {
           "stat": "ms",
@@ -32,14 +32,15 @@
           "value": 0.97
         }
       ],
-      "duration": 10.0
+      "duration": 10
     },
     {
       "kind": "applyStatus",
       "statusId": "evil-eye",
-      "duration": 10.0
+      "duration": 10
     }
   ],
   "vfxKey": "fx.prim.void.pulse",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

@@ -14,7 +14,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "targetsEnemies": true,
   "effects": [],
@@ -23,14 +23,15 @@
     "params": {
       "status": {
         "statusId": "root",
-        "duration": 4.0,
+        "duration": 4,
         "root": true
       },
-      "castTimeSec": 0.833
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.holy.pulse",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1.0,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

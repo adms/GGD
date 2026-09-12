@@ -62,14 +62,14 @@
         "duration": 1.5,
         "moveSpeedMult": 0.6
       },
-      "castTimeSec": 1.133
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "radius": 4.5,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1.0,
   "rangeTier": "大",
   "range": 8,
   "radiusTier": "小",

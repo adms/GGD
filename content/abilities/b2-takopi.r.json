@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     90.0,
@@ -36,9 +36,9 @@
   ],
   "id": "b2-takopi.r",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "maxRank": 3,
   "name": "道具說明書暖心頁",
@@ -101,5 +101,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-takopi.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

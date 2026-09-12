@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -28,11 +28,11 @@
               {
                 "kind": "applyStatus",
                 "statusId": "blind",
-                "duration": 6.0,
+                "duration": 6,
                 "missChance": 0.5
               }
             ],
-            "internalCooldown": 1.0,
+            "internalCooldown": 1,
             "chance": 0.3,
             "target": "event"
           }
@@ -40,5 +40,7 @@
       }
     ]
   },
-  "icon": "assets/icons/abilities/godie-h02v.passive.webp"
+  "icon": "assets/icons/abilities/godie-h02v.passive.webp",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

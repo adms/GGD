@@ -32,7 +32,7 @@
       }
     }
   ],
-  "castTimeSec": 2.233,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-07-20260907.r.webp",
   "template": {
@@ -44,7 +44,7 @@
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 2.233
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

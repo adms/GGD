@@ -49,7 +49,7 @@
       "radiusTier": "極小"
     }
   ],
-  "castTimeSec": 0.833,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "template": {
     "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
@@ -62,7 +62,7 @@
         "ratios": []
       },
       "damageType": "magic",
-      "castTimeSec": 0.833
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"

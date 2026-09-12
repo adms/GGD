@@ -67,9 +67,9 @@
         45.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -91,7 +91,8 @@
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "castTimeSec": 0.067,
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-hpb1.w",
@@ -181,12 +182,13 @@
           "invulnerableSec": 0.1,
           "status": {
             "statusId": "moon-combo",
-            "duration": 1.0,
+            "duration": 1,
             "applyTo": "self"
           },
           "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-hpb1.e",
@@ -287,9 +289,9 @@
         45.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -299,7 +301,7 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 8.0,
+          "duration": 8,
           "modifiers": [
             {
               "stat": "armor",
@@ -316,7 +318,7 @@
                   "value": 25
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
@@ -326,7 +328,7 @@
                   "value": 25
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -336,12 +338,13 @@
                   "value": 25
                 }
               ],
-              "duration": 16.0
+              "duration": 16
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

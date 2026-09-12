@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -44,7 +44,7 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "damage": {
         "damageTier": "小"
       },
@@ -65,5 +65,6 @@
       "vfxKey": "fx.prim.arcane.slash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-touka.e.webp"
+  "icon": "assets/icons/abilities/b2-touka.e.webp",
+  "castTimeTier": "大"
 }

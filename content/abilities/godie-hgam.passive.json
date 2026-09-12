@@ -29,11 +29,11 @@
       "intervalSec": 1,
       "durationSec": 5,
       "stacking": "refresh",
-      "castTimeSec": 1.7
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.nature.bolt",
-  "castTimeSec": 1.7,
+  "castTimeSec": 1.0,
   "rangeTier": "大",
   "range": 8,
   "castTimeTier": "極大"

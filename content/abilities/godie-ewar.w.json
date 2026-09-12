@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -45,5 +45,6 @@
   "icon": "assets/icons/abilities/godie-ewar.w.webp",
   "vfxKey": "fx.prim.ki.pulse-sm",
   "cooldownTier": "極大",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.1,
+  "castTimeTier": "小"
 }

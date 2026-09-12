@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -35,7 +35,7 @@
                     }
                   ]
                 },
-                "radius": 3.0,
+                "radius": 3,
                 "radiusTier": "極小"
               }
             ],
@@ -64,12 +64,14 @@
           {
             "op": "durationSec",
             "mode": "set",
-            "value": 30.0
+            "value": 30
           }
         ]
       }
     ]
   },
   "icon": "assets/icons/abilities/godie-e00w.ex.webp",
-  "vfxKey": "fx.prim.lightning.beam-lg"
+  "vfxKey": "fx.prim.lightning.beam-lg",
+  "castTimeTier": "極大",
+  "castTimeSec": 1.0
 }

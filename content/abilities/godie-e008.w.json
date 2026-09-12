@@ -14,16 +14,16 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 6.0,
+      "duration": 6,
       "modifiers": [
         {
           "stat": "ms",
@@ -40,7 +40,7 @@
               "value": 1.5
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -50,7 +50,7 @@
               "value": 1.5
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
@@ -60,13 +60,14 @@
               "value": 1.5
             }
           ],
-          "duration": 18.0
+          "duration": 18
         }
       ],
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.fire.nova",
   "schema": "ability@1",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

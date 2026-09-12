@@ -22,10 +22,10 @@
       ],
       "id": "b2-popp.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "隊友加油我先繞背",
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-popp.e.webp"
+      "icon": "assets/icons/abilities/b2-popp.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -92,7 +93,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },
@@ -112,7 +113,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-popp.q.webp"
+      "icon": "assets/icons/abilities/b2-popp.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -155,7 +157,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.833,
+          "castTimeSec": 1.0,
           "damage": {
             "damageTier": "中"
           },
@@ -172,7 +174,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-popp.r.webp"
+      "icon": "assets/icons/abilities/b2-popp.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -229,7 +232,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.233,
+          "castTimeSec": 1.0,
           "castType": "targeted",
           "effects": [
             {

@@ -70,10 +70,10 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -84,9 +84,10 @@
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-udea.w",
@@ -132,7 +133,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
       "vfxKey": "fx.prim.ice.nova",
@@ -141,7 +142,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-udea.e",
@@ -190,12 +192,13 @@
           "damageType": "magic",
           "status": {
             "statusId": "slow40",
-            "duration": 1.0,
+            "duration": 1,
             "moveSpeedMult": 0.6
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-udea.r",
@@ -221,14 +224,14 @@
           "kind": "chainLightning",
           "shape": "circle",
           "centre": "caster",
-          "radius": 8.0,
+          "radius": 8,
           "maxSources": 20,
           "damageType": "magic",
           "amount": {
             "damageTier": "極小"
           },
           "jumps": 16,
-          "jumpRange": 24.0,
+          "jumpRange": 24,
           "decay": 0.9,
           "jumpIntervalSec": 0.05,
           "onHitTargets": [
@@ -237,9 +240,9 @@
               "applyTo": "target",
               "amount": {
                 "perRank": [
-                  250.0,
-                  350.0,
-                  450.0
+                  250,
+                  350,
+                  450
                 ]
               }
             }
@@ -252,7 +255,7 @@
           "amount": {
             "damageTier": "大"
           },
-          "radius": 8.0,
+          "radius": 8,
           "maxTargets": 1,
           "radiusTier": "大"
         }
@@ -261,7 +264,8 @@
       "castTimeSec": 0.667,
       "range": 0.0,
       "cooldownTier": "極小",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

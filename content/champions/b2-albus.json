@@ -22,10 +22,10 @@
       ],
       "id": "b2-albus.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "這裡有捷徑",
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-albus.e.webp"
+      "icon": "assets/icons/abilities/b2-albus.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -86,7 +87,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },
@@ -101,7 +102,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-albus.q.webp"
+      "icon": "assets/icons/abilities/b2-albus.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -151,9 +153,9 @@
       ],
       "id": "b2-albus.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "走捷徑才趕得上急救",
@@ -165,7 +167,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -215,7 +217,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-albus.r.webp"
+      "icon": "assets/icons/abilities/b2-albus.r.webp",
+      "castTimeTier": "小"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -241,10 +244,10 @@
       ],
       "id": "b2-albus.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "已花冷卻才准跳段",
@@ -255,7 +258,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -280,7 +283,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-albus.w.webp"
+      "icon": "assets/icons/abilities/b2-albus.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",

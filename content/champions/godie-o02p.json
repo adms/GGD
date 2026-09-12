@@ -89,7 +89,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.sound.nova",
@@ -119,10 +119,10 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.sound.pulse",
@@ -137,21 +137,22 @@
           "target": "ally",
           "amount": {
             "perRank": [
-              200.0,
-              275.0,
-              350.0,
-              425.0
+              200,
+              275,
+              350,
+              425
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-o02p.e",
@@ -169,10 +170,10 @@
         45.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -194,10 +195,11 @@
               "value": 3
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.3
         }
       },
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-o02p.r",
@@ -214,9 +216,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -224,9 +226,9 @@
           "kind": "heal",
           "amount": {
             "perRank": [
-              200.0,
-              275.0,
-              350.0
+              200,
+              275,
+              350
             ]
           }
         },
@@ -234,13 +236,13 @@
           "kind": "delayed",
           "shape": "circle",
           "radiusTier": "中",
-          "radius": 6.0,
+          "radius": 6,
           "side": "enemies",
           "anchor": "caster",
           "targetMode": "reresolve",
-          "delaySec": 1.0,
+          "delaySec": 1,
           "count": 4,
-          "intervalSec": 1.0,
+          "intervalSec": 1,
           "effects": [
             {
               "kind": "damage",
@@ -254,7 +256,8 @@
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
       "castTimeSec": 0.067,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "castTimeTier": "小"
     }
   },
   "skillOrder": [

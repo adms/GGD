@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castType": "self",
   "cooldown": [
     90.0,
@@ -51,7 +51,7 @@
     "params": {
       "anchor": "caster",
       "applyTo": "enemies",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "damageTier": "中",
       "damageType": "magic",
       "durationSec": 3,
@@ -68,5 +68,6 @@
       "vfxKey": "fx.prim.arcane.nova"
     }
   ],
-  "icon": "assets/icons/abilities/b2-kumoko.r.webp"
+  "icon": "assets/icons/abilities/b2-kumoko.r.webp",
+  "castTimeTier": "大"
 }

@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -28,22 +28,23 @@
       "target": "self",
       "amount": {
         "perRank": [
-          200.0,
-          360.0,
-          520.0,
-          680.0
+          200,
+          360,
+          520,
+          680
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 1
           }
         ]
       },
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.prim.blood.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.1,
+  "castTimeTier": "小"
 }

@@ -10,7 +10,11 @@ BACKLOG = ROOT / "materials/hero-model-library/已取得模型待設計英雄.js
 
 def role_counts(candidates):
     bodies = {"character-body-costume", "character-body-mesh-source"}
-    components = {"model-component-or-prop", "independent-static-skinned-model-component"}
+    components = {
+        "model-component-or-prop",
+        "independent-static-skinned-model-component",
+        "independent-skinned-model-motion-component",
+    }
     return (
         sum(row.get("resourceRole") in bodies for row in candidates),
         sum(row.get("resourceRole") in components for row in candidates),
@@ -33,7 +37,7 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "rem": (1, 1, 1),
             "emilia": (1, 1, 1),
             "felix": (1, 1, 1),
-            "ssbu-mario": (16, 10, 0),
+            "ssbu-mario": (16, 11, 0),
             "ssbu-mewtwo": (8, 2, 0),
             "ssbu-ptrainer": (8, 3, 0),
             "ssbu-ryu": (8, 2, 0),

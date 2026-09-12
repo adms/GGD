@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -28,8 +28,8 @@
       {
         "critStrike": {
           "chance": 0.03,
-          "damageMult": 10.0,
-          "lifestealFraction": 0.0
+          "damageMult": 10,
+          "lifestealFraction": 0
         },
         "hooks": [
           {
@@ -38,7 +38,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               },
               {
@@ -49,7 +49,7 @@
                   "tag": "burn"
                 },
                 "statusId": "blind",
-                "duration": 5.0,
+                "duration": 5,
                 "missChance": 0.5
               }
             ],
@@ -63,8 +63,8 @@
       {
         "critStrike": {
           "chance": 0.04,
-          "damageMult": 10.0,
-          "lifestealFraction": 0.0
+          "damageMult": 10,
+          "lifestealFraction": 0
         },
         "hooks": [
           {
@@ -73,7 +73,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               },
               {
@@ -84,7 +84,7 @@
                   "tag": "burn"
                 },
                 "statusId": "blind",
-                "duration": 5.0,
+                "duration": 5,
                 "missChance": 0.5
               }
             ],
@@ -98,8 +98,8 @@
       {
         "critStrike": {
           "chance": 0.05,
-          "damageMult": 10.0,
-          "lifestealFraction": 0.0
+          "damageMult": 10,
+          "lifestealFraction": 0
         },
         "hooks": [
           {
@@ -108,7 +108,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               },
               {
@@ -119,7 +119,7 @@
                   "tag": "burn"
                 },
                 "statusId": "blind",
-                "duration": 5.0,
+                "duration": 5,
                 "missChance": 0.5
               }
             ],
@@ -133,8 +133,8 @@
       {
         "critStrike": {
           "chance": 0.06,
-          "damageMult": 10.0,
-          "lifestealFraction": 0.0
+          "damageMult": 10,
+          "lifestealFraction": 0
         },
         "hooks": [
           {
@@ -143,7 +143,7 @@
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 1.0,
+                "duration": 1,
                 "stun": true
               },
               {
@@ -154,7 +154,7 @@
                   "tag": "burn"
                 },
                 "statusId": "blind",
-                "duration": 5.0,
+                "duration": 5,
                 "missChance": 0.5
               }
             ],
@@ -168,5 +168,7 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-h02k.q.webp",
-  "vfxKey": "fx.prim.physical.shockwave"
+  "vfxKey": "fx.prim.physical.shockwave",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

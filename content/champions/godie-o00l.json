@@ -95,7 +95,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -136,7 +136,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.fire.explosion",
@@ -166,12 +166,12 @@
         30.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "shield",
@@ -189,17 +189,18 @@
               }
             ]
           },
-          "duration": 6.0,
+          "duration": 6,
           "absorbs": "magic"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.waygatewhat1",
       "targetsEnemies": false,
-      "radius": 8.0,
+      "radius": 8,
       "castTimeSec": 0.067,
       "cooldownTier": "極小",
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "castTimeTier": "小"
     },
     "R": {
       "id": "godie-o00l.r",
@@ -237,7 +238,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 2.433
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.fire.explosion-lg",

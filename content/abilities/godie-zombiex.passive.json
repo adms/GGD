@@ -10,10 +10,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -37,7 +37,7 @@
                     "value": 8
                   }
                 ],
-                "duration": 99999.0,
+                "duration": 99999,
                 "stackKey": "blackmud-mob",
                 "maxStacks": 200,
                 "stackVisual": true
@@ -58,7 +58,7 @@
                     "value": 40
                   }
                 ],
-                "duration": 99999.0,
+                "duration": 99999,
                 "stackKey": "blackmud-champ",
                 "maxStacks": 40,
                 "stackVisual": true
@@ -68,5 +68,7 @@
         ]
       }
     ]
-  }
+  },
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

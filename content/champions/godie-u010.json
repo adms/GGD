@@ -105,7 +105,7 @@
           },
           "damageType": "magic",
           "invulnerableSec": 0.24,
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -184,7 +184,7 @@
           "damageType": "magic",
           "statusId": "slow40",
           "statusDurationSec": 1.5,
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -218,10 +218,10 @@
           "shape": "single",
           "modelKey": "imported.darkraor",
           "path": "forward",
-          "speed": 30.0,
-          "distance": 14.0,
-          "spinDegPerSec": 240.0,
-          "scale": 2.0,
+          "speed": 30,
+          "distance": 14,
+          "spinDegPerSec": 240,
+          "scale": 2,
           "touchRadius": 4.58,
           "touchSide": "enemies",
           "touchOncePerTarget": true,
@@ -234,7 +234,7 @@
                 "ratios": [
                   {
                     "stat": "ap",
-                    "coeff": 1.0
+                    "coeff": 1
                   }
                 ]
               }
@@ -269,9 +269,9 @@
           "path": "orbit",
           "count": 12,
           "distance": 6.42,
-          "speed": 30.0,
-          "lifeSec": 3.0,
-          "scale": 1.0,
+          "speed": 30,
+          "lifeSec": 3,
+          "scale": 1,
           "soundKey": "guardianSlam"
         }
       ],
@@ -293,7 +293,8 @@
         "camKick": 0.36
       },
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-u010.r",
@@ -310,9 +311,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -337,12 +338,12 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 10.0,
+          "duration": 10,
           "modifiers": [
             {
               "stat": "ad",
               "op": "pctAdd",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "manaRegen",
@@ -350,9 +351,10 @@
               "value": -10
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

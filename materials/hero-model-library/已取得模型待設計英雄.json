@@ -20,9 +20,10 @@
     "heroesWithAllDeclaredMechanics": 153,
     "heroesWithMissingRefs": 0,
     "heroesWithExplicitSkillPlaceholderEvidence": 0,
-    "heroesWithUncertainty": 0,
+    "heroesWithUncertainty": 152,
     "statusCounts": {
-      "mechanics-defined": 153
+      "mechanics-defined-with-uncertainty": 152,
+      "mechanics-defined": 1
     },
     "schemaFailedAbilities": 0,
     "templateExpansionFailedAbilities": 0,
@@ -55,7 +56,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "cc4fe66d682b175d5ad58104bc3eb3b2c3124ae98b7e47b78f3e799c84326bd4"
+      "sha256": "a3777dc6f589290588b8bf8d823b7586575234f3884ec86b659a01158f9d0e98"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -79,615 +80,615 @@
     },
     {
       "path": "content/champions/b2-aladdin.json",
-      "sha256": "14204348d4afdff1890f7cc587f67de3596097fd8261ff974a40da281ae10e58"
+      "sha256": "ae08a346fa9ede156750d7e5dde0c1d792ff6df2bf862f99de0216649b85cbdd"
     },
     {
       "path": "content/champions/b2-albus.json",
-      "sha256": "f3048677596ba22d0f2bd3a579785c6f19e02b15cd8dead9cdfad96006efc97e"
+      "sha256": "f03d4cf1cc9b39e878e24a92ffb20bf9ddb41c8a6dd82caaa7fff0fe4e8ba041"
     },
     {
       "path": "content/champions/b2-bojji.json",
-      "sha256": "af34b6b380b4dbea47b731dcb7f1616a0151181a81ac8addf27f9dbd6457d86e"
+      "sha256": "6bce55f98e949efe7bfd418b0e5b04745e9fbbd4c7863114857655ca78f24bb0"
     },
     {
       "path": "content/champions/b2-boxxo.json",
-      "sha256": "00e07adc7522c9142f26a5f833f639b90db7fc7247991c9f40112aa26a894a05"
+      "sha256": "a4f8fbe1b8dff73110fa14f072f9d9a4a08f5a917786b87461f069509548777a"
     },
     {
       "path": "content/champions/b2-elma.json",
-      "sha256": "03f020bdbb473508e1b1c347f51eab578911806dd53e1a8f0cc93fc4ba0bab5c"
+      "sha256": "22591e4ae629b5f9c0c489c33a2314cfefa2388feaf408bd3c3106eb4e298f04"
     },
     {
       "path": "content/champions/b2-fushi.json",
-      "sha256": "3f5ae903eb8ea980e584be52c51730f6b7632485b8ebb3f15f5b3360de0b90be"
+      "sha256": "26a94a39beb434febb970988684d8e036666b66f5879c119ba97a6db282dc0b4"
     },
     {
       "path": "content/champions/b2-goblin.json",
-      "sha256": "bba2428ed1c9be995535973c8783e5e99292b291dac6e8d2820c5082efdf5c56"
+      "sha256": "9d5da16dfb874e439f594177ab419e829dd25a4ec6c9a75098f7980f71d4863e"
     },
     {
       "path": "content/champions/b2-guts.json",
-      "sha256": "02303f4303d76f5cd5b5f94ddac5c8ee79af967fd4fb3f8cb17c3bb40477e3b2"
+      "sha256": "87e9553713d56f3438c6bc5b64362bd899ab9e07c1ce91793b731e97ef9e629d"
     },
     {
       "path": "content/champions/b2-haga.json",
-      "sha256": "04af807d3b5756cb4d0c551878722a164d311076d179699942a88255089d9141"
+      "sha256": "033870ac8a60a293cf6552e29afd336c500710839f2f1d53ca7633a5939cc1a8"
     },
     {
       "path": "content/champions/b2-kaede.json",
-      "sha256": "94daf99f9dfe1bd55ac617e76fde79779b4cdd19cccbb7ff7839be0cad7e9467"
+      "sha256": "57d32b10a5789c0d0d250702af76399e093705b0b31236141bbd2d7eadb50ddd"
     },
     {
       "path": "content/champions/b2-kaiji.json",
-      "sha256": "6c61747502a5f2e08b622520fd60fe939fadd687fe60f68a479744c9147f746a"
+      "sha256": "5c153bde869d4513f678a8b9a081c0de81a96b28e71b83df633ba9b5e10d3705"
     },
     {
       "path": "content/champions/b2-keyaru.json",
-      "sha256": "6490d8a3f46fea13a9d51fdc693cedb250b4d025a5e4f4e308d77989117326d9"
+      "sha256": "10a313262cef6c93fcb88c18d84034f559792d51f970ffc8436612d6f4e2ecc8"
     },
     {
       "path": "content/champions/b2-kisaragi.json",
-      "sha256": "374f38e8ec313a3ba635a49d1ff06d106fd0cd21b808643f54c9b4fcad5753be"
+      "sha256": "3b0838f23b0022bd33c1d6ce69daa2e3d97dad478ff162fcb63394ca3b9b4128"
     },
     {
       "path": "content/champions/b2-klaus.json",
-      "sha256": "11b2173d5b7eced52111a217b8c4a4dee26f945dc4b0c920375e4f5e4d391fd9"
+      "sha256": "9acae78d57ae7ebb69064479c428bed186e23561bddd0542247b5884c7d60f86"
     },
     {
       "path": "content/champions/b2-kumoko.json",
-      "sha256": "9d179e3b66a7783904a9b39c895fd10eddb9861ece956602853aa326c3d692dd"
+      "sha256": "fe8cecc68a987dd6b9467a9d7e5e255c89c1e6e58bbcbbcce3c4dc23ee79798f"
     },
     {
       "path": "content/champions/b2-luckyman.json",
-      "sha256": "8cdcbdf8c389c66a8a71e1a5813dd28150f96f760838991c6e78556cf927c8f6"
+      "sha256": "83b7343567a5debb4c8384b2dac530345ded2c674aecb016f877642529ed54c9"
     },
     {
       "path": "content/champions/b2-makoto.json",
-      "sha256": "69e00e0d5087af5c7dd8cf6fbccf85c788ed04a94a9ad444da1cb54e6145b906"
+      "sha256": "f70d43bad14ec0c5d9cc9cf1dcf18229f1dda5b1a642971d09e162a0702506e5"
     },
     {
       "path": "content/champions/b2-maomao.json",
-      "sha256": "0f7df045a39720d5bddf89c9c651184a3b449893e9a395d8940de04569b7d76c"
+      "sha256": "e7c6549d049403031aea616ff97d3808054a00f664dd76f4ffa603cdf76cc28e"
     },
     {
       "path": "content/champions/b2-maple-alt-9769eb88b85b.json",
-      "sha256": "c6119287dcd61a48091b1ea01f780fa56ccb50e389f6f740454968ff167a4276"
+      "sha256": "b0dd3915966eb0196d81e50b1fac4eb30905d6ee2e8129b0f8dd84e52ac2ebf3"
     },
     {
       "path": "content/champions/b2-maple.json",
-      "sha256": "329a493e63a898e43f031549e412fd2e4b86698edd3a39569bf68a66e6f72293"
+      "sha256": "ae3c50206904090619ea587f46f8366d9c2a51dd47a7865d05d6e50022dd5c03"
     },
     {
       "path": "content/champions/b2-matthias.json",
-      "sha256": "008f26dd472c29e3914d8b52ef53c65166c3dc65f69f0a9cdf1141b5d42942b6"
+      "sha256": "beca10d7681326a7a42643dbe32e356941026287c9a9f986bcd96ad52c765375"
     },
     {
       "path": "content/champions/b2-misery.json",
-      "sha256": "a6e564a996cd7b4cc1ac535be678772c2df572ff59b93c74632029dd1e63047e"
+      "sha256": "166f08cd0f653927cf1e034263471bfaa3eaf98f5c83342c194b49b493aa5f9f"
     },
     {
       "path": "content/champions/b2-naofumi.json",
-      "sha256": "02fc7b72a4fb74756ae31fbb8f59e3feffb9928025bb658107fffe9c6b1d753d"
+      "sha256": "40d9bd5a837476e232c508bacfe4f25e294acb7b8f37a648424a3c5768060b3b"
     },
     {
       "path": "content/champions/b2-ned.json",
-      "sha256": "e4756c6c3d0b227531f4ef0fd7060fc7501820f3531761feb17d2552b3f3951c"
+      "sha256": "fc2c352c345895f0f8d71715aa3aa8428f4a501589c23eab91f657049586a606"
     },
     {
       "path": "content/champions/b2-noor.json",
-      "sha256": "f7c88a060d7f101e84ac6ddc8226404f6f2b91ddbb55b0a5879f51e8ded24b5b"
+      "sha256": "577f52a5fa3bd529b5da31612d612742c5543318250da6fb3c01400fd9d12840"
     },
     {
       "path": "content/champions/b2-nube.json",
-      "sha256": "e1b5977bbe226afb3d749ae1eeb1b49018baf8c572ab9fcb4837c214c773b81b"
+      "sha256": "ccfb658f337b30632c4a806f932dc68fbeecdde00d3568aa8f93c16f095ea287"
     },
     {
       "path": "content/champions/b2-orphen.json",
-      "sha256": "b15b28486dc3a68eb5b3b5059ff125b49278b9171c8df29e4cda6d61c672d45f"
+      "sha256": "2ce5facb2be3d52a0b2fdbc2bf04be760f97699e738a82cb5a5e51e7f279c373"
     },
     {
       "path": "content/champions/b2-popp.json",
-      "sha256": "1203297af745fd320ca044ee96b79c6274d755d7a5087e859f08206afb74da34"
+      "sha256": "871ad02e762491af6154a3652d881cdb67edcd6576cc729bc62209c616b35ae9"
     },
     {
       "path": "content/champions/b2-rem.json",
-      "sha256": "56b2d5a55f977d46c252d9568fb821f86aa8b248d0b22e5cddcb49da047cde3f"
+      "sha256": "2c368cf3e815dc57af6465786b87adcc1cfbfccd788682b2e15019c870289ce2"
     },
     {
       "path": "content/champions/b2-rin.json",
-      "sha256": "6a01d9b1d8e57c5a53a11f825ed72562930ab92ae3ba740eb625062c839ef67f"
+      "sha256": "04b64b10f0a5c29835fc0ea02c9963b23cbadef1f1ce1f41d39c8283402848e5"
     },
     {
       "path": "content/champions/b2-shadow.json",
-      "sha256": "ec8fd37ecc67bd366c0d3800cf56bd243922071f1612f9ce2559578de948889c"
+      "sha256": "70ed100e39c863c310b0c93d245bf776612cd07cbfdba3a5c8518dd31e7a3e33"
     },
     {
       "path": "content/champions/b2-shinchan.json",
-      "sha256": "dd708e159826d06f2fb2bb3fe9e28ebdaf9245db74c3aeaf4b9ea520f153e853"
+      "sha256": "481868b7fcaeca12dc969d77e93549e511bc6425c9f9149c65609b55b2ef99d8"
     },
     {
       "path": "content/champions/b2-sinbad.json",
-      "sha256": "325e47c3240beaf28cc7de141b24fd64bdbfdf6b72982a1c33073646a1debbde"
+      "sha256": "ee14fc32e013eeec3feb87d8ce718f4e1642d13d35683f84939ee5d48ad483a8"
     },
     {
       "path": "content/champions/b2-takopi.json",
-      "sha256": "2a86f05291d313e05e763ad6111aefab0eccdb65b9e2ab4cd24ab129d06e44e4"
+      "sha256": "f42814f5ec525c65c8bdb73f5187172a42b5416535b1daf72c4064096214b428"
     },
     {
       "path": "content/champions/b2-touka.json",
-      "sha256": "7543866ffdb8e52c17887c7e3c888cc7802dce35e09d5400a7adb1b7c696b427"
+      "sha256": "510cb3fd8bde6497d6b418058bfef5faf679da47fad5ce6ac4577859bda94a9c"
     },
     {
       "path": "content/champions/b2-uncle.json",
-      "sha256": "80f755d2b32d069c74fbdfba37a68f28e41177f54fa8573575e8a7d1baa8c04b"
+      "sha256": "e8437991ee4d7cd4104b82513f27aa1521c1f8516b68fa03910dde96bbf99fd4"
     },
     {
       "path": "content/champions/b2-yogiri.json",
-      "sha256": "dcdf819c132e9a5d92928bf0dd5b0beafc6190290932d9c3e4bd8b986b3ca338"
+      "sha256": "72fd71fa5eeee4031a64ea8b8099099e570db845b1552619d97b9e603b0c89a9"
     },
     {
       "path": "content/champions/b2-zenitsu.json",
-      "sha256": "7dd769c7909e1d854123f2c1382e783f0bfa867f31be182ba542395471e98eef"
+      "sha256": "7c6cbda8f143333acf70354d6793048bb69f37f33b22cce61365e2d0bf92d649"
     },
     {
       "path": "content/champions/community-review-01-20260907.json",
-      "sha256": "d6e361ce4af976185f0ca4eb52468dc547e995c3861177579af44284553bb80b"
+      "sha256": "dafc8b67b2fbc61c814ce5985a615fb7f0b8b718e97708e49cda2f05617c18b0"
     },
     {
       "path": "content/champions/community-review-02-20260907.json",
-      "sha256": "5a97f57f9aebfe0bb64a98014f424ed8f579913132e07bf55421e75ce1a7d99b"
+      "sha256": "d71dae79e52e5f872632eaeda2f3fc70fa0e33a5e14abd09187f690c4b73554e"
     },
     {
       "path": "content/champions/community-review-03-20260907.json",
-      "sha256": "8df740a2db82efe1428991f978282cf2b44bf15ba78ca2a71a7201232186da28"
+      "sha256": "81b07cf7e4200e6ab4cf62794420bb25428726445e7f6dbc30ff3fd897f8ea9f"
     },
     {
       "path": "content/champions/community-review-04-20260907.json",
-      "sha256": "471bee29e2506accf3baa0deef06375431750ab6ce8b42088a348147e88de619"
+      "sha256": "b251597e22ddc44ede7143de88cc24b7e39c8b9ef73812a7fca7a570a48a644f"
     },
     {
       "path": "content/champions/community-review-05-20260907.json",
-      "sha256": "cb0f59a8e47c6e64c8758304242333a81e873bce1524ffab25d2a634bf887326"
+      "sha256": "1a89dfee78a8e8c13b3f4cb77cddd93462b93e1f6258e9f4a36ddc46a0723842"
     },
     {
       "path": "content/champions/community-review-06-20260907.json",
-      "sha256": "5b6221f4293ab309106a723a74610f33a4f992a256ea112c839391a8e45a6aca"
+      "sha256": "552c0adae452e71c7e24bed57b1caeea8e738ca5ae4431472f9726651aa81416"
     },
     {
       "path": "content/champions/community-review-07-20260907.json",
-      "sha256": "fca40a983419922b65653c310028843729329e8d642b095270091b681bdac829"
+      "sha256": "789f59ceecf3b881017a1fd3cfa2b9b1d211dd8f662831a4657bb86d6f9f9258"
     },
     {
       "path": "content/champions/community-review-08-20260907.json",
-      "sha256": "3faac845b9f1f02894b8772deff7b2072cbc164b8e18af89a05fb6b730286ba9"
+      "sha256": "bdf3464da6f92dba08f47bc782ff795b3029964b7db721e6a9d124fc3a899913"
     },
     {
       "path": "content/champions/community-review-09-20260907.json",
-      "sha256": "1c0d5e11b4c3ea902c22c62d15d907bf5cff52b1c2d8a88563cfa08e934093f8"
+      "sha256": "3fcf23056323bf42ceae9b3d24c758012af09a685786b47894d7dee2c36d01d2"
     },
     {
       "path": "content/champions/community-review-10-20260907.json",
-      "sha256": "c66817bbdccc69460ce0ef6f9925a572c71f933aa6044950bf5e8a376b4f48ce"
+      "sha256": "24dcdea25bf88886ff997adf00b6c963d25ca01b68a8fa849f8309037c04f5a3"
     },
     {
       "path": "content/champions/community-review-11-20260907.json",
-      "sha256": "f79aa16337e7a4579ab567f9d342de259697cc74f9ca2fb9437679bddd2acfb4"
+      "sha256": "95b2856d3551d2bfb49014ebf11bc044fe202f49639631280d9947e3b0b3fa1b"
     },
     {
       "path": "content/champions/community-review-12-20260907.json",
-      "sha256": "6cbf15acb31d1d51793d74d75f405105800f9b832eaad2b12905171faeda89fc"
+      "sha256": "c4a4c0e5058617da7404b9d1fb527e2b937dc6ef787ffbaeabba1c68d6a969d6"
     },
     {
       "path": "content/champions/community-review-13-20260907.json",
-      "sha256": "195b9e643982dd383ae45d8c7dc81c30180a1b8ea5d61fbfee3514c78af7b4c9"
+      "sha256": "0fa77492db61d6113289126f252a655bebbcde7c9770a4310444400a78f9ce69"
     },
     {
       "path": "content/champions/community-review-14-20260907.json",
-      "sha256": "2eaadcbb1b8e45763b5b80b51cdbe7022ad13abbf72c0205f8893b3ec9168e3a"
+      "sha256": "35110e79c60d99a4fea397cf6832b52abf33357746542255689929328bca0d2d"
     },
     {
       "path": "content/champions/community-review-15-20260907.json",
-      "sha256": "b4a12982e75a7727f1e9fae9d96f94118b0de7ebe5215aeabdcbedf443011cfc"
+      "sha256": "d7d49aba395e8e9445b198e7cda8a84db87f729925f333b2103f094dfc141a98"
     },
     {
       "path": "content/champions/community-review-16-20260907.json",
-      "sha256": "bb06ff34ac39467c6b94cf76b6c8e5df269d2f9daeb72798579a060b2e7cacc0"
+      "sha256": "7efca196e516b4ef4cc21bc632a548126d4d39cf4e37beb8ff00ec6df2b52ad2"
     },
     {
       "path": "content/champions/community-review-17-20260907.json",
-      "sha256": "973e079b17d12727df4acec03f1cd325ec7d769d0a558ebc8cbb95a2cf22ba80"
+      "sha256": "9f0453920dff4596ae80851419263e44803dcd281ba43b50356a62f972a19dcb"
     },
     {
       "path": "content/champions/community-review-18-20260907.json",
-      "sha256": "4efea6bac6b4059a3873410fe91cdba1fcb547fbb7020b6604fca60b954520c6"
+      "sha256": "196deda2586d8f1e89ed63e2e8bd94027faeaebb060ab7d27a81e87ee951ef00"
     },
     {
       "path": "content/champions/community-review-19-20260907.json",
-      "sha256": "ea65eda4143fc31dc7716e869bbabf422c1055947f458a24b8e10060d9852069"
+      "sha256": "daa00b45cb04f8d9aee2daa68204622e01d6e434adb79113336d10c921ec4568"
     },
     {
       "path": "content/champions/community-review-20-20260907.json",
-      "sha256": "5e8d03ef4996e8dbe16df331d1fd330b5fb7efae13df28369f71bc66245af927"
+      "sha256": "72535b150512b4b9699889344173f7d6498b3b5785a5c75cd87b35d12f7833ee"
     },
     {
       "path": "content/champions/community-review-21-20260907.json",
-      "sha256": "0f390d47c7d4ab844a9532ac2b1be61ff156752aa01ca8f0001d956965b07ce1"
+      "sha256": "1d72cb54b08930e57c9a87e024f6f5f26a22e76a50564ba4bc35c076417b4130"
     },
     {
       "path": "content/champions/community-review-22-20260907.json",
-      "sha256": "7771cdc58a3f51efe6acb9fc81455ea69c18f49f72f7a271d05a41cfaaf57a3d"
+      "sha256": "480eeba1fdd324ddb4ed6dcb9a6dba68a3f4440614248af277bdeae94813f896"
     },
     {
       "path": "content/champions/community-review-23-20260907.json",
-      "sha256": "3edfd20c00e16bc67a42a5c19df83247abdb26178786b53072a0e77a10c4a8b6"
+      "sha256": "3bcc5c778fdcdc46630de5b99bca58c5686656f5f4f966c4c966036b04f352c0"
     },
     {
       "path": "content/champions/community-review-24-20260907.json",
-      "sha256": "2c0934eff93e67cfe3a92d2ef6a70c6c3c1badfdb5a3e734f40ef1cb8fa85b5e"
+      "sha256": "0e95ae3ba77c70f41b08608ecc0ac4d138e217be3e210afc4a181d4405596cb5"
     },
     {
       "path": "content/champions/community-review-25-20260907.json",
-      "sha256": "b05580c680785686ef38ab49141b0be6d9007f1159f802bc5f0fcf17432aba1b"
+      "sha256": "2e96caae6fe486354a85cc0c225e57e40468a35c8ac935faa002b957b9c720d5"
     },
     {
       "path": "content/champions/community-review-26-20260907.json",
-      "sha256": "19b4a37c3385d0582e286c3d37f15f433202ef247ae2badc6488cceda3030623"
+      "sha256": "17bd3e1bc114f9668263bed981d411a18766b28529c0a989834f6564aae0b953"
     },
     {
       "path": "content/champions/community-review-27-20260907.json",
-      "sha256": "9e93a3303c6fa018e1b37e540464123e1c2fb95fc07c541814a6028f2ab2fabe"
+      "sha256": "b8b5425e3506c034317dfbb1334101b4c1e3afda536f537c1d94ccf17a03d48c"
     },
     {
       "path": "content/champions/community-review-28-20260907.json",
-      "sha256": "d3e52f0d34816c71ea568edf2e4f5a360c59d791a95bf109a9b2027d44c5880f"
+      "sha256": "28f462c56da801f87f106c28d1d4c7910186f72b26016fc429c6141a443de389"
     },
     {
       "path": "content/champions/community-review-29-20260907.json",
-      "sha256": "c77f8e9341be7bfef2f43fa5eef0e409f7931c9d6144e7dcb4054fdafd688532"
+      "sha256": "6510b6a5b790ea416e3d605b7742ee2e0b15305768d075ee1c359356ac9e48f4"
     },
     {
       "path": "content/champions/community-review-30-20260907.json",
-      "sha256": "004abf9e22442c8680c49ee27f5ea324aff1c6679c31072339a1f31b795a964e"
+      "sha256": "e5e0df55e8d0ddbeeafa26fe349d6ceac5b6002face2109fac229a40d245829a"
     },
     {
       "path": "content/champions/community-review-31-20260907.json",
-      "sha256": "cc6248d6589267165fca167c600745e64782a7a4a3c75cec005d7923f602952c"
+      "sha256": "4ab4cdebd7595381c1c41364a1011ec0cbbb2ae4e87789c08c935856b76f7217"
     },
     {
       "path": "content/champions/community-review-32-20260907.json",
-      "sha256": "b613d36ec3d1228e601ad0c0d2e66feffb7a3b3c8e2e238843ec34eb73e554d6"
+      "sha256": "cd270da7b5b1c73600673d9ef3b1c900a6bd5f82dcc33a0c95a24045a63ae1e1"
     },
     {
       "path": "content/champions/community-review-33-20260907.json",
-      "sha256": "3bbacfa585d40b32f140a67cef3ecf8fbdbe3e300c0b692e0b9674f9ddb54997"
+      "sha256": "9ae51044ae5a63ecb46086275f2076c5344921e0d86dd399139e742fe252b244"
     },
     {
       "path": "content/champions/community-review-34-20260907.json",
-      "sha256": "fc071131a4ae4a8f989593ac0098d0acc8cf163b3e1c1790a9c0a26f7bf26b59"
+      "sha256": "e4807d845cf5162b786a60a1995fa7547ac434d3d4a1f7e43d7c1a5131a4554e"
     },
     {
       "path": "content/champions/community-review-35-20260907.json",
-      "sha256": "a936de0a6b80882d431cb9cd08deeda6a7a7bf10fd00e9d4be590827d5eb3f2f"
+      "sha256": "4db00b25344a7ec36200c573fda79c77e036ea97f42b8379a9008657d662e37a"
     },
     {
       "path": "content/champions/community-review-36-20260907.json",
-      "sha256": "9e4785727ec0ae9eee0360f73dc16642f8a6cb4678b187981e271da5d9b743d3"
+      "sha256": "68bb4d4b7c7e0aa96fbc92265b541f1d6975e757c9d10e067ca590580a2bcaef"
     },
     {
       "path": "content/champions/community-review-37-20260907.json",
-      "sha256": "dfca2b544623b65dac00a9c042487cd417fcf735cf55b8be3667718ff7370c29"
+      "sha256": "a359b96b368764ab28899f7c5d40cf9866d3f29bc2d25dcc5c341d48c336412f"
     },
     {
       "path": "content/champions/godie-e001.json",
-      "sha256": "038f5f88d81608eaab5a8e512a57a5c604c2f39c2779d4d3349963c24df56cd1"
+      "sha256": "486974d39c998c9d0a464a4d9405a856d630fa0f0d8a237947081f38f6e4163a"
     },
     {
       "path": "content/champions/godie-e002.json",
-      "sha256": "1a7a1ee3a93ceaa4b7da06a77eccfc687fb6a10c9bd676397f484d779335bc02"
+      "sha256": "cc515031b9552e8f17b3017c39e45d3ce61d079e7e732c8db0f5fa046ade70db"
     },
     {
       "path": "content/champions/godie-e007.json",
-      "sha256": "8be86bb1e8578c0c48c3895a1dba1ab963f067c55a2444b2cd53be2d3e5c4e9d"
+      "sha256": "19165d229f95b7a61d4a631d6701bedfd22f6033fe28dc885983f9e525b37e73"
     },
     {
       "path": "content/champions/godie-e008.json",
-      "sha256": "7ea3cb987bb59447b45a50df3c9acfb8e6cd140a9f4242bcf80c71a7ed58bdcb"
+      "sha256": "ec154d105017e7426a385f9034081c1862ebb47067fddb1890dd594d6214448e"
     },
     {
       "path": "content/champions/godie-e00l.json",
-      "sha256": "fcdd68dc9e41384d48135424921d57f262a5d71ca2e6c8ee8936aae4e989cf5a"
+      "sha256": "5c558bb62bae1464579ef0e1dd5e2bdc1beccb3293d4a64700777e5f545a94b6"
     },
     {
       "path": "content/champions/godie-e00n.json",
-      "sha256": "a2b11709361a71344c34480ee87e1ed21daf19076a7bef952649a4126b00343a"
+      "sha256": "061e9267d5e9e4ad75540225ac304904ca48fd8544297e9deb02ae7fc423cec7"
     },
     {
       "path": "content/champions/godie-e00r.json",
-      "sha256": "cf69223384a2c9d333ca25704df8235a76c51525042586c960f7c82f7ee2127d"
+      "sha256": "a156690fb7235976f29db60b0707134bdfbf0b497071f3c505645a6ce8957100"
     },
     {
       "path": "content/champions/godie-e00s.json",
-      "sha256": "af34a5932a93288c2f0598218254bbcedbfe32ea98d010c62b78038e72e27526"
+      "sha256": "845357fb52f9b29761661dfa30f88c6e223d169695bca3c6c6e67164cddeebe4"
     },
     {
       "path": "content/champions/godie-e00w.json",
-      "sha256": "551d2b2656b53132bf771b309bbaad32189bd6e8fc6d71ba8ed200d896ca0758"
+      "sha256": "d68d1846af197048ab3d496bcea34dc11258f78d13fb6f0773be672e1dd0f8ac"
     },
     {
       "path": "content/champions/godie-e00x.json",
-      "sha256": "e61d6b960590ac14c9c3974d2398c05ee6e6a2214abe8d76ae4f5ee66f3cd372"
+      "sha256": "607f92dce61a5bc93f36e3ba6cba45e86404d2a67547384f260ad07b505f07ce"
     },
     {
       "path": "content/champions/godie-e010.json",
-      "sha256": "00919759cf1ef6711e7c1352eac41a0caedf0da98b49b40de727adc4e64902d2"
+      "sha256": "289a4910480d7209ce0a96ac2a44179dee81a2273e5dd832430a6beecd466639"
     },
     {
       "path": "content/champions/godie-edem.json",
-      "sha256": "ac4b1d811b1dc731e6a92e906d8e34489e2ed418ef705d95d4f33bd16cb0bc5a"
+      "sha256": "556fc6d1537910956726a52692e389296f7f62a0f518e25b4d1f817963ad33bf"
     },
     {
       "path": "content/champions/godie-efur.json",
-      "sha256": "22c95ba6259736505b0655a02bc2ba78d23f395ea1b594bed5d13abb4e46f773"
+      "sha256": "23fe8c9260d4c940a33361b103a79ab277c6fdf95eb5c2fd4582572cac632434"
     },
     {
       "path": "content/champions/godie-emfr.json",
-      "sha256": "9611515a73b4c23b1d4a131774e0532b799816789237bbfa79f7b9a025191056"
+      "sha256": "409d47721b4a055a613ad856fe24810d58e5fda369e58c9dff0cc8d94f4fcd0f"
     },
     {
       "path": "content/champions/godie-emns.json",
-      "sha256": "4c0e43c9650e548a4b86908779e7db1f966b67cfc0aeebc712a5f8f214801211"
+      "sha256": "0ec58855febeed9230bef84f4279de1eb2873e73f5bc313d623abbf291f6fce2"
     },
     {
       "path": "content/champions/godie-etyr.json",
-      "sha256": "f10e342d864dfdc87c4483f27eaab05833b58bd8b72a0af6eba13fb4ff7ada2e"
+      "sha256": "b317ba2d958ec52ce604c1d7435f463ac8b94d1c8a06ed816654be8a095277a5"
     },
     {
       "path": "content/champions/godie-ewar.json",
-      "sha256": "d595f775d9c94a5dde6551dac939e99b4266fd350ee509e98816ace95fcf7790"
+      "sha256": "ecef164c223d1418d2bdb35fc473c048d78b611baff9313d66b41922a0140e5d"
     },
     {
       "path": "content/champions/godie-h00l.json",
-      "sha256": "0d4284da4ecd6670c2424d5a34a372b63a9d74acf11b85e019f629fa6907848a"
+      "sha256": "4a802ec342f8e98cabc8a0dac039d5329734a176f0b55bcd38b124353e1a0c35"
     },
     {
       "path": "content/champions/godie-h01n.json",
-      "sha256": "9818fb42bee5ca8dde91905abf43aa04c3a0066972c83478a364057738717a60"
+      "sha256": "50db03b7f1f7ffa0d5a8b31db7a650c4535707598a119afd40251e59e8bb1585"
     },
     {
       "path": "content/champions/godie-h01o.json",
-      "sha256": "c378d504404b7a5bc599dbf96414cede3ee8c7a28ce85fc89b79c367eb6b0daf"
+      "sha256": "533309e8f55043fe2667ba0413acaef558d22207aec930afd0513e5d635f1084"
     },
     {
       "path": "content/champions/godie-h01u.json",
-      "sha256": "450f0b8b01134517fd9bb7c0d1703d4ab9a26529ef574907e0d90652023e7fe8"
+      "sha256": "16326bc1fd94a794eec75642f79a06faccb7ad6bc7513f08858b2e355e833cb7"
     },
     {
       "path": "content/champions/godie-h020.json",
-      "sha256": "d5f7bd31053ddc583807e72aa471797a61efe2a82b7cf91103a355b865cd611c"
+      "sha256": "fc81b53ef00b0a73f63ae1f75323085db6d4cddbd430b47e568f14600c0039f7"
     },
     {
       "path": "content/champions/godie-h02k.json",
-      "sha256": "cfd9bc8896af4fe230876277d9fa1537f2fadf0d38c486cabb609b0300161680"
+      "sha256": "2420228cd65d9caaedb1486aa753ddcc1d0ca345878ee5043db0b464b7744b5f"
     },
     {
       "path": "content/champions/godie-h02r.json",
-      "sha256": "1a9f14454e3ce17e128d8353b756a1f477e19733de5c0fbac0b9212edf88cd9e"
+      "sha256": "6e0df344c4f0d24c7a5e49d500f5572190d380ea84ddb4fea514b44043f05bec"
     },
     {
       "path": "content/champions/godie-h02u.json",
-      "sha256": "996aae078f346f6b10c12c0c26dc409a62479879f9236d48b2a7fbfd0e7bbfb3"
+      "sha256": "4369c364600d02e87da5bf8343072f59031acc182fdf77fe2e202ec6d09f5e2d"
     },
     {
       "path": "content/champions/godie-h02v.json",
-      "sha256": "7d579ede2886084c81cd72978d5ea90e5c5bedb04abfb24f7d6f5db60d81ddfc"
+      "sha256": "8d3a14961a846797d4ef161fbf8c24d9c1b9414080a6f4294952f6068e4080d2"
     },
     {
       "path": "content/champions/godie-hapm.json",
-      "sha256": "871be04655608d550bdabe167f43f6a863a0f63e4609ce1513a11bae66177f1b"
+      "sha256": "9c0802b3ff5aa45a79470042ba7267581cdf2fc0cebc6d7ba9ea7477f6783b75"
     },
     {
       "path": "content/champions/godie-hart.json",
-      "sha256": "61b9d5144b9aa99d88b2d455fd98f5e5d8734ee22824021a5ab731b908d30cc4"
+      "sha256": "fe3288606f9423407ee205f5cfeae23ba408287227939d49cf4c5aaa3696abc4"
     },
     {
       "path": "content/champions/godie-hgam.json",
-      "sha256": "d1ba38694f8b8cad3e245f6b2e3b2eacc0e9efdaf0dbad02ba2b8b5c11c2afc7"
+      "sha256": "ff49a371b86d2cca37c0b6e751ee9614499235f6764162e44686f512abd449f5"
     },
     {
       "path": "content/champions/godie-hjai.json",
-      "sha256": "d183db5c2590d24700122e23bb47aee5b4d451c37677097d18fb0f1aba098116"
+      "sha256": "be048e4d34153238b914d96069978fb893d01b894bdfe9f2e9d67d13b2feb93f"
     },
     {
       "path": "content/champions/godie-hpb1.json",
-      "sha256": "c3675ce6aca35c8849941638cad49c6d47cb7da73703baf9e2db3bb0fb0cdeee"
+      "sha256": "c5adbc642effcaa079986a0356f0f0f22fc3960f21bd19ecb3f9af130f67f01e"
     },
     {
       "path": "content/champions/godie-huth.json",
-      "sha256": "0b2b1d4ecf4d5ba78263ecfae90cc46c0639310c9e00fcf8a848f4ea6bafd53f"
+      "sha256": "650bffe264e83bab2a8d99d567b5f2d7d04fea6623c6542b3d1f1fe87e9a424f"
     },
     {
       "path": "content/champions/godie-hvsh.json",
-      "sha256": "702ca666e9957d6658e70492859843edc80fc8808c01be4ddeaca15daebe500d"
+      "sha256": "4540bc27c474f7a794d6c96a03f619ad474b42394df1ef9b130300f6fe70e7d6"
     },
     {
       "path": "content/champions/godie-hvwd.json",
-      "sha256": "0778cb3875b11c12fe73ac3d03d1806a72dcf519fd075a5d11d6f5302895a85e"
+      "sha256": "c90019f2941e39655e5c4957fc03a4da900ebd540e8a16df40de3c1dd8d966bb"
     },
     {
       "path": "content/champions/godie-n003.json",
-      "sha256": "5418f993d72002970918b894d53b3f89c484015473572a8f52120ff246b1b50c"
+      "sha256": "65e1c2006b76cc18463c1d3eb2f478411dc8dd014ea9b68b3da0637516d183f6"
     },
     {
       "path": "content/champions/godie-n00b.json",
-      "sha256": "af559dd9b2a78c8b19b91a265e7167e065e1ccce16fef61b9f682117cd2e6f27"
+      "sha256": "da2a4dc294b6b2fb07c59641adaf98d36c1068dcbcd43da43ea92fcc1320de8e"
     },
     {
       "path": "content/champions/godie-n00p.json",
-      "sha256": "badb35fa7afd25ec6a316db3cc1604bf38e0acd1fbb1970f642655eaca18c85f"
+      "sha256": "0e90dd66b84cd8336655f2a8a91b19728315e009dc57a380da85a742fae59681"
     },
     {
       "path": "content/champions/godie-n01c.json",
-      "sha256": "d2e1a09c74a0e7090118d312ee705060353bda830e909cc89bb4c204a2ae3ca8"
+      "sha256": "a5f28faee6020a0f42dc19d65321c4f9d8067fd93d0b8ab05472cd003d3072ba"
     },
     {
       "path": "content/champions/godie-n01g.json",
-      "sha256": "21305a7c7dce1f5676b313d4a0088270e266337d3cc0e368b31131022988fa5c"
+      "sha256": "4c4deedd6866aef10b18fad9947d6f3b82829061e4cd5e50bbaa2af4ae80af60"
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "sha256": "854f1235aeaede6136408215b7f222fec91f530d0a150f9fe64f010767c1d42d"
+      "sha256": "c95530a051a0c2e34dec1e9adc20769992b27d20b6e3d1abe6b8e6144bda5d46"
     },
     {
       "path": "content/champions/godie-nsjs.json",
-      "sha256": "1cd8e355661c5dd625b4a4feb981cfd279bb3ad3759078ce7bc9e6c01d97e674"
+      "sha256": "14801003aae6fb9ec73f8194ea847f131361767bcd19fb1d3cd6cf9cd2e841a0"
     },
     {
       "path": "content/champions/godie-o00k.json",
-      "sha256": "7f27ddc7a66b789dbcf142d1a6ba2fc896fac0b390fad36e682a1b28fdaec0fa"
+      "sha256": "d9afc0717f64a7b4d6c8135e88281b0ebf98f69413d730d6ea5e5955dec30e87"
     },
     {
       "path": "content/champions/godie-o00l.json",
-      "sha256": "54aba91078b88db08408d85e594b13ab853e77cf2f2994c84832d159bf625dc3"
+      "sha256": "f97565378d589dafd37427ac9a97e04b507fa36f5505ab965acd54ff1bddabd4"
     },
     {
       "path": "content/champions/godie-o00x.json",
-      "sha256": "1cce94bc5699a3fd8997688f322e99d4dff1c7a52dc8f1757080ca8502ede7a2"
+      "sha256": "6378916e475d41519106e92b0a5cf2263dc5a28871104aad2d60617b9f08ae44"
     },
     {
       "path": "content/champions/godie-o02l.json",
-      "sha256": "d817020dbdc8add458dd96a9b07892b1cbe89cfac79036d84a8467ce6ff397bf"
+      "sha256": "91ea939726c2374a31c8feff43dd49d2df5d4f63144c9771820c121130f3d258"
     },
     {
       "path": "content/champions/godie-o02p.json",
-      "sha256": "6c02ff1e822ea963c19ea1b0cb05f748e27852c344148f39a610cb75fa69cbf2"
+      "sha256": "2b4bb33f6cff02a8b53991b40ff978dda4e04b82aee9594d787ab6968d96a7d1"
     },
     {
       "path": "content/champions/godie-o030.json",
-      "sha256": "2ae76c489f1719307a4b5562dab75aee89d0394170eba75aeaff4267999324c2"
+      "sha256": "0987f2bbe9e7167071cb178a6471506aaee595df3752ad92c3fe8f88fac0cdf5"
     },
     {
       "path": "content/champions/godie-ofar.json",
-      "sha256": "c1dff0e7ba1047f531c45e7299f0cd95a4b95532ef9944d8a51ec8d4f368f880"
+      "sha256": "d3d0396942d512be4179d1b4af4ab50876a520f48eed317da6cfea030ae6667d"
     },
     {
       "path": "content/champions/godie-ogld.json",
-      "sha256": "1ffd6e7187ffa28766eb75e521d2ab3d31ac8470d34921bd6f7eeb8037d8529f"
+      "sha256": "d640bdafcfa0d9c365c2d8c38848255af06e2c9c936e147f969de06dfc20c4fa"
     },
     {
       "path": "content/champions/godie-ogrh.json",
-      "sha256": "23a07c5e5bde64f4b5fb7d5074130b2a2ea8c49e9fac04b2c150988181dc1cf1"
+      "sha256": "3ef9348989c463ca1172f1660a74146b1a95c7e689cc910678d54f17d5da4528"
     },
     {
       "path": "content/champions/godie-orkn.json",
-      "sha256": "2994b22efce9dbd3aa346d06135742cfce9986ab31d4c90bbf24a690a4e80499"
+      "sha256": "7b5fcb67edae0e66da8bdfafaa4cf79ae1282bedc656d6746d69bf66ba684506"
     },
     {
       "path": "content/champions/godie-osam.json",
-      "sha256": "3df94950877ad90cb1e010e7372d9dc588f112606832d1f8a0fe23e9e811220c"
+      "sha256": "dd3c256592c866a2c9e7c210088f4814f531bd04a7ed574dde47d67b9dceaa22"
     },
     {
       "path": "content/champions/godie-u00h.json",
-      "sha256": "9e7da6c175bc7fcbeaf6ec3b018a5e34cba363dcd517b4eb9852ac110af1cd50"
+      "sha256": "ca50be8b7536cbe6a8f6b76662c6f06e86fc4a436d35a334a9949abb729a7253"
     },
     {
       "path": "content/champions/godie-u00j.json",
-      "sha256": "b1fd01eb75933eaca3702570efee2b713abfce907fee0a6539aa8e69e28c0515"
+      "sha256": "d0fdc77bc595027808a22665bdffff6baffb6e378a3146aa0a89b11568f2b43b"
     },
     {
       "path": "content/champions/godie-u00k.json",
-      "sha256": "53701bcaea7cb1e8e80d1695fe4b15ed9dfa8fa70f7486f73618deba2bcef0b4"
+      "sha256": "8197c98dbd076ff1e82c7313deb61257a7a34c9732d82762c07e95d6041f08e4"
     },
     {
       "path": "content/champions/godie-u00l.json",
-      "sha256": "dc8f4162d97721e0aca8b560bbab40022ceee2c5b970f7f5ed6c733fbe457cc9"
+      "sha256": "e9ae99c2d200cb351e74f16db87770116326e6b49563a44aafd32a07026d7052"
     },
     {
       "path": "content/champions/godie-u00n.json",
-      "sha256": "9f001bfb2a1c76dda72367aed7ead4bfaa3b4afbce9b15eb53767dabcc4e6505"
+      "sha256": "e3494b1331953a2a7468f6739163fc2697167615fb67e1ebdad9e4b29032a49b"
     },
     {
       "path": "content/champions/godie-u00o.json",
-      "sha256": "fc44ce4796b5e3d6f4119440900faf56ebc84bfc3bad8a9475df9c05efe0fe16"
+      "sha256": "f1fd688a8a832e5d093281e166223190fe252063f628e95c3313f2d77e4e963d"
     },
     {
       "path": "content/champions/godie-u00v.json",
-      "sha256": "849435ea39d2e92cca0ce74e6a2511ae3033109ad4a07c498d282ad2e63653ef"
+      "sha256": "c569becca4627275925404b00e92326cc777bc181ce9527780a23fc0615f88cb"
     },
     {
       "path": "content/champions/godie-u010.json",
-      "sha256": "95c147bd29f19ad7c01c616a7a618164415a2d77d4000c352aa0621baed5ea95"
+      "sha256": "4d9f3ca8cf9cb40a51c73868e845cac9076207dcc156f168b9e49592daedb6cc"
     },
     {
       "path": "content/champions/godie-u01u.json",
-      "sha256": "23ed9821bc09f266be26325130b68de0024b935cdeda24b3a1e8ffb4da2588fe"
+      "sha256": "49a65c8b999238d36f02262130ec0e8c2723db0bcfe813955707d281c38b4143"
     },
     {
       "path": "content/champions/godie-u034.json",
-      "sha256": "f5085b76ef811a5c0966b63ff8cbbd91054c7ca5e5d77d97d98723a16ae9036c"
+      "sha256": "f2a8bfb3dc5d97e79e967cd9ffd96c1341f95886dc0abd1af076aa530eaf63bc"
     },
     {
       "path": "content/champions/godie-ubal.json",
-      "sha256": "e9b93101923f1c4b86183f1c64cb82dda371e336e31a4abc1c450fd4354e0010"
+      "sha256": "47395468c5c2af8c087f3ea6066ee13adaa0ddec2ed23c41bcb1a85af23c573e"
     },
     {
       "path": "content/champions/godie-ucrl.json",
-      "sha256": "e56cc19f15eae2df6913bcd83e9eac58c877968b721ba78989c3d756a4ec0ee3"
+      "sha256": "9264b1d696c240bbd8688235d1c07db70c13b83802ef3c912016d2a06cb96890"
     },
     {
       "path": "content/champions/godie-udea.json",
-      "sha256": "25f445a309e50f215fbc62f64065f812707f9d506165eb83bfb23c81c146bdf7"
+      "sha256": "dbb01f289d52bbf5ad1123509d12c661f695e6f63ece370cb2ca013a9dbe6665"
     },
     {
       "path": "content/champions/godie-udre.json",
-      "sha256": "3152d7e5fe927bb56f02a551a4291767efd7278c3658f153a0cd55bc9e73cb92"
+      "sha256": "fb9699b845f494412db173c5e70ce2ca7ad935cc22df83a96f2a866c4e66a224"
     },
     {
       "path": "content/champions/godie-umal.json",
-      "sha256": "d934426ff2e39e850228aa5735b344fd135c876f984852370737b1c7bcdf7a69"
+      "sha256": "49e7fd3e6b9f0dacd6a64d83eca8ea0f3e303185c4735b25d68f7fdf981024e3"
     },
     {
       "path": "content/champions/godie-uvng.json",
-      "sha256": "4077636c89605c283b055564c5ec525d0b011b62f1a123a0a68ef021ab35500e"
+      "sha256": "4800456baec58274ddda6ef19c7ae50cfdaf0440a8b81f970ff3f485285cd3b3"
     },
     {
       "path": "content/champions/godie-zombiex.json",
-      "sha256": "0a171b86c2e9eebdf7691269eda6c74894c25c27b6cffaf617b7bf8305e72a65"
+      "sha256": "3f65ada391394a422eb155b9ce9f3abf8936c61fb25a8f55cd094e42c2caf655"
     },
     {
       "path": "content/champions/lol-karthus.json",
-      "sha256": "a95982628f8cf905e4fc7c4b7bc539f8ae07386704cc5a783d5e0f96ad991e3c"
+      "sha256": "50e111653a455ba5797dbf4af661277b59620eebee5257c83a9b0d0929576ce1"
     },
     {
       "path": "content/champions/lol-leesin.json",
-      "sha256": "523edaac983da9cfd5b06db80e11906badfb76b6135de56978327d481f0541bc"
+      "sha256": "400f4c6f6490965309bc74c99d3ea2311d4edfcf651fa6721e41cc19d46e0e96"
     },
     {
       "path": "content/champions/lol-lux.json",
-      "sha256": "1376c9c131321935f024ebf2fb4d3346d35d820ef67e9a7c1c09884fc8436b31"
+      "sha256": "105c5411b9c0c6f0dd500edf4c81e08b939a12a439686c1974fa5e38a81e7fc3"
     },
     {
       "path": "content/champions/lol-missfortune.json",
-      "sha256": "30314175645472b6e23682458ff931eff9f636f586e863b6a204794e0806b4cd"
+      "sha256": "dd07836428d94321f5516ea20e2b227329d30b64aec21396e017304b01cdf676"
     },
     {
       "path": "content/champions/lol-warwick.json",
-      "sha256": "9a35f0814a2aa4d2fb13da0dd9f36a48876accacb51f92b40cc009dc839533aa"
+      "sha256": "1101c7db96ff8bbe33781bf87accb549a9748e1ce819c258e1cd4847dfec8daa"
     },
     {
       "path": "content/champions/lol-xerath.json",
-      "sha256": "9479b369920e0dc0291e47a482af4854b5a48ac8d7bccec2e72b0a86035fe311"
+      "sha256": "62565e1316193817d75faa909e09960dff6bc7204d8e6bdb924f52e5e5507462"
     },
     {
       "path": "content/champions/lol-yasuo.json",
-      "sha256": "3d6505d4bacef1b3895943d3c9265c8dacb4bacc44d5c9e62b5732eb21a5b05a"
+      "sha256": "639d5f62099086d9e214109d5f61702fcf5e250e6ef56717a092b12a468faf75"
     },
     {
       "path": "content/champions/sela.json",
-      "sha256": "6b0d13a33579dd3514b758987bc7e58f566aaf21ded8e3a5493dae86bc1a094a"
+      "sha256": "e151e186a3366c142c33ed00b5a05ff8bc09e2e06e12e30bafed625927b18a47"
     },
     {
       "path": "content/champions/thorne.json",
-      "sha256": "68425a63ffb636a28d942148ee966654ea7c42d9bbac9a5f2d3f5c9dc969b333"
+      "sha256": "8d041e96f61d4ffe610f3a5c1dd303f4f5d6d56072d274ea1ce91df4552f1e29"
     }
   ],
   "characters": [
@@ -4871,7 +4872,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -5484,7 +5485,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -6393,7 +6394,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -6877,7 +6878,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -7625,7 +7626,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -7635,7 +7636,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -7984,7 +7985,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -8441,7 +8442,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -9615,7 +9616,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -10218,7 +10219,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -10953,7 +10954,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -12028,7 +12029,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -12875,7 +12876,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -13592,7 +13593,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -14362,7 +14363,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -15145,7 +15146,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -16184,7 +16185,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -16817,7 +16818,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -17560,7 +17561,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -18216,7 +18217,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         },
         {
@@ -18226,7 +18227,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         }
       ],
@@ -19032,7 +19033,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -19377,7 +19378,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -20369,7 +20370,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -21232,7 +21233,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -22098,7 +22099,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -22814,7 +22815,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -23621,7 +23622,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -24305,7 +24306,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -24931,7 +24932,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -25576,7 +25577,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -25942,7 +25943,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -27289,7 +27290,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -28139,7 +28140,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -28149,7 +28150,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -28660,7 +28661,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         },
         {
@@ -28670,7 +28671,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         }
       ],
@@ -29571,7 +29572,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         },
         {
@@ -29581,7 +29582,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         }
       ],
@@ -30415,7 +30416,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -31312,7 +31313,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -31322,7 +31323,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -32150,7 +32151,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -89795,7 +89796,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         },
         {
@@ -89805,7 +89806,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         }
       ],
@@ -90015,7 +90016,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -90436,7 +90437,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -90894,7 +90895,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -91328,7 +91329,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -91899,7 +91900,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         },
         {
@@ -91909,7 +91910,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         }
       ],
@@ -92268,7 +92269,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -92624,7 +92625,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -93450,7 +93451,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -94000,7 +94001,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -94220,7 +94221,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -94436,7 +94437,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -94742,7 +94743,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -94752,7 +94753,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -95214,7 +95215,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -95529,7 +95530,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -96924,7 +96925,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -97625,7 +97626,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -97635,7 +97636,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -97954,7 +97955,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -98255,7 +98256,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -98496,7 +98497,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -99738,7 +99739,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -99748,7 +99749,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -105109,7 +105110,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -105344,7 +105345,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -105708,7 +105709,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -105973,7 +105974,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -107532,7 +107533,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -107731,7 +107732,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -107955,7 +107956,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -109593,7 +109594,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -109603,7 +109604,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -110185,7 +110186,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "變身／替代形態；不在白名單"
         },
         {
@@ -110195,7 +110196,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -110393,7 +110394,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -110608,7 +110609,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -110817,7 +110818,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -111221,7 +111222,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -111446,7 +111447,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -111642,7 +111643,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -111889,7 +111890,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -112098,7 +112099,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -113085,7 +113086,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -113339,7 +113340,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -113568,7 +113569,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -114258,7 +114259,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -114518,7 +114519,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -114799,7 +114800,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -115051,7 +115052,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -115400,7 +115401,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -193925,7 +193926,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -194011,7 +194012,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],
@@ -194097,7 +194098,7 @@
           "mechanicsAuditStale": false,
           "designComplete": null,
           "missingRefs": [],
-          "status": "mechanics-defined",
+          "status": "mechanics-defined-with-uncertainty",
           "availability": "正式機白名單可選"
         }
       ],

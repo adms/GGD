@@ -14,24 +14,25 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 9.0,
+      "duration": 9,
       "modifiers": [
         {
           "stat": "armor",
           "op": "flat",
-          "value": 10.0
+          "value": 10
         }
       ],
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.ice.pulse-lg",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

@@ -65,11 +65,11 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -79,7 +79,7 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 6.0,
+          "duration": 6,
           "modifiers": [
             {
               "stat": "ms",
@@ -87,9 +87,10 @@
               "msBonusTier": "大"
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-e00n.w",
@@ -101,16 +102,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -142,7 +143,7 @@
               {
                 "stat": "critDamage",
                 "op": "override",
-                "value": 2.0
+                "value": 2
               }
             ]
           },
@@ -175,7 +176,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00n.e",
@@ -221,12 +223,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "slow60",
-            "duration": 5.0,
+            "duration": 5,
             "moveSpeedMult": 0.4
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "R": {
       "id": "godie-e00n.r",
@@ -243,9 +246,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -263,9 +266,10 @@
               "value": 55
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

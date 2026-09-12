@@ -41,6 +41,8 @@ import { registerAll } from "./registries";
 import { Abilities } from "../sim/content/registry";
 import type { AbilityDef } from "../sim/content/defs";
 import { CAST_CAP, CAST_FLOOR, deriveCastTime } from "./castTimeFormula";
+import { DEFAULT_CAST_TIME_TIERS } from "./castTimeTiers";
+import { SKILL_TIER_NAMES } from "./skillTiers";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -135,7 +137,21 @@ describe("吟唱普查（owner 2026-08-13 的 0.06–4.00）", () => {
       if (typeof raw !== "string") continue;
       const m = /(?:吟唱|施展時間|詠唱)\s*([\d.]+)\s*秒/.exec(raw.replace(/「[^」]*」/gs, ""));
       if (!m) continue;
-      const want = Math.min(CAST_CAP, Math.max(CAST_FLOOR, Number(m[1])));
+      // ⭐⭐ 【五級距**取代**了 0.06–4.00 的自由值】（owner 2026-09-02 ／ 09-12）
+      //
+      // ⛔ 在此之前這一行夾的是 `[CAST_FLOOR 0.06, CAST_CAP 4.00]` ——
+      // ⭐ 那是 owner 2026-08-13「請你照我的 0.06~4.00 秒」的區間，
+      // ⚠️ 而 **2026-09-02 他用五級距取代了它**（`0, 0.1, 0.3, 0.5, 1`），
+      // ⭐ 2026-09-12 又逐字確認：「照五級距 **最高就是1秒 有什麼好爭議的**」。
+      //
+      // ⇒ ⭐ 規格文字寫「吟唱 2 秒」時，**上界是 1.0，⛔ 不是 4.00** ——
+      //   而那 1.0 同時是 `castTimeMaxSec`（引擎真的夾得住的值）
+      //   ⇒ ⭐ 寫 2 秒的技能，玩家**從來就只吟唱 1 秒**。
+      //
+      // ⚠️ ⛔ 這不是把斷言放寬：它仍然要求「規格說了就要照做」，
+      //   ⭐ 只是「照做」的上界改成 owner 今天的那一個。
+      const tierCap = Math.max(...SKILL_TIER_NAMES.map((n) => DEFAULT_CAST_TIME_TIERS.seconds[n]));
+      const want = Math.min(tierCap, Math.max(CAST_FLOOR, Number(m[1])));
       if (Math.abs((d.castTimeSec ?? 0) - want) > 0.05) {
         missed.push(`${d.id}: 規格 ${m[1]}s → 出貨 ${String(d.castTimeSec)}s`);
       }

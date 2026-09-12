@@ -130,13 +130,13 @@
         "scale": 4,
         "lifeSec": 2
       },
-      "castTimeSec": 1.633
+      "castTimeSec": 1.0
     }
   },
   "icon": "assets/icons/abilities/godie-edem.ex.webp",
   "vfxKey": "fx.prim.void.explosion-lg",
   "cooldownTier": "極大",
   "manaCostTier": "大",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1.0,
   "castTimeTier": "極大"
 }

@@ -8,18 +8,18 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    45.0,
-    45.0,
-    45.0,
-    45.0
+    45,
+    45,
+    45,
+    45
   ],
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    75,
+    75,
+    75,
+    75
   ],
-  "range": 3.0,
+  "range": 3,
   "targetsEnemies": true,
   "effects": [
     {
@@ -48,7 +48,7 @@
     },
     {
       "kind": "knockback",
-      "distance": 6.0,
+      "distance": 6,
       "speed": 16,
       "from": "caster"
     }
@@ -73,5 +73,6 @@
   "cooldownTier": "大",
   "manaCostTier": "極小",
   "rangeTier": "極小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

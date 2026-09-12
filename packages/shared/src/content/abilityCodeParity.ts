@@ -58,6 +58,41 @@ export interface AbilityCodeDrift {
 }
 
 /** 允許不一樣的欄位 —— 理由逐條寫在檔頭。⛔ 加一格之前先讀那一段。 */
+/**
+ * ⭐⭐ 【**省略有意義**的欄位 —— 比對之前先套預設】
+ *
+ * owner 2026-09-12（逐字）：「請幫助**漏填**這種 trivial 的狀況」
+ *
+ * ⚠️ ⭐ 這一族欄位的「沒填」**不是「沒有意見」**，它是一個**具體的值** ——
+ * ⛔ 而逐位元組比對看不出這件事，於是「一邊寫 `true`、一邊留空」會被報成**分歧**，
+ * ⭐ 儘管它們的**行為逐位元相同**。
+ *
+ * ⭐ 量到的代價（GH#1245）：`90-04 陽光烈焰` 兩個載體，一邊 `targetsEnemies: true`、
+ * 一邊留空 ⇒ 閘報「同源分歧」⇒ ⛔ 我把它當成真缺陷，還開了一張票要 owner 裁決。
+ * ⇒ ⭐ 補上 `true` 之後**一個位元的行為都沒變** —— 它從頭到尾就不是缺陷。
+ *
+ * ⇒ ⭐ 判準：**一個欄位的預設值寫在消費端，那比對端就必須知道它。**
+ * ⛔ 不然「沒填」與「填了預設值」會變成兩個不同的東西，而它們是同一個。
+ *
+ * ⚠️ ⭐ 加一列之前先去**讀消費端**，⛔ 不要憑印象填 —— 這張表本身也會說謊。
+ * 每一列都要寫得出「哪一行程式這樣預設」。
+ */
+const OMITTED_DEFAULTS: ReadonlyMap<string, unknown> = new Map<string, unknown>([
+  // `sim/abilities/abilitySystem.ts`：`targetsEnemies !== false`（省略 = true）
+  ["targetsEnemies", true],
+  // ⛔ `radius` **刻意不在這裡**（2026-09-12 更正）——
+  // ⚠️ 它的「省略」在兩個語境裡是**不同的值**（選人 1／它是不是 AoE 0），
+  // ⇒ ⭐ 比對端無法替它挑一個，⛔ 挑了就是再造一個第三種意思。
+  // 兩個具名解析器在 `sim/abilities/abilitySystem.ts`（`targetingRadius` / `authoredAoeRadius`）。
+]);
+
+/** 省略 ⇒ 套 {@link OMITTED_DEFAULTS} 的值；其餘原樣回傳。 */
+function withDefault(field: string, value: unknown): unknown {
+  return value === undefined && OMITTED_DEFAULTS.has(field)
+    ? OMITTED_DEFAULTS.get(field)
+    : value;
+}
+
 export const COSMETIC_FIELDS: ReadonlySet<string> = new Set([
   "id",
   "icon",
@@ -141,8 +176,36 @@ export function scanAbilityCodeDrift(docs: readonly Record<string, unknown>[]): 
       const values = members.map((doc) => ({
         id: String(doc.id),
         // ⭐ 自我參照摺疊:doc id 是 `<heroId>.<slot>`,英雄 id 是第一段。
-        json: canonicalJson(doc[field], String(doc.id).split(".")[0]),
+        // ⭐ 省略值先套預設再比（見 {@link OMITTED_DEFAULTS}）。
+        json: canonicalJson(withDefault(field, doc[field]), String(doc.id).split(".")[0]),
       }));
+      // ⭐⭐ 【effects **結構不同** ⇒ 推導出來的欄位本來就會不同】
+      //
+      // owner 2026-09-12：「請幫助**漏填**這種 trivial 的狀況」
+      //
+      // ⚠️ ⭐ 同一個編號的兩個載體，**effects 的 kind 序列不同**時
+      // （例：本體有 `damageArea`、變身態只有特效），
+      // ⭐ `tiers:apply` 會**正確地**推出不同的 `manaCost`／`manaCostTier`
+      // ——⇒ ⛔ 那不是分歧，那是推導在做它該做的事。
+      //
+      // ⭐ 量到的：`77-04` 兩邊 —— `[damageArea, spawnModelFx]` vs `[spawnVfx, spawnModelFx]`
+      // ⇒ 耗魔 150 vs 75。⛔ 而在此之前這條閘把它報成「拿去給 owner 裁決」。
+      // ⇒ ⭐ 同 GH#1237 已關的那 9 組：**同一個槽的兩支不同技能**，⛔ 不是同一支的兩份抄寫。
+      //
+      // ⚠️ ⛔ 只豁免**從 effects 推導**的那幾格 —— 其餘（冷卻／距離／吟唱）
+      // ⭐ 仍然逐位元組比對：那些與 effects 結構無關，不一樣就是不一樣。
+      const derivedFromEffects = field === "manaCost" || field === "manaCostTier";
+      const shapes = new Set(
+        members.map((d) =>
+          JSON.stringify(
+            (Array.isArray(d.effects) ? d.effects : []).map((e) =>
+              (e as { kind?: unknown })?.kind,
+            ),
+          ),
+        ),
+      );
+      if (derivedFromEffects && shapes.size > 1) continue;
+
       if (new Set(values.map((v) => v.json)).size > 1) {
         out.push({ code, field, key: `${code}|${field}`, values });
       }

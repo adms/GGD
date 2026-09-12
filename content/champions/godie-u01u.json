@@ -66,10 +66,10 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -93,7 +93,7 @@
       "template": {
         "ref": "tpl-buff-self",
         "params": {
-          "duration": 3.0,
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -101,9 +101,10 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-u01u.w",
@@ -126,11 +127,11 @@
         75.0,
         75.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
-      "radius": 3.0,
+      "radius": 3,
       "castTimeSec": 0.8,
       "cooldownTier": "小",
       "manaCostTier": "極小",
@@ -154,9 +155,10 @@
             "duration": 0.8,
             "stun": true
           },
-          "castTimeSec": 0.8
+          "castTimeSec": 1.0
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-u01u.e",
@@ -216,12 +218,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "burnstun",
-            "duration": 1.0,
+            "duration": 1,
             "stun": true
           },
           "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u01u.r",
@@ -238,9 +241,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -275,7 +278,7 @@
             ]
           },
           "length": 8.75,
-          "width": 2.0,
+          "width": 2,
           "aim": "facing",
           "fromCaster": true
         },
@@ -288,7 +291,7 @@
               "value": 0.4
             }
           ],
-          "duration": 3.0
+          "duration": 3
         },
         {
           "kind": "spawnModelFx",
@@ -313,17 +316,18 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 2.0,
+          "scale": 2,
           "tint": [
             0.3922,
             0.5882,
-            1.0
+            1
           ]
         }
       ],
       "vfxKey": "fx.prim.physical.slash-lg",
       "castTimeSec": 0.667,
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

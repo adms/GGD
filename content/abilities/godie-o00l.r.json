@@ -36,14 +36,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 2.433
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 2.433,
+  "castTimeSec": 1.0,
   "range": 0,
   "castTimeTier": "極大"
 }

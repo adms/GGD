@@ -64,6 +64,67 @@ export function resolveAbilityRange(world: SimWorld, range: number): number {
 }
 
 /** Ability AoE RADIUS after the same `abilityRange` factor (task #136). */
+/**
+ * ⭐⭐ 【技能**省略 `radius`** 時它是多少 —— 唯一的答案住這裡】（GH#1246）
+ *
+ * owner 2026-09-12（逐字）：
+ * > 「對 要**抽象化 統一 維持一致性** 不是逐個去填」　「**這是我一貫風格**」
+ *
+ * ⛔ 在此之前這個預設值住**三個地方，而且三個不一樣**：
+ *
+ * | 誰 | 當成 |
+ * |---|---:|
+ * | 這個檔的選人路徑 `def.radius ?? 1` | **1** |
+ * | `systems/MobSystem.ts` 王的瞄準 `(def.radius ?? 0) <= 0` | **0** |
+ * | `content/castTimeFormula.ts` 的兇殘分數 `def.radius ?? 0` | **0** |
+ *
+ * ⇒ ⭐ 量到的：**907 支技能裡 626 支省略它**，其中 `castType:"ground"` 的 **51 支**
+ * 真的受影響 —— 它們**真的打一個 1 單位的圈**（選人那一側），
+ * ⛔ 而殭屍王把它們當單體（不瞄人群）、吟唱公式把它們當非 AoE（吟唱偏短）。
+ *
+ * ⭐ 預設取 **1**，⛔ 不是 0 —— 理由是**玩家今天實際經歷的就是 1**
+ * （選人那一條路決定誰被打到）。⇒ 統一之後**玩家那一側零變化**，
+ * ⭐ 動的是另外兩個原本就與它不一致的消費端。
+ *
+ * ⚠️ ⛔ 不要在任何地方寫 `def.radius ?? <字面值>` —— 閘
+ * `packages/shared/src/ops/noLiteralRadiusDefault.test.ts` 會紅。
+ */
+/**
+ * ⛔⛔ 【更正：那是**兩個概念**，⛔ 不是一個常數】（2026-09-12，同一天內）
+ *
+ * ⚠️ ⭐ 我第一版把三個消費端統一成 `?? 1`，⇒ **39 條測試紅** ——
+ * 其中最尖銳的一條逐字是：
+ * > 「一支**玩家從來沒有按過**的被動會讓畫面跑出施法條」（98 支）
+ *
+ * ⭐ 根因：`radius` 的「省略」在兩種語境裡**真的是不同的意思**：
+ *
+ * | 語境 | 省略的意思 | 值 |
+ * |---|---|---:|
+ * | **選人**（誰被打到） | 「沒宣告 ⇒ 用一個 1 單位的圈當後備」 | **1** |
+ * | **它是不是 AoE**（兇殘分數／王的瞄準） | 「⛔ **這不是 AoE**」 | **0** |
+ *
+ * ⇒ ⭐ 把它們壓成一個值 ＝ 讓每一支省略 `radius` 的**被動**看起來像 AoE
+ *   ⇒ 兇殘分數升高 ⇒ 推導出非零吟唱 ⇒ ⛔ **畫面跑出施法條**。
+ *
+ * ⇒ ⭐ 正確的抽象是**兩個具名函式**（各自一個住處），⛔ 不是一個共用常數 ——
+ *   owner 2026-09-12：「要**抽象化 統一 維持一致性**」⭐ 而一致性指的是
+ *   「同一個**意思**只有一個住處」，⛔ 不是「同一個**欄位名**只有一個值」。
+ */
+export const TARGETING_RADIUS_WHEN_OMITTED = 1;
+
+/** ⭐ **選人**用的圈：省略 ⇒ {@link TARGETING_RADIUS_WHEN_OMITTED}（後備值）。 */
+export function targetingRadius(def: { readonly radius?: number }): number {
+  return def.radius ?? TARGETING_RADIUS_WHEN_OMITTED;
+}
+
+/**
+ * ⭐ **宣告的 AoE 大小**：省略 ⇒ **0 ＝ 它不是 AoE**。
+ * ⚠️ ⛔ 不要拿這一支去選人 —— 0 會選不到任何人（那是 {@link targetingRadius}）。
+ */
+export function authoredAoeRadius(def: { readonly radius?: number }): number {
+  return def.radius ?? 0;
+}
+
 export function resolveAbilityRadius(world: SimWorld, radius: number): number {
   return radius * world.combatEnv.abilityRange;
 }
@@ -195,7 +256,7 @@ export function groundAoeTargets(
   def: { targetsEnemies?: boolean; radius?: number },
   point: { x: number; z: number },
 ): EntityId[] {
-  const radius = resolveAbilityRadius(world, def.radius ?? 1);
+  const radius = resolveAbilityRadius(world, targetingRadius(def));
   if (def.targetsEnemies !== false) return enemiesInCircle(world, caster, point, radius);
   const allies = bodiesInCircle(world, caster, point, radius, { side: "allies" });
   const t = world.transform.get(caster);

@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -50,7 +50,7 @@
           {
             "stat": "critDamage",
             "op": "override",
-            "value": 2.0
+            "value": 2
           }
         ]
       },
@@ -83,5 +83,7 @@
         ]
       }
     ]
-  }
+  },
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

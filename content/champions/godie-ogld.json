@@ -90,7 +90,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.holy.pulse",
@@ -135,12 +135,13 @@
           "damageTier": "小",
           "apRatio": 0.6,
           "damageType": "magic",
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
+          "intervalSec": 1,
+          "durationSec": 10,
           "stacking": "refresh",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-ogld.e",
@@ -175,7 +176,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.holy.nova",
@@ -184,7 +185,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-ogld.r",
@@ -209,7 +211,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "radius": 3.0,
+      "radius": 3,
       "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
@@ -226,14 +228,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1.0,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
       },
       "cooldownTier": "大",
       "manaCostTier": "小",
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

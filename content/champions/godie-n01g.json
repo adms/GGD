@@ -119,10 +119,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -135,21 +135,22 @@
           "target": "self",
           "amount": {
             "perRank": [
-              200.0,
-              360.0,
-              520.0,
-              680.0
+              200,
+              360,
+              520,
+              680
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-n01g.e",
@@ -187,7 +188,7 @@
             "damageTier": "大"
           },
           "damageType": "magic",
-          "castTimeSec": 1.7
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -361,7 +362,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

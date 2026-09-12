@@ -91,9 +91,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-n00p.w",
@@ -147,7 +148,7 @@
             "durationSec": 2,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -195,7 +196,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

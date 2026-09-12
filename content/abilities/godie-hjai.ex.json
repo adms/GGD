@@ -29,12 +29,12 @@
         }
       ],
       "buffDurationSec": 6,
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.void.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "persistentVfx": [
     {
       "vfxKey": "attach.ex.midchilder-aura",

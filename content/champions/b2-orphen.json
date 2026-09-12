@@ -22,10 +22,10 @@
       ],
       "id": "b2-orphen.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "債務人請勿插話",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.3,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -52,7 +52,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-orphen.e.webp"
+      "icon": "assets/icons/abilities/b2-orphen.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -128,7 +129,7 @@
         "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc",
         "params": {
           "apRatio": 0.2,
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damageTier": "極小",
           "damageType": "magic",
           "durationSec": 3,
@@ -145,7 +146,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-orphen.q.webp"
+      "icon": "assets/icons/abilities/b2-orphen.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -197,7 +199,7 @@
       "template": {
         "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "中"
           },
@@ -214,7 +216,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-orphen.r.webp"
+      "icon": "assets/icons/abilities/b2-orphen.r.webp",
+      "castTimeTier": "大"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -240,10 +243,10 @@
       ],
       "id": "b2-orphen.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "利息可以再寄一次",
@@ -254,7 +257,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -279,7 +282,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-orphen.w.webp"
+      "icon": "assets/icons/abilities/b2-orphen.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",

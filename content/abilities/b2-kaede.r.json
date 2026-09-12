@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.433,
+  "castTimeSec": 1.0,
   "castType": "ground",
   "cooldown": [
     90.0,
@@ -52,7 +52,7 @@
     "params": {
       "anchor": "point",
       "applyTo": "enemies",
-      "castTimeSec": 1.433,
+      "castTimeSec": 1.0,
       "damageTier": "中",
       "damageType": "magic",
       "durationSec": 3,

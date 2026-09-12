@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -39,7 +39,7 @@
                     "value": 0.1
                   }
                 ],
-                "duration": 1.0,
+                "duration": 1,
                 "statusId": "rage",
                 "stackKey": "lubu-tianxia",
                 "maxStacks": 20,
@@ -53,5 +53,7 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-h01u.q.webp",
-  "vfxKey": "fx.prim.physical.shockwave"
+  "vfxKey": "fx.prim.physical.shockwave",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

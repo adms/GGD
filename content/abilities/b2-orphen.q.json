@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -73,7 +73,7 @@
     "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc",
     "params": {
       "apRatio": 0.2,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "damageTier": "極小",
       "damageType": "magic",
       "durationSec": 3,
@@ -90,5 +90,6 @@
       "vfxKey": "fx.prim.arcane.bolt"
     }
   ],
-  "icon": "assets/icons/abilities/b2-orphen.q.webp"
+  "icon": "assets/icons/abilities/b2-orphen.q.webp",
+  "castTimeTier": "大"
 }

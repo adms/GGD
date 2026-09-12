@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -40,7 +40,7 @@
     "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761",
     "params": {
       "arriveRadius": 150,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "destination": "castPoint",
       "travelSec": 0.35
     },
@@ -53,5 +53,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-boxxo.e.webp"
+  "icon": "assets/icons/abilities/b2-boxxo.e.webp",
+  "castTimeTier": "大"
 }

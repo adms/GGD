@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    60
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -31,14 +31,14 @@
                   "ratios": [
                     {
                       "stat": "maxHealth",
-                      "coeff": 1.0
+                      "coeff": 1
                     }
                   ]
                 },
-                "duration": 8.0
+                "duration": 8
               }
             ],
-            "internalCooldown": 120.0,
+            "internalCooldown": 120,
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -70,5 +70,7 @@
   },
   "icon": "assets/icons/abilities/godie-h00l.ex.webp",
   "vfxKey": "fx.prim.holy.beam-lg",
-  "cooldownTier": "極大"
+  "cooldownTier": "極大",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

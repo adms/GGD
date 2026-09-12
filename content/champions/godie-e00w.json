@@ -61,18 +61,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -93,14 +93,14 @@
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3.0,
-              "speed": 15.0,
+              "distance": 3,
+              "speed": 15,
               "from": "caster"
             }
           ]
@@ -132,14 +132,14 @@
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3.0,
-              "speed": 15.0,
+              "distance": 3,
+              "speed": 15,
               "from": "caster"
             }
           ],
@@ -149,7 +149,7 @@
             "modelKey": "imported.earthtornado2",
             "soundKey": "wc3.blademasterwhirlwind"
           },
-          "castTimeSec": 0.667
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.q.webp",
@@ -157,7 +157,8 @@
       "sfxKey": "wc3.darksummoninglaunch1",
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.667,
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-e00w.w",
@@ -168,18 +169,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -189,7 +190,7 @@
             "critStrike": {
               "chance": 0.1,
               "damageMult": 1.5,
-              "lifestealFraction": 0.0
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -206,7 +207,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小"
                   }
                 ],
@@ -218,7 +219,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-e00w.w.webp",
-      "vfxKey": "fx.prim.lightning.beam"
+      "vfxKey": "fx.prim.lightning.beam",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00w.e",
@@ -229,28 +231,28 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        120.0,
-        120.0,
-        120.0,
-        120.0
+        120,
+        120,
+        120,
+        120
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
           "durationSec": [
-            6.0,
-            9.0,
-            12.0,
-            15.0
+            6,
+            9,
+            12,
+            15
           ]
         },
         {
@@ -262,7 +264,7 @@
               "value": 0.6
             }
           ],
-          "duration": 6.0,
+          "duration": 6,
           "perRank": [
             {
               "modifiers": [
@@ -272,7 +274,7 @@
                   "value": 0.6
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -282,7 +284,7 @@
                   "value": 0.9
                 }
               ],
-              "duration": 9.0
+              "duration": 9
             },
             {
               "modifiers": [
@@ -292,7 +294,7 @@
                   "value": 1.2
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -302,7 +304,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 15.0
+              "duration": 15
             }
           ],
           "flight": {
@@ -316,7 +318,8 @@
       "icon": "assets/icons/abilities/godie-e00w.e.webp",
       "vfxKey": "fx.prim.lightning.nova",
       "cooldownTier": "極大",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.267,
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-e00w.r",
@@ -393,7 +396,7 @@
             "preset": "tpl-locust-strike",
             "modelKey": "w3x.stock.monsoonbolttarget"
           },
-          "castTimeSec": 2
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-e00w.r.webp",
@@ -401,7 +404,8 @@
       "cooldownTier": "中",
       "manaCostTier": "小",
       "rangeTier": "極大",
-      "castTimeSec": 2
+      "castTimeSec": 2,
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

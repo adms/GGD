@@ -75,7 +75,7 @@
     },
     "inheritDefaults": true
   },
-  "castTimeSec": 0.733,
+  "castTimeSec": 0.5,
   "schema": "ability@1",
   "vfxKey": "fx.prim.fire.slash",
   "vfxLayers": [

@@ -8,19 +8,19 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    60
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 6.0,
+  "range": 6,
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "swapResource",
       "shape": "single",
       "resource": "health",
-      "clampMin": 1.0
+      "clampMin": 1
     }
   ],
   "icon": "assets/icons/abilities/godie-emns.ex.webp",
@@ -28,5 +28,6 @@
   "sfxKey": "wc3.kaelyesattack3",
   "cooldownTier": "極大",
   "rangeTier": "中",
-  "castTimeSec": 1
+  "castTimeSec": 1,
+  "castTimeTier": "極大"
 }

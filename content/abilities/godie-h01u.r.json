@@ -8,16 +8,16 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -34,7 +34,7 @@
           "value": 0.5
         }
       ],
-      "duration": 8.0,
+      "duration": 8,
       "perRank": [
         {
           "modifiers": [
@@ -49,22 +49,22 @@
               "value": 0.5
             }
           ],
-          "duration": 8.0
+          "duration": 8
         },
         {
           "modifiers": [
             {
               "stat": "ap",
               "op": "pctMult",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "ad",
               "op": "pctMult",
-              "value": 1.0
+              "value": 1
             }
           ],
-          "duration": 8.0
+          "duration": 8
         },
         {
           "modifiers": [
@@ -79,7 +79,7 @@
               "value": 1.5
             }
           ],
-          "duration": 8.0
+          "duration": 8
         }
       ],
       "hooks": [
@@ -125,5 +125,6 @@
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "sfxKey": "wc3.defendcaster",
   "cooldownTier": "極大",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

@@ -27,7 +27,7 @@
           "value": 0.35
         }
       ],
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "augment": {
@@ -56,6 +56,6 @@
   },
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "castTimeTier": "極大"
 }

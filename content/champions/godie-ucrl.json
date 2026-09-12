@@ -185,17 +185,18 @@
         ]
       },
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ]
+        0,
+        0,
+        0,
+        0
+      ],
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-ucrl.w",
@@ -227,7 +228,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -250,7 +251,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -273,7 +274,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -296,7 +297,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -308,17 +309,18 @@
         ]
       },
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ]
+        0,
+        0,
+        0,
+        0
+      ],
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-ucrl.e",
@@ -330,18 +332,18 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.earth.pulse-sm",
@@ -377,7 +379,8 @@
             }
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-ucrl.r",
@@ -393,9 +396,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -403,9 +406,9 @@
           "kind": "championForm",
           "to": "alternate",
           "durationSec": [
-            7.0,
-            14.0,
-            21.0
+            7,
+            14,
+            21
           ]
         }
       ],
@@ -469,7 +472,7 @@
                           },
                           {
                             "kind": "knockback",
-                            "distance": 8.0,
+                            "distance": 8,
                             "speed": 16,
                             "distanceTier": "極大",
                             "from": "caster"
@@ -484,7 +487,7 @@
                                 "shape": "single",
                                 "to": "targetUnit",
                                 "applyTo": "self",
-                                "stopShortUnits": 1.0
+                                "stopShortUnits": 1
                               },
                               {
                                 "kind": "weightedBranch",
@@ -499,7 +502,7 @@
                                       {
                                         "kind": "applyStatus",
                                         "statusId": "stun",
-                                        "duration": 1.0,
+                                        "duration": 1,
                                         "stun": true
                                       }
                                     ]
@@ -548,8 +551,8 @@
                               "damageTier": "極小",
                               "mult": 0.6
                             },
-                            "intervalSec": 1.0,
-                            "durationSec": 8.0,
+                            "intervalSec": 1,
+                            "durationSec": 8,
                             "stacking": "refresh",
                             "condition": {
                               "kind": "learned",
@@ -591,7 +594,7 @@
                               {
                                 "kind": "applyStatus",
                                 "statusId": "slow50",
-                                "duration": 5.0,
+                                "duration": 5,
                                 "moveSpeedMult": 0.5,
                                 "condition": {
                                   "kind": "learned",
@@ -610,7 +613,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

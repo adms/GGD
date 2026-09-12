@@ -27,7 +27,7 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "augment": {
@@ -47,6 +47,6 @@
   },
   "vfxKey": "fx.prim.ki.beam-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "castTimeTier": "極大"
 }

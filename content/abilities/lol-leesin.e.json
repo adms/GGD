@@ -34,7 +34,7 @@
       }
     }
   ],
-  "castTimeSec": 1.633,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "template": {
     "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
@@ -45,7 +45,7 @@
         "ratios": []
       },
       "damageType": "physical",
-      "castTimeSec": 1.633
+      "castTimeSec": 0.1
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:0a7ab816857d7853bd2bea5bf8ce814de44a27ea690ca8aaf1aec1c0c37deef1"

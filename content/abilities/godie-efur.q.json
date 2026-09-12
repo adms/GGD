@@ -8,16 +8,16 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    6,
+    6,
+    6,
+    6
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "range": 4.5,
   "targetsEnemies": true,
@@ -27,7 +27,7 @@
       "shape": "single",
       "to": "targetUnit",
       "applyTo": "self",
-      "stopShortUnits": 1.0,
+      "stopShortUnits": 1,
       "onArrive": [
         {
           "kind": "spawnVfx",
@@ -37,7 +37,7 @@
         {
           "kind": "applyStatus",
           "statusId": "blind",
-          "duration": 1.0,
+          "duration": 1,
           "missChance": 0.5
         }
       ]
@@ -61,5 +61,6 @@
   "recoverySec": 0.25,
   "cooldownTier": "極小",
   "rangeTier": "小",
-  "castTimeSec": 0.233
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

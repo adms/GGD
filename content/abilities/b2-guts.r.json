@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 2.433,
+  "castTimeSec": 1.0,
   "castType": "ground",
   "cooldown": [
     90.0,
@@ -54,7 +54,7 @@
   "template": {
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
     "params": {
-      "castTimeSec": 2.433,
+      "castTimeSec": 1.0,
       "damage": {
         "damageTier": "中"
       },

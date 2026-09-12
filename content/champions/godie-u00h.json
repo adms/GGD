@@ -99,12 +99,13 @@
           "damageType": "physical",
           "status": {
             "statusId": "slow40",
-            "duration": 1.0,
+            "duration": 1,
             "moveSpeedMult": 0.6
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-u00h.w",
@@ -141,7 +142,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.433
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.fire.slash",
@@ -204,7 +205,7 @@
             "duration": 1.2,
             "stun": true
           },
-          "castTimeSec": 1.2
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -250,14 +251,15 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1.0,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
       },
       "cooldownTier": "中",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

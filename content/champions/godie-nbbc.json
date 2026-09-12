@@ -69,10 +69,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -87,10 +87,10 @@
           "target": "ally",
           "amount": {
             "perRank": [
-              50.0,
-              85.0,
-              120.0,
-              155.0
+              50,
+              85,
+              120,
+              155
             ],
             "ratios": [
               {
@@ -99,9 +99,10 @@
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-nbbc.w",
@@ -153,7 +154,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.lightning.slash",
@@ -162,7 +163,8 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-nbbc.e",
@@ -220,7 +222,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -251,8 +253,8 @@
           "preset": "tpl-locust-travel",
           "modelKey": "imported.crescent",
           "clip": "idle",
-          "scale": 2.0,
-          "distance": 12.0
+          "scale": 2,
+          "distance": 12
         },
         {
           "kind": "damageLine",
@@ -272,7 +274,7 @@
             {
               "kind": "applyStatus",
               "statusId": "aban-x-mark",
-              "duration": 1.0
+              "duration": 1
             }
           ]
         },
@@ -329,7 +331,8 @@
       "range": 12,
       "cooldownTier": "極大",
       "manaCostTier": "小",
-      "cooldownShape": "單體"
+      "cooldownShape": "單體",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

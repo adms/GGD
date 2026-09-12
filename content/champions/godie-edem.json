@@ -162,7 +162,7 @@
               "stacking": "refresh"
             }
           ],
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-edem.q.webp",
@@ -182,18 +182,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -209,7 +209,7 @@
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
@@ -222,14 +222,14 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3.0,
+              "duration": 3,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 3.0,
+              "duration": 3,
               "moveSpeedMult": 0.5
             }
           ]
@@ -249,7 +249,7 @@
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
@@ -262,25 +262,26 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3.0,
+              "duration": 3,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 3.0,
+              "duration": 3,
               "moveSpeedMult": 0.5
             }
           ],
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-edem.e",
@@ -291,18 +292,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        150.0,
-        150.0,
-        150.0,
-        150.0
+        150,
+        150,
+        150,
+        150
       ],
-      "range": 12.0,
+      "range": 12,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -325,12 +326,12 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
           "length": 12.83,
-          "width": 12.0,
+          "width": 12,
           "aim": "facing",
           "fromCaster": true,
           "includeOrigin": true
@@ -350,11 +351,11 @@
           "soundKey": "wc3.thunderclapcaster",
           "scale": 3.5,
           "tint": [
-            1.0,
-            0.0,
-            0.0
+            1,
+            0,
+            0
           ],
-          "lifeSec": 1.0
+          "lifeSec": 1
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.e.webp",
@@ -369,7 +370,8 @@
       "cooldownTier": "小",
       "manaCostTier": "小",
       "rangeTier": "極大",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     },
     "R": {
       "id": "godie-edem.r",
@@ -380,16 +382,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -405,15 +407,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 400.0,
+                      "flat": 400,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3.0
+                          "coeff": 3
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -437,15 +439,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 700.0,
+                      "flat": 700,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3.0
+                          "coeff": 3
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -469,15 +471,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1000.0,
+                      "flat": 1000,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3.0
+                          "coeff": 3
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -495,7 +497,8 @@
       },
       "vfxKey": "fx.prim.void.pulse-lg",
       "sfxKey": "wc3.thunderboltmissiledeath",
-      "icon": "assets/icons/abilities/godie-edem.r.png"
+      "icon": "assets/icons/abilities/godie-edem.r.png",
+      "castTimeTier": "極小"
     }
   },
   "skillOrder": [

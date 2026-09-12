@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -31,16 +31,17 @@
       "preset": "tpl-locust-strike",
       "modelKey": "w3x.stock.monsoonbolttarget",
       "anchor": "self",
-      "scale": 10.0,
+      "scale": 10,
       "tint": [
-        1.0,
-        0.0,
-        0.0
+        1,
+        0,
+        0
       ]
     }
   ],
   "vfxKey": "fx.prim.lightning.pulse-lg",
   "sfxKey": "wc3.nocute",
   "schema": "ability@1",
-  "castTimeSec": 0.667
+  "castTimeSec": 1.0,
+  "castTimeTier": "極大"
 }

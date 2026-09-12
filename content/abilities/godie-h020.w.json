@@ -26,7 +26,7 @@
   "targetsEnemies": true,
   "radius": 6,
   "schema": "ability@1",
-  "castTimeSec": 1.033,
+  "castTimeSec": 1.0,
   "rangeTier": "極大",
   "range": 12,
   "radiusTier": "中",
@@ -40,7 +40,7 @@
       "applyTo": "enemies",
       "damageTier": "小",
       "damageType": "magic",
-      "castTimeSec": 1.033
+      "castTimeSec": 1.0
     }
   },
   "castTimeTier": "極大"

@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.3,
   "castType": "self",
   "cooldown": [
     45.0,
@@ -30,10 +30,10 @@
   ],
   "id": "b2-maple.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "這個形狀看起來很耐打",
@@ -44,7 +44,7 @@
     "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705",
     "params": {
       "buffDurationSec": 4,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "durationSec": 4,
       "modifiers": [
         {
@@ -64,5 +64,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-maple.e.webp"
+  "icon": "assets/icons/abilities/b2-maple.e.webp",
+  "castTimeTier": "中"
 }

@@ -28,10 +28,10 @@
       ],
       "id": "b2-kaede.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "電池型魔法裝甲",
@@ -42,7 +42,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -71,7 +71,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaede.e.webp"
+      "icon": "assets/icons/abilities/b2-kaede.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -105,10 +106,10 @@
       ],
       "id": "b2-kaede.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "安裝魔劍套件",
@@ -117,7 +118,7 @@
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "duration": 4,
           "modifiers": [
             {
@@ -140,7 +141,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-kaede.q.webp"
+      "icon": "assets/icons/abilities/b2-kaede.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 1.433,
@@ -195,7 +197,7 @@
         "params": {
           "anchor": "point",
           "applyTo": "enemies",
-          "castTimeSec": 1.433,
+          "castTimeSec": 1.0,
           "damageTier": "中",
           "damageType": "magic",
           "durationSec": 3,
@@ -259,7 +261,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "中"
           },
@@ -276,7 +278,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-kaede.w.webp"
+      "icon": "assets/icons/abilities/b2-kaede.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",

@@ -27,10 +27,10 @@
       ],
       "id": "b2-elma.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "重劍攻略追加七十點",
@@ -39,7 +39,7 @@
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.3,
           "duration": 3,
           "modifiers": [
             {
@@ -58,7 +58,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-elma.e.webp"
+      "icon": "assets/icons/abilities/b2-elma.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -100,10 +101,10 @@
       ],
       "id": "b2-elma.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "攻略說先扣自己血",
@@ -114,7 +115,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -155,7 +156,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-elma.q.webp"
+      "icon": "assets/icons/abilities/b2-elma.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 1.7,
@@ -199,7 +201,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 1.7,
+          "castTimeSec": 1.0,
           "damage": {
             "damageTier": "中",
             "ratios": [
@@ -268,10 +270,10 @@
       ],
       "id": "b2-elma.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "半血以下保固升級",
@@ -282,7 +284,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -328,7 +330,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-elma.w.webp"
+      "icon": "assets/icons/abilities/b2-elma.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "tank",

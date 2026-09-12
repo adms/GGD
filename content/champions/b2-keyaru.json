@@ -22,10 +22,10 @@
       ],
       "id": "b2-keyaru.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "麻醉單請勿填錯",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.3,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -52,7 +52,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-keyaru.e.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
       "castTimeSec": 0.067,
@@ -82,10 +83,10 @@
       ],
       "id": "b2-keyaru.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "醫生先給自己掛號",
@@ -103,7 +104,7 @@
               180
             ]
           },
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "target": "self"
         },
         "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -115,7 +116,8 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-keyaru.q.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
       "castTimeSec": 0.067,
@@ -155,9 +157,9 @@
       ],
       "id": "b2-keyaru.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "門診加號先救人",
@@ -219,7 +221,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-keyaru.r.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.r.webp",
+      "castTimeTier": "小"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -262,10 +265,10 @@
       ],
       "id": "b2-keyaru.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "病歷換職災保險",
@@ -277,7 +280,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -319,7 +322,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-keyaru.w.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",

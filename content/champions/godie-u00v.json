@@ -69,11 +69,11 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -107,7 +107,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-u00v.w",
@@ -146,7 +147,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.433
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -181,13 +182,13 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 3.0,
+          "scale": 3,
           "tint": [
             0.7843,
             0.3922,
             0.3922
           ],
-          "lifeSec": 5.0
+          "lifeSec": 5
         }
       ],
       "vfxKey": "fx.prim.ki.beam",
@@ -210,14 +211,15 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1.0,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
       },
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00v.r",
@@ -274,14 +276,14 @@
             {
               "kind": "knockback",
               "distanceTier": "極大",
-              "speed": 16.0,
+              "speed": 16,
               "from": "caster",
               "distance": 8
             },
             {
               "kind": "applyStatus",
               "statusId": "burnstun",
-              "duration": 1.0,
+              "duration": 1,
               "stun": true
             }
           ]
@@ -307,7 +309,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

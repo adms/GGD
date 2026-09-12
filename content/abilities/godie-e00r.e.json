@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -33,13 +33,13 @@
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 150.0
+                  "flat": 150
                 },
-                "duration": 8.0,
+                "duration": 8,
                 "absorbs": "magic"
               }
             ],
-            "internalCooldown": 8.0,
+            "internalCooldown": 8,
             "target": "self"
           }
         ],
@@ -66,13 +66,13 @@
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 250.0
+                  "flat": 250
                 },
-                "duration": 8.0,
+                "duration": 8,
                 "absorbs": "magic"
               }
             ],
-            "internalCooldown": 8.0,
+            "internalCooldown": 8,
             "target": "self"
           }
         ],
@@ -99,13 +99,13 @@
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 350.0
+                  "flat": 350
                 },
-                "duration": 8.0,
+                "duration": 8,
                 "absorbs": "magic"
               }
             ],
-            "internalCooldown": 8.0,
+            "internalCooldown": 8,
             "target": "self"
           }
         ],
@@ -132,13 +132,13 @@
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 450.0
+                  "flat": 450
                 },
-                "duration": 8.0,
+                "duration": 8,
                 "absorbs": "magic"
               }
             ],
-            "internalCooldown": 8.0,
+            "internalCooldown": 8,
             "target": "self"
           }
         ],
@@ -170,9 +170,11 @@
     "flashColor": [
       0.7,
       0.85,
-      1.0
+      1
     ],
     "flashMs": 120,
     "camKick": 0.3
-  }
+  },
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

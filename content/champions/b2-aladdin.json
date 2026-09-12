@@ -29,10 +29,10 @@
       ],
       "id": "b2-aladdin.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "團員到齊才打節拍",
@@ -44,7 +44,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "castType": "ground",
           "effects": [
             {
@@ -74,7 +74,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-aladdin.e.webp"
+      "icon": "assets/icons/abilities/b2-aladdin.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.467,
@@ -111,10 +112,10 @@
       ],
       "id": "b2-aladdin.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "烏戈代班先派一位",
@@ -170,7 +171,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-aladdin.q.webp"
+      "icon": "assets/icons/abilities/b2-aladdin.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.833,
@@ -213,7 +215,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.833,
+          "castTimeSec": 1.0,
           "damage": {
             "damageTier": "中"
           },
@@ -230,7 +232,8 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-aladdin.r.webp"
+      "icon": "assets/icons/abilities/b2-aladdin.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.467,
@@ -269,10 +272,10 @@
       ],
       "id": "b2-aladdin.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "樂團加演再請一位",
@@ -283,7 +286,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -321,7 +324,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-aladdin.w.webp"
+      "icon": "assets/icons/abilities/b2-aladdin.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",

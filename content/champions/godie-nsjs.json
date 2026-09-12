@@ -87,7 +87,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.wind.nova",
@@ -96,7 +96,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-nsjs.w",
@@ -149,7 +150,7 @@
             "durationSec": 2,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -170,10 +171,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -186,9 +187,10 @@
         "params": {
           "to": "alternate",
           "durationSec": 8,
-          "castTimeSec": 0.267
+          "castTimeSec": 1.0
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-nsjs.r",

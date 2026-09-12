@@ -107,7 +107,7 @@
             "durationSec": 10,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.7
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"
@@ -128,10 +128,10 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.dash",
@@ -142,9 +142,10 @@
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-ogrh.e",
@@ -162,10 +163,10 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -190,7 +191,8 @@
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
       "castTimeSec": 0.267,
-      "cooldownTier": "中"
+      "cooldownTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-ogrh.r",
@@ -254,7 +256,7 @@
           "radius": 9.39,
           "applyTo": "nearby",
           "amplitude": 0.3,
-          "durationSec": 2.0
+          "durationSec": 2
         },
         {
           "kind": "spawnVfx",
@@ -291,11 +293,12 @@
           },
           "damageType": "magic",
           "length": 14,
-          "width": 2.0,
+          "width": 2,
           "aim": "facing",
-          "castTimeSec": 0.833
+          "castTimeSec": 1.0
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

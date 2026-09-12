@@ -85,7 +85,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
       },
       "vfxKey": "fx.prim.void.beam",
@@ -95,7 +95,8 @@
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-ubal.w",
@@ -129,7 +130,7 @@
           "applyTo": "enemies",
           "damageTier": "小",
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.shockwave",
@@ -185,7 +186,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-ubal.r",
@@ -220,7 +222,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.prim.void.pulse-lg",

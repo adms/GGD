@@ -63,18 +63,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -91,7 +91,7 @@
               "value": 0.1
             }
           ],
-          "duration": 6.0,
+          "duration": 6,
           "statusId": "rage",
           "perRank": [
             {
@@ -107,7 +107,7 @@
                   "value": 0.1
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -122,7 +122,7 @@
                   "value": 0.15
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -137,7 +137,7 @@
                   "value": 0.2
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -152,7 +152,7 @@
                   "value": 0.25
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             }
           ]
         }
@@ -170,9 +170,9 @@
                     "shape": "single",
                     "who": "self",
                     "stackKey": "rage",
-                    "addSec": 2.0,
+                    "addSec": 2,
                     "perDamagePctOfMaxHealth": 0.05,
-                    "maxRemainingSec": 30.0
+                    "maxRemainingSec": 30
                   }
                 ],
                 "target": "self"
@@ -184,7 +184,8 @@
       "icon": "assets/icons/abilities/godie-hapm.q.webp",
       "vfxKey": "fx.prim.physical.pulse",
       "cooldownTier": "極大",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-hapm.w",
@@ -195,18 +196,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75,
+        75
       ],
-      "range": 12.0,
+      "range": 12,
       "targetsEnemies": true,
       "effects": [
         {
@@ -253,7 +254,7 @@
                 "statusId": "rage"
               },
               "statusId": "fear",
-              "duration": 3.0,
+              "duration": 3,
               "feared": true
             }
           ]
@@ -264,7 +265,8 @@
       "cooldownTier": "大",
       "manaCostTier": "極小",
       "rangeTier": "極大",
-      "castTimeSec": 0.833
+      "castTimeSec": 0.833,
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-hapm.e",
@@ -275,18 +277,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -301,7 +303,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 50.0
+                      "flat": 50
                     }
                   },
                   {
@@ -336,7 +338,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 70.0
+                      "flat": 70
                     }
                   },
                   {
@@ -371,7 +373,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 90.0
+                      "flat": 90
                     }
                   },
                   {
@@ -406,7 +408,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 110.0
+                      "flat": 110
                     }
                   },
                   {
@@ -420,7 +422,7 @@
                       {
                         "stat": "as",
                         "op": "pctAdd",
-                        "value": -1.0
+                        "value": -1
                       }
                     ],
                     "duration": 0.6,
@@ -435,7 +437,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-hapm.e.webp",
-      "vfxKey": "fx.prim.physical.slash"
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-hapm.r",
@@ -446,16 +449,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        120.0,
-        120.0,
-        120.0
+        120,
+        120,
+        120
       ],
       "manaCost": [
-        300.0,
-        300.0,
-        300.0
+        300,
+        300,
+        300
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -463,7 +466,7 @@
           "kind": "dash",
           "mode": "forward",
           "speed": 16,
-          "maxDistance": 5.0
+          "maxDistance": 5
         },
         {
           "kind": "damageArea",
@@ -475,7 +478,7 @@
               "中"
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true
         },
@@ -483,9 +486,9 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "flat": 0.0
+            "flat": 0
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "中",
           "includeOrigin": true,
           "victimCondition": {
@@ -507,7 +510,8 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "cooldownTier": "極大",
       "manaCostTier": "中",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "castTimeTier": "小"
     }
   },
   "skillOrder": [

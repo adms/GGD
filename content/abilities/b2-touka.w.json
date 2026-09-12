@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "castType": "ground",
   "cooldown": [
     15.0,
@@ -50,7 +50,7 @@
     "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d",
     "params": {
       "apexHeight": 100,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "durationSec": 0.4,
       "grabMode": "dragToCaster",
       "landDamageTier": "小",
@@ -68,5 +68,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-touka.w.webp"
+  "icon": "assets/icons/abilities/b2-touka.w.webp",
+  "castTimeTier": "大"
 }

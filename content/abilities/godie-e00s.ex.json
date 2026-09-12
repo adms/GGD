@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -29,7 +29,7 @@
                 "kind": "weightedBranch",
                 "shape": "circle",
                 "radiusTier": "中",
-                "radius": 6.0,
+                "radius": 6,
                 "side": "allies",
                 "maxTargets": 24,
                 "branches": [
@@ -59,12 +59,14 @@
           {
             "op": "damageCoeffAp",
             "mode": "add",
-            "value": 5.0
+            "value": 5
           }
         ]
       }
     ]
   },
   "icon": "assets/icons/abilities/godie-e00s.ex.webp",
-  "vfxKey": "fx.prim.blood.pulse-lg"
+  "vfxKey": "fx.prim.blood.pulse-lg",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

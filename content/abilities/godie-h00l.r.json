@@ -8,22 +8,22 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
       "kind": "applyBuff",
       "modifiers": [],
-      "duration": 3.0,
+      "duration": 3,
       "hooks": [
         {
           "on": "onDamageTaken",
@@ -32,11 +32,11 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "flat": 0.0
+                "flat": 0
               },
               "incomingPct": {
                 "perRank": [
-                  1.0
+                  1
                 ],
                 "negateOriginal": true
               }
@@ -76,15 +76,15 @@
                 "kind": "damageArea",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 1.0
+                  "flat": 1
                 },
-                "radius": 6.0,
+                "radius": 6,
                 "radiusTier": "中",
                 "onHitTargets": [
                   {
                     "kind": "knockback",
-                    "distance": 4.0,
-                    "speed": 16.0,
+                    "distance": 4,
+                    "speed": 16,
                     "from": "caster"
                   }
                 ]
@@ -116,5 +116,6 @@
     "camKick": 0.466
   },
   "cooldownTier": "中",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

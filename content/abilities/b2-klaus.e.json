@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.5,
   "castType": "ground",
   "cooldown": [
     15.0,
@@ -20,10 +20,10 @@
   ],
   "id": "b2-klaus.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "更改辦公室位置",
@@ -34,7 +34,7 @@
   "template": {
     "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
     "params": {
-      "castTimeSec": 0.467
+      "castTimeSec": 0.5
     },
     "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
   },
@@ -45,5 +45,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-klaus.e.webp"
+  "icon": "assets/icons/abilities/b2-klaus.e.webp",
+  "castTimeTier": "大"
 }

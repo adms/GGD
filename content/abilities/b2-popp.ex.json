@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     90.0
@@ -30,7 +30,7 @@
   ],
   "id": "b2-popp.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "撤退前先把隊友扶起來",
@@ -89,5 +89,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-popp.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

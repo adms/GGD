@@ -30,13 +30,13 @@
         "damageTier": "小"
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.prim.arcane.bolt",
   "sfxKey": "wc3.demonhuntermissilehit3",
   "schema": "ability@1",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1.0,
   "rangeTier": "大",
   "range": 8,
   "castTimeTier": "極大"

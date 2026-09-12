@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.5,
   "castType": "ground",
   "cooldown": [
     15.0,
@@ -42,7 +42,7 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "damage": {
         "damageTier": "中"
       },
@@ -59,5 +59,6 @@
       "vfxKey": "fx.prim.arcane.bolt"
     }
   ],
-  "icon": "assets/icons/abilities/b2-kaede.w.webp"
+  "icon": "assets/icons/abilities/b2-kaede.w.webp",
+  "castTimeTier": "大"
 }

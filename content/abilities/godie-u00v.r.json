@@ -55,14 +55,14 @@
         {
           "kind": "knockback",
           "distanceTier": "極大",
-          "speed": 16.0,
+          "speed": 16,
           "from": "caster",
           "distance": 8
         },
         {
           "kind": "applyStatus",
           "statusId": "burnstun",
-          "duration": 1.0,
+          "duration": 1,
           "stun": true
         }
       ]
@@ -71,7 +71,7 @@
   "vfxKey": "fx.w3x.locust.boomnl.p01",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,
@@ -79,7 +79,7 @@
     "shakeStyle": "omni",
     "sparkKind": "heavy",
     "flashColor": [
-      1.0,
+      1,
       0.72,
       0.34
     ],
@@ -87,5 +87,6 @@
     "camKick": 0.506
   },
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "大"
 }

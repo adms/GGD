@@ -189,7 +189,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -275,7 +275,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -347,7 +347,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "physical",
-          "castTimeSec": 1.433,
+          "castTimeSec": 0.5,
           "radius": 4.5
         },
         "inheritDefaults": true

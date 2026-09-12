@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.5,
   "castType": "self",
   "cooldown": [
     45.0,
@@ -33,10 +33,10 @@
   ],
   "id": "b2-aladdin.q",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "烏戈代班先派一位",
@@ -93,5 +93,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-aladdin.q.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

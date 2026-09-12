@@ -41,11 +41,11 @@
       "damageType": "physical",
       "statusId": "slow40",
       "statusDurationSec": 2,
-      "castTimeSec": 1.833
+      "castTimeSec": 1.0
     }
   },
   "vfxKey": "fx.bramble-burst",
-  "castTimeSec": 1.833,
+  "castTimeSec": 1.0,
   "provenance": "w3x-import",
   "castTimeTier": "極大"
 }

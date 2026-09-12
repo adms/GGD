@@ -68,10 +68,10 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -88,10 +88,11 @@
               "value": 30
             }
           ],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-hvwd.w",
@@ -109,10 +110,10 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -129,10 +130,11 @@
               "value": 0.07
             }
           ],
-          "castTimeSec": 0.233
+          "castTimeSec": 0.3
         }
       },
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "中"
     },
     "E": {
       "id": "godie-hvwd.e",
@@ -168,7 +170,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -249,7 +251,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1.0
         }
       },
       "castTimeTier": "極大"

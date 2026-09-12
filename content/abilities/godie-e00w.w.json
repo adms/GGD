@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -29,7 +29,7 @@
         "critStrike": {
           "chance": 0.1,
           "damageMult": 1.5,
-          "lifestealFraction": 0.0
+          "lifestealFraction": 0
         },
         "hooks": [
           {
@@ -46,7 +46,7 @@
                     }
                   ]
                 },
-                "radius": 3.0,
+                "radius": 3,
                 "radiusTier": "極小"
               }
             ],
@@ -58,5 +58,7 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00w.w.webp",
-  "vfxKey": "fx.prim.lightning.beam"
+  "vfxKey": "fx.prim.lightning.beam",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

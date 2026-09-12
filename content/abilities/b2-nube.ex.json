@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castType": "targeted",
   "cooldown": [
     90.0
@@ -29,7 +29,7 @@
   ],
   "id": "b2-nube.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "保健室先解除惡靈",
@@ -87,5 +87,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-nube.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "小"
 }

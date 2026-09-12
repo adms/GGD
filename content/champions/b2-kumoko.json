@@ -22,10 +22,10 @@
       ],
       "id": "b2-kumoko.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "房東來了躲牆角",
@@ -35,7 +35,7 @@
       "template": {
         "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         },
         "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
       },
@@ -46,7 +46,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-kumoko.e.webp"
+      "icon": "assets/icons/abilities/b2-kumoko.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
       "castTimeSec": 0.567,
@@ -70,10 +71,10 @@
       ],
       "id": "b2-kumoko.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "玄關地墊有點黏",
@@ -84,7 +85,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "status": {
             "duration": 3,
             "root": true,
@@ -100,7 +101,8 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-kumoko.q.webp"
+      "icon": "assets/icons/abilities/b2-kumoko.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
       "castTimeSec": 0.667,
@@ -154,7 +156,7 @@
         "params": {
           "anchor": "caster",
           "applyTo": "enemies",
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "damageTier": "中",
           "damageType": "magic",
           "durationSec": 3,
@@ -171,7 +173,8 @@
           "vfxKey": "fx.prim.arcane.nova"
         }
       ],
-      "icon": "assets/icons/abilities/b2-kumoko.r.webp"
+      "icon": "assets/icons/abilities/b2-kumoko.r.webp",
+      "castTimeTier": "大"
     },
     "W": {
       "castTimeSec": 1.7,
@@ -232,7 +235,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.7,
+          "castTimeSec": 1.0,
           "castType": "targeted",
           "effects": [
             {

@@ -8,28 +8,28 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    45.0,
-    45.0,
-    45.0,
-    45.0
+    45,
+    45,
+    45,
+    45
   ],
   "manaCost": [
-    75.0,
-    75.0,
-    75.0,
-    75.0
+    75,
+    75,
+    75,
+    75
   ],
-  "range": 12.0,
+  "range": 12,
   "targetsEnemies": true,
   "effects": [
     {
       "kind": "leap",
       "applyTo": "self",
       "mode": "toPoint",
-      "apexHeight": 0.0,
+      "apexHeight": 0,
       "durationSec": 0.4,
-      "throwDistance": 11.0,
-      "landRadius": 3.0,
+      "throwDistance": 11,
+      "landRadius": 3,
       "onLand": [
         {
           "kind": "damage",
@@ -52,5 +52,6 @@
   "cooldownTier": "大",
   "manaCostTier": "極小",
   "rangeTier": "極大",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5,
+  "castTimeTier": "大"
 }

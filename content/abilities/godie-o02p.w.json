@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "effects": [],
   "template": {
@@ -27,25 +27,26 @@
       "target": "ally",
       "amount": {
         "perRank": [
-          200.0,
-          275.0,
-          350.0,
-          425.0
+          200,
+          275,
+          350,
+          425
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 1
           }
         ]
       },
-      "castTimeSec": 0.067
+      "castTimeSec": 0.1
     }
   },
   "vfxKey": "fx.prim.sound.pulse",
   "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "小"
 }

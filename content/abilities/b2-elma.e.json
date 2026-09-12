@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.3,
   "castType": "self",
   "cooldown": [
     15.0,
@@ -25,10 +25,10 @@
   ],
   "id": "b2-elma.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "重劍攻略追加七十點",
@@ -38,7 +38,7 @@
   "template": {
     "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
     "params": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "duration": 3,
       "modifiers": [
         {
@@ -57,5 +57,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-elma.e.webp"
+  "icon": "assets/icons/abilities/b2-elma.e.webp",
+  "castTimeTier": "中"
 }

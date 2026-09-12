@@ -19,7 +19,7 @@
     75.0
   ],
   "manaCostTier": "極小",
-  "range": 0.0,
+  "range": 0,
   "effects": [],
   "vfxKey": "fx.prim.nature.slash",
   "vfxLayers": [
@@ -49,7 +49,7 @@
   ],
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.667,
+  "castTimeSec": 0.5,
   "radiusTier": "小",
   "template": {
     "ref": "tpl-periodic-field",
@@ -61,7 +61,8 @@
       "applyTo": "enemies",
       "damageTier": "小",
       "damageType": "magic",
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
-  }
+  },
+  "castTimeTier": "大"
 }

@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -45,14 +45,14 @@
                       {
                         "stat": "ap",
                         "op": "flat",
-                        "value": 1.0
+                        "value": 1
                       }
                     ],
                     "permanent": true,
                     "applyTo": "self",
                     "maxStat": {
                       "stat": "ap",
-                      "value": 200.0,
+                      "value": 200,
                       "basis": "thisSource"
                     },
                     "stackKey": "caonima-devour-ap"
@@ -93,14 +93,14 @@
                       {
                         "stat": "ap",
                         "op": "flat",
-                        "value": 1.0
+                        "value": 1
                       }
                     ],
                     "permanent": true,
                     "applyTo": "self",
                     "maxStat": {
                       "stat": "ap",
-                      "value": 200.0,
+                      "value": 200,
                       "basis": "thisSource"
                     },
                     "stackKey": "caonima-devour-ap"
@@ -141,14 +141,14 @@
                       {
                         "stat": "ap",
                         "op": "flat",
-                        "value": 1.0
+                        "value": 1
                       }
                     ],
                     "permanent": true,
                     "applyTo": "self",
                     "maxStat": {
                       "stat": "ap",
-                      "value": 200.0,
+                      "value": 200,
                       "basis": "thisSource"
                     },
                     "stackKey": "caonima-devour-ap"
@@ -189,14 +189,14 @@
                       {
                         "stat": "ap",
                         "op": "flat",
-                        "value": 1.0
+                        "value": 1
                       }
                     ],
                     "permanent": true,
                     "applyTo": "self",
                     "maxStat": {
                       "stat": "ap",
-                      "value": 200.0,
+                      "value": 200,
                       "basis": "thisSource"
                     },
                     "stackKey": "caonima-devour-ap"
@@ -221,5 +221,7 @@
   },
   "icon": "assets/icons/abilities/godie-h02v.w.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
-  "sfxKey": "wc3.taunt"
+  "sfxKey": "wc3.taunt",
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

@@ -10,10 +10,10 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    0
   ],
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -32,32 +32,34 @@
                 "attr": "str",
                 "mode": "pctOfCurrent",
                 "amount": 1,
-                "durationSec": 3.0
+                "durationSec": 3
               },
               {
                 "kind": "grantAttribute",
                 "attr": "agi",
                 "mode": "pctOfCurrent",
                 "amount": 1,
-                "durationSec": 3.0
+                "durationSec": 3
               },
               {
                 "kind": "grantAttribute",
                 "attr": "int",
                 "mode": "pctOfCurrent",
                 "amount": 1,
-                "durationSec": 3.0
+                "durationSec": 3
               },
               {
                 "kind": "spawnVfx",
                 "vfxId": "fx.dragon-awaken",
                 "at": "self",
-                "durationSec": 3.0
+                "durationSec": 3
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "castTimeTier": "極小",
+  "castTimeSec": 0
 }

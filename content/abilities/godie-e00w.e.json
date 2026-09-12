@@ -8,28 +8,28 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    120.0,
-    120.0,
-    120.0,
-    120.0
+    120,
+    120,
+    120,
+    120
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
       "kind": "championForm",
       "to": "alternate",
       "durationSec": [
-        6.0,
-        9.0,
-        12.0,
-        15.0
+        6,
+        9,
+        12,
+        15
       ]
     },
     {
@@ -41,7 +41,7 @@
           "value": 0.6
         }
       ],
-      "duration": 6.0,
+      "duration": 6,
       "perRank": [
         {
           "modifiers": [
@@ -51,7 +51,7 @@
               "value": 0.6
             }
           ],
-          "duration": 6.0
+          "duration": 6
         },
         {
           "modifiers": [
@@ -61,7 +61,7 @@
               "value": 0.9
             }
           ],
-          "duration": 9.0
+          "duration": 9
         },
         {
           "modifiers": [
@@ -71,7 +71,7 @@
               "value": 1.2
             }
           ],
-          "duration": 12.0
+          "duration": 12
         },
         {
           "modifiers": [
@@ -81,7 +81,7 @@
               "value": 1.5
             }
           ],
-          "duration": 15.0
+          "duration": 15
         }
       ],
       "flight": {
@@ -95,5 +95,6 @@
   "icon": "assets/icons/abilities/godie-e00w.e.webp",
   "vfxKey": "fx.prim.lightning.nova",
   "cooldownTier": "極大",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }
