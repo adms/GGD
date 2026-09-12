@@ -1,0 +1,1946 @@
+{
+  "schema": "ggd-console-audio-source-catalogs@1",
+  "melee": {
+    "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+    "observedDownloadUrls": [
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Bowser.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Captain_Falcon.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Donkey_Kong.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Dr_Mario.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Falco.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Falco_JP.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Fox JP.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Fox.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Ganondorf.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Giga Bowser.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Ice Climbers.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Jigglypuff JP.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Jigglypuff.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Kirby.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Link.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Luigi.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Mario.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Marth.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Master_Hand_and_Crazy_Hand.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Mewtwo.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Mr_Game_and_Watch.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Ness.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Onett.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Peach.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Pichu.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Pikachu.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Pokemon.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Princess_Peachs_Castle.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Roy.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Samus.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Venom.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Yoshi.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Young_Link.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Characters_Zelda_and_Sheik.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Misc_Crowd JP.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Misc_Fanfares.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Misc_General Sound Effects.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Misc_Narrator.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Big Blue Adventure.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Big Blue.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Brinstar Depths.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Corneria.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Final Destination.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Fourside.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Great Bay.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Green Greens.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Jungle Japes.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Kongo Jungle.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Mute City.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Planet Zebes Adventure.zip",
+      "http://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects/SSBM_Stage_sounds_Pokemon_Stadium_and_Poke_Floats.zip"
+    ],
+    "downloadCount": 51,
+    "status": "listed; only Kirby/Pikachu/Marth downloaded in this batch"
+  },
+  "jumpForce": [
+    {
+      "quickkey": "7vhd0f2bi8f7zh8",
+      "hash": "59499db770e126d9a78f8e444b4bdfdae0aabf35f2a9a652c53da3453cac6663",
+      "filename": "JForce_Asta.7z",
+      "description": "",
+      "size": "5763320",
+      "privacy": "public",
+      "created": "2022-05-28 20:41:17",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7038",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "50",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/7vhd0f2bi8f7zh8/JForce_Asta.7z/file"
+      },
+      "created_utc": "2022-05-29T01:41:17Z",
+      "sourceFolder": "root"
+    },
+    {
+      "quickkey": "lym3lieb4tpevco",
+      "hash": "651e27fd1e79501318a0b62cca3e01702f3e379116fe0f044ce3ffbf61f2d216",
+      "filename": "JForce_Boruto.7z",
+      "description": "",
+      "size": "4438517",
+      "privacy": "public",
+      "created": "2022-05-28 20:41:13",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7037",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "48",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/lym3lieb4tpevco/JForce_Boruto.7z/file"
+      },
+      "created_utc": "2022-05-29T01:41:13Z",
+      "sourceFolder": "root"
+    },
+    {
+      "quickkey": "pkcvobox5cr1fmq",
+      "hash": "c27fcd468fd6061327d0c524176ff6af63618f0152106df59c2c811f1d720664",
+      "filename": "JForce_Dai.7z",
+      "description": "",
+      "size": "6211414",
+      "privacy": "public",
+      "created": "2022-05-28 20:41:13",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7036",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "37",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/pkcvobox5cr1fmq/JForce_Dai.7z/file"
+      },
+      "created_utc": "2022-05-29T01:41:13Z",
+      "sourceFolder": "root"
+    },
+    {
+      "quickkey": "kr487qsvpq165ee",
+      "hash": "d16ded5850a42797f205e33c59a97132ee030105d2515f299c3a3ac5f37780ad",
+      "filename": "JForce_Kenshiro.7z",
+      "description": "",
+      "size": "5312720",
+      "privacy": "public",
+      "created": "2022-05-28 20:41:17",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7039",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "55",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/kr487qsvpq165ee/JForce_Kenshiro.7z/file"
+      },
+      "created_utc": "2022-05-29T01:41:17Z",
+      "sourceFolder": "root"
+    },
+    {
+      "quickkey": "xi6wa5p41135bd1",
+      "hash": "c8cc049fe569d8d06ac289a6f818e163177eb669c8a9b912dc122d86ebd42713",
+      "filename": "JForce_Ryo Saeba.7z",
+      "description": "",
+      "size": "9334054",
+      "privacy": "public",
+      "created": "2022-05-28 20:41:29",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7040",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "52",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/xi6wa5p41135bd1/JForce_Ryo_Saeba.7z/file"
+      },
+      "created_utc": "2022-05-29T01:41:29Z",
+      "sourceFolder": "root"
+    },
+    {
+      "quickkey": "elr84ec5bts63vm",
+      "hash": "dc24c2bf7a159066d47d9f96713cbf1849b6fcb6247556c086d46344e0144d3e",
+      "filename": "JForce__Common Sounds.7z",
+      "description": "",
+      "size": "75661692",
+      "privacy": "public",
+      "created": "2022-05-28 20:42:41",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7041",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "365",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/elr84ec5bts63vm/JForce__Common_Sounds.7z/file"
+      },
+      "created_utc": "2022-05-29T01:42:41Z",
+      "sourceFolder": "root"
+    },
+    {
+      "quickkey": "2gorylpg6g8d3yx",
+      "hash": "5699517f7d92efdede008143c3b563e86537511453c42db26d903bc6f1c1e9f8",
+      "filename": "JForce_Aizen.7z",
+      "description": "",
+      "size": "6522930",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:35",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7046",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "93",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/2gorylpg6g8d3yx/JForce_Aizen.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:35Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "47x2p8mj7cmmeev",
+      "hash": "60cb8beaaf02a910b40ca18d5dc8ca44aa9a1f0e37ca049c28e32d36b896c4f8",
+      "filename": "JForce_Grimmjow.7z",
+      "description": "",
+      "size": "6130781",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:36",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7047",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "58",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/47x2p8mj7cmmeev/JForce_Grimmjow.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:36Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "49lua32hy4niu5z",
+      "hash": "9a01cb20f8fdb41db67e42c96d40b5ac85de235e86bb3658b059a617be40c1da",
+      "filename": "JForce_Hitsugaya.7z",
+      "description": "",
+      "size": "10998153",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:50",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7050",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "61",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/49lua32hy4niu5z/JForce_Hitsugaya.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:50Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "z2tdn2p8m5w2xqw",
+      "hash": "b857f21855d37d85280e061753f23eb4b861460151091d6ac083292fed058de5",
+      "filename": "JForce_Ichigo.7z",
+      "description": "",
+      "size": "4717109",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:29",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7043",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "150",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/z2tdn2p8m5w2xqw/JForce_Ichigo.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:29Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "7rvmsfqzvp2faz8",
+      "hash": "5b189315466162adb22e889e9bd8f9af12c5000ed2c09e3fa85df3b568cb1759",
+      "filename": "JForce_Renji.7z",
+      "description": "",
+      "size": "8303343",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:48",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7039",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "47",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/7rvmsfqzvp2faz8/JForce_Renji.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:48Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "tykg0caf992lsw4",
+      "hash": "037461d3a8250b74bf1a27ad7d63320d90a935cce2c6ec4064fde891e49ee7b7",
+      "filename": "JForce_Rukia.7z",
+      "description": "",
+      "size": "4098768",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:30",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7044",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "91",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/tykg0caf992lsw4/JForce_Rukia.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:30Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "60l9svx5hchp5z5",
+      "hash": "5bfa135ce587bb92698da4a71a8216626dc2e3396f1c2721cbce60814d9037c1",
+      "filename": "JForce_Yoruichi.7z",
+      "description": "",
+      "size": "5982551",
+      "privacy": "public",
+      "created": "2022-05-28 20:43:31",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7045",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "87",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/60l9svx5hchp5z5/JForce_Yoruichi.7z/file"
+      },
+      "created_utc": "2022-05-29T01:43:31Z",
+      "sourceFolder": "Bleach"
+    },
+    {
+      "quickkey": "djwxhl9u5unqp3c",
+      "hash": "82bd84d7c6e0588020eff58f8220b7797804fb4bcd6e04803410cb7eb6cea904",
+      "filename": "JForce_Cell.7z",
+      "description": "",
+      "size": "8076979",
+      "privacy": "public",
+      "created": "2022-05-28 21:37:09",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7060",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "74",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/djwxhl9u5unqp3c/JForce_Cell.7z/file"
+      },
+      "created_utc": "2022-05-29T02:37:09Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "g3d2wsttn4a61be",
+      "hash": "d5b492ebbb282a988d9df803591798202e1c818cffeccd12465ef27bbb895656",
+      "filename": "JForce_Frieza.7z",
+      "description": "",
+      "size": "6171911",
+      "privacy": "public",
+      "created": "2022-05-28 21:37:03",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7059",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "64",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/g3d2wsttn4a61be/JForce_Frieza.7z/file"
+      },
+      "created_utc": "2022-05-29T02:37:03Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "c2980osbbkp32ax",
+      "hash": "79347f137ce036ee850410d5582da5a9277ee338696103d358ebeea6efb607ed",
+      "filename": "JForce_Goku.7z",
+      "description": "",
+      "size": "5627474",
+      "privacy": "public",
+      "created": "2022-05-28 21:36:54",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7056",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "111",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/c2980osbbkp32ax/JForce_Goku.7z/file"
+      },
+      "created_utc": "2022-05-29T02:36:54Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "h207jv0kz9yfccu",
+      "hash": "22e1eb851f13e31cbbff38c21a7f827689c4de5b9f346789ce31063fce05c0c7",
+      "filename": "JForce_Majin Buu.7z",
+      "description": "",
+      "size": "5278455",
+      "privacy": "public",
+      "created": "2022-05-28 21:36:55",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7058",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "39",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/h207jv0kz9yfccu/JForce_Majin_Buu.7z/file"
+      },
+      "created_utc": "2022-05-29T02:36:55Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "f2g7ditkesfvwf5",
+      "hash": "43b90ecf49dc6387d7253bad65926fb137fe8940e3c99e352f253aba6b8547fe",
+      "filename": "JForce_Piccolo.7z",
+      "description": "",
+      "size": "5092112",
+      "privacy": "public",
+      "created": "2022-05-28 21:36:36",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7055",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "45",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/f2g7ditkesfvwf5/JForce_Piccolo.7z/file"
+      },
+      "created_utc": "2022-05-29T02:36:36Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "b2s1uzrxha20uyu",
+      "hash": "192f78a07fcd97a08be6eead771f84f2d7c19f9238ea7e9b1f1a1747322b0334",
+      "filename": "JForce_Trunks.7z",
+      "description": "",
+      "size": "4123122",
+      "privacy": "public",
+      "created": "2022-05-28 21:36:36",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7054",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "58",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/b2s1uzrxha20uyu/JForce_Trunks.7z/file"
+      },
+      "created_utc": "2022-05-29T02:36:36Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "3t3dranpx6tmk3v",
+      "hash": "585b0bc1b5a227adf3a9042061bedec29ee0678f2d517d019097c8c0ec945007",
+      "filename": "JForce_Vegeta.7z",
+      "description": "",
+      "size": "6064895",
+      "privacy": "public",
+      "created": "2022-05-28 21:36:54",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7057",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "62",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/3t3dranpx6tmk3v/JForce_Vegeta.7z/file"
+      },
+      "created_utc": "2022-05-29T02:36:54Z",
+      "sourceFolder": "Dbz"
+    },
+    {
+      "quickkey": "3a0xlo946h8717v",
+      "hash": "62efee190bdebc9db46c9a452166d61a1815666fed78ae1fb09280ea5448b817",
+      "filename": "JForce_Biscuit.7z",
+      "description": "",
+      "size": "5819096",
+      "privacy": "public",
+      "created": "2022-05-28 21:38:06",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7064",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "56",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/3a0xlo946h8717v/JForce_Biscuit.7z/file"
+      },
+      "created_utc": "2022-05-29T02:38:06Z",
+      "sourceFolder": "HxH"
+    },
+    {
+      "quickkey": "08cgfko3frgle12",
+      "hash": "44631772cf736a4428d64968435067dc62b87399cb40df10f481a36647ffec7d",
+      "filename": "JForce_Gon.7z",
+      "description": "",
+      "size": "5383740",
+      "privacy": "public",
+      "created": "2022-05-28 21:38:05",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7063",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "96",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/08cgfko3frgle12/JForce_Gon.7z/file"
+      },
+      "created_utc": "2022-05-29T02:38:05Z",
+      "sourceFolder": "HxH"
+    },
+    {
+      "quickkey": "ifniyafj38l7tn2",
+      "hash": "ea00d7fe5e0f34d55db84f16c3267cb92b954c9df8a95771c9647bd8812774af",
+      "filename": "JForce_Hisoka.7z",
+      "description": "",
+      "size": "7630032",
+      "privacy": "public",
+      "created": "2022-05-28 21:38:21",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7067",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "47",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/ifniyafj38l7tn2/JForce_Hisoka.7z/file"
+      },
+      "created_utc": "2022-05-29T02:38:21Z",
+      "sourceFolder": "HxH"
+    },
+    {
+      "quickkey": "2smo4csmkrsebfx",
+      "hash": "8cfa2d430aec54caff5fd01ab52ab991967c1a34439197f18c9b701dec1aa31d",
+      "filename": "JForce_Killua.7z",
+      "description": "",
+      "size": "4711551",
+      "privacy": "public",
+      "created": "2022-05-28 21:38:04",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7062",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "63",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/2smo4csmkrsebfx/JForce_Killua.7z/file"
+      },
+      "created_utc": "2022-05-29T02:38:04Z",
+      "sourceFolder": "HxH"
+    },
+    {
+      "quickkey": "sa1c7q1flmkt72r",
+      "hash": "e0d6963c2ffc2cf5cdb3e05a333e77b367d848f97927dc62a80264e9222af2d1",
+      "filename": "JForce_Kurapika.7z",
+      "description": "",
+      "size": "5967217",
+      "privacy": "public",
+      "created": "2022-05-28 21:38:09",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7065",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "44",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/sa1c7q1flmkt72r/JForce_Kurapika.7z/file"
+      },
+      "created_utc": "2022-05-29T02:38:09Z",
+      "sourceFolder": "HxH"
+    },
+    {
+      "quickkey": "4x9chz3y6qzel0v",
+      "hash": "3e7b8b7f4dc160ba2d1e07744ccbffce2849e75748106f9052b61167726e652d",
+      "filename": "JForce_Meruem.7z",
+      "description": "",
+      "size": "6247975",
+      "privacy": "public",
+      "created": "2022-05-28 21:38:13",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7066",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "38",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/4x9chz3y6qzel0v/JForce_Meruem.7z/file"
+      },
+      "created_utc": "2022-05-29T02:38:13Z",
+      "sourceFolder": "HxH"
+    },
+    {
+      "quickkey": "52q2s56u5rqp5vl",
+      "hash": "c4eacab1deec7c4f6e3746a662ccd631c2818943861bba41d2e0ffb7f5f16397",
+      "filename": "JForce_Galena.7z",
+      "description": "",
+      "size": "5850028",
+      "privacy": "public",
+      "created": "2022-05-28 22:28:41",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7070",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "35",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/52q2s56u5rqp5vl/JForce_Galena.7z/file"
+      },
+      "created_utc": "2022-05-29T03:28:41Z",
+      "sourceFolder": "JF Original"
+    },
+    {
+      "quickkey": "adfbxf800ewuv08",
+      "hash": "23d4d1e44bd002e400a5e43b7e0f6920e5a6661cfc2a8935b81a16a113cb3f02",
+      "filename": "JForce_Kane.7z",
+      "description": "",
+      "size": "5889131",
+      "privacy": "public",
+      "created": "2022-05-28 22:28:46",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7072",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "40",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/adfbxf800ewuv08/JForce_Kane.7z/file"
+      },
+      "created_utc": "2022-05-29T03:28:46Z",
+      "sourceFolder": "JF Original"
+    },
+    {
+      "quickkey": "ezpnwosocgre0uh",
+      "hash": "2928fea2ce4edbf95c3f7bac0363240e957fb5488b63f290fdc82348edd0a8d1",
+      "filename": "JForce_Prometheus.7z",
+      "description": "",
+      "size": "6556868",
+      "privacy": "public",
+      "created": "2022-05-28 22:28:42",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7071",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "35",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/ezpnwosocgre0uh/JForce_Prometheus.7z/file"
+      },
+      "created_utc": "2022-05-29T03:28:42Z",
+      "sourceFolder": "JF Original"
+    },
+    {
+      "quickkey": "9jn9f06sdgxhox5",
+      "hash": "73870b052a28da1db4bf3193b2cf02e952b8bfa008c038bf28cad5799711ae01",
+      "filename": "JForce_DIO.7z",
+      "description": "",
+      "size": "8044185",
+      "privacy": "public",
+      "created": "2022-05-28 22:44:50",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7075",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "121",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/9jn9f06sdgxhox5/JForce_DIO.7z/file"
+      },
+      "created_utc": "2022-05-29T03:44:50Z",
+      "sourceFolder": "Jojo"
+    },
+    {
+      "quickkey": "yb33qbndarhibdd",
+      "hash": "99bcfdbb365f2dc6e40f88bf123325006e86db0df5bc1f192dbc9e90b3e5ffcb",
+      "filename": "JForce_Giorno.7z",
+      "description": "",
+      "size": "7651431",
+      "privacy": "public",
+      "created": "2022-05-28 22:44:50",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7074",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "92",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/yb33qbndarhibdd/JForce_Giorno.7z/file"
+      },
+      "created_utc": "2022-05-29T03:44:50Z",
+      "sourceFolder": "Jojo"
+    },
+    {
+      "quickkey": "rkldzhky6xp9zze",
+      "hash": "e7056a561be6de938ab5adaba13e761fecf96815964751796b578e9c7d4f456e",
+      "filename": "JForce_Jotaro.7z",
+      "description": "",
+      "size": "6302497",
+      "privacy": "public",
+      "created": "2022-05-28 22:44:54",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7076",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "118",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/rkldzhky6xp9zze/JForce_Jotaro.7z/file"
+      },
+      "created_utc": "2022-05-29T03:44:54Z",
+      "sourceFolder": "Jojo"
+    },
+    {
+      "quickkey": "v8oug0npujcgt8b",
+      "hash": "dbf1e76931ca33ce5ff35eb4cbc2db1f5089bf1dd4062f431e79629093726288",
+      "filename": "JForce_All Might.7z",
+      "description": "",
+      "size": "7868874",
+      "privacy": "public",
+      "created": "2022-05-28 22:56:50",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7080",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "73",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/v8oug0npujcgt8b/JForce_All_Might.7z/file"
+      },
+      "created_utc": "2022-05-29T03:56:50Z",
+      "sourceFolder": "MHA"
+    },
+    {
+      "quickkey": "km8s864zcqqxe5s",
+      "hash": "cea2aa22fac00cb6e951f7ecb33fd5b960457e60fa3c7c1c494949a7d24c5d07",
+      "filename": "JForce_Bakugo.7z",
+      "description": "",
+      "size": "7774651",
+      "privacy": "public",
+      "created": "2022-05-28 22:56:44",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7079",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "50",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/km8s864zcqqxe5s/JForce_Bakugo.7z/file"
+      },
+      "created_utc": "2022-05-29T03:56:44Z",
+      "sourceFolder": "MHA"
+    },
+    {
+      "quickkey": "3dlw6f0i33b5ws2",
+      "hash": "cc22805b23b38c603bf9ee7d091de5ae9830005ccd9e1a102bb2ef75ed2ba32a",
+      "filename": "JForce_Deku.7z",
+      "description": "",
+      "size": "5351840",
+      "privacy": "public",
+      "created": "2022-05-28 22:56:43",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7078",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "74",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/3dlw6f0i33b5ws2/JForce_Deku.7z/file"
+      },
+      "created_utc": "2022-05-29T03:56:43Z",
+      "sourceFolder": "MHA"
+    },
+    {
+      "quickkey": "8xoit82ayo5x571",
+      "hash": "75b5bbdc500dc6d1cfdbf1b563fa18fe3b130c94e8a9739a917d89cb98673490",
+      "filename": "JForce_Todoroki.7z",
+      "description": "",
+      "size": "6122379",
+      "privacy": "public",
+      "created": "2022-05-28 22:56:44",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7079",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "51",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/8xoit82ayo5x571/JForce_Todoroki.7z/file"
+      },
+      "created_utc": "2022-05-29T03:56:44Z",
+      "sourceFolder": "MHA"
+    },
+    {
+      "quickkey": "cy6nqqo834xm6ud",
+      "hash": "ab171db2e645a8290fc3b025125d4088b25616faf55c36cfe7c9177e64803cbc",
+      "filename": "JForce_Gaara.7z",
+      "description": "",
+      "size": "5864925",
+      "privacy": "public",
+      "created": "2022-05-28 22:58:26",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7085",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "48",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/cy6nqqo834xm6ud/JForce_Gaara.7z/file"
+      },
+      "created_utc": "2022-05-29T03:58:26Z",
+      "sourceFolder": "Naruto"
+    },
+    {
+      "quickkey": "otwxgosfvulezjb",
+      "hash": "5bc3e1680096faf883646c2bd771485a3395c9373362dc77889fb2539a183517",
+      "filename": "JForce_Kaguya.7z",
+      "description": "",
+      "size": "5241561",
+      "privacy": "public",
+      "created": "2022-05-28 22:58:26",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7084",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "55",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/otwxgosfvulezjb/JForce_Kaguya.7z/file"
+      },
+      "created_utc": "2022-05-29T03:58:26Z",
+      "sourceFolder": "Naruto"
+    },
+    {
+      "quickkey": "dbon0rw1fwwc7u0",
+      "hash": "2e3664e7da74949b0367c6fcc09a5cf07a37aee0b3e02649613a1879643f2096",
+      "filename": "JForce_Kakashi.7z",
+      "description": "",
+      "size": "5186754",
+      "privacy": "public",
+      "created": "2022-05-28 22:58:21",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7082",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "48",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/dbon0rw1fwwc7u0/JForce_Kakashi.7z/file"
+      },
+      "created_utc": "2022-05-29T03:58:21Z",
+      "sourceFolder": "Naruto"
+    },
+    {
+      "quickkey": "calp94ouvivaqvh",
+      "hash": "a3bf162f054b43b42d64b792dfc06cee00a4f536de3dfbbc4bb54cfea57b2f0b",
+      "filename": "JForce_Madara.7z",
+      "description": "",
+      "size": "5924823",
+      "privacy": "public",
+      "created": "2022-05-28 22:58:35",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7080",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "66",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/calp94ouvivaqvh/JForce_Madara.7z/file"
+      },
+      "created_utc": "2022-05-29T03:58:35Z",
+      "sourceFolder": "Naruto"
+    },
+    {
+      "quickkey": "k9epmlvgu2i37jv",
+      "hash": "a8ab48a882bb2a217d135ca63b7a781574810561e6ae82eb2d75017acfd0834b",
+      "filename": "JForce_Naruto.7z",
+      "description": "",
+      "size": "4602542",
+      "privacy": "public",
+      "created": "2022-05-28 22:58:21",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7083",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "66",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/k9epmlvgu2i37jv/JForce_Naruto.7z/file"
+      },
+      "created_utc": "2022-05-29T03:58:21Z",
+      "sourceFolder": "Naruto"
+    },
+    {
+      "quickkey": "blbtb4b1hkot4ic",
+      "hash": "09fa19b284c00cbde83becdc2885879d2f3e0739610c5f39e65fc4220d580813",
+      "filename": "JForce_Sasuke.7z",
+      "description": "",
+      "size": "5039481",
+      "privacy": "public",
+      "created": "2022-05-28 22:58:26",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7086",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "80",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/blbtb4b1hkot4ic/JForce_Sasuke.7z/file"
+      },
+      "created_utc": "2022-05-29T03:58:26Z",
+      "sourceFolder": "Naruto"
+    },
+    {
+      "quickkey": "is5udo9mxzxtgj6",
+      "hash": "d4cf461a47849ded2789df463598a796d0cd9c9535d1cc4732c68b2272fbda00",
+      "filename": "JForce_Blackbeard.7z",
+      "description": "",
+      "size": "6401363",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:53",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7094",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "40",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/is5udo9mxzxtgj6/JForce_Blackbeard.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:53Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "3y5worbamj6rnku",
+      "hash": "e0de4a7fe58f66302f73fb2a7800db5790917cd5a5a90820e33c18323cea22c0",
+      "filename": "JForce_Hancock.7z",
+      "description": "",
+      "size": "5873737",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:43",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7092",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "54",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/3y5worbamj6rnku/JForce_Hancock.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:43Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "mq7h1ea47so64f5",
+      "hash": "e2ab5cb78e8cc54119a1067970831c65c8f70190a70814403d67d7da520aabdc",
+      "filename": "JForce_Law.7z",
+      "description": "",
+      "size": "5776437",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:38",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7090",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "45",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/mq7h1ea47so64f5/JForce_Law.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:38Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "29e0coso1msgrtg",
+      "hash": "d6d80c86684a49357fc3eb17090923222f0d75bb0f5d5b4fa96ec9f0f373499c",
+      "filename": "JForce_Luffy.7z",
+      "description": "",
+      "size": "4897105",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:47",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7093",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "62",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/29e0coso1msgrtg/JForce_Luffy.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:47Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "ra9b76goglndu9b",
+      "hash": "68e88a8c560044922604170959183d9ddf8fb2b7669c4a314daf0d6f1986fe50",
+      "filename": "JForce_Sabo.7z",
+      "description": "",
+      "size": "4884956",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:38",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7089",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "36",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/ra9b76goglndu9b/JForce_Sabo.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:38Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "0fome9zmi8jsb5m",
+      "hash": "8ad03b315f9dc973aef998df39d17e424809a924ac57a82eb337f286b74f3a8a",
+      "filename": "JForce_Sanji.7z",
+      "description": "",
+      "size": "8002565",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:56",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7095",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "49",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/0fome9zmi8jsb5m/JForce_Sanji.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:56Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "l8hzizrluf9hag3",
+      "hash": "aea5c77aaf9602c6acebaa1da1fd96d4f25d47fdfeb183809e0123344a4e91e6",
+      "filename": "JForce_Zoro.7z",
+      "description": "",
+      "size": "5280417",
+      "privacy": "public",
+      "created": "2022-05-28 23:12:39",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7091",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "48",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/l8hzizrluf9hag3/JForce_Zoro.7z/file"
+      },
+      "created_utc": "2022-05-29T04:12:39Z",
+      "sourceFolder": "One Piece"
+    },
+    {
+      "quickkey": "7sev4t1pgki7uai",
+      "hash": "8cd0a7cc1839b499a354812cdf218a4490db28b0284ab89ec48e8cb8ea7007c9",
+      "filename": "JForce_Kenshin.7z",
+      "description": "",
+      "size": "4442556",
+      "privacy": "public",
+      "created": "2022-05-28 23:14:38",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7098",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "77",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/7sev4t1pgki7uai/JForce_Kenshin.7z/file"
+      },
+      "created_utc": "2022-05-29T04:14:38Z",
+      "sourceFolder": "Rurouni Kenshin"
+    },
+    {
+      "quickkey": "tphdpk319pqpds1",
+      "hash": "1f8a4822a9006fe00b9c030ed499aabce6e8e7cd92f1436b0e06e1fd067641e3",
+      "filename": "JForce_Shishio.7z",
+      "description": "",
+      "size": "6933339",
+      "privacy": "public",
+      "created": "2022-05-28 23:14:37",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7097",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "38",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/tphdpk319pqpds1/JForce_Shishio.7z/file"
+      },
+      "created_utc": "2022-05-29T04:14:37Z",
+      "sourceFolder": "Rurouni Kenshin"
+    },
+    {
+      "quickkey": "87sreig5jpgnkgc",
+      "hash": "3f52d5dbfa50bb49bde1c27c7f0d5a055ab720c6feb192da5b3c048844cc196b",
+      "filename": "JForce_Seiya.7z",
+      "description": "",
+      "size": "4727901",
+      "privacy": "public",
+      "created": "2022-05-28 23:16:05",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7098",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "34",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/87sreig5jpgnkgc/JForce_Seiya.7z/file"
+      },
+      "created_utc": "2022-05-29T04:16:05Z",
+      "sourceFolder": "Saint Seiya"
+    },
+    {
+      "quickkey": "rkmn4c9q9kyjrb0",
+      "hash": "0f8c2e80a94c050b2e2049ff0f04afe91081b6e16d3edcf5b779972777aa2cbd",
+      "filename": "JForce_Shiryū.7z",
+      "description": "",
+      "size": "5022887",
+      "privacy": "public",
+      "created": "2022-05-28 23:16:04",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7090",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "28",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/rkmn4c9q9kyjrb0/JForce_Shiry%25C5%25AB.7z/file"
+      },
+      "created_utc": "2022-05-29T04:16:04Z",
+      "sourceFolder": "Saint Seiya"
+    },
+    {
+      "quickkey": "q0th32u2b3cyi37",
+      "hash": "49acb22c8278fafa68e0d44af58bd21ae83c854d8248c3eeacebeb61e8836cbb",
+      "filename": "JForce_Hiei.7z",
+      "description": "",
+      "size": "6249302",
+      "privacy": "public",
+      "created": "2022-05-28 23:17:28",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7103",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "47",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/q0th32u2b3cyi37/JForce_Hiei.7z/file"
+      },
+      "created_utc": "2022-05-29T04:17:28Z",
+      "sourceFolder": "Yu Yu Hakusho"
+    },
+    {
+      "quickkey": "dimhwy2534pop8y",
+      "hash": "1cec216cd7b8a0a678c8ae41e335aa26326ab6b44cbca61b30275a8207a00c30",
+      "filename": "JForce_Toguro.7z",
+      "description": "",
+      "size": "6821768",
+      "privacy": "public",
+      "created": "2022-05-28 23:17:30",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7105",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "45",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/dimhwy2534pop8y/JForce_Toguro.7z/file"
+      },
+      "created_utc": "2022-05-29T04:17:30Z",
+      "sourceFolder": "Yu Yu Hakusho"
+    },
+    {
+      "quickkey": "yzfditmv8tkg5rn",
+      "hash": "d0e3c89c6b9d1cc8fc689045a753e1ed425fdf8d49d3027854e548ee9b5b6220",
+      "filename": "JForce_Yusuke.7z",
+      "description": "",
+      "size": "5429180",
+      "privacy": "public",
+      "created": "2022-05-28 23:17:28",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7104",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "69",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/yzfditmv8tkg5rn/JForce_Yusuke.7z/file"
+      },
+      "created_utc": "2022-05-29T04:17:28Z",
+      "sourceFolder": "Yu Yu Hakusho"
+    },
+    {
+      "quickkey": "dxw8z4rubrocpl2",
+      "hash": "310b7b59d44db10bfb8065591c2bb6cc581ae429aa0f87ace9e79b7a1bc3bfbf",
+      "filename": "JForce_Kaiba.7z",
+      "description": "",
+      "size": "8839622",
+      "privacy": "public",
+      "created": "2022-05-28 23:19:45",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7109",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "59",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/dxw8z4rubrocpl2/JForce_Kaiba.7z/file"
+      },
+      "created_utc": "2022-05-29T04:19:45Z",
+      "sourceFolder": "Yu-Gi-Oh"
+    },
+    {
+      "quickkey": "u5xoj9ltvicn6n6",
+      "hash": "37fbac143d47b099681cc1f87f03b581b5ac427f863f701a24375c58421f90b0",
+      "filename": "JForce_Yugi.7z",
+      "description": "",
+      "size": "6127914",
+      "privacy": "public",
+      "created": "2022-05-28 23:19:44",
+      "password_protected": "no",
+      "mimetype": "application/x-7z-compressed",
+      "filetype": "archive",
+      "view": "0",
+      "edit": "0",
+      "revision": "7108",
+      "flag": "0",
+      "permissions": {
+        "value": "1",
+        "explicit": "0",
+        "read": "1",
+        "write": "0"
+      },
+      "downloads": "61",
+      "views": "0",
+      "links": {
+        "normal_download": "https://www.mediafire.com/file/u5xoj9ltvicn6n6/JForce_Yugi.7z/file"
+      },
+      "created_utc": "2022-05-29T04:19:44Z",
+      "sourceFolder": "Yu-Gi-Oh"
+    }
+  ],
+  "note": "Discovery records only. Acquired packages are identified by download-sources.json publicSources receipts.",
+  "ysSora": {
+    "id": "miner600-psp-ys-sora-audio",
+    "author": "miner600",
+    "sourcePage": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+    "sourceFolder": "https://www.mediafire.com/folder/di0dagtq841st/Y_vs_SnK_sound",
+    "sourceGame": "Ys vs. Sora no Kiseki: Alternative Saga",
+    "sourcePlatform": "PSP",
+    "status": "catalog-only-not-downloaded",
+    "rootFileCount": 4,
+    "declaredSubfolderFileCount": 17,
+    "notes": "Author labels Japanese voices and game SFX. 4 root archives include announcer, Galsis, Mona, common SFX; 9 Trails + 8 Ys character archives declared by public folder API, not yet individually inventoried.",
+    "rootFiles": {
+      "response": {
+        "action": "folder/get_content",
+        "asynchronous": "no",
+        "folder_content": {
+          "chunk_size": "100",
+          "content_type": "files",
+          "chunk_number": "1",
+          "folderkey": "di0dagtq841st",
+          "files": [
+            {
+              "quickkey": "z6jjsz9vvr9x4fk",
+              "hash": "245624a810c8cfe2fda9d8522572d232526099039b7fae0c2133d93349477d83",
+              "filename": "YvsK__Announcer.zip",
+              "description": "",
+              "size": "277984",
+              "privacy": "public",
+              "created": "2023-12-27 17:41:41",
+              "password_protected": "no",
+              "mimetype": "application/zip",
+              "filetype": "archive",
+              "view": "0",
+              "edit": "0",
+              "revision": "14884",
+              "flag": "0",
+              "permissions": {
+                "value": "1",
+                "explicit": "0",
+                "read": "1",
+                "write": "0"
+              },
+              "downloads": "26",
+              "views": "0",
+              "links": {
+                "normal_download": "https://www.mediafire.com/file/z6jjsz9vvr9x4fk/YvsK__Announcer.zip/file"
+              },
+              "created_utc": "2023-12-27T23:41:41Z"
+            },
+            {
+              "quickkey": "kk71m32ziuyr3g3",
+              "hash": "9a9289e3b98261385d2689c70eea9c2a66353aeeba3831cb9ca81810e3390f3c",
+              "filename": "YvsK__Dragon King Galsis(Boss).zip",
+              "description": "",
+              "size": "2732699",
+              "privacy": "public",
+              "created": "2023-12-27 17:41:44",
+              "password_protected": "no",
+              "mimetype": "application/zip",
+              "filetype": "archive",
+              "view": "0",
+              "edit": "0",
+              "revision": "14886",
+              "flag": "0",
+              "permissions": {
+                "value": "1",
+                "explicit": "0",
+                "read": "1",
+                "write": "0"
+              },
+              "downloads": "33",
+              "views": "0",
+              "links": {
+                "normal_download": "https://www.mediafire.com/file/kk71m32ziuyr3g3/YvsK__Dragon_King_Galsis%2528Boss%2529.zip/file"
+              },
+              "created_utc": "2023-12-27T23:41:44Z"
+            },
+            {
+              "quickkey": "rpgqoqaf72fa2jx",
+              "hash": "1ce6eb9381e81c6d26a7161adc02e524c7eca8d59b6e69d0f0d9e2ee75f06e17",
+              "filename": "YvsK__Mona(Store).zip",
+              "description": "",
+              "size": "1243819",
+              "privacy": "public",
+              "created": "2023-12-27 17:41:41",
+              "password_protected": "no",
+              "mimetype": "application/zip",
+              "filetype": "archive",
+              "view": "0",
+              "edit": "0",
+              "revision": "14885",
+              "flag": "0",
+              "permissions": {
+                "value": "1",
+                "explicit": "0",
+                "read": "1",
+                "write": "0"
+              },
+              "downloads": "27",
+              "views": "0",
+              "links": {
+                "normal_download": "https://www.mediafire.com/file/rpgqoqaf72fa2jx/YvsK__Mona%2528Store%2529.zip/file"
+              },
+              "created_utc": "2023-12-27T23:41:41Z"
+            },
+            {
+              "quickkey": "sustzehxlk77lpl",
+              "hash": "7d168989f646d5deed80a657cca79e6d22b3abb5f230a786cddf1da4e34402f0",
+              "filename": "YvsK__Sound Effects.zip",
+              "description": "",
+              "size": "12009745",
+              "privacy": "public",
+              "created": "2023-12-27 17:42:03",
+              "password_protected": "no",
+              "mimetype": "application/zip",
+              "filetype": "archive",
+              "view": "0",
+              "edit": "0",
+              "revision": "14887",
+              "flag": "0",
+              "permissions": {
+                "value": "1",
+                "explicit": "0",
+                "read": "1",
+                "write": "0"
+              },
+              "downloads": "40",
+              "views": "0",
+              "links": {
+                "normal_download": "https://www.mediafire.com/file/sustzehxlk77lpl/YvsK__Sound_Effects.zip/file"
+              },
+              "created_utc": "2023-12-27T23:42:03Z"
+            }
+          ],
+          "more_chunks": "no",
+          "revision": "24663"
+        },
+        "result": "Success",
+        "current_api_version": "1.5"
+      }
+    },
+    "folders": {
+      "response": {
+        "action": "folder/get_content",
+        "asynchronous": "no",
+        "folder_content": {
+          "chunk_size": "100",
+          "content_type": "folders",
+          "chunk_number": "1",
+          "folderkey": "di0dagtq841st",
+          "folders": [
+            {
+              "folderkey": "nneapgoa6d923",
+              "name": "Fighters (Trails)",
+              "description": "",
+              "tags": "",
+              "privacy": "public",
+              "created": "2023-12-27 17:39:09",
+              "revision": "24693",
+              "flag": "0",
+              "permissions": {
+                "value": "1",
+                "explicit": "0",
+                "read": "1",
+                "write": "0"
+              },
+              "file_count": "9",
+              "folder_count": "0",
+              "dropbox_enabled": "no",
+              "created_utc": "2023-12-27T23:39:09Z"
+            },
+            {
+              "folderkey": "6uo6yo599k1nd",
+              "name": "Fighters (Ys)",
+              "description": "",
+              "tags": "",
+              "privacy": "public",
+              "created": "2023-12-27 17:38:55",
+              "revision": "24719",
+              "flag": "0",
+              "permissions": {
+                "value": "1",
+                "explicit": "0",
+                "read": "1",
+                "write": "0"
+              },
+              "file_count": "8",
+              "folder_count": "0",
+              "dropbox_enabled": "no",
+              "created_utc": "2023-12-27T23:38:55Z"
+            }
+          ],
+          "more_chunks": "no",
+          "revision": "24663"
+        },
+        "result": "Success",
+        "current_api_version": "1.5"
+      }
+    }
+  }
+}

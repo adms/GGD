@@ -1,0 +1,173 @@
+{
+  "schema": "ggd.ssbu-mario-ultimate14-motion-delivery@1",
+  "deliveryId": "ssbu-mario-ultimate14-motion-v1",
+  "sourceIds": [
+    "gitlab-ssbu-models",
+    "parallel-ns-ultimate14"
+  ],
+  "character": {
+    "name": "Mario",
+    "nameZh": "Mario／瑪利歐",
+    "nativeId": "fighter/mario/body/c00",
+    "variant": "c00",
+    "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+    "platform": "Nintendo Switch MOD"
+  },
+  "bodySource": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+    "bytes": 9190080,
+    "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+  },
+  "motionSources": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsdash.nuanmb",
+      "bytes": 72833,
+      "sha256": "2247d9422dcbe9d4b0a5bec4461783b0b8d8587281f8490aaa9c313f322ae8c7",
+      "action": "d01specialairsdash",
+      "frameRange": [
+        1.0,
+        55.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsend.nuanmb",
+      "bytes": 53388,
+      "sha256": "63d49bc1470daf9a268c664556168295b6d495d720bed7a3b428f73203f073b1",
+      "action": "d01specialairsend",
+      "frameRange": [
+        1.0,
+        39.0
+      ],
+      "fCurveCount": 800,
+      "transformNodeCount": 80,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsjump.nuanmb",
+      "bytes": 46756,
+      "sha256": "343b2b2ea5294c97496c34204117c047c2f59aee7f592a82d7273d3d46ecc927",
+      "action": "d01specialairsjump",
+      "frameRange": [
+        1.0,
+        31.0
+      ],
+      "fCurveCount": 800,
+      "transformNodeCount": 80,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsdash.nuanmb",
+      "bytes": 89477,
+      "sha256": "7b7d0071d8074b0cc6c4ae5a2561fac0a936c4dbe3c4f940ee83a7a05295a49e",
+      "action": "d01specialsdash",
+      "frameRange": [
+        1.0,
+        76.0
+      ],
+      "fCurveCount": 980,
+      "transformNodeCount": 98,
+      "missingArmatureBones": []
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsend.nuanmb",
+      "bytes": 52569,
+      "sha256": "c27e9d9566b5d99625af7cca1010fa722b8b81f840f41762d5e04d2ab2d1e5b5",
+      "action": "d01specialsend",
+      "frameRange": [
+        1.0,
+        39.0
+      ],
+      "fCurveCount": 800,
+      "transformNodeCount": 80,
+      "missingArmatureBones": []
+    }
+  ],
+  "dependency": {
+    "blenderVersion": "4.5.13 LTS",
+    "addon": "Smash Ultimate Blender",
+    "addonVersion": "3.0.4",
+    "addonRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/extracted/smash-ultimate-blender",
+    "addonZip": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/smash-ultimate-blender-3_0_4.zip",
+    "addonZipSha256": "813cd5af33b5c74d7bdc88a81095ee09cff3662d0ac50f858d8d6dc596237248",
+    "embeddedScriptsExecuted": false,
+    "transformTracksOnly": true
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+    "bytes": 1148100,
+    "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526"
+  },
+  "metrics": {
+    "triangles": 7189,
+    "drawPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 98,
+    "textureCount": 5,
+    "sourceNativeMotionCount": 5,
+    "proceduralMotionCount": 0,
+    "retargetedMotionCount": 0,
+    "animationChannelCountPerClip": 294
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "finiteFloatValuesChecked": 131472,
+    "webglSamplesReviewed": 15,
+    "visualPlaybackAccepted": true
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeGameplayActionSet": false,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/integrate.py",
+      "sha256": "a827874c5c4565633ee5a6d482bc86c18407a5e1556fe782bdcb021dd6b9a938"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/import_nuanmb_actions.py",
+      "sha256": "7eb13e708518f0328819ea5c8c52764e05b5c12a815d142f47382b57f0982c52"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/normalize_materials.py",
+      "sha256": "c501a09f9a13614b045bc6a2f3b6862fd4d1f4a187305d24e2f49ffd98b8d245"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/validate_motion_component.mts",
+      "sha256": "c944d7a3202cd053c3317f1fe3804ac6357baa8bfb14acf8ec6c0ad0b34c46af"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/render_motion_glb.py",
+      "sha256": "636a5fd8e3a62753fd6af5ed501886793feb1c2fc3db6db6c2f9abc35db35622"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/render_motion_glb.mjs",
+      "sha256": "f70d3bb209fc11c670860745f484a7707e3e53406eaddf0269cdb6ee0c029e02"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "cb8e2dea1f5a9a552a8a734691eb235ad344a7261667d32eeddc1fe7da3342ea"
+    },
+    {
+      "path": "tools/w3x-import/repair_alpha_backdrops.py",
+      "sha256": "dcbc750871857277084c31ef9b6fbf6b581b5040b79aa48ee34970968be91a1a"
+    }
+  ],
+  "gaps": [
+    "Only five Ultimate14 community MOD body motions are present; idle, walk/run, normal attacks, hurt, death and the remaining gameplay action set are missing.",
+    "The motions are native to the acquired Ultimate14 MOD package, not verified original Nintendo game animations and not procedural or retargeted animations.",
+    "Visibility and material animation tracks remain in the original NUANMB sources and were not imported into this Transform-only body component.",
+    "Mario has no GGD hero definition or skill mapping, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+    "Source-game shader parity and semantic action-event mapping remain unverified; six draw primitives pass the hard budget but exceed the warning threshold of three."
+  ]
+}

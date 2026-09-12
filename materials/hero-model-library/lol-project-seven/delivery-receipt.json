@@ -1,0 +1,79 @@
+{
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+  "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+  "manifestSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
+  "voiceIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/seven-voice-index.json",
+  "voiceIndexSha256": "5765ddb9cb6bd9f385bb1325649eb7dc388991ee8d7610eed534f1c67de49fad",
+  "gitHandoffPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/git-handoff-files.json",
+  "gitHandoffSha256": "315da5667bb2398aaccc4e4bd81f28211112886e075d1a7eee0a4786fbe6bd9e",
+  "scopeControlPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/control/allowlist.json",
+  "totals": {
+    "completeWads": 7,
+    "completeAudioWads": 7,
+    "nonAudioWads": 0,
+    "pcmWavCount": 4927,
+    "audioSeconds": 18611.429133078203,
+    "audioBytes": 5429873080,
+    "nativeWemFiles": 4927,
+    "nativeBanks": 113,
+    "filesWithSamplesAboveUnity": 2264,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "exactPcm16Recoveries": 0,
+    "packagesWithUnresolvedErrors": 0
+  },
+  "characters": [
+    {
+      "heroId": "example:karthus",
+      "name": "卡爾瑟斯",
+      "nativeId": "Karthus.ja_JP",
+      "pcmWavCount": 225,
+      "seconds": 1102.4895918367351
+    },
+    {
+      "heroId": "example:leesin",
+      "name": "李星",
+      "nativeId": "LeeSin.ja_JP",
+      "pcmWavCount": 1069,
+      "seconds": 4757.531111111111
+    },
+    {
+      "heroId": "example:lux",
+      "name": "拉克絲",
+      "nativeId": "Lux.ja_JP",
+      "pcmWavCount": 1142,
+      "seconds": 3473.1046712018183
+    },
+    {
+      "heroId": "example:missfortune",
+      "name": "好運姐",
+      "nativeId": "MissFortune.ja_JP",
+      "pcmWavCount": 695,
+      "seconds": 2130.2731972789097
+    },
+    {
+      "heroId": "example:warwick",
+      "name": "沃維克",
+      "nativeId": "Warwick.ja_JP",
+      "pcmWavCount": 531,
+      "seconds": 1848.2423303571418
+    },
+    {
+      "heroId": "example:xerath",
+      "name": "齊勒斯",
+      "nativeId": "Xerath.ja_JP",
+      "pcmWavCount": 223,
+      "seconds": 1060.2127210884355
+    },
+    {
+      "heroId": "example:yasuo",
+      "name": "犽宿",
+      "nativeId": "Yasuo.ja_JP",
+      "pcmWavCount": 1042,
+      "seconds": 4239.575510204076
+    }
+  ],
+  "defaultChanged": false,
+  "centralFilesChanged": false
+}

@@ -4,7 +4,7 @@ import { dirname, resolve, sep } from "node:path";
 import { zChampionDoc, type ChampionDoc } from "@ggd/shared/content/schema/champion";
 import { zModelDoc, type ModelDoc } from "@ggd/shared/content/schema/model";
 import {
-  MODEL_VERSION_PREFIX, zChampionModelVersion,
+  MODEL_VERSION_PREFIX, zChampionModelVersion, preferredModelVersion,
   type ChampionModelVersion, type ChampionModelVersionState, type ModelVersionCommand,
 } from "@ggd/shared/content/schema/championModelVersions";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
@@ -40,7 +40,7 @@ export class ModelVersions {
 
   state(id: string): ChampionModelVersionState {
     const champion = this.champion(id);
-    return { championId: id, expectedHash: contentSha256(champion), activeModelKey: champion.modelKey, versions: champion.modelVersions ?? [] };
+    return { championId: id, expectedHash: contentSha256(champion), activeModelKey: champion.modelKey, versions: champion.modelVersions ?? [], selectionMode: champion.modelSelectionMode ?? "automatic", preferredModelKey: preferredModelVersion(champion.modelVersions ?? [])?.modelKey ?? champion.modelKey };
   }
 
   /** Generic CRUD/restore cannot erase the history or bypass a stale selection check. */
@@ -52,6 +52,7 @@ export class ModelVersions {
     const file = docPath(this.root, "champions", id);
     if (existsSync(file)) this.assertDocumentPath(file);
     const current = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) as Record<string, unknown> : null;
+    if (current?.modelSelectionMode !== body?.modelSelectionMode) throw new ModelVersionError("請使用模型選單切換自動或手動選用。", 409);
     if (current?.modelVersions === undefined && body?.modelVersions === undefined) {
       if (current && body && current.modelKey !== body.modelKey) throw new ModelVersionError("請透過「上線模型版本」保存舊版並套用新模型。", 409);
       return;
@@ -111,16 +112,17 @@ export class ModelVersions {
     }
   }
 
-  private freeze(source: { doc: ModelDoc; bytes: Uint8Array }, label: string, provenance: ChampionModelVersion["source"], legacy: boolean): FrozenBody {
+  private freeze(source: { doc: ModelDoc; bytes: Uint8Array }, label: string, provenance: ChampionModelVersion["source"], legacy: boolean, automaticEligible?: boolean): FrozenBody {
     // Keep the asset family prefix: legacy overlay detection depends on it.
     // Drop the live generator knob, since this GLB is already baked and immutable.
     const { voxel: _voxel, bodyVersion: _version, ...binding } = source.doc;
     const binarySha256 = sha256Bytes(source.bytes);
     const glbPath = `${source.doc.glbPath.slice(0, source.doc.glbPath.lastIndexOf("/"))}/versions/${binarySha256}.glb`;
     const appearance = { ...binding, glbPath, yawOffsetDeg: effectiveYawOffsetDeg(source.doc), bodyVersion: { sourceModelKey: source.doc.id, legacyAppearance: legacy } };
-    const id = MODEL_VERSION_PREFIX + contentSha256(appearance).slice(7, 55);
+    // Identical bytes from different deliveries retain independently selectable provenance.
+    const id = MODEL_VERSION_PREFIX + contentSha256({ appearance, label, source: provenance, ...(automaticEligible === undefined ? {} : { automaticEligible }) }).slice(7, 55);
     const doc = zModelDoc.parse({ ...appearance, id });
-    const version = zChampionModelVersion.parse({ modelKey: id, label, sourceModelKey: source.doc.id, modelSha256: contentSha256(doc).slice(7), binarySha256, registeredAt: new Date().toISOString(), source: provenance });
+    const version = zChampionModelVersion.parse({ modelKey: id, label, sourceModelKey: source.doc.id, modelSha256: contentSha256(doc).slice(7), binarySha256, registeredAt: new Date().toISOString(), source: provenance, ...(automaticEligible === undefined ? {} : { automaticEligible }) });
     return { doc, bytes: source.bytes, version };
   }
 
@@ -134,11 +136,11 @@ export class ModelVersions {
   async prepare(id: string, command: ModelVersionCommand): Promise<{ champion: ChampionDoc; artifacts: FrozenBody[] }> {
     const champion = this.champion(id);
     this.assertCurrent(champion.id, command.expectedHash);
-    if (command.action === "activate") {
-      const version = champion.modelVersions?.find((v) => v.modelKey === command.modelKey);
+    if (command.action === "activate" || command.action === "automatic") {
+      const version = command.action === "automatic" ? preferredModelVersion(champion.modelVersions ?? []) : champion.modelVersions?.find((v) => v.modelKey === command.modelKey);
       if (!version) throw new ModelVersionError("此英雄沒有該模型版本。", 422);
       this.verify(version);
-      return { champion: zChampionDoc.parse({ ...champion, modelKey: version.modelKey }), artifacts: [] };
+      return { champion: zChampionDoc.parse({ ...champion, modelKey: version.modelKey, modelSelectionMode: command.action === "automatic" ? "automatic" : "manual" }), artifacts: [] };
     }
     if (command.source.kind === "previous") throw new ModelVersionError("舊版紀錄由系統自動保存。", 422);
     // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
@@ -161,16 +163,20 @@ export class ModelVersions {
     if (versions.length >= 64) throw new ModelVersionError("此英雄已保存 64 個版本，未移除任何歷史版本。", 422);
     if (!versions.length) {
       const previous = this.freeze(this.source(champion.modelKey), "原上線模型", {
-        kind: "previous", character: champion.name, work: "原上線內容", library: "GGD", reference: `models/${champion.modelKey}.json`,
+        kind: "previous", character: champion.name, work: "原上線內容", library: "GGD", reference: `models/${champion.modelKey}.json`, tier: /^(imported\.|w3x\.)/.test(champion.modelKey) ? "w3x" : "original",
       }, true);
       artifacts.push(previous); versions.push(previous.version);
     }
-    const next = this.freeze(candidate, command.label, command.source, false);
+    const next = this.freeze(candidate, command.label, command.source, false, command.automaticEligible ?? command.source.kind !== "style-proxy");
     if (versions.some((v) => v.modelKey === next.version.modelKey)) {
       throw new ModelVersionError("相同模型與動作設定已在此英雄的版本清單中，請直接選擇該版本。", 409);
     }
     artifacts.push(next); versions.push(next.version);
-    return { champion: zChampionDoc.parse({ ...champion, modelKey: next.doc.id, modelVersions: versions }), artifacts };
+    const mode = champion.modelSelectionMode ?? "automatic";
+    const selected = mode === "manual" ? versions.find((v) => v.modelKey === champion.modelKey) ?? versions[0]! : preferredModelVersion(versions);
+    if (!selected) throw new ModelVersionError("沒有核准自動選用的模型；候選仍保留供手動選用。", 422);
+    if (!artifacts.some((artifact) => artifact.version.modelKey === selected.modelKey)) this.verify(selected);
+    return { champion: zChampionDoc.parse({ ...champion, modelKey: selected.modelKey, modelVersions: versions, modelSelectionMode: mode }), artifacts };
   }
 
   assertCurrent(id: string, expectedHash: string): void {

@@ -1,3 +1,5 @@
+import type { ModelSelectionApi } from "./ui/ChampionModelVersions";
+import { zChampionModelVersionState } from "@ggd/shared/content/schema/championModelVersions";
 /** Typed wrappers over the platform admin API (all via the shared ApiClient). */
 import { ApiClient, ApiError } from "./session";
 import type { heroCatalogApi, CatalogHeroChoice, CatalogHeroPreview, CatalogVersionChoice } from "./contentApi";
@@ -47,6 +49,27 @@ export const platformHeroCatalogApi: typeof heroCatalogApi = {
   capture:()=>catalogResult(()=>api.request<{version:{versionId:string}}>("/content-overlay/hero-catalog/versions/capture",{body:{}})),
   preview:(heroPath,versionId)=>catalogResult(()=>api.request<CatalogHeroPreview>("/content-overlay/hero-catalog/preview",{body:{heroPath,versionId}})),
   restore:(preview)=>catalogResult(()=>api.request<{versionId:string;restoredFrom:string;previousVersion:string;contentVersion:string}>("/content-overlay/hero-catalog/restore",{body:{heroPath:preview.hero.path,versionId:preview.versionId,expectedCurrentVersion:preview.currentVersion,planDigest:preview.planDigest}})),
+};
+
+/** Model selection uses the production admin session and durable content overlay. */
+export const platformModelVersionsApi: ModelSelectionApi = {
+  fetchDoc: async (collection, id) => {
+    try {
+      const doc = await getOverlayDoc(collection, id) ?? (await getShippedDoc(collection, id)).doc;
+      return { doc: doc && typeof doc === "object" && !Array.isArray(doc) ? doc as Record<string, unknown> : null };
+    } catch { return { doc: null }; }
+  },
+  modelVersions: {
+    read: async id => {
+      const result = await catalogResult(async () => zChampionModelVersionState.parse(await api.request(`/content-overlay/champions/${encodeURIComponent(id)}/model-versions`)));
+      return { state: result.data, error: result.error };
+    },
+    update: async (id, command) => {
+      const result = await catalogResult(async () => zChampionModelVersionState.parse(await api.request(`/content-overlay/champions/${encodeURIComponent(id)}/model-versions`, { body: command })));
+      return { state: result.data, error: result.error };
+    },
+    catalog: async () => ({ ids: [], error: null }),
+  },
 };
 
 // ---- auth -------------------------------------------------------------------

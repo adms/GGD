@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.93011ca09d17b780568d3c89",
+  "title": "梅普露",
+  "kind": "model-body",
+  "model": "models/community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:272",
+        "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+        "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
+        "sha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+        "bytes": 920828,
+        "documentSha256": "93011ca09d17b780568d3c89f0a890d80aab56944eddee884395efed3e26540e",
+        "sourceCharacter": "梅普露",
+        "sourceWork": "怕痛的我，把防禦力點滿就對了",
+        "sourceAssetId": "300heroes:143555c3ac43ac85b6538424",
+        "sourceSha256": "98fc92bf763811f4e95b12a848d38d6b7aeadc42c789ad5bac3324b2f05e6e59",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.93011ca09d17b780568d3c89"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-maple",
+        "name": "梅普露"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

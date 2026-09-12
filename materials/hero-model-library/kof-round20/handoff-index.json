@@ -1,0 +1,143 @@
+{
+  "schema": "ggd.source-round-handoff@1",
+  "roundId": "kof-author-models-round20",
+  "createdAt": "2026-09-10T15:16:42.103814+00:00",
+  "scope": "KOF XV Mai and Iori, original extracted FBX exports plus distinct SFM conversion; bounded 3 acquired archives",
+  "downloadedArchives": 3,
+  "archiveBytes": 271317884,
+  "characters": [
+    "Mai Shiranui",
+    "Iori Yagami"
+  ],
+  "selectableRuntimeModels": 0,
+  "nativeGameplayAnimations": 0,
+  "newAudioFiles": 0,
+  "newStandaloneVfxFiles": 0,
+  "deliveries": [
+    {
+      "sourceId": "kof-xv-mai-whitemagesunny-raw",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw",
+      "entryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/public-source-entry.json",
+      "entrySha256": "c2ca4bbb4d69ef4d91b1521363a6f6e36320e1abe6ac50447234664062a43867",
+      "deliveryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/delivery-20260910T151538200789Z.json",
+      "deliverySha256": "67e91b59d9888679fbf8ffa41e08b60330bd5e9a2af97da315c64a8c26a76b35",
+      "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/raw/King of Fighters XV - Mai Shiranui.rar",
+      "archiveSha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67",
+      "nativeModelPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/extracted-v1/Raw Files/Mai Shiranui.fbx",
+      "nativeModelSha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe",
+      "meshCount": 21,
+      "vertices": 178947,
+      "triangles": 116939,
+      "bones": 319,
+      "nativeAnimations": 0,
+      "audioCount": 0,
+      "textureCount": 12,
+      "gitEligibleFiles": [
+        "public-source-entry.json",
+        "source-manifest.json",
+        "fbx-analysis.json",
+        "texture-validation.json",
+        "tools/ggd-kof-drive-download.py",
+        "tools/ggd-kof-round20-extract.py",
+        "tools/extract_public_sources.py",
+        "tools/ggd-kof-fbx-inspect.py",
+        "tools/ggd-kof-round20-textures.py",
+        "tools/ggd-kof-round20-freeze-raw.py"
+      ]
+    },
+    {
+      "sourceId": "kof-xv-iori-whitemagesunny-raw",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw",
+      "entryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/public-source-entry.json",
+      "entrySha256": "7e81a5b11f73b1f2759a9e1a21a1f92e30c6ed7ca0c91528f36cf4bc4fb475c9",
+      "deliveryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/delivery-20260910T151539495752Z.json",
+      "deliverySha256": "087ea81e82eb3242ddc4ebbe732e20db1f20e0181eeb8d9bb0496ee7661ab0b4",
+      "archivePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/raw/The King of Fighters XV - Iori Yagami.rar",
+      "archiveSha256": "40d327cd60a6a196541b993370549f8563e9578d7b1c00e7b49507c338f50329",
+      "nativeModelPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/extracted-v1/Raw Files/Iori Yagami.fbx",
+      "nativeModelSha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
+      "meshCount": 26,
+      "vertices": 85852,
+      "triangles": 126007,
+      "bones": 241,
+      "nativeAnimations": 0,
+      "audioCount": 0,
+      "textureCount": 12,
+      "gitEligibleFiles": [
+        "public-source-entry.json",
+        "source-manifest.json",
+        "fbx-analysis.json",
+        "texture-validation.json",
+        "tools/ggd-kof-drive-download.py",
+        "tools/ggd-kof-round20-extract.py",
+        "tools/extract_public_sources.py",
+        "tools/ggd-kof-fbx-inspect.py",
+        "tools/ggd-kof-round20-textures.py",
+        "tools/ggd-kof-round20-freeze-raw.py"
+      ]
+    },
+    {
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm",
+      "entryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm/public-source-entry.json",
+      "entrySha256": "a380e0f5e95073b5a44848721974c3190c485029f266f8feac8e5b5e1b7dc3b2",
+      "deliveryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm/supplement-delivery-20260910T151139112875Z.json",
+      "deliverySha256": "f76e316a178bbe33b26b324e02a35a87960fa383addbddaa80e64746cc0e1add",
+      "gitEligibleFiles": [
+        "public-source-entry.json",
+        "tools/ggd-kof-round20-extract.py",
+        "tools/ggd-kof-round20-freeze.py",
+        "tools/ggd-kof-drive-download.py",
+        "tools/public-kof-download.mjs",
+        "tools/package-lock.json",
+        "tools/extract_public_sources.py"
+      ],
+      "oldFileShaUnchanged": true
+    }
+  ],
+  "allReferencedFileShaVerified": true,
+  "oldDeliveryFilesUnchanged": true,
+  "downloadsActive": false,
+  "centralFilesModified": false,
+  "gitPublicationPerformed": false,
+  "awsOperationsPerformed": false,
+  "missingToComplete": [
+    "Original FBX source material names need mapping to provided TGA files; GGD standard conversion/validation and dropdown registration belong to root workflow.",
+    "Original gameplay motion/VFX and Iori Japanese audio were not acquired in this batch. Previously acquired Mai audio remains separate and unchanged."
+  ],
+  "sourceAttempts": [
+    {
+      "url": "https://www.deviantart.com/xcrofty/art/The-King-of-Fighters-XIV-Mai-678059999",
+      "status": "author page obtained; Google Drive401, Yandex CAPTCHA, MEGA EBLOCKED -16; no bypass"
+    },
+    {
+      "url": "https://www.deviantart.com/xcrofty/art/The-King-of-Fighters-XIV-Iori-676493952",
+      "status": "author page obtained; Google Drive401 and MEGA EBLOCKED -16; no bypass"
+    },
+    {
+      "url": "https://www.patreon.com/posts/king-of-fighters-64795965",
+      "status": "search describes free Mai archive; live403, stopped"
+    },
+    {
+      "url": "https://www.deviantart.com/enlightendshadow/art/KOFXV-Mai-EnlightendShadow-907248683",
+      "status": "public author page obtained, direct download requires login; did not bypass. Distinct attributed SFM version independently public and obtained."
+    },
+    {
+      "url": "https://www.deviantart.com/michifreddy35/art/King-Of-Fighters-XV-Iori-Yagami-909404068",
+      "status": "public page; direct download requires login, not acquired"
+    },
+    {
+      "url": "https://www.deviantart.com/pharaohillusion/art/KOF-XIV-Iori-Classic-XNALara-XPS-819613954",
+      "status": "public page; direct download requires login, not acquired"
+    },
+    {
+      "url": "https://sounds.spriters-resource.com/pc_computer/kingoffightersxiv/asset/407181/",
+      "status": "live403; no download bypass"
+    },
+    {
+      "url": "https://mugenguild.com/forum/topics/king-fighters-xv-sound-and-image-ripsupdate-goenitz-195418.0.html",
+      "status": "HTTP200 login page says topic missing or off limits; stopped"
+    }
+  ],
+  "sourcePageEvidenceRoot": "source-pages",
+  "nextPriority": "Root standardization of the two already acquired original XV FBX models; no further paid-body purchase needed for these particular candidates."
+}

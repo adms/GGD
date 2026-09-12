@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.3efeb4dc4c0a6bf25fd8bab6",
+  "title": "不知火舞（獨立副本／真田幸村）",
+  "kind": "model-body",
+  "model": "models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:mai",
+        "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+        "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+        "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+        "bytes": 1736188,
+        "documentSha256": "3efeb4dc4c0a6bf25fd8bab60cc54b4da9607cd950aaea7a5186d2d1ea78382a",
+        "sourceCharacter": "不知火舞（獨立副本／真田幸村）",
+        "sourceWork": "百花繚亂 SAMURAI GIRLS",
+        "sourceAssetId": "derivative:mai",
+        "sourceSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "community-review-03-20260907",
+          "targetName": "不知火舞",
+          "targetWork": "拳皇 KOF",
+          "sourceId": "community:community-review-03-20260907",
+          "sourceSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+          "copyMode": "independent-embedded-copy",
+          "changes": "白色衣料改紅色"
+        },
+        "bundleId": "ggd.model.3efeb4dc4c0a6bf25fd8bab6"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-03-20260907",
+        "name": "不知火舞"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

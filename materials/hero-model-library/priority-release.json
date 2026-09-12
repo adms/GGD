@@ -1,0 +1,613 @@
+{
+  "schema": "ggd-priority-model-release@1",
+  "state": "git-handoff-awaiting-main-review-and-deployment",
+  "baseMainCommit": "e36a5acda352",
+  "branch": "codex/hero-model-library-options",
+  "pullRequest": "https://github.com/adms/GGD/pull/1152",
+  "productionDeployed": false,
+  "inventoryRoleCount": 157,
+  "newHeroCount": 81,
+  "versionReferences": 283,
+  "registrationFailures": 0,
+  "priority15": [
+    {
+      "heroId": "b2-shadow",
+      "name": "闇影",
+      "activeModelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
+      "sourceModelKey": "ou99.481732-standard-v2",
+      "source": {
+        "kind": "style-proxy",
+        "character": "202511z13",
+        "work": "來源作品待核；論壇標題：202511z13",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-481732-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "similar-proxy",
+      "automaticEligible": true,
+      "modelSha256": "80a7994df1f89b3d0cf6ad54bd0794954bc52eb9159d2d8082d4c61decf37946",
+      "binarySha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+      "selectedSourceIds": [
+        "ou99:481732"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "b2-maomao",
+      "name": "貓貓",
+      "activeModelKey": "version.body.30b105459d1ab108fa51d3e2835f75ed24d492d3bd5f8592",
+      "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+      "source": {
+        "kind": "exact",
+        "character": "貓貓｜中性表情／小步幅",
+        "work": "藥師少女的獨語",
+        "library": "Lethal Company MOD／GrogCompany",
+        "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "afa2c08d5d767313e82acf0330475a62f7974ea136f00c96d97896c1bff78a2b",
+      "binarySha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67",
+      "selectedSourceIds": [
+        "runtime:maomao-community-procedural-ready-20260910"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 3,
+      "modelMotionLimitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "This explicitly named neutral-face derivative omits 58 source facial morph targets; original Unity bundle retains all 58, whose defaults are zero.",
+        "Run amplitude is 0.18 of initial procedural fallback to limit leg/skirt intersections; it is a restrained running-state gesture, not original character running motion.",
+        "The high-resolution original and original topology remain preserved; LOD uses Blender COLLAPSE and textures are reduced from2048 to1024.",
+        "Initial runtime-v1 is retained as historical review variant with visible large-stride skirt clipping; prefer runtime-v2."
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "b2-naofumi",
+      "name": "岩谷尚文",
+      "activeModelKey": "version.body.2136181a61f2dc6857d98a331ad134b68ac9dd17a8bd82d8",
+      "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+      "source": {
+        "kind": "exact",
+        "character": "岩谷尚文",
+        "work": "盾之勇者成名錄",
+        "library": "GTA SA 社群 MOD",
+        "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "590e814b2bc15a9655fe0f8104dd8ddd7b4c0b2400ae46a89c651cb951d9c156",
+      "binarySha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
+      "selectedSourceIds": [
+        "runtime:naofumi-native-material-fixed-procedural-v2"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 4,
+      "modelMotionLimitations": [
+        "原生模型轉出32骨及四材質；修復錯誤 BLEND 模式為來源對應 OPAQUE，保留完整貼圖與 specular。",
+        "減面至26,000面；全部八組骨權重保留，原始高面數 DFF/TXD 與錯誤試作另存。",
+        "六段均為GGD程序化替补動作，非原生遊戲動作；技能實戰及專用特效未宣稱完成。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "b2-guts",
+      "name": "凱茲",
+      "activeModelKey": "version.body.de3c6037deafcb87635f2c87e80a393f012fa03d82a9c086",
+      "sourceModelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+      "source": {
+        "kind": "exact",
+        "character": "凱茲｜狂戰士鎧甲",
+        "work": "烙印勇士 Berserk",
+        "library": "Lethal Company MOD／RRoD",
+        "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "e9a101deef1989deadcc89a9870c59717187b26a33046f9f4e2046cdcd2b4dac",
+      "binarySha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
+      "selectedSourceIds": [
+        "runtime:guts-community-procedural-ready-20260910"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 4,
+      "modelMotionLimitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "LOD uses Blender COLLAPSE; 2048 body texture reduced to1024; other three material textures retained.",
+        "Cape follows source skin weights without cloth simulation; death is a generic sideways fall."
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "b2-shinchan",
+      "name": "野原新之助",
+      "activeModelKey": "version.body.ed540d52c89846f386fd2cc45f011fc8df9cef09f33ff9ca",
+      "sourceModelKey": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+      "source": {
+        "kind": "exact",
+        "character": "野原新之助（normal outfit 紅衣／黃褲）",
+        "work": "蠟筆小新",
+        "library": "GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL",
+        "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "cf526b1be9ef9c96af745ebfd48b140b7a67a5e6cf1b988093b5290862d832db",
+      "binarySha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+      "selectedSourceIds": [
+        "runtime:gta5mod-shinchan-kstamil-procedural-six-state-v1"
+      ],
+      "retainedOptionCount": 2,
+      "versionCount": 4,
+      "modelMotionLimitations": [
+        "六段皆為 GGD 程序化替補，來源未附 YCD／原作動作。",
+        "原始 58,752 面模型、骨架及貼圖全部保留；可用副本減至 25,262 面，1024 貼圖圖集。",
+        "KS 另8張作者替換貼圖已保存，尚待組合，未冒稱已成後台外觀選項。",
+        "來源權利聲明原文保存；技術檢查未代表完成來源再散布授權確認。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-02-20260907",
+      "name": "八神庵",
+      "activeModelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+      "sourceModelKey": "ou99.313646-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "八神庵",
+        "work": "THE KING OF FIGHTERS",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-313646-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "46b44c18727f68739cab5e7c8d6c90cb9a140ae64ed173a3fed2b83342bb42c2",
+      "binarySha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+      "selectedSourceIds": [
+        "ou99:313646"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-05-20260907",
+      "name": "洛克人",
+      "activeModelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+      "sourceModelKey": "ou99.287871-standard",
+      "source": {
+        "kind": "exact",
+        "character": "洛克人",
+        "work": "Mega Man",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-287871-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "d70b5698be825c5626e6c152473484a4a9903a62cdad19e34d609984d9dcd558",
+      "binarySha256": "6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d",
+      "selectedSourceIds": [
+        "ou99:287871"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-07-20260907",
+      "name": "西索",
+      "activeModelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "8535c15a6cff530cad1b93cd634b04394e829ad346ed539dd72e712ce49636d4",
+      "binarySha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+      "selectedSourceIds": [
+        "ou99:497211"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。",
+        "可用副本已減面；完整原生高面數模型與動作仍保留。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "activeModelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
+      "sourceModelKey": "ou99.468771-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "赫蘿",
+        "work": "狼與辛香料",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-468771-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "14ffba3bf5fbbb60876eac8c90a0fda1ed1ab95c02e513e1bbb54df167b5d579",
+      "binarySha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223",
+      "selectedSourceIds": [
+        "ou99:468771"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-11-20260907",
+      "name": "利姆路",
+      "activeModelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
+      "sourceModelKey": "ou99.457280-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "利姆路",
+        "work": "關於我轉生變成史萊姆這檔事",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457280-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "72e0ed54bc6ebb8149b070c04ecb799645ff0d907b54a5bf917321a06ef881fe",
+      "binarySha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd",
+      "selectedSourceIds": [
+        "ou99:457280"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-14-20260907",
+      "name": "殺老師",
+      "activeModelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
+      "sourceModelKey": "ou99.472112-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "殺老師",
+        "work": "暗殺教室",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-472112-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "acedb2b5126e022bed5ed31d2213c6ff54bd981ea791faf0861ebf9334bc84ca",
+      "binarySha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e",
+      "selectedSourceIds": [
+        "ou99:472112"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。",
+        "可用副本貼圖已縮至模型预算；完整原圖仍保留。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "activeModelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+      "sourceModelKey": "ou99.457123-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "比利海靈頓",
+        "work": "摔角與網路迷因形象。",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457123-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "b03385fed8793f3815e9f51133d7a118b86a2ba9209fa215b0a5a1869cd5a8c0",
+      "binarySha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+      "selectedSourceIds": [
+        "ou99:457123"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "activeModelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+      "sourceModelKey": "ou99.311294-standard-v2",
+      "source": {
+        "kind": "exact",
+        "character": "菜月昴",
+        "work": "Re:從零開始的異世界生活",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "community-mod",
+      "automaticEligible": true,
+      "modelSha256": "8e6e48b3155057f885634df3a9d3a7a288a451aa7a25537bec53ca52b1aee7fd",
+      "binarySha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+      "selectedSourceIds": [
+        "ou99:311294"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "activeModelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
+      "sourceModelKey": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
+      "source": {
+        "kind": "exact",
+        "character": "高速婆婆｜招財貓形態",
+        "work": "膽大黨 Dandadan",
+        "library": "Lethal Company MOD／inkiidonut",
+        "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "manual",
+      "automaticEligible": true,
+      "modelSha256": "53a95a33bbd5e8d50e8bd512ad98e6507b53ce106ba462e8e7c26e262f8747a5",
+      "binarySha256": "02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3",
+      "selectedSourceIds": [
+        "runtime:turbo-granny-community-procedural-ready-20260910"
+      ],
+      "retainedOptionCount": 2,
+      "versionCount": 6,
+      "modelMotionLimitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "Confirmed lucky-cat form; distinct from pre-existing ou99.458013 owner-listed similar proxy.",
+        "All 9432 source triangles and five material slots retained; no decimation required."
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    },
+    {
+      "heroId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "activeModelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
+      "sourceModelKey": "ou99.459617-standard",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "selectionMode": "automatic",
+      "selectionClass": "similar-proxy",
+      "automaticEligible": true,
+      "modelSha256": "e372ff7c98df5585e3d4a7eb72b6b3339f65f8409949e2d43c2a3e5101bd25d1",
+      "binarySha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "selectedSourceIds": [
+        "ou99:459617"
+      ],
+      "retainedOptionCount": 1,
+      "versionCount": 5,
+      "modelMotionLimitations": [
+        "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
+      ],
+      "identityNotReclassifiedByThisAudit": true
+    }
+  ],
+  "otherWorkflows": {
+    "auditedNamedHeroes": 21,
+    "suppliedHeroes": 20,
+    "ofOriginal18Missing": 17,
+    "stillNoDeliveredNewModel": [],
+    "identity": "Other workflow supplied proxies retain similar-proxy class; source acquisition does not prove canonical identity.",
+    "newLocalBodyPendingConversion": [
+      "b2-kaiji"
+    ],
+    "newBodyReceipt": "../../../GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/delivery-receipt.json",
+    "stillUsingPriorPlaceholder": [
+      "b2-kaiji"
+    ]
+  },
+  "preservedManualDefaults": 15,
+  "preservedApprovedDerivatives": 11,
+  "localFixedLibrary": {
+    "before": 94,
+    "after": 139,
+    "added": 45,
+    "receipt": "current-options-admission.json",
+    "incrementalReceipts": [
+      "priority-evidence/haga-native-visibility/admission.json",
+      "priority-evidence/kaiji-community/admission.json"
+    ]
+  },
+  "finishedEntryPoint": "../asset-library/current-resources.json",
+  "sourceCounts": {
+    "allIndexedModels": 150,
+    "runtimeConversionDeliveries": 9
+  },
+  "audio": {
+    "lolScopeHeroes": 7,
+    "decodedJapaneseLanguagePackWav": 4927,
+    "immediatelyReadableLocally": true,
+    "index": "lol-project-seven/seven-voice-index.json",
+    "notAllConfirmedDialogue": true,
+    "mainCommittedCombatHeroes": 74,
+    "mainCommittedCombatClips": 1016,
+    "sourceReusedCombatClips": 308,
+    "syntheticCombatClips": 708,
+    "projectSevenRuntimeCombatBinding": "pending",
+    "priorityAudit": "priority-evidence/main-81-handoff/audio/per-hero.json",
+    "currentBranchCombatClips": 1018,
+    "currentBranchSourceReusedCombatClips": 310,
+    "trainSupplementClips": 2,
+    "extendedElevenCategoriesCompleteHeroes": 74,
+    "trainSupplement": "priority-evidence/kisaragi-train-audio/conversion.json",
+    "currentBranchAudit": "priority-evidence/main-81-handoff/current-branch-audio/current-per-hero.json"
+  },
+  "limitations": [
+    "Eight runtime derivatives use six GGD procedural animation states, not acquired native actions. Original source meshes, rigs and textures remain preserved.",
+    "Forum source identity classifications remain as delivered; visual matching does not establish canonical identity.",
+    "Model readiness does not imply all native VFX, skill bindings, voices or sound effects are complete.",
+    "Production deployment, every-source S3 backup and KOF full-roster acquisition are not completed by this receipt.",
+    "Original geometry findings remain retained. Haga has an independently registered visibility repair with 13 native clips and 82 direct playback samples; global geometry census and release checks are not declared passed."
+  ],
+  "evidence": [
+    "priority-registration.json",
+    "priority-evidence/final-integrity.json",
+    "current-options-admission.json",
+    "priority-evidence/unpublished-v2-withdrawal.json",
+    "parallel-deliveries-20260910/integration-receipt.json",
+    "priority-evidence/haga-native-visibility/final-integrity.json",
+    "priority-evidence/main-81-handoff/final-integrity.json",
+    "priority-evidence/kaiji-community/final-integrity.json"
+  ],
+  "postRegistrationReview": "post-registration-review.json",
+  "fullReleaseChecksPassed": false,
+  "newSourceDeliveries": {
+    "kof": [
+      "kof-xv-mai-sfmlab-lordscrub-v1",
+      "kof-xv-mai-whitemagesunny-raw",
+      "kof-xv-iori-whitemagesunny-raw"
+    ],
+    "infinityStrash": [
+      "parallel-infinity-strash-sorcerer-popp"
+    ],
+    "state": "raw-reserve-pending-conversion-and-s3-backup",
+    "kofAudio": [
+      "kof-xv-iori-audio-float32-v1"
+    ],
+    "newKofPrimaryAudioFiles": 97
+  },
+  "nativeVisibilityRepair": {
+    "sourceModelKey": "ou99.495015-native-visibility-v1",
+    "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+    "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+    "nativeAnimationCount": 13,
+    "visualSamples": 82,
+    "nonTargetVertexMaxError": 0,
+    "visibleTargetVertexMaxError": 0,
+    "hiddenTargetAreaMax": 0,
+    "evidence": "priority-evidence/haga-native-visibility/render-proof.json",
+    "productionDeployed": false
+  },
+  "contentBuildVersion": "cv_dc97f8aa6fdd",
+  "latestValidation": "priority-evidence/dai-vearn-20260911/validation.json",
+  "priority81Handoff": "priority-81-handoff.json",
+  "previousValidation": "priority-evidence/design-backlog/validation.json",
+  "kaijiCommunityModel": {
+    "receipt": "priority-evidence/kaiji-community/receipt.json",
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+    "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+    "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+    "nativeAnimations": 0,
+    "proceduralAnimations": 6,
+    "sourceAudio": 0,
+    "sourceVfx": 0,
+    "preservedPreviousOptions": 3,
+    "sourceBackup": "priority-evidence/kaiji-community/source-s3-backup.json",
+    "conversionBackup": "priority-evidence/kaiji-community/conversion-s3-backup.json"
+  },
+  "sourceSupplement": {
+    "sourceId": "github-flemmli97-fateubw-07e9d79b",
+    "models": 19,
+    "animationClips": 156,
+    "audioFiles": 5,
+    "runtimeReady": false,
+    "originalFucPsp": false,
+    "backupReceipt": "priority-evidence/fateubw-community/source-s3-backup.json"
+  },
+  "modelDesignBacklog": "materials/hero-model-library/已取得模型待設計英雄.md",
+  "palworldReserve": "materials/hero-model-library/priority-evidence/palworld-daedream/delivery.json",
+  "modelDesignBacklogCounts": {
+    "not-defined": 387,
+    "definitions-incomplete": 11,
+    "identity-review": 247,
+    "designed": 86,
+    "source-unavailable": 0
+  },
+  "prioritySourceProgress": {
+    "index": "design-backlog/resource-coverage.json",
+    "dai": "117 原檔、14部件，缺人體基底；完整本體0",
+    "vearnOld": "本作Boss存在已確認，本尊素材包未取得",
+    "vearnYoung": "原作真身獨立追蹤，素材包未取得",
+    "newNativeAudioFiles": 0,
+    "sourceBackupVerifiedMembers": 154,
+    "productionDeployed": false
+  }
+}

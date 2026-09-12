@@ -1,0 +1,136 @@
+{
+  "schema": "ggd.editor-form-receipt-history-fix@1",
+  "createdAt": "2026-09-10T19:02:58.343755+00:00",
+  "scope": "independent tmp source patch; central files not edited",
+  "ownership": {
+    "AGENTS": "AGENTS.md:45-49",
+    "rule": "tools/skill-forge/** belongs to Codex; source-level fix and local regression tests fit requested scope; no shared sim/schema/Main generator touched"
+  },
+  "paths": [
+    {
+      "repoPath": "tools/skill-forge/build-editor-form-receipts.mjs",
+      "localPath": "/private/tmp/ggd-formreceipts-history-fix/worktree/tools/skill-forge/build-editor-form-receipts.mjs",
+      "sha256": "87936f336ec8d4e89de8e3474379ec88cebf1e3f94242f62d56b6d4a9dea55e3"
+    },
+    {
+      "repoPath": "tools/skill-forge/editor-form-receipt-history.mjs",
+      "localPath": "/private/tmp/ggd-formreceipts-history-fix/worktree/tools/skill-forge/editor-form-receipt-history.mjs",
+      "sha256": "045515891425813d6264018a6f41bc26011b925a7c29d5570860d80a5441f11a"
+    },
+    {
+      "repoPath": "tools/skill-forge/editor-form-receipt-history.test.mjs",
+      "localPath": "/private/tmp/ggd-formreceipts-history-fix/worktree/tools/skill-forge/editor-form-receipt-history.test.mjs",
+      "sha256": "a05f85e2649096fa6aca4b9957b9ab39500609c9eaf87c61d5b952672ed45736"
+    }
+  ],
+  "patch": {
+    "path": "/private/tmp/ggd-formreceipts-history-fix/formreceipts-history.patch",
+    "sha256": "9d5ea53ddf45ddf3997868465aa557c8f2b7c5051781760465b8be5c5126d0b2"
+  },
+  "centralGeneratorUnchangedAtReview": false,
+  "implementation": {
+    "measurementRunsBeforeHistoricalDecision": true,
+    "historySource": "git show origin/main:docs/editor-contract/coordination/claim.editor-form-receipts.json",
+    "onlyIgnoredComparisonField": "source.capabilityFingerprint",
+    "requiresValidMatchingInputHashes": [
+      "source.brickInputSha256",
+      "source.typeCatalogSha256"
+    ],
+    "requiresNonemptyExactReceiptsAndAllOtherFields": true,
+    "preservesHistoricalBytesAndAttribution": true,
+    "onUnavailableMalformedHistory": "normal current output/check behavior, no reuse",
+    "onActualInputOrReceiptChange": "normal current output/check behavior; no historical reuse, coord can demand a distinct follow-up claim"
+  },
+  "actualFixture": {
+    "sourceMain": "e36a5acda3522ab0bb2677891a367e56eefb05a1",
+    "sourceFiles": [
+      "evidence/main-packet.json",
+      "evidence/measured-packet.json"
+    ],
+    "freshlyMeasuredReceiptCount": 178,
+    "historicalFingerprint": "dbeac382",
+    "currentFingerprint": "600485a2",
+    "historicalExactBytesSelected": true,
+    "selectedPacketSha256": "1ede4da9c863e839f8307312713b9e185f9b28946b4fae8b15da3cb5f2aa6292",
+    "actualFixtureSingleReceiptMutationRejected": true,
+    "projectedPacketCoordCheckPassed": true
+  },
+  "checks": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "/private/tmp/ggd-formreceipts-history-fix/worktree/tools/skill-forge/editor-form-receipt-history.test.mjs"
+      ],
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-formreceipts-history-fix/evidence/check-0.log",
+      "logSha256": "f493402b10e3c0f1b114243845d4e323fe6fc71a156c03698132b5e79408195c"
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "/private/tmp/ggd-formreceipts-history-fix/worktree/tools/skill-forge/build-editor-form-receipts.mjs"
+      ],
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-formreceipts-history-fix/evidence/check-1.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "apply",
+        "--check",
+        "/private/tmp/ggd-formreceipts-history-fix/formreceipts-history.patch"
+      ],
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-formreceipts-history-fix/evidence/check-2.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "tools/coord/check.mjs",
+        "--dir",
+        "/private/tmp/ggd-formreceipts-history-fix/evidence/projected"
+      ],
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-formreceipts-history-fix/evidence/check-3.log",
+      "logSha256": "99617930c0f33f836e5aa7a49bb99398028c2d38531c9fe9770abc23b9dcfc2d"
+    }
+  ],
+  "unitTests": {
+    "passed": 20,
+    "failed": 0,
+    "covers": [
+      "exact bytes and original attribution",
+      "changed real renderability/parameter edit/added control",
+      "changed brick/type catalog SHA or source path",
+      "changed limits, claim/base/repro/key/count/evidence",
+      "malformed, missing or unavailable history/input hashes",
+      "nonmutating comparison"
+    ]
+  },
+  "rootApplyCommands": [
+    "git apply --check /private/tmp/ggd-formreceipts-history-fix/formreceipts-history.patch",
+    "git apply /private/tmp/ggd-formreceipts-history-fix/formreceipts-history.patch",
+    "node --test tools/skill-forge/editor-form-receipt-history.test.mjs",
+    "pnpm formreceipts:build",
+    "pnpm formreceipts:check",
+    "pnpm coord:check"
+  ],
+  "limits": [
+    "Actual full generator React measurement was already completed in root regeneration; this child replayed its 178-row actual output through the new comparison helper. After applying, root should execute full generator/check above once.",
+    "No change to coordination dedupe rule, contract fingerprint, historical packet identity, claims, Main mechanism sources, central data or Git index."
+  ],
+  "centralSnapshotObservation": {
+    "originalUnchangedAtFinalSnapshot": false,
+    "matchesDeliveredPatchGenerator": true,
+    "newHelperAndTestNowPresentInCentral": true,
+    "note": "Central changed concurrently after patch handoff; final snapshot matches the delivered patch. This reviewer only wrote files under /private/tmp and performed git apply --check, never git apply or central writes."
+  }
+}

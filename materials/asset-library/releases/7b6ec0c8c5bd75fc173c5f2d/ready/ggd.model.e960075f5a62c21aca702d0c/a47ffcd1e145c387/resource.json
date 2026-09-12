@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.e960075f5a62c21aca702d0c",
+  "title": "黑",
+  "kind": "model-body",
+  "model": "models/community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:118",
+        "modelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+        "glbPath": "assets/models/community/e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48.glb",
+        "sha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+        "bytes": 658940,
+        "documentSha256": "e960075f5a62c21aca702d0cb399568d1c771efd3ab1ae3631ed85027587dbe7",
+        "sourceCharacter": "黑",
+        "sourceWork": "DARKER THAN BLACK－黑之契約者",
+        "sourceAssetId": "300heroes:3d7222e80131dc1b4fa7c782",
+        "sourceSha256": "aeb89e83d89f3b25516ee5bd46cdb64629a70e4ed7217643e4cf1a5ef5889e59",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.e960075f5a62c21aca702d0c"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-kaiji",
+        "name": "伊藤開司"
+      },
+      {
+        "id": "b2-orphen",
+        "name": "歐菲"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

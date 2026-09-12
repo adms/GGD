@@ -1,0 +1,11 @@
+{
+  "schema": "ggd-model-design-audit-backup@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/model-design-audits/20260911/fe0bc1bb4956e50b3635e82e1b5e108be40516130b4678f5371be5343e0be701.tar.gz",
+  "sha256": "fe0bc1bb4956e50b3635e82e1b5e108be40516130b4678f5371be5343e0be701",
+  "bytes": 1319725,
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog",
+  "fullGetAndEveryFileVerified": true,
+  "localPreserved": true,
+  "fileCount": 10,
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/model-design-audits/20260911/fe0bc1bb4956e50b3635e82e1b5e108be40516130b4678f5371be5343e0be701.files.json"
+}

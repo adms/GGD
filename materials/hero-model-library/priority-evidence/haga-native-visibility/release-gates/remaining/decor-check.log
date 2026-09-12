@@ -1,0 +1,6 @@
+
+> ggd@0.0.0 decor:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/config-decor/gen.ts --check
+
+⛔ ggd-config-decoration-census.json · ggd-config-decoration-census.md 過期了 —— 跑 `pnpm decor:build` 然後 git add
+ ELIFECYCLE  Command failed with exit code 1.

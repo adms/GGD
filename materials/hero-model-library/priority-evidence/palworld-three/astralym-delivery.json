@@ -1,0 +1,56 @@
+{
+  "schema": "ggd-astralym-delivery@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym",
+  "frozen": true,
+  "sourceEntriesProposal": "/private/tmp/ggd-astralym-source-entries.json",
+  "sourceFilesProposal": "/private/tmp/ggd-astralym-public-source-files.json",
+  "backupReceipt": "/private/tmp/ggd-astralym-s3-backup-receipt.json",
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/file-manifest.json",
+    "bytes": 15074,
+    "sha256": "fef30305f922ba9aa498832c832237c43a276f895ba020b820a49a54b527e0fe"
+  },
+  "backup": {
+    "localArchive": "/private/tmp/ggd-palworld-astralym-backup/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+    "bytes": 29873643,
+    "sha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+    "archiveFormat": "tar-gzip",
+    "archiveMemberRoot": "parallel-palworld-astralym",
+    "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-20260911/481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e.tar.gz",
+    "readbackVerified": true,
+    "fullReadbackVerified": true,
+    "readbackPath": "/private/tmp/ggd-palworld-astralym-backup/readback.tar.gz",
+    "readbackSha256": "481ed5133bb711abf2d5db839ad7c383fc144058773031de3fcf1e3deac9ce0e",
+    "deletionAllowed": false
+  },
+  "model": {
+    "sourceId": "opgg-palworld-astralym-2026081102",
+    "candidateIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/model-candidates-v2.json",
+    "original": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/original/model.glb",
+    "decodedV1": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded.glb",
+    "decodedV2": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+    "triangles": 23928,
+    "joints": 145,
+    "primitives": 3,
+    "clips": 58,
+    "movingClips": 57,
+    "staticClip": "HaloCutter_Loop_Ring",
+    "textures": 9,
+    "validatorErrorsV2": 0,
+    "validatorWarningsV2": 1,
+    "readiness": "pending-material-standardization-and-visual-backend-validation"
+  },
+  "audio": {
+    "sourceId": "gamevault-palworld-astralym-audio",
+    "index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/audioFileIndex.json",
+    "count": 6,
+    "seconds": 19.966666,
+    "category": "sound-effect",
+    "language": "nonverbal",
+    "sourceIsSynthetic": false,
+    "fullDecodePassed": true,
+    "listeningVerified": false
+  },
+  "noCentralChanges": true
+}

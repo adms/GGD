@@ -1,0 +1,120 @@
+{
+  "schema": "ggd.ssbu-mewtwo-component-delivery@1",
+  "deliveryId": "ssbu-mewtwo-c00-blender4513-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceCommit": "df76879171b064570b4e49a608c9f98211b33edb",
+  "character": {
+    "name": "Mewtwo",
+    "nameZh": "超夢",
+    "nativeId": "fighter/mewtwo/body/c00",
+    "variant": "c00",
+    "sourceGame": "Super Smash Bros. Ultimate",
+    "originalSeries": "Pokémon"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/mewtwo-c00.blend",
+    "bytes": 3463792,
+    "sha256": "a75e399676876d88bcb8ae48f08d6d1efd4d6ae9e3dd224479a6e5b15a3a4a74"
+  },
+  "finalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1",
+  "rebuildRoot": "/private/tmp/ssbu-mewtwo-c00-rebuild-v1",
+  "blenderExport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/blender-export.glb",
+    "bytes": 401444,
+    "sha256": "f2933958bd95bc313e0f8a9c932619f4812ac0868d9608c9910122bb3c4f9fa4"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+    "bytes": 667840,
+    "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0"
+  },
+  "derivedTextures": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/derived-textures/def_mewtwo_001_col.png.ggd-256.png",
+      "bytes": 72073,
+      "sha256": "09bb4be9f0633485be8da2a65423c3e67a8ec3e72a77e2c79cd9f348cbc0e7e3"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/derived-textures/eye_mewtwo_w_col.png.ggd-256.png",
+      "bytes": 19513,
+      "sha256": "a9397f157718a24d51b7ddd91ac6cfa9f6ac95f13e0f757af2703b75524b4361"
+    }
+  ],
+  "metrics": {
+    "triangles": 6972,
+    "drawPrimitives": 3,
+    "skinnedPrimitives": 3,
+    "skinCount": 1,
+    "jointCount": 75,
+    "textureCount": 2,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0,
+    "worldHeightMeters": 1.800000087853982
+  },
+  "normalization": {
+    "drawCalls": {
+      "before": 5,
+      "after": 3
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": true
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "finiteFloatValuesChecked": 105456,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "f5652b4db8fce114d1e8b1aa39706b9a400e3c8b51aebb10251838289f76275a"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/normalize_static_component.mts",
+      "sha256": "38292868500638ffd63a406fa0e78e48f142b71daaab6c98c6691a623144276b"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "sha256": "1cd199b1853322c882d42aba0715b8ecbffc92f50516e702d51a6aad11c25b93"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.py",
+      "sha256": "ca465944cb995b3614d5abf708d85d6e27490aec030b385fdd1e939beace8013"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.mjs",
+      "sha256": "29a3daac6b06bcf13ad1d8d6f0007b42293b642666b2ba3a67eba3dfb17dd4c2"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "7b404bcd2f050dbe6fc78c0d06d29fe2999d08d198179d2619839da8cc0303c9"
+    }
+  ],
+  "gaps": [
+    "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+    "No GGD hero definition or skill binding exists for this exact Mewtwo identity.",
+    "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+    "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+    "Twenty-three hidden facial/source mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
+    "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+  ]
+}

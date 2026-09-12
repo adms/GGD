@@ -1,0 +1,89 @@
+{
+  "schema": "ggd-source-workflow-code-archive@1",
+  "files": [
+    {
+      "path": "slayers-hand-review/ggd-lina-hand-variants.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/ggd-lina-hand-variants.py",
+      "bytes": 4175,
+      "sha256": "76a0683a6e7de260106ade00fe5c4f3818edca0574d54b032d16c281eaf0284a"
+    },
+    {
+      "path": "slayers-hand-review/ggd-lina-render-diagnostic-server.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/ggd-lina-render-diagnostic-server.py",
+      "bytes": 3447,
+      "sha256": "67ae1ad740c88614b10f1cae7280c2ab0efd9e0d8f3dcef71a4d4c6903fd7a4e"
+    },
+    {
+      "path": "slayers-hand-review/ggd-lina-render-diagnostic.mjs",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/ggd-lina-render-diagnostic.mjs",
+      "bytes": 5822,
+      "sha256": "017e1e756481176f9048541e209383c60d0801ea068ddc9af244e086effe359d"
+    },
+    {
+      "path": "slayers-hand-review/ggd-lina-render-server.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/ggd-lina-render-server.py",
+      "bytes": 3468,
+      "sha256": "959a938d4346669a08d85ae11e3a41155ae34863ab3d5b82a18f0036c7e2d50a"
+    },
+    {
+      "path": "slayers-hand-review/ggd-lina-render.mjs",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/ggd-lina-render.mjs",
+      "bytes": 3805,
+      "sha256": "f3d12e82848be9078fc5d40b8112d8998ca33b44b6389984474bf25a83a180f9"
+    },
+    {
+      "path": "slayers-hand-review/ggd-lina-review-finalize.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/ggd-lina-review-finalize.py",
+      "bytes": 13709,
+      "sha256": "e340b86f4e4b9884248dda8f4d75d8b183c22ea0514fcaf72e43a89135137d8c"
+    },
+    {
+      "path": "slayers-hand-review/glb_io.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/scripts/glb_io.py",
+      "bytes": 6754,
+      "sha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e"
+    },
+    {
+      "path": "psp-native/ggd-convert-native-smd-samples.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/control/tooling/ggd-convert-native-smd-samples.py",
+      "bytes": 2805,
+      "sha256": "3130bfb67cb9348a3a7c18063406b5c96d426c1b8330319f2a30c4b75f431c41"
+    },
+    {
+      "path": "psp-native/ggd-fix-native-smd-gltf.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/control/tooling/ggd-fix-native-smd-gltf.py",
+      "bytes": 3086,
+      "sha256": "6d4b2af4104740ee764b6420f0929ce561bf30b27ad955e4a2520396d067f535"
+    },
+    {
+      "path": "psp-native/ggd-freeze-fuc-native-batch3.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/control/tooling/ggd-freeze-fuc-native-batch3.py",
+      "bytes": 14527,
+      "sha256": "4fe98f38b637dca287cbed01ab239153fa8bc7cb28074f50e3c1b5ad03fa2b54"
+    },
+    {
+      "path": "psp-native/ggd-index-native-gmo.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/control/tooling/ggd-index-native-gmo.py",
+      "bytes": 5209,
+      "sha256": "13f9e338bb7a3541ae7f8019feb6100f197e98b23590ada3102b7e7206929c55"
+    },
+    {
+      "path": "psp-native/ggd-inspect-psp-gmo.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/control/tooling/ggd-inspect-psp-gmo.py",
+      "bytes": 5486,
+      "sha256": "857332fa7302f1cc1d474c549f30767048e5d3707c3c6c2138d8c311d2a02d94"
+    },
+    {
+      "path": "psp-native/ggd-validate-native-smd.cjs",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/control/tooling/ggd-validate-native-smd.cjs",
+      "bytes": 943,
+      "sha256": "98c4536a9c26550f826385688b995410c7666eefdc55d5f2b4eb106bdf77f115"
+    },
+    {
+      "path": "lol-pcm16-recovery/recover-lol-pcm16.py",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/recovery-lol-local-pcm16-20260910/tools/recover-lol-pcm16.py",
+      "bytes": 5829,
+      "sha256": "8d05b142ddd859f181920ea383395e11ed73703a783bc406876329d42899cb7a"
+    }
+  ]
+}

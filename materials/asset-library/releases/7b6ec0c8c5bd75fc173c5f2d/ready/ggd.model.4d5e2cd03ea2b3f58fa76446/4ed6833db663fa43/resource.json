@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.4d5e2cd03ea2b3f58fa76446",
+  "title": "伊莉雅",
+  "kind": "model-body",
+  "model": "models/community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-16-20260907",
+        "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+        "glbPath": "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+        "sha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+        "bytes": 1053984,
+        "documentSha256": "4d5e2cd03ea2b3f58fa76446954bfb6c6af0a386bffa190bc998c23b8c609f96",
+        "sourceCharacter": "伊莉雅",
+        "sourceWork": "Fate/kaleid liner 魔法少女☆伊莉雅",
+        "sourceAssetId": "300heroes:3ec592fda559036e3b71758f",
+        "sourceSha256": "813d20aead0383d2ad5a309407ce5cc92671b2f7dc36cd4dce38c008ac38f93d",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.4d5e2cd03ea2b3f58fa76446"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-16-20260907",
+        "name": "魔法少女☆伊莉雅"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

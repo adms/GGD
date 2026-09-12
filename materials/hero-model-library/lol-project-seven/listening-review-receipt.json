@@ -1,0 +1,230 @@
+{
+  "schema": "ggd-lol-listening-review-queue-receipt@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "files": [
+    {
+      "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
+      "bytes": 1438644,
+      "sha256": "9e6783fce6003170b8c25e1d69bd0d5e0b17614562cd726bfda109af84a2b476"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.md",
+      "bytes": 1661,
+      "sha256": "8359871517007880279d3085151335de4124fb5b516eb49a74078108cb27298c"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/listening-review-decisions.json",
+      "bytes": 129,
+      "sha256": "01e68bdc36793c13caf0663e1f9ae66495bd996f8df6d84154f32e9bbe36fa43"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/tools/build_listening_review_queue.py",
+      "bytes": 18340,
+      "sha256": "3a2a913a1315e2b5d98bf5e3289685e8343095b5b5a3313e770c859f4334c3ff"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/tools/test_build_listening_review_queue.py",
+      "bytes": 1630,
+      "sha256": "c3a9d93f4226f83835b8ed77f055e10e6ee7c66c8642a3c59bc7f1ffcf8889c1"
+    }
+  ],
+  "summary": {
+    "characters": 7,
+    "uniqueWavFiles": 754,
+    "bytes": 725636616,
+    "seconds": 2636.8756009070285,
+    "pendingReviews": 754,
+    "speakerVerified": 0,
+    "perClipLanguageVerified": 0,
+    "ggdSkillSemanticBindingVerified": 0,
+    "runtimeApproved": 0,
+    "allLocalWavBytesAndSha256Verified": true,
+    "byCharacter": [
+      {
+        "nativeId": "Karthus",
+        "heroId": "example:karthus",
+        "files": 135,
+        "seconds": 676.0304535147394,
+        "bytes": 175887028,
+        "categoryFileRelationships": {
+          "ability-cast": 23,
+          "attack": 20,
+          "death": 9,
+          "emote": 17,
+          "encounter": 15,
+          "item": 21,
+          "move": 27,
+          "recall": 3
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 0,
+          "W": 7,
+          "E": 7,
+          "R": 9
+        },
+        "missingAbilitySlotEventCandidates": [
+          "Q"
+        ],
+        "pendingReviews": 135,
+        "runtimeApproved": 0
+      },
+      {
+        "nativeId": "LeeSin",
+        "heroId": "example:leesin",
+        "files": 151,
+        "seconds": 448.25242630385475,
+        "bytes": 158150100,
+        "categoryFileRelationships": {
+          "ability-cast": 29,
+          "attack": 28,
+          "death": 7,
+          "emote": 11,
+          "encounter": 37,
+          "move": 36,
+          "recall": 3
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 8,
+          "W": 8,
+          "E": 8,
+          "R": 5
+        },
+        "missingAbilitySlotEventCandidates": [],
+        "pendingReviews": 151,
+        "runtimeApproved": 0
+      },
+      {
+        "nativeId": "Lux",
+        "heroId": "example:lux",
+        "files": 104,
+        "seconds": 317.8472562358277,
+        "bytes": 73200112,
+        "categoryFileRelationships": {
+          "ability-cast": 25,
+          "attack": 19,
+          "death": 4,
+          "emote": 11,
+          "encounter": 21,
+          "move": 24
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 7,
+          "W": 6,
+          "E": 6,
+          "R": 6
+        },
+        "missingAbilitySlotEventCandidates": [],
+        "pendingReviews": 104,
+        "runtimeApproved": 0
+      },
+      {
+        "nativeId": "MissFortune",
+        "heroId": "example:missfortune",
+        "files": 35,
+        "seconds": 96.24671201814057,
+        "bytes": 16979460,
+        "categoryFileRelationships": {
+          "ability-cast": 11,
+          "attack": 6,
+          "death": 4,
+          "emote": 6,
+          "move": 8
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 4,
+          "W": 4,
+          "E": 0,
+          "R": 3
+        },
+        "missingAbilitySlotEventCandidates": [
+          "E"
+        ],
+        "pendingReviews": 35,
+        "runtimeApproved": 0
+      },
+      {
+        "nativeId": "Warwick",
+        "heroId": "example:warwick",
+        "files": 159,
+        "seconds": 467.964081632653,
+        "bytes": 165104724,
+        "categoryFileRelationships": {
+          "ability-cast": 25,
+          "attack": 51,
+          "death": 3,
+          "emote": 8,
+          "encounter": 35,
+          "move": 33,
+          "other-event": 20,
+          "recall": 4
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 3,
+          "W": 7,
+          "E": 4,
+          "R": 11
+        },
+        "missingAbilitySlotEventCandidates": [],
+        "pendingReviews": 159,
+        "runtimeApproved": 0
+      },
+      {
+        "nativeId": "Xerath",
+        "heroId": "example:xerath",
+        "files": 79,
+        "seconds": 361.1151473922903,
+        "bytes": 88785584,
+        "categoryFileRelationships": {
+          "ability-cast": 16,
+          "attack": 14,
+          "death": 4,
+          "emote": 12,
+          "encounter": 17,
+          "move": 20
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 4,
+          "W": 4,
+          "E": 4,
+          "R": 4
+        },
+        "missingAbilitySlotEventCandidates": [],
+        "pendingReviews": 79,
+        "runtimeApproved": 0
+      },
+      {
+        "nativeId": "Yasuo",
+        "heroId": "example:yasuo",
+        "files": 91,
+        "seconds": 269.4195238095238,
+        "bytes": 47529608,
+        "categoryFileRelationships": {
+          "ability-cast": 18,
+          "attack": 19,
+          "death": 4,
+          "emote": 10,
+          "encounter": 18,
+          "move": 22
+        },
+        "abilitySlotFileRelationships": {
+          "Q": 8,
+          "W": 3,
+          "E": 4,
+          "R": 3
+        },
+        "missingAbilitySlotEventCandidates": [],
+        "pendingReviews": 91,
+        "runtimeApproved": 0
+      }
+    ]
+  },
+  "claims": {
+    "allLocalWavBytesAndSha256Verified": true,
+    "eventBindingsVerified": true,
+    "speakerVerifiedCount": 0,
+    "perClipLanguageVerifiedCount": 0,
+    "runtimeApprovedCount": 0,
+    "runtimeConfigChanged": false,
+    "deployed": false
+  }
+}

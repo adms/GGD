@@ -1,0 +1,428 @@
+{
+  "schema": "ggd-kaiji-integration-independent-review@1",
+  "reviewedAt": "2026-09-10T17:09:53.305895+00:00",
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "baselineCommit": "3c85197b8295d82eb0301136050a05e4fc43decf",
+  "scope": "Read-only targeted metadata/diff and Kaiji bytes review; no full-library test replay or mutations. Existing 282 version metadata retained; their binary full revalidation left to root required gates.",
+  "result": "PASS_WITH_TOOL_REPLAY_FINDING",
+  "checks": {
+    "same81HeroIds": true,
+    "previousVersionsAllPreserved": true,
+    "other80RegistrationRowsUnchanged": true,
+    "all81ChampionRegistrationStatesMatch": true,
+    "all81HandoffCandidateKeysMatch": true,
+    "manual15SelectionsAndVersionsPreserved": true,
+    "approved11DefinitionsUnchanged": true,
+    "approved11DerivativesPreservedAndActive": true,
+    "priority-runtime-inputs.json:prior-entries-preserved": true,
+    "priority-runtime-options.json:prior-models-preserved": true,
+    "priority-runtime-options.json:prior-heroes-preserved": true,
+    "kaijiDocHashMatchesInputOptionReceipt": true,
+    "kaijiRuntimeAndFrozenGlbAllShaMatch": true,
+    "kaijiSixProceduralNotNative": true,
+    "kaijiClipMapResolvesActualGlb": true,
+    "kaijiCommunityModNotCanonicalGame": true,
+    "kaijiAll11ReceiptEvidenceHashesMatch": true,
+    "rawCandidateAcquisitionClaimsPreserved": true,
+    "registeredRelationLinkedToActualKaiji": true,
+    "fateReserveNotRuntimeReady": true,
+    "handoffCountsReflectCurrentRegistration": true,
+    "handoffKaijiActualMotionMetadata": true,
+    "markdownDynamicCountsAndNoKaijiPendingConversion": true,
+    "readSnapshotStable": true
+  },
+  "counts": {
+    "heroes": 81,
+    "previousVersionReferences": 282,
+    "currentVersionReferences": 283,
+    "distinctVersionKeys": 245,
+    "manualSelections": 15,
+    "approvedDerivatives": 11,
+    "runtimeInputs": 9,
+    "runtimeModels": 9,
+    "publicSources": 90,
+    "fateRawCandidates": 19
+  },
+  "kaiji": {
+    "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+    "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+    "priorVersionCount": 3,
+    "newVersionCount": 4,
+    "files": [
+      {
+        "path": "content/models/community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036.json",
+        "bytes": 504,
+        "sha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8"
+      },
+      {
+        "path": "content/models/version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f.json",
+        "bytes": 654,
+        "sha256": "28824201b18f322a7ccdf8a1d15ada51d4fdc36d068e2347d6b8d72541cdfec3"
+      },
+      {
+        "path": "content/assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+        "bytes": 319724,
+        "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a"
+      },
+      {
+        "path": "content/assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+        "bytes": 319724,
+        "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a"
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+        "bytes": 4623,
+        "sha256": "ca1121dac7453ff534c66524d508f5ab907b6c07e8e88627ac7b45bf2d17ea9e"
+      }
+    ],
+    "actualAnimationNames": [
+      "GGD_procedural_idle",
+      "GGD_procedural_run",
+      "GGD_procedural_attack",
+      "GGD_procedural_cast",
+      "GGD_procedural_hurt",
+      "GGD_procedural_death"
+    ],
+    "nativeAnimations": 0,
+    "proceduralAnimations": 6,
+    "sourceAudio": 0,
+    "sourceVfx": 0,
+    "originalRawReadiness": "extracted-native-pending-conversion",
+    "currentRegistrationReadiness": "registered-runtime-option",
+    "productionDeployed": false,
+    "evidenceChecks": [
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/animation.json",
+        "bytes": 2721,
+        "sha256": "0ff2f4763888fca07dc2e860e16c63ee9d183d323e42921df78357545bcd973d",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/contact.png",
+        "bytes": 162701,
+        "sha256": "2e7bdc0dfafc7d69e618ff4bb0a5d43935a662e80d9e63a16a0e5a04a41d269e",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/independent-check.json",
+        "bytes": 53170,
+        "sha256": "6373e503d23d3c8e9dfef2dae7828fdb2b0a76460ec130ec466b74b437ebb486",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/khronos.json",
+        "bytes": 1718,
+        "sha256": "4c56db4ad28a5ab240808fa4fadb3bbca290e14a7b52b47aacbe0e6ff5d35f8c",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/native-preflight.json",
+        "bytes": 31329,
+        "sha256": "253dfa64ce777fce861991edb79b4e2dd3ab0dfaff1e4a350d39d53de64e935f",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/original-source-entry.json",
+        "bytes": 9861,
+        "sha256": "77d34c199502fbc3a92eab8408510f32f775f03a8881a2bba5445c305333cfaf",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/png-sar-fix.json",
+        "bytes": 3088,
+        "sha256": "fe61099a4bfc245d887874c98f22afc593fc4f9ad2b770572f6d84bec902fba7",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/preparation.json",
+        "bytes": 3242,
+        "sha256": "05e0f3521f3cc7c03a17261406d36d871983347197f7e87fb3caca355cb2bc35",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/render-proof.json",
+        "bytes": 16359,
+        "sha256": "719170716de9c5a36aaa016c9d835dec6dad4b23284db5ed22ee9455c6d21f66",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/render-run.json",
+        "bytes": 353,
+        "sha256": "51eb832e6e7dfd2a6f5d4f71056bd525d9d5b7555acd82480528e45a5abbd44b",
+        "matches": true
+      },
+      {
+        "path": "materials/hero-model-library/priority-evidence/kaiji-community/source-s3-backup.json",
+        "bytes": 15322,
+        "sha256": "bf7ef0e91c25e8658c297c65f3c5afe3999f6f54437e6e937ebe9e2a85b9ee3e",
+        "matches": true
+      }
+    ]
+  },
+  "manualSelections": [
+    {
+      "heroId": "godie-e002",
+      "runtimeHeroId": "godie-e002",
+      "modelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-e008",
+      "runtimeHeroId": "godie-e008",
+      "modelKey": "version.body.363e237043c1c1498e71a9dec8dc4323dac314f74bcf124f",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-e00l",
+      "runtimeHeroId": "godie-e00l",
+      "modelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-edem",
+      "runtimeHeroId": "godie-edem",
+      "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-h01n",
+      "runtimeHeroId": "godie-h01n",
+      "modelKey": "version.body.0758526c616aafc9ef5aee24fa58e959ceacaea8b646f986",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-h01o",
+      "runtimeHeroId": "godie-h01o",
+      "modelKey": "version.body.85f650c11313bfea545c366efd2f149854764731cf09e9d5",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-h020",
+      "runtimeHeroId": "godie-h020",
+      "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-hapm",
+      "runtimeHeroId": "godie-hapm",
+      "modelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-hjai",
+      "runtimeHeroId": "godie-hjai",
+      "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-hvsh",
+      "runtimeHeroId": "godie-hvsh",
+      "modelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-osam",
+      "runtimeHeroId": "godie-osam",
+      "modelKey": "version.body.c462be5cabf1c6528b2023539dfaaae6504b7cb3af483702",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-u00n",
+      "runtimeHeroId": "godie-u00n",
+      "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-u00o",
+      "runtimeHeroId": "godie-u00o",
+      "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-u01u",
+      "runtimeHeroId": "godie-u01u",
+      "modelKey": "version.body.d1644694e19fa5def52e06c32343585380f3bd7b569b9920",
+      "preserved": true
+    },
+    {
+      "heroId": "godie-udre",
+      "runtimeHeroId": "godie-udre",
+      "modelKey": "version.body.d1644694e19fa5def52e06c32343585380f3bd7b569b9920",
+      "preserved": true
+    }
+  ],
+  "approvedDerivatives": [
+    {
+      "heroId": "community-review-03-20260907",
+      "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "binarySha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "community-review-06-20260907",
+      "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "binarySha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "community-review-31-20260907",
+      "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "binarySha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "community-review-32-20260907",
+      "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "binarySha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-popp",
+      "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "binarySha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-albus",
+      "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "binarySha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-goblin",
+      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "binarySha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-yogiri",
+      "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "binarySha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-takopi",
+      "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "binarySha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-misery",
+      "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "binarySha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    },
+    {
+      "heroId": "b2-bojji",
+      "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "binarySha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "versionCount": 2,
+      "preserved": true,
+      "activeApprovedDerivative": true
+    }
+  ],
+  "mismatches": {
+    "lostVersions": [],
+    "nonTargetRegistrationChanges": [],
+    "championStateMismatches": [],
+    "handoffKeyMismatches": []
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "tools/hero-model-library/priority-conversion/kaiji/freeze.py",
+      "lines": "58-60",
+      "title": "Re-running freeze erases completed registration receipt fields",
+      "detail": "freeze always replaces receipt.json with readiness=runtime-verified-awaiting-registration and no backendSelectionVerified/activeModelKey/selectionMode/registrationEvidence. Current checked receipt has those completed fields; readback.mts writes only priority-registration and registration-readback, so rerunning the documented pair downgrades and loses this completed receipt state. Current artifacts are consistent; issue affects reproducible replay.",
+      "suggestion": "Separate conversion and registration receipts or preserve/validate completed registration fields when source SHA is unchanged; reject drift rather than overwrite.",
+      "rootDisposition": "Root acknowledged and is implementing the replay fix independently; this report pins the pre-fix reviewed source SHA."
+    }
+  ],
+  "notes": [
+    {
+      "file": "tools/hero-model-library/build_priority81_handoff.py",
+      "detail": "Current raw supplement association matches the correct source URL/key/SHA. runtime_supplement joins by hero/sourceModelKey but does not verify source receipt identity, so future second Kaiji source should be joined by sourceId/receipt as well; not a current data mismatch."
+    },
+    {
+      "file": "tools/hero-model-library/priority-conversion/kaiji/readback.mts",
+      "detail": "Readback checks prior versions, exact Kaiji SHA/selection class/active selection and other 80 states. Hardcoded 81/283/4 intentionally limits this one-change replay; not a general future catalog updater."
+    }
+  ],
+  "inputs": [
+    {
+      "path": "materials/hero-model-library/priority-registration.json",
+      "bytes": 511629,
+      "sha256": "663a60d5da649b688de2c320b3d1b1f07ecf9926a6fab066e276bcb2a6f868ac"
+    },
+    {
+      "path": "materials/hero-model-library/priority-runtime-inputs.json",
+      "bytes": 14421,
+      "sha256": "9502f81d51fb641060ca19f5bc2f8abf4914888f0d49abf17962e400f7614a22"
+    },
+    {
+      "path": "materials/hero-model-library/priority-runtime-options.json",
+      "bytes": 24103,
+      "sha256": "51687d84afd506350dd9eda1fa2f26ff4dd6058d4c7098935a693eb4dc343e53"
+    },
+    {
+      "path": "materials/hero-model-library/priority-81-handoff.json",
+      "bytes": 5501249,
+      "sha256": "9b83a4c53141fae4f8c2beb4a13b1c4f677fbbee4c59ef241a46c138ff281a29"
+    },
+    {
+      "path": "materials/hero-model-library/inventory.json",
+      "bytes": 4406541,
+      "sha256": "a33a795f00d47fa7a77645bc19d479a389f4f595a4f084cc41c79f3478b5945e"
+    },
+    {
+      "path": "materials/hero-model-library/default-policy.json",
+      "bytes": 14708,
+      "sha256": "228786c0709519299965ae76ab5e05761ad39e0be2b03e874bf84946b9ca20cb"
+    },
+    {
+      "path": "materials/hero-model-library/download-sources.json",
+      "bytes": 1757596,
+      "sha256": "c52739b8ebac77bcaaf8f647f60eb6fd69cef86b595487e31757d258a7f0f990"
+    },
+    {
+      "path": "materials/hero-model-library/81英雄優先合併清單.md",
+      "bytes": 22761,
+      "sha256": "1f83c1253d75a5ecb618e083dc02144a0fb07a050772f898c2272e23e7338af8"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/receipt.json",
+      "bytes": 4623,
+      "sha256": "ca1121dac7453ff534c66524d508f5ab907b6c07e8e88627ac7b45bf2d17ea9e"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/kaiji/freeze.py",
+      "bytes": 6006,
+      "sha256": "344a6f9b9f7a2a37981473675c4f6d14ad4c42ff3e6acf8a9ee3158a3b7bcc71"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/kaiji/readback.mts",
+      "bytes": 2650,
+      "sha256": "4ab846b2f1c88a4dccbcbbbb4a56e20956e593b0d2a0cf166e7f1c4747d18e8d"
+    }
+  ]
+}

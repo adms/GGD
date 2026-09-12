@@ -1,6 +1,8 @@
 /** The uncompressed glTF subset used by community bodies and animation libraries. */
 export interface GlbAccessor {
   bufferView?: number; byteOffset?: number; componentType: number; count: number; type: string;
+  /** glTF integer accessors may request normalized floating-point decoding. */
+  normalized?: boolean;
   /** glTF 規範的逐分量精確界。⚠️ POSITION **必填**；合併幾何時一定要用真資料重算，⛔ 沿用任何一段的界都會讓真實資料「超界」。 */
   min?: number[]; max?: number[];
   sparse?: { count: number; indices: { bufferView: number; byteOffset?: number; componentType: number }; values: { bufferView: number; byteOffset?: number } };
@@ -40,7 +42,7 @@ export const MODEL_UPLOAD_LIMITS = {
   clipChannels: 2048,
   clipSeconds: 300,
 } as const;
-const extensions = new Set(["KHR_materials_unlit", "KHR_texture_transform", "KHR_materials_emissive_strength"]);
+const extensions = new Set(["KHR_materials_unlit", "KHR_texture_transform", "KHR_materials_emissive_strength", "KHR_materials_specular"]);
 const dimensions: Record<string, number> = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4, MAT2: 4, MAT3: 9, MAT4: 16 };
 
 /** Bound work before calling the official validator or allocating accessor arrays. */

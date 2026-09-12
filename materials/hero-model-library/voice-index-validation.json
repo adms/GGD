@@ -1,0 +1,34 @@
+{
+  "schema": "ggd-local-audio-index-validation@1",
+  "audioFiles": 278971,
+  "groups": 963,
+  "alternateFormatFiles": 168,
+  "prefetchAliases": 47,
+  "localMissing": 0,
+  "duplicatePaths": 0,
+  "languagePriority": [
+    "ja",
+    "en",
+    "other-or-unreviewed"
+  ],
+  "priorPublishedAudioPreserved": 278874,
+  "priorAlternateFilesPreserved": 168,
+  "queriedDeliveryCounts": {
+    "local-lol-decoded-audio": 165761,
+    "lol-riot-ja-jp-16.18.8159717": 20603,
+    "lol-local-native-pcm16-recovery-round18": 2,
+    "kof-xv-ash-audio": 86,
+    "kof-xv-mai-audio": 82,
+    "kof-xv-iori-audio-float32-v1": 97
+  },
+  "compressedManifestSha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+  "compressedManifestBytes": 26531986,
+  "localUncompressedRetained": true,
+  "independentlyRehashedNewPrimaryFiles": 97,
+  "documentMirrorsMatch": true,
+  "synthesisReadyGroups": 0,
+  "latestIncrementalValidation": "parallel-deliveries-20260910/audio-index-validation.json",
+  "previousBatchValidation": "parallel-deliveries-20260910/prior-voice-index-validation.json",
+  "scope": "Current audio index; all historical primary path/group/SHA/size entries, alternate encodings and prefetch aliases preserved. New Iori delivery independently rehashed; no language or speaker acceptance.",
+  "modelChanges": "priority-evidence/haga-native-visibility/final-integrity.json"
+}

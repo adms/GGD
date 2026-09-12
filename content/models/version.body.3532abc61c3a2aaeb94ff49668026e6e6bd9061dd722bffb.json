@@ -1,0 +1,67 @@
+{
+  "id": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/versions/1d499008481edd3d4520219970e18cb4a05bc03a52094af5129bf7cc9c06ac31.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "walk",
+    "attack": "Attack - 1",
+    "cast": "Attack - 1",
+    "hurt": "Stand - 1",
+    "death": "death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "imported.linainvers",
+    "legacyAppearance": true
+  },
+  "attachPoints": {
+    "origin": {
+      "x": 0,
+      "y": 0.0124,
+      "z": 0
+    },
+    "head": {
+      "x": -0.0372,
+      "y": 1.6755,
+      "z": 0
+    },
+    "overhead": {
+      "x": 0,
+      "y": 1.8617,
+      "z": 0
+    },
+    "chest": {
+      "x": 0,
+      "y": 1.2411,
+      "z": 0
+    },
+    "hand right": {
+      "x": 0,
+      "y": 0.9184,
+      "z": 0.2482
+    },
+    "weapon": {
+      "x": 0,
+      "y": 0.9184,
+      "z": 0.2482
+    },
+    "hand left": {
+      "x": 0.0124,
+      "y": 0.9184,
+      "z": -0.2482
+    },
+    "foot left": {
+      "x": 0,
+      "y": 0.0124,
+      "z": -0.0869
+    },
+    "foot right": {
+      "x": 0,
+      "y": 0.0124,
+      "z": 0.0869
+    }
+  },
+  "yawOffsetDeg": 90
+}

@@ -1,0 +1,55 @@
+{
+  "id": "ggd.model.0231908c8873f295e0e5bbd1",
+  "title": "坂本",
+  "kind": "model-body",
+  "model": "models/community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:319",
+        "modelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+        "glbPath": "assets/models/community/d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d.glb",
+        "sha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+        "bytes": 2405996,
+        "documentSha256": "0231908c8873f295e0e5bbd152dd196ccbd028dccad0e009ba7216f17c104c0e",
+        "sourceCharacter": "坂本",
+        "sourceWork": "在下坂本，有何貴幹？",
+        "sourceAssetId": "300heroes:62413511bf6cb6a428c2821a",
+        "sourceSha256": "1190bbb97602f452832220f856dc5ce689423c8262fe685653d39f8ef889ea04",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.0231908c8873f295e0e5bbd1"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-uncle",
+        "name": "異世界舅舅"
+      },
+      {
+        "id": "b2-haga",
+        "name": "羽賀"
+      },
+      {
+        "id": "b2-kaiji",
+        "name": "伊藤開司"
+      },
+      {
+        "id": "b2-nube",
+        "name": "鵺野鳴介"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "ggd.design-source-tools-replay@1",
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "checkoutHeadAtStart": "79ccd787f05078f956041543b1cd6445ac66e7e7",
+  "checkoutHeadAtEnd": "79ccd787f05078f956041543b1cd6445ac66e7e7",
+  "mainCommitAncestorVerified": "817a05498",
+  "toolResults": {
+    "source_ability_check.mts": "passed",
+    "audit_300_mba.py": "passed",
+    "validate_300_mba.py": "passed"
+  },
+  "outputs": [
+    {
+      "path": "/private/tmp/ggd-design-sources-300-mba-final.json",
+      "bytes": 4074417,
+      "sha256": "57e240f00e6e02ef08d06ad825d9cdbaabcfb6fed4848192bb07e00d63b7368f"
+    },
+    {
+      "path": "/private/tmp/ggd-design-source-abilities-final.json",
+      "bytes": 432175,
+      "sha256": "52bb23b998aae0277a24dfff39ebed41f0a94e88eabb390ba6fab272e1e8a997"
+    }
+  ],
+  "counts": {
+    "sourceDefinitionEntries": 297,
+    "uniqueCharacterGroupsWithActualBody": 275,
+    "sourceFamilies": {
+      "300heroes": 276,
+      "mba": 21
+    },
+    "designStatus": {
+      "definitions-incomplete": 3,
+      "designed": 37,
+      "identity-review": 1,
+      "not-defined": 234
+    },
+    "ggdChampionsChecked": 153,
+    "allChampionAbilityRefsValid": true,
+    "mappingJsonFilesScanned": 287,
+    "nativeSourceBodyCandidates": 290,
+    "localModelCandidates": 1754,
+    "noDesignByFamily": {
+      "300heroes": 224,
+      "mba": 11
+    }
+  },
+  "validation": {
+    "modelCandidatesStatChecked": 1754,
+    "glbContainersChecked": 88,
+    "convertedDeclaredShaChecked": 68,
+    "convertedDeclaredShaMismatches": 0,
+    "sourceIdsUnique": true,
+    "allCharacterGroupsHaveSourceDefinedNativeBody": true,
+    "errors": []
+  },
+  "same275SourceIdGroupsAsFrozenAudit": true,
+  "samePerGroupDesignStatusAsFrozenAudit": true,
+  "previousMappingJsonFiles": 283,
+  "currentMappingJsonFiles": 287,
+  "toolFingerprints": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/source_ability_check.mts",
+      "sha256": "3877276622dda787e91e08cac31955e92cc11aba9b1d2177b4f46a6e2bfbe9bc"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/audit_300_mba.py",
+      "sha256": "6e03bfa38cbf2bf167ea077d1f5dab3cb804cbf11657df2a3caa810266e688a1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/validate_300_mba.py",
+      "sha256": "dd7945fb6e2e3996153f7bc6c492f8067bff35038f569ced8e6f393a3937acec"
+    }
+  ],
+  "centralMutations": false,
+  "newDownloads": false
+}

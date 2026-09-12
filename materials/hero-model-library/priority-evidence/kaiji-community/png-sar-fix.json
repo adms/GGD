@@ -1,0 +1,96 @@
+{
+  "schema": "ggd.ffmpeg-png-sar-fix@1",
+  "cases": [
+    {
+      "input": {
+        "width": 512,
+        "height": 512,
+        "bytes": 3559,
+        "sha256": "a77a1e84416fa4967f69c6aba02c2db8fd88344ab7b549d175b644ca45030756",
+        "pHYs": null
+      },
+      "baseline": {
+        "sha256": "fbd575ce160682708145071df10cd3e4339c2cb0d20b7fbdd8f133b0ff41c9a7",
+        "pHYs": {
+          "x": 0,
+          "y": 1,
+          "unit": 0
+        }
+      },
+      "fixed": {
+        "sha256": "301fc7dd16fb88b2a4c2e0132c901958be951132e106e9377c624a4179ee54e2",
+        "pHYs": {
+          "x": 1,
+          "y": 1,
+          "unit": 0
+        }
+      },
+      "decodedRgbBytes": 196608,
+      "decodedRgbSha256": "805bae63f7b3db457297fc533ebe86ee4f2300e4bf98b51a63247cdfbdfce1e4",
+      "allDecodedRgbPixelsIdenticalBeforeAndAfter": true,
+      "inputShaUnchanged": true
+    },
+    {
+      "input": {
+        "width": 512,
+        "height": 256,
+        "bytes": 1831,
+        "sha256": "3a49037b2769f2a8a662337e3f5efc39ba6e189c4a157e926f9c5ef0c7b934b5",
+        "pHYs": null
+      },
+      "baseline": {
+        "sha256": "1c4f5cee507ffbb8de515db2ebcb9952feb2fa7420c896df0c481c1444b765f6",
+        "pHYs": {
+          "x": 0,
+          "y": 1,
+          "unit": 0
+        }
+      },
+      "fixed": {
+        "sha256": "bd382cb7aeb30e9a29710aaaa08daf4d103e63d4ae6d3590293522ce612c6b49",
+        "pHYs": {
+          "x": 1,
+          "y": 1,
+          "unit": 0
+        }
+      },
+      "decodedRgbBytes": 98304,
+      "decodedRgbSha256": "52eb55f7314b58e4fb38202165e908de9e2d0950fd2267f0ce49db8f9ef3e380",
+      "allDecodedRgbPixelsIdenticalBeforeAndAfter": true,
+      "inputShaUnchanged": true
+    }
+  ],
+  "regression": {
+    "command": "pnpm exec vitest run apps/content-api/src/resizeImage.node.test.ts --pool=forks --maxWorkers=1 --minWorkers=1 --no-cache",
+    "before": {
+      "tests": 2,
+      "failed": 2,
+      "reason": "PNG pixels must have positive aspect ratio: expected 0 to be greater than 0"
+    },
+    "after": {
+      "tests": 2,
+      "passed": 2,
+      "durationSeconds": 2.92,
+      "KhronosWarningsPerImage": 0
+    }
+  },
+  "changes": [
+    "scale filter unchanged; appended setsar=1",
+    "ffmpeg output PNG uses positive square-pixel density; rectangular image dimensions preserved"
+  ],
+  "limitations": [
+    "Real ffmpeg executable is required by the regression tests; no decoder mocks.",
+    "No native Kaiji sources, runtime outputs, central indexes or Git commits changed by this fix."
+  ],
+  "changedFiles": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/content-api/src/resizeImage.node.ts",
+      "sha256": "a14c240d751e0c2b32f2d359e51000222b90f33f5d4719854785cd9d906dbc57"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/apps/content-api/src/resizeImage.node.test.ts",
+      "sha256": "6e703ae0841f70c2885ec1ae73d635d8ea7264b22bd8bb402e7b12be2971e813"
+    }
+  ],
+  "diffWhitespaceCheckPassed": true
+}

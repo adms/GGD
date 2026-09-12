@@ -1,0 +1,48 @@
+{
+  "modelKey": "ou99.457594-standard-v2",
+  "finalGlbSha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+  "nodeHierarchyAndInverseBindMatricesUnchanged": true,
+  "nativeMotion": [
+    {
+      "name": "stand",
+      "channels": 27,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "walk",
+      "channels": 27,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "attack 2",
+      "channels": 27,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "spell one",
+      "channels": 27,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "stand ready",
+      "channels": 27,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "death",
+      "channels": 27,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    }
+  ],
+  "allOriginalEmbeddedImageBytesRetainedInFinal": true,
+  "originalImageSha256": [
+    "5f7f9f7f762c081a18bb7768621b7d2da50b0bb7e12b6cda943a627b30bbfe77",
+    "acd02ef375241436b335447c5fac735aab13c6ee2dacfe55cb70a9afbbcaf773"
+  ],
+  "finalImageSha256": [
+    "5f7f9f7f762c081a18bb7768621b7d2da50b0bb7e12b6cda943a627b30bbfe77",
+    "acd02ef375241436b335447c5fac735aab13c6ee2dacfe55cb70a9afbbcaf773"
+  ],
+  "geometryLod": false,
+  "textureLod": false
+}

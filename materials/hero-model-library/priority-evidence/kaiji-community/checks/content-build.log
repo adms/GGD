@@ -1,0 +1,69 @@
+
+> ggd@0.0.0 content:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh content:build content:build:raw
+
+🔓 隔離區:解鎖 447 份（追蹤 1438,缺 0）
+
+> ggd@0.0.0 content:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> pnpm vfxassets:check && pnpm --filter @ggd/shared content:build && pnpm spec:build && pnpm overview:build && pnpm tiers:build
+
+
+> ggd@0.0.0 vfxassets:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/python-pillow.sh tools/vfx-asset-safety/check.py && bash scripts/python-pillow.sh tools/w3x-import/repair_alpha_backdrops.py --check && bash scripts/python-pillow.sh tools/vfx-asset-safety/repair_material_metadata.py --check
+
+vfx-asset-safety: PASS (0 blocker(s))
+checked: 0
+checked: 0
+
+> @ggd/shared@0.0.0 content:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/packages/shared
+> tsx scripts/buildIndexes.ts
+
+  champions       153 doc(s)  49c1bf3cd9d1
+  abilities       907 doc(s)  c7062c2234b7
+  items           142 doc(s)  1ee281a7f136
+  augments         91 doc(s)  e003b299e8a9
+  projectiles      21 doc(s)  952cffc4b28b
+  status-effects   51 doc(s)  7219076b5f8e
+  loot-tables       3 doc(s)  50b52195cd4a
+  arenas           13 doc(s)  ee5870b2c76d
+  maps              7 doc(s)  51237ab2fd5f
+  config          103 doc(s)  889783c791ac
+  models          609 doc(s)  e72f07f6eb1f
+  vfx             702 doc(s)  7df129081586
+  skins            14 doc(s)  5ea08c605fea
+  ability-templates  82 doc(s)  48fcf2ce8923
+  vfx-scripts      45 doc(s)  20b5e06e9013
+  vfx-subtypes      4 doc(s)  356bb93fc4d8
+contentVersion: cv_258401b6b5a6
+editor-target-profile.json  digest=49ed42c8d634
+bundle.json:    2947 doc(s)  4479004 B raw  879418 B gzip-9  510734 B brotli-11
+
+> ggd@0.0.0 spec:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh spec:build spec:build:raw
+
+
+> ggd@0.0.0 spec:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/skill-spec/gen_spec.ts
+
+[content-cache] Redis 連不上（127.0.0.1:6379）⇒ 退回檔案層
+✅ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/docs/技能標記機制與效果規則.md（4941 行）
+
+> ggd@0.0.0 overview:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh overview:build overview:build:raw
+
+
+> ggd@0.0.0 overview:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/innate-legendary/gen_overview.ts
+
+✅ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/docs/固有能力及寶具總覽.md（4231 行）
+
+> ggd@0.0.0 tiers:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/genrun.sh tiers:build tiers:build:raw
+
+
+> ggd@0.0.0 tiers:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/skill-tiers/gen_tiers.ts
+
+✅ 寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/docs/editor-contract/ggd-skill-tiers.md（803 行）
+🔒 隔離區:上鎖 465 份（追蹤 1438,缺 0,正規化器專屬 971 份不上鎖,部分產物 2 份不上鎖(GH#1097)）
+✓ genrun: content:build 完成（產物已重新上鎖）

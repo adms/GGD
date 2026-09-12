@@ -1,0 +1,9 @@
+
+> ggd@0.0.0 voices:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> node tools/tts-gen/src/build-champ-names.mjs --check && node tools/tts-gen/src/build-champ-quotes.mjs --check
+
+build-champ-names: ⚠️ 47 CASTING rows are RETIRED (champion doc is in content/_legacy/champions/) — kept in MANIFEST.retiredCasting, no clip emitted: godie-e00j, godie-e00k, godie-e00q, godie-e00t, godie-e00u, godie-e00v, godie-e00z, godie-e012, godie-e015, godie-ecen, godie-ekee, godie-ewrd, godie-h001, godie-h00w, godie-h021, godie-h022, godie-h02n, godie-h02s, godie-h02y, godie-h02z, godie-harf, godie-hblm, godie-hlgr, godie-hpal, godie-n01b, godie-n01l, godie-naka, godie-nbst, godie-nman, godie-nplh, godie-ntin, godie-o01z, godie-o02n, godie-o02o, godie-o02s, godie-o02v, godie-o02w, godie-obla, godie-opgh, godie-oshd, godie-othr, godie-u00b, godie-u011, godie-u012, godie-u01f, godie-usyl, godie-uwar
+build-champ-names --check: 3 products up to date
+build-champ-quotes: ⚠️ 60/153 位出貨英雄**刻意留空** —— 本機查不到可引用的出處（⛔ 不編造）。逐名與理由寫在 quotes.json 的 `unsourced`；查到出處就補一列 EXTRA 並刪掉 UNSOURCED 那一列。
+build-champ-quotes: ⚠️ 45 列名言的英雄已下架（content/_legacy/champions/）—— 文案留在 MANIFEST.retiredQuotes，⛔ 不算進出貨涵蓋率
+build-champ-quotes --check: 2 products up to date

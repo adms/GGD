@@ -1,0 +1,254 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/ptrainer-c01.blend",
+    "bytes": 5646396,
+    "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": false
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+    "bytes": 834264,
+    "sha256": "927308cfc3307f8d9c6d8818541c5ff7cc8c3cf83926de40f8deb2cac3cad4f3"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -8.660579681396484,
+        -2.6827802658081055,
+        -0.005965450778603554
+      ],
+      [
+        8.660579681396484,
+        2.6105291843414307,
+        17.626651763916016
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.10208354086538675,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    72
+  ],
+  "sourceActionCount": 0,
+  "sourceImageCountUsed": 6,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "metal_ptrainer_female_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_ptrainer_female_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_ptrainer_female_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "alp_ptrainer_female_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "alp_ptrainer_female_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/derived-textures/alp_ptrainer_female_001_col.png.ggd-256.png",
+      "derivedBytes": 63773,
+      "derivedSha256": "de251a7b50c8e046784d53123319522c80de5680dd7203ce54f2cf33f5b254a0",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "def_ptrainer_female_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/derived-textures/def_ptrainer_female_001_col.png.ggd-256.png",
+      "derivedBytes": 96363,
+      "derivedSha256": "e06697b09ee50f5e9826f720979d62a89a88e3fdb71edd1380b1ab965a896d1e",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_ptrainer_female_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/derived-textures/skin_ptrainer_female_001_col.png.ggd-256.png",
+      "derivedBytes": 37995,
+      "derivedSha256": "d0b1ad7702fb1fffe628f74d8303a773766aa5b0508fa042e0b9a5b25558f6ed",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 72,
+      "nodeName": "_Gamemodel_bagAsc5_Quadrangle2Shape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 73,
+      "nodeName": "_Gamemodel_bagDsc5_Quadrangle1Shape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 74,
+      "nodeName": "GamemodelShape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 75,
+      "nodeName": "GamemodelShape.001",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 76,
+      "nodeName": "GamemodelShape.002",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 77,
+      "nodeName": "GamemodelShape.003",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 78,
+      "nodeName": "head_rigidShape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 79,
+      "nodeName": "head_rigidShape.001",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 80,
+      "nodeName": "ptrainer_female_eyeL_VIS_O_OBJShape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 81,
+      "nodeName": "ptrainer_female_eyeR_VIS_O_OBJShape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 82,
+      "nodeName": "ptrainer_female_faceN_Mouth_VIS_O_OBJShape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 83,
+      "nodeName": "ptrainer_female_Openblink_VIS_O_OBJShape",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 84,
+      "nodeName": "ptrainer_female_Openblink_VIS_O_OBJShape.001",
+      "previousParentIndex": 85,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

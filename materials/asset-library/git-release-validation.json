@@ -1,0 +1,20 @@
+{
+  "schema": "ggd-git-finished-release-validation@1",
+  "release": "7b6ec0c8c5bd75fc173c5f2d",
+  "fileCount": 432,
+  "totalBytes": 98553852,
+  "resourceCount": 150,
+  "allFilesMatchPinnedSourceArchive": true,
+  "sourceArchiveSha256": "fd96e9bb86c4995536caa253cc47977bb52d546231e6621115ef83a49ee81758",
+  "hydration": {
+    "gitOnly": true,
+    "localLibraryAbsent": true,
+    "contentInitiallyWithoutAssets": true,
+    "release": "7b6ec0c8c5bd75fc173c5f2d",
+    "verified_files": 90,
+    "manifest_sha256": "829d66d59a09f0989b4007f8321002315d44a88b5265f53e4599f2a74606ca4d"
+  },
+  "existingManualChoicesRetained": 15,
+  "nativeSourcesOrIntakeIncluded": false,
+  "productionDeployed": false
+}

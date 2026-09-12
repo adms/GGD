@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.666d91f4dd2bcde9a6b27ede",
+  "title": "高遠夜霧（獨立副本／富樫勇太）",
+  "kind": "model-body",
+  "model": "models/community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:yogiri",
+        "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+        "glbPath": "assets/models/community/fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c.glb",
+        "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+        "bytes": 683364,
+        "documentSha256": "666d91f4dd2bcde9a6b27edee2660e1bb517b8dba7902fa2fc0186ac3ba69e31",
+        "sourceCharacter": "高遠夜霧（獨立副本／富樫勇太）",
+        "sourceWork": "中二病也想談戀愛！",
+        "sourceAssetId": "derivative:yogiri",
+        "sourceSha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-yogiri",
+          "targetName": "高遠夜霧",
+          "targetWork": "秒殺外掛太強了，異世界的傢伙們根本就不是對手",
+          "sourceId": "300heroes:36",
+          "sourceSha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
+          "copyMode": "independent-embedded-copy",
+          "changes": "完整複製富樫勇太模型與貼圖"
+        },
+        "bundleId": "ggd.model.666d91f4dd2bcde9a6b27ede"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-yogiri",
+        "name": "高遠夜霧"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

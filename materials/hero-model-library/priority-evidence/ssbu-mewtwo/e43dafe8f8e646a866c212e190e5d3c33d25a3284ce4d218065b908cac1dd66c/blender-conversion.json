@@ -1,0 +1,156 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-mewtwo-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/mewtwo-c00.blend",
+    "bytes": 3463792,
+    "sha256": "a75e399676876d88bcb8ae48f08d6d1efd4d6ae9e3dd224479a6e5b15a3a4a74"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+    "bytes": 401444,
+    "sha256": "f2933958bd95bc313e0f8a9c932619f4812ac0868d9608c9910122bb3c4f9fa4"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -11.32349967956543,
+        -3.484860420227051,
+        -0.04936792701482773
+      ],
+      [
+        11.32349967956543,
+        26.37800407409668,
+        20.7533016204834
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.08652735630348327,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    75
+  ],
+  "sourceActionCount": 0,
+  "sourceImageCountUsed": 3,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "def_mewtwo_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "def_mewtwo_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/derived-textures/def_mewtwo_001_col.png.ggd-256.png",
+      "derivedBytes": 72073,
+      "derivedSha256": "09bb4be9f0633485be8da2a65423c3e67a8ec3e72a77e2c79cd9f348cbc0e7e3",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "eye_mewtwo_w_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/derived-textures/eye_mewtwo_w_col.png.ggd-256.png",
+      "derivedBytes": 19513,
+      "derivedSha256": "a9397f157718a24d51b7ddd91ac6cfa9f6ac95f13e0f757af2703b75524b4361",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 75,
+      "nodeName": "GamemodelShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 76,
+      "nodeName": "Mewtwo_Eye_VIS_O_OBJShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 77,
+      "nodeName": "Mewtwo_Eye_VIS_O_OBJShape.001",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 78,
+      "nodeName": "Mewtwo_Mouth_FaceN_VIS_O_OBJShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 79,
+      "nodeName": "Mewtwo_Openblink_VIS_O_OBJShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "ggd.model.eddbc49d92b98f9c9a017404",
+  "title": "菲特（StrikerS 成年版）",
+  "kind": "model-body",
+  "model": "models/community.body.60d8cb84d9ca91fc005e849df2b10d48520fc812e2927cca.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "mba:Chara15_02",
+        "modelKey": "community.body.60d8cb84d9ca91fc005e849df2b10d48520fc812e2927cca",
+        "glbPath": "assets/models/community/256e318ecb9a40754306031f46e34ee15b0b9dc48edacccfdc7ee7cac5632e04.glb",
+        "sha256": "256e318ecb9a40754306031f46e34ee15b0b9dc48edacccfdc7ee7cac5632e04",
+        "bytes": 801772,
+        "documentSha256": "eddbc49d92b98f9c9a01740409810c763272593e1ed7583fcaeccd527dbe3212",
+        "sourceCharacter": "菲特（StrikerS 成年版）",
+        "sourceWork": "魔法少女奈葉",
+        "sourceAssetId": "mba:87df029adc708b54334c708f",
+        "sourceSha256": "fb72830499a0d334ade2e20f71fadf3f7b32a08c7e4aaed09185a19dd4bdf345",
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.eddbc49d92b98f9c9a017404"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-ntin",
+        "name": "菲特"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

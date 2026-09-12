@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.2edc9b2b73e70d1555474f3f",
+  "title": "坂田银时",
+  "kind": "model-body",
+  "model": "models/community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:137",
+        "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+        "glbPath": "assets/models/community/8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2.glb",
+        "sha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+        "bytes": 958364,
+        "documentSha256": "2edc9b2b73e70d1555474f3fb0fbebceed42b238e20e020583c9a338c033018d",
+        "sourceCharacter": "坂田银时",
+        "sourceWork": "銀魂",
+        "sourceAssetId": "300heroes:4a4c507abbd6a236e206dd15",
+        "sourceSha256": "4c598274bc65141528a3470cfbbf2e931fae3ef7e76cee772e7008c3be2229e4",
+        "clipMap": {
+          "idle": "single_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_05",
+          "hurt": "single_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.2edc9b2b73e70d1555474f3f"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-23-20260907",
+        "name": "坂田銀時"
+      },
+      {
+        "id": "b2-fushi",
+        "name": "不死"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "schema": "ggd-ssbu-blend-source-analysis@1",
+  "candidateId": "ssbu-pickel-steve-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/pickel-steve-c00.blend",
+  "sourceBytes": 4211812,
+  "sourceSha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739",
+  "blenderVersion": "4.5.13 LTS",
+  "embeddedScriptsExecuted": false,
+  "embeddedTextBlockCount": 1,
+  "mutedDrivers": [],
+  "visibleMeshes": [
+    {
+      "name": "pickel_VIS_O_OBJ_NSCShape",
+      "vertices": 606,
+      "polygons": 820,
+      "vertexGroups": 31,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_pickel_001"
+      ]
+    },
+    {
+      "name": "pickel_Openblink_VIS_O_OBJShape",
+      "vertices": 6,
+      "polygons": 4,
+      "vertexGroups": 31,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001"
+      ],
+      "materials": [
+        "EyeL"
+      ]
+    },
+    {
+      "name": "pickel_Openblink_VIS_O_OBJShape.001",
+      "vertices": 6,
+      "polygons": 4,
+      "vertexGroups": 31,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001"
+      ],
+      "materials": [
+        "EyeR"
+      ]
+    }
+  ],
+  "hiddenOrNonrenderMeshes": [
+    "pickel_Blink_VIS_O_OBJShape",
+    "rail_VIS_O_OBJShape",
+    "railFLIP_VIS_O_OBJShape",
+    "flint_VIS_O_OBJShape",
+    "flint_VIS_O_OBJShape.001",
+    "bucket1_VIS_O_OBJShape",
+    "bucket1_VIS_O_OBJShape.001",
+    "bucket2_VIS_O_OBJShape",
+    "bucket2_VIS_O_OBJShape.001",
+    "redstone_VIS_O_OBJShape",
+    "redstone_VIS_O_OBJShape.001",
+    "fireworks_VIS_O_OBJShape",
+    "fireworks_VIS_O_OBJShape.001",
+    "steak_VIS_O_OBJShape",
+    "steak_VIS_O_OBJShape.001",
+    "chicken_VIS_O_OBJShape",
+    "chicken_VIS_O_OBJShape.001",
+    "rail_VIS_O_OBJShape.001",
+    "bed_VIS_O_OBJShape",
+    "bed_VIS_O_OBJShape.001",
+    "flintFLIP_VIS_O_OBJShape",
+    "flintFLIP_VIS_O_OBJShape.001",
+    "bucket1FLIP_VIS_O_OBJShape",
+    "bucket1FLIP_VIS_O_OBJShape.001",
+    "bucket2FLIP_VIS_O_OBJShape",
+    "bucket2FLIP_VIS_O_OBJShape.001",
+    "redstoneFLIP_VIS_O_OBJShape",
+    "redstoneFLIP_VIS_O_OBJShape.001",
+    "fireworksFLIP_VIS_O_OBJShape",
+    "fireworksFLIP_VIS_O_OBJShape.001",
+    "steakFLIP_VIS_O_OBJShape",
+    "steakFLIP_VIS_O_OBJShape.001",
+    "chickenFLIP_VIS_O_OBJShape",
+    "chickenFLIP_VIS_O_OBJShape.001",
+    "railFLIP_VIS_O_OBJShape.001",
+    "bedFLIP_VIS_O_OBJShape",
+    "bedFLIP_VIS_O_OBJShape.001",
+    "sand_VIS_O_OBJShape",
+    "stone_VIS_O_OBJShape",
+    "wood_VIS_O_OBJShape",
+    "iron_VIS_O_OBJShape",
+    "wool_VIS_O_OBJShape",
+    "ice_VIS_O_OBJShape",
+    "cray_VIS_O_OBJShape",
+    "forge_VIS_O_OBJShape",
+    "bomb_VIS_O_OBJShape",
+    "pushbject_VIS_O_OBJShape",
+    "cobblestone_VIS_O_OBJShape",
+    "sandFLIP_VIS_O_OBJShape",
+    "stoneFLIP_VIS_O_OBJShape",
+    "woodFLIP_VIS_O_OBJShape",
+    "ironFLIP_VIS_O_OBJShape",
+    "woolFLIP_VIS_O_OBJShape",
+    "iceFLIP_VIS_O_OBJShape",
+    "crayFLIP_VIS_O_OBJShape",
+    "bombFLIP_VIS_O_OBJShape",
+    "pushbjectFLIP_VIS_O_OBJShape",
+    "cobblestoneFLIP_VIS_O_OBJShape",
+    "plate_VIS_O_OBJShape",
+    "forgeFLIP_VIS_O_OBJShape",
+    "plateFLIP_VIS_O_OBJShape",
+    "meltobject_VIS_O_OBJShape",
+    "meltobjectFLIP_VIS_O_OBJShape"
+  ],
+  "armatures": [
+    {
+      "name": "model-armature",
+      "bones": 31,
+      "boneNames": [
+        "Trans",
+        "Rot",
+        "Hip",
+        "Waist",
+        "Bust",
+        "Neck",
+        "Head",
+        "ClavicleC",
+        "ClavicleL",
+        "ShoulderL",
+        "ArmL",
+        "HandL",
+        "HaveL",
+        "WeaponL",
+        "HandL_eff",
+        "ClavicleR",
+        "ShoulderR",
+        "ArmR",
+        "HandR",
+        "HaveR",
+        "WeaponR",
+        "LegC",
+        "LegL",
+        "KneeL",
+        "FootL",
+        "ToeL",
+        "LegR",
+        "KneeR",
+        "FootR",
+        "ToeR",
+        "Throw"
+      ]
+    }
+  ],
+  "actions": [],
+  "usedMaterials": [
+    {
+      "name": "EyeL",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "EyeR",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "def_pickel_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    }
+  ],
+  "usedImages": [
+    {
+      "name": "def_pickel_001_col.png",
+      "source": "FILE",
+      "filepath": "//def_pickel_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/def_pickel_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 64,
+      "height": 64,
+      "bytes": 2048,
+      "sha256": "2638a04abff9841f416a1152dbf5411cbb1c405a121c1d8d6f4fd5def6bce5f6"
+    }
+  ],
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_pickel_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 31,
+      "nodeName": "pickel_Openblink_VIS_O_OBJShape",
+      "previousParentIndex": 34,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 32,
+      "nodeName": "pickel_Openblink_VIS_O_OBJShape.001",
+      "previousParentIndex": 34,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 33,
+      "nodeName": "pickel_VIS_O_OBJ_NSCShape",
+      "previousParentIndex": 34,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceUnits": {
+    "system": "METRIC",
+    "scaleLength": 1.0
+  }
+}

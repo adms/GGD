@@ -331,7 +331,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-orphen",
-  "modelKey": "version.body.22bdbf148e368f65a812201d250e439c5d431676c638bf9e",
+  "modelKey": "version.body.5abf9ec53fc14ad4e39811385acbce35771cecb10869d810",
   "name": "歐菲",
   "origin": "法鬥",
   "passiveAbility": "b2-orphen.passive",
@@ -377,6 +377,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-496452-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.b381e24be8b0427229c47418ad54c27db5ed0eb3f7f02cb7",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.496452",
+      "modelSha256": "7ae267be3f122b3be3a1dc70deafc3cf78223139b961d77b48f3e02d69d666b9",
+      "binarySha256": "de633e450e81ec45b08188037de6c540b52b0d22b5a43fe11c6ff877fda9611c",
+      "registeredAt": "2026-09-10T14:45:41.660Z",
+      "source": {
+        "kind": "previous",
+        "character": "歐菲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.496452.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.cb317c563fe505ef3fbaf246e6d8bf3291497e8e599ee5f7",
+      "label": "黑",
+      "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+      "modelSha256": "19a11cad685e66a964e94f48cbd425339c98bbd93ca741f6c91d0596ca081020",
+      "binarySha256": "e23de01e117f848158a31a1f7cf6f95bc626f447bb987444bcdd15ea29440f48",
+      "registeredAt": "2026-09-10T14:45:41.666Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑",
+        "work": "DARKER THAN BLACK－黑之契約者",
+        "library": "300heroes",
+        "reference": "300heroes:3d7222e80131dc1b4fa7c782",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.5abf9ec53fc14ad4e39811385acbce35771cecb10869d810",
+      "label": "甲贺忍蛙（論壇相似模型）",
+      "sourceModelKey": "ou99.496452-standard-v2",
+      "modelSha256": "cb45a3da070657c5270731f033d84547c53a070b1f2f0cae71efafc0409e722e",
+      "binarySha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+      "registeredAt": "2026-09-10T14:48:56.967Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "甲贺忍蛙",
+        "work": "來源作品待核；論壇標題：甲贺忍蛙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-496452-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

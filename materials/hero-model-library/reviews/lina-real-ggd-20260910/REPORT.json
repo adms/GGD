@@ -1,0 +1,490 @@
+{
+  "schema": "ggd-lina-real-runtime-compatibility-review@1",
+  "frozenAt": "2026-09-10T13:58:20.901138+00:00",
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility",
+  "reportPath": "/private/tmp/ggd-parallel-lina-ggd-compat-report.json",
+  "reviewRole": "existing-candidate-runtime-and-registration-evidence-only",
+  "sourceCandidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2/candidates/lina00-hands-a-300-idle-run-footplant-loop-v2.glb",
+    "sha256": "d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f",
+    "bytes": 2490156,
+    "newCandidate": false
+  },
+  "counts": {
+    "newDownloadedPackages": 0,
+    "newCharacterModels": 0,
+    "newAnimationClips": 0,
+    "newAudioFiles": 0,
+    "fixtureCopiedGlb": 1,
+    "existingCandidateJoints": 69,
+    "existingCandidateDerivedAnimations": 2,
+    "existingCandidateRaysNativeAnimations": 0,
+    "realComponentVideos": 3,
+    "decodedFramesEach": 57
+  },
+  "readiness": {
+    "assetManagerLoaded": true,
+    "championViewAdopted": true,
+    "storePreviewLoaded": true,
+    "registrationAccepted": false,
+    "actualRegistrationStatus": 422,
+    "adminDropdownRegistered": false,
+    "fullMovingMatchTested": false,
+    "runtimeReady": false,
+    "automaticEligible": false,
+    "defaultChanged": false,
+    "centralEdited": false,
+    "gitPublished": false,
+    "s3UploadedByThisAgent": false
+  },
+  "registration": {
+    "twoClipOnlyModelSchema": {
+      "ok": false,
+      "issues": [
+        {
+          "code": "invalid_type",
+          "expected": "string",
+          "received": "undefined",
+          "path": [
+            "clipMap",
+            "attack"
+          ],
+          "message": "Required"
+        },
+        {
+          "code": "invalid_type",
+          "expected": "string",
+          "received": "undefined",
+          "path": [
+            "clipMap",
+            "cast"
+          ],
+          "message": "Required"
+        },
+        {
+          "code": "invalid_type",
+          "expected": "string",
+          "received": "undefined",
+          "path": [
+            "clipMap",
+            "hurt"
+          ],
+          "message": "Required"
+        },
+        {
+          "code": "invalid_type",
+          "expected": "string",
+          "received": "undefined",
+          "path": [
+            "clipMap",
+            "death"
+          ],
+          "message": "Required"
+        }
+      ]
+    },
+    "explicitMissingSentinelDocSchema": {
+      "ok": true,
+      "caveat": "Schema accepts strings; sentinel names do not assert real motions and fail version name validation."
+    },
+    "actualParseUploadGlb": {
+      "ok": false,
+      "error": "Error: GLB 宣告尚未支援的擴充。"
+    },
+    "actualModelVersionsPrepare": [
+      {
+        "id": "godie-h020",
+        "ok": false,
+        "status": 422,
+        "error": "GLB 宣告尚未支援的擴充。",
+        "existingActiveModelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+        "existingVersionCount": 3
+      },
+      {
+        "id": "godie-hjai",
+        "ok": false,
+        "status": 422,
+        "error": "GLB 宣告尚未支援的擴充。",
+        "existingActiveModelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+        "existingVersionCount": 3
+      }
+    ],
+    "sixStateClipNamePredicate": {
+      "ok": false,
+      "missing": [
+        {
+          "state": "attack",
+          "name": "MISSING_SOURCE_attack"
+        },
+        {
+          "state": "cast",
+          "name": "MISSING_SOURCE_cast"
+        },
+        {
+          "state": "hurt",
+          "name": "MISSING_SOURCE_hurt"
+        },
+        {
+          "state": "death",
+          "name": "MISSING_SOURCE_death"
+        }
+      ]
+    },
+    "budgetMetricsOnly": {
+      "triangles": 9072,
+      "meshes": 5,
+      "textures": [
+        {
+          "format": "png",
+          "mime": "image/png",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "format": "png",
+          "mime": "image/png",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "format": "png",
+          "mime": "image/png",
+          "width": 1024,
+          "height": 1024
+        }
+      ],
+      "clips": [
+        {
+          "name": "300heroes_bat_idle_retargeted_to_Rays_Lina_processed_footplant_loop",
+          "channels": 20
+        },
+        {
+          "name": "300heroes_single_run_retargeted_to_Rays_Lina_processed_footplant_loop",
+          "channels": 20
+        }
+      ],
+      "result": {
+        "errors": [],
+        "warnings": [
+          "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+          "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+        ]
+      },
+      "caveat": "The actual parser rejects extensions before inspection; this independently invokes the real budget function with measured geometry/texture/channel metrics, not an import success."
+    }
+  },
+  "extensionInventory": {
+    "sourceSha256": "d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f",
+    "extensionsUsed": [
+      "KHR_materials_specular",
+      "KHR_materials_volume",
+      "FB_ngon_encoding"
+    ],
+    "extensionsRequired": [],
+    "actualExtensionPayloads": [
+      {
+        "pointer": "$.materials[0].extensions.KHR_materials_specular",
+        "name": "KHR_materials_specular",
+        "payload": {
+          "specularFactor": 1.0,
+          "specularColorFactor": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "pointer": "$.materials[1].extensions.KHR_materials_specular",
+        "name": "KHR_materials_specular",
+        "payload": {
+          "specularFactor": 1.0,
+          "specularColorFactor": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "pointer": "$.materials[2].extensions.KHR_materials_specular",
+        "name": "KHR_materials_specular",
+        "payload": {
+          "specularFactor": 1.0,
+          "specularColorFactor": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    ],
+    "declarationOnly": [
+      "KHR_materials_volume",
+      "FB_ngon_encoding"
+    ],
+    "futureNormalizationPlan": "Remove declaration-only entries in a distinct derivative only after confirming no referenced payloads. KHR_materials_specular is active on all 3 materials and cannot be called redundant. Evaluate core-PBR material conversion against original actual renders and preserve both before a new upload audit. Do not broaden the parser allowlist or silently discard effective material fields in this audit.",
+    "changedSource": false
+  },
+  "provenanceProposal": {
+    "source": {
+      "kind": "exact",
+      "character": "Lina Inverse / 莉娜",
+      "work": "Slayers",
+      "library": "Tales of the Rays body / 300英雄 retargeted motions",
+      "reference": "https://open3dlab.com/project/b8113b97-01b8-4a89-ba62-6b4c7d75ffee/ ; local footloop processing report SHA 259e478d2541e8636cea572657b4d925579cba764e7c7b9cf53f9794261e96bf",
+      "tier": "original",
+      "selectionClass": "community-mod",
+      "sourceGame": "Tales of the Rays (body); 300英雄 (motion)",
+      "sourcePlatform": "Mobile body / PC motion"
+    },
+    "selectionClass": "community-mod",
+    "automaticEligible": false,
+    "decision": "proposal only; cross-game processed motion is classified community-mod for this review option, preserve original body source in registry"
+  },
+  "runtimeSummary": {
+    "actualModules": "actual source modules from GGD-hero-model-options, no mocks of AssetManager/ChampionView/ClipAnimator/StorePreview",
+    "sourceFilesEvidence": "evidence/project-source-evidence.json",
+    "scale": 1.1556370480008433,
+    "restSkinnedHeight": 1.7999997927447124,
+    "idleMinY": 0.002311606717894502,
+    "runSnapshotMinY": 0.0022900382757743013,
+    "rate": 0.7797266567702565,
+    "resolvedStates": [
+      "idle",
+      "run"
+    ],
+    "missingStates": [
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "missingActualPlayingGroup": "300heroes_bat_idle_retargeted_to_Rays_Lina_processed_footplant_loop",
+    "missingActualPlaybackRate": 3,
+    "warning": "currentClip records requested state and does not prove actual resolved clip; see playingGroups.",
+    "recordings": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility/evidence/runtime/champion-idle-actual-framework.webm",
+        "sha256": "ca26854666db7f95aa5595c1ce44dcee3911ab8ec7a52826bafaba7c01f9cfec",
+        "probe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "vp9",
+              "width": 1024,
+              "height": 1024,
+              "nb_read_frames": "57"
+            }
+          ],
+          "format": {
+            "duration": "14.154825",
+            "size": "498452"
+          }
+        },
+        "probeExit": 0,
+        "decodedFrameCount": 57,
+        "distinctDecodedFrameHashes": 57,
+        "mp4TranscodeExit": 0,
+        "frames": [
+          {
+            "phase": 0.1,
+            "file": "champion-idle-actual-framework-early.png",
+            "ok": true
+          },
+          {
+            "phase": 0.5,
+            "file": "champion-idle-actual-framework-middle.png",
+            "ok": true
+          },
+          {
+            "phase": 0.9,
+            "file": "champion-idle-actual-framework-late.png",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility/evidence/runtime/champion-run-actual-framework.webm",
+        "sha256": "0356f3e37071738eb8bcbc17e6424f3373d716051200aa13d6fae3be5a379a28",
+        "probe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "vp9",
+              "width": 1024,
+              "height": 1024,
+              "nb_read_frames": "57"
+            }
+          ],
+          "format": {
+            "duration": "6.643977",
+            "size": "520655"
+          }
+        },
+        "probeExit": 0,
+        "decodedFrameCount": 57,
+        "distinctDecodedFrameHashes": 57,
+        "mp4TranscodeExit": 0,
+        "frames": [
+          {
+            "phase": 0.1,
+            "file": "champion-run-actual-framework-early.png",
+            "ok": true
+          },
+          {
+            "phase": 0.5,
+            "file": "champion-run-actual-framework-middle.png",
+            "ok": true
+          },
+          {
+            "phase": 0.9,
+            "file": "champion-run-actual-framework-late.png",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility/evidence/runtime/store-idle-actual-framework.webm",
+        "sha256": "c9efb936f19fad5aa44eb96b49edc874438f54f6a367b6f64729307f6efde9cb",
+        "probe": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "vp9",
+              "width": 1024,
+              "height": 1024,
+              "nb_read_frames": "57"
+            }
+          ],
+          "format": {
+            "duration": "4.550046",
+            "size": "430478"
+          }
+        },
+        "probeExit": 0,
+        "decodedFrameCount": 57,
+        "distinctDecodedFrameHashes": 57,
+        "mp4TranscodeExit": 0,
+        "frames": [
+          {
+            "phase": 0.1,
+            "file": "store-idle-actual-framework-early.png",
+            "ok": true
+          },
+          {
+            "phase": 0.5,
+            "file": "store-idle-actual-framework-middle.png",
+            "ok": true
+          },
+          {
+            "phase": 0.9,
+            "file": "store-idle-actual-framework-late.png",
+            "ok": true
+          }
+        ]
+      }
+    ]
+  },
+  "strideCalibration": {
+    "observedGGDScale": 1.1556370480008433,
+    "observedGGDRunRate": 0.7797266567702565,
+    "testEntitySpeedUnitsPerSecond": 4.5224146092674875,
+    "ggdGlobalReferenceSpeed": 5.8,
+    "candidateNominalContactSpeedAt1xMetersPerSecond": 4.5224146092674875,
+    "candidateContactSpeedAfterGGDScaleAt1x": 5.226269868889767,
+    "predictedContactSpeedAfterGGDScaleAndRate": 4.075061932248545,
+    "predictedSteadyCoreFootSlideUnitsPerSecond": 0.44735267701894266,
+    "sourceCycleSeconds": 0.40625,
+    "actualGGDRunCycleSeconds": 0.5210159181715651,
+    "spikeNetHorizontalDisplacementAfterGGDScaleMeters": 0.005813942668728433,
+    "spikeSupportDurationAfterGGDPlaybackRateSeconds": 0.005343753006887828,
+    "evidenceStatus": "Scale and speedRatio observed through real components. Residual foot velocity is a kinematic prediction from previously sampled planted-sole trajectories, not a live moving-match measurement. In-place component recording supplies groundSpeed to actual ClipAnimator but does not advance SimWorld entity position.",
+    "integrationOptions": [
+      "Calibrate a distinct asset playback derivative to the existing global reference speed after normalization, with new timing/pose provenance and visual evidence.",
+      "A future reviewed per-model stride-reference contract could preserve this clip timing; not implemented or requested in this audit."
+    ],
+    "implementedCalibrationChange": false
+  },
+  "leftSpike": {
+    "peakHorizontalMps": 1.995018011190477,
+    "event": {
+      "sampleIndices": [
+        196,
+        198
+      ],
+      "sampleCentersSeconds": [
+        0.20416666666666666,
+        0.20625
+      ],
+      "durationWithHalfStepEachSideSeconds": 0.003125,
+      "centralDerivativeSupportSeconds": [
+        0.203125,
+        0.20729166666666665
+      ],
+      "supportDurationSeconds": 0.004166666666666652,
+      "supportDeltaXYZMeters": [
+        -0.0007025279590474887,
+        -0.004808997085395294,
+        0.004981649257489229
+      ],
+      "supportNetHorizontalDisplacementMeters": 0.005030941746620251,
+      "supportHorizontalPathLengthMeters": 0.00506305992209142,
+      "peakMps": 1.995018011190477
+    },
+    "evidence": "evidence/left-foot-spike.json"
+  },
+  "visualReview": {
+    "reviewedFiles": [
+      "evidence/runtime-attempt-1/champion-idle.png",
+      "evidence/runtime-attempt-1/store-idle.png",
+      "evidence/runtime/champion-run-actual-framework-middle.png",
+      "evidence/runtime/store-idle-actual-framework-early.png",
+      "evidence/runtime/store-idle-actual-framework-late.png"
+    ],
+    "method": "Direct viewing of actual locally rendered PNG and decoded recording frames with view_image.",
+    "observations": [
+      "Actual StorePreview displays full Lina body, colored embedded textures, one selected hand pair and coherent idle pose; no gross detached limb or mesh explosion visible in these reviewed samples.",
+      "Actual CameraRig gameplay angle shows rear/top with cape occluding legs. It is inadequate by itself to approve subtle foot slip.",
+      "Input uses hands-a, no additional hand variants activated in this audit.",
+      "Source still has rigid cape/hair limitations from prior review."
+    ],
+    "limits": [
+      "Not all video frames manually inspected. Three current videos have 57 distinct decoded frames each; explicit canvas capture rendered 60 frames each.",
+      "Headless x64 Chrome under Rosetta and SwiftShader generated low-rate recordings; these establish actual component execution, not supported-device performance or a 5 ms visual quality pass.",
+      "Missing-state transition in first run briefly measured whole-mesh minimum Y=-0.0205138; second run minimum Y=0.0503497 at a different wall phase. These are unverified mixed fallback transition poses, not a source stationary clip floor bound.",
+      "No live content-API HTTP route write, admin selection persistence, SimWorld moving match, full application E2E or deployment was performed."
+    ]
+  },
+  "recordingAttemptHistory": {
+    "path": "evidence/runtime-attempt-1",
+    "preserved": true,
+    "classification": "recording test-mechanism failure and incomplete scene fixture, not established product failure",
+    "emptyIdleVideoBytes": 110,
+    "idleFFprobe": "End of file / invalid EBML",
+    "runDecodedFrames": 10,
+    "storeDecodedFrames": 25,
+    "groundTextures": "First fixture intentionally did not serve four ground files; actual fallback rendered grey. Second serves four exact local project PNG paths.",
+    "replacement": "evidence/runtime",
+    "secondAttemptDecodedFramesEach": 57,
+    "furtherRecordingRetriesNeeded": false
+  },
+  "projectCommit": "dda5a452765ac75614c09bf77e6b0cbcdf227812",
+  "projectSourceFilesMatchCommit": true,
+  "nextBatch": "new root; standardize used materials and unused declarations; inspect native 300 Lina20 clips for real attack/cast/hurt/death before retargeting; no false aliases and no engine/central/default changes",
+  "sourcePreservation": {
+    "originalCandidateShaVerifiedAfter": "d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f",
+    "writesOutsideThisIntake": "Only owned /private/tmp scripts, report and own headless profile; no prior intakes or central files changed."
+  },
+  "manifestPolicy": "FILE_MANIFEST lists all payload and evidence files except REPORT.json, FILE_MANIFEST.json, SHA256SUMS. Their hashes are reported externally; exclusion avoids circular hashes.",
+  "manifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-ggd-compatibility/FILE_MANIFEST.json",
+    "sha256": "547d220b2725a97a7fa1b26589d095f814fa4f5a3c797e8346fa15519cfc7944",
+    "rows": 55,
+    "payloadBytes": 16586926,
+    "allFilesExpected": 58
+  }
+}

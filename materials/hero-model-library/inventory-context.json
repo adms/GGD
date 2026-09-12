@@ -1,0 +1,3764 @@
+{
+  "main": {
+    "commit": "bbc62a06df8eb7910e7a30304770f3fb03f01f2f",
+    "champions": {
+      "godie-e001": {
+        "id": "godie-e001",
+        "name": "蟬在叫人壞掉 - 龍宮禮奈",
+        "description": "故事：\n來自雛見澤的小女孩，喜歡把\"好可愛\"的東西帶回家。\n(出自:寒蟬鳴泣之時)\n\n推薦玩家 : 追擊殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.80\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬼隱之擊\n、染血的柴刀、五吋釘、雛見澤症候群L5",
+        "origin": "狂戰",
+        "modelKey": "imported.renaryugu2",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e00n",
+          "normalUnitRawcode": "E001",
+          "alternateUnitRawcode": "E00N",
+          "triggerAbility": {
+            "rawcode": "A02Q",
+            "name": "22-04 雛見澤症候群L5",
+            "durationSec": {
+              "1": 7,
+              "2": 14,
+              "3": 21,
+              "4": 28
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 75
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e002": {
+        "id": "godie-e002",
+        "name": "亞瑟王 - Saber",
+        "description": "故事：\n在偶然的情況下與衛宮士郎定下契約的 、外觀嬌小的女性SERVANT，就是被認為能力最高的聖靈。\n(出自:Fate/stay night)\n\n推薦玩家 : 破塔PK\n上手度 : 中\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.80\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n風王結界、感知能力、約束與勝利之劍、Avalon-永恆的理想鄉",
+        "origin": "法鬥",
+        "modelKey": "imported.herosaber",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e00l",
+          "normalUnitRawcode": "E002",
+          "alternateUnitRawcode": "E00L",
+          "triggerAbility": {
+            "rawcode": "A0DZ",
+            "name": "20-01 風王結界"
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e007": {
+        "id": "godie-e007",
+        "name": "龍之子 - 天地志狼",
+        "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n柳術、鬥仙術、雲體風身之術、仙氣發勁",
+        "modelKey": "imported.herolingtong",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ewar",
+          "normalUnitRawcode": "EWAR",
+          "alternateUnitRawcode": "E007",
+          "triggerAbility": {
+            "rawcode": "A02W",
+            "name": "12-03 破凰之心-徒手空破山",
+            "durationSec": {
+              "1": 12.0,
+              "2": 18.0,
+              "3": 24.0,
+              "4": 30.0
+            },
+            "cooldownSec": {
+              "1": 45.0,
+              "2": 45.0,
+              "3": 45.0,
+              "4": 45.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "thrown"
+        ]
+      },
+      "godie-e008": {
+        "id": "godie-e008",
+        "name": "火霧戰士 - 夏娜",
+        "description": "故事：\n身分為火霧戰士，為了存在感稀薄的人而戰。\n(出自:灼眼的夏娜)\n\n推薦玩家 : 團戰殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 310\n\n可學習的技能：\n拔焰刀、火羽、赤焰爆發、討滅封絕",
+        "origin": "法鬥",
+        "modelKey": "imported.heroshana",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-e00l": {
+        "id": "godie-e00l",
+        "name": "亞瑟王 - Saber",
+        "modelKey": "imported.herosaber",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e002",
+          "normalUnitRawcode": "E002",
+          "alternateUnitRawcode": "E00L",
+          "triggerAbility": {
+            "rawcode": "A0DZ",
+            "name": "20-01 風王結界"
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e00n": {
+        "id": "godie-e00n",
+        "name": "蟬在叫人壞掉 - 龍宮禮奈",
+        "modelKey": "imported.renaryugu2",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e001",
+          "normalUnitRawcode": "E001",
+          "alternateUnitRawcode": "E00N",
+          "triggerAbility": {
+            "rawcode": "A02Q",
+            "name": "22-04 雛見澤症候群L5",
+            "durationSec": {
+              "1": 7.0,
+              "2": 14.0,
+              "3": 21.0,
+              "4": 28.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 75.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e00r": {
+        "id": "godie-e00r",
+        "name": "最終泛用人型決戰兵器 - 初號機",
+        "description": "故事：\n『汎用人型決戰兵器』EVANGELION初號機，採用半生物機械的製造，因此雖然能力強大,但是不好控制。作業系統為[J-Win95]，因此很容易發生\"應用程式錯誤\"而失控暴走 。\n\n推薦玩家 : KUSO破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 300\n\n可學習的技能：\n吞噬、高震動周波短刀、AT力場、野戰型陽電子砲",
+        "origin": "狂戰",
+        "modelKey": "w3x.stock.satyrtrickster",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "sword"
+        ]
+      },
+      "godie-e00s": {
+        "id": "godie-e00s",
+        "name": "白木老樹精 - 白木卡迪那",
+        "description": "故事：\n白木家族是捍衛世界樹種族之一，與黃金龍族不同的是，通常處於被動守護狀態而不像黃金龍族常巡邏出擊，白木家族擅長控制自然元素牽制敵人。卡迪那本來是一顆瀕臨枯死的老樹精，受到飛鼠先生的祝福之後重生也得到了異常的魔法能量。\n(出自:去死團逆襲原創)\n\n推薦玩家 : 團戰殺人\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.10\n智慧 + 2.80\n基礎跑速 250\n\n可學習的技能：\n伸卡球、大怒石、木束縛之術、千年練成",
+        "origin": "硬輔",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e010",
+          "normalUnitRawcode": "E00S",
+          "alternateUnitRawcode": "E010",
+          "triggerAbility": {
+            "rawcode": "A0O6",
+            "name": "70-00 紮根",
+            "cooldownSec": {
+              "1": 15
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-e00w": {
+        "id": "godie-e00w",
+        "name": "神鳴流劍士 - 櫻綻剎那",
+        "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n百烈櫻華斬、雷鳴劍、GLADIARIA ALAT、真-雷光劍",
+        "origin": "鬥士",
+        "modelKey": "imported.mfls",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e00x",
+          "normalUnitRawcode": "E00W",
+          "alternateUnitRawcode": "E00X",
+          "triggerAbility": {
+            "rawcode": "A0JG",
+            "name": "77-03 GLADIARIA ALAT",
+            "durationSec": {
+              "1": 6,
+              "2": 12,
+              "3": 18,
+              "4": 24
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-e00x": {
+        "id": "godie-e00x",
+        "name": "神鳴流劍士 - 櫻綻剎那",
+        "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n斬魔劍、百烈櫻華斬、GLADIARIA ALAT、真雷光劍",
+        "modelKey": "imported.mfls",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e00w",
+          "normalUnitRawcode": "E00W",
+          "alternateUnitRawcode": "E00X",
+          "triggerAbility": {
+            "rawcode": "A0JG",
+            "name": "77-03 GLADIARIA ALAT",
+            "durationSec": {
+              "1": 6.0,
+              "2": 12.0,
+              "3": 18.0,
+              "4": 24.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-e010": {
+        "id": "godie-e010",
+        "name": "白木老樹精 - 白木卡迪那",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e00s",
+          "normalUnitRawcode": "E00S",
+          "alternateUnitRawcode": "E010",
+          "triggerAbility": {
+            "rawcode": "A0O6",
+            "name": "70-00 紮根",
+            "cooldownSec": {
+              "1": 15.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-edem": {
+        "id": "godie-edem",
+        "name": "寫輪眼復仇者 - 宇智波佐助",
+        "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
+        "origin": "法刺",
+        "modelKey": "imported.herosasuke",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-efur": {
+        "id": "godie-efur",
+        "name": "揍敵客大家長 - 揍敵客桀諾",
+        "description": "故事：\n來自殺手世家揍敵客家族，其才能在揍敵客家族歷史也是非常優秀。擁有超強的念能力，可以任意操縱敵人的生死。暗殺家族揍敵客家的家長。奇犽的祖父。 穿著「一日一殺」和「生涯現役」等刺繡的衣服。\n(出自:偽獵人X獵人)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.20\n智慧 + 2.30\n基礎跑速 315\n\n可學習的技能：\n暗步。極限之圓、龍頭戲畫。牙突、龍頭戲畫。佈壁、龍星群",
+        "origin": "鬥士",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-emfr": {
+        "id": "godie-emfr",
+        "name": "魔法老師 - 涅吉。史普林。菲爾德",
+        "description": "故事：\n英國某間魔法學校修行的首席畢業生涅吉，目前還只是個10歲的少年。他的目標是成為「出色的魔法使」。\n(出自:魔法老師)\n\n推薦玩家 : 團戰牽制\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.40\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n風精召喚、沉睡之霧、雷電風暴、千之雷",
+        "origin": "狂戰",
+        "modelKey": "imported.negi",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-emns": {
+        "id": "godie-emns",
+        "name": "奇樂 - 夜神月",
+        "description": "故事：\n英俊瀟灑，謹慎且機智，雖然極有女人緣但對異性不感興趣。高中三年級時在學校撿到了死神路克遺留人間界的死亡筆記\"DEATH NOTE\"，從而擁有了操縱生死的能力，並以\"新世界的神\"的名義君臨天下。\n(出自:死亡筆記本)\n\n推薦玩家 : 心機暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.50\n智慧 + 2.70\n基礎跑速 300\n\n可學習的技能：\n死神的規則、機警、火車輾過、心臟麻痺",
+        "origin": "法師",
+        "modelKey": "imported.herolight",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-etyr": {
+        "id": "godie-etyr",
+        "name": "治癒系公主 - 木乃香",
+        "description": "故事：\n父母家在京都的關西咒術協會，父親近衛詠春是關西咒術協會會長，祖父是關東魔法協會會長與麻帆良學園的校長，自身擁有驚世駭俗的魔法力量，有可能能成為世界頂級的治癒術師，在關東魔法協會一戰中被天崎千草借其魔力召喚出過百惡魔。\n(2007部族盃比賽獎品 出自:魔法老師)\n\n推薦玩家 : 輔助團戰\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.20\n智慧 + 3.20\n基礎跑速 295\n\n可學習的技能：\n東風繪扇、南風末廣、式神炸裂、魔力應援、聖夜降臨",
+        "origin": "軟輔",
+        "modelKey": "imported.herooichi",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-ewar": {
+        "id": "godie-ewar",
+        "name": "龍之子 - 天地志狼",
+        "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n推薦玩家 : 團戰狙擊\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬥仙術、仙氣．採藥、破凰之心．徒手空破山、龍氣爆發",
+        "origin": "鬥士",
+        "modelKey": "imported.herolingtong",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e007",
+          "normalUnitRawcode": "EWAR",
+          "alternateUnitRawcode": "E007",
+          "triggerAbility": {
+            "rawcode": "A02W",
+            "name": "12-03 破凰之心-徒手空破山",
+            "durationSec": {
+              "1": 12,
+              "2": 18,
+              "3": 24,
+              "4": 30
+            },
+            "cooldownSec": {
+              "1": 45,
+              "2": 45,
+              "3": 45,
+              "4": 45
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-h00l": {
+        "id": "godie-h00l",
+        "name": "時空勇者 - 林克",
+        "description": "故事：原本在森林中被當成『永遠不會長大的科奇利族人』般的生活著，直到某天因葛諾多夫的陰謀而知道自己真正的身世，為了對抗葛諾多夫，林克成為時空勇者 。\n(出自:薩爾達傳說)\n\n推薦玩家 : 肉盾牽制\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 2.00\n智慧 + 1.20\n基礎跑速 295\n\n可學習的技能：\n科奇利族迴旋鏢、鎖鏈槍、海拉爾之盾的庇護、迴旋斬",
+        "origin": "鬥士",
+        "modelKey": "imported.linkstik",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-h01n": {
+        "id": "godie-h01n",
+        "name": "開外掛的死神 - 黑崎一護",
+        "description": "故事：黑崎一護除了能夠看見靈之外，是個很普通的高中生，但是有一天，出現了一個叫做〔虛〕的惡靈找上了他，此時！他遇見了死神朽木露琪亞，為了拯救家人，踏上代理死神這條路 。\n(出自:死神BLEACH)\n\n推薦玩家 : 輸出殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.45\n智慧 + 1.6\n基礎跑速 295\n\n可學習的技能：\n瞬步、斬擊、月牙天衝、卍解",
+        "origin": "鬥士",
+        "modelKey": "imported.heroichigo",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h01o",
+          "normalUnitRawcode": "H01N",
+          "alternateUnitRawcode": "H01O",
+          "triggerAbility": {
+            "rawcode": "A0LN",
+            "name": "79-04 卍解",
+            "durationSec": {
+              "1": 8,
+              "2": 16,
+              "3": 24,
+              "4": 25
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 30
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-h01o": {
+        "id": "godie-h01o",
+        "name": "外掛開很大的死神 - 黑崎一護",
+        "modelKey": "imported.heroichigo-bankai",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-h01n",
+          "normalUnitRawcode": "H01N",
+          "alternateUnitRawcode": "H01O",
+          "triggerAbility": {
+            "rawcode": "A0LN",
+            "name": "79-04 卍解",
+            "durationSec": {
+              "1": 8.0,
+              "2": 16.0,
+              "3": 24.0,
+              "4": 25.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 30.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-h01u": {
+        "id": "godie-h01u",
+        "name": "亂世癿王者 - 呂布奉先",
+        "description": "故事：呂布（公元151年—公元198年），字奉先，五原（今內蒙古包頭市）人。三國時代的著名武將。呂布因其驍勇善戰，但又勢利多變。在民間對他評價為「人中呂布，馬中赤兔」。\n(出自:東漢世紀末傳說)\n\n推薦玩家 : PK破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 305\n\n可學習的技能：\n天下無雙、弒鬼神、鬼神烈戟、赤兔咆哮",
+        "origin": "鬥士",
+        "modelKey": "imported.lubu",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "greatsword"
+        ]
+      },
+      "godie-h020": {
+        "id": "godie-h020",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬(需要惡夢魔王碎片)",
+        "modelKey": "imported.linainvers",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-hjai",
+          "normalUnitRawcode": "HJAI",
+          "alternateUnitRawcode": "H020",
+          "triggerAbility": {
+            "rawcode": "A0OE",
+            "name": "04-002 惡夢魔王的碎片",
+            "durationSec": {
+              "1": 20.0,
+              "2": 12.0,
+              "3": 18.0,
+              "4": 24.0
+            },
+            "cooldownSec": {
+              "1": 70.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-h02k": {
+        "id": "godie-h02k",
+        "name": "國寶級的畜生 - 熊貓",
+        "description": "故事：\n來自四川的熊貓，經歷過四川的地震以後，流落到馬戲團賣藝，雖然自稱賣藝不賣身，但是為了生活還是常常到228公園去，而支持他苟延殘喘活下來的動力，就是希望在有生之年能拍一張彩色的照片。\n(出自:去死團原創)\n\n推薦玩家 : 人品爆發\n上手度 : 殘\n\n角色成長：\n力量 + 2.5（原作寫 1~4，取中點）\n敏捷 + 1.5（原作寫 1~2，取中點）\n智慧 + 0.5（原作寫 0~1，取中點）\n基礎跑速 305\n\n【修正紀錄】w3x 裡這三個成長全部是 0.0，是作者自己填的 —— 也就是說牠原本永遠停在 1 級，跟牠自己的說明矛盾。owner 2026-07-26 裁定「應該照說明成長」。原作寫的是區間，但模擬器是確定性的（不能擲骰），所以取中點。\n\n可學習的技能：\n憤怒的門牙、憤怒的菊花、憤怒的胸毛、憤怒的簡諧運動",
+        "origin": "坦克",
+        "modelKey": "champ.skin.barbarian",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "fist"
+        ]
+      },
+      "godie-h02r": {
+        "id": "godie-h02r",
+        "name": "種子神奇寶貝 - 妙蛙花",
+        "modelKey": "imported.bulbasaur",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-hgam",
+          "normalUnitRawcode": "HGAM",
+          "alternateUnitRawcode": "H02R",
+          "triggerAbility": {
+            "rawcode": "A0VG",
+            "name": "90-002 超進化! 妙蛙花",
+            "durationSec": {
+              "1": 18.0,
+              "4": 25.0
+            },
+            "cooldownSec": {
+              "1": 75.0,
+              "4": 30.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-h02u": {
+        "id": "godie-h02u",
+        "name": "看似憂鬱的神獸 - 草泥馬",
+        "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n憂鬱的眼神、臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+        "modelKey": "imported.horse",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-h02v",
+          "normalUnitRawcode": "H02V",
+          "alternateUnitRawcode": "H02U",
+          "triggerAbility": {
+            "rawcode": "A0W9",
+            "name": "92-01 臥草泥馬",
+            "durationSec": {
+              "1": 10.0,
+              "2": 10.0,
+              "3": 5.0,
+              "4": 5.0
+            },
+            "cooldownSec": {
+              "1": 40.0,
+              "2": 40.0,
+              "3": 20.0,
+              "4": 20.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-h02v": {
+        "id": "godie-h02v",
+        "name": "看似憂鬱的神獸 - 草泥馬",
+        "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+        "origin": "坦克",
+        "modelKey": "imported.horse",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h02u",
+          "normalUnitRawcode": "H02V",
+          "alternateUnitRawcode": "H02U",
+          "triggerAbility": {
+            "rawcode": "A0W9",
+            "name": "92-01 臥草泥馬",
+            "durationSec": {
+              "1": 10,
+              "2": 10,
+              "3": 5,
+              "4": 5
+            },
+            "cooldownSec": {
+              "1": 40,
+              "2": 40,
+              "3": 20,
+              "4": 20
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-hapm": {
+        "id": "godie-hapm",
+        "name": "海克力斯 - Berserker",
+        "description": "故事：\nBerserker是希臘神話中著名的英雄海格力斯(Hercules) ，血統為半神半人，力大無窮，曾在聖杯戰爭中被召喚為SENVENT與嬌小的Master依利亞並肩作戰。\n(第一屆去死團大賽獎勵角色 出自:Fate/stay night)\n\n推薦玩家 : 衝鋒殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n狂戰士之怒、蹂躪編年史、無銘斧劍、巨神一擊",
+        "origin": "坦克",
+        "modelKey": "champ.thorne",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "greatsword"
+        ]
+      },
+      "godie-hart": {
+        "id": "godie-hart",
+        "name": "最終幻想 - 克勞德",
+        "description": "故事：\nCloud的名字暗示著他神祕，不清楚的過去以及他那不可預知的將來，為了過去奮戰們的朋友，使得他不得不重新提起沉重的大刀迎敵。\n(出自:太空戰士7)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.80\n智慧 + 1.90\n基礎跑速 310\n\n可學習的技能：\n凶斬、隕石擊、畫龍點睛、超究武神霸斬",
+        "origin": "鬥士",
+        "modelKey": "imported.cloud",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "greatsword"
+        ]
+      },
+      "godie-hgam": {
+        "id": "godie-hgam",
+        "name": "種子神奇寶貝 - 妙蛙種子",
+        "description": "故事：\n一出生背上就負著不可思議的種子。背上的種子裡面，擁有大量的營養 ，種子會跟著身體一起長大。\n(出自:神奇寶貝)\n\n推薦玩家 : 牽制會戰\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.00\n智慧 + 2.30\n基礎跑速 300\n\n可學習的技能：\n飛葉快刀、麻痺粉、藤鞭、陽光烈焰",
+        "origin": "軟輔",
+        "modelKey": "imported.bulbasaur",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h02r",
+          "normalUnitRawcode": "HGAM",
+          "alternateUnitRawcode": "H02R",
+          "triggerAbility": {
+            "rawcode": "A0VG",
+            "name": "90-002 超進化! 妙蛙花",
+            "durationSec": {
+              "1": 18,
+              "4": 25
+            },
+            "cooldownSec": {
+              "1": 75,
+              "4": 30
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-hjai": {
+        "id": "godie-hjai",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬",
+        "origin": "法師",
+        "modelKey": "imported.linainvers",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h020",
+          "normalUnitRawcode": "HJAI",
+          "alternateUnitRawcode": "H020",
+          "triggerAbility": {
+            "rawcode": "A0OE",
+            "name": "04-002 惡夢魔王的碎片",
+            "durationSec": {
+              "1": 20,
+              "2": 12,
+              "3": 18,
+              "4": 24
+            },
+            "cooldownSec": {
+              "1": 70,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-hpb1": {
+        "id": "godie-hpb1",
+        "name": "獸矛傳承使 - 蒼月潮",
+        "description": "故事：\n無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義感的蒼月潮為了阻止去死團的破壞拿起獸矛奮戰了。\n(出自:魔力小馬、潮與虎)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.10\n敏捷 + 2.00\n智慧 + 1.70\n基礎跑速 310\n\n可學習的技能：\n臨兵鬥、者皆陣、列在前、神聖結界",
+        "origin": "狂戰",
+        "modelKey": "imported.herotoshiiemaeda",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "greatsword"
+        ]
+      },
+      "godie-huth": {
+        "id": "godie-huth",
+        "name": "超級普烏 - 魔人普烏",
+        "description": "故事：\n看似貪玩可愛，骨子裡卻充滿邪惡的魔人普烏。擁有強大的分身再生能力，摧毀敵人也只不過是他的娛樂。\n(出自:七龍珠)\n\n推薦玩家 : 破塔堵人\n上手度 : 易\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.85\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n吃掉你、把你變成餅乾、分身、破滅能量彈",
+        "origin": "坦克",
+        "modelKey": "imported.herobuu",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-hvsh": {
+        "id": "godie-hvsh",
+        "name": "梅杜莎 - Rider",
+        "description": "故事：\n高爾根為蛇髮女怪，她們是海神Phorcys和ceto所生的三女妖：大姐司提娜(Stheno)是代表力量，二姐尤里艾蕾(Euryale)是代表自由(飛翔)，三妹梅杜莎(Medusa)是代表悲哀(女王)。她們三姊妹當中只有梅杜沙是人類的身軀。\n(出自:Fate/stay night)\n\n推薦玩家 : 團戰牽制\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n魔法鎖鍊、心眼、鮮血神殿、騎英之韁繩",
+        "origin": "法鬥",
+        "modelKey": "imported.herorider",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-hvwd": {
+        "id": "godie-hvwd",
+        "name": "除魔巫女 - 桔梗",
+        "description": "故事：\n原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨念。\n(出自:犬夜叉)\n\n推薦玩家 : 牽制輔助\n上手度 : 易\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.40\n智慧 + 1.80\n基礎跑速 295\n\n可學習的技能：\n破魔之箭、明鏡止水、魂飛魄散、百鬼夜行",
+        "origin": "射手",
+        "modelKey": "imported.kikyou",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-n003": {
+        "id": "godie-n003",
+        "name": "黑暗福音 - 依文潔琳",
+        "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.20\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+        "origin": "法師",
+        "modelKey": "imported.long",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-n01g",
+          "normalUnitRawcode": "N003",
+          "alternateUnitRawcode": "N01G",
+          "triggerAbility": {
+            "rawcode": "A06K",
+            "name": "42-002 魔力印章",
+            "durationSec": {
+              "1": 7,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-n00b": {
+        "id": "godie-n00b",
+        "name": "小叮噹 - 哆拉A夢",
+        "description": "故事：\n從21世紀來的機械貓，因為感受到體內KUSO魂呼喚，所以決定在去死團大闖天下。\n(出自:小叮噹)\n\n推薦玩家 : 團戰輔助\n上手度 : 中\n\n角色成長：\n力量 + 2.00\n敏捷 + 1.85\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n空氣砲、任意門、複製鏡、竹蜻蜓",
+        "origin": "軟輔",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "thrown"
+        ]
+      },
+      "godie-n00p": {
+        "id": "godie-n00p",
+        "name": "妖狐藏馬 - 南野秀一",
+        "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n寄生種子、風華圓舞陣、妖狐變化、魔界樹海",
+        "modelKey": "imported.fox",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-nsjs",
+          "normalUnitRawcode": "NSJS",
+          "alternateUnitRawcode": "N00P",
+          "triggerAbility": {
+            "rawcode": "A0IH",
+            "name": "18-03 妖狐變化",
+            "durationSec": {
+              "1": 8.0,
+              "2": 12.0,
+              "3": 16.0,
+              "4": 20.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "thrown"
+        ]
+      },
+      "godie-n01c": {
+        "id": "godie-n01c",
+        "name": "傳說的龍騎士 - 勇者小呆",
+        "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
+        "modelKey": "imported.sd2",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-nbbc",
+          "normalUnitRawcode": "NBBC",
+          "alternateUnitRawcode": "N01C",
+          "triggerAbility": {
+            "rawcode": "A0T1",
+            "name": "08-002 龍魔人",
+            "durationSec": {
+              "1": 20,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-n01g": {
+        "id": "godie-n01g",
+        "name": "黑暗福音 - 依文潔琳",
+        "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+        "modelKey": "imported.long",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-n003",
+          "normalUnitRawcode": "N003",
+          "alternateUnitRawcode": "N01G",
+          "triggerAbility": {
+            "rawcode": "A06K",
+            "name": "42-002 魔力印章",
+            "durationSec": {
+              "1": 7.0,
+              "2": 15.0,
+              "3": 21.0,
+              "4": 27.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-nbbc": {
+        "id": "godie-nbbc",
+        "name": "傳說的龍騎士 - 勇者小呆",
+        "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
+        "origin": "法鬥",
+        "modelKey": "imported.sd2",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-n01c",
+          "normalUnitRawcode": "NBBC",
+          "alternateUnitRawcode": "N01C",
+          "triggerAbility": {
+            "rawcode": "A0T1",
+            "name": "08-002 龍魔人",
+            "durationSec": {
+              "1": 20,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-nsjs": {
+        "id": "godie-nsjs",
+        "name": "妖狐藏馬 - 南野秀一",
+        "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n推薦玩家 : 追擊破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n風華圓舞陣、寄生種子、妖狐變化、億年樹",
+        "origin": "法師",
+        "modelKey": "imported.fox2",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-n00p",
+          "normalUnitRawcode": "NSJS",
+          "alternateUnitRawcode": "N00P",
+          "triggerAbility": {
+            "rawcode": "A0IH",
+            "name": "18-03 妖狐變化",
+            "durationSec": {
+              "1": 8,
+              "2": 12,
+              "3": 16,
+              "4": 20
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "thrown"
+        ]
+      },
+      "godie-o00k": {
+        "id": "godie-o00k",
+        "name": "傲嬌電氣老鼠 - 皮卡娘",
+        "description": "故事：\n相當傲嬌的皮卡丘，從小就展現出超出一般水準的戰鬥能力，是個斗S，喜歡身為M的主人小智，。\n(出自:SATO X PICA)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 2.60\n智慧 + 1.80\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、電光一閃、神鳴、打雷絕招",
+        "origin": "法刺",
+        "modelKey": "imported.pika",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-o00l": {
+        "id": "godie-o00l",
+        "name": "獸神官 - 傑洛士",
+        "description": "故事：\n隸屬於獸王底下的神官，是非常高等的魔族，擁有強大的魔法破壞力，不過通常隱身在幕後扮演調查和輔助的角色。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.40\n智慧 + 3.10\n基礎跑速 295\n\n可學習的技能：\n強化炸彈陣、獸王牙操彈、破法對咒、暴爆咒",
+        "origin": "法刺",
+        "modelKey": "imported.heroxelloss",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-o00x": {
+        "id": "godie-o00x",
+        "name": "超級賽亞人 - 悟空",
+        "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n※ 這是【賽亞人 - 悟空】的變身態（w3x O00X「(09超三)」），不能直接選，只能靠 09-03 超級賽亞人 進入。\n\n變身態的身體（w3x war3map.w3u 自己寫的四項）：\n‧ 攻擊間隔 1.90 → 1.20 秒（ua1c）＝ 攻擊速度 ×1.58\n‧ 移動速度 310 → 400（umvs）\n‧ 浮空 30（umvt=hover / umvh=30）—— 這是設定，不是 #168 那個要壓回地面的 bug\n‧ 普攻換成【超賽攻擊】（A017）：命中時多一圈衝擊波與金色氣爆\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 400",
+        "modelKey": "imported.goku",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ogrh",
+          "normalUnitRawcode": "OGRH",
+          "alternateUnitRawcode": "O00X",
+          "triggerAbility": {
+            "rawcode": "A09E",
+            "name": "09-03 超級賽亞人",
+            "durationSec": {
+              "1": 8.0,
+              "2": 12.0,
+              "3": 16.0,
+              "4": 20.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-o02l": {
+        "id": "godie-o02l",
+        "name": "神騎寶貝 - 皮卡丘",
+        "modelKey": "imported.picacugy",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ofar",
+          "normalUnitRawcode": "OFAR",
+          "alternateUnitRawcode": "O02L",
+          "triggerAbility": {
+            "rawcode": "A040",
+            "name": "58-04 瘋狂皮卡丘",
+            "durationSec": {
+              "1": 6.0,
+              "2": 12.0,
+              "3": 18.0,
+              "4": 24.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-o02p": {
+        "id": "godie-o02p",
+        "name": "夢幻之星 - 初音",
+        "description": "故事：\n人類史上第一個紅遍全球的虛擬歌姬，儘管到了今日仍在發光發熱，甚至有專屬初音的感謝祭演場會。\n(出自:HATSUNE MIKU)\n\n推薦玩家 : 輔助戰鬥\n上手度 : 易\n\n角色成長：\n力量 + 2.00\n敏捷 + 2.30\n智慧 + 1.70\n基礎跑速 315\n\n可學習的技能：\n甩蔥歌、最初的聲音、初音未來的消失、世界第一的公主殿下",
+        "origin": "軟輔",
+        "modelKey": "imported.heromiku",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-o030": {
+        "id": "godie-o030",
+        "name": "電車癡漢 - 臭作",
+        "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n|CFFFF0000推薦玩家 : |CFFFE890D牽制殺人\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-orkn",
+          "normalUnitRawcode": "ORKN",
+          "alternateUnitRawcode": "O030",
+          "triggerAbility": {
+            "rawcode": "A0YT",
+            "name": "30-002 變態紳士",
+            "durationSec": {
+              "1": 15.0,
+              "2": 15.0,
+              "3": 21.0,
+              "4": 27.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-ofar": {
+        "id": "godie-ofar",
+        "name": "神奇寶貝兒 - 皮卡丘",
+        "description": "故事：\n自從皮卡丘成為國際巨星後，開始也擺起架勢把小智當傭人使喚，直到有一天在森林裡吃蘋果的時候，發現已經身在這場戰鬥中。\n(出自:神奇寶貝)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.90\n智慧 + 1.60\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、鋼鐵尾巴、就決定是你了!小智、瘋狂皮卡丘",
+        "origin": "射手",
+        "modelKey": "imported.heropikachu",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-o02l",
+          "normalUnitRawcode": "OFAR",
+          "alternateUnitRawcode": "O02L",
+          "triggerAbility": {
+            "rawcode": "A040",
+            "name": "58-04 瘋狂皮卡丘",
+            "durationSec": {
+              "1": 6,
+              "2": 12,
+              "3": 18,
+              "4": 24
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-ogld": {
+        "id": "godie-ogld",
+        "name": "美白大法師 - 黑人牙膏",
+        "description": "故事：\n曾是魔法界首屈一指美白專家，個性善良；但在一次魔法決鬥中敗給飛鼠先生。自認為輸給飛鼠是因為智慧不夠，所以希望在有生之年收個聰明的徒弟一雪前恥。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1\n敏捷 + 1.50\n智慧 + 1.50\n基礎跑速 250\n\n可學習的技能：\n洗刷刷、黑人牙菌斑、超亮白牙膏、黑化",
+        "origin": "砲手",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-ogrh": {
+        "id": "godie-ogrh",
+        "name": "賽亞人 - 悟空",
+        "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n推薦玩家 : 追擊破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 310\n\n可學習的技能：\n界王拳、瞬間移動、超級賽亞人、龜派氣功",
+        "origin": "鬥士",
+        "modelKey": "imported.goku",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-o00x",
+          "normalUnitRawcode": "OGRH",
+          "alternateUnitRawcode": "O00X",
+          "triggerAbility": {
+            "rawcode": "A09E",
+            "name": "09-03 超級賽亞人",
+            "durationSec": {
+              "1": 8,
+              "2": 12,
+              "3": 16,
+              "4": 20
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-orkn": {
+        "id": "godie-orkn",
+        "name": "電車癡漢 - 臭作",
+        "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+        "origin": "法師",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-o030",
+          "normalUnitRawcode": "ORKN",
+          "alternateUnitRawcode": "O030",
+          "triggerAbility": {
+            "rawcode": "A0YT",
+            "name": "30-002 變態紳士",
+            "durationSec": {
+              "1": 15,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-osam": {
+        "id": "godie-osam",
+        "name": "犬妖 - 殺生丸",
+        "description": "故事：\n犬夜叉同父異母的哥哥。他是完全的妖怪，能力要強得多，性格非常冷酷殘忍，對付自己的弟弟也是手下毫不留情。為了獲得更強大的力量加入去死團。\n(出自:犬夜叉)\n\n推薦玩家 : 龜裝PK\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n合氣斬、風華之爪、爆碎丸、奧義蒼龍破",
+        "origin": "鬥士",
+        "modelKey": "imported.sesshomaru",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u00h": {
+        "id": "godie-u00h",
+        "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+        "description": "故事：\n關原之戰後四年千人斬傳說復活！\n手拿五尺大刀，背上有太極圖徽紋\n臉上有如鬼般的深紅雙眼！\n懸賞一百萬兩的通緝犯\n江湖上稱他為鬼畜狂刀。\n(出自:鬼眼狂刀KYO)\n\n推薦玩家 : 團戰殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.40\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n無名神風流-白虎 、無名神風流-朱雀、無明神風流-蛟龍、四神召喚 金色神風",
+        "origin": "法鬥",
+        "modelKey": "imported.herokyo",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u00j": {
+        "id": "godie-u00j",
+        "name": "神性的流失 - 賽菲洛斯",
+        "description": "故事：\n賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成年輕的他成了神羅最強的精英戰士，與扎克斯和克勞德到了尼布爾罕做觀察，在那裡的神羅建築地下室發現自己真正的身世，毀了尼布爾罕之後，開始向全世界「復仇」，尋找「約束之地」。\n(出自:最終幻想7)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.10\n智慧 + 1.90\n基礎跑速 295\n\n可學習的技能：\n獄門、八刀一閃、闇之天使、最終殞落星",
+        "origin": "法鬥",
+        "modelKey": "imported.herosephiroth",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u00k": {
+        "id": "godie-u00k",
+        "name": "邪惡意念集合體 - 死之王",
+        "description": "故事：\n所有邪惡的聚合體，從上古時代就誕生的惡魔，與飛鼠先生一戰後魂飛魄散，在此次戰役中被召喚回來。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 2.00\n智慧 + 3.00\n基礎跑速 275\n\n可學習的技能：\n死亡隕落、靈魂吸取、厄夜靈魂、萬惡歸宗",
+        "origin": "法鬥",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-u00l": {
+        "id": "godie-u00l",
+        "name": "北斗之鼠 - 拳四郎",
+        "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔拳、北斗神拳秘訣轉龍呼吸法、北斗百裂拳、ChangeDNA",
+        "modelKey": "imported.heropikachu",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-umal",
+          "normalUnitRawcode": "UMAL",
+          "alternateUnitRawcode": "U00L",
+          "triggerAbility": {
+            "rawcode": "A0HW",
+            "name": "25-04 ChangeDNA",
+            "durationSec": {
+              "1": 8.0,
+              "2": 16.0,
+              "3": 24.0,
+              "4": 28.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 75.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-u00n": {
+        "id": "godie-u00n",
+        "name": "草帽小子 - 蒙其.D.魯夫",
+        "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n推薦玩家 : 牽制殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔 - 巨人迴旋彈",
+        "origin": "法鬥",
+        "modelKey": "imported.luffe",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u00o",
+          "normalUnitRawcode": "U00N",
+          "alternateUnitRawcode": "U00O",
+          "triggerAbility": {
+            "rawcode": "A0IR",
+            "name": "76-00 二檔",
+            "durationSec": {
+              "1": 20
+            },
+            "cooldownSec": {
+              "1": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-u00o": {
+        "id": "godie-u00o",
+        "name": "草帽小子 - 蒙其.D.魯夫",
+        "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔",
+        "modelKey": "imported.luffe",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-u00n",
+          "normalUnitRawcode": "U00N",
+          "alternateUnitRawcode": "U00O",
+          "triggerAbility": {
+            "rawcode": "A0IR",
+            "name": "76-00 二檔",
+            "durationSec": {
+              "1": 20.0
+            },
+            "cooldownSec": {
+              "1": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-u00v": {
+        "id": "godie-u00v",
+        "name": "黑手黨老大 - 基廉列克",
+        "description": "故事：\n前黑手黨老大，被手下背叛炸爛後接合回去所以身上有須多接痕及顏色，平常安靜，必要時非常的暴躁，武功高強，刀槍不入，有潔癖，愛帆布鞋成痴。\n(出自:監獄兔)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.60\n敏捷 + 1.60\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n斬鐵拳、地走龍牙破、廬山昇龍破、死亡噴射肘擊",
+        "origin": "鬥士",
+        "modelKey": "imported.rabbit",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-u010": {
+        "id": "godie-u010",
+        "name": "邪眼師 - 飛影",
+        "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+        "modelKey": "imported.herohehi",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-uvng",
+          "normalUnitRawcode": "UVNG",
+          "alternateUnitRawcode": "U010",
+          "triggerAbility": {
+            "rawcode": "A0OH",
+            "name": "38-00 邪眼全開",
+            "durationSec": {
+              "1": 10.0
+            },
+            "cooldownSec": {
+              "1": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u01u": {
+        "id": "godie-u01u",
+        "name": "三刀流劍士 - 索隆",
+        "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
+        "modelKey": "imported.heromusashimiyamoto",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-udre",
+          "normalUnitRawcode": "UDRE",
+          "alternateUnitRawcode": "U01U",
+          "triggerAbility": {
+            "rawcode": "A10N",
+            "name": "11-002 武裝色霸氣",
+            "durationSec": {
+              "1": 15,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u034": {
+        "id": "godie-u034",
+        "name": "職業獵人 - 傑 富力士",
+        "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n流流舞、猜猜拳-剪刀、猜猜拳-拳頭、猜猜拳-布",
+        "modelKey": "imported.herobiggon",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ucrl",
+          "normalUnitRawcode": "UCRL",
+          "alternateUnitRawcode": "U034",
+          "triggerAbility": {
+            "rawcode": "A0Y1",
+            "name": "06-04 傑桑變化",
+            "durationSec": {
+              "1": 7.0,
+              "2": 14.0,
+              "3": 21.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-ubal": {
+        "id": "godie-ubal",
+        "name": "魔界霸主 - 巴恩大魔王",
+        "description": "故事：\n巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有機會再使用，但是老邁身軀仍然擁有深不可測的智慧和魔力...。\n(出自:神龍之謎)\n\n推薦玩家 : 破塔殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 1.95\n智慧 + 2.55\n基礎跑速 295\n\n可學習的技能：\n凱薩之鷹、黑核晶、災難之牆、魔界之王",
+        "origin": "法師",
+        "modelKey": "champ.skin.barbarian",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-ucrl": {
+        "id": "godie-ucrl",
+        "name": "職業獵人 - 傑 富力士",
+        "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n山形修煉-放出系、山形修煉-變化系、山形修煉-強化系、傑桑",
+        "origin": "鬥士",
+        "modelKey": "champ.thorne",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u034",
+          "normalUnitRawcode": "UCRL",
+          "alternateUnitRawcode": "U034",
+          "triggerAbility": {
+            "rawcode": "A0Y1",
+            "name": "06-04 傑桑變化",
+            "durationSec": {
+              "1": 7,
+              "2": 14,
+              "3": 21
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "fist"
+        ]
+      },
+      "godie-udea": {
+        "id": "godie-udea",
+        "name": "至尊學長 - 飛鼠先生",
+        "description": "故事：\n神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 1.00\n智慧 + 4.00\n基礎跑速 320\n\n可學習的技能：\n神出鬼沒、寒冰破碎、魔法膨脹、天譴、永恆的愚蠢鄉",
+        "origin": "法鬥",
+        "modelKey": "champ.thorne",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "sword"
+        ]
+      },
+      "godie-udre": {
+        "id": "godie-udre",
+        "name": "三刀流劍士 - 索隆",
+        "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
+        "origin": "鬥士",
+        "modelKey": "imported.heromusashimiyamoto",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u01u",
+          "normalUnitRawcode": "UDRE",
+          "alternateUnitRawcode": "U01U",
+          "triggerAbility": {
+            "rawcode": "A10N",
+            "name": "11-002 武裝色霸氣",
+            "durationSec": {
+              "1": 15,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-umal": {
+        "id": "godie-umal",
+        "name": "北斗神拳掌門人 - 拳四郎",
+        "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n推薦玩家 : KUSO殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔權、北斗神拳秘訣轉龍呼吸法、北斗百烈拳、ChangeDNA",
+        "origin": "鬥士",
+        "modelKey": "champ.skin.barbarian",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u00l",
+          "normalUnitRawcode": "UMAL",
+          "alternateUnitRawcode": "U00L",
+          "triggerAbility": {
+            "rawcode": "A0HW",
+            "name": "25-04 ChangeDNA",
+            "durationSec": {
+              "1": 8,
+              "2": 16,
+              "3": 24,
+              "4": 28
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 75
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "fist"
+        ]
+      },
+      "godie-uvng": {
+        "id": "godie-uvng",
+        "name": "邪眼師 - 飛影",
+        "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+        "origin": "法刺",
+        "modelKey": "imported.herohehi",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u010",
+          "normalUnitRawcode": "UVNG",
+          "alternateUnitRawcode": "U010",
+          "triggerAbility": {
+            "rawcode": "A0OH",
+            "name": "38-00 邪眼全開",
+            "durationSec": {
+              "1": 10
+            },
+            "cooldownSec": {
+              "1": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-zombiex": {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "description": "故事：\n黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了印度麥可，因為專幹壞事，人稱喪標麥可。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 45 / 級（基礎 380）\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n【#244 數值理由】380 是「全場最脆，但不會被一套秒」的位置（Saber 580、揍敵客 420、魯夫 480）。成長刻意壓回接近一般的 45 — 這隻的爆發力不能來自看不見的成長曲線，要來自天生技「黑泥吞噬」：玩家看得到、也賺得到。\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥吞噬（天生）、肝泥抹德、黑天覆七重咖哩・硬啦、咕咕嘎嘎、百式・哈基米、此世全部之咖哩・バタンキュー（EX）",
+        "origin": "硬輔",
+        "modelKey": "champ.godie-zombiex",
+        "tags": [
+          "godie",
+          "original",
+          "tank",
+          "claw"
+        ]
+      },
+      "sela": {
+        "id": "sela",
+        "name": "Sela, the Ember Sage",
+        "modelKey": "champ.sela",
+        "tags": [
+          "mage",
+          "burst",
+          "ranged",
+          "magic"
+        ]
+      },
+      "thorne": {
+        "id": "thorne",
+        "name": "Thorne, the Bramble Knight",
+        "modelKey": "champ.thorne",
+        "tags": [
+          "bruiser",
+          "engage",
+          "melee",
+          "sword"
+        ]
+      }
+    }
+  },
+  "production": {
+    "commit": "bbc62a06df8eb7910e7a30304770f3fb03f01f2f",
+    "champions": {
+      "godie-ogld": {
+        "id": "godie-ogld",
+        "name": "美白大法師 - 黑人牙膏",
+        "description": "故事：\n曾是魔法界首屈一指美白專家，個性善良；但在一次魔法決鬥中敗給飛鼠先生。自認為輸給飛鼠是因為智慧不夠，所以希望在有生之年收個聰明的徒弟一雪前恥。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1\n敏捷 + 1.50\n智慧 + 1.50\n基礎跑速 250\n\n可學習的技能：\n洗刷刷、黑人牙菌斑、超亮白牙膏、黑化",
+        "origin": "砲手",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-hpb1": {
+        "id": "godie-hpb1",
+        "name": "獸矛傳承使 - 蒼月潮",
+        "description": "故事：\n無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義感的蒼月潮為了阻止去死團的破壞拿起獸矛奮戰了。\n(出自:魔力小馬、潮與虎)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.10\n敏捷 + 2.00\n智慧 + 1.70\n基礎跑速 310\n\n可學習的技能：\n臨兵鬥、者皆陣、列在前、神聖結界",
+        "origin": "狂戰",
+        "modelKey": "imported.herotoshiiemaeda",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "greatsword"
+        ]
+      },
+      "godie-hart": {
+        "id": "godie-hart",
+        "name": "最終幻想 - 克勞德",
+        "description": "故事：\nCloud的名字暗示著他神祕，不清楚的過去以及他那不可預知的將來，為了過去奮戰們的朋友，使得他不得不重新提起沉重的大刀迎敵。\n(出自:太空戰士7)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.80\n智慧 + 1.90\n基礎跑速 310\n\n可學習的技能：\n凶斬、隕石擊、畫龍點睛、超究武神霸斬",
+        "origin": "鬥士",
+        "modelKey": "imported.cloud",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "greatsword"
+        ]
+      },
+      "godie-hapm": {
+        "id": "godie-hapm",
+        "name": "海克力斯 - Berserker",
+        "description": "故事：\nBerserker是希臘神話中著名的英雄海格力斯(Hercules) ，血統為半神半人，力大無窮，曾在聖杯戰爭中被召喚為SENVENT與嬌小的Master依利亞並肩作戰。\n(第一屆去死團大賽獎勵角色 出自:Fate/stay night)\n\n推薦玩家 : 衝鋒殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n狂戰士之怒、蹂躪編年史、無銘斧劍、巨神一擊",
+        "origin": "坦克",
+        "modelKey": "champ.thorne",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "greatsword"
+        ]
+      },
+      "godie-o030": {
+        "id": "godie-o030",
+        "name": "電車癡漢 - 臭作",
+        "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n|CFFFF0000推薦玩家 : |CFFFE890D牽制殺人\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-orkn",
+          "normalUnitRawcode": "ORKN",
+          "alternateUnitRawcode": "O030",
+          "triggerAbility": {
+            "rawcode": "A0YT",
+            "name": "30-002 變態紳士",
+            "durationSec": {
+              "1": 15.0,
+              "2": 15.0,
+              "3": 21.0,
+              "4": 27.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-u00h": {
+        "id": "godie-u00h",
+        "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+        "description": "故事：\n關原之戰後四年千人斬傳說復活！\n手拿五尺大刀，背上有太極圖徽紋\n臉上有如鬼般的深紅雙眼！\n懸賞一百萬兩的通緝犯\n江湖上稱他為鬼畜狂刀。\n(出自:鬼眼狂刀KYO)\n\n推薦玩家 : 團戰殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.40\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n無名神風流-白虎 、無名神風流-朱雀、無明神風流-蛟龍、四神召喚 金色神風",
+        "origin": "法鬥",
+        "modelKey": "imported.herokyo",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-zombiex": {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "description": "故事：\n黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了印度麥可，因為專幹壞事，人稱喪標麥可。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 45 / 級（基礎 380）\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n【#244 數值理由】380 是「全場最脆，但不會被一套秒」的位置（Saber 580、揍敵客 420、魯夫 480）。成長刻意壓回接近一般的 45 — 這隻的爆發力不能來自看不見的成長曲線，要來自天生技「黑泥吞噬」：玩家看得到、也賺得到。\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥吞噬（天生）、肝泥抹德、黑天覆七重咖哩・硬啦、咕咕嘎嘎、百式・哈基米、此世全部之咖哩・バタンキュー（EX）",
+        "origin": "硬輔",
+        "modelKey": "champ.godie-zombiex",
+        "tags": [
+          "godie",
+          "original",
+          "tank",
+          "claw"
+        ]
+      },
+      "godie-osam": {
+        "id": "godie-osam",
+        "name": "犬妖 - 殺生丸",
+        "description": "故事：\n犬夜叉同父異母的哥哥。他是完全的妖怪，能力要強得多，性格非常冷酷殘忍，對付自己的弟弟也是手下毫不留情。為了獲得更強大的力量加入去死團。\n(出自:犬夜叉)\n\n推薦玩家 : 龜裝PK\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n合氣斬、風華之爪、爆碎丸、奧義蒼龍破",
+        "origin": "鬥士",
+        "modelKey": "imported.sesshomaru",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-h01o": {
+        "id": "godie-h01o",
+        "name": "外掛開很大的死神 - 黑崎一護",
+        "modelKey": "imported.heroichigo-bankai",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-h01n",
+          "normalUnitRawcode": "H01N",
+          "alternateUnitRawcode": "H01O",
+          "triggerAbility": {
+            "rawcode": "A0LN",
+            "name": "79-04 卍解",
+            "durationSec": {
+              "1": 8.0,
+              "2": 16.0,
+              "3": 24.0,
+              "4": 25.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 30.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-e00r": {
+        "id": "godie-e00r",
+        "name": "最終泛用人型決戰兵器 - 初號機",
+        "description": "故事：\n『汎用人型決戰兵器』EVANGELION初號機，採用半生物機械的製造，因此雖然能力強大,但是不好控制。作業系統為[J-Win95]，因此很容易發生\"應用程式錯誤\"而失控暴走 。\n\n推薦玩家 : KUSO破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 300\n\n可學習的技能：\n吞噬、高震動周波短刀、AT力場、野戰型陽電子砲",
+        "origin": "狂戰",
+        "modelKey": "w3x.stock.satyrtrickster",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "sword"
+        ]
+      },
+      "godie-o00x": {
+        "id": "godie-o00x",
+        "name": "超級賽亞人 - 悟空",
+        "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n※ 這是【賽亞人 - 悟空】的變身態（w3x O00X「(09超三)」），不能直接選，只能靠 09-03 超級賽亞人 進入。\n\n變身態的身體（w3x war3map.w3u 自己寫的四項）：\n‧ 攻擊間隔 1.90 → 1.20 秒（ua1c）＝ 攻擊速度 ×1.58\n‧ 移動速度 310 → 400（umvs）\n‧ 浮空 30（umvt=hover / umvh=30）—— 這是設定，不是 #168 那個要壓回地面的 bug\n‧ 普攻換成【超賽攻擊】（A017）：命中時多一圈衝擊波與金色氣爆\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 400",
+        "modelKey": "imported.goku",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ogrh",
+          "normalUnitRawcode": "OGRH",
+          "alternateUnitRawcode": "O00X",
+          "triggerAbility": {
+            "rawcode": "A09E",
+            "name": "09-03 超級賽亞人",
+            "durationSec": {
+              "1": 8.0,
+              "2": 12.0,
+              "3": 16.0,
+              "4": 20.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-udea": {
+        "id": "godie-udea",
+        "name": "至尊學長 - 飛鼠先生",
+        "description": "故事：\n神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 1.00\n智慧 + 4.00\n基礎跑速 320\n\n可學習的技能：\n神出鬼沒、寒冰破碎、魔法膨脹、天譴、永恆的愚蠢鄉",
+        "origin": "法鬥",
+        "modelKey": "champ.thorne",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "sword"
+        ]
+      },
+      "godie-e00s": {
+        "id": "godie-e00s",
+        "name": "白木老樹精 - 白木卡迪那",
+        "description": "故事：\n白木家族是捍衛世界樹種族之一，與黃金龍族不同的是，通常處於被動守護狀態而不像黃金龍族常巡邏出擊，白木家族擅長控制自然元素牽制敵人。卡迪那本來是一顆瀕臨枯死的老樹精，受到飛鼠先生的祝福之後重生也得到了異常的魔法能量。\n(出自:去死團逆襲原創)\n\n推薦玩家 : 團戰殺人\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.10\n智慧 + 2.80\n基礎跑速 250\n\n可學習的技能：\n伸卡球、大怒石、木束縛之術、千年練成",
+        "origin": "硬輔",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e010",
+          "normalUnitRawcode": "E00S",
+          "alternateUnitRawcode": "E010",
+          "triggerAbility": {
+            "rawcode": "A0O6",
+            "name": "70-00 紮根",
+            "cooldownSec": {
+              "1": 15
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-h01n": {
+        "id": "godie-h01n",
+        "name": "開外掛的死神 - 黑崎一護",
+        "description": "故事：黑崎一護除了能夠看見靈之外，是個很普通的高中生，但是有一天，出現了一個叫做〔虛〕的惡靈找上了他，此時！他遇見了死神朽木露琪亞，為了拯救家人，踏上代理死神這條路 。\n(出自:死神BLEACH)\n\n推薦玩家 : 輸出殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.45\n智慧 + 1.6\n基礎跑速 295\n\n可學習的技能：\n瞬步、斬擊、月牙天衝、卍解",
+        "origin": "鬥士",
+        "modelKey": "imported.heroichigo",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h01o",
+          "normalUnitRawcode": "H01N",
+          "alternateUnitRawcode": "H01O",
+          "triggerAbility": {
+            "rawcode": "A0LN",
+            "name": "79-04 卍解",
+            "durationSec": {
+              "1": 8,
+              "2": 16,
+              "3": 24,
+              "4": 25
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 30
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u034": {
+        "id": "godie-u034",
+        "name": "職業獵人 - 傑 富力士",
+        "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n流流舞、猜猜拳-剪刀、猜猜拳-拳頭、猜猜拳-布",
+        "modelKey": "imported.herobiggon",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ucrl",
+          "normalUnitRawcode": "UCRL",
+          "alternateUnitRawcode": "U034",
+          "triggerAbility": {
+            "rawcode": "A0Y1",
+            "name": "06-04 傑桑變化",
+            "durationSec": {
+              "1": 7.0,
+              "2": 14.0,
+              "3": 21.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-o00l": {
+        "id": "godie-o00l",
+        "name": "獸神官 - 傑洛士",
+        "description": "故事：\n隸屬於獸王底下的神官，是非常高等的魔族，擁有強大的魔法破壞力，不過通常隱身在幕後扮演調查和輔助的角色。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.40\n智慧 + 3.10\n基礎跑速 295\n\n可學習的技能：\n強化炸彈陣、獸王牙操彈、破法對咒、暴爆咒",
+        "origin": "法刺",
+        "modelKey": "imported.heroxelloss",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "thorne": {
+        "id": "thorne",
+        "name": "Thorne, the Bramble Knight",
+        "modelKey": "champ.thorne",
+        "tags": [
+          "bruiser",
+          "engage",
+          "melee",
+          "sword"
+        ]
+      },
+      "godie-ucrl": {
+        "id": "godie-ucrl",
+        "name": "職業獵人 - 傑 富力士",
+        "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n山形修煉-放出系、山形修煉-變化系、山形修煉-強化系、傑桑",
+        "origin": "鬥士",
+        "modelKey": "champ.thorne",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u034",
+          "normalUnitRawcode": "UCRL",
+          "alternateUnitRawcode": "U034",
+          "triggerAbility": {
+            "rawcode": "A0Y1",
+            "name": "06-04 傑桑變化",
+            "durationSec": {
+              "1": 7,
+              "2": 14,
+              "3": 21
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "fist"
+        ]
+      },
+      "godie-o02l": {
+        "id": "godie-o02l",
+        "name": "神騎寶貝 - 皮卡丘",
+        "modelKey": "imported.picacugy",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ofar",
+          "normalUnitRawcode": "OFAR",
+          "alternateUnitRawcode": "O02L",
+          "triggerAbility": {
+            "rawcode": "A040",
+            "name": "58-04 瘋狂皮卡丘",
+            "durationSec": {
+              "1": 6.0,
+              "2": 12.0,
+              "3": 18.0,
+              "4": 24.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-n01g": {
+        "id": "godie-n01g",
+        "name": "黑暗福音 - 依文潔琳",
+        "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+        "modelKey": "imported.long",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-n003",
+          "normalUnitRawcode": "N003",
+          "alternateUnitRawcode": "N01G",
+          "triggerAbility": {
+            "rawcode": "A06K",
+            "name": "42-002 魔力印章",
+            "durationSec": {
+              "1": 7.0,
+              "2": 15.0,
+              "3": 21.0,
+              "4": 27.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-efur": {
+        "id": "godie-efur",
+        "name": "揍敵客大家長 - 揍敵客桀諾",
+        "description": "故事：\n來自殺手世家揍敵客家族，其才能在揍敵客家族歷史也是非常優秀。擁有超強的念能力，可以任意操縱敵人的生死。暗殺家族揍敵客家的家長。奇犽的祖父。 穿著「一日一殺」和「生涯現役」等刺繡的衣服。\n(出自:偽獵人X獵人)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.20\n智慧 + 2.30\n基礎跑速 315\n\n可學習的技能：\n暗步。極限之圓、龍頭戲畫。牙突、龍頭戲畫。佈壁、龍星群",
+        "origin": "鬥士",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-emfr": {
+        "id": "godie-emfr",
+        "name": "魔法老師 - 涅吉。史普林。菲爾德",
+        "description": "故事：\n英國某間魔法學校修行的首席畢業生涅吉，目前還只是個10歲的少年。他的目標是成為「出色的魔法使」。\n(出自:魔法老師)\n\n推薦玩家 : 團戰牽制\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.40\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n風精召喚、沉睡之霧、雷電風暴、千之雷",
+        "origin": "狂戰",
+        "modelKey": "imported.negi",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-e001": {
+        "id": "godie-e001",
+        "name": "蟬在叫人壞掉 - 龍宮禮奈",
+        "description": "故事：\n來自雛見澤的小女孩，喜歡把\"好可愛\"的東西帶回家。\n(出自:寒蟬鳴泣之時)\n\n推薦玩家 : 追擊殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.80\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬼隱之擊\n、染血的柴刀、五吋釘、雛見澤症候群L5",
+        "origin": "狂戰",
+        "modelKey": "imported.renaryugu2",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e00n",
+          "normalUnitRawcode": "E001",
+          "alternateUnitRawcode": "E00N",
+          "triggerAbility": {
+            "rawcode": "A02Q",
+            "name": "22-04 雛見澤症候群L5",
+            "durationSec": {
+              "1": 7,
+              "2": 14,
+              "3": 21,
+              "4": 28
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 75
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-h02v": {
+        "id": "godie-h02v",
+        "name": "看似憂鬱的神獸 - 草泥馬",
+        "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+        "origin": "坦克",
+        "modelKey": "imported.horse",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h02u",
+          "normalUnitRawcode": "H02V",
+          "alternateUnitRawcode": "H02U",
+          "triggerAbility": {
+            "rawcode": "A0W9",
+            "name": "92-01 臥草泥馬",
+            "durationSec": {
+              "1": 10,
+              "2": 10,
+              "3": 5,
+              "4": 5
+            },
+            "cooldownSec": {
+              "1": 40,
+              "2": 40,
+              "3": 20,
+              "4": 20
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-udre": {
+        "id": "godie-udre",
+        "name": "三刀流劍士 - 索隆",
+        "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
+        "origin": "鬥士",
+        "modelKey": "imported.heromusashimiyamoto",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u01u",
+          "normalUnitRawcode": "UDRE",
+          "alternateUnitRawcode": "U01U",
+          "triggerAbility": {
+            "rawcode": "A10N",
+            "name": "11-002 武裝色霸氣",
+            "durationSec": {
+              "1": 15,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-o00k": {
+        "id": "godie-o00k",
+        "name": "傲嬌電氣老鼠 - 皮卡娘",
+        "description": "故事：\n相當傲嬌的皮卡丘，從小就展現出超出一般水準的戰鬥能力，是個斗S，喜歡身為M的主人小智，。\n(出自:SATO X PICA)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 2.60\n智慧 + 1.80\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、電光一閃、神鳴、打雷絕招",
+        "origin": "法刺",
+        "modelKey": "imported.pika",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-nbbc": {
+        "id": "godie-nbbc",
+        "name": "傳說的龍騎士 - 勇者小呆",
+        "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
+        "origin": "法鬥",
+        "modelKey": "imported.sd2",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-n01c",
+          "normalUnitRawcode": "NBBC",
+          "alternateUnitRawcode": "N01C",
+          "triggerAbility": {
+            "rawcode": "A0T1",
+            "name": "08-002 龍魔人",
+            "durationSec": {
+              "1": 20,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-hvsh": {
+        "id": "godie-hvsh",
+        "name": "梅杜莎 - Rider",
+        "description": "故事：\n高爾根為蛇髮女怪，她們是海神Phorcys和ceto所生的三女妖：大姐司提娜(Stheno)是代表力量，二姐尤里艾蕾(Euryale)是代表自由(飛翔)，三妹梅杜莎(Medusa)是代表悲哀(女王)。她們三姊妹當中只有梅杜沙是人類的身軀。\n(出自:Fate/stay night)\n\n推薦玩家 : 團戰牽制\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n魔法鎖鍊、心眼、鮮血神殿、騎英之韁繩",
+        "origin": "法鬥",
+        "modelKey": "imported.herorider",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e010": {
+        "id": "godie-e010",
+        "name": "白木老樹精 - 白木卡迪那",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e00s",
+          "normalUnitRawcode": "E00S",
+          "alternateUnitRawcode": "E010",
+          "triggerAbility": {
+            "rawcode": "A0O6",
+            "name": "70-00 紮根",
+            "cooldownSec": {
+              "1": 15.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-e00x": {
+        "id": "godie-e00x",
+        "name": "神鳴流劍士 - 櫻綻剎那",
+        "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n斬魔劍、百烈櫻華斬、GLADIARIA ALAT、真雷光劍",
+        "modelKey": "imported.mfls",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e00w",
+          "normalUnitRawcode": "E00W",
+          "alternateUnitRawcode": "E00X",
+          "triggerAbility": {
+            "rawcode": "A0JG",
+            "name": "77-03 GLADIARIA ALAT",
+            "durationSec": {
+              "1": 6.0,
+              "2": 12.0,
+              "3": 18.0,
+              "4": 24.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u00n": {
+        "id": "godie-u00n",
+        "name": "草帽小子 - 蒙其.D.魯夫",
+        "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n推薦玩家 : 牽制殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔 - 巨人迴旋彈",
+        "origin": "法鬥",
+        "modelKey": "imported.luffe",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u00o",
+          "normalUnitRawcode": "U00N",
+          "alternateUnitRawcode": "U00O",
+          "triggerAbility": {
+            "rawcode": "A0IR",
+            "name": "76-00 二檔",
+            "durationSec": {
+              "1": 20
+            },
+            "cooldownSec": {
+              "1": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-hvwd": {
+        "id": "godie-hvwd",
+        "name": "除魔巫女 - 桔梗",
+        "description": "故事：\n原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨念。\n(出自:犬夜叉)\n\n推薦玩家 : 牽制輔助\n上手度 : 易\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.40\n智慧 + 1.80\n基礎跑速 295\n\n可學習的技能：\n破魔之箭、明鏡止水、魂飛魄散、百鬼夜行",
+        "origin": "射手",
+        "modelKey": "imported.kikyou",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-u00o": {
+        "id": "godie-u00o",
+        "name": "草帽小子 - 蒙其.D.魯夫",
+        "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔",
+        "modelKey": "imported.luffe",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-u00n",
+          "normalUnitRawcode": "U00N",
+          "alternateUnitRawcode": "U00O",
+          "triggerAbility": {
+            "rawcode": "A0IR",
+            "name": "76-00 二檔",
+            "durationSec": {
+              "1": 20.0
+            },
+            "cooldownSec": {
+              "1": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-e007": {
+        "id": "godie-e007",
+        "name": "龍之子 - 天地志狼",
+        "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n柳術、鬥仙術、雲體風身之術、仙氣發勁",
+        "modelKey": "imported.herolingtong",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-ewar",
+          "normalUnitRawcode": "EWAR",
+          "alternateUnitRawcode": "E007",
+          "triggerAbility": {
+            "rawcode": "A02W",
+            "name": "12-03 破凰之心-徒手空破山",
+            "durationSec": {
+              "1": 12.0,
+              "2": 18.0,
+              "3": 24.0,
+              "4": 30.0
+            },
+            "cooldownSec": {
+              "1": 45.0,
+              "2": 45.0,
+              "3": 45.0,
+              "4": 45.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "thrown"
+        ]
+      },
+      "godie-e00l": {
+        "id": "godie-e00l",
+        "name": "亞瑟王 - Saber",
+        "modelKey": "imported.herosaber",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e002",
+          "normalUnitRawcode": "E002",
+          "alternateUnitRawcode": "E00L",
+          "triggerAbility": {
+            "rawcode": "A0DZ",
+            "name": "20-01 風王結界"
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-ubal": {
+        "id": "godie-ubal",
+        "name": "魔界霸主 - 巴恩大魔王",
+        "description": "故事：\n巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有機會再使用，但是老邁身軀仍然擁有深不可測的智慧和魔力...。\n(出自:神龍之謎)\n\n推薦玩家 : 破塔殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 1.95\n智慧 + 2.55\n基礎跑速 295\n\n可學習的技能：\n凱薩之鷹、黑核晶、災難之牆、魔界之王",
+        "origin": "法師",
+        "modelKey": "champ.skin.barbarian",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-ewar": {
+        "id": "godie-ewar",
+        "name": "龍之子 - 天地志狼",
+        "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n推薦玩家 : 團戰狙擊\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬥仙術、仙氣．採藥、破凰之心．徒手空破山、龍氣爆發",
+        "origin": "鬥士",
+        "modelKey": "imported.herolingtong",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e007",
+          "normalUnitRawcode": "EWAR",
+          "alternateUnitRawcode": "E007",
+          "triggerAbility": {
+            "rawcode": "A02W",
+            "name": "12-03 破凰之心-徒手空破山",
+            "durationSec": {
+              "1": 12,
+              "2": 18,
+              "3": 24,
+              "4": 30
+            },
+            "cooldownSec": {
+              "1": 45,
+              "2": 45,
+              "3": 45,
+              "4": 45
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-ogrh": {
+        "id": "godie-ogrh",
+        "name": "賽亞人 - 悟空",
+        "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n推薦玩家 : 追擊破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 310\n\n可學習的技能：\n界王拳、瞬間移動、超級賽亞人、龜派氣功",
+        "origin": "鬥士",
+        "modelKey": "imported.goku",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-o00x",
+          "normalUnitRawcode": "OGRH",
+          "alternateUnitRawcode": "O00X",
+          "triggerAbility": {
+            "rawcode": "A09E",
+            "name": "09-03 超級賽亞人",
+            "durationSec": {
+              "1": 8,
+              "2": 12,
+              "3": 16,
+              "4": 20
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-u00v": {
+        "id": "godie-u00v",
+        "name": "黑手黨老大 - 基廉列克",
+        "description": "故事：\n前黑手黨老大，被手下背叛炸爛後接合回去所以身上有須多接痕及顏色，平常安靜，必要時非常的暴躁，武功高強，刀槍不入，有潔癖，愛帆布鞋成痴。\n(出自:監獄兔)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.60\n敏捷 + 1.60\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n斬鐵拳、地走龍牙破、廬山昇龍破、死亡噴射肘擊",
+        "origin": "鬥士",
+        "modelKey": "imported.rabbit",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-n003": {
+        "id": "godie-n003",
+        "name": "黑暗福音 - 依文潔琳",
+        "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.20\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+        "origin": "法師",
+        "modelKey": "imported.long",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-n01g",
+          "normalUnitRawcode": "N003",
+          "alternateUnitRawcode": "N01G",
+          "triggerAbility": {
+            "rawcode": "A06K",
+            "name": "42-002 魔力印章",
+            "durationSec": {
+              "1": 7,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-hgam": {
+        "id": "godie-hgam",
+        "name": "種子神奇寶貝 - 妙蛙種子",
+        "description": "故事：\n一出生背上就負著不可思議的種子。背上的種子裡面，擁有大量的營養 ，種子會跟著身體一起長大。\n(出自:神奇寶貝)\n\n推薦玩家 : 牽制會戰\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.00\n智慧 + 2.30\n基礎跑速 300\n\n可學習的技能：\n飛葉快刀、麻痺粉、藤鞭、陽光烈焰",
+        "origin": "軟輔",
+        "modelKey": "imported.bulbasaur",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h02r",
+          "normalUnitRawcode": "HGAM",
+          "alternateUnitRawcode": "H02R",
+          "triggerAbility": {
+            "rawcode": "A0VG",
+            "name": "90-002 超進化! 妙蛙花",
+            "durationSec": {
+              "1": 18,
+              "4": 25
+            },
+            "cooldownSec": {
+              "1": 75,
+              "4": 30
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-hjai": {
+        "id": "godie-hjai",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬",
+        "origin": "法師",
+        "modelKey": "imported.linainvers",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-h020",
+          "normalUnitRawcode": "HJAI",
+          "alternateUnitRawcode": "H020",
+          "triggerAbility": {
+            "rawcode": "A0OE",
+            "name": "04-002 惡夢魔王的碎片",
+            "durationSec": {
+              "1": 20,
+              "2": 12,
+              "3": 18,
+              "4": 24
+            },
+            "cooldownSec": {
+              "1": 70,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-o02p": {
+        "id": "godie-o02p",
+        "name": "夢幻之星 - 初音",
+        "description": "故事：\n人類史上第一個紅遍全球的虛擬歌姬，儘管到了今日仍在發光發熱，甚至有專屬初音的感謝祭演場會。\n(出自:HATSUNE MIKU)\n\n推薦玩家 : 輔助戰鬥\n上手度 : 易\n\n角色成長：\n力量 + 2.00\n敏捷 + 2.30\n智慧 + 1.70\n基礎跑速 315\n\n可學習的技能：\n甩蔥歌、最初的聲音、初音未來的消失、世界第一的公主殿下",
+        "origin": "軟輔",
+        "modelKey": "imported.heromiku",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e008": {
+        "id": "godie-e008",
+        "name": "火霧戰士 - 夏娜",
+        "description": "故事：\n身分為火霧戰士，為了存在感稀薄的人而戰。\n(出自:灼眼的夏娜)\n\n推薦玩家 : 團戰殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 310\n\n可學習的技能：\n拔焰刀、火羽、赤焰爆發、討滅封絕",
+        "origin": "法鬥",
+        "modelKey": "imported.heroshana",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-u00l": {
+        "id": "godie-u00l",
+        "name": "北斗之鼠 - 拳四郎",
+        "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔拳、北斗神拳秘訣轉龍呼吸法、北斗百裂拳、ChangeDNA",
+        "modelKey": "imported.heropikachu",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-umal",
+          "normalUnitRawcode": "UMAL",
+          "alternateUnitRawcode": "U00L",
+          "triggerAbility": {
+            "rawcode": "A0HW",
+            "name": "25-04 ChangeDNA",
+            "durationSec": {
+              "1": 8.0,
+              "2": 16.0,
+              "3": 24.0,
+              "4": 28.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 75.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-etyr": {
+        "id": "godie-etyr",
+        "name": "治癒系公主 - 木乃香",
+        "description": "故事：\n父母家在京都的關西咒術協會，父親近衛詠春是關西咒術協會會長，祖父是關東魔法協會會長與麻帆良學園的校長，自身擁有驚世駭俗的魔法力量，有可能能成為世界頂級的治癒術師，在關東魔法協會一戰中被天崎千草借其魔力召喚出過百惡魔。\n(2007部族盃比賽獎品 出自:魔法老師)\n\n推薦玩家 : 輔助團戰\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.20\n智慧 + 3.20\n基礎跑速 295\n\n可學習的技能：\n東風繪扇、南風末廣、式神炸裂、魔力應援、聖夜降臨",
+        "origin": "軟輔",
+        "modelKey": "imported.herooichi",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "bow"
+        ]
+      },
+      "godie-huth": {
+        "id": "godie-huth",
+        "name": "超級普烏 - 魔人普烏",
+        "description": "故事：\n看似貪玩可愛，骨子裡卻充滿邪惡的魔人普烏。擁有強大的分身再生能力，摧毀敵人也只不過是他的娛樂。\n(出自:七龍珠)\n\n推薦玩家 : 破塔堵人\n上手度 : 易\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.85\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n吃掉你、把你變成餅乾、分身、破滅能量彈",
+        "origin": "坦克",
+        "modelKey": "imported.herobuu",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "fist"
+        ]
+      },
+      "godie-e00n": {
+        "id": "godie-e00n",
+        "name": "蟬在叫人壞掉 - 龍宮禮奈",
+        "modelKey": "imported.renaryugu2",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-e001",
+          "normalUnitRawcode": "E001",
+          "alternateUnitRawcode": "E00N",
+          "triggerAbility": {
+            "rawcode": "A02Q",
+            "name": "22-04 雛見澤症候群L5",
+            "durationSec": {
+              "1": 7.0,
+              "2": 14.0,
+              "3": 21.0,
+              "4": 28.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 75.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-n00p": {
+        "id": "godie-n00p",
+        "name": "妖狐藏馬 - 南野秀一",
+        "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n寄生種子、風華圓舞陣、妖狐變化、魔界樹海",
+        "modelKey": "imported.fox",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-nsjs",
+          "normalUnitRawcode": "NSJS",
+          "alternateUnitRawcode": "N00P",
+          "triggerAbility": {
+            "rawcode": "A0IH",
+            "name": "18-03 妖狐變化",
+            "durationSec": {
+              "1": 8.0,
+              "2": 12.0,
+              "3": 16.0,
+              "4": 20.0
+            },
+            "cooldownSec": {
+              "1": 60.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "thrown"
+        ]
+      },
+      "godie-orkn": {
+        "id": "godie-orkn",
+        "name": "電車癡漢 - 臭作",
+        "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+        "origin": "法師",
+        "modelKey": "champ.sela",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-o030",
+          "normalUnitRawcode": "ORKN",
+          "alternateUnitRawcode": "O030",
+          "triggerAbility": {
+            "rawcode": "A0YT",
+            "name": "30-002 變態紳士",
+            "durationSec": {
+              "1": 15,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      },
+      "godie-n01c": {
+        "id": "godie-n01c",
+        "name": "傳說的龍騎士 - 勇者小呆",
+        "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
+        "modelKey": "imported.sd2",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-nbbc",
+          "normalUnitRawcode": "NBBC",
+          "alternateUnitRawcode": "N01C",
+          "triggerAbility": {
+            "rawcode": "A0T1",
+            "name": "08-002 龍魔人",
+            "durationSec": {
+              "1": 20,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-u010": {
+        "id": "godie-u010",
+        "name": "邪眼師 - 飛影",
+        "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+        "modelKey": "imported.herohehi",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-uvng",
+          "normalUnitRawcode": "UVNG",
+          "alternateUnitRawcode": "U010",
+          "triggerAbility": {
+            "rawcode": "A0OH",
+            "name": "38-00 邪眼全開",
+            "durationSec": {
+              "1": 10.0
+            },
+            "cooldownSec": {
+              "1": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-uvng": {
+        "id": "godie-uvng",
+        "name": "邪眼師 - 飛影",
+        "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+        "origin": "法刺",
+        "modelKey": "imported.herohehi",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u010",
+          "normalUnitRawcode": "UVNG",
+          "alternateUnitRawcode": "U010",
+          "triggerAbility": {
+            "rawcode": "A0OH",
+            "name": "38-00 邪眼全開",
+            "durationSec": {
+              "1": 10
+            },
+            "cooldownSec": {
+              "1": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-h02u": {
+        "id": "godie-h02u",
+        "name": "看似憂鬱的神獸 - 草泥馬",
+        "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n憂鬱的眼神、臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+        "modelKey": "imported.horse",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-h02v",
+          "normalUnitRawcode": "H02V",
+          "alternateUnitRawcode": "H02U",
+          "triggerAbility": {
+            "rawcode": "A0W9",
+            "name": "92-01 臥草泥馬",
+            "durationSec": {
+              "1": 10.0,
+              "2": 10.0,
+              "3": 5.0,
+              "4": 5.0
+            },
+            "cooldownSec": {
+              "1": 40.0,
+              "2": 40.0,
+              "3": 20.0,
+              "4": 20.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-h00l": {
+        "id": "godie-h00l",
+        "name": "時空勇者 - 林克",
+        "description": "故事：原本在森林中被當成『永遠不會長大的科奇利族人』般的生活著，直到某天因葛諾多夫的陰謀而知道自己真正的身世，為了對抗葛諾多夫，林克成為時空勇者 。\n(出自:薩爾達傳說)\n\n推薦玩家 : 肉盾牽制\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 2.00\n智慧 + 1.20\n基礎跑速 295\n\n可學習的技能：\n科奇利族迴旋鏢、鎖鏈槍、海拉爾之盾的庇護、迴旋斬",
+        "origin": "鬥士",
+        "modelKey": "imported.linkstik",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-e00w": {
+        "id": "godie-e00w",
+        "name": "神鳴流劍士 - 櫻綻剎那",
+        "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n百烈櫻華斬、雷鳴劍、GLADIARIA ALAT、真-雷光劍",
+        "origin": "鬥士",
+        "modelKey": "imported.mfls",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e00x",
+          "normalUnitRawcode": "E00W",
+          "alternateUnitRawcode": "E00X",
+          "triggerAbility": {
+            "rawcode": "A0JG",
+            "name": "77-03 GLADIARIA ALAT",
+            "durationSec": {
+              "1": 6,
+              "2": 12,
+              "3": 18,
+              "4": 24
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-n00b": {
+        "id": "godie-n00b",
+        "name": "小叮噹 - 哆拉A夢",
+        "description": "故事：\n從21世紀來的機械貓，因為感受到體內KUSO魂呼喚，所以決定在去死團大闖天下。\n(出自:小叮噹)\n\n推薦玩家 : 團戰輔助\n上手度 : 中\n\n角色成長：\n力量 + 2.00\n敏捷 + 1.85\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n空氣砲、任意門、複製鏡、竹蜻蜓",
+        "origin": "軟輔",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "thrown"
+        ]
+      },
+      "godie-emns": {
+        "id": "godie-emns",
+        "name": "奇樂 - 夜神月",
+        "description": "故事：\n英俊瀟灑，謹慎且機智，雖然極有女人緣但對異性不感興趣。高中三年級時在學校撿到了死神路克遺留人間界的死亡筆記\"DEATH NOTE\"，從而擁有了操縱生死的能力，並以\"新世界的神\"的名義君臨天下。\n(出自:死亡筆記本)\n\n推薦玩家 : 心機暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.50\n智慧 + 2.70\n基礎跑速 300\n\n可學習的技能：\n死神的規則、機警、火車輾過、心臟麻痺",
+        "origin": "法師",
+        "modelKey": "imported.herolight",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-h02k": {
+        "id": "godie-h02k",
+        "name": "國寶級的畜生 - 熊貓",
+        "description": "故事：\n來自四川的熊貓，經歷過四川的地震以後，流落到馬戲團賣藝，雖然自稱賣藝不賣身，但是為了生活還是常常到228公園去，而支持他苟延殘喘活下來的動力，就是希望在有生之年能拍一張彩色的照片。\n(出自:去死團原創)\n\n推薦玩家 : 人品爆發\n上手度 : 殘\n\n角色成長：\n力量 + 2.5（原作寫 1~4，取中點）\n敏捷 + 1.5（原作寫 1~2，取中點）\n智慧 + 0.5（原作寫 0~1，取中點）\n基礎跑速 305\n\n【修正紀錄】w3x 裡這三個成長全部是 0.0，是作者自己填的 —— 也就是說牠原本永遠停在 1 級，跟牠自己的說明矛盾。owner 2026-07-26 裁定「應該照說明成長」。原作寫的是區間，但模擬器是確定性的（不能擲骰），所以取中點。\n\n可學習的技能：\n憤怒的門牙、憤怒的菊花、憤怒的胸毛、憤怒的簡諧運動",
+        "origin": "坦克",
+        "modelKey": "champ.skin.barbarian",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "fist"
+        ]
+      },
+      "godie-u00j": {
+        "id": "godie-u00j",
+        "name": "神性的流失 - 賽菲洛斯",
+        "description": "故事：\n賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成年輕的他成了神羅最強的精英戰士，與扎克斯和克勞德到了尼布爾罕做觀察，在那裡的神羅建築地下室發現自己真正的身世，毀了尼布爾罕之後，開始向全世界「復仇」，尋找「約束之地」。\n(出自:最終幻想7)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.10\n智慧 + 1.90\n基礎跑速 295\n\n可學習的技能：\n獄門、八刀一閃、闇之天使、最終殞落星",
+        "origin": "法鬥",
+        "modelKey": "imported.herosephiroth",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-h020": {
+        "id": "godie-h020",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬(需要惡夢魔王碎片)",
+        "modelKey": "imported.linainvers",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-hjai",
+          "normalUnitRawcode": "HJAI",
+          "alternateUnitRawcode": "H020",
+          "triggerAbility": {
+            "rawcode": "A0OE",
+            "name": "04-002 惡夢魔王的碎片",
+            "durationSec": {
+              "1": 20.0,
+              "2": 12.0,
+              "3": 18.0,
+              "4": 24.0
+            },
+            "cooldownSec": {
+              "1": 70.0,
+              "2": 60.0,
+              "3": 60.0,
+              "4": 60.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-umal": {
+        "id": "godie-umal",
+        "name": "北斗神拳掌門人 - 拳四郎",
+        "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n推薦玩家 : KUSO殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔權、北斗神拳秘訣轉龍呼吸法、北斗百烈拳、ChangeDNA",
+        "origin": "鬥士",
+        "modelKey": "champ.skin.barbarian",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-u00l",
+          "normalUnitRawcode": "UMAL",
+          "alternateUnitRawcode": "U00L",
+          "triggerAbility": {
+            "rawcode": "A0HW",
+            "name": "25-04 ChangeDNA",
+            "durationSec": {
+              "1": 8,
+              "2": 16,
+              "3": 24,
+              "4": 28
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 75
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "fist"
+        ]
+      },
+      "sela": {
+        "id": "sela",
+        "name": "Sela, the Ember Sage",
+        "modelKey": "champ.sela",
+        "tags": [
+          "mage",
+          "burst",
+          "ranged",
+          "magic"
+        ]
+      },
+      "godie-edem": {
+        "id": "godie-edem",
+        "name": "寫輪眼復仇者 - 宇智波佐助",
+        "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
+        "origin": "法刺",
+        "modelKey": "imported.herosasuke",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-e002": {
+        "id": "godie-e002",
+        "name": "亞瑟王 - Saber",
+        "description": "故事：\n在偶然的情況下與衛宮士郎定下契約的 、外觀嬌小的女性SERVANT，就是被認為能力最高的聖靈。\n(出自:Fate/stay night)\n\n推薦玩家 : 破塔PK\n上手度 : 中\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.80\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n風王結界、感知能力、約束與勝利之劍、Avalon-永恆的理想鄉",
+        "origin": "法鬥",
+        "modelKey": "imported.herosaber",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-e00l",
+          "normalUnitRawcode": "E002",
+          "alternateUnitRawcode": "E00L",
+          "triggerAbility": {
+            "rawcode": "A0DZ",
+            "name": "20-01 風王結界"
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "sword"
+        ]
+      },
+      "godie-ofar": {
+        "id": "godie-ofar",
+        "name": "神奇寶貝兒 - 皮卡丘",
+        "description": "故事：\n自從皮卡丘成為國際巨星後，開始也擺起架勢把小智當傭人使喚，直到有一天在森林裡吃蘋果的時候，發現已經身在這場戰鬥中。\n(出自:神奇寶貝)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.90\n智慧 + 1.60\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、鋼鐵尾巴、就決定是你了!小智、瘋狂皮卡丘",
+        "origin": "射手",
+        "modelKey": "imported.heropikachu",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-o02l",
+          "normalUnitRawcode": "OFAR",
+          "alternateUnitRawcode": "O02L",
+          "triggerAbility": {
+            "rawcode": "A040",
+            "name": "58-04 瘋狂皮卡丘",
+            "durationSec": {
+              "1": 6,
+              "2": 12,
+              "3": 18,
+              "4": 24
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "magic"
+        ]
+      },
+      "godie-u01u": {
+        "id": "godie-u01u",
+        "name": "三刀流劍士 - 索隆",
+        "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
+        "modelKey": "imported.heromusashimiyamoto",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-udre",
+          "normalUnitRawcode": "UDRE",
+          "alternateUnitRawcode": "U01U",
+          "triggerAbility": {
+            "rawcode": "A10N",
+            "name": "11-002 武裝色霸氣",
+            "durationSec": {
+              "1": 15,
+              "2": 15,
+              "3": 21,
+              "4": 27
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "katana"
+        ]
+      },
+      "godie-nsjs": {
+        "id": "godie-nsjs",
+        "name": "妖狐藏馬 - 南野秀一",
+        "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n推薦玩家 : 追擊破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n風華圓舞陣、寄生種子、妖狐變化、億年樹",
+        "origin": "法師",
+        "modelKey": "imported.fox2",
+        "transform": {
+          "role": "base",
+          "counterpartId": "godie-n00p",
+          "normalUnitRawcode": "NSJS",
+          "alternateUnitRawcode": "N00P",
+          "triggerAbility": {
+            "rawcode": "A0IH",
+            "name": "18-03 妖狐變化",
+            "durationSec": {
+              "1": 8,
+              "2": 12,
+              "3": 16,
+              "4": 20
+            },
+            "cooldownSec": {
+              "1": 60,
+              "2": 60,
+              "3": 60,
+              "4": 60
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "thrown"
+        ]
+      },
+      "godie-h02r": {
+        "id": "godie-h02r",
+        "name": "種子神奇寶貝 - 妙蛙花",
+        "modelKey": "imported.bulbasaur",
+        "transform": {
+          "role": "alternate",
+          "counterpartId": "godie-hgam",
+          "normalUnitRawcode": "HGAM",
+          "alternateUnitRawcode": "H02R",
+          "triggerAbility": {
+            "rawcode": "A0VG",
+            "name": "90-002 超進化! 妙蛙花",
+            "durationSec": {
+              "1": 18.0,
+              "4": 25.0
+            },
+            "cooldownSec": {
+              "1": 75.0,
+              "4": 30.0
+            }
+          }
+        },
+        "tags": [
+          "wc3-import",
+          "godie",
+          "claw"
+        ]
+      },
+      "godie-h01u": {
+        "id": "godie-h01u",
+        "name": "亂世癿王者 - 呂布奉先",
+        "description": "故事：呂布（公元151年—公元198年），字奉先，五原（今內蒙古包頭市）人。三國時代的著名武將。呂布因其驍勇善戰，但又勢利多變。在民間對他評價為「人中呂布，馬中赤兔」。\n(出自:東漢世紀末傳說)\n\n推薦玩家 : PK破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 305\n\n可學習的技能：\n天下無雙、弒鬼神、鬼神烈戟、赤兔咆哮",
+        "origin": "鬥士",
+        "modelKey": "imported.lubu",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "greatsword"
+        ]
+      },
+      "godie-u00k": {
+        "id": "godie-u00k",
+        "name": "邪惡意念集合體 - 死之王",
+        "description": "故事：\n所有邪惡的聚合體，從上古時代就誕生的惡魔，與飛鼠先生一戰後魂飛魄散，在此次戰役中被召喚回來。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 2.00\n智慧 + 3.00\n基礎跑速 275\n\n可學習的技能：\n死亡隕落、靈魂吸取、厄夜靈魂、萬惡歸宗",
+        "origin": "法鬥",
+        "modelKey": "champ.sela",
+        "tags": [
+          "wc3-import",
+          "godie",
+          "voxel-standin",
+          "magic"
+        ]
+      }
+    },
+    "overlay": {},
+    "whitelist": {
+      "version": 1,
+      "updatedAt": "2026-08-21T20:52:58.526316518Z",
+      "champions": [
+        "godie-e001",
+        "godie-e002",
+        "godie-e008",
+        "godie-e00r",
+        "godie-e00s",
+        "godie-e00w",
+        "godie-edem",
+        "godie-efur",
+        "godie-emfr",
+        "godie-emns",
+        "godie-etyr",
+        "godie-ewar",
+        "godie-h00l",
+        "godie-h01n",
+        "godie-h01u",
+        "godie-h02k",
+        "godie-h02v",
+        "godie-hapm",
+        "godie-hart",
+        "godie-hgam",
+        "godie-hjai",
+        "godie-hpb1",
+        "godie-huth",
+        "godie-hvsh",
+        "godie-hvwd",
+        "godie-n003",
+        "godie-n00b",
+        "godie-nbbc",
+        "godie-nsjs",
+        "godie-o00k",
+        "godie-o00l",
+        "godie-o02p",
+        "godie-ofar",
+        "godie-ogld",
+        "godie-ogrh",
+        "godie-orkn",
+        "godie-osam",
+        "godie-u00h",
+        "godie-u00j",
+        "godie-u00k",
+        "godie-u00n",
+        "godie-u00v",
+        "godie-ubal",
+        "godie-ucrl",
+        "godie-udea",
+        "godie-udre",
+        "godie-umal",
+        "godie-uvng",
+        "godie-zombiex"
+      ],
+      "items": [
+        "all-might-hair",
+        "bezoar-of-the-apothecary",
+        "book-of-gospel",
+        "bulwark-charge-greaves",
+        "cleaver-of-the-warden",
+        "collar-of-the-deadly-soul",
+        "endless-edge",
+        "fingerless-gloves",
+        "gantz-suit",
+        "godie-i000",
+        "godie-i004",
+        "godie-i006",
+        "godie-i007",
+        "godie-i00f",
+        "godie-i00i",
+        "godie-i00j",
+        "godie-i00l",
+        "godie-i00s",
+        "godie-i00u",
+        "godie-i00z",
+        "godie-i012",
+        "godie-i013",
+        "godie-i014",
+        "godie-i016",
+        "godie-i018",
+        "godie-i01d",
+        "godie-i01g",
+        "godie-i01i",
+        "godie-i01j",
+        "godie-i01n",
+        "godie-i01o",
+        "godie-i01s",
+        "godie-i01v",
+        "godie-i01w",
+        "godie-i020",
+        "godie-i027",
+        "godie-i02d",
+        "godie-i02e",
+        "godie-i02r",
+        "godie-i031",
+        "godie-i039",
+        "godie-i03b",
+        "godie-i03d",
+        "godie-i03f",
+        "godie-i03h",
+        "godie-i03m",
+        "godie-i040",
+        "godie-i041",
+        "godie-i045",
+        "godie-i049",
+        "godie-i04d",
+        "godie-i04i",
+        "godie-i05h",
+        "godie-i05o",
+        "godie-i060",
+        "godie-i061",
+        "godie-i067",
+        "godie-i06a",
+        "godie-i06d",
+        "godie-i06e",
+        "godie-i06f",
+        "godie-i06g",
+        "godie-i06i",
+        "godie-i06j",
+        "godie-i06n",
+        "godie-i06o",
+        "godie-i06q",
+        "gravity-sword-black-rod",
+        "grief-seed",
+        "icha-icha-paradise",
+        "lance-kongotetsu",
+        "legendary-orb",
+        "magic-armor-type-zero",
+        "master-ball",
+        "meat-cleaver",
+        "meteor-ring",
+        "millennium-puzzle",
+        "mystery-scrap-of-paper",
+        "nezuko-box",
+        "odm-gear",
+        "pale-moon-requiem-crown",
+        "red-comet-mask",
+        "sasumata",
+        "scouter",
+        "senzu-bean",
+        "shining-golden-orbs",
+        "slime-suit",
+        "soul-eater",
+        "soul-gem",
+        "spear-of-lightning",
+        "staff-of-ainz-ooal-gown",
+        "stat-attunement",
+        "stone-mask",
+        "teardrop-of-rebirth",
+        "torch-master",
+        "touyako",
+        "ultimate-mod-shiranui",
+        "usagizuki-twin-crescents"
+      ],
+      "abilities": [
+        "godie-e001.e",
+        "godie-e001.ex",
+        "godie-e001.q",
+        "godie-e001.r",
+        "godie-e001.w",
+        "godie-e002.e",
+        "godie-e002.ex",
+        "godie-e002.q",
+        "godie-e002.r",
+        "godie-e002.w",
+        "godie-e007.e",
+        "godie-e007.ex",
+        "godie-e007.q",
+        "godie-e007.r",
+        "godie-e007.w",
+        "godie-e008.e",
+        "godie-e008.ex",
+        "godie-e008.q",
+        "godie-e008.r",
+        "godie-e008.w",
+        "godie-e00r.e",
+        "godie-e00r.ex",
+        "godie-e00r.q",
+        "godie-e00r.r",
+        "godie-e00r.w",
+        "godie-e00s.e",
+        "godie-e00s.ex",
+        "godie-e00s.q",
+        "godie-e00s.r",
+        "godie-e00s.w",
+        "godie-e00w.e",
+        "godie-e00w.ex",
+        "godie-e00w.q",
+        "godie-e00w.r",
+        "godie-e00w.w",
+        "godie-edem.e",
+        "godie-edem.ex",
+        "godie-edem.q",
+        "godie-edem.r",
+        "godie-edem.w",
+        "godie-efur.e",
+        "godie-efur.ex",
+        "godie-efur.q",
+        "godie-efur.r",
+        "godie-efur.w",
+        "godie-emfr.e",
+        "godie-emfr.ex",
+        "godie-emfr.q",
+        "godie-emfr.r",
+        "godie-emfr.w",
+        "godie-emns.e",
+        "godie-emns.ex",
+        "godie-emns.q",
+        "godie-emns.r",
+        "godie-emns.w",
+        "godie-etyr.e",
+        "godie-etyr.ex",
+        "godie-etyr.q",
+        "godie-etyr.r",
+        "godie-etyr.w",
+        "godie-ewar.e",
+        "godie-ewar.ex",
+        "godie-ewar.q",
+        "godie-ewar.r",
+        "godie-ewar.w",
+        "godie-h00l.e",
+        "godie-h00l.ex",
+        "godie-h00l.q",
+        "godie-h00l.r",
+        "godie-h00l.w",
+        "godie-h01n.e",
+        "godie-h01n.ex",
+        "godie-h01n.q",
+        "godie-h01n.r",
+        "godie-h01n.w",
+        "godie-h01u.e",
+        "godie-h01u.ex",
+        "godie-h01u.q",
+        "godie-h01u.r",
+        "godie-h01u.w",
+        "godie-h020.e",
+        "godie-h020.ex",
+        "godie-h020.q",
+        "godie-h020.r",
+        "godie-h020.w",
+        "godie-h02k.e",
+        "godie-h02k.ex",
+        "godie-h02k.q",
+        "godie-h02k.r",
+        "godie-h02k.w",
+        "godie-h02r.e",
+        "godie-h02r.ex",
+        "godie-h02r.q",
+        "godie-h02r.r",
+        "godie-h02r.w",
+        "godie-h02u.e",
+        "godie-h02u.ex",
+        "godie-h02u.q",
+        "godie-h02u.r",
+        "godie-h02u.w",
+        "godie-h02v.e",
+        "godie-h02v.ex",
+        "godie-h02v.q",
+        "godie-h02v.r",
+        "godie-h02v.w",
+        "godie-hapm.e",
+        "godie-hapm.ex",
+        "godie-hapm.q",
+        "godie-hapm.r",
+        "godie-hapm.w",
+        "godie-hart.e",
+        "godie-hart.ex",
+        "godie-hart.q",
+        "godie-hart.r",
+        "godie-hart.w",
+        "godie-hgam.e",
+        "godie-hgam.ex",
+        "godie-hgam.q",
+        "godie-hgam.r",
+        "godie-hgam.w",
+        "godie-hjai.e",
+        "godie-hjai.ex",
+        "godie-hjai.q",
+        "godie-hjai.r",
+        "godie-hjai.w",
+        "godie-hpb1.e",
+        "godie-hpb1.ex",
+        "godie-hpb1.q",
+        "godie-hpb1.r",
+        "godie-hpb1.w",
+        "godie-huth.e",
+        "godie-huth.ex",
+        "godie-huth.q",
+        "godie-huth.r",
+        "godie-huth.w",
+        "godie-hvsh.e",
+        "godie-hvsh.ex",
+        "godie-hvsh.q",
+        "godie-hvsh.r",
+        "godie-hvsh.w",
+        "godie-hvwd.e",
+        "godie-hvwd.ex",
+        "godie-hvwd.q",
+        "godie-hvwd.r",
+        "godie-hvwd.w",
+        "godie-n003.e",
+        "godie-n003.ex",
+        "godie-n003.q",
+        "godie-n003.r",
+        "godie-n003.w",
+        "godie-n00b.e",
+        "godie-n00b.ex",
+        "godie-n00b.q",
+        "godie-n00b.r",
+        "godie-n00b.w",
+        "godie-n00p.e",
+        "godie-n00p.ex",
+        "godie-n00p.q",
+        "godie-n00p.r",
+        "godie-n00p.w",
+        "godie-n01c.e",
+        "godie-n01c.ex",
+        "godie-n01c.q",
+        "godie-n01c.r",
+        "godie-n01c.w",
+        "godie-nbbc.e",
+        "godie-nbbc.ex",
+        "godie-nbbc.q",
+        "godie-nbbc.r",
+        "godie-nbbc.w",
+        "godie-nsjs.e",
+        "godie-nsjs.ex",
+        "godie-nsjs.q",
+        "godie-nsjs.r",
+        "godie-nsjs.w",
+        "godie-o00k.e",
+        "godie-o00k.ex",
+        "godie-o00k.q",
+        "godie-o00k.r",
+        "godie-o00k.w",
+        "godie-o00l.e",
+        "godie-o00l.ex",
+        "godie-o00l.q",
+        "godie-o00l.r",
+        "godie-o00l.w",
+        "godie-o00x.e",
+        "godie-o00x.ex",
+        "godie-o00x.q",
+        "godie-o00x.r",
+        "godie-o00x.w",
+        "godie-o02p.e",
+        "godie-o02p.ex",
+        "godie-o02p.q",
+        "godie-o02p.r",
+        "godie-o02p.w",
+        "godie-ofar.e",
+        "godie-ofar.ex",
+        "godie-ofar.q",
+        "godie-ofar.r",
+        "godie-ofar.w",
+        "godie-ogld.e",
+        "godie-ogld.ex",
+        "godie-ogld.q",
+        "godie-ogld.r",
+        "godie-ogld.w",
+        "godie-ogrh.e",
+        "godie-ogrh.ex",
+        "godie-ogrh.q",
+        "godie-ogrh.r",
+        "godie-ogrh.w",
+        "godie-orkn.e",
+        "godie-orkn.ex",
+        "godie-orkn.q",
+        "godie-orkn.r",
+        "godie-orkn.w",
+        "godie-osam.e",
+        "godie-osam.ex",
+        "godie-osam.q",
+        "godie-osam.r",
+        "godie-osam.w",
+        "godie-u00h.e",
+        "godie-u00h.ex",
+        "godie-u00h.q",
+        "godie-u00h.r",
+        "godie-u00h.w",
+        "godie-u00j.e",
+        "godie-u00j.ex",
+        "godie-u00j.q",
+        "godie-u00j.r",
+        "godie-u00j.w",
+        "godie-u00k.e",
+        "godie-u00k.ex",
+        "godie-u00k.q",
+        "godie-u00k.r",
+        "godie-u00k.w",
+        "godie-u00l.e",
+        "godie-u00l.ex",
+        "godie-u00l.q",
+        "godie-u00l.r",
+        "godie-u00l.w",
+        "godie-u00n.e",
+        "godie-u00n.ex",
+        "godie-u00n.q",
+        "godie-u00n.r",
+        "godie-u00n.w",
+        "godie-u00v.e",
+        "godie-u00v.ex",
+        "godie-u00v.q",
+        "godie-u00v.r",
+        "godie-u00v.w",
+        "godie-u010.e",
+        "godie-u010.ex",
+        "godie-u010.q",
+        "godie-u010.r",
+        "godie-u010.w",
+        "godie-u01u.e",
+        "godie-u01u.ex",
+        "godie-u01u.q",
+        "godie-u01u.r",
+        "godie-u01u.w",
+        "godie-ubal.e",
+        "godie-ubal.ex",
+        "godie-ubal.q",
+        "godie-ubal.r",
+        "godie-ubal.w",
+        "godie-ucrl.e",
+        "godie-ucrl.ex",
+        "godie-ucrl.q",
+        "godie-ucrl.r",
+        "godie-ucrl.w",
+        "godie-udea.e",
+        "godie-udea.ex",
+        "godie-udea.q",
+        "godie-udea.r",
+        "godie-udea.w",
+        "godie-udre.e",
+        "godie-udre.ex",
+        "godie-udre.q",
+        "godie-udre.r",
+        "godie-udre.w",
+        "godie-umal.e",
+        "godie-umal.ex",
+        "godie-umal.q",
+        "godie-umal.r",
+        "godie-umal.w",
+        "godie-uvng.e",
+        "godie-uvng.ex",
+        "godie-uvng.q",
+        "godie-uvng.r",
+        "godie-uvng.w",
+        "godie-zombiex.e",
+        "godie-zombiex.ex",
+        "godie-zombiex.q",
+        "godie-zombiex.r",
+        "godie-zombiex.w"
+      ]
+    }
+  },
+  "live-overlay": {
+    "schemaVersion": 1,
+    "generation": 0,
+    "updatedAt": "0001-01-01T00:00:00Z",
+    "updatedBy": "",
+    "docs": {},
+    "deleted": {}
+  },
+  "live-community": {
+    "version": 1,
+    "updatedAt": "0001-01-01T00:00:00Z",
+    "champions": [],
+    "items": [],
+    "abilities": []
+  }
+}

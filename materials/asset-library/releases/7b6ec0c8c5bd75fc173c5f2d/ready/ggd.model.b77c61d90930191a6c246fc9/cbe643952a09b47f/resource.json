@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.b77c61d90930191a6c246fc9",
+  "title": "GGD 原創如月電車",
+  "kind": "model-body",
+  "model": "models/community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "existing:tram",
+        "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+        "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+        "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+        "bytes": 78876,
+        "documentSha256": "b77c61d90930191a6c246fc9be54860d0ba21dc382d6c00310237d33270320fc",
+        "sourceCharacter": "GGD 原創如月電車",
+        "sourceWork": "GGD 原創",
+        "sourceAssetId": "existing:tram",
+        "sourceSha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "limitations": [
+          "保留借用模型身形；未重製角色專屬外觀或複合身體。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.b77c61d90930191a6c246fc9"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-kisaragi",
+        "name": "如月電車"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

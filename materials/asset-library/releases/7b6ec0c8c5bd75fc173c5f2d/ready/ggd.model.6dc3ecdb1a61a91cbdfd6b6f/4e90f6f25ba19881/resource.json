@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.6dc3ecdb1a61a91cbdfd6b6f",
+  "title": "李小狼",
+  "kind": "model-body",
+  "model": "models/community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:119",
+        "modelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+        "glbPath": "assets/models/community/7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1.glb",
+        "sha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+        "bytes": 762644,
+        "documentSha256": "6dc3ecdb1a61a91cbdfd6b6f472b31fc0ededc6f63afeecef31a73ad8e7d2403",
+        "sourceCharacter": "李小狼",
+        "sourceWork": "TSUBASA 翼／翼年代記",
+        "sourceAssetId": "300heroes:f1660efeba7e0630c361c814",
+        "sourceSha256": "b3aacc2a77626f8b2cffed7589624a75961fd89198443a6255061a2c543c27d3",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.6dc3ecdb1a61a91cbdfd6b6f"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-popp",
+        "name": "何布"
+      },
+      {
+        "id": "b2-keyaru",
+        "name": "凱亞爾"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

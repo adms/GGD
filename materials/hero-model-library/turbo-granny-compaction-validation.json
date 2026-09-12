@@ -1,0 +1,70 @@
+{
+  "schema": "ggd-hero-model-component-validation@1",
+  "sourceId": "thunderstore-turbo-granny",
+  "heroId": "community-review-34-20260907",
+  "sha256": "c8a1d6accb1c1fbb892296a5c955d09f84944166db81020ee0e8161a2b1c4141",
+  "bytes": 817196,
+  "meshes": 5,
+  "triangles": 9432,
+  "textures": [
+    {
+      "width": 1024,
+      "height": 1024,
+      "bytes": 58254,
+      "sha256": "db4d2bed8efe4c8fe9ef8629d1978f630cd9a356507e47970ff22abcb7242f84"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "bytes": 9543,
+      "sha256": "515e179e2de5e0f83af2dc6b69933e701a1a0ae996ff779de82a2b4fd68275d4"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "bytes": 10839,
+      "sha256": "d69620f3e9e39ef3a11e3bdf6b77f4acbc2a15b3cfa8b91c63f00461909c8c7d"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "bytes": 7759,
+      "sha256": "fe1ff709f67015a87cf55aaf5ec8da0603b20cfd45ab3f22d84034e2fb3d906e"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "bytes": 11995,
+      "sha256": "fe4a06c1203b545d3b7d6284c9894aaf9304279392ab3acd4a744f972665f695"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "bytes": 5345,
+      "sha256": "5fb594bc9ad9920d278c938d37531041b175b01e2ed3f3ae519647035832197e"
+    }
+  ],
+  "animationClips": 0,
+  "formatIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "budget": {
+    "errors": [],
+    "warnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+      "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+    ]
+  },
+  "ruleSha256": {
+    "inspector": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1",
+    "budget": "43aae1ec1e505f8896e47f481a948e3afb9f8ad1a4192ceced7b43e608f7bde4"
+  },
+  "scope": "geometry and texture limits only; no six-state motion binding, runtime motion or backend selection acceptance",
+  "runtimeReady": false,
+  "backendSelectionVerified": false
+}

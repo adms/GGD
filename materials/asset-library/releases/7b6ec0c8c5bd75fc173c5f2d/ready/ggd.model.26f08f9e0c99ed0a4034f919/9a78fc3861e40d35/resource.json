@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.26f08f9e0c99ed0a4034f919",
+  "title": "笠笠笠",
+  "kind": "model-body",
+  "model": "models/community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-08-20260907",
+        "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+        "glbPath": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
+        "sha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+        "bytes": 1160176,
+        "documentSha256": "26f08f9e0c99ed0a4034f9199c25e3271952a6e98a3fd139ff24be1729eb310c",
+        "sourceCharacter": "笠笠笠",
+        "sourceWork": "進擊的巨人",
+        "sourceAssetId": "300heroes:2b730a6724d72692c2c95046",
+        "sourceSha256": "5a0062142e64a778013fd7abad31077dec15c69c4d5bacd1b8958aed2055c5da",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.26f08f9e0c99ed0a4034f919"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-08-20260907",
+        "name": "米卡莎"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

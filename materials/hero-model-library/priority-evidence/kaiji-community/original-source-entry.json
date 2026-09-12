@@ -1,0 +1,183 @@
+{
+  "id": "thunderstore-holya-kaiji-suit2",
+  "target": "伊藤開司：holya Lethal Company 完整蒙皮社群模型",
+  "heroIds": [
+    "b2-kaiji"
+  ],
+  "ownerEntryIds": [],
+  "url": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+  "downloadUrl": "https://thunderstore.io/package/download/holya/kaiji_suit_2/0.1.1/",
+  "uploader": "holya",
+  "format": "ZIP → .NET DLL embedded UnityFS → skinned Mesh / Avatar / Transform / HDRP Material / Texture2D",
+  "accessStatus": "public-direct-download",
+  "checkedAt": "2026-09-10T16:06:32.004657+00:00",
+  "acquisitionStatus": "downloaded-verified",
+  "readiness": "extracted-native-pending-conversion",
+  "resourceRole": "character-body",
+  "assetKinds": [
+    "model",
+    "skeleton",
+    "texture",
+    "material"
+  ],
+  "defaultEligible": false,
+  "purchaseDecision": "no-purchase-source-acquired",
+  "discoveryChannel": "mod-community",
+  "platform": "PC / Unity",
+  "sourceGame": "Lethal Company (community model replacement)",
+  "sourceWork": "賭博黙示録カイジ / Gyakkyou Burai Kaiji",
+  "selectionClass": "MOD社群修改",
+  "localPath": "GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+  "files": [
+    {
+      "path": "original/holya-kaiji_suit_2-0.1.1.zip",
+      "bytes": 1216760,
+      "sha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc"
+    },
+    {
+      "path": "extracted/kaiji.dll",
+      "bytes": 888320,
+      "sha256": "079f98cc7f32c43bdd313e0b5350b7a5646fe4b903ad3aa751cd83e1cd1bc9cf"
+    },
+    {
+      "path": "embedded/kaiji-unityfs.bundle",
+      "bytes": 879249,
+      "sha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8"
+    }
+  ],
+  "upstreamArchiveSha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc",
+  "modelCount": 1,
+  "modelCandidates": [
+    {
+      "id": "candidate.holya-kaiji-suit2.0.1.1",
+      "heroIds": [
+        "b2-kaiji"
+      ],
+      "sourceId": "thunderstore-holya-kaiji-suit2",
+      "label": "伊藤開司／holya Lethal Company 社群模型",
+      "resourceRole": "character-body",
+      "identityClass": "named-character-community-model",
+      "readiness": "extracted-native-pending-conversion",
+      "sourceBundlePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/embedded/kaiji-unityfs.bundle",
+      "sourceBundleSha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8",
+      "meshCount": 1,
+      "vertexCount": 1766,
+      "triangleCount": 2176,
+      "boneCount": 33,
+      "weightedBoneCount": 32,
+      "materialCount": 3,
+      "textureCount": 3,
+      "nativeAnimationCount": 0,
+      "audioCount": 0,
+      "meshArrays": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-native.npz",
+      "skeleton": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/skeleton.json",
+      "nativeScene": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/native-scene.json",
+      "bindPosesAndSubmeshes": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-metadata.json",
+      "materials": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/materials.json",
+      "textures": [
+        {
+          "pathId": -4092671177842900150,
+          "name": "Baked kaiji 2",
+          "path": "analysis/textures/Baked-kaiji-2.-4092671177842900150.png",
+          "width": 2048,
+          "height": 2048,
+          "mode": "RGBA",
+          "bytes": 249046,
+          "sha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc",
+          "decode": "UnityPy Texture2D.image native DXT1 decode; no resizing or tinting"
+        },
+        {
+          "pathId": -1962654042311310318,
+          "name": "Shirt kaiji.001",
+          "path": "analysis/textures/Shirt-kaiji.001.-1962654042311310318.png",
+          "width": 2048,
+          "height": 1024,
+          "mode": "RGBA",
+          "bytes": 1795718,
+          "sha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b",
+          "decode": "UnityPy Texture2D.image native DXT1 decode; no resizing or tinting"
+        },
+        {
+          "pathId": 8619384907673432593,
+          "name": "Baked kaiji 4",
+          "path": "analysis/textures/Baked-kaiji-4.8619384907673432593.png",
+          "width": 2048,
+          "height": 2048,
+          "mode": "RGBA",
+          "bytes": 81779,
+          "sha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f",
+          "decode": "UnityPy Texture2D.image native DXT1 decode; no resizing or tinting"
+        }
+      ],
+      "defaultEligible": false,
+      "backendIntegration": "pending-conversion",
+      "requiredActions": [
+        "Convert native mesh + exact 33-joint hierarchy/bind poses/weights into GLB; preserve all three submeshes/materials.",
+        "Normalize native coordinates, unit scale and ground position. Do not treat raw mesh bounds as world-space stature.",
+        "Adapt Unity HDRP material semantics and 2048px textures to the actual GGD contract; preserve unmodified source textures.",
+        "No native animations: source separate compatible real motions or explicitly label any later procedural/retargeted motion.",
+        "Run GGD parser/prepare/verify, Khronos and actual rendered/animated acceptance before runtime selection."
+      ]
+    }
+  ],
+  "nativeAssetCounts": {
+    "bodyModelCount": 1,
+    "skeletonCount": 1,
+    "jointCount": 33,
+    "weightedJointCount": 32,
+    "materialCount": 3,
+    "texture2DCount": 3,
+    "nativeAnimationClipCount": 0,
+    "nativeAudioBankCount": 0,
+    "audioFileCount": 0,
+    "vfxAssetCount": 0
+  },
+  "sourceManifest": {
+    "path": "source.json",
+    "bytes": 2268,
+    "sha256": "bf9342317edb65d0f5cb57edd2503bc2f2eacdea2d05f46a6d05b7c342d14961"
+  },
+  "sourceEvidence": {
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+    "nativeAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/checks.json",
+    "nativeScenePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/native-scene.json",
+    "meshArraysPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/mesh-native.npz",
+    "skeletonPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/analysis/skeleton.json",
+    "modelCandidateIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/model-candidates.json",
+    "audioIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/audio-file-index.json",
+    "previousLocalEvidencePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/local-existing-evidence.json"
+  },
+  "verification": "ZIP CRC passes; original ZIP/DLL/UnityFS SHA-256 recorded. All 33 bone references, all material textures and all indices resolve; max weight-sum error 1.1920928955078125e-7. No 3D rendering/runtime acceptance yet.",
+  "gaps": [
+    "Convert native mesh + exact 33-joint hierarchy/bind poses/weights into GLB; preserve all three submeshes/materials.",
+    "Normalize native coordinates, unit scale and ground position. Do not treat raw mesh bounds as world-space stature.",
+    "Adapt Unity HDRP material semantics and 2048px textures to the actual GGD contract; preserve unmodified source textures.",
+    "No native animations: source separate compatible real motions or explicitly label any later procedural/retargeted motion.",
+    "Run GGD parser/prepare/verify, Khronos and actual rendered/animated acceptance before runtime selection."
+  ],
+  "reuseTerms": "No standalone LICENSE or explicit redistribution/conversion grant found in the six-file package or inspected source page. Preserve author/provenance; availability alone is not a licensing grant.",
+  "publicRedistributionRightsVerified": false,
+  "backendIntegration": {
+    "required": true,
+    "state": "pending-conversion",
+    "heroIds": [
+      "b2-kaiji"
+    ],
+    "selectionVerified": false
+  },
+  "publicationStatus": "local-only-awaiting-source-backup",
+  "pendingBackup": {
+    "status": "not-uploaded",
+    "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit/original/holya-kaiji_suit_2-0.1.1.zip",
+    "bytes": 1216760,
+    "sha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc",
+    "readbackVerified": false
+  },
+  "audioAcquisition": {
+    "audioCount": 0,
+    "nativeAudioBankCount": 0,
+    "confirmedVoiceCount": 0,
+    "runtimeReady": false
+  },
+  "verifiedLocalDeliveryOnly": true
+}

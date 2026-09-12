@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+  "modelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -296,5 +296,60 @@
     "magic"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-karthus.webp"
+  "icon": "assets/icons/champions/lol-karthus.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0c5df87ee0f8b37a38897e2b5bc903c681d8250dbe156c75",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "60876c7c7df2efd1181dd5c8b5c1a2a4f12e40d8c8d7be1c8314cb183d777667",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.581Z",
+      "source": {
+        "kind": "previous",
+        "character": "卡爾瑟斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.0cb6555ccbf4b9e95eb4bc18071445cebafcf75d5675eb00",
+      "label": "卡爾瑟斯（LOL 原生模型）",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "4e43af5943de4d7703d21e96260f0f8c081b77dfc70f2f65ab1ccf517b2d1932",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.597Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-karthus.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
+      "label": "卡爾瑟斯",
+      "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "modelSha256": "a5decad4c5ece0d1a79e3d6ccbd1d01fd2436f002b6c49b12d2299fd03e2c206",
+      "binarySha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+      "registeredAt": "2026-09-10T14:45:43.711Z",
+      "source": {
+        "kind": "exact",
+        "character": "卡爾瑟斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:karthus",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

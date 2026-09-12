@@ -1217,7 +1217,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-goblin/hurt.mp3",
             "text": "（原檔）0011-vc_link_damage_twinkle",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.44,
             "speakerSim": null,
             "hash": "329d5b10d278e2f8ce00683572ff6115a5f54f06cd71a562d5ef99e814864120"
@@ -1227,7 +1227,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-goblin/hurt-heavy.mp3",
             "text": "（原檔）0014-vc_link_damagefly01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.680249,
             "speakerSim": null,
             "hash": "1132150e129778a56f4b6a757717dfe4baf3a4bf6caf6f5c5ab82b3362dd43b1"
@@ -1237,7 +1237,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-goblin/kill-1.mp3",
             "text": "（原檔）0001-vc_link_attack01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.4,
             "speakerSim": null,
             "hash": "a4d3bf50552e211e9bf423efa4e531a72320b3c5a3b26ebd01d57124487bb2a3"
@@ -2187,7 +2187,6 @@
       "tier": "combat-core",
       "missingCategories": [
         "quote",
-        "victory",
         "stun",
         "poison",
         "slow",
@@ -2198,7 +2197,6 @@
         "confused",
         "paralyzed",
         "thanks",
-        "taunt",
         "curse",
         "hum",
         "attack-light",
@@ -2225,6 +2223,16 @@
         "unstoppable"
       ],
       "lines": {
+        "select": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+            "text": "（原檔）doaShimarimasuFemale",
+            "lang": "ja",
+            "durationSec": 7.218821,
+            "speakerSim": null,
+            "hash": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45"
+          }
+        ],
         "defeat": [
           {
             "clip": "assets/audio/voices/lines/b2-kisaragi/defeat.mp3",
@@ -2313,6 +2321,26 @@
             "durationSec": 1.48,
             "speakerSim": null,
             "hash": "24123b18fe75d856a000e9d8ca5204f8e832a5330dfb33aacb5516501ed3d728"
+          }
+        ],
+        "taunt": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+            "text": "（原檔）doaShimarimasuFemale",
+            "lang": "ja",
+            "durationSec": 7.218821,
+            "speakerSim": null,
+            "hash": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+            "text": "（原檔）JR_Melody",
+            "lang": "und",
+            "durationSec": 10.03102,
+            "speakerSim": null,
+            "hash": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc"
           }
         ]
       }
@@ -3212,7 +3240,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.427755,
             "speakerSim": null,
             "hash": "61659cad78d637069ad831363a304d460429f5c54db5cac136d34750c1de72fb"
@@ -3222,7 +3250,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.468571,
             "speakerSim": null,
             "hash": "eca72f929bf8136d6c5624216d6f5384eac36d9b09b5b2ff93ca1e9bc58ef9a6"
@@ -3232,7 +3260,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.099955,
             "speakerSim": null,
             "hash": "a78d2ede7d2199e03f874390850904177fbe45b05678eb2da8869f03d7fbd0e2"
@@ -3242,7 +3270,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.828481,
             "speakerSim": null,
             "hash": "b80e3e1ed543a444829893bbfc4bee46ffb461225037620a708770530ed3cb15"
@@ -3252,7 +3280,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.863311,
             "speakerSim": null,
             "hash": "44faa9813c4116abc14e198f7d02bff348e138bf4b50cfb295a724701b94782f"
@@ -3260,7 +3288,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.575964,
             "speakerSim": null,
             "hash": "7866e080e8f49132afa6ba2a9dea2a7dc1833133321b61bf7f703f2a9609f1e4"
@@ -3268,7 +3296,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/defeat.3.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.863311,
             "speakerSim": null,
             "hash": "44faa9813c4116abc14e198f7d02bff348e138bf4b50cfb295a724701b94782f"
@@ -3278,7 +3306,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.382857,
             "speakerSim": null,
             "hash": "6e12c2075329bddef90458817c6aa96906671c5ad006a77c3ebd84ddec9007d4"
@@ -3318,7 +3346,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.821134,
             "speakerSim": null,
             "hash": "893013e9f8e1b49a51e1bcb50b24b1bade146615a3118b5f7d05f8cd30c8115d"
@@ -3326,7 +3354,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.477279,
             "speakerSim": null,
             "hash": "5a3daf8f077783920ac8f0af09a112251566fadcbf049a7e28037ee25d71a33a"
@@ -3334,7 +3362,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.438186,
             "speakerSim": null,
             "hash": "789db8e41219728b690b865b4e1b53d58993c3a13b0575ab703d8d0c0a5b1d3b"
@@ -3344,7 +3372,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-maple/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.427755,
             "speakerSim": null,
             "hash": "61659cad78d637069ad831363a304d460429f5c54db5cac136d34750c1de72fb"
@@ -4828,7 +4856,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.626848,
             "speakerSim": null,
             "hash": "b14a768de75eafbcf6563aced810788f4146dbfc7a4d787430c40742370c0bea"
@@ -4838,7 +4866,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.817052,
             "speakerSim": null,
             "hash": "eebd2dfea01ca4863197c29d2a42c0b855d9df672b6a002b98c96f0db3b6edbe"
@@ -4848,7 +4876,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.985215,
             "speakerSim": null,
             "hash": "1d2f4675f5535abb6f7dab15f3a7ac3159458676c943a777291d21a39866f54e"
@@ -4858,7 +4886,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.120272,
             "speakerSim": null,
             "hash": "030124b3e3646ce5b7454e858bf0f31c19ece4107efcf4697ade3400995eec13"
@@ -4866,7 +4894,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.632653,
             "speakerSim": null,
             "hash": "01343c0db38abfa517d9f91efc554c0891f5b4283f5e10617ad00c0d817da51e"
@@ -4876,7 +4904,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 7.533424,
             "speakerSim": null,
             "hash": "8defca354ec73a64e35a090f23f71f903f408bfaa49f4615105c55ce2f1c01cd"
@@ -4916,7 +4944,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/quote.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.395646,
             "speakerSim": null,
             "hash": "2425b0a4f699fd2e4c9af532e9e35068f561908fd8b994dc698985b6deff4830"
@@ -4924,7 +4952,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/quote.2.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.35093,
             "speakerSim": null,
             "hash": "890d470504d772df8faf7ed1ac01c39c15e314304ac4dcf12f0b9896a80ff5ad"
@@ -4942,7 +4970,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rem/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.626848,
             "speakerSim": null,
             "hash": "b14a768de75eafbcf6563aced810788f4146dbfc7a4d787430c40742370c0bea"
@@ -5059,7 +5087,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/taunt.mp3",
             "text": "（原檔）-9084295889143869978_Talk",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.58483,
             "speakerSim": null,
             "hash": "361ba4ee43c1e25be50bf370c22d953210d655984e0b515cf7a89f328e5f001c"
@@ -5067,7 +5095,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.301769,
             "speakerSim": null,
             "hash": "e225932269874b5c102dc784b33a769da9612e89f91e6c5445b9cdd83595a97c"
@@ -5077,7 +5105,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.577506,
             "speakerSim": null,
             "hash": "647d9e858001a31996164b3138ea492198a1ab12bed8c5397d2c03e3f4ca0498"
@@ -5087,7 +5115,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.243719,
             "speakerSim": null,
             "hash": "6bbe5795a0310af1f9ae2ef0e4f1ddf56f23147b2518bd017fce3af5db413531"
@@ -5097,7 +5125,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.171156,
             "speakerSim": null,
             "hash": "a455b7f52a4ecc69ce790df7b1db4c643d9110b5fa7eab97f526b42f2ca5305a"
@@ -5107,7 +5135,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.394649,
             "speakerSim": null,
             "hash": "533cb67832bab180ac79f74c2442f826cad6c28290ff53065911f5c5c9e55baa"
@@ -5115,7 +5143,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.139229,
             "speakerSim": null,
             "hash": "d6a9dcdee0f077985d4e6be3c45933f1d8b1659b2e8a8e5ec6330231167eaded"
@@ -5125,7 +5153,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.217596,
             "speakerSim": null,
             "hash": "b68cdff58a4edf38aef33b3ae9b78536c7948890acc9ed23ce0ab1e5f94a5076"
@@ -5135,7 +5163,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/hurt.mp3",
             "text": "（原檔）7442269018062653095_Pain",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.743039,
             "speakerSim": null,
             "hash": "69aab8cce9929dbd77c60b453f7031e0f79579af58a32b9952e82969e6d7dcbe"
@@ -5155,7 +5183,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/jump.mp3",
             "text": "（原檔）-7499555266119980768_Jump1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.18576,
             "speakerSim": null,
             "hash": "447e76890105bee586182928f77149e043939d3e2ce6884571cc5a76b268856b"
@@ -5175,7 +5203,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.998367,
             "speakerSim": null,
             "hash": "d812da1d05f09b633c0f55627b643088ccfa1124ea8fadcbc23ba6db37147103"
@@ -5183,7 +5211,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.650068,
             "speakerSim": null,
             "hash": "fc51ef9d3c2030c95ea0b7e39cb7ed34711107d59075afc5994cf291304be09e"
@@ -5191,7 +5219,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.906667,
             "speakerSim": null,
             "hash": "be27b2ecac2a7a730323d9d9edb8487a8b12b5165b54d81fc3686cc0f43412ff"
@@ -5201,7 +5229,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.301769,
             "speakerSim": null,
             "hash": "e225932269874b5c102dc784b33a769da9612e89f91e6c5445b9cdd83595a97c"
@@ -5261,7 +5289,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-rin/taunt.mp3",
             "text": "（原檔）-9084295889143869978_Talk",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.58483,
             "speakerSim": null,
             "hash": "361ba4ee43c1e25be50bf370c22d953210d655984e0b515cf7a89f328e5f001c"
@@ -5322,7 +5350,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/taunt.mp3",
             "text": "（原檔）fencer_select_04",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5330,7 +5358,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/respond.ok.mp3",
             "text": "（原檔）fencer_select_07",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5338,7 +5366,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/respond.no.mp3",
             "text": "（原檔）fencer_unselect_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.026327,
             "speakerSim": null,
             "hash": "b687e5b1942ab3d87ab444d227f280f746a8e6b6461ed74c03d587fdce8ef7be"
@@ -5346,7 +5374,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/thanks.mp3",
             "text": "（原檔）fencer_pick_up_gold_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.604512,
             "speakerSim": null,
             "hash": "d5ecccc6e8905ef2a96864df2ab3e8b8c717e104496465df2c3fc5da845cfb4b"
@@ -5354,7 +5382,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/puzzled.mp3",
             "text": "（原檔）fencer_select_08",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5364,7 +5392,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/block.mp3",
             "text": "（原檔）fencer_parry_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.572857,
             "speakerSim": null,
             "hash": "a32bb06fbc5277cb34c44770e5377c9e187acbf6e4f4745a6145f1f433c41dcf"
@@ -5374,7 +5402,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/defeat.mp3",
             "text": "（原檔）fencer_pain_death_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.224014,
             "speakerSim": null,
             "hash": "c285a4eb121b96ccb44c9ec44a670af989f63cb66106c5044bb0e47fc565bf6c"
@@ -5382,7 +5410,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/defeat.2.mp3",
             "text": "（原檔）fencer_pain_death_02",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.224014,
             "speakerSim": null,
             "hash": "c285a4eb121b96ccb44c9ec44a670af989f63cb66106c5044bb0e47fc565bf6c"
@@ -5390,7 +5418,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/defeat.3.mp3",
             "text": "（原檔）fencer_pain_death_03",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.224014,
             "speakerSim": null,
             "hash": "c285a4eb121b96ccb44c9ec44a670af989f63cb66106c5044bb0e47fc565bf6c"
@@ -5400,7 +5428,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/dodge.mp3",
             "text": "（原檔）fencer_effort_dash_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.908481,
             "speakerSim": null,
             "hash": "5d1b190b09b051331132eb4d46ef9e793d2e343748f5deb026b84af941778145"
@@ -5410,7 +5438,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/hurt.mp3",
             "text": "（原檔）fencer_pain_small_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.532857,
             "speakerSim": null,
             "hash": "c5454de027500a8ae693dab4035d8e5f6beb2621300069d03e8b5b6cc2b0b57a"
@@ -5418,7 +5446,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/hurt.2.mp3",
             "text": "（原檔）fencer_pain_small_02",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.833537,
             "speakerSim": null,
             "hash": "d804244a99a987b7050ee4c96be4ede615180178b2f9495851cf5af31380ebe6"
@@ -5428,7 +5456,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/hurt-heavy.mp3",
             "text": "（原檔）fencer_pain_big_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.481655,
             "speakerSim": null,
             "hash": "35ae9b429211ee357abd6847110eefc5c5be3b5efc0b71e24178f2e6a3a24c57"
@@ -5436,7 +5464,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/hurt-heavy.2.mp3",
             "text": "（原檔）fencer_pain_big_02",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.740816,
             "speakerSim": null,
             "hash": "14aed400ddae697146d42bb266da13ced4334009cbdd514cc5164f90b059a85c"
@@ -5446,7 +5474,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/kill-1.mp3",
             "text": "（原檔）fencer_kill_anyhero_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.604512,
             "speakerSim": null,
             "hash": "d5ecccc6e8905ef2a96864df2ab3e8b8c717e104496465df2c3fc5da845cfb4b"
@@ -5454,7 +5482,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/kill-1.2.mp3",
             "text": "（原檔）fencer_kill_anyhero_02",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.803878,
             "speakerSim": null,
             "hash": "54ca412fbb28e4535efae0464d4300edfc82d563fdbdb2a10603ed5b86ca546b"
@@ -5462,7 +5490,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/kill-1.3.mp3",
             "text": "（原檔）fencer_kill_anyhero_03",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.605329,
             "speakerSim": null,
             "hash": "9de82257ee8b1308557ccf8f4da6efafef7a44ed53c06cfe1683d883c792832d"
@@ -5472,7 +5500,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/kill-2.mp3",
             "text": "（原檔）fencer_kill_anyhero_07",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.40517,
             "speakerSim": null,
             "hash": "b5f634c55ec60a76cc0554b5680198c720de5564e8eea18c66b4f4b848efed96"
@@ -5482,7 +5510,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/kill-3.mp3",
             "text": "（原檔）fencer_kill_anyhero_08",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.347075,
             "speakerSim": null,
             "hash": "d52c65f760f5cd07a39c12baae6867bc496de72d6fcf94937283d39959a3a213"
@@ -5492,7 +5520,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/puzzled.mp3",
             "text": "（原檔）fencer_select_08",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5500,7 +5528,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/puzzled.2.mp3",
             "text": "（原檔）fencer_select_09",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5510,7 +5538,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/quote.mp3",
             "text": "（原檔）fencer_select_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5518,7 +5546,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/quote.2.mp3",
             "text": "（原檔）fencer_select_02",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5526,7 +5554,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/quote.3.mp3",
             "text": "（原檔）fencer_select_03",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5536,7 +5564,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/respond.no.mp3",
             "text": "（原檔）fencer_unselect_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.026327,
             "speakerSim": null,
             "hash": "b687e5b1942ab3d87ab444d227f280f746a8e6b6461ed74c03d587fdce8ef7be"
@@ -5546,7 +5574,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/respond.ok.mp3",
             "text": "（原檔）fencer_select_07",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5606,7 +5634,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/sprint.mp3",
             "text": "（原檔）fencer_effort_dash_02",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.511519,
             "speakerSim": null,
             "hash": "38958516c8f750a950956a3f1f96834c50263e57dc1dcdd9a0553f5b645034d9"
@@ -5616,7 +5644,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/taunt.mp3",
             "text": "（原檔）fencer_select_04",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5624,7 +5652,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/taunt.2.mp3",
             "text": "（原檔）fencer_select_05",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5632,7 +5660,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/taunt.3.mp3",
             "text": "（原檔）fencer_select_06",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.464512,
             "speakerSim": null,
             "hash": "e5f3b4059154a07d103be100d1b4ca402e9e4ffabdc016db14e789efccfb4a89"
@@ -5642,7 +5670,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/thanks.mp3",
             "text": "（原檔）fencer_pick_up_gold_01",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.604512,
             "speakerSim": null,
             "hash": "d5ecccc6e8905ef2a96864df2ab3e8b8c717e104496465df2c3fc5da845cfb4b"
@@ -5652,7 +5680,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/unstoppable.mp3",
             "text": "（原檔）fencer_revenge_kill",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.061043,
             "speakerSim": null,
             "hash": "5547debc2a5b95f622e6b6e40d25294f467df2ee0f6c0d0bf17229f1ed4f91c8"
@@ -5662,7 +5690,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/victory.mp3",
             "text": "（原檔）fencer_kill_anyhero_04",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.004036,
             "speakerSim": null,
             "hash": "200e6fe6e2927ce0728eba66c037e89362e35aa60d91f1edcdaaa395c53bd8cf"
@@ -5670,7 +5698,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/victory.2.mp3",
             "text": "（原檔）fencer_kill_anyhero_05",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.804694,
             "speakerSim": null,
             "hash": "987ab237e116d40f96d59b422115e143dd6c0ae713d256b21fa04ffbf4481dde"
@@ -5678,7 +5706,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-shadow/victory.3.mp3",
             "text": "（原檔）fencer_kill_anyhero_06",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.804694,
             "speakerSim": null,
             "hash": "2ad4cc35cb1c37b8428a32ea23d42c27a9efae50dd7cfe983e5f356321ef161c"
@@ -6764,7 +6792,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/taunt.mp3",
             "text": "（原檔）voice_to_267_0_2_3_4_5_6_12_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.823855,
             "speakerSim": null,
             "hash": "9aa2c9ebd15497ade995c0f088192cd6001d14d4dc9d3aebfe9c30adc2f4a238"
@@ -6772,7 +6800,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.056417,
             "speakerSim": null,
             "hash": "f6ba27519bbc7e81b2453c9432e9af71ebc715e5dc771e35d84a5c348c1996c3"
@@ -6782,7 +6810,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.182585,
             "speakerSim": null,
             "hash": "03500eb53be90d8a9847c5147401a02da12802a36175783681deae77775368f2"
@@ -6792,7 +6820,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.461406,
             "speakerSim": null,
             "hash": "9fecf17e6a66b0ce8f07171f8c6eb9c207b8b8d370cbcca20ea5d1dc463dd868"
@@ -6802,7 +6830,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.102857,
             "speakerSim": null,
             "hash": "6270aa6a2ee487663f2395aa965f73a744f52adcca342bd3b32111170476966e"
@@ -6812,7 +6840,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.063583,
             "speakerSim": null,
             "hash": "c37f8335c0260a14152e4e07acf1f3412a201a8df513d3f0770ff48292f54100"
@@ -6820,7 +6848,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.439546,
             "speakerSim": null,
             "hash": "e0f5d769e1b9e516ca4152c61351ba04cf946341fcf123de8220c9cae205284f"
@@ -6828,7 +6856,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/defeat.3.mp3",
             "text": "（原檔）voice_death_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.046349,
             "speakerSim": null,
             "hash": "cd1604fecd2d49e58e0298555da994c6e38345c99dfb63e0304aa670be4dbaad"
@@ -6838,7 +6866,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/free-move.mp3",
             "text": "（原檔）voice_move_10",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.735601,
             "speakerSim": null,
             "hash": "f2b9177c39e0a0b8baa7e8f874649f033e4d757d9b0581fcc6b9fe43364de0fa"
@@ -6858,7 +6886,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/hurt-heavy.mp3",
             "text": "（原檔）voice_hp30_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.634195,
             "speakerSim": null,
             "hash": "b441b145ec308efca2445f7bb93a36005c313c10c84641357a012d7c98d9b544"
@@ -6866,7 +6894,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/hurt-heavy.2.mp3",
             "text": "（原檔）voice_hp30_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.59356,
             "speakerSim": null,
             "hash": "222c7fe58e329c00f6189215445f6f1ef786bca6a167cd536e7a2f604e9e78e9"
@@ -6876,7 +6904,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/kill-1.mp3",
             "text": "（原檔）voice_3gamerkills_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.448435,
             "speakerSim": null,
             "hash": "cd7da15da2e557226e38e4f3a73dca79bd01acba111865287f5f8d1cb4f9e566"
@@ -6884,7 +6912,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/kill-1.2.mp3",
             "text": "（原檔）voice_3gamerkills_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.648707,
             "speakerSim": null,
             "hash": "8c8dca088a52c7e3b25037be779c43c7a2a30367c23870ff71000cfd21060e95"
@@ -6892,7 +6920,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/kill-1.3.mp3",
             "text": "（原檔）voice_3gamerkills_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.509388,
             "speakerSim": null,
             "hash": "2b7c569478f81535d19077c03c30632cb902b18f0a1be1ae0d7779e54dffc6f0"
@@ -6902,7 +6930,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.426213,
             "speakerSim": null,
             "hash": "86fadaeebdd3d7e2ac048b84f9f47b9c8f52cb39934566011744918fd4363848"
@@ -6910,7 +6938,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/quote.2.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.96898,
             "speakerSim": null,
             "hash": "7716cc1e505b297bcb992e528ad67a1739de34852dc2cd8af2dbe045ad6b517e"
@@ -6928,7 +6956,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.056417,
             "speakerSim": null,
             "hash": "f6ba27519bbc7e81b2453c9432e9af71ebc715e5dc771e35d84a5c348c1996c3"
@@ -6968,7 +6996,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/skill-name.r.mp3",
             "text": "（原檔）voice_q1_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.118912,
             "speakerSim": null,
             "hash": "09eddd3f90e5adc49098e8026613c38caccf692a5ca78cd4ee59732e6a26d2d0"
@@ -6988,7 +7016,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/taunt.mp3",
             "text": "（原檔）voice_to_267_0_2_3_4_5_6_12_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.823855,
             "speakerSim": null,
             "hash": "9aa2c9ebd15497ade995c0f088192cd6001d14d4dc9d3aebfe9c30adc2f4a238"
@@ -6996,7 +7024,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/taunt.2.mp3",
             "text": "（原檔）voice_to_267_0_2_3_4_5_6_12_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.411701,
             "speakerSim": null,
             "hash": "f171bc1bcd6bc4611716813a4a6b969d1992327006e06b1522ff4ccbd008dcac"
@@ -7004,7 +7032,7 @@
           {
             "clip": "assets/audio/voices/lines/b2-zenitsu/taunt.3.mp3",
             "text": "（原檔）voice_to_267_0_2_3_4_5_6_12_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.080998,
             "speakerSim": null,
             "hash": "6e4571d8b5589a689a45afe38b2e775d798359bb11e5a797518c102b663cc489"
@@ -7062,7 +7090,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/taunt.mp3",
             "text": "（原檔）chr0400_ActVoice#27",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.20678,
             "speakerSim": null,
             "hash": "31d20ab04206594ffe6d8a174f31abddd3f7c39554d940d20e5881b070154b26"
@@ -7070,7 +7098,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.54966,
             "speakerSim": null,
             "hash": "eb2741d802efcf784a4704221a8163896c11ebc2da20843e1a2c91d79c7702ca"
@@ -7080,7 +7108,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.011519,
             "speakerSim": null,
             "hash": "f7d1b4f890da7437b88b272d4abc4f42b1c4cf13418a9e0420e60c57c144e970"
@@ -7088,7 +7116,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/attack-heavy.2.mp3",
             "text": "（原檔）chr0400_ActVoice#36",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.188073,
             "speakerSim": null,
             "hash": "87c6515720e11c179a39de9a32de91b52e896bbfd307ff439c9f74d3a0068336"
@@ -7098,7 +7126,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.779138,
             "speakerSim": null,
             "hash": "4b4b6f8cdce94000cad487a3a1635255ed935daf5669913818b5b46c404a2049"
@@ -7106,7 +7134,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/attack-light.2.mp3",
             "text": "（原檔）chr0400_ActVoice#156",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.597392,
             "speakerSim": null,
             "hash": "b8b2c8d8215217b47cc918af9514a477b93396330b178137d30bc48748423f03"
@@ -7116,7 +7144,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.38576,
             "speakerSim": null,
             "hash": "1ee9eae6832af77b182540dd628204b6a3614c1a8c7b424dcf11dc116cd3e920"
@@ -7124,7 +7152,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.728254,
             "speakerSim": null,
             "hash": "f4783a7dd0024c4f9b912bef296dac5a6e248edd20fad1317e4ba82e94645ec9"
@@ -7132,7 +7160,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/defeat.3.mp3",
             "text": "（原檔）chr0400_ActVoice#3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.880068,
             "speakerSim": null,
             "hash": "f759bbe23456a259c511813ee213265c16ab1dc508ca66cae5e56b363daf7d48"
@@ -7142,7 +7170,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.021587,
             "speakerSim": null,
             "hash": "cba38bc4be60b41fd8ba6917d7401d4db2e132bad3b27aa9b536f283c8a72197"
@@ -7152,7 +7180,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/hurt.mp3",
             "text": "（原檔）chr0400_ActVoice#193",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.695374,
             "speakerSim": null,
             "hash": "3d25735556b29a0af948e404499cc85ef891b71fbad94edd7a41e7cb25de9dd1"
@@ -7160,7 +7188,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/hurt.2.mp3",
             "text": "（原檔）chr0400_ActVoice#57",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.694739,
             "speakerSim": null,
             "hash": "08cbb75fe20d51ca19dbfc4f24f91d035f94e4b1d2a05477b3dd0176bb15c0c1"
@@ -7170,7 +7198,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/hurt-heavy.mp3",
             "text": "（原檔）chr0400_ActVoice#212",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.278707,
             "speakerSim": null,
             "hash": "0ca40672ff9ccecffb1e5171eebb877bd4cc1a723e40b233318784563f738bd5"
@@ -7178,7 +7206,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）chr0400_ActVoice#73",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.217392,
             "speakerSim": null,
             "hash": "00bd24d5b5bde51580911004aa53d86231f09c2495af4542fcf700451e44c817"
@@ -7188,7 +7216,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/jump.mp3",
             "text": "（原檔）chr0400_ActVoice#60",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.593401,
             "speakerSim": null,
             "hash": "359d53a5b8cd519e2538b2e75833864b0bb0726c14441c4469cdab87f5444a9f"
@@ -7198,7 +7226,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/kill-1.mp3",
             "text": "（原檔）chr0400_ActVoice#196",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.092041,
             "speakerSim": null,
             "hash": "9e15d26734dc2dddaf3b8961b80116bf284d081766b11a7909c593689e1e4583"
@@ -7206,7 +7234,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/kill-1.2.mp3",
             "text": "（原檔）chr0400_ActVoice#89",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.512744,
             "speakerSim": null,
             "hash": "305af7fe185d8fea8a8f7134240adc6efb2a6d96da7f24acc57dec770fae3e17"
@@ -7216,7 +7244,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.22322,
             "speakerSim": null,
             "hash": "e94077a174c1d2a4b3a1625195edebdc2831892a3b1d1e525ed8d30f95512a25"
@@ -7224,7 +7252,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/quote.2.mp3",
             "text": "（原檔）chr0400_ActVoice#7",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.873401,
             "speakerSim": null,
             "hash": "79601f991e02ac063c436d06b9c6687888d8e8d1d1d9bd9a88dca0bb1771fc40"
@@ -7232,7 +7260,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/quote.3.mp3",
             "text": "（原檔）chr0400_ActVoice#16",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.938209,
             "speakerSim": null,
             "hash": "045833678805a3da9f8895ef89e02359ffc141a9418c66b6789c848d5014ddca"
@@ -7242,7 +7270,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.54966,
             "speakerSim": null,
             "hash": "eb2741d802efcf784a4704221a8163896c11ebc2da20843e1a2c91d79c7702ca"
@@ -7282,7 +7310,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/skill-name.r.mp3",
             "text": "（原檔）chr0400_ActVoice#112",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.946077,
             "speakerSim": null,
             "hash": "d1eb0708c04e4fbe89246667e71abb162f9b9a3d6aa7bc37d69b5a69d3083e73"
@@ -7302,7 +7330,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/taunt.mp3",
             "text": "（原檔）chr0400_ActVoice#27",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.20678,
             "speakerSim": null,
             "hash": "31d20ab04206594ffe6d8a174f31abddd3f7c39554d940d20e5881b070154b26"
@@ -7310,7 +7338,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/taunt.2.mp3",
             "text": "（原檔）chr0400_ActVoice#200",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.90805,
             "speakerSim": null,
             "hash": "e335b32056020633ffbb85691e778e7ab0eb54c0d525575f1e776343d933ffe3"
@@ -7318,7 +7346,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/taunt.3.mp3",
             "text": "（原檔）chr0400_ActVoice#206",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.792721,
             "speakerSim": null,
             "hash": "82735f5ee19aa21290e8f1c1d7bffe8f538490120c22423bca11c6415aca4e8d"
@@ -7328,7 +7356,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/victory.mp3",
             "text": "（原檔）chr0400_ActVoice#203",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.352358,
             "speakerSim": null,
             "hash": "fceaac3c000b9fb345947a343fcc36fe7cf065952a7f0fb182d92f0a4f9272e4"
@@ -7336,7 +7364,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/victory.2.mp3",
             "text": "（原檔）chr0400_ActVoice#15",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.676485,
             "speakerSim": null,
             "hash": "5eb6819201f0536eb4683044e17786d8f30e36761ed9322e332592c940d3129b"
@@ -7344,7 +7372,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-01-20260907/victory.3.mp3",
             "text": "（原檔）chr0400_ActVoice#8",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.672744,
             "speakerSim": null,
             "hash": "80120ea77956d9c5725ccd57a76f8757c743c31669a3219acc8f68363110c772"
@@ -7394,7 +7422,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/taunt.mp3",
             "text": "（原檔）749155776",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.864014,
             "speakerSim": null,
             "hash": "2c1a93557cd1ca5eed861cb62d2624753cdf527b79426ba67f856897233afb78"
@@ -7404,7 +7432,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/attack-heavy.mp3",
             "text": "（原檔）121001225",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.986667,
             "speakerSim": null,
             "hash": "b545befac1b54a03d232340a55319976545ebfb8158daa1fe6ca59030a5540c3"
@@ -7414,7 +7442,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/attack-light.mp3",
             "text": "（原檔）389953878",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.593333,
             "speakerSim": null,
             "hash": "3afd75cd497f842fbd9d7fcb2b5b2621bec752720b15330de50e857420765e87"
@@ -7434,7 +7462,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/hurt.mp3",
             "text": "（原檔）765506492",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.686667,
             "speakerSim": null,
             "hash": "98c758251e10ee563a019197c0d728c8275905b2b757b7b41730982a69877893"
@@ -7442,7 +7470,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/hurt.2.mp3",
             "text": "（原檔）367884088",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.680249,
             "speakerSim": null,
             "hash": "de0e03d5d871984778463f8379eb1ff22c389a5d3dee99131aacd8c26fef3710"
@@ -7452,7 +7480,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/hurt-heavy.mp3",
             "text": "（原檔）764957318",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.291995,
             "speakerSim": null,
             "hash": "d226c70a3c046b2de6a5722d7eb193cc78df067648a122a4af83a10aa82727b2"
@@ -7460,7 +7488,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）33338552",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.124331,
             "speakerSim": null,
             "hash": "8f26628fcae3ab4bead4804374a7d82fb09660dea2d329513d9c290e9be0bbf5"
@@ -7470,7 +7498,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/jump.mp3",
             "text": "（原檔）462137703",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.59068,
             "speakerSim": null,
             "hash": "e01e1cd995d6ef6c794e3047bf5eabc38005aff8c8b0774d5ca686e2a7a8a12b"
@@ -7480,7 +7508,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/kill-1.mp3",
             "text": "（原檔）677800579",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.448005,
             "speakerSim": null,
             "hash": "1efbf57c7e4ac888e6b6ead9fe370c03bdd0fcc5c72f777a83611a38b1c36560"
@@ -7488,7 +7516,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/kill-1.2.mp3",
             "text": "（原檔）1070713993",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.231995,
             "speakerSim": null,
             "hash": "ef30faa7bd8d0710ed2b377782404f469306548182b702883ce4c1dda1fb24e4"
@@ -7496,7 +7524,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/kill-1.3.mp3",
             "text": "（原檔）544589971",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.929342,
             "speakerSim": null,
             "hash": "3130263b0e6704370ec216e70bfb3e67a9580015a40297d644ddbbcc1caf2901"
@@ -7506,7 +7534,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/quote.mp3",
             "text": "（原檔）1003448717",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.973333,
             "speakerSim": null,
             "hash": "2bd02249e4f425e2c8db7c7fedd85085f529e82ef4c67c45abe313b93afc5149"
@@ -7514,7 +7542,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/quote.2.mp3",
             "text": "（原檔）383133743",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.371995,
             "speakerSim": null,
             "hash": "4a5076823174080515ef198fb1bf5c3f85df1d38f7c520e785dcc75c237f2be5"
@@ -7522,7 +7550,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/quote.3.mp3",
             "text": "（原檔）85163673",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.173333,
             "speakerSim": null,
             "hash": "3d6a8804b7c5ac654e1c95159045f133db646a67d757bd11bf56aa15bf23ed73"
@@ -7582,7 +7610,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/taunt.mp3",
             "text": "（原檔）749155776",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.864014,
             "speakerSim": null,
             "hash": "2c1a93557cd1ca5eed861cb62d2624753cdf527b79426ba67f856897233afb78"
@@ -7590,7 +7618,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/taunt.2.mp3",
             "text": "（原檔）48520949",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.28,
             "speakerSim": null,
             "hash": "9919428b7465b285293716cb20f55a002dab4e1fd516362b5a85b88f9e317daa"
@@ -7598,7 +7626,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-02-20260907/taunt.3.mp3",
             "text": "（原檔）883136331",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.28,
             "speakerSim": null,
             "hash": "10e2304165b1550837e961907168fead55a36637d407af6eba9f3ba0df3a926e"
@@ -7658,7 +7686,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/taunt.mp3",
             "text": "（原檔）v_022_mai_v_c_004",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.394286,
             "speakerSim": null,
             "hash": "c6eb2355ea5255811c3dd2bb8aebc7d27a0a1bad635ffb17e61dac0da1bf443b"
@@ -7668,7 +7696,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/attack-heavy.mp3",
             "text": "（原檔）v_022_mai_303_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.730431,
             "speakerSim": null,
             "hash": "78bda2613ee61dd7f49a6fb0ce1b05cb4e90e1a928c03648dac274dec788a54c"
@@ -7676,7 +7704,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/attack-heavy.2.mp3",
             "text": "（原檔）34533024",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.885329,
             "speakerSim": null,
             "hash": "148aad64141e493c46bbac4bb31adc72d7938853070c74d16e930b5d1e7fa6c8"
@@ -7686,7 +7714,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/attack-light.mp3",
             "text": "（原檔）v_022_mai_008_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.563129,
             "speakerSim": null,
             "hash": "9b974e56d0b2d7ef66042edf94d680c947b57cfd6d55afe9a8d845131dc2450c"
@@ -7694,7 +7722,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/attack-light.2.mp3",
             "text": "（原檔）259793242",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.594671,
             "speakerSim": null,
             "hash": "c59f01b9219181f122ba773047b8a5cd34b1e2bacd8b77190713228c74f58b02"
@@ -7704,7 +7732,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/defeat.mp3",
             "text": "（原檔）v_022_mai_v_011",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.192744,
             "speakerSim": null,
             "hash": "e7810517dc6ffeb6d1e48f4d4055a5ca19706b3d84721e623a50996a11e84563"
@@ -7712,7 +7740,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/defeat.2.mp3",
             "text": "（原檔）v_022_mai_v_c_016",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.761927,
             "speakerSim": null,
             "hash": "ca83c89f418a91e27175e6438dba1a72325ffc702c492ea120990644b47f2adc"
@@ -7720,7 +7748,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/defeat.3.mp3",
             "text": "（原檔）v_022_mai_v_c_008",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.588685,
             "speakerSim": null,
             "hash": "1eaa1430ab90a42717b56b4bf6dcd0fd7ecbf0761b78cc6e4062ca197f35103b"
@@ -7730,7 +7758,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/hurt.mp3",
             "text": "（原檔）v_022_mai_503_4",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.57576,
             "speakerSim": null,
             "hash": "9476d8802d15f0169e43393a3d4cf48ddc67682fa38c4f071a98def9ede7680f"
@@ -7738,7 +7766,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/hurt.2.mp3",
             "text": "（原檔）1_mai_106_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.573628,
             "speakerSim": null,
             "hash": "219693e56842a0c292e94f25c3bad445b20f3ee51bde75d928566aacb4a67f5e"
@@ -7746,7 +7774,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/hurt.3.mp3",
             "text": "（原檔）1557046",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.686667,
             "speakerSim": null,
             "hash": "81d5d083e137adfbfa7224364641ee16cbf4141ce101353ae3d0d80d5774d26e"
@@ -7756,7 +7784,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/hurt-heavy.mp3",
             "text": "（原檔）v_022_mai_503_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.168753,
             "speakerSim": null,
             "hash": "38d8394f40f3aaf7eca8e5244a04866fa87bd946c8d59ba062d9200bfb573c68"
@@ -7764,7 +7792,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）v_022_mai_502_2_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.047619,
             "speakerSim": null,
             "hash": "49e9daa6658ab2d4aa86b00205d3ec21d02bfda8a18c1e72b3064b3eb9e0b173"
@@ -7772,7 +7800,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/hurt-heavy.3.mp3",
             "text": "（原檔）885595326",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.009342,
             "speakerSim": null,
             "hash": "677bef1851c727e216d0427a1f8456c8f35b0c0842ad7515b2297fd46f71ba50"
@@ -7782,7 +7810,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/jump.mp3",
             "text": "（原檔）v_022_mai_403_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.515624,
             "speakerSim": null,
             "hash": "f47a3919d4f1d4ef1d835132380e567552291ebafbf9160cb9c3867227d2dd95"
@@ -7790,7 +7818,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/jump.2.mp3",
             "text": "（原檔）896468988",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.556009,
             "speakerSim": null,
             "hash": "f79d5e80131b87c0acd2d0fca90ef26639ccd43c5783a569e9f42f94df588857"
@@ -7800,7 +7828,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/kill-1.mp3",
             "text": "（原檔）v_022_mai_v_c_018",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.191701,
             "speakerSim": null,
             "hash": "c2027c94e87b13810abc074c8f60bff64a21035454db126d8caccfaff9f62db5"
@@ -7810,7 +7838,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/quote.mp3",
             "text": "（原檔）v_022_mai_v_002",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.999841,
             "speakerSim": null,
             "hash": "b369a226613db3df7a9691644723be6122877b71582e963f68772d214c77d341"
@@ -7818,7 +7846,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/quote.2.mp3",
             "text": "（原檔）v_022_mai_v_005",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.463469,
             "speakerSim": null,
             "hash": "0d7adab47cb5b50eb98c249db88a940e470f2be362d264d5d7b745d4b552e655"
@@ -7826,7 +7854,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/quote.3.mp3",
             "text": "（原檔）v_022_mai_v_003",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.422698,
             "speakerSim": null,
             "hash": "6a200ac00238f140f94d2f8e39b62ea787f0e8c195f904b093ec01b9fd873b0d"
@@ -7846,7 +7874,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.ex.mp3",
             "text": "（原檔）v_022_mai_502_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.901769,
             "speakerSim": null,
             "hash": "cebfeb6ec5526a086f97f82e2a5b4e0adf232935e66a8a2a1a74bdf09b02733a"
@@ -7854,7 +7882,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.ex.2.mp3",
             "text": "（原檔）579986331",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.911995,
             "speakerSim": null,
             "hash": "233ffe4f3e07f31fa94c458d49c1c1ad1f20d0b8f489753476362376c477014f"
@@ -7864,7 +7892,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.q.mp3",
             "text": "（原檔）v_022_mai_402_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.626689,
             "speakerSim": null,
             "hash": "82250507b4f0e86f502e85f93a00bada0d41f2ad36761f1487e8b4807cd036a4"
@@ -7872,7 +7900,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.q.2.mp3",
             "text": "（原檔）984670352",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.709342,
             "speakerSim": null,
             "hash": "53115306c466ac16dbaa8465c63e3fda4980810f8349d054bb6ceebb4d452c42"
@@ -7882,7 +7910,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.r.mp3",
             "text": "（原檔）v_022_mai_501_1_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.611905,
             "speakerSim": null,
             "hash": "c9c5824b1782205e4f2bad711c8c86cf1b2412e848c5383eb1b57577cc128eb1"
@@ -7890,7 +7918,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.r.2.mp3",
             "text": "（原檔）v_022_mai_501_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.885442,
             "speakerSim": null,
             "hash": "068cc3fc6b612b3fdb6373f155bc9986647c8f1ea983611baaa40c4e21d601eb"
@@ -7900,7 +7928,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/skill-name.w.mp3",
             "text": "（原檔）v_022_mai_401_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.669093,
             "speakerSim": null,
             "hash": "40f9810d728775fc8c4b1301ca3b57b18e8f3b9053a7470a412136c039956fdc"
@@ -7910,7 +7938,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/taunt.mp3",
             "text": "（原檔）v_022_mai_v_c_004",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.394286,
             "speakerSim": null,
             "hash": "c6eb2355ea5255811c3dd2bb8aebc7d27a0a1bad635ffb17e61dac0da1bf443b"
@@ -7918,7 +7946,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/taunt.2.mp3",
             "text": "（原檔）v_022_mai_v_012",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.341247,
             "speakerSim": null,
             "hash": "d3b27d5cbd63b938a6679a0437dd6fb9b7555c32be843bb84344d22f22bf2a61"
@@ -7926,7 +7954,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/taunt.3.mp3",
             "text": "（原檔）v_022_mai_v_020",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.232948,
             "speakerSim": null,
             "hash": "a8a05ac5f7bb0f87cd4f272de84c4b23d61699834fc146f207151c3630e80e9c"
@@ -7936,7 +7964,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/victory.mp3",
             "text": "（原檔）v_022_mai_v_013",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.163084,
             "speakerSim": null,
             "hash": "056279c13781ae546f6322c3398e21f2e407eafeadfa5e10344c0cbd2cae2e82"
@@ -7944,7 +7972,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/victory.2.mp3",
             "text": "（原檔）v_022_mai_v_009",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.459592,
             "speakerSim": null,
             "hash": "b1656d8d02637fad9d9ad3803dfe88ea3d65a6fdf6259dc6d84ef3141e3e4b36"
@@ -7952,7 +7980,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-03-20260907/victory.3.mp3",
             "text": "（原檔）v_022_mai_108_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.257642,
             "speakerSim": null,
             "hash": "0437c20d9745d1398eeb74614372100f469e4f84e70917dd9515e832611ed1bd"
@@ -8000,7 +8028,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/taunt.mp3",
             "text": "（原檔）voice_to_270_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.623764,
             "speakerSim": null,
             "hash": "b96eafe692b363a3a0070ef005db7601e3f04569a001a2062a6dee19d82cd7d0"
@@ -8008,7 +8036,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.628027,
             "speakerSim": null,
             "hash": "a4d8419357d331eb47ddfe4480737696cd75336e2137777058c84688d479d2c4"
@@ -8018,7 +8046,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.786485,
             "speakerSim": null,
             "hash": "36b24cf3c1e21bcce4145a2f1f702ba62dba682a063ed10e6df55757f0022b47"
@@ -8026,7 +8054,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/attack-heavy.2.mp3",
             "text": "（原檔）chr0340_ActVoice#71",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.180113,
             "speakerSim": null,
             "hash": "7583493f59517bf643f2a04457a58db35517a7fb961d84ae4bdae02277607b5e"
@@ -8036,7 +8064,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.365261,
             "speakerSim": null,
             "hash": "062dfda86f1c7734f9d59cbba3e1a1c9ba91a2430e6539df6cc7e94bf7639225"
@@ -8044,7 +8072,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/attack-light.2.mp3",
             "text": "（原檔）chr0340_ActVoice#177",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.589138,
             "speakerSim": null,
             "hash": "4d62937fc1ffe1faf0605ecce50b110c0e55b1e9cb332aa01133460a73fee1b1"
@@ -8054,7 +8082,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.404717,
             "speakerSim": null,
             "hash": "ccbe66d39ad804cb814038aac543f7d5be6f52b87ffd66c4d74ade96b3569fef"
@@ -8062,7 +8090,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.503401,
             "speakerSim": null,
             "hash": "8a00fb32482cbfa75e99d3d36dcd7fa7bb5d52b6b265d02a2fc344f2b71043a9"
@@ -8072,7 +8100,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.850159,
             "speakerSim": null,
             "hash": "d766b82fb152f0a0351961ea895d436dff33996c144a9dd092c8b9ceb79329a5"
@@ -8082,7 +8110,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/hurt.mp3",
             "text": "（原檔）chr0340_ActVoice#64",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.693537,
             "speakerSim": null,
             "hash": "67d88c3e375bf57d62e6429b10c74ab16425776d788bf95f0695df028ea6e37e"
@@ -8090,7 +8118,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/hurt.2.mp3",
             "text": "（原檔）chr0340_ActVoice#192",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.689093,
             "speakerSim": null,
             "hash": "7fe52a77eee0e290241b5531d7710f093e20366fb68d598eae7a0a3e685d09ab"
@@ -8100,7 +8128,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/hurt-heavy.mp3",
             "text": "（原檔）chr0340_ActVoice#68",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.227415,
             "speakerSim": null,
             "hash": "eecece1fda6b4a9581a43aa899898bc413e92be7ae1d23f54a736cb99c2371ff"
@@ -8108,7 +8136,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）chr0340_ActVoice#35",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.18898,
             "speakerSim": null,
             "hash": "8f3287250dd1bc5367514db19843ed3ff836c42ccda0eeed3e229da490786a3a"
@@ -8118,7 +8146,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/jump.mp3",
             "text": "（原檔）chr0340_ActVoice#128",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.584014,
             "speakerSim": null,
             "hash": "18ee85cd7290b977eb8a3494d27b8aa54d06dd825f8ac45f8eaee1d3971fd273"
@@ -8128,7 +8156,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/kill-1.mp3",
             "text": "（原檔）voice_kill_255_1_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.670023,
             "speakerSim": null,
             "hash": "d7d92d46870c89528d3db672960bf4443e7751c596ce4cd1e414aa1300a99151"
@@ -8136,7 +8164,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/kill-1.2.mp3",
             "text": "（原檔）chr0340_ActVoice#141",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.227234,
             "speakerSim": null,
             "hash": "fec3e7f017bab86628109b40f014cff9dca625e2d0792c62e78af3f7a3200aeb"
@@ -8146,7 +8174,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.388844,
             "speakerSim": null,
             "hash": "cbf7ad39d6d967fb1f312b88d5b70810a857f1d34c4b4c482b6b4b2b45184270"
@@ -8154,7 +8182,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.005533,
             "speakerSim": null,
             "hash": "88019e03b7b5b26598ecc6c1244d6f13ac365696d54d25ea77f8199eaf5a7756"
@@ -8162,7 +8190,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.841633,
             "speakerSim": null,
             "hash": "49c0b10d73b87a7d3e627c3c81abcd7f63f160369e56c5353e2886ffef98bb5e"
@@ -8172,7 +8200,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.628027,
             "speakerSim": null,
             "hash": "a4d8419357d331eb47ddfe4480737696cd75336e2137777058c84688d479d2c4"
@@ -8232,7 +8260,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/taunt.mp3",
             "text": "（原檔）voice_to_270_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.623764,
             "speakerSim": null,
             "hash": "b96eafe692b363a3a0070ef005db7601e3f04569a001a2062a6dee19d82cd7d0"
@@ -8240,7 +8268,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/taunt.2.mp3",
             "text": "（原檔）chr0340_ActVoice#6",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.910907,
             "speakerSim": null,
             "hash": "c34e16358f87321509581f93c69aecaff39418aeccc2c20bb7e9dc2a9db6004d"
@@ -8248,7 +8276,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-04-20260907/taunt.3.mp3",
             "text": "（原檔）chr0340_ActVoice#200",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.899615,
             "speakerSim": null,
             "hash": "2e6240a758496b7d52bf064aa48ea6bd6ff0578611a0835b55bb48826df1e95a"
@@ -8480,7 +8508,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/taunt.mp3",
             "text": "（原檔）voice/kirby1c.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.008254,
             "speakerSim": null,
             "hash": "7363a886f93a25bf8683c1a157c88d95a56bb18bc441594378880e82cca346dd"
@@ -8488,7 +8516,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/puzzled.mp3",
             "text": "（原檔）voice/kirby2f.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.112766,
             "speakerSim": null,
             "hash": "d65899a7a187b0778ef8647ecc27dd029a802ba3ae98eb66165d243b160fd309"
@@ -8498,7 +8526,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/attack-heavy.mp3",
             "text": "（原檔）voice/kirby32.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.508254,
             "speakerSim": null,
             "hash": "2fdd29954f4a7e98772e0ff118e9709d4ec0f014cadd554779657f9b73aaeb61"
@@ -8508,7 +8536,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/attack-light.mp3",
             "text": "（原檔）voice/kirby31.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.748277,
             "speakerSim": null,
             "hash": "fe42ce3ae7543a1f59fa80f6ec4e7978eadf5c74785d5f3d63e50ddbc87f1cfe"
@@ -8518,7 +8546,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/defeat.mp3",
             "text": "（原檔）voice/kirby2c.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.999909,
             "speakerSim": null,
             "hash": "879311ab7c717f71d5f8ee5dc9937e0354d292f1fee64c1b4c9275be243b43a8"
@@ -8526,7 +8554,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/defeat.2.mp3",
             "text": "（原檔）voice/kirby2d.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.959955,
             "speakerSim": null,
             "hash": "62b678e809e86590a998302fde15dc1495576ad881bdf6706fb284b1b722019a"
@@ -8534,7 +8562,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/defeat.3.mp3",
             "text": "（原檔）voice/kirby2e.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.416599,
             "speakerSim": null,
             "hash": "23ff4d1175a694a08d11fd1823f6ab8efef452d8a07c6932f6067519a0b11b66"
@@ -8544,7 +8572,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/hurt.mp3",
             "text": "（原檔）voice/kirby27.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.701565,
             "speakerSim": null,
             "hash": "bfef95ca77ead38527e02215e342286f5fa89e2bfba50c18f2d1ccb0d7fed82a"
@@ -8552,7 +8580,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/hurt.2.mp3",
             "text": "（原檔）voice/kirby28.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.626599,
             "speakerSim": null,
             "hash": "32947a84514be21cbcf83c3983fb759c5cba1d3250a7be5cd1191e0d8c221183"
@@ -8562,7 +8590,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/hurt-heavy.mp3",
             "text": "（原檔）voice/kirby2a.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.288277,
             "speakerSim": null,
             "hash": "f219003fab45d23ff7c721099fed0ec5ae87960e7d39bb0a40568235faf1c4b1"
@@ -8570,7 +8598,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）voice/kirby2b.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.675533,
             "speakerSim": null,
             "hash": "8f0315ce3e239f0519e84147c160ed82d17d00c789fb5e7df99fd3655d43e6b2"
@@ -8580,7 +8608,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/jump.mp3",
             "text": "（原檔）voice/kirby33.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.46161,
             "speakerSim": null,
             "hash": "92a4351d36b77f28abb98d824d6243626c29a5f31154fdecbe0ec87cb576cc22"
@@ -8590,7 +8618,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/kill-1.mp3",
             "text": "（原檔）voice/kirby19.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.713265,
             "speakerSim": null,
             "hash": "ba80b38ec3c8d640a3a188e6e83a121aba5c436d4a2f4cd591bb51bd65127983"
@@ -8598,7 +8626,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/kill-1.2.mp3",
             "text": "（原檔）voice/kirby1a.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.434218,
             "speakerSim": null,
             "hash": "44478c7e3d83fde19155478961ce551e27f3c11d858e19a38fed42f20cb773b8"
@@ -8606,7 +8634,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/kill-1.3.mp3",
             "text": "（原檔）voice/kirby1b.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.009955,
             "speakerSim": null,
             "hash": "620b42d4a80180e684cd769ab941a7213173fdeb8655ac6e92ba6cfafc7a99c9"
@@ -8616,7 +8644,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/puzzled.mp3",
             "text": "（原檔）voice/kirby2f.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.112766,
             "speakerSim": null,
             "hash": "d65899a7a187b0778ef8647ecc27dd029a802ba3ae98eb66165d243b160fd309"
@@ -8624,7 +8652,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/puzzled.2.mp3",
             "text": "（原檔）voice/kirby30.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.376576,
             "speakerSim": null,
             "hash": "a1895b2a3ea28d29e8ef4c47232a426db6ea04cc38cecddecac88569d156dce5"
@@ -8634,7 +8662,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/quote.mp3",
             "text": "（原檔）voice/kirby20.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.828481,
             "speakerSim": null,
             "hash": "faf326a53776fe5b2fe840378049f1a219e81c1d3e5ea536f2069d43f4badb9e"
@@ -8642,7 +8670,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/quote.2.mp3",
             "text": "（原檔）voice/kirby21.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.348277,
             "speakerSim": null,
             "hash": "b6d6e7d95102143b15695a86846b690d8b242adc91251c7be464b2c7b9d3a8a5"
@@ -8650,7 +8678,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/quote.3.mp3",
             "text": "（原檔）voice/kirby22.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.751565,
             "speakerSim": null,
             "hash": "d1d5268340e2870ef8dbfc18503512f77241fcc7bc8f6e255d1989dd9609960c"
@@ -8660,7 +8688,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.e.mp3",
             "text": "（原檔）voice/kirby0a.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.968254,
             "speakerSim": null,
             "hash": "09e8df51cc8a811094e2674d2e1a26449b9678ce8912e6b22239036fadf0f355"
@@ -8668,7 +8696,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.e.2.mp3",
             "text": "（原檔）voice/kirby12.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.436621,
             "speakerSim": null,
             "hash": "4f91225b68061445178e74652c7759b7a32130e89d57f02367c2077c4ee40c2f"
@@ -8678,7 +8706,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.ex.mp3",
             "text": "（原檔）voice/kirby16.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.39322,
             "speakerSim": null,
             "hash": "ec686bfd20f31170e802442ce70e93e80fecdbd9a4649c0b392b9825673e8666"
@@ -8686,7 +8714,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.ex.2.mp3",
             "text": "（原檔）voice/kirby17.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.34322,
             "speakerSim": null,
             "hash": "ab00f817c41bcc459f410905cf20e051d989e6ebb0e444cf1c8e6bddd0a7034b"
@@ -8696,7 +8724,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.q.mp3",
             "text": "（原檔）voice/kirby00.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.16263,
             "speakerSim": null,
             "hash": "51062f038d791d2e60b2b3c5040b970aa14d35be70830b3eae7b23546a07c87a"
@@ -8704,7 +8732,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.q.2.mp3",
             "text": "（原檔）voice/kirby02.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.378254,
             "speakerSim": null,
             "hash": "718cad68d4f569fda9ade021ceec6ba5744f8c152fc312822e04068903400334"
@@ -8714,7 +8742,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.r.mp3",
             "text": "（原檔）voice/kirby13.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.954195,
             "speakerSim": null,
             "hash": "257e20e33d8289c1fe20fa89598b92873b1ef1cffe85929bc2062db66d8d805a"
@@ -8722,7 +8750,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.r.2.mp3",
             "text": "（原檔）voice/kirby14.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.282789,
             "speakerSim": null,
             "hash": "0e1cdf24db541c8df371536d45b26f24f9887f2801815a8fda6a96870d260b43"
@@ -8732,7 +8760,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.w.mp3",
             "text": "（原檔）voice/kirby04.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.454921,
             "speakerSim": null,
             "hash": "d220c1f2d41e952cfeeac329ad230903ca8c9d8d1978eeda3b5dd98f9ce3b13d"
@@ -8740,7 +8768,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/skill-name.w.2.mp3",
             "text": "（原檔）voice/kirby07.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.399955,
             "speakerSim": null,
             "hash": "6e2a54b34de30f51d895ae0a26805181120624bee0b7864fac6217a83240fb2d"
@@ -8750,7 +8778,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/taunt.mp3",
             "text": "（原檔）voice/kirby1c.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.008254,
             "speakerSim": null,
             "hash": "7363a886f93a25bf8683c1a157c88d95a56bb18bc441594378880e82cca346dd"
@@ -8758,7 +8786,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/taunt.2.mp3",
             "text": "（原檔）voice/kirby1d.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.810862,
             "speakerSim": null,
             "hash": "21b17a42dce292584154567827e5ffb36e6e997dea8a6aa5ad00b90c2b877cd0"
@@ -8766,7 +8794,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/taunt.3.mp3",
             "text": "（原檔）voice/kirby1e.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.72161,
             "speakerSim": null,
             "hash": "8441fc66e2c8c3d338b30473f9359f766780b129170e3c7b061695db49ab0900"
@@ -8776,7 +8804,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/victory.mp3",
             "text": "（原檔）voice/kirby23.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.701565,
             "speakerSim": null,
             "hash": "20751c1a45e56d3e83261540ed10dadb5235ab60c5fb8b8f8be0d6fcf83df282"
@@ -8784,7 +8812,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/victory.2.mp3",
             "text": "（原檔）voice/kirby24.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.133265,
             "speakerSim": null,
             "hash": "e76e0fa8605b269b24d98a1af29633c2ba4f43be871df08d5d4fff22065acc0e"
@@ -8792,7 +8820,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-06-20260907/victory.3.mp3",
             "text": "（原檔）voice/kirby25.dsp",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.16161,
             "speakerSim": null,
             "hash": "75e07b9c5eeab9af7f5cd94782c3984d4559ba1814d9df9cea2ea14844650d6b"
@@ -8842,7 +8870,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/taunt.mp3",
             "text": "（原檔）chr0330_ActVoice#202",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.321769,
             "speakerSim": null,
             "hash": "148e801257dfb3923d6fa5941902d5e988f5ad4ee98bd8d679e1f644f4cac691"
@@ -8852,7 +8880,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/attack-heavy.mp3",
             "text": "（原檔）chr0330_ActVoice#54",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.195782,
             "speakerSim": null,
             "hash": "067a24f29eeb4edbcefa43bc78908f6d70b4e96e520f64037ef251d8974ac542"
@@ -8862,7 +8890,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/attack-light.mp3",
             "text": "（原檔）chr0330_ActVoice#155",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.592109,
             "speakerSim": null,
             "hash": "df2f40652f4aff428eeb12a8a52caf7b5e35e0dc1967cb8c8fc772ae2b09ab19"
@@ -8872,7 +8900,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/defeat.mp3",
             "text": "（原檔）chr0330_ActVoice#21",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.41941,
             "speakerSim": null,
             "hash": "649c1db702034186ffcef85ceb517e0129465174920c6818f4e2f1f46bd63167"
@@ -8882,7 +8910,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/hurt.mp3",
             "text": "（原檔）chr0330_ActVoice#162",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.675533,
             "speakerSim": null,
             "hash": "27f66e7a1a4c56956e1c99e1f070587af1319251cbd7edae33d20efb4042a078"
@@ -8890,7 +8918,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/hurt.2.mp3",
             "text": "（原檔）chr0330_ActVoice#60",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.66,
             "speakerSim": null,
             "hash": "d905fcf86df7b23aca9079be59567cf38f38293abf4a72eba19fe0f34068fdd1"
@@ -8900,7 +8928,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/hurt-heavy.mp3",
             "text": "（原檔）chr0330_ActVoice#173",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.285102,
             "speakerSim": null,
             "hash": "bdc1f70b67f55bc9504c61d61e69eda48f2476dcf221d57480067849a952db8b"
@@ -8908,7 +8936,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）chr0330_ActVoice#172",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.24195,
             "speakerSim": null,
             "hash": "35948cf183221bb17073138ac2abdf99f4516379645d5b6f7828a4a935a48465"
@@ -8918,7 +8946,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/jump.mp3",
             "text": "（原檔）chr0330_ActVoice#159",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.585102,
             "speakerSim": null,
             "hash": "74781226dc31b08dc4f038de2a58a82035d511ecda7e09deb936eb6ed040af6b"
@@ -8928,7 +8956,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/kill-1.mp3",
             "text": "（原檔）chr0330_ActVoice#78",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.5361,
             "speakerSim": null,
             "hash": "b20f3e483a31eeb67346f3e026db6270523293e095a4627140010051e5f22d9b"
@@ -8938,7 +8966,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/quote.mp3",
             "text": "（原檔）chr0330_ActVoice#14",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.930862,
             "speakerSim": null,
             "hash": "3a7c1dc6b25aff3b20cd9a5441552492aee1a2921012bf0c080cd39272a95362"
@@ -8946,7 +8974,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/quote.2.mp3",
             "text": "（原檔）chr0330_ActVoice#19",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.929025,
             "speakerSim": null,
             "hash": "02d84560ff9961ae4a4f5e5f982e31666a53edebc5e417ddd9bb14a3e0e7d644"
@@ -8954,7 +8982,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/quote.3.mp3",
             "text": "（原檔）chr0330_ActVoice#18",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.838027,
             "speakerSim": null,
             "hash": "9f70dc6711385d1979f5bf0320b84c28e003dd9e93cb3ed2eede5a0de2fee679"
@@ -9014,7 +9042,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/taunt.mp3",
             "text": "（原檔）chr0330_ActVoice#202",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.321769,
             "speakerSim": null,
             "hash": "148e801257dfb3923d6fa5941902d5e988f5ad4ee98bd8d679e1f644f4cac691"
@@ -9022,7 +9050,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/taunt.2.mp3",
             "text": "（原檔）chr0330_ActVoice#26",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.244785,
             "speakerSim": null,
             "hash": "91fb4e62ecb5012692350eb100d29c991454e3ef8f3e08316b10952963c67829"
@@ -9030,7 +9058,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/taunt.3.mp3",
             "text": "（原檔）chr0330_ActVoice#143",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.223787,
             "speakerSim": null,
             "hash": "e970c931260c56d2fd5f28588f21b5e62b6ea307d91b7677ef07cce46d97c4cc"
@@ -9040,7 +9068,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/victory.mp3",
             "text": "（原檔）chr0330_ActVoice#205",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.779116,
             "speakerSim": null,
             "hash": "79974a0dd0e47250f6ee3f9fbf31a048f060974e9022df04d0fd250609715697"
@@ -9048,7 +9076,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/victory.2.mp3",
             "text": "（原檔）chr0330_ActVoice#17",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.236893,
             "speakerSim": null,
             "hash": "563b66fa873160ae31c735a1465da365db24fce6219da271145d7df0a271f691"
@@ -9056,7 +9084,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-07-20260907/victory.3.mp3",
             "text": "（原檔）chr0330_ActVoice#12",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.979025,
             "speakerSim": null,
             "hash": "193f91fbca7ad1706d9625ce67f3be93c316b32a789b7dbf941f5546ab407bc7"
@@ -9458,7 +9486,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.840091,
             "speakerSim": null,
             "hash": "f69d31996b074bcec38ec59662393a81d15697d6401d2d4091efeee8150e9968"
@@ -9468,7 +9496,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.062222,
             "speakerSim": null,
             "hash": "2bfd1df39dbe21df9896b56c0feaa301fd6a202c43bad35c220dffa4e34a2b9a"
@@ -9478,7 +9506,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.702132,
             "speakerSim": null,
             "hash": "5bf16787bfed03986a7a15d2cb9e29d374d24a036ff2e76da2350bcf56e7b089"
@@ -9488,7 +9516,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.230567,
             "speakerSim": null,
             "hash": "a458a4c98fa797325d22afe8757bc04413c8a20a4d43a624dcb97b5699fb7283"
@@ -9498,7 +9526,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.529524,
             "speakerSim": null,
             "hash": "a5492025bc2e03f36337ae925e028d3c87a792772ea0d85d04b682ef06cd52ed"
@@ -9506,7 +9534,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.664399,
             "speakerSim": null,
             "hash": "59910949332ce763e40b533fd9ba91058ab0825896f35928a3160fe0200a750d"
@@ -9516,7 +9544,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.567256,
             "speakerSim": null,
             "hash": "14614f8388edfad9dc2544ca43c70ccb20d4bd515cfe8839877776acbfd97048"
@@ -9556,7 +9584,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.583129,
             "speakerSim": null,
             "hash": "e30623437a8c1c8bafee525ec83b07f951715b3e0622e4046dd77a009057b8b5"
@@ -9564,7 +9592,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.323084,
             "speakerSim": null,
             "hash": "3e2bb2e1fd53e943b11d161d5bf6b983d9a9f9bdbc1f9106ec4b8e3e7d1b0701"
@@ -9582,7 +9610,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-10-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.840091,
             "speakerSim": null,
             "hash": "f69d31996b074bcec38ec59662393a81d15697d6401d2d4091efeee8150e9968"
@@ -9725,7 +9753,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-11-20260907/hurt.mp3",
             "text": "（原檔）675434901",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.28,
             "speakerSim": null,
             "hash": "b320fa12d8c2d971232d907315dddf42e999df38147a013d62b276e9d718b11a"
@@ -9735,7 +9763,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-11-20260907/hurt-heavy.mp3",
             "text": "（原檔）105924093",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.52,
             "speakerSim": null,
             "hash": "1c7ce3b0aef3d328b73efb0ea1085b456410f5d7659b139cb64cd313fa92a0c0"
@@ -9755,7 +9783,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-11-20260907/quote.mp3",
             "text": "（原檔）505624353",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.704762,
             "speakerSim": null,
             "hash": "817dcdc32054cde438da433122b9837cc9b8c1e8e14fac8d0028e177fc140af4"
@@ -9775,7 +9803,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-11-20260907/skill-name.ex.mp3",
             "text": "（原檔）1001475546",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.102109,
             "speakerSim": null,
             "hash": "5cb844eceb29e01c096dbd11b47ffbdcabfe14a997fcea690ced7549fdb9c2b3"
@@ -9875,7 +9903,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/taunt.mp3",
             "text": "（原檔）-412570245643270488_Talk1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.544535,
             "speakerSim": null,
             "hash": "42c6ccd26ad77c1c0ffe685eccf91c3db7a338c6e1b2dbde00787f2d29af7dde"
@@ -9885,7 +9913,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/attack-heavy.mp3",
             "text": "（原檔）-7076748036963549048_Boost_Trick3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.060794,
             "speakerSim": null,
             "hash": "6f370722241f8db9493c427f59f40eebb1cc6b7064f22772788a643cb499ce03"
@@ -9893,7 +9921,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/attack-heavy.2.mp3",
             "text": "（原檔）VOICE_1142",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.824014,
             "speakerSim": null,
             "hash": "a8daae0d9f204fa5220b832e5c00c4e53048d9882724a47ee663f676d66401ce"
@@ -9903,7 +9931,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/attack-light.mp3",
             "text": "（原檔）-8111284017400737213_Combo1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.487619,
             "speakerSim": null,
             "hash": "bfb59746296b41e6bb7c34de2c0bec3a649402909d63df9e7b20e6961c8d7f91"
@@ -9911,7 +9939,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/attack-light.2.mp3",
             "text": "（原檔）VOICE_0471",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.583333,
             "speakerSim": null,
             "hash": "1970bb2e279a312bd10ceea6ea28d3d6b2b2f654ebecd312d9bf936fc57bf6d8"
@@ -9921,7 +9949,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/defeat.mp3",
             "text": "（原檔）-3207472971116271881_Death",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.301791,
             "speakerSim": null,
             "hash": "ef9b92b5f8511bf3d3c109a1eb64bd7b8eaef897be214afea23f285706f00284"
@@ -9929,7 +9957,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/defeat.2.mp3",
             "text": "（原檔）VOICE_1191",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.107347,
             "speakerSim": null,
             "hash": "77a0e1b07ce6ea1ce685b5b37eab444e4fea8c96f57a288d7bd4f2654e4a88f2"
@@ -9937,7 +9965,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/defeat.3.mp3",
             "text": "（原檔）VOICE_1975",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.794014,
             "speakerSim": null,
             "hash": "876d41b9d2363ec3a1f1e6992c8251c338a052aaf0da18b3fbd5394811532754"
@@ -9947,7 +9975,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/hurt.mp3",
             "text": "（原檔）-1164302356178838169_Pain4",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.645079,
             "speakerSim": null,
             "hash": "17c40ac05f5235a25c759e86d9a4e13df38ea46189b8125297066f5e8cbc39b9"
@@ -9955,7 +9983,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/hurt.2.mp3",
             "text": "（原檔）-2574605753401942291_Pain3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.397982,
             "speakerSim": null,
             "hash": "d9653b2dcff4cef5a25d50fb513446d34bc7571ec371b0b758877fa7d30dbaa2"
@@ -9963,7 +9991,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/hurt.3.mp3",
             "text": "（原檔）VOICE_1215",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.664671,
             "speakerSim": null,
             "hash": "a8bbd61aff90cbaa6df626de443855729d4b239151eff2697a5ab1ce6bf6a9b2"
@@ -9973,7 +10001,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/hurt-heavy.mp3",
             "text": "（原檔）-4741925241798207979_Pain1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.579977,
             "speakerSim": null,
             "hash": "d2b9277f03b60ddb151bedb4990a573abf33569d8bc53e003d0c24c1d2818a07"
@@ -9981,7 +10009,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）VOICE_1146",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.023333,
             "speakerSim": null,
             "hash": "b8febab285bf457ebd405a18cc38faad227f3d7277c31f97e318b4337b68705b"
@@ -9989,7 +10017,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/hurt-heavy.3.mp3",
             "text": "（原檔）VOICE_1977",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.936667,
             "speakerSim": null,
             "hash": "22f1e33320226ead8a0c9b445aeaa8e9cd04c5b9f2b00db12f6205db0b2fa6da"
@@ -9999,7 +10027,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/jump.mp3",
             "text": "（原檔）-5051522238835174812_Jump1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.169955,
             "speakerSim": null,
             "hash": "ea5d24e660429b23e56aae8bc00068f3c9af3e431a1ee2f81a5174e01c3bee9b"
@@ -10007,7 +10035,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/jump.2.mp3",
             "text": "（原檔）VOICE_1141",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.58,
             "speakerSim": null,
             "hash": "bcb24147341f2ce5f448f631e128ebadfc4df19b196e52c57afd34ef3db7a3b4"
@@ -10017,7 +10045,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/kill-1.mp3",
             "text": "（原檔）VOICE_1144",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.331995,
             "speakerSim": null,
             "hash": "2d12aa7d84477f81abbafe0fd060a4b92c0561f35b6c4cad80dc029e9e8da4eb"
@@ -10027,7 +10055,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/quote.mp3",
             "text": "（原檔）VOICE_1991",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.737347,
             "speakerSim": null,
             "hash": "39fc33174d45f6b3a47f1b0981746973e2e43f0757b773c9a6844957a5451e97"
@@ -10035,7 +10063,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/quote.2.mp3",
             "text": "（原檔）VOICE_1971",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.714014,
             "speakerSim": null,
             "hash": "7fe69779ca24fdfb478d2a1860def39c18206eff1e20a44df09260c740839e0e"
@@ -10043,7 +10071,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/quote.3.mp3",
             "text": "（原檔）VOICE_1992",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.67,
             "speakerSim": null,
             "hash": "c1b219fe5c1761c899e627c0305dd4596df5cc4f54d06b6f5612f959a2ee60af"
@@ -10103,7 +10131,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/taunt.mp3",
             "text": "（原檔）-412570245643270488_Talk1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.544535,
             "speakerSim": null,
             "hash": "42c6ccd26ad77c1c0ffe685eccf91c3db7a338c6e1b2dbde00787f2d29af7dde"
@@ -10111,7 +10139,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/taunt.2.mp3",
             "text": "（原檔）-816935317900612421_Talk2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.804444,
             "speakerSim": null,
             "hash": "dc50e8b409ee3b0bdb2aec580ec96d5e340ef34c394fae237c9c7b2719ef3bce"
@@ -10119,7 +10147,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/taunt.3.mp3",
             "text": "（原檔）VOICE_2009",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.387347,
             "speakerSim": null,
             "hash": "a6588cb914bc97ce3b4c6deebd78ac7ceab85c433156c4c436eca54f12cc59aa"
@@ -10129,7 +10157,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/victory.mp3",
             "text": "（原檔）VOICE_1208",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.991995,
             "speakerSim": null,
             "hash": "d668fe660bf6c4b934edeb6b5cebfe55e6f7473de14ccb61999bb8070f6567d0"
@@ -10137,7 +10165,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-12-20260907/victory.2.mp3",
             "text": "（原檔）VOICE_1169",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.831338,
             "speakerSim": null,
             "hash": "d968b2144a358511633b5bd1b6c10fbb38260ca332f29ae2298e0354585fab96"
@@ -10201,7 +10229,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.226304,
             "speakerSim": null,
             "hash": "9268751ffaec280f63c3a0212cc1c38bda431c12503bf60864c0d02579bcf3e8"
@@ -10211,7 +10239,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.197279,
             "speakerSim": null,
             "hash": "987b8b6f6962147f609ec8304149d1368c20ad5eca0898db78c7984eddc50808"
@@ -10221,7 +10249,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.063764,
             "speakerSim": null,
             "hash": "0a60a03dd0156b668644a9ef8ca3b79751304478a79f8068167c8522ad9a9413"
@@ -10231,7 +10259,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.600544,
             "speakerSim": null,
             "hash": "f69498c187fe7344461ace438c509de766fbf9c84d4bf858811419b5cd05e30e"
@@ -10241,7 +10269,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.884807,
             "speakerSim": null,
             "hash": "b667013b5714f91f2316fc5be2d306f5f75787846d9d0965cc8d1c01b2ac821d"
@@ -10249,7 +10277,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.683356,
             "speakerSim": null,
             "hash": "1d33b2d4487c783e3f25bddfb6658ef910a831a3120b55a3aea1aa100a4898ef"
@@ -10257,7 +10285,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/defeat.3.mp3",
             "text": "（原檔）voice_death_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.615057,
             "speakerSim": null,
             "hash": "3540ac875140e9cefe23695fefe25a66ff843db4df1b6d52eb0c10404d40e815"
@@ -10267,7 +10295,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.173878,
             "speakerSim": null,
             "hash": "3577ef01b3cbdd85f74f96e3948d3b88abf28b4fcca9e1d6048b6257c5c2e346"
@@ -10307,7 +10335,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.921179,
             "speakerSim": null,
             "hash": "b84dedb3b231d6b6e6cc34978ce763d2030c1214642d1714ae27160ca104f3ca"
@@ -10315,7 +10343,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.598821,
             "speakerSim": null,
             "hash": "3f54040d3742bbf3b5f6028b14fbff288fd5a5ad9b6d21929a7d58f308e6e278"
@@ -10323,7 +10351,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.330431,
             "speakerSim": null,
             "hash": "317b4d872674dd9d3a0c6c0675a41da643db101b05536cf085e4634749725d60"
@@ -10333,7 +10361,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-13-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.226304,
             "speakerSim": null,
             "hash": "9268751ffaec280f63c3a0212cc1c38bda431c12503bf60864c0d02579bcf3e8"
@@ -10805,7 +10833,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.993923,
             "speakerSim": null,
             "hash": "ffa04c80154f25dd11307869f4085b65a3fc891417fb869e211b0efbe499b629"
@@ -10815,7 +10843,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.535329,
             "speakerSim": null,
             "hash": "3e1b94cd8f82bdf5bc5c211768eadc10e3d890362723b86d29e3a0546d90fce1"
@@ -10825,7 +10853,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.766168,
             "speakerSim": null,
             "hash": "0f014246330ff48ba2bdd4db04e04c61cf6407a27866935d56a004bd88e12e2f"
@@ -10835,7 +10863,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.155102,
             "speakerSim": null,
             "hash": "542b084b84584b62a6fd99036b63a1063f3fe18cf38f29f0a7f756481c787ecb"
@@ -10845,7 +10873,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.901043,
             "speakerSim": null,
             "hash": "1bdd396a6d85428d936034c3d7a09c18a500658e3f290977e850b6483110b771"
@@ -10855,7 +10883,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.883628,
             "speakerSim": null,
             "hash": "91e365bb9801b676fb82a601657dfc0be625f1dbe02d63b781a2a12c1ea2c6c9"
@@ -10895,7 +10923,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.492971,
             "speakerSim": null,
             "hash": "5fb3ba55f3c959f54985b879df3ef7c8b5386db9d5237484cda4d3b25816d6f3"
@@ -10903,7 +10931,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.391565,
             "speakerSim": null,
             "hash": "25c6fa0c85fb5861006b4ee98ebfd4a189941a817d6ac3f5a214e74f7dcc92ca"
@@ -10921,7 +10949,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-16-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.993923,
             "speakerSim": null,
             "hash": "ffa04c80154f25dd11307869f4085b65a3fc891417fb869e211b0efbe499b629"
@@ -11047,7 +11075,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.660136,
             "speakerSim": null,
             "hash": "74c2ff2be1a54822c5067248b16a4fbd3e4e97322311187fbdf1bd62b5b76f12"
@@ -11057,7 +11085,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.14195,
             "speakerSim": null,
             "hash": "641a9279e72245d02eacf5d6fd6bafa47b470ca3ce2a81a5eb5bea02793beb93"
@@ -11067,7 +11095,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.671565,
             "speakerSim": null,
             "hash": "d0c1154c526912230989498607b57517568bd35ba41ce65648ce003237840ab7"
@@ -11077,7 +11105,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.993923,
             "speakerSim": null,
             "hash": "432931749fd37322abd29835e90d1d66fb8a3e761cf5fcb02fd424c8f6aced79"
@@ -11087,7 +11115,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.201542,
             "speakerSim": null,
             "hash": "4114e805ba67e0160c05c3ee4796a35b9235f45be9e9c7f719576f5fb998c075"
@@ -11097,7 +11125,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.498776,
             "speakerSim": null,
             "hash": "67ca4988b483588c377167e81073b343f631624b3e55dae74bd8c06866ec8cd5"
@@ -11137,7 +11165,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.384399,
             "speakerSim": null,
             "hash": "5f4472888cac5a2cee19bea8175ab770aacfc22834ae99bd8a95cd2cb5a429cf"
@@ -11145,7 +11173,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.067846,
             "speakerSim": null,
             "hash": "c6da173e566368e0405f60cc6ca8bf23041b4fbe919dc1c83f418d29dc09bb56"
@@ -11163,7 +11191,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-17-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.660136,
             "speakerSim": null,
             "hash": "74c2ff2be1a54822c5067248b16a4fbd3e4e97322311187fbdf1bd62b5b76f12"
@@ -11682,7 +11710,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-20-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.52,
             "speakerSim": null,
             "hash": "e2f00b80cda48d666bdcb7b802057c437cc75669aea1f13e982b9d61a18d1fba"
@@ -11817,7 +11845,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.27102,
             "speakerSim": null,
             "hash": "81b634d384fa7bea09305a3605a523b46111387eeca4ebfa456f8e660493f5d9"
@@ -11827,7 +11855,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.538231,
             "speakerSim": null,
             "hash": "cebba63c15d13165b70a739294d3d942a0691699b570e60fd594c73b4dafb563"
@@ -11837,7 +11865,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.351111,
             "speakerSim": null,
             "hash": "c5cca95479e4deda220a0154aa16d04214fc01f4214c31eb2c61f67d80b4782b"
@@ -11847,7 +11875,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.649887,
             "speakerSim": null,
             "hash": "024d8b2dbbd47c6089999017a0b05602511ee8262333d635567808d4f3c282c3"
@@ -11855,7 +11883,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.819592,
             "speakerSim": null,
             "hash": "78396ee23480afd185d18ad90d2259b5c7a11e09cfd8bcabfbfaa15d2cb6cb6d"
@@ -11865,7 +11893,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.998367,
             "speakerSim": null,
             "hash": "709883e72f589f0f3f145a39585a275a5c99a8a8acb134f1b306c9ac77f0c1af"
@@ -11905,7 +11933,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.693243,
             "speakerSim": null,
             "hash": "4dad1f1dbd90e9f2cb8bad7a2bdfd05b35ba58778f38869f2363a727992937cb"
@@ -11913,7 +11941,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.974966,
             "speakerSim": null,
             "hash": "a48e342584da739bd6f71b2681bbe509161c19e5f8a119fa81fd8ba65330aa34"
@@ -11921,7 +11949,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.644082,
             "speakerSim": null,
             "hash": "0b947e98f1b64297c88dd3f9b4ba3cc5770bec031c97fb32a9e6a66bb3f82338"
@@ -11931,7 +11959,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-21-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.27102,
             "speakerSim": null,
             "hash": "81b634d384fa7bea09305a3605a523b46111387eeca4ebfa456f8e660493f5d9"
@@ -12232,7 +12260,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.429116,
             "speakerSim": null,
             "hash": "b851f4388ae50e9d63f054c02c5125775f4f6cc86d8cc69de2186a92c2374590"
@@ -12242,7 +12270,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.841451,
             "speakerSim": null,
             "hash": "51d3192be617b8aec8cd59fd0499fba76ef1460b236eccb766781793bdadb4e8"
@@ -12252,7 +12280,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.706576,
             "speakerSim": null,
             "hash": "62c1d21d7fda5d3c87aa7323583396e8d617b5e621084fa467074df0e8903b7c"
@@ -12262,7 +12290,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.091066,
             "speakerSim": null,
             "hash": "06b3e9517c0c1fea32e71c1170b0c7ebe5aff03cf5a817b256bcf2b8796f9f16"
@@ -12302,7 +12330,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.172336,
             "speakerSim": null,
             "hash": "2766734bf7e7e6ec590b2638242d34eb4d3e71c85d75dcc1dc3c8d0f7bd6a845"
@@ -12310,7 +12338,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.088345,
             "speakerSim": null,
             "hash": "e4710825496f22a27c696f81aef6a7ead54ac555811508a5831e77ee0592e6c1"
@@ -12328,7 +12356,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-23-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.429116,
             "speakerSim": null,
             "hash": "b851f4388ae50e9d63f054c02c5125775f4f6cc86d8cc69de2186a92c2374590"
@@ -12445,7 +12473,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/taunt.mp3",
             "text": "（原檔）chr0310_ActVoice#209",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.133605,
             "speakerSim": null,
             "hash": "2ee7debaecb40a350483344e8c24f108bc615ed3f0c4375b1146567db80956c1"
@@ -12453,7 +12481,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.22458,
             "speakerSim": null,
             "hash": "35e98d704e4b67ddcde2a8879e907dcabe3f2bdb574398f22641bfc9fdfbe033"
@@ -12463,7 +12491,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.692063,
             "speakerSim": null,
             "hash": "b4826099b1a63c6c96f2a728d014f6d3d357a9bad6e208476410d2a6d9b604bd"
@@ -12471,7 +12499,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/attack-heavy.2.mp3",
             "text": "（原檔）chr0310_ActVoice#122",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.193515,
             "speakerSim": null,
             "hash": "59f493ca28139d7c2032c1452e27563d400f4349eced6b8d9737c5032f7ce53e"
@@ -12481,7 +12509,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.943039,
             "speakerSim": null,
             "hash": "49a4ebaeb77003b72dce5860230b3402712a7264005b23c45e5177c6f6b1c500"
@@ -12489,7 +12517,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/attack-light.2.mp3",
             "text": "（原檔）chr0310_ActVoice#196",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.594082,
             "speakerSim": null,
             "hash": "13868feaa8d86c654152fd7a5c5645bab7df1b446874df8eeb86a283e05ab88f"
@@ -12499,7 +12527,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.692063,
             "speakerSim": null,
             "hash": "b4826099b1a63c6c96f2a728d014f6d3d357a9bad6e208476410d2a6d9b604bd"
@@ -12509,7 +12537,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.779138,
             "speakerSim": null,
             "hash": "6ce6b1dfe3d5dfb21acd4684b5cf63afd76a3d5c021ec9619acb24195e9c40d4"
@@ -12517,7 +12545,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.710839,
             "speakerSim": null,
             "hash": "959b0c83047b15eb575c7ae5a49058fe25bb44593ebea99b815e04eebbc207ee"
@@ -12525,7 +12553,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/defeat.3.mp3",
             "text": "（原檔）voice_death_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.427937,
             "speakerSim": null,
             "hash": "c0f4f96fbba2cf2de469cff600593f59d1fa502212a203762b620088fb1c80a5"
@@ -12535,7 +12563,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.789025,
             "speakerSim": null,
             "hash": "0cc50930f64cb7cdea91a8f2dbfaed72f83fa98ca5b3f1b31b0028c01077342d"
@@ -12545,7 +12573,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/hurt.mp3",
             "text": "（原檔）chr0310_ActVoice#68",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.693016,
             "speakerSim": null,
             "hash": "02472c800df560371895c5d3819ceb745440019d597d93976c196dc5e7ed7bb5"
@@ -12553,7 +12581,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/hurt.2.mp3",
             "text": "（原檔）chr0310_ActVoice#182",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.674762,
             "speakerSim": null,
             "hash": "f249d5abd2e9caa1da3e74c5573b65a6898b821b6b5640ba3a6445640c63ae5a"
@@ -12563,7 +12591,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/hurt-heavy.mp3",
             "text": "（原檔）chr0310_ActVoice#111",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.279683,
             "speakerSim": null,
             "hash": "b4ac07cec599a1bcc315162ce6f47a13afea144fe9c4e93387bd0460ad1ee5ec"
@@ -12571,7 +12599,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/hurt-heavy.2.mp3",
             "text": "（原檔）chr0310_ActVoice#220",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.243492,
             "speakerSim": null,
             "hash": "5c9337c4664c43fed6750b0539da6efd64a9bcba3a827c41be1d5cbbf118f97c"
@@ -12581,7 +12609,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/jump.mp3",
             "text": "（原檔）chr0310_ActVoice#82",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.588163,
             "speakerSim": null,
             "hash": "ebf303f1ed2aec915d98f28a524b3456da0ef06037122f8179adae6e0425550f"
@@ -12601,7 +12629,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.209887,
             "speakerSim": null,
             "hash": "e53127bb298fd9a1bad41f0f70566c8be4c20d1ac5277d9103e2461fffc76da5"
@@ -12609,7 +12637,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.437823,
             "speakerSim": null,
             "hash": "4a49af6cb62a562152fb7e8176921cd30a6ab756bcf27f42098063eb5d690cb4"
@@ -12617,7 +12645,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.176599,
             "speakerSim": null,
             "hash": "c37c793328199c2346bd8d985f42bb922448d1ba8b4389d1981eeb0ae647ea7b"
@@ -12627,7 +12655,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.22458,
             "speakerSim": null,
             "hash": "35e98d704e4b67ddcde2a8879e907dcabe3f2bdb574398f22641bfc9fdfbe033"
@@ -12637,7 +12665,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/skill-name.e.mp3",
             "text": "（原檔）chr0310_ActVoice#121",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.953175,
             "speakerSim": null,
             "hash": "cb2cd126f422fedecd1d4ac4963d51d9f554bdfbf8d9a96f944384f6ec626b93"
@@ -12647,7 +12675,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/skill-name.ex.mp3",
             "text": "（原檔）chr0310_ActVoice#145",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.256508,
             "speakerSim": null,
             "hash": "e4db11d08c06d111e91e54935f858678b9c076f59459a9d68b5691041bd367ae"
@@ -12657,7 +12685,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/skill-name.q.mp3",
             "text": "（原檔）chr0310_ActVoice#102",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.795624,
             "speakerSim": null,
             "hash": "ed09231e5155909d238786ab9142e8204a2ac3f7dd345d2fa946422921aef994"
@@ -12687,7 +12715,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/taunt.mp3",
             "text": "（原檔）chr0310_ActVoice#209",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.133605,
             "speakerSim": null,
             "hash": "2ee7debaecb40a350483344e8c24f108bc615ed3f0c4375b1146567db80956c1"
@@ -12695,7 +12723,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/taunt.2.mp3",
             "text": "（原檔）chr0310_ActVoice#16",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.722086,
             "speakerSim": null,
             "hash": "a53c4f16411352c492d9a60dbde9d7c713fd2658ba0821c14aa82977273225b6"
@@ -12703,7 +12731,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/taunt.3.mp3",
             "text": "（原檔）chr0310_ActVoice#15",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.514082,
             "speakerSim": null,
             "hash": "3327785809d160f86483f9f7edd018c4a5fb3046b9ff7a2c46b1e74082d4ad9d"
@@ -12713,7 +12741,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-24-20260907/victory.mp3",
             "text": "（原檔）chr0310_ActVoice#28",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.211429,
             "speakerSim": null,
             "hash": "efdeef178fa89126f0c34d6a9ad0e8ff26116c167be04b1022ee575c640d25d4"
@@ -12778,7 +12806,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.66458,
             "speakerSim": null,
             "hash": "42d067a6f07bcf44ccd47a3da8db22d3a9a7d976d0b090b6805fbf0b47ccffb6"
@@ -12788,7 +12816,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.658776,
             "speakerSim": null,
             "hash": "fa25fef7909e3beea2317cf7f2b458a44f40b46f21193c700dac172b7a44c859"
@@ -12798,7 +12826,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.658776,
             "speakerSim": null,
             "hash": "fa25fef7909e3beea2317cf7f2b458a44f40b46f21193c700dac172b7a44c859"
@@ -12808,7 +12836,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.002812,
             "speakerSim": null,
             "hash": "fc74bd39daae4774134683a0ae3768664d5dd62f19decd46b3b7eebda5fca71d"
@@ -12818,7 +12846,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.306213,
             "speakerSim": null,
             "hash": "90b4a84d0e61ed2e2fb6a05e0ffab37b27dacc171e897541ff37f9e73380f55a"
@@ -12858,7 +12886,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.845896,
             "speakerSim": null,
             "hash": "d7211db3106f2f0ac0a024df8895661786c9d50d90dc48aca8f8291d8aeb76b1"
@@ -12876,7 +12904,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-25-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.66458,
             "speakerSim": null,
             "hash": "42d067a6f07bcf44ccd47a3da8db22d3a9a7d976d0b090b6805fbf0b47ccffb6"
@@ -13002,7 +13030,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.355374,
             "speakerSim": null,
             "hash": "9fbbaa82bff53464d106c6cbca1be066bfb3b8d8462f73ebca8cdeed42564672"
@@ -13012,7 +13040,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.737143,
             "speakerSim": null,
             "hash": "7b0cb051a24401aa7df082defa1d802a14a12b5ae6c82dac2cbf8ef938fdc163"
@@ -13022,7 +13050,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.716825,
             "speakerSim": null,
             "hash": "f629ca6963884fa81a14e3414c7abfc28259fb99090bf7cd3dd45c3572b5075c"
@@ -13032,7 +13060,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.771973,
             "speakerSim": null,
             "hash": "c6ecc9490b17ea81ea7173b70e2b35c95c7c882338dbbd9cdf64b28531c12ff8"
@@ -13042,7 +13070,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.441088,
             "speakerSim": null,
             "hash": "ea6d560c2152703dbeb24b24f06da5d75c5bf2c7ffd27099fbbf20834bd38ed3"
@@ -13050,7 +13078,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.38576,
             "speakerSim": null,
             "hash": "73a4fcf55e5889fc2852f00cfbbbe0c74310843999fd2d2b57da863f9015f24d"
@@ -13060,7 +13088,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.493333,
             "speakerSim": null,
             "hash": "fd277696bc6376925926f83c1a94297c426a065e944a086a8e382185093c90c7"
@@ -13100,7 +13128,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.110023,
             "speakerSim": null,
             "hash": "e7f56f13cf5cda579d4879a046c1e71235d2620ddc0e4c5c9690b46f97bf521a"
@@ -13108,7 +13136,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.285714,
             "speakerSim": null,
             "hash": "4d726bb70de2c07ddea23c96b0e1e5224636406fc87eb0504d2cb41d295eecdc"
@@ -13126,7 +13154,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-26-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.355374,
             "speakerSim": null,
             "hash": "9fbbaa82bff53464d106c6cbca1be066bfb3b8d8462f73ebca8cdeed42564672"
@@ -13254,7 +13282,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.319002,
             "speakerSim": null,
             "hash": "340ce6338f0d0951ba6a2c61b0b7eeeb8220a7aceac4cea66bd8f9768a0b6306"
@@ -13264,7 +13292,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.352472,
             "speakerSim": null,
             "hash": "b9c6c762d963aa76b556b5d80b474c02a574e607c0bab118033e020505168642"
@@ -13274,7 +13302,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.843175,
             "speakerSim": null,
             "hash": "e83075d793a21e4ac1520e1b35256924bef57a3922905cc1c8a468395bad5f50"
@@ -13282,7 +13310,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.134785,
             "speakerSim": null,
             "hash": "e0aef70ac447da7537021cced588727573d3ce247deb61fc372ff08eb38ca22a"
@@ -13292,7 +13320,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.914195,
             "speakerSim": null,
             "hash": "da2dc9dfdec7f255e89e106169805885b651abf4dac43bef46b8b7226d136d9b"
@@ -13332,7 +13360,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.275465,
             "speakerSim": null,
             "hash": "78aa8393a89ef53f21692514f8758ad0d9a82a6da74e4ede5d143bb222a67587"
@@ -13340,7 +13368,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.464308,
             "speakerSim": null,
             "hash": "d6b0cdf52dd137c437acb4534326bb8bcccb7105dbcac240dbb4750dc05502ce"
@@ -13348,7 +13376,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.728435,
             "speakerSim": null,
             "hash": "524a731052a988a612996fb20d98e948014082cac2fc4a97419776e0a366463c"
@@ -13358,7 +13386,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-27-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.319002,
             "speakerSim": null,
             "hash": "340ce6338f0d0951ba6a2c61b0b7eeeb8220a7aceac4cea66bd8f9768a0b6306"
@@ -13657,7 +13685,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.285714,
             "speakerSim": null,
             "hash": "6b0d92edcabbcfaf0421b78b427bed6ad848a81abbfaf437e4c996d54bdadaf2"
@@ -13667,7 +13695,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.954649,
             "speakerSim": null,
             "hash": "3a99d3d6e624c7fe7fd81533f3e1a96e8852dd9f58726e3a5ccbdffa3ed6a3ce"
@@ -13677,7 +13705,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.091247,
             "speakerSim": null,
             "hash": "40ee547ad7b65f62adfd2f69f30cf3b1ede0529d3e9a8f9fa39ee84b0cd5df69"
@@ -13687,7 +13715,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.983855,
             "speakerSim": null,
             "hash": "97b0e8110ca38ab8e374e19baa34ada6c67c82dc2a3ae553812e37df2f829ced"
@@ -13697,7 +13725,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/defeat.mp3",
             "text": "（原檔）voice_death_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.98966,
             "speakerSim": null,
             "hash": "96bebdb6475460c238e9ffe14fd62675b0cb20f1d65523db8bc86a17c696907b"
@@ -13705,7 +13733,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.705215,
             "speakerSim": null,
             "hash": "76615b0a3e43103693d8e6b64fb1b24bf98579441d858989e27066e60a50fe18"
@@ -13713,7 +13741,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/defeat.3.mp3",
             "text": "（原檔）voice_death_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.951927,
             "speakerSim": null,
             "hash": "b99fb3659cbf84dac52b937b0332eba6f93c2b25df29edaa6dda6d412555f929"
@@ -13723,7 +13751,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/free-move.mp3",
             "text": "（原檔）voice_move_10",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.792109,
             "speakerSim": null,
             "hash": "ae8d25fd4299a6a6943fd00a0762c9f827cdebda0fa21eae0944563f46f0a3cc"
@@ -13763,7 +13791,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 6.584308,
             "speakerSim": null,
             "hash": "9ded65ba11dadad507d9cc4fbd76acdb84b6dc87e72ee90b6bc9dfec4a3eb027"
@@ -13771,7 +13799,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 7.460862,
             "speakerSim": null,
             "hash": "d8d4b69719a61d540a0a842da2a53a0cdf9e9938cb199089a2ad5d34777ee8a2"
@@ -13779,7 +13807,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.751293,
             "speakerSim": null,
             "hash": "d1490e2f4b55b418c5de4b508b2123de5d25dd606fd75818ae9f45215fa37538"
@@ -13789,7 +13817,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-29-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.285714,
             "speakerSim": null,
             "hash": "6b0d92edcabbcfaf0421b78b427bed6ad848a81abbfaf437e4c996d54bdadaf2"
@@ -14771,7 +14799,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.226304,
             "speakerSim": null,
             "hash": "30ae576b241b9aca77fbeea427f726047465c89a0861c63f4aebee4efbcb52db"
@@ -14781,7 +14809,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/attack-heavy.mp3",
             "text": "（原檔）voice_attack_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.597823,
             "speakerSim": null,
             "hash": "b8f08ef0d3945b211b4febf9198487c299a3bb4b4a07c8de6f452ad9a83ac2a2"
@@ -14791,7 +14819,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/attack-light.mp3",
             "text": "（原檔）voice_attack_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.95483,
             "speakerSim": null,
             "hash": "8565e7ad5273aafe98f1f2d76d8f9aef8ab2cb5d38afbf9ad7c9f39716c49ffa"
@@ -14801,7 +14829,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/crit.mp3",
             "text": "（原檔）voice_attack_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.561451,
             "speakerSim": null,
             "hash": "dacf9991d08a02560b774d09b5c41e2eab1ab3b9f79db6eafa730ef070c9e95c"
@@ -14811,7 +14839,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/defeat.mp3",
             "text": "（原檔）voice_death_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.857687,
             "speakerSim": null,
             "hash": "53d6e6fa4a7e05e42545dcb0e639f6c9efb49774d6bb088990a780a62d164b1d"
@@ -14819,7 +14847,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/defeat.2.mp3",
             "text": "（原檔）voice_death_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.394649,
             "speakerSim": null,
             "hash": "03603c0995e08376566d5bda55723d89b606453f7f9d6a3f2deacb0f4585ab28"
@@ -14827,7 +14855,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/defeat.3.mp3",
             "text": "（原檔）voice_death_4",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.936054,
             "speakerSim": null,
             "hash": "583a8b5ebc263a9d8025330e0e8b3a59714d0e9bd3495e1ba9da6e5c3ec38e7d"
@@ -14837,7 +14865,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/free-move.mp3",
             "text": "（原檔）voice_move_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.901043,
             "speakerSim": null,
             "hash": "66e82fa503bcf547687b97bc056cd7b3fc0ffe8728c96787f3a65abf716b69b6"
@@ -14877,7 +14905,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/quote.mp3",
             "text": "（原檔）voice_joke_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.693605,
             "speakerSim": null,
             "hash": "05a5e44cbb788390796be542f956af271ca903a7f1fa12283bee706ffd118c86"
@@ -14885,7 +14913,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/quote.2.mp3",
             "text": "（原檔）voice_joke_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.84898,
             "speakerSim": null,
             "hash": "99a066bb1cd0c518967e880abce9caeb7c6614130721ee2eb23eca371ef5aae1"
@@ -14893,7 +14921,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/quote.3.mp3",
             "text": "（原檔）voice_joke_3",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.712381,
             "speakerSim": null,
             "hash": "78ced290caeff189c6343b8f1c5790e19979c025795eee0288480efe842cc1cc"
@@ -14903,7 +14931,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-35-20260907/respond.ok.mp3",
             "text": "（原檔）voice_move_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.226304,
             "speakerSim": null,
             "hash": "30ae576b241b9aca77fbeea427f726047465c89a0861c63f4aebee4efbcb52db"
@@ -15219,7 +15247,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-37-20260907/hurt.mp3",
             "text": "（原檔）injured_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.859138,
             "speakerSim": null,
             "hash": "1c3447ac46e2f6cbfeb10097426bf72fcd791d2d2fb7561b58446480a0825a67"
@@ -15229,7 +15257,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-37-20260907/hurt-heavy.mp3",
             "text": "（原檔）injured_2",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.859138,
             "speakerSim": null,
             "hash": "a63262bce876064b79222538f95130fbb42c261fa9b8b2c1973ae419a6760cca"
@@ -15239,7 +15267,7 @@
           {
             "clip": "assets/audio/voices/lines/community-review-37-20260907/kill-1.mp3",
             "text": "（原檔）tame_1",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.114558,
             "speakerSim": null,
             "hash": "6fb23c67c990b918839ef0a1708246ed2b5254abd26b3eb99703c6cf33064818"
@@ -43120,7 +43148,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/taunt.mp3",
             "text": "（原檔）bd0bbe/00110-1606171314",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.983107,
             "speakerSim": null,
             "hash": "bbca7bd9f5ccf42f2be47254e0660dfabd0f5cacc57c9e05a372f4607cfd70d0"
@@ -43130,7 +43158,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/defeat.mp3",
             "text": "（原檔）bd0bbe/00053-735105578",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.990454,
             "speakerSim": null,
             "hash": "91b8ff020da3c40067caf2467a371977819c5877be617d975ba9feddaf7a5f7c"
@@ -43140,7 +43168,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/quote.mp3",
             "text": "（原檔）bd0bbe/00078-1154709670",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.993447,
             "speakerSim": null,
             "hash": "c2de6e42b40130940d437e96d26a1ac19414d06862cef059cc7094031eb0850d"
@@ -43148,7 +43176,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/quote.2.mp3",
             "text": "（原檔）bd0bbe/00016-157583185",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.991474,
             "speakerSim": null,
             "hash": "7e2f43c2335fcf112fd86b0e2ad7b7f41f3c0612d10d78dcc11878edb343d0a5"
@@ -43156,7 +43184,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/quote.3.mp3",
             "text": "（原檔）bd0bbe/00067-940314714",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.991293,
             "speakerSim": null,
             "hash": "138582ae7de5fa52ac1dbf729bd5bc192fce701d244d6517e637d2e04f20b326"
@@ -43166,7 +43194,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/taunt.mp3",
             "text": "（原檔）bd0bbe/00110-1606171314",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.983107,
             "speakerSim": null,
             "hash": "bbca7bd9f5ccf42f2be47254e0660dfabd0f5cacc57c9e05a372f4607cfd70d0"
@@ -43174,7 +43202,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/taunt.2.mp3",
             "text": "（原檔）bd0bbe/00084-1220324455",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.979773,
             "speakerSim": null,
             "hash": "9aed661f365ce178e36a54307ac9d426f8004387c05db15a34224a59a6ae3668"
@@ -43182,7 +43210,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/taunt.3.mp3",
             "text": "（原檔）bd0bbe/00096-1478988453",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.921202,
             "speakerSim": null,
             "hash": "9904dd507a7de09ea45743e65656d5c4b13df138039622782ab15d74ee4cdd93"
@@ -43192,7 +43220,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-karthus/victory.mp3",
             "text": "（原檔）bd0bbe/00082-1207163039",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.030522,
             "speakerSim": null,
             "hash": "6e2cc84d124d358d6a01009381e46829ae4225ccb9562c8c0535fd328086bef3"
@@ -43252,7 +43280,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/taunt.mp3",
             "text": "（原檔）f046bc/00214-2046392973",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.867188,
             "speakerSim": null,
             "hash": "068343e4430cd59e407502e58f25564b032edcdab64f2a75a6679769038f6772"
@@ -43262,7 +43290,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/defeat.mp3",
             "text": "（原檔）f046bc/00160-1457209495",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.784376,
             "speakerSim": null,
             "hash": "68294aadb761a7943aa49a90d1f7ac0751dc6dc61160ddf480904227102c84e2"
@@ -43270,7 +43298,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/defeat.2.mp3",
             "text": "（原檔）f046bc/00125-1138446816",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.735669,
             "speakerSim": null,
             "hash": "6ae1ff8bbe5beb5bde86f173ccf4b0f5349237142b4808616a8479cd4e36caa8"
@@ -43280,7 +43308,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/kill-1.mp3",
             "text": "（原檔）f046bc/00190-1786588904",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.661474,
             "speakerSim": null,
             "hash": "0d9d45966ac97d64eb5ed0f0b02b537e613a281b688172fde6e216bece2aee5a"
@@ -43288,7 +43316,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/kill-1.2.mp3",
             "text": "（原檔）f046bc/00053-503804987",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.391678,
             "speakerSim": null,
             "hash": "8253f19a70ead722e117ef8b73a9856af4c7c3083a941d922934e08c483577c7"
@@ -43298,7 +43326,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/quote.mp3",
             "text": "（原檔）f046bc/00195-1875226779",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.983333,
             "speakerSim": null,
             "hash": "19a2220ed148ba6cd6b08d9251413a08b35853ccb839bbb163098cd5f92cfca0"
@@ -43306,7 +43334,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/quote.2.mp3",
             "text": "（原檔）f046bc/00171-1551638179",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.911474,
             "speakerSim": null,
             "hash": "4bcc250a2a6a0426e26d90bcd29a2acb23dfb2e98859022c854dbc367e9a2cf3"
@@ -43314,7 +43342,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/quote.3.mp3",
             "text": "（原檔）f046bc/00002-32240076",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.906259,
             "speakerSim": null,
             "hash": "a92f2b5a9842ba1951f01da9591a07d5c423ca45adc08255f0a467a4f5fc5e49"
@@ -43324,7 +43352,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/taunt.mp3",
             "text": "（原檔）f046bc/00214-2046392973",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.867188,
             "speakerSim": null,
             "hash": "068343e4430cd59e407502e58f25564b032edcdab64f2a75a6679769038f6772"
@@ -43332,7 +43360,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/taunt.2.mp3",
             "text": "（原檔）f046bc/00180-1641348520",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.816667,
             "speakerSim": null,
             "hash": "6517ce6faf7a61edfd9002b14edd36a24bae9b0b40467855e77cc6f1943b0383"
@@ -43340,7 +43368,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/taunt.3.mp3",
             "text": "（原檔）f046bc/00159-1455190140",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.786463,
             "speakerSim": null,
             "hash": "dd6b1c71a00ada20a8a6ad538dfb6845d15e06df1a2c2f5a8bf0491c6aedeb52"
@@ -43350,7 +43378,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/victory.mp3",
             "text": "（原檔）f046bc/00072-629363452",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.333084,
             "speakerSim": null,
             "hash": "026e5494adf329b25ef4ada6c427d9f1be52ad65c9c3a889fcb43057626c08f2"
@@ -43358,7 +43386,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/victory.2.mp3",
             "text": "（原檔）f046bc/00206-1944986174",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.293764,
             "speakerSim": null,
             "hash": "37c45de5102b33fea405840e5ea2042181c5abdf68d213ce639615f88a3e7b13"
@@ -43366,7 +43394,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-leesin/victory.3.mp3",
             "text": "（原檔）f046bc/00181-1669230622",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.24585,
             "speakerSim": null,
             "hash": "30e61833b621839acb8f39fae58594f8866c526f8679e02b742c059ce2075f09"
@@ -43421,7 +43449,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/taunt.mp3",
             "text": "（原檔）a08e1d/00373-1013337541",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.094943,
             "speakerSim": null,
             "hash": "a0c788168f9453b6b76814882f35a1063d243e2c6057af9daaf52e37e03d20ff"
@@ -43431,7 +43459,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/attack-heavy.mp3",
             "text": "（原檔）a08e1d/00699-2009324577",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.195011,
             "speakerSim": null,
             "hash": "be5fd0b76a9897807e41ef7a82c1a9350db41a601a35d25c114c8aaad2d93f60"
@@ -43441,7 +43469,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/attack-light.mp3",
             "text": "（原檔）a08e1d/00037-83010775",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.562517,
             "speakerSim": null,
             "hash": "b8fbe1e6b0a2c54d3631df1cedbe13e55323bf1c9c9e2a50194825e58fefb1bf"
@@ -43451,7 +43479,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/defeat.mp3",
             "text": "（原檔）a08e1d/00460-1256654380",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.52381,
             "speakerSim": null,
             "hash": "f76c38c716a0664c3cc2f3b0e1c3693e97235a78b3aade86f6f2412210d025c1"
@@ -43459,7 +43487,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/defeat.2.mp3",
             "text": "（原檔）a08e1d/00592-1665949245",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.502676,
             "speakerSim": null,
             "hash": "eb755ed704f20ff8abf7a1982cc4bb96ca1e5a68f1f40ccfb3e1f9944fb37c75"
@@ -43467,7 +43495,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/defeat.3.mp3",
             "text": "（原檔）a08e1d/00559-1558282504",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.957438,
             "speakerSim": null,
             "hash": "b22c9d8ff4f8da4462eaa128b8d07e274c88909c6167134174ce74cf093c703d"
@@ -43477,7 +43505,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/hurt.mp3",
             "text": "（原檔）a08e1d/00662-1897737210",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.691678,
             "speakerSim": null,
             "hash": "69bbe4c901688aa593ea5de186c4794f1fa4f64c6313dfbc77c723d01fe9b45b"
@@ -43485,7 +43513,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/hurt.2.mp3",
             "text": "（原檔）a08e1d/00375-1019042998",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.683333,
             "speakerSim": null,
             "hash": "54e5ba7a7a3bcc39b1544642975eac748e671e7f3bdf68be521dc244980fec5f"
@@ -43495,7 +43523,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/hurt-heavy.mp3",
             "text": "（原檔）a08e1d/00386-1047527518",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.291678,
             "speakerSim": null,
             "hash": "30c8a01e6478dc18ad88cf700c751e4cde08004319cc89d529e55ddd1eb67c46"
@@ -43503,7 +43531,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/hurt-heavy.2.mp3",
             "text": "（原檔）a08e1d/00547-1520963052",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.248458,
             "speakerSim": null,
             "hash": "55e3d3ad0c19b9c84f73ad1a2a2faa61d8d947e5ab986cd1b0a7762ce025bb62"
@@ -43513,7 +43541,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/jump.mp3",
             "text": "（原檔）a08e1d/00000-351827",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.516667,
             "speakerSim": null,
             "hash": "329f611310d514759e3547fcbc20e9419a89679ab746a9aff91e2c9e21e63e5d"
@@ -43523,7 +43551,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/kill-1.mp3",
             "text": "（原檔）a08e1d/00013-25170149",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.170839,
             "speakerSim": null,
             "hash": "727d535982c4f06644b9ff5c6f33d23698b612462e858ea66688c478832321bb"
@@ -43533,7 +43561,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/quote.mp3",
             "text": "（原檔）a08e1d/00287-708962889",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.912517,
             "speakerSim": null,
             "hash": "2d70ccd8412f76ac597f7f6d914c320165bb9e91c6fc9482e26f33ab083bb4cf"
@@ -43541,7 +43569,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/quote.2.mp3",
             "text": "（原檔）a08e1d/00710-2036857663",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.356168,
             "speakerSim": null,
             "hash": "bb99f43370ae5b899196799cc72c434c3ec28acfdb62a1c2d1b4667108bfcba4"
@@ -43549,7 +43577,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/quote.3.mp3",
             "text": "（原檔）a08e1d/00534-1458679983",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.294354,
             "speakerSim": null,
             "hash": "d3e92f3c1b08351e4a0c539297fa87caaabaf4c3ece303e74d98f64f73857ef5"
@@ -43559,7 +43587,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/taunt.mp3",
             "text": "（原檔）a08e1d/00373-1013337541",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.094943,
             "speakerSim": null,
             "hash": "a0c788168f9453b6b76814882f35a1063d243e2c6057af9daaf52e37e03d20ff"
@@ -43567,7 +43595,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/taunt.2.mp3",
             "text": "（原檔）a08e1d/00481-1312619320",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5,
             "speakerSim": null,
             "hash": "ff6e3c62442f19c61e38f8b638b07dc1f079551cd5936ad235d6ed2be6e3d20d"
@@ -43575,7 +43603,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/taunt.3.mp3",
             "text": "（原檔）a08e1d/00152-364039369",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.774853,
             "speakerSim": null,
             "hash": "41204514bf7a8f786b30a9de72b6eb592fd3252aee34a9ae456d5c8948a30ebc"
@@ -43585,7 +43613,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/victory.mp3",
             "text": "（原檔）a08e1d/00159-394834437",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.525351,
             "speakerSim": null,
             "hash": "95c4f01136829c18481df1b02c1e84d2b1e46c6a3a180008f7841788ff980603"
@@ -43593,7 +43621,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/victory.2.mp3",
             "text": "（原檔）a08e1d/00075-164778004",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.359002,
             "speakerSim": null,
             "hash": "22ae6523e1dd38c15e613940ecdb7d43b6659314bbc0b94101b6cb1358069b90"
@@ -43601,7 +43629,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-lux/victory.3.mp3",
             "text": "（原檔）a08e1d/00042-89167983",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.578186,
             "speakerSim": null,
             "hash": "06649a5171ff2d19358e231c0f4a63880851aaa00686754468ba78b1a8e713a6"
@@ -43656,7 +43684,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/taunt.mp3",
             "text": "（原檔）dfe023/00147-986620118",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.783311,
             "speakerSim": null,
             "hash": "5317ae8863da532603d932a64eb1fe50c9ff2c269ffeef71a80fbbad73b08aac"
@@ -43666,7 +43694,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/attack-heavy.mp3",
             "text": "（原檔）dfe023/00237-1672849677",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.923628,
             "speakerSim": null,
             "hash": "bb53a0813ff7add57819a90e9bed1527554fd9d30df7cb2df3e757663da59998"
@@ -43676,7 +43704,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/attack-light.mp3",
             "text": "（原檔）dfe023/00295-2139853312",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.583741,
             "speakerSim": null,
             "hash": "77b16203f11f44bee557aecb6f1b3f06384aad02ce6632ce711566218dec8476"
@@ -43686,7 +43714,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/defeat.mp3",
             "text": "（原檔）dfe023/00013-44743934",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.497256,
             "speakerSim": null,
             "hash": "5a2e5ae37046c9637a41a5f9b66608e87af54a56c9f7420b4f269acc3c6d5991"
@@ -43694,7 +43722,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/defeat.2.mp3",
             "text": "（原檔）dfe023/00085-475692727",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.128254,
             "speakerSim": null,
             "hash": "6d7bce21578b05497efe23262c03c2f42fd754839bd0703f2444225cc787c30c"
@@ -43702,7 +43730,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/defeat.3.mp3",
             "text": "（原檔）dfe023/00257-1864818944",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.121429,
             "speakerSim": null,
             "hash": "66934e8599040ad4b6a5d3c7a9c0a8b0019ae8435b7998a297a671c9e161c780"
@@ -43712,7 +43740,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/hurt.mp3",
             "text": "（原檔）dfe023/00175-1206610475",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.68932,
             "speakerSim": null,
             "hash": "aea20392ccdcd445e078a53e29379e5cc92142eded5111db819500670480abdd"
@@ -43720,7 +43748,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/hurt.2.mp3",
             "text": "（原檔）dfe023/00071-394948743",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.624853,
             "speakerSim": null,
             "hash": "92c1d10b901404d6a29370c530271983d32946fdf9cee27f255a1fbeed5d4a39"
@@ -43730,7 +43758,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/hurt-heavy.mp3",
             "text": "（原檔）dfe023/00072-405050065",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.031293,
             "speakerSim": null,
             "hash": "c35b4516770138acf2f4b9e3085b54a198e1251bcd7cc4e3ae6e440bdb8442ae"
@@ -43738,7 +43766,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/hurt-heavy.2.mp3",
             "text": "（原檔）dfe023/00123-716600395",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.979184,
             "speakerSim": null,
             "hash": "6772eb2821ea469f8586d9d8fbc554f20250f8ca50bc8648d2e43bdf9b94fa5e"
@@ -43748,7 +43776,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/jump.mp3",
             "text": "（原檔）dfe023/00279-1991419310",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.464943,
             "speakerSim": null,
             "hash": "b8a1ba0d3851b15ef7ba5dd525757a7a922dc0d9e42f231e011805e37e978afd"
@@ -43758,7 +43786,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/kill-1.mp3",
             "text": "（原檔）dfe023/00119-693520566",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.36839,
             "speakerSim": null,
             "hash": "7315b4a09a7aa899623199920567c48532b4fc1647a65691c7033722faa95698"
@@ -43768,7 +43796,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/quote.mp3",
             "text": "（原檔）dfe023/00243-1755056024",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.968889,
             "speakerSim": null,
             "hash": "ebb1e4177d78f55d6b79bf07b080858da68020538e4b01e536c3ed3c2c1c81fc"
@@ -43776,7 +43804,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/quote.2.mp3",
             "text": "（原檔）dfe023/00110-660483869",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.853084,
             "speakerSim": null,
             "hash": "7baae0857f7846d9a2f056b44aeec0be63710dc2e17d7a5b42c390bff8faabc6"
@@ -43784,7 +43812,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/quote.3.mp3",
             "text": "（原檔）dfe023/00188-1331655191",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.813583,
             "speakerSim": null,
             "hash": "0f4804743717c3f3c470da67acc244285ed10d402977128dc1a35b54aa21becb"
@@ -43794,7 +43822,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/taunt.mp3",
             "text": "（原檔）dfe023/00147-986620118",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.783311,
             "speakerSim": null,
             "hash": "5317ae8863da532603d932a64eb1fe50c9ff2c269ffeef71a80fbbad73b08aac"
@@ -43802,7 +43830,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/taunt.2.mp3",
             "text": "（原檔）dfe023/00201-1421927930",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.729864,
             "speakerSim": null,
             "hash": "16cdc8dba1c5301112225383caea30d25e25591d72808a8fbf263658d14faca0"
@@ -43810,7 +43838,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/taunt.3.mp3",
             "text": "（原檔）dfe023/00111-664546967",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.728889,
             "speakerSim": null,
             "hash": "386b0e55e1f77a7e936401013cfde4d5089f52d9d02613fd305b04b34857ad0e"
@@ -43820,7 +43848,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/victory.mp3",
             "text": "（原檔）dfe023/00289-2040222152",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.637642,
             "speakerSim": null,
             "hash": "d27cce065744ba4e3eb1149ea91c5490acf9fd5a5754f9ff433290f370d7a172"
@@ -43828,7 +43856,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/victory.2.mp3",
             "text": "（原檔）dfe023/00170-1171883945",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.520249,
             "speakerSim": null,
             "hash": "14a4c836439130eb89c5e589201d74d17f07a0615ba075d31028713372f5b1d9"
@@ -43836,7 +43864,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-missfortune/victory.3.mp3",
             "text": "（原檔）dfe023/00262-1895295014",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.495601,
             "speakerSim": null,
             "hash": "be4b3f58c9c783ff96ac5394b899a13bb5c1e508948167fecba5f5541287abbd"
@@ -43895,7 +43923,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/taunt.mp3",
             "text": "（原檔）b49dee/00077-874765889",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.353923,
             "speakerSim": null,
             "hash": "949e10e7c83fe50c5d53455c8ca3f0c86f76819886a615f18a11983f7ae29313"
@@ -43905,7 +43933,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/attack-heavy.mp3",
             "text": "（原檔）b49dee/00104-1208055973",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.184853,
             "speakerSim": null,
             "hash": "7e62febc7871453d211a1b3f8ed86212455d465dd3b04362d234e6be141b5314"
@@ -43915,7 +43943,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/defeat.mp3",
             "text": "（原檔）b49dee/00122-1567358002",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.166961,
             "speakerSim": null,
             "hash": "d77ca90c1387e57dd06de66e13815f8c6cbbea97f2ab8d816aa5998c2c517c99"
@@ -43923,7 +43951,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/defeat.2.mp3",
             "text": "（原檔）b49dee/00022-279358554",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.148594,
             "speakerSim": null,
             "hash": "13e31104a47db04bf248d18eeaa0a25374586e6d9e45cc1906e2f39bcaa7fc60"
@@ -43933,7 +43961,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/hurt-heavy.mp3",
             "text": "（原檔）b49dee/00068-759620751",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.245147,
             "speakerSim": null,
             "hash": "dc5a63a01d5ff65b9102448a5e26a29dfadcc398a9c2c7bc91e2e9b5eeaf058f"
@@ -43941,7 +43969,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/hurt-heavy.2.mp3",
             "text": "（原檔）b49dee/00014-192735419",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.225986,
             "speakerSim": null,
             "hash": "7dc9b0f47248397f4666835be990f49abd606588f38ad89eeba707dfacc0d6f1"
@@ -43951,7 +43979,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/kill-1.mp3",
             "text": "（原檔）b49dee/00103-1197012657",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.866213,
             "speakerSim": null,
             "hash": "5eb7630e4f75f5a73afb5c19c98c4c220045563fef705d92c7efbed30a7c0cce"
@@ -43961,7 +43989,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/quote.mp3",
             "text": "（原檔）b49dee/00144-1947782139",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.910227,
             "speakerSim": null,
             "hash": "2d646e970638523a506774fdff7641ac890d6b46fdb56742dd792ebd9ccb849e"
@@ -43969,7 +43997,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/quote.2.mp3",
             "text": "（原檔）b49dee/00032-354107152",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.39288,
             "speakerSim": null,
             "hash": "a7871a7906d3488c6b0fef1bba986f4b9f730395e572969794f1db9a8b03d9bd"
@@ -43977,7 +44005,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/quote.3.mp3",
             "text": "（原檔）b49dee/00131-1733212436",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.376667,
             "speakerSim": null,
             "hash": "df190f06ab2084f94cbedaeb03dff9bb7b548279b01a6b0e19fccd38f819b6da"
@@ -43987,7 +44015,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/taunt.mp3",
             "text": "（原檔）b49dee/00077-874765889",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.353923,
             "speakerSim": null,
             "hash": "949e10e7c83fe50c5d53455c8ca3f0c86f76819886a615f18a11983f7ae29313"
@@ -43995,7 +44023,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/taunt.2.mp3",
             "text": "（原檔）b49dee/00114-1465240279",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.273923,
             "speakerSim": null,
             "hash": "0b486cc824cfadca508a3b53ab3afb338227a2bad6b2dbb96c2e9f94e0034d55"
@@ -44003,7 +44031,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-warwick/taunt.3.mp3",
             "text": "（原檔）b49dee/00012-164801319",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.140499,
             "speakerSim": null,
             "hash": "4e22ecd207ecd21949755dae81a035ba890336d2515c5697fb20383f5d61154c"
@@ -44062,7 +44090,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/taunt.mp3",
             "text": "（原檔）51d146/00026-623881657",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.866803,
             "speakerSim": null,
             "hash": "9ba73d26d9bc0edfe8ec5c82232b60d8a973bd252bb888d33c51b8ba0638b034"
@@ -44072,7 +44100,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/attack-heavy.mp3",
             "text": "（原檔）51d146/00035-827724831",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.727392,
             "speakerSim": null,
             "hash": "0ad4d00435ead367c93188e62bcc1c08d2d5294bccd7baf05ad12cea2e19ce69"
@@ -44082,7 +44110,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/hurt.mp3",
             "text": "（原檔）51d146/00044-953017791",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.49068,
             "speakerSim": null,
             "hash": "40144898b668f889cde59538bd43e476757101725025a449d3b427f4b66d67c8"
@@ -44092,7 +44120,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/hurt-heavy.mp3",
             "text": "（原檔）51d146/00024-566648896",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.813741,
             "speakerSim": null,
             "hash": "b3c6342f4afcad59e57f8dd1e1e74438e4c5ab59f6d2ef1cd9c9302fce57de19"
@@ -44100,7 +44128,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/hurt-heavy.2.mp3",
             "text": "（原檔）51d146/00010-276258939",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.78322,
             "speakerSim": null,
             "hash": "edef9464165e76126c8996b298b4f136727722d915529dedb6a41bfbdc9f68c1"
@@ -44110,7 +44138,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/kill-1.mp3",
             "text": "（原檔）51d146/00062-1395721266",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 4.739819,
             "speakerSim": null,
             "hash": "951db94fd3089bd7ab2de179e5e509a758739edddd7f28dabf383beaa9e5a1f3"
@@ -44120,7 +44148,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/quote.mp3",
             "text": "（原檔）51d146/00013-375078456",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.94576,
             "speakerSim": null,
             "hash": "2770b9935150695675d3c74245fef717d606a1830e2f3d8ec986f62c02e7ed4a"
@@ -44128,7 +44156,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/quote.2.mp3",
             "text": "（原檔）51d146/00065-1472095359",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.898662,
             "speakerSim": null,
             "hash": "59b23473575fad535b4a6fdbcf1a5f3d371a301f7ea5ccdcba15b8c711138da8"
@@ -44136,7 +44164,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/quote.3.mp3",
             "text": "（原檔）51d146/00052-1133560666",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.889252,
             "speakerSim": null,
             "hash": "36e7548b32ff9520d32a89e20e1870e2cc17855efe4e38a0a0e78e0214404631"
@@ -44146,7 +44174,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/taunt.mp3",
             "text": "（原檔）51d146/00026-623881657",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.866803,
             "speakerSim": null,
             "hash": "9ba73d26d9bc0edfe8ec5c82232b60d8a973bd252bb888d33c51b8ba0638b034"
@@ -44154,7 +44182,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/taunt.2.mp3",
             "text": "（原檔）51d146/00003-85732516",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.849229,
             "speakerSim": null,
             "hash": "ed8cee1c2d40ae2e777f9f7949fe99b398e55c905226454409e9626304bee817"
@@ -44162,7 +44190,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-xerath/taunt.3.mp3",
             "text": "（原檔）51d146/00054-1235708491",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.750862,
             "speakerSim": null,
             "hash": "3003bff528243768422916d0ab0673ca6527a44685f92d3c99df9d56fbbc05ba"
@@ -44221,7 +44249,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/taunt.mp3",
             "text": "（原檔）63fc90/00182-1449621807",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.697007,
             "speakerSim": null,
             "hash": "1cf27873a73f097cf16a1c0ba7b549880361becedb1c22698c1058b6acf5a824"
@@ -44231,7 +44259,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/attack-heavy.mp3",
             "text": "（原檔）63fc90/00191-1491422125",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.174354,
             "speakerSim": null,
             "hash": "e1a414d4dd88f00b75b63c1ed01f42532157bd577deb35c8ef552e47121607e4"
@@ -44241,7 +44269,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/hurt.mp3",
             "text": "（原檔）63fc90/00209-1593357960",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 0.673016,
             "speakerSim": null,
             "hash": "2bd232a4cc068702f3e74300da35546e321ff3e49939416f495f3d561b8fc647"
@@ -44251,7 +44279,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/hurt-heavy.mp3",
             "text": "（原檔）63fc90/00145-1194290517",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.203673,
             "speakerSim": null,
             "hash": "fe378b83c2f78d417ca56dd4723d24bf0605bcc0a7c29e60c0b2aab4e136262d"
@@ -44259,7 +44287,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/hurt-heavy.2.mp3",
             "text": "（原檔）63fc90/00269-2133458323",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 1.185011,
             "speakerSim": null,
             "hash": "b8b5bd2c95dd2c9e477d7db782ab5829f6313461e0cf7978ac0e3738d0d876b7"
@@ -44269,7 +44297,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/quote.mp3",
             "text": "（原檔）63fc90/00018-152596570",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.779683,
             "speakerSim": null,
             "hash": "bbba5b8b71d895c0af4282afd022c8d59e38d00980c83e88d6a975400d5d1c3a"
@@ -44277,7 +44305,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/quote.2.mp3",
             "text": "（原檔）63fc90/00077-646001144",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.726349,
             "speakerSim": null,
             "hash": "da853f1088b8b21e7adc9fa36ae760ad0fa8cd79a3803e7f8207a10a471939f0"
@@ -44285,7 +44313,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/quote.3.mp3",
             "text": "（原檔）63fc90/00125-1056979916",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.699683,
             "speakerSim": null,
             "hash": "c125f8bb84619608f1867e7fa4b1937573a04c1dbd24c40e808e75ac5e89f154"
@@ -44295,7 +44323,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/taunt.mp3",
             "text": "（原檔）63fc90/00182-1449621807",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.697007,
             "speakerSim": null,
             "hash": "1cf27873a73f097cf16a1c0ba7b549880361becedb1c22698c1058b6acf5a824"
@@ -44303,7 +44331,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/taunt.2.mp3",
             "text": "（原檔）63fc90/00055-433557619",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.638345,
             "speakerSim": null,
             "hash": "64802109fdc08ef02a7e46f034b658af6aa0f439670e4c741a039c8f77a4eb9c"
@@ -44311,7 +44339,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/taunt.3.mp3",
             "text": "（原檔）63fc90/00009-37223449",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 5.60102,
             "speakerSim": null,
             "hash": "6d6730a3314dfc03b7bb64338502829d745ffdbf150e0d36ee82e90007e5ae77"
@@ -44321,7 +44349,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/victory.mp3",
             "text": "（原檔）63fc90/00166-1338572262",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 3.609002,
             "speakerSim": null,
             "hash": "40a8ec56f128ae1ffc91ed43aca980ec032ad06c8173fcfdf05d731f591b12dc"
@@ -44329,7 +44357,7 @@
           {
             "clip": "assets/audio/voices/lines/lol-yasuo/victory.2.mp3",
             "text": "（原檔）63fc90/00137-1111095032",
-            "lang": "ja",
+            "lang": "und",
             "durationSec": 2.345011,
             "speakerSim": null,
             "hash": "1df848ea8d7cc3d28086ee7ef51ab0a21a5932fad230f7de06d321fa06966a61"

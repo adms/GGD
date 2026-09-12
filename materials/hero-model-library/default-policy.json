@@ -1,0 +1,342 @@
+{
+  "schema": "ggd-hero-model-default-policy@1",
+  "priority": [
+    "manual",
+    "canonical-game",
+    "community-mod",
+    "retextured-proxy",
+    "similar-proxy",
+    "300heroes",
+    "mba",
+    "original",
+    "w3x"
+  ],
+  "unapprovedStyleProxy": "candidate-only",
+  "existingModelFallback": "preserve-existing-binding-without-claiming-new-approval",
+  "paidDownloadRule": "Acquisition/payment authorization is separate from model default priority. Review acquired versions before repeat purchase.",
+  "approvedDerivatives": [
+    {
+      "heroId": "community-review-03-20260907",
+      "sourceId": "derivative:mai",
+      "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "name": "不知火舞",
+      "source": "不知火舞（獨立副本／真田幸村）",
+      "changes": "白色衣料改紅色"
+    },
+    {
+      "heroId": "community-review-06-20260907",
+      "sourceId": "derivative:kirby",
+      "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "name": "卡比",
+      "source": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+      "changes": "完整複製 pink-round 程序化替身"
+    },
+    {
+      "heroId": "community-review-31-20260907",
+      "sourceId": "derivative:sunraku",
+      "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "name": "SUN樂",
+      "source": "SUN樂（獨立副本／哈桑）",
+      "changes": "褲子與頭改藍色，上半身改膚色"
+    },
+    {
+      "heroId": "community-review-32-20260907",
+      "sourceId": "derivative:azazel",
+      "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "name": "阿薩謝爾",
+      "source": "阿薩謝爾（獨立副本／喜羊羊）",
+      "changes": "上半身咖啡色、下半身深咖啡色"
+    },
+    {
+      "heroId": "b2-popp",
+      "sourceId": "derivative:popp",
+      "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "name": "何布",
+      "source": "何布（獨立副本／李小狼）",
+      "changes": "完整複製李小狼模型與貼圖"
+    },
+    {
+      "heroId": "b2-albus",
+      "sourceId": "derivative:albus",
+      "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "name": "阿爾巴斯",
+      "source": "阿爾巴斯（獨立副本／尤吉欧）",
+      "changes": "完整複製尤吉歐模型與貼圖"
+    },
+    {
+      "heroId": "b2-goblin",
+      "sourceId": "derivative:goblin",
+      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "name": "哥布林殺手",
+      "source": "哥布林殺手（獨立副本／尤吉欧）",
+      "changes": "完整複製尤吉歐，右手小劍、左手小盾"
+    },
+    {
+      "heroId": "b2-yogiri",
+      "sourceId": "derivative:yogiri",
+      "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "name": "高遠夜霧",
+      "source": "高遠夜霧（獨立副本／富樫勇太）",
+      "changes": "完整複製富樫勇太模型與貼圖"
+    },
+    {
+      "heroId": "b2-takopi",
+      "sourceId": "derivative:takopi",
+      "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "name": "章魚嗶",
+      "source": "章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）",
+      "changes": "八爪魚全身粉紅，修復原生損壞動畫"
+    },
+    {
+      "heroId": "b2-misery",
+      "sourceId": "derivative:misery",
+      "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "name": "米瑟利",
+      "source": "米瑟利（獨立副本／优克莉伍德）",
+      "changes": "完整複製優克莉伍德模型與貼圖"
+    },
+    {
+      "heroId": "b2-bojji",
+      "sourceId": "derivative:bojji",
+      "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "name": "波吉",
+      "source": "波吉（獨立副本／小桐人寵物）",
+      "changes": "小桐人上半身藍色、下半身白色"
+    }
+  ],
+  "priorityLabels": {
+    "manual": "手動指定模型",
+    "canonical-game": "原著模型",
+    "community-mod": "MOD社群修改",
+    "retextured-proxy": "相似模型貼圖修改",
+    "similar-proxy": "相似模型",
+    "300heroes": "300英雄",
+    "mba": "MBA",
+    "original": "原版",
+    "w3x": "借用 W3X 選用"
+  },
+  "canonicalGameDefinition": "原作遊戲直接擷取；300／MBA 仍按第 6／7 位，不因角色本尊改列第 2 位。",
+  "sourceClassOverrides": {
+    "lol:karthus": "canonical-game",
+    "lol:lux": "canonical-game",
+    "lol:missfortune": "canonical-game",
+    "lol:xerath": "canonical-game"
+  },
+  "approvedDerivativePriority": "manual",
+  "manualSelectionOverridesAutomatic": true,
+  "sourceTierPreserved": true,
+  "sameClassPriority": {
+    "field": "sourceGameReleasedAt",
+    "order": "descending",
+    "unknownDates": "after-verified-dates",
+    "evidenceField": "sourceGameReleaseReference",
+    "useUploadOrRegistrationDateAsGameDate": false,
+    "preserveAllAlternatives": true,
+    "manualSelectionStillWins": true
+  },
+  "approvedWorkflowDefaults": [
+    {
+      "heroId": "b2-noor",
+      "sourceId": "ou99:453949",
+      "modelKey": "ou99.453949-standard-v2",
+      "sha256": "14d9219f16bcf80b7aa49896802b3e80e2be43d7a42c87f9bd3649f0cdc6f25b",
+      "name": "諾爾",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-uncle",
+      "sourceId": "ou99:454482",
+      "modelKey": "ou99.454482-standard-v2",
+      "sha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016",
+      "name": "異世界舅舅",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-ned",
+      "sourceId": "ou99:456917",
+      "modelKey": "ou99.456917-standard-v2",
+      "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+      "name": "青蛙劍士 Ned",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-luckyman",
+      "sourceId": "ou99:457594",
+      "modelKey": "ou99.457594-standard-v2",
+      "sha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+      "name": "幸運超人",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-keyaru",
+      "sourceId": "ou99:458777",
+      "modelKey": "ou99.458777-standard-v3",
+      "sha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+      "name": "凱亞爾",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-touka",
+      "sourceId": "ou99:459257",
+      "modelKey": "ou99.459257-standard-v2",
+      "sha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+      "name": "托卡・史考特",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-37-20260907",
+      "sourceId": "ou99:459617",
+      "modelKey": "ou99.459617-standard",
+      "sha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "name": "吉伊卡哇",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-matthias",
+      "sourceId": "ou99:465884",
+      "modelKey": "ou99.465884-standard",
+      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+      "name": "馬提亞斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-fushi",
+      "sourceId": "ou99:467227",
+      "modelKey": "ou99.467227-standard",
+      "sha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564",
+      "name": "不死",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-33-20260907",
+      "sourceId": "ou99:470087",
+      "modelKey": "ou99.470087-standard-v2",
+      "sha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0",
+      "name": "近衛刀太",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-elma",
+      "sourceId": "ou99:472038",
+      "modelKey": "ou99.472038-standard-v2",
+      "sha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+      "name": "艾爾瑪",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-aladdin",
+      "sourceId": "ou99:473324",
+      "modelKey": "ou99.473324-standard-v3",
+      "sha256": "5d74e8585b102acbef005e9730f1de6b9360136ea7af7ebbefb95b771d72a2b5",
+      "name": "阿拉丁",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-kaede",
+      "sourceId": "ou99:474258",
+      "modelKey": "ou99.474258-standard",
+      "sha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "name": "楓",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-makoto",
+      "sourceId": "ou99:478642",
+      "modelKey": "ou99.478642-standard",
+      "sha256": "63a6ff5922c9b41957a371005e12d09c2a1ab74a3aec909c1019628b6f2f251f",
+      "name": "深澄真",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-shadow",
+      "sourceId": "ou99:481732",
+      "modelKey": "ou99.481732-standard-v2",
+      "sha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+      "name": "闇影",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-nube",
+      "sourceId": "ou99:487484",
+      "modelKey": "ou99.487484-standard",
+      "sha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a",
+      "name": "鵺野鳴介",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-klaus",
+      "sourceId": "ou99:487487-7yzc0mtk",
+      "modelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "sha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+      "name": "克勞斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-klaus",
+      "sourceId": "ou99:487487-sbhhkedr",
+      "modelKey": "ou99.487487-sbhhkedr-standard",
+      "sha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
+      "name": "克勞斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-boxxo",
+      "sourceId": "ou99:491448",
+      "modelKey": "ou99.491448-standard-v3",
+      "sha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+      "name": "阿箱＋拉蜜絲",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-36-20260907",
+      "sourceId": "ou99:493578",
+      "modelKey": "ou99.493578-standard-v2",
+      "sha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894",
+      "name": "鬼畜王蘭斯",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-haga",
+      "sourceId": "ou99:495015",
+      "modelKey": "ou99.495015-standard",
+      "sha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+      "name": "羽賀",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-orphen",
+      "sourceId": "ou99:496452",
+      "modelKey": "ou99.496452-standard-v2",
+      "sha256": "97027136b013f2da63d8357b72914155336ec5ff674abdf93e51643cc461d501",
+      "name": "歐菲",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "community-review-30-20260907",
+      "sourceId": "ou99:498214",
+      "modelKey": "ou99.498214-standard-v2",
+      "sha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d",
+      "name": "尼古貓貓",
+      "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
+    },
+    {
+      "heroId": "b2-haga",
+      "sourceId": "runtime:haga-native-visibility-v1",
+      "modelKey": "ou99.495015-native-visibility-v1",
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "name": "羽賀",
+      "approval": "既有核准相似模型的顯隱修復版本；沿用既有身分及來源順位，未增加新的手動指定角色。"
+    }
+  ]
+}

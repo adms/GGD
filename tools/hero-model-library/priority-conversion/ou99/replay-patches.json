@@ -1,0 +1,26 @@
+{
+  "schema": "ggd-source-replay-patches@1",
+  "reason": "PR 1152 no-constant-condition lint errors in maintained replay copies; frozen source files and their receipts remain unchanged.",
+  "files": [
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-priority10-front.mjs",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-front-audit-20260910/tools/ggd-ou99-priority10-front.mjs",
+      "sourceSha256": "630c898a86b256431088087667e1c92bd4c69738b1795a3125893dcec707d2f1",
+      "sourceBytes": 3252,
+      "replaySha256": "3339862c180a39bb7acf7d95ea30173c672ee22cc71ed90701b2ac690a247d10",
+      "replayBytes": 3244,
+      "operation": "Replace the single 'if(true){' with '{'; preserve the executed block and lexical scope.",
+      "sourceModified": false
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-priority10-visual.mjs",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-priority10-visual-audit-20260910/tools/ggd-ou99-priority10-visual.mjs",
+      "sourceSha256": "cd20ceecc132c10e9ef7ee4dceb5462698cefdd5faad886ad3d7e51156f21afe",
+      "sourceBytes": 3229,
+      "replaySha256": "ec4858207d40695d4eb8adab9d1e0ae664c996bbaf01b538f20d0c215c885b56",
+      "replayBytes": 3221,
+      "operation": "Replace the single 'if(true){' with '{'; preserve the executed block and lexical scope.",
+      "sourceModified": false
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_e500d28fdb68`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_a1b9fd70d2a4`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**907**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
 `content/abilities/*.json` 共 **907** 份，每個英雄每個 slot 一份：天生 PASSIVE 150　·　Q 152　·　W 152　·　E 152　·　R 152　·　EX 149。
@@ -492,7 +492,7 @@
 | `godie-e008.ex` | 21-002 天破壤碎 | EX | 主動 | 21-002 | `godie-e008` 夏娜 | ✅ | 以燃燒火霧戰士的心臟為祭品，讓身為紅世「天罰神」的阿拉斯托爾得以直接在現世顯現並不受現世影響發揮全部實力。 |
 | `godie-e00l.passive` | 20-00 銀色甲胄 | PASSIVE | 天生·被動 | 20-00 | `godie-e00l` Saber | — | Saber魔力化的銀色鎧甲讓Saber有相當良好的魔法抗性，當Saber魔力高於30%最大值時，有50%機率抵消(50+S… |
 | `godie-e00l.q` | 20-02 感知能力 | Q | 被動 | 20-02 | `godie-e00l` Saber | — | 受到物理攻擊時有7%機率可迴避物理攻擊。 |
-| `godie-e00l.w` | 20-01 風王結界 | W | 被動 | 20-01 | `godie-e00l` Saber | — | [切換] 開關型 · 冷卻 30 秒 · 開關本身不花半點法力 |
+| `godie-e00l.w` | 20-01 風王結界 | W | 被動 | 20-01 | `godie-e00l` Saber | — | [切換] 開關型 · 冷卻 60 秒 · 開關本身不花半點法力 |
 | `godie-e00l.e` | 20-03 約束與勝利之劍 | E | 主動 | 20-03 | `godie-e00l` Saber | — | [主動][指向][範圍][AP加成] |
 | `godie-e00l.r` | 20-04 Avalon-永恆的理想鄉 | R | 主動 | 20-04 | `godie-e00l` Saber | — | [主動][輔助][反彈][AP加成] |
 | `godie-e00l.ex` | 20-002 解放.約束勝利劍MAX | EX | 被動 | 20-002 | `godie-e00l` Saber | — | [被動][指向][範圍][反彈][反彈成功時][AP加成] |

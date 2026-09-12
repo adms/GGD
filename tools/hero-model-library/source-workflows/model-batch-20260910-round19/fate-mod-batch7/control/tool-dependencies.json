@@ -1,0 +1,13 @@
+{
+  "sourceExtractionHelper": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/extract_public_sources.py",
+  "unityConverter": {
+    "path": "control/tooling/ggd-fuc-convert-unity-outfit.py",
+    "bytes": 17886,
+    "sha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6"
+  },
+  "assimp": "6.0.0",
+  "UnityPy": "1.25.3",
+  "KhronosValidator": "gltf-validator@2.0.0-dev.3.10; maxIssues=0",
+  "execution": "No archive-provided code, game, MOD assembly or script was executed. Parsing/conversion tools only.",
+  "frozenToolCaveat": "Converters retain task-local path assumptions. Reuse by adapting copied tools in a new batch; never regenerate into this frozen root."
+}

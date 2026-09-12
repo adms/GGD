@@ -416,7 +416,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-boxxo",
-  "modelKey": "version.body.115a4c5a7e643388bd988c1caab582482f6d1175616a0437",
+  "modelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
   "name": "阿箱＋拉蜜絲",
   "origin": "硬輔",
   "passiveAbility": "b2-boxxo.passive",
@@ -462,6 +462,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-491448-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.491448",
+      "modelSha256": "f620019299ac8f62484949f295cf13cf04f7dc595c8af1302c26d74059889dc8",
+      "binarySha256": "772649dc32c92d80a8d348dbe46e52cbf935cab99d8d3678b9f9832171875d51",
+      "registeredAt": "2026-09-10T14:45:35.685Z",
+      "source": {
+        "kind": "previous",
+        "character": "阿箱＋拉蜜絲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.491448.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.c4036c2ac7c92c6b4c6fba19ceb782a81eb63ec1a69d479d",
+      "label": "POD 機械寵物 06_pod",
+      "sourceModelKey": "community.body.4d64263f3044235d7aecedf3642860c37d061a06d95e0bc5",
+      "modelSha256": "58575949617e95d476f93171c2db843b8e67d3f80e8754b663c251b865bd067f",
+      "binarySha256": "bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f",
+      "registeredAt": "2026-09-10T14:45:35.687Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "POD 機械寵物 06_pod",
+        "work": "来源遊戲 300英雄；外觀近 NieR POD，出處未獨立確認",
+        "library": "300heroes",
+        "reference": "300heroes:15becf8ae6a0265a94b514f3",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
+      "label": "逃亡的盗墓女孩（論壇相似模型）",
+      "sourceModelKey": "ou99.491448-standard-v3",
+      "modelSha256": "30b7a77571e7be6a1fbf2f98613a908c3c1a1e83d1d84b45b8a5b7725392382d",
+      "binarySha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+      "registeredAt": "2026-09-10T15:02:41.101Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "逃亡的盗墓女孩",
+        "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-491448-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

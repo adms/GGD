@@ -1,0 +1,54 @@
+{
+  "mainCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "skillCatalogByteIdentical": true,
+  "usedInMain": {
+    "consumeStatus": [
+      "content/abilities/b2-aladdin.w.json",
+      "content/abilities/b2-bojji.r.json",
+      "content/abilities/b2-boxxo.w.json",
+      "content/abilities/b2-fushi.w.json",
+      "content/abilities/b2-haga.r.json",
+      "content/abilities/b2-kaede.ex.json",
+      "content/abilities/b2-kaiji.e.json",
+      "content/abilities/b2-keyaru.ex.json",
+      "content/abilities/b2-keyaru.w.json",
+      "content/abilities/b2-kisaragi.e.json",
+      "content/abilities/b2-klaus.ex.json",
+      "content/abilities/b2-makoto.r.json",
+      "content/abilities/b2-maomao.r.json",
+      "content/abilities/b2-matthias.ex.json",
+      "content/abilities/b2-misery.w.json",
+      "content/abilities/b2-naofumi.w.json",
+      "content/abilities/b2-noor.r.json",
+      "content/abilities/b2-noor.w.json",
+      "content/abilities/b2-popp.w.json",
+      "content/abilities/b2-rin.r.json",
+      "content/abilities/b2-rin.w.json",
+      "content/abilities/b2-shinchan.ex.json",
+      "content/abilities/b2-takopi.ex.json",
+      "content/abilities/b2-touka.r.json",
+      "content/abilities/b2-uncle.r.json",
+      "content/abilities/b2-yogiri.ex.json",
+      "content/abilities/b2-yogiri.w.json",
+      "content/abilities/b2-zenitsu.w.json"
+    ],
+    "evasion": [
+      "content/abilities/b2-bojji.q.json",
+      "content/abilities/b2-luckyman.e.json",
+      "content/abilities/b2-luckyman.q.json"
+    ],
+    "pull": [
+      "content/abilities/b2-goblin.w.json",
+      "content/abilities/b2-kisaragi.q.json",
+      "content/abilities/b2-noor.ex.json",
+      "content/abilities/b2-rem.q.json",
+      "content/abilities/b2-shadow.q.json"
+    ],
+    "spendHealth": [
+      "content/abilities/b2-elma.q.json",
+      "content/abilities/b2-fushi.q.json",
+      "content/abilities/b2-guts.w.json",
+      "content/abilities/b2-rem.e.json"
+    ]
+  }
+}

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+  "modelKey": "version.body.cf0570347305b3e13535d2b411bc17a0f9964f818c308554",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -308,5 +308,60 @@
     "magic"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-xerath.webp"
+  "icon": "assets/icons/champions/lol-xerath.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.909b7478ac8e5fee361d3e314ead3f544197d2ea23ccfa8f",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+      "modelSha256": "bc7b0ab9bc508c9d20a5bfd173c67e5d79cbfb492cb58f61217dc10608083ada",
+      "binarySha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+      "registeredAt": "2026-09-10T14:45:44.826Z",
+      "source": {
+        "kind": "previous",
+        "character": "齊勒斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.92c9d26b37ace95bb72963bc73b2b0e44218c7806d097ed6",
+      "label": "齊勒斯（LOL 原生模型）",
+      "sourceModelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+      "modelSha256": "14ba569083c687d64a9623c0c001d11a7df463267967a3c23ce46e636611252e",
+      "binarySha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+      "registeredAt": "2026-09-10T14:45:44.848Z",
+      "source": {
+        "kind": "exact",
+        "character": "齊勒斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-xerath.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.cf0570347305b3e13535d2b411bc17a0f9964f818c308554",
+      "label": "齊勒斯",
+      "sourceModelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+      "modelSha256": "116e94f6902046cba3981a01fb3eac748f7776bd70094cad9ad9286704c422f6",
+      "binarySha256": "1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc",
+      "registeredAt": "2026-09-10T14:45:44.969Z",
+      "source": {
+        "kind": "exact",
+        "character": "齊勒斯",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:xerath",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

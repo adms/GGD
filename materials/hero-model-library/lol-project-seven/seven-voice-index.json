@@ -1,0 +1,488 @@
+{
+  "schema": "ggd.project-seven-voice-subset@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
+  "sourceMetadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
+  "scopeConfig": "project-seven-config.json",
+  "sourceDelivery": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "relativePath": "deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "sha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda"
+  },
+  "audioFileIndex": {
+    "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
+    "reportSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
+    "rowsProperty": "files",
+    "rowNativeIdProperty": "nativeId"
+  },
+  "characters": [
+    {
+      "heroId": "example:karthus",
+      "name": "卡爾瑟斯",
+      "nativeId": "Karthus.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-karthus-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Karthus.ja_JP/wav/"
+      ],
+      "pcmWavCount": 225,
+      "seconds": 1102.4895918367351,
+      "sourceWad": "original-wads/Karthus.ja_JP.wad.client",
+      "sourceWadSha256": "2df91dd179c3ef23221b443319bfda4ff6472c003df10ec1bdc6f2fdea4fcdb2",
+      "nativeAudioBanks": 9,
+      "nativeWemCount": 225,
+      "nativeEventBindingReports": [
+        "event-bindings/karthus-base.json"
+      ],
+      "nativeEventBoundFiles": 135,
+      "nativeEventMappedEvents": 35,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    },
+    {
+      "heroId": "example:leesin",
+      "name": "李星",
+      "nativeId": "LeeSin.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-leesin-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/LeeSin.ja_JP/wav/"
+      ],
+      "pcmWavCount": 1069,
+      "seconds": 4757.531111111111,
+      "sourceWad": "original-wads/LeeSin.ja_JP.wad.client",
+      "sourceWadSha256": "8d76a9b90e941135a59b2ff9c3a805cc73580b1e6d8e7ba17e24120292257ef3",
+      "nativeAudioBanks": 24,
+      "nativeWemCount": 1069,
+      "nativeEventBindingReports": [
+        "event-bindings/leesin-base.json"
+      ],
+      "nativeEventBoundFiles": 151,
+      "nativeEventMappedEvents": 50,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    },
+    {
+      "heroId": "example:lux",
+      "name": "拉克絲",
+      "nativeId": "Lux.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-lux-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Lux.ja_JP/wav/"
+      ],
+      "pcmWavCount": 1142,
+      "seconds": 3473.1046712018183,
+      "sourceWad": "original-wads/Lux.ja_JP.wad.client",
+      "sourceWadSha256": "4c40d659dc32937835aeabd0dd10e7b08660430a5b2304b92fa54f96387f2ca9",
+      "nativeAudioBanks": 18,
+      "nativeWemCount": 1142,
+      "nativeEventBindingReports": [
+        "event-bindings/lux-base.json"
+      ],
+      "nativeEventBoundFiles": 104,
+      "nativeEventMappedEvents": 39,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    },
+    {
+      "heroId": "example:missfortune",
+      "name": "好運姐",
+      "nativeId": "MissFortune.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-missfortune-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/MissFortune.ja_JP/wav/"
+      ],
+      "pcmWavCount": 695,
+      "seconds": 2130.2731972789097,
+      "sourceWad": "original-wads/MissFortune.ja_JP.wad.client",
+      "sourceWadSha256": "00377249616a0f1021c4d56eee9ab2ed214fb88138c82ed0ffc55fc03f5a6da6",
+      "nativeAudioBanks": 15,
+      "nativeWemCount": 695,
+      "nativeEventBindingReports": [
+        "event-bindings/missfortune-base.json"
+      ],
+      "nativeEventBoundFiles": 35,
+      "nativeEventMappedEvents": 9,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    },
+    {
+      "heroId": "example:warwick",
+      "name": "沃維克",
+      "nativeId": "Warwick.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-warwick-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Warwick.ja_JP/wav/"
+      ],
+      "pcmWavCount": 531,
+      "seconds": 1848.2423303571418,
+      "sourceWad": "original-wads/Warwick.ja_JP.wad.client",
+      "sourceWadSha256": "ddcd7b2eb8dcc3ddc3018112e40fbbaee6454c84d390c35d34e745bf01c15817",
+      "nativeAudioBanks": 15,
+      "nativeWemCount": 531,
+      "nativeEventBindingReports": [
+        "event-bindings/warwick-base.json"
+      ],
+      "nativeEventBoundFiles": 159,
+      "nativeEventMappedEvents": 46,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    },
+    {
+      "heroId": "example:xerath",
+      "name": "齊勒斯",
+      "nativeId": "Xerath.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-xerath-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Xerath.ja_JP/wav/"
+      ],
+      "pcmWavCount": 223,
+      "seconds": 1060.2127210884355,
+      "sourceWad": "original-wads/Xerath.ja_JP.wad.client",
+      "sourceWadSha256": "bde0ced1ff6858fd410767ad792a2bb532e49bff04c880936aed4c8fff483efb",
+      "nativeAudioBanks": 8,
+      "nativeWemCount": 223,
+      "nativeEventBindingReports": [
+        "event-bindings/xerath-base.json"
+      ],
+      "nativeEventBoundFiles": 79,
+      "nativeEventMappedEvents": 24,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    },
+    {
+      "heroId": "example:yasuo",
+      "name": "犽宿",
+      "nativeId": "Yasuo.ja_JP",
+      "work": "League of Legends",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "groupIds": [
+        "lol-yasuo-ja-jp-16-18-8159717"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Yasuo.ja_JP/wav/"
+      ],
+      "pcmWavCount": 1042,
+      "seconds": 4239.575510204076,
+      "sourceWad": "original-wads/Yasuo.ja_JP.wad.client",
+      "sourceWadSha256": "3f3a63baac496f2ae63a3e0b83a081654da7385f8e82044a36e3377f01f697e0",
+      "nativeAudioBanks": 24,
+      "nativeWemCount": 1042,
+      "nativeEventBindingReports": [
+        "event-bindings/yasuo-base.json"
+      ],
+      "nativeEventBoundFiles": 91,
+      "nativeEventMappedEvents": 29,
+      "eventBindingCoverage": "partial-by-skin",
+      "modelDefaultChanged": false,
+      "languageVerified": false,
+      "speakerVerified": false,
+      "confirmedVoiceCount": null,
+      "transcriptStatus": "not-transcribed",
+      "synthesisReady": false,
+      "englishPackageAcquired": false
+    }
+  ],
+  "audioGroups": [
+    {
+      "id": "lol-karthus-ja-jp-16-18-8159717",
+      "name": "League of Legends / Karthus / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:karthus"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Karthus.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    },
+    {
+      "id": "lol-leesin-ja-jp-16-18-8159717",
+      "name": "League of Legends / LeeSin / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:leesin"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/LeeSin.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    },
+    {
+      "id": "lol-lux-ja-jp-16-18-8159717",
+      "name": "League of Legends / Lux / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:lux"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Lux.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    },
+    {
+      "id": "lol-missfortune-ja-jp-16-18-8159717",
+      "name": "League of Legends / MissFortune / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:missfortune"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/MissFortune.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    },
+    {
+      "id": "lol-warwick-ja-jp-16-18-8159717",
+      "name": "League of Legends / Warwick / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:warwick"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Warwick.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    },
+    {
+      "id": "lol-xerath-ja-jp-16-18-8159717",
+      "name": "League of Legends / Xerath / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:xerath"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Xerath.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    },
+    {
+      "id": "lol-yasuo-ja-jp-16-18-8159717",
+      "name": "League of Legends / Yasuo / ja_JP / 16.18.8159717",
+      "heroIds": [
+        "example:yasuo"
+      ],
+      "pathPrefixes": [
+        "audio/decoded/Yasuo.ja_JP/wav/"
+      ],
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "Riot official manifest flag ja_JP; per-clip listening pending",
+      "speakerVerified": false,
+      "languageVerified": false
+    }
+  ],
+  "nativeEventBindingReports": [
+    {
+      "path": "event-bindings/karthus-base.json",
+      "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d",
+      "heroId": "example:karthus",
+      "nativeId": "Karthus",
+      "skinId": "skin0",
+      "mappedEvents": 35,
+      "mappedWemIds": 135,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "event-bindings/leesin-base.json",
+      "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735",
+      "heroId": "example:leesin",
+      "nativeId": "LeeSin",
+      "skinId": "skin0",
+      "mappedEvents": 50,
+      "mappedWemIds": 151,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "event-bindings/lux-base.json",
+      "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3",
+      "heroId": "example:lux",
+      "nativeId": "Lux",
+      "skinId": "skin0",
+      "mappedEvents": 39,
+      "mappedWemIds": 104,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "event-bindings/missfortune-base.json",
+      "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9",
+      "heroId": "example:missfortune",
+      "nativeId": "MissFortune",
+      "skinId": "skin0",
+      "mappedEvents": 9,
+      "mappedWemIds": 35,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "event-bindings/warwick-base.json",
+      "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a",
+      "heroId": "example:warwick",
+      "nativeId": "Warwick",
+      "skinId": "skin0",
+      "mappedEvents": 46,
+      "mappedWemIds": 159,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "event-bindings/xerath-base.json",
+      "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36",
+      "heroId": "example:xerath",
+      "nativeId": "Xerath",
+      "skinId": "skin0",
+      "mappedEvents": 24,
+      "mappedWemIds": 79,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    },
+    {
+      "path": "event-bindings/yasuo-base.json",
+      "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4",
+      "heroId": "example:yasuo",
+      "nativeId": "Yasuo",
+      "skinId": "skin0",
+      "mappedEvents": 29,
+      "mappedWemIds": 91,
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "ggdSkillSemanticBindingsVerified": false
+    }
+  ],
+  "totals": {
+    "completeWads": 7,
+    "completeAudioWads": 7,
+    "nonAudioWads": 0,
+    "pcmWavCount": 4927,
+    "audioSeconds": 18611.429133078203,
+    "audioBytes": 5429873080,
+    "nativeWemFiles": 4927,
+    "nativeBanks": 113,
+    "filesWithSamplesAboveUnity": 2264,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "exactPcm16Recoveries": 0,
+    "packagesWithUnresolvedErrors": 0,
+    "nativeEventBindingReports": 7,
+    "nativeEventBoundUniqueFiles": 754,
+    "nativeEventMappedEvents": 232
+  },
+  "scope": {
+    "fullRosterEnabled": false,
+    "englishEnabled": false,
+    "heroIds": [
+      "example:karthus",
+      "example:leesin",
+      "example:lux",
+      "example:missfortune",
+      "example:warwick",
+      "example:xerath",
+      "example:yasuo"
+    ]
+  },
+  "notes": [
+    "Resolve every PCM path from sourceDelivery.files against localRoot.",
+    "This index references complete original native and PCM files; no audio is synthesized or duplicated.",
+    "Native event reports prove only the listed skin and WEM relationships; speaker, per-clip language, transcript and GGD skill binding remain pending.",
+    "Seven Japanese source packages only; older full-roster files remain preserved outside this subset."
+  ]
+}

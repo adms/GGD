@@ -1,0 +1,53 @@
+{
+  "schema": "ggd.kisaragi-train-validation@1",
+  "baselineCommit": "00d7d66fbc0f4013f319f70466c8f5ff8395531a",
+  "requiredChecksInitiallyRunConcurrently": true,
+  "skillsRecheckedAfterGeneratedDocumentsRefresh": true,
+  "requiredChecks": [
+    {
+      "command": "pnpm skills:check",
+      "exit": 1,
+      "result": "msgledger:check: existing previous-day unpaired messages; generated content-version documentation refreshed and preceding checks passed",
+      "log": "checks/skills.txt",
+      "sha256": "5818e3ed089e4780d7c8c91314d120795db4b22dc535c3139defe03d1da99b64"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exit": 1,
+      "result": "Existing Skill Forge capability-only catalog mismatches; Main capability receipt and Editor coverage freshness passed",
+      "log": "checks/editor.txt",
+      "sha256": "4515baa1ebd758b7d3398925e0c8d27a08143750dfc1939a5ec78c8677bb3590"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exit": 1,
+      "result": "Existing claim.editor-form-receipts duplicate at unchanged type fingerprint; current asset claim passes",
+      "log": "checks/coord.txt",
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    }
+  ],
+  "fullReleaseChecksPassed": false,
+  "specificChecks": {
+    "sourceAndFinishedAudioFullDecode": "passed: 4 files",
+    "finishedFormat": "passed: MP3 128kbps 44.1kHz mono",
+    "existingNineLinesAndMp3": "unchanged vs baseline",
+    "otherHeroFiles": "unchanged; 3487 existing audio/status files compared",
+    "invalidHeroSelectors": "passed: 5 rejection cases, no writes",
+    "targetedCombatBuilderCheck": "passed: 1 hero / 11 lines / 0 pending",
+    "voiceManifestCheck": "passed: 125 champions / 19 form shares",
+    "audioOverlayCheck": "passed: 1016 Main baseline + 2 branch additions",
+    "priority81HandoffCheck": "passed: 81 heroes / 282 candidates / 1018 audio files",
+    "inventoryCheck": "passed: 157 roles/forms",
+    "assetToolTests": "60 passed"
+  },
+  "review": "review.json",
+  "sourceBackup": "s3-backup.json",
+  "contentBuildVersion": "cv_469994722c04",
+  "modelValidationUnchangedFrom": "../main-81-handoff/final-integrity.json",
+  "productionDeployed": false,
+  "remainingPriorityGaps": [
+    "Kaiji newly acquired MOD body pending conversion; prior placeholder retained",
+    "LoL seven Japanese reserves pending runtime combat category binding"
+  ],
+  "closedGap": "b2-kisaragi taunt/victory now bound to acquired railway announcement and melody"
+}

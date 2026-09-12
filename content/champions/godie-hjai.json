@@ -6,7 +6,7 @@
   "role": "marksman",
   "attackType": "ranged",
   "origin": "法師",
-  "modelKey": "imported.linainvers",
+  "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
   "missileSpeed": 18.3,
   "baseStats": {
     "maxHealth": 150,
@@ -495,5 +495,56 @@
     "範圍爆發",
     "大招"
   ],
-  "pitch": "保持距離反覆施放攻擊法術，等待敵人聚集或露出破綻後用大招解決。"
+  "pitch": "保持距離反覆施放攻擊法術，等待敵人聚集或露出破綻後用大招解決。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "8615c4f74e282b51d6fc95afa6e9faaa550e0c53a8a443bcb745e827d641610c",
+      "binarySha256": "1d499008481edd3d4520219970e18cb4a05bc03a52094af5129bf7cc9c06ac31",
+      "registeredAt": "2026-09-09T07:13:26.792Z",
+      "source": {
+        "kind": "previous",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+      "label": "莉娜·因巴斯",
+      "sourceModelKey": "community.body.08f7a7de95c4beb47b77a27b49e04db9eefd8192f6e5952b",
+      "modelSha256": "746e742b81e038bed8e4156b7c1fbc768042f7cf12dcf6bce0cf6deeef3f67f7",
+      "binarySha256": "df07ee9d9baf46a88033329bcba43d814580521de3d8b4b9a5deb161bd1f0628",
+      "registeredAt": "2026-09-09T07:13:26.824Z",
+      "source": {
+        "kind": "exact",
+        "character": "莉娜·因巴斯",
+        "work": "秀逗魔導士 Slayers",
+        "library": "300heroes",
+        "reference": "300heroes:e88ba3ef348e0f9bb9e7774d",
+        "tier": "300heroes"
+      }
+    },
+    {
+      "modelKey": "version.body.0caddb8f0afb4e1927224744b9b961ad853b8e954de3079a",
+      "label": "莉娜·因巴斯",
+      "sourceModelKey": "community.body.af43a6c7cc5f5a9d24de9bbff14e35867296d5e0d37063b8",
+      "modelSha256": "c311a4d3f458e2a9d8de040cd46ef7e857cff52786d5e04d5f01dbd84bde2f9a",
+      "binarySha256": "f482e093ef36bed9c840288a9a1de9649d4445d5452909f1f494f47c3fe54e54",
+      "registeredAt": "2026-09-09T07:23:46.626Z",
+      "source": {
+        "kind": "exact",
+        "character": "莉娜·因巴斯",
+        "work": "秀逗魔導士",
+        "library": "mba",
+        "reference": "mba:90e2e3fdffbbb5b1251958c6",
+        "tier": "mba"
+      }
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

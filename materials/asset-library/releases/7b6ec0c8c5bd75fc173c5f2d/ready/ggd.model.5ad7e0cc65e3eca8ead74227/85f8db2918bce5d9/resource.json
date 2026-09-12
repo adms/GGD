@@ -1,0 +1,44 @@
+{
+  "id": "ggd.model.5ad7e0cc65e3eca8ead74227",
+  "title": "拉克絲",
+  "kind": "model-body",
+  "model": "models/community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "lol:lux",
+        "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+        "glbPath": "assets/models/community/5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee.glb",
+        "sha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+        "bytes": 1968836,
+        "documentSha256": "5ad7e0cc65e3eca8ead74227735bb06f2c8224a8fa020696b66a90f9a666a4ec",
+        "sourceCharacter": "拉克絲",
+        "sourceWork": "英雄聯盟 League of Legends",
+        "sourceAssetId": "lol:lux",
+        "sourceSha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+        "clipMap": {
+          "idle": "lux_idle1",
+          "run": "lux_run",
+          "attack": "lux_attack1",
+          "cast": "lux_spell1",
+          "hurt": "lux_idle1",
+          "death": "lux_death"
+        },
+        "limitations": [
+          "原 LOL 模型；hurt 共用 idle。保留先前已驗證的六動作選段與無渲染子節點動畫裁剪。完整動作原檔另存備份。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.5ad7e0cc65e3eca8ead74227"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "example:lux",
+        "name": "拉克絲"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

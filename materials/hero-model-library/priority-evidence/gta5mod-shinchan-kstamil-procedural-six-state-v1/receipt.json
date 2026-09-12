@@ -1,0 +1,307 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "gta5mod-shinchan-kstamil",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/budget-static-v1/kstamil.glb",
+      "bytes": 1361256,
+      "sha256": "4d4847fed91c46b40d97a085e4ceefce2f007bc9689df5bc79adb39cb536651e"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/kstamil-six-state-v2/body.glb",
+      "bytes": 1424516,
+      "sha256": "8e8e3a90f421a3ed729bb99dbf3fa923dafe712370f8e72607329218b4574df6"
+    },
+    "stateClips": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0,
+    "animationProvenance": {
+      "kind": "GGD generated procedural fallback",
+      "native": false,
+      "retargeted": false,
+      "nativeAnimationCount": 0,
+      "timeUnit": "seconds",
+      "authoringSampleRateHz": 30
+    },
+    "clipDetails": [
+      {
+        "state": "idle",
+        "clip": "GGD_procedural_idle",
+        "seconds": 2.4,
+        "sampleKeys": 73,
+        "channels": 12,
+        "varyingChannels": 3,
+        "loopIntent": true,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "run",
+        "clip": "GGD_procedural_run",
+        "seconds": 0.8,
+        "sampleKeys": 25,
+        "channels": 12,
+        "varyingChannels": 10,
+        "loopIntent": true,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "attack",
+        "clip": "GGD_procedural_attack",
+        "seconds": 1,
+        "sampleKeys": 31,
+        "channels": 12,
+        "varyingChannels": 5,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "cast",
+        "clip": "GGD_procedural_cast",
+        "seconds": 1.6,
+        "sampleKeys": 49,
+        "channels": 12,
+        "varyingChannels": 6,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "hurt",
+        "clip": "GGD_procedural_hurt",
+        "seconds": 0.55,
+        "sampleKeys": 18,
+        "channels": 12,
+        "varyingChannels": 5,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      },
+      {
+        "state": "death",
+        "clip": "GGD_procedural_death",
+        "seconds": 1.25,
+        "sampleKeys": 39,
+        "channels": 12,
+        "varyingChannels": 6,
+        "loopIntent": false,
+        "origin": "ggd-procedural-fallback",
+        "native": false
+      }
+    ],
+    "boneMapping": {
+      "pelvis": "SKEL_ROOT",
+      "spine": "SKEL_Spine3",
+      "head": "SKEL_Head",
+      "upperArmL": "SKEL_L_UpperArm",
+      "upperArmR": "SKEL_R_UpperArm",
+      "forearmL": "SKEL_L_Forearm",
+      "forearmR": "SKEL_R_Forearm",
+      "thighL": "SKEL_L_Thigh",
+      "thighR": "SKEL_R_Thigh",
+      "shinL": "SKEL_L_Calf",
+      "shinR": "SKEL_R_Calf"
+    },
+    "basePoseDegrees": {},
+    "config": {
+      "asset": "gta5mod-shinchan-kstamil",
+      "bones": {
+        "pelvis": "SKEL_ROOT",
+        "spine": "SKEL_Spine3",
+        "head": "SKEL_Head",
+        "upperArmL": "SKEL_L_UpperArm",
+        "upperArmR": "SKEL_R_UpperArm",
+        "forearmL": "SKEL_L_Forearm",
+        "forearmR": "SKEL_R_Forearm",
+        "thighL": "SKEL_L_Thigh",
+        "thighR": "SKEL_R_Thigh",
+        "shinL": "SKEL_L_Calf",
+        "shinR": "SKEL_R_Calf"
+      },
+      "roleSigns": {
+        "upperArmR": [
+          1,
+          1,
+          -1
+        ],
+        "forearmL": [
+          1,
+          1,
+          -1
+        ]
+      },
+      "unitsPerMeter": 1,
+      "yawOffsetDeg": 0
+    },
+    "matrixToTrsMaxError": 0,
+    "limitations": [
+      "Six clips are procedural fallback authored by GGD, not source-game motions.",
+      "Bone axes/base pose and visual gesture quality require character-specific visual acceptance.",
+      "No source voice, SFX, VFX or gameplay timing is created or implied.",
+      "Shared upload and runtime sampling must be run separately."
+    ],
+    "materialNormalization": {
+      "opaqueAlphaImages": [
+        0
+      ],
+      "rgbAndGeometryUnchanged": true
+    }
+  },
+  "selectedClips": {
+    "idle": "GGD_procedural_idle",
+    "run": "GGD_procedural_run",
+    "attack": "GGD_procedural_attack",
+    "cast": "GGD_procedural_cast",
+    "hurt": "GGD_procedural_hurt",
+    "death": "GGD_procedural_death"
+  },
+  "originalClipCount": 6,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "GGD_procedural_idle",
+      "duration": 2.4000000953674316,
+      "channels": 12
+    },
+    {
+      "index": 1,
+      "name": "GGD_procedural_run",
+      "duration": 0.800000011920929,
+      "channels": 12
+    },
+    {
+      "index": 2,
+      "name": "GGD_procedural_attack",
+      "duration": 1,
+      "channels": 12
+    },
+    {
+      "index": 3,
+      "name": "GGD_procedural_cast",
+      "duration": 1.600000023841858,
+      "channels": 12
+    },
+    {
+      "index": 4,
+      "name": "GGD_procedural_hurt",
+      "duration": 0.550000011920929,
+      "channels": 12
+    },
+    {
+      "index": 5,
+      "name": "GGD_procedural_death",
+      "duration": 1.25,
+      "channels": 12
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+    "byteSize": 1424356,
+    "clipMap": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 25262,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 35488,
+        "sha256": "8743caa8624e3bb2f047e9a2e7bd887a41963711ac8aab15f1748c8efbd53f8b"
+      }
+    ]
+  },
+  "warnings": [
+    "三角面 25262 高於警戒值 16000，送審時需檢查演出負載。",
+    "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD audited loose RSC7 FiveFury 0.5.0 converter",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1383652
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 6,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 14315,
+      "totalTriangleCount": 25262,
+      "maxUVs": 1,
+      "maxInfluences": 8,
+      "maxAttributes": 7
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

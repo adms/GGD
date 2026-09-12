@@ -1,0 +1,44 @@
+{
+  "id": "ggd.model.d76a057d4869e4913d9a7327",
+  "title": "卡爾瑟斯",
+  "kind": "model-body",
+  "model": "models/community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "lol:karthus",
+        "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+        "glbPath": "assets/models/community/f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b.glb",
+        "sha256": "f95c32ef3c9856ea08dc964c3f8987578e1a0f571a4983bce2a11ae402bf7c4b",
+        "bytes": 1715124,
+        "documentSha256": "d76a057d4869e4913d9a7327b04cd1d99473a034c74f3099a8c576af18b21641",
+        "sourceCharacter": "卡爾瑟斯",
+        "sourceWork": "英雄聯盟 League of Legends",
+        "sourceAssetId": "lol:karthus",
+        "sourceSha256": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+        "clipMap": {
+          "idle": "karthus_idle01",
+          "run": "karthus_run",
+          "attack": "karthus_attack1",
+          "cast": "karthus_spell1a",
+          "hurt": "karthus_idle01",
+          "death": "karthus_death"
+        },
+        "limitations": [
+          "原 LOL 模型；hurt 共用 idle。保留先前已驗證的六動作選段與無渲染子節點動畫裁剪。完整動作原檔另存備份。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.d76a057d4869e4913d9a7327"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "example:karthus",
+        "name": "卡爾瑟斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

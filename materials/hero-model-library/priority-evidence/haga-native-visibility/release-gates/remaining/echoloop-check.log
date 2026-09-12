@@ -1,0 +1,15 @@
+
+> ggd@0.0.0 echoloop:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> tsx tools/balance-alert/echoLoop.ts --check
+
+⚠️  回音迴圈偵測（echo-loop-feedback）—— 「調了等於白調」
+   出貨：一發「極大」＝血條 40.5% · 2.5 發送走 LV30 中位
+
+   旋鈕                       傷害端     生命端     佔血條   判定
+   damageDealt                動       —       動   ⭐ 真的旋鈕
+   abilityPower               動       —       動   ⭐ 真的旋鈕
+   maxHealth                  —       動       動   ⭐ 真的旋鈕
+   strToMaxHealth             動       動       動   ⭐ 真的旋鈕
+   intToAbilityPower          動       —       動   ⭐ 真的旋鈕
+
+✔ 沒有回音迴圈：每一個碰得到傷害或生命的旋鈕，佔血條都跟著動。

@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.33f79fda5f82f1e4677c9ec8",
+  "title": "少司命",
+  "kind": "model-body",
+  "model": "models/community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:246",
+        "modelKey": "community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5",
+        "glbPath": "assets/models/community/edf36fb1ada4a685349ffe5d78fe3a6d2afce96f6536f329ed6cc1d1087897d0.glb",
+        "sha256": "edf36fb1ada4a685349ffe5d78fe3a6d2afce96f6536f329ed6cc1d1087897d0",
+        "bytes": 1343648,
+        "documentSha256": "33f79fda5f82f1e4677c9ec81f449720f26397b8766680ab3504fd1789f16168",
+        "sourceCharacter": "少司命",
+        "sourceWork": "秦時明月",
+        "sourceAssetId": "300heroes:bb25f176065469beefe7dd86",
+        "sourceSha256": "188b634104339c1b3363b1e0adb46738780ed848c0d746765a755c9ef2c6f293",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.33f79fda5f82f1e4677c9ec8"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-maomao",
+        "name": "貓貓"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

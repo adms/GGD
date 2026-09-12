@@ -1,0 +1,35 @@
+{
+  "schema": "ggd.rezero-static-component-source-rebuild@1",
+  "componentId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "outputSha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+  "sourceConversionByteIdentical": true,
+  "normalizedGlbByteIdentical": true,
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "c68ec3f4defa87ce5ca570ce7a3eca304825f2cba397c0c143f12a146ccc072c"
+    },
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab_mixed.py",
+      "sha256": "3f479f76095bc458bad04c4da8ca2377f02559a9a268c073e36fbac9b5238583"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v1/normalize_validate.mts",
+      "sha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v2/normalize_validate.mts",
+      "sha256": "a068d6ca5be4cb35e598385479b29ce6f226f492f4f6b0c752172cb719dd972b"
+    }
+  ],
+  "rebuildReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/rebuild.json",
+    "bytes": 12617,
+    "sha256": "664e0623ef1a6c556e0c3e5692181c86f12bed76c1542ddce2bd125c39738118"
+  },
+  "limitations": [
+    "Receipt JSON contains run-specific absolute paths; both GLB stages are byte-identical.",
+    "Static deterministic output does not establish gameplay animation readiness."
+  ]
+}

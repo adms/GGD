@@ -1,0 +1,32 @@
+{
+  "schema": "ggd-source-workflow-dependency-receipt@1",
+  "generatedAt": "2026-09-12T04:11:17Z",
+  "workflow": "ultimate14-motion-audit-20260912-v1",
+  "python": "3.10",
+  "platform": "macOS arm64",
+  "dependencies": [
+    {
+      "name": "ssbh_data_py",
+      "version": "0.9.1",
+      "source": "https://pypi.org/project/ssbh-data-py/0.9.1/",
+      "license": "MIT",
+      "wheel": "ssbh_data_py-0.9.1-cp310-cp310-macosx_11_0_arm64.whl",
+      "bytes": 867238,
+      "sha256": "0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487",
+      "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/ssbh-data-py-0.9.1/ssbh_data_py-0.9.1-cp310-cp310-macosx_11_0_arm64.whl",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/dependencies/ssbh_data_py/0.9.1/0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487.whl",
+      "s3Etag": "f195c921e64c4332a08704cb4e4772bb",
+      "serverSideEncryption": "AES256",
+      "readbackPath": "/private/tmp/ssbh_data_py-0.9.1-readback.whl",
+      "readbackBytes": 867238,
+      "readbackSha256": "0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487",
+      "readbackVerified": true
+    }
+  ],
+  "aws": {
+    "profile": "vibe-coding",
+    "region": "ap-east-2",
+    "bucket": "ggd-390630837668-ap-east-2-an",
+    "verifiedArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789185764"
+  }
+}

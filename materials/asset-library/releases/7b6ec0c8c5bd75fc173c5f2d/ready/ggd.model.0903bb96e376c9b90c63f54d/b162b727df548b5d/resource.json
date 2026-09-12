@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.0903bb96e376c9b90c63f54d",
+  "title": "骑士娃",
+  "kind": "model-body",
+  "model": "models/community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:81",
+        "modelKey": "community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa",
+        "glbPath": "assets/models/community/6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467.glb",
+        "sha256": "6c378a151d80e5a705ca31acabcb7fc5dff5352059957642614606f383767467",
+        "bytes": 1088600,
+        "documentSha256": "0903bb96e376c9b90c63f54d3c32d35e7e137bfb0e67147162dbca5e084df7fe",
+        "sourceCharacter": "骑士娃",
+        "sourceWork": "葫蘆兄弟／葫蘆娃",
+        "sourceAssetId": "300heroes:6533778837fecf4a5b811d57",
+        "sourceSha256": "4a52218e9341da5814ee42b749d425b1791156d870fd9cf5096bdd5e4568742e",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.0903bb96e376c9b90c63f54d"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-naofumi",
+        "name": "岩谷尚文"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

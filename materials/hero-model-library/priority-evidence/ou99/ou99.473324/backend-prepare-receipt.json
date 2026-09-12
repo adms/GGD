@@ -1,0 +1,528 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-aladdin.json",
+  "sourceHeroSha256": "78e948f97511870d4fd175a4abcb8c684d2cf80139860bc8f989f01864d26bd9",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:1c9c30739d779b5eb8a20825361fa291bb26c6d861b5aa1d7a8e2fa2901a0636",
+    "sourceModelKey": "ou99.473324-standard-v2",
+    "label": "龙族亚瑟王（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "龙族亚瑟王",
+      "work": "來源作品待核；論壇標題：龙族亚瑟王",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-473324-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-aladdin",
+    "name": "阿拉丁",
+    "description": "魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "mage",
+    "attackType": "ranged",
+    "archetype": "mage",
+    "origin": "法師",
+    "modelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.473324",
+        "modelSha256": "ac2f276326ce0a264c63be5e1f14e9b877a67d59b797878a798db5f1c318f22b",
+        "binarySha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
+        "registeredAt": "2026-09-10T14:37:55.791Z",
+        "source": {
+          "kind": "previous",
+          "character": "阿拉丁",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.473324.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.02b68181099948c5c812c39be48ed330056b39a81aaf41aa",
+        "label": "龙族亚瑟王（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.473324-standard-v2",
+        "modelSha256": "7a76003dbf8668fae11fcc2a6cf998ed548f95ecf767b8bb701fc688774de27a",
+        "binarySha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26",
+        "registeredAt": "2026-09-10T14:37:55.803Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "龙族亚瑟王",
+          "work": "來源作品待核；論壇標題：龙族亚瑟王",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-473324-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 8,
+      "range": 8.2
+    },
+    "growth": {
+      "ad": 2.5489795918367353,
+      "ap": 0,
+      "armor": 0.45735714285714285,
+      "as": 0,
+      "healthRegen": 0.10673469387755102,
+      "manaRegen": 0,
+      "maxHealth": 45.833673469387755,
+      "maxMana": 0.9581632653061187,
+      "mr": 2.1118367346938776
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 13,
+      "agi": 18,
+      "int": 29,
+      "strGrowth": 1.25,
+      "agiGrowth": 1.67,
+      "intGrowth": 2.78,
+      "primary": "INT",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-aladdin.q",
+        "name": "烏戈代班先派一位",
+        "provenance": "w3x-import",
+        "description": "「烏戈代班先派一位！」\n召喚 1 具可獨立攻擊的自身代理 4 秒，攻擊與生命倍率欄位均為 30%，本招最多 3 具；同時取得 rage 演奏暫態 4 秒。代理不是烏戈原作模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "summon",
+            "body": "self",
+            "championId": "self",
+            "count": 1,
+            "durationSec": 4,
+            "formation": "ring",
+            "spread": 1,
+            "maxAlive": 3,
+            "onOwnerDeath": "despawn",
+            "hpMult": 0.3,
+            "damageMult": 0.3
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "rage",
+            "duration": 4,
+            "applyTo": "self"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "cards": [
+            {
+              "ref": "hero-template.1112de91c80812d8694c17311498df56dc44e672d3fe9804",
+              "params": {
+                "body": "self",
+                "castTimeSec": 0.1,
+                "cleanse": "none",
+                "count": 1,
+                "damageMult": 0.3,
+                "durationSec": 4,
+                "formation": "ring",
+                "hpMult": 0.3,
+                "maxAlive": 3,
+                "onOwnerDeath": "despawn",
+                "spread": 1
+              },
+              "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f"
+            },
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "castTimeSec": 0.1,
+                "castType": "self",
+                "effects": [
+                  {
+                    "applyTo": "self",
+                    "duration": 4,
+                    "kind": "applyStatus",
+                    "statusId": "rage"
+                  }
+                ],
+                "radius": 3,
+                "side": "allies"
+              },
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "W": {
+        "id": "b2-aladdin.w",
+        "name": "樂團加演再請一位",
+        "provenance": "w3x-import",
+        "description": "「樂團加演再請一位！」\n消耗自身 rage 演奏暫態再召喚 1 具同規格代理 4 秒，W 自己的上限為 3 具；沒有演奏暫態就不能加演。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "radius": 3,
+        "radiusTier": "極小",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "rage",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
+              {
+                "kind": "summon",
+                "body": "self",
+                "count": 1,
+                "durationSec": 4,
+                "formation": "ring",
+                "spread": 1,
+                "maxAlive": 3,
+                "onOwnerDeath": "despawn",
+                "hpMult": 0.3,
+                "damageMult": 0.3
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "self",
+            "effects": [
+              {
+                "count": "all",
+                "kind": "consumeStatus",
+                "onConsumed": [
+                  {
+                    "body": "self",
+                    "count": 1,
+                    "damageMult": 0.3,
+                    "durationSec": 4,
+                    "formation": "ring",
+                    "hpMult": 0.3,
+                    "kind": "summon",
+                    "maxAlive": 3,
+                    "onOwnerDeath": "despawn",
+                    "spread": 1
+                  }
+                ],
+                "shape": "single",
+                "statusId": "rage",
+                "subject": "self"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-aladdin.e",
+        "name": "團員到齊才打節拍",
+        "provenance": "w3x-import",
+        "description": "「團員到齊才打節拍！」\n指定地點半徑{{radius}} 內的友方單位增加 80 攻擊力 4 秒，可驅散；先叫出代理再指揮，代理才會領到加班增益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 80
+              }
+            ],
+            "duration": 4,
+            "applyTo": "target",
+            "dispellable": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.667,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.667,
+            "castType": "ground",
+            "effects": [
+              {
+                "applyTo": "target",
+                "dispellable": true,
+                "duration": 4,
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "op": "flat",
+                    "stat": "ad",
+                    "value": 80
+                  }
+                ]
+              }
+            ],
+            "radius": 3,
+            "side": "allies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "R": {
+        "id": "b2-aladdin.r",
+        "name": "魔法音樂課吹整排",
+        "provenance": "w3x-import",
+        "description": "「魔法音樂課吹整排！」\n發出直線魔法波動，打擊沿線敵人；演出是吹笛，幾何以編譯能力為準。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "ground",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "中"
+            },
+            "length": 10,
+            "width": 1.8,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.833,
+        "template": {
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+          "params": {
+            "aim": "target",
+            "castTimeSec": 0.833,
+            "damage": {
+              "damageTier": "中"
+            },
+            "damageType": "magic",
+            "length": 10,
+            "width": 1.8
+          },
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+        }
+      }
+    },
+    "exAbility": "b2-aladdin.ex",
+    "passiveAbility": "b2-aladdin.passive",
+    "icon": "assets/icons/champions/b2-aladdin.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell one",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.473324",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.473324",
+        "modelSha256": "ac2f276326ce0a264c63be5e1f14e9b877a67d59b797878a798db5f1c318f22b",
+        "binarySha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c",
+        "registeredAt": "2026-09-10T14:37:55.791Z",
+        "source": {
+          "kind": "previous",
+          "character": "阿拉丁",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.473324.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 1650264,
+      "sha256": "8c51daf66290e9f88783708a89850fb63b8bd4fd830f29612e20f4314081a81c"
+    },
+    {
+      "document": {
+        "id": "version.body.02b68181099948c5c812c39be48ed330056b39a81aaf41aa",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell one",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.473324-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.02b68181099948c5c812c39be48ed330056b39a81aaf41aa",
+        "label": "龙族亚瑟王（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.473324-standard-v2",
+        "modelSha256": "7a76003dbf8668fae11fcc2a6cf998ed548f95ecf767b8bb701fc688774de27a",
+        "binarySha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26",
+        "registeredAt": "2026-09-10T14:37:55.803Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "龙族亚瑟王",
+          "work": "來源作品待核；論壇標題：龙族亚瑟王",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-473324-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 1591956,
+      "sha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

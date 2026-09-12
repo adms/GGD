@@ -1,0 +1,8 @@
+
+> ggd@0.0.0 board:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/board/gen_board.py --check
+
+ggd-board.html is STALE —— ⭐ **只有版號那一格**：v0.42.14 → v0.43.6
+   ⇒ 這是 `release.sh --tag` 打完 tag 的必然狀態（tag ⛔ 不在工作樹裡，所以沒有任何來源檔改動）。
+   ⇒ 重生成：bash scripts/genrun.sh board:build
+ ELIFECYCLE  Command failed with exit code 1.

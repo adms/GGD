@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "imported.heroichigo",
+  "modelKey": "version.body.0758526c616aafc9ef5aee24fa58e959ceacaea8b646f986",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -468,5 +468,40 @@
     "連續斬擊",
     "近戰壓迫"
   ],
-  "pitch": "持續逼近敵人，以普攻與斬擊保持壓力，適合一路追著目標砍到底。"
+  "pitch": "持續逼近敵人，以普攻與斬擊保持壓力，適合一路追著目標砍到底。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0758526c616aafc9ef5aee24fa58e959ceacaea8b646f986",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.heroichigo",
+      "modelSha256": "fad4d54c501b043242c13630ed926730d486be531bf18939756a923f7afa4179",
+      "binarySha256": "b8bb808bd8728b0d6cd80e9933d95b5fffe4c15e317728fe59a69e372abef21a",
+      "registeredAt": "2026-09-09T07:13:26.495Z",
+      "source": {
+        "kind": "previous",
+        "character": "開外掛的死神 - 黑崎一護",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.heroichigo.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.8d7862441a426d48f6ffdd3f97e2d7c93c50af070486e31b",
+      "label": "小一",
+      "sourceModelKey": "community.body.64dc1015923537534452de098ac7209081039b5fae0e2169",
+      "modelSha256": "926f1b9835b1b08526793b4465dfdce7dd6cad1dfeaaa06e69a1381149bcccff",
+      "binarySha256": "efc5d5ca21d1b525faa8b35720f3e5528a5720ea31b220c42b3bd47685050509",
+      "registeredAt": "2026-09-09T07:13:26.500Z",
+      "source": {
+        "kind": "exact",
+        "character": "小一",
+        "work": "BLEACH 死神",
+        "library": "300heroes",
+        "reference": "300heroes:0583f874944e93106f8f0f97",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

@@ -1,0 +1,128 @@
+{
+  "schema": "ggd-historical-model-webgl-proof@1",
+  "candidateId": "historical-lord-nightmares-7bc2fa3f8",
+  "modelSha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+  "renderer": "Babylon WebGL glTF loader in a right-handed scene; idle or first native clip at 20 percent; CPU-skinned bounds frame three views",
+  "idleClipRequested": "wait",
+  "clipRendered": "wait",
+  "animationGroups": [
+    "wait",
+    "F-Move",
+    "maryokudan_01",
+    "sp01_01",
+    "Damage-1",
+    "D-Down"
+  ],
+  "worldSkinnedBounds": {
+    "min": [
+      -0.49929613371290316,
+      -0.03816659210126305,
+      -0.9415798107087312
+    ],
+    "max": [
+      0.23970355011661226,
+      1.1882330216874948,
+      -0.2975439895188501
+    ],
+    "extent": [
+      0.7389996838295154,
+      1.2263996137887578,
+      0.6440358211898811
+    ]
+  },
+  "geometry": [
+    {
+      "name": "lina_02",
+      "vertices": 2740,
+      "indices": 9822,
+      "worldBounds": {
+        "min": [
+          -0.49929613371290316,
+          -0.03816659210126305,
+          -0.9415798107087312
+        ],
+        "max": [
+          0.23970355011661226,
+          1.1882330216874948,
+          -0.2975439895188501
+        ]
+      },
+      "skeleton": "skin",
+      "bones": 31
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "skin",
+      "bones": 31
+    }
+  ],
+  "materials": [
+    {
+      "name": "MBA diffuse atlas",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "albedoTexture": {
+        "name": "MBA diffuse atlas (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 128,
+        "height": 1
+      }
+    },
+    {
+      "name": "MBA diffuse atlas (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.2822827157509358
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "visualIdentityAcceptance": "pending-human-review",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

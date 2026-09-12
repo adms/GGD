@@ -1,0 +1,44 @@
+{
+  "schema": "ggd-static-visual-evidence@1",
+  "upstreamSourceId": "parallel-community-slayers-lina-hand-review",
+  "runtimeAccepted": false,
+  "sourceAnimationCount": 0,
+  "files": [
+    {
+      "path": "lina00-hands-a-front.png",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/evidence/babylon-reviewed/lina00-hands-a-front.png",
+      "bytes": 351309,
+      "sha256": "735231d8ea49243b95a50e7a5a0676649454e60a09e3dfb63e2291b0ea575484"
+    },
+    {
+      "path": "lina00-hands-a-side.png",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/evidence/babylon-reviewed/lina00-hands-a-side.png",
+      "bytes": 242331,
+      "sha256": "db048954d22a8d71fe35420272e03da38957c97e166d41ff81d744032acc2e95"
+    },
+    {
+      "path": "lina00-hands-a-back.png",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/evidence/babylon-reviewed/lina00-hands-a-back.png",
+      "bytes": 292630,
+      "sha256": "acf86f0285da5d7b679b923d7905a150fed32a151f8eb4f42bc0a0a77df835e8"
+    },
+    {
+      "path": "lina01-hands-a-front.png",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/evidence/babylon-reviewed/lina01-hands-a-front.png",
+      "bytes": 368882,
+      "sha256": "668a32aec16fe5e2423ea52fd6059cba6be31797af819b1d4d3e2c139424cf80"
+    },
+    {
+      "path": "lina01-hands-a-side.png",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/evidence/babylon-reviewed/lina01-hands-a-side.png",
+      "bytes": 249149,
+      "sha256": "4df0ad8d737fcbe90ad8968bd5a96a0103ba4b4e626d1af54735095b8a333b44"
+    },
+    {
+      "path": "lina01-hands-a-back.png",
+      "originalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-slayers-lina-hand-review/evidence/babylon-reviewed/lina01-hands-a-back.png",
+      "bytes": 288673,
+      "sha256": "914a67824bdc65a50397a9a47479b74e1fbb4e2258fc592fc2d8f40dc3bbe681"
+    }
+  ]
+}

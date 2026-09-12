@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法刺",
-  "modelKey": "imported.herosasuke",
+  "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.01,
@@ -521,5 +521,40 @@
     "爆發",
     "切後排"
   ],
-  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。"
+  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.herosasuke",
+      "modelSha256": "7de25854b9d7ed36a53ebe431ae6bf44ee45c19603434cffbf6fe8691f4adaa0",
+      "binarySha256": "c5977e07303923cd1df7a10cbecfe5a7ef236fd2cd818d125774e3f4ea9bb939",
+      "registeredAt": "2026-09-09T07:13:26.403Z",
+      "source": {
+        "kind": "previous",
+        "character": "寫輪眼復仇者 - 宇智波佐助",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herosasuke.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.c7c18b4fe781830b000e7fe0c755d9c945f3779ddee8e6d6",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "7891fab95af9fdad28cb5747193fa38fffff9468cd1d6c358fc95a912b0c57e6",
+      "binarySha256": "9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74",
+      "registeredAt": "2026-09-09T07:13:26.416Z",
+      "source": {
+        "kind": "exact",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

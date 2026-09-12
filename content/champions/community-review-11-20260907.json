@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473",
+  "modelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -379,6 +379,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457280-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.9dc018e902d47bae413635f604c326742a8dcfba4fe52a56",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457280",
+      "modelSha256": "5497a0a27bd12f95ce5da18926cac0ecc46d8b69274bf6b3a22305a3ba0f0412",
+      "binarySha256": "9cc19189b317670be5438a49bf6b0f529a4d7dc2e7e1730707d98736118b3748",
+      "registeredAt": "2026-09-10T14:45:29.986Z",
+      "source": {
+        "kind": "previous",
+        "character": "利姆路",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457280.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.922d5fed47d6a264169695737cab2f6dc1622104882a048d",
+      "label": "珂朵莉",
+      "sourceModelKey": "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a",
+      "modelSha256": "7c74d2e4cea546640fb582bbf5f7af8b05565eaf70fa4411469f76d91d8cea80",
+      "binarySha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "registeredAt": "2026-09-10T14:45:29.993Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "珂朵莉",
+        "work": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+        "library": "300heroes",
+        "reference": "300heroes:69984f1ef03f84baa007b28d",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
+      "label": "利姆路（論壇模型）",
+      "sourceModelKey": "ou99.457280-standard-v2",
+      "modelSha256": "72e0ed54bc6ebb8149b070c04ecb799645ff0d907b54a5bf917321a06ef881fe",
+      "binarySha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd",
+      "registeredAt": "2026-09-10T14:48:47.526Z",
+      "source": {
+        "kind": "exact",
+        "character": "利姆路",
+        "work": "關於我轉生變成史萊姆這檔事",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457280-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

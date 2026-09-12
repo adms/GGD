@@ -1,0 +1,67 @@
+{
+  "id": "version.body.363e237043c1c1498e71a9dec8dc4323dac314f74bcf124f",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/versions/aa8e2036d1dadcd424e4954e166cd5e8aff8332f77eb33dd2e0d4f74abe703e7.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "imported.heroshana",
+    "legacyAppearance": true
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": -0.0899,
+      "y": 0.8447,
+      "z": 0.2336
+    },
+    "Hand Left": {
+      "x": -0.0899,
+      "y": 0.8447,
+      "z": -0.2336
+    },
+    "Chest": {
+      "x": -0.0899,
+      "y": 0.9885,
+      "z": 0
+    },
+    "Foot Right": {
+      "x": -0.0192,
+      "y": 0,
+      "z": 0.1089
+    },
+    "Foot Left": {
+      "x": -0.0192,
+      "y": 0,
+      "z": -0.0983
+    },
+    "Origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "Overhead": {
+      "x": -0.0899,
+      "y": 1.7973,
+      "z": 0
+    },
+    "Head -": {
+      "x": -0.0899,
+      "y": 1.348,
+      "z": 0
+    },
+    "Weapon": {
+      "x": 0.8088,
+      "y": 0.8447,
+      "z": 0.2516
+    }
+  },
+  "yawOffsetDeg": 90
+}

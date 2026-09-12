@@ -1,0 +1,41 @@
+{
+  "id": "ggd.model.f06b631406f8efcc631f0578",
+  "title": "GGD 黃色觸手教師替身",
+  "kind": "model-body",
+  "model": "models/community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-14-20260907",
+        "modelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+        "glbPath": "assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
+        "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+        "bytes": 311956,
+        "documentSha256": "f06b631406f8efcc631f0578ff92b351ff72e5ed11dc65e40698ed15050d004e",
+        "sourceCharacter": "GGD 黃色觸手教師替身",
+        "sourceWork": "GGD 自製程序化卡通替身",
+        "sourceAssetId": "generated:ggd-cartoon-proxy-yellow-teacher",
+        "sourceSha256": "ebfe00f9ac1ad088bf668dbbeb7aeb15a67275eb8606a7e3d51229a2761ce3c7",
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.f06b631406f8efcc631f0578"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-14-20260907",
+        "name": "殺老師"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/integration-evidence/priority-audio-audit-20260911/830830c9b4d3ba75e3edc421dc68f10bbc2dd3c2e3886479fb7a94184f89fd2f.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/integration-evidence/priority-audio-audit-20260911/830830c9b4d3ba75e3edc421dc68f10bbc2dd3c2e3886479fb7a94184f89fd2f.files.json",
+  "archiveSha256": "830830c9b4d3ba75e3edc421dc68f10bbc2dd3c2e3886479fb7a94184f89fd2f",
+  "archiveBytes": 2884486,
+  "fileCount": 39,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/priority-audio-audit-20260911",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/priority-audio-audit-20260911/3236e1af18ff0949e1fc66f3d896ed76655cf0cfe03c2775384d129c3644f196/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/priority-audio-audit-20260911/3236e1af18ff0949e1fc66f3d896ed76655cf0cfe03c2775384d129c3644f196/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/priority-audio-audit-20260911/3236e1af18ff0949e1fc66f3d896ed76655cf0cfe03c2775384d129c3644f196/manifest.json"
+}

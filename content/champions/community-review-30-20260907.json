@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
+  "modelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -368,6 +368,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-498214-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.d0dd376d8dc09d756500861ccc7c4ddb9e797aeca35c3b0c",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.498214",
+      "modelSha256": "a5ac61e31cfdb226cc6a38b8c3a32a6a35e7ce1dc2270eee60590c91d9988251",
+      "binarySha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480",
+      "registeredAt": "2026-09-10T14:45:32.999Z",
+      "source": {
+        "kind": "previous",
+        "character": "尼古貓貓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.498214.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f7568368073ada65fac6834932acc02361b3eff9a6804c29",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "f28e667799771669e45ca12e569c193ee06580db2cb497a90c3f96e8cb341413",
+      "binarySha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "registeredAt": "2026-09-10T14:45:33.009Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
+      "label": "可爱娃娃（論壇相似模型）",
+      "sourceModelKey": "ou99.498214-standard-v2",
+      "modelSha256": "23d30149120b3f5e3e72c07a1a3d8b39137a241ee007b4a009e2e3f14c2ec1f5",
+      "binarySha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d",
+      "registeredAt": "2026-09-10T14:48:49.525Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱娃娃",
+        "work": "來源作品待核；論壇標題：可爱娃娃",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

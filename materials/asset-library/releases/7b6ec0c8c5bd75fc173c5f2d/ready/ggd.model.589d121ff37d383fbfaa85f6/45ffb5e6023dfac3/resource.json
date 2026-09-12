@@ -1,0 +1,44 @@
+{
+  "id": "ggd.model.589d121ff37d383fbfaa85f6",
+  "title": "好運姐",
+  "kind": "model-body",
+  "model": "models/community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "lol:missfortune",
+        "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+        "glbPath": "assets/models/community/8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c.glb",
+        "sha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+        "bytes": 1426364,
+        "documentSha256": "589d121ff37d383fbfaa85f68baf262d507facda768959dd6e4c5a7a53f05018",
+        "sourceCharacter": "好運姐",
+        "sourceWork": "英雄聯盟 League of Legends",
+        "sourceAssetId": "lol:missfortune",
+        "sourceSha256": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+        "clipMap": {
+          "idle": "missfortune_idle1",
+          "run": "missfortune_run",
+          "attack": "missfortune_attack1",
+          "cast": "missfortune_spell1",
+          "hurt": "missfortune_idle1",
+          "death": "missfortune_death"
+        },
+        "limitations": [
+          "原 LOL 模型；hurt 共用 idle。保留先前已驗證的六動作選段與無渲染子節點動畫裁剪。完整動作原檔另存備份。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.589d121ff37d383fbfaa85f6"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "example:missfortune",
+        "name": "好運姐"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

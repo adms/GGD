@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.8793dcf75df24643459254bc",
+  "title": "奴良陆生",
+  "kind": "model-body",
+  "model": "models/community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-23-20260907",
+        "modelKey": "community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63",
+        "glbPath": "assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb",
+        "sha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+        "bytes": 2010288,
+        "documentSha256": "8793dcf75df24643459254bc8701332b3800576cbef368234f913c63cfe65390",
+        "sourceCharacter": "奴良陆生",
+        "sourceWork": "妖怪少爺／滑頭鬼之孫",
+        "sourceAssetId": "300heroes:3afc0ea6519ff5a221a230b7",
+        "sourceSha256": "c3e25811873ad250f4f2bdc8d077e5afd57fe300c2a445f92cbf7aad9b8074b0",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.8793dcf75df24643459254bc"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-23-20260907",
+        "name": "坂田銀時"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

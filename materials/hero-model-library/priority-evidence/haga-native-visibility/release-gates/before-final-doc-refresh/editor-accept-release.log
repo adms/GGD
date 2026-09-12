@@ -1,0 +1,96 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-10T15:45Z","branch":"codex/hero-model-library-options","head":"f69a9c903b9a","originMain":"3b066f8dc19a","dirty":true,"worktreeChangeCount":33,"handbackMainCommit":null,"coverageFingerprint":"d18427f10501","capabilityFingerprint":"0a52bb76","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+FAIL Skill Forge
+
+> ggd@0.0.0 skillforge:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> node tools/skill-forge/check.mjs -- --machine-only
+
+ ELIFECYCLE  Command failed with exit code 1.
+
+FAIL Skill Forge no-code acceptance
+    "chainLightning",
+    "championForm",
+    "comboStrikes",
+-   "consumeStatus",
+    "cycleBuff",
+    "damage",
+    "damageArea",
+    "damageLine",
+    "dash",
+    "delayed",
+    "devour",
+    "dispel",
+    "dot",
+-   "evasion",
+    "eventValueConversion",
+    "extendBuff",
+    "floatingText",
+    "grantAttribute",
+    "grantGold",
+    "grantXp",
+    "heal",
+    "invulnerable",
+    "knockback",
+    "leap",
+    "manaBarrier",
+    "modifyCooldown",
+    "proxyCast",
+-   "pull",
+    "randomArea",
+    "restore",
+    "screenFlash",
+    "screenShake",
+    "shield",
+    "spawnModelFx",
+    "spawnProjectile",
+    "spawnVfx",
+-   "spendHealth",
+    "spendMana",
+    "summon",
+    "swapResource",
+    "taunt",
+    "weightedBranch",
+  }
+
+ ❯ src/forge/skillAcceptanceCatalog.test.ts:183:40
+    181|     const all = [...abilities.values()];
+    182|     const selected = SKILL_ACCEPTANCE_CANDIDATES.map((row) => abilitie…
+    183|     expect(union(selected, "effects")).toEqual(union(all, "effects"));
+       |                                        ^
+    184|     expect(union(selected, "hooks")).toEqual(union(all, "hooks"));
+    185|     expect(union(selected, "conditions")).toEqual(union(all, "conditio…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/forge/skillAcceptanceCatalog.test.ts > 鑄技工坊 47 份現有技能驗收清單 > capability-only 清單正好是契約有、正式技能沒採用的格，不能冒充已驗收
+AssertionError: expected Set{ 'spendHealth', 'carry', …(6) } to deeply equal Set{ 'carry', 'convertTeam', …(2) }
+
+- Expected
++ Received
+
+  Set {
+    "carry",
++   "consumeStatus",
+    "convertTeam",
++   "evasion",
++   "pull",
+    "revive",
+    "shieldBreak",
++   "spendHealth",
+  }
+
+ ❯ src/forge/skillAcceptanceCatalog.test.ts:193:51
+    191|     const usedHooks = union(all, "hooks");
+    192|     const usedConditions = union(all, "conditions");
+    193|     expect(new Set(CAPABILITY_ONLY_EFFECT_KINDS)).toEqual(
+       |                                                   ^
+    194|       new Set(capabilities.effectKinds.filter((kind) => !usedEffects.h…
+    195|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+ ELIFECYCLE  Command failed with exit code 1.

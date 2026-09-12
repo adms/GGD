@@ -1,0 +1,1265 @@
+{
+  "schema": "ggd-palworld-model-candidate-contract-audit@1",
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options",
+  "readOnly": true,
+  "actualLimits": {
+    "upload": {
+      "fileBytes": 33554432,
+      "jsonBytes": 4194304,
+      "jsonValues": 500000,
+      "depth": 64,
+      "nodes": 1024,
+      "clips": 256,
+      "accessors": 32768,
+      "accessorValues": 8000000,
+      "channels": 32768,
+      "clipChannels": 2048,
+      "clipSeconds": 300
+    },
+    "hero": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "championCount": 153,
+  "championInputs": [
+    {
+      "path": "content/champions/b2-aladdin.json",
+      "sha256": "32348a6daafcdd3994bbd11a98fdfcef3cb093cbfceee8b7a62798e8895c8f59"
+    },
+    {
+      "path": "content/champions/b2-albus.json",
+      "sha256": "540eb23ccc70a317a442800c5513d6f496f776f7e34502dcf2e04193e0997496"
+    },
+    {
+      "path": "content/champions/b2-bojji.json",
+      "sha256": "4f151ecbb04b021886c8c2833f5540be49f98798a88b3381962b6fd00c7b6bad"
+    },
+    {
+      "path": "content/champions/b2-boxxo.json",
+      "sha256": "40a5634c13e39e07983ba28f2bdd8fc0763fecec4e2288f1e566c6d2986f427e"
+    },
+    {
+      "path": "content/champions/b2-elma.json",
+      "sha256": "7457cadd0ca81d0f3a1d7e3bc2ed0507a73f7168d64317b6e7b41f94bbf7a6b1"
+    },
+    {
+      "path": "content/champions/b2-fushi.json",
+      "sha256": "211d3add6b8b79b22bd543b8733803d02b89b1c2ba5b872ea5e4130ee06c6ea8"
+    },
+    {
+      "path": "content/champions/b2-goblin.json",
+      "sha256": "47b2d78cff1c2c00a83f77c5bc87013a20a26f4afeb2a08b9460a63387ead076"
+    },
+    {
+      "path": "content/champions/b2-guts.json",
+      "sha256": "789ef7c932e8428b698bebce16853acdaa939d70f00af844a7b9b7309192f49d"
+    },
+    {
+      "path": "content/champions/b2-haga.json",
+      "sha256": "e98c222b89652f896822be384e927318185fa25ed1ad9f15f4e11367fc3514b8"
+    },
+    {
+      "path": "content/champions/b2-kaede.json",
+      "sha256": "422394c236c2e80fba8c92b5b1c05baaa89aa757bb681ea1f72b6ba2df5b3511"
+    },
+    {
+      "path": "content/champions/b2-kaiji.json",
+      "sha256": "648c1fd3bb5fb1455cb9e1caa333990b3fbd76fca6291f1d6c71332d987c8ddc"
+    },
+    {
+      "path": "content/champions/b2-keyaru.json",
+      "sha256": "c80e491c0d62c13d4a6314b7bc10aa58541ca8bee55f0e69c4c4d778ce9706d6"
+    },
+    {
+      "path": "content/champions/b2-kisaragi.json",
+      "sha256": "117483d70a0fca0156f829ca1f51af6c66a0653d0ce8c88e49fdf28ecfae8be0"
+    },
+    {
+      "path": "content/champions/b2-klaus.json",
+      "sha256": "f27e8f2c71a45447969734e293a5eb134516e08fa1db3011b171ae29fe213d34"
+    },
+    {
+      "path": "content/champions/b2-kumoko.json",
+      "sha256": "7a83ea37cac45c11a488204d44371f9cf22981844614ef5f932fac8f1bbcbbe3"
+    },
+    {
+      "path": "content/champions/b2-luckyman.json",
+      "sha256": "ea8c47d2fb415af67f867e37761b4757659402b4f393fc8736c26e484f281f99"
+    },
+    {
+      "path": "content/champions/b2-makoto.json",
+      "sha256": "d3c26b6ee6632a3f305bd5fba263e8049b0af99fb1aecea1b09712bfbe83f9cb"
+    },
+    {
+      "path": "content/champions/b2-maomao.json",
+      "sha256": "114c3cea9b8d5b8dd2489e7f556b9355faf1e874149fc9121dd8f1eb678b41bc"
+    },
+    {
+      "path": "content/champions/b2-maple-alt-9769eb88b85b.json",
+      "sha256": "248f1f1647cf8988704bbbdad100e60865a817c02c94605689e7f6332acb118d"
+    },
+    {
+      "path": "content/champions/b2-maple.json",
+      "sha256": "adfddc05447074ddfff19ecb19856d6cad2b3d11d72728ec5f03187b4d54f50e"
+    },
+    {
+      "path": "content/champions/b2-matthias.json",
+      "sha256": "8ea722fa1d199122bb41decb060fc2c36e777b0366dc35a827bdf546a5a1ce16"
+    },
+    {
+      "path": "content/champions/b2-misery.json",
+      "sha256": "fd8ee2619844dfd39a5fcc49eb4ad66dc6885ae4bbd3d175af2dc5c7d376d8d5"
+    },
+    {
+      "path": "content/champions/b2-naofumi.json",
+      "sha256": "7c083d4ee9718f418b504e5030273ed37c1e30e759b3f5dd5073c45d4100146b"
+    },
+    {
+      "path": "content/champions/b2-ned.json",
+      "sha256": "b91d7001a5816abd6852818df2c58fe9812073cce906e8258f41207134780931"
+    },
+    {
+      "path": "content/champions/b2-noor.json",
+      "sha256": "9860e08196b8e12e2bf4cec51c1153643428fee51558f6610a2248f3940c5de3"
+    },
+    {
+      "path": "content/champions/b2-nube.json",
+      "sha256": "2de4404d387e5a40203f7c00ccde7ef39934358fc914a4a32f51a7ed214fc047"
+    },
+    {
+      "path": "content/champions/b2-orphen.json",
+      "sha256": "a9d613e3cf746eb1b17859e0eb4ff3c2318c1ab1517809450dcb8b7c5bb5921a"
+    },
+    {
+      "path": "content/champions/b2-popp.json",
+      "sha256": "7c0484689aa090bfc255d7f50b09c06f9afe37b86db77d57ca3525f1cbed0dcc"
+    },
+    {
+      "path": "content/champions/b2-rem.json",
+      "sha256": "2cb25cebaf0c9434a260a54727d2b62066c5c6449427e36cdcf946e1304854f9"
+    },
+    {
+      "path": "content/champions/b2-rin.json",
+      "sha256": "55f5e99f3ef9caf0620bab6b2f2aed7def6d944a6781a7d335b61fb5b378d6de"
+    },
+    {
+      "path": "content/champions/b2-shadow.json",
+      "sha256": "c2806a10d144e9522c4cd2c669a1adbb90227f2b56f1c81fd1d08b696fc98df0"
+    },
+    {
+      "path": "content/champions/b2-shinchan.json",
+      "sha256": "4393101773593f6902bcd7d974f412ed8126e1a20b748adfdfb635a47eeab342"
+    },
+    {
+      "path": "content/champions/b2-sinbad.json",
+      "sha256": "dd86d64f6314b590ec8de299e3cd57b3dd1c7cb25b50dd09857b385d48ecabe3"
+    },
+    {
+      "path": "content/champions/b2-takopi.json",
+      "sha256": "9568b51afa7217434bef3f366da86c05810eaa9b5c29b43c5f82139371d79bfb"
+    },
+    {
+      "path": "content/champions/b2-touka.json",
+      "sha256": "684d429db4f0472018f510e72cb6a47dfcb44a56bed83897e154b90a1a7712dd"
+    },
+    {
+      "path": "content/champions/b2-uncle.json",
+      "sha256": "3d369a0b418067fa4ecfb9083a77e5ea8422a33292efdd9d58dbf7c25403c4d4"
+    },
+    {
+      "path": "content/champions/b2-yogiri.json",
+      "sha256": "e155eb9580c1ff95774dde6125e6ba75fb6e324d3531c47fe02771dfbe29b8fd"
+    },
+    {
+      "path": "content/champions/b2-zenitsu.json",
+      "sha256": "3b17d4f9afb647d01aa5ec9f8fc1516ea44e842ca13d1baa0e60088cb721dc86"
+    },
+    {
+      "path": "content/champions/community-review-01-20260907.json",
+      "sha256": "fe0501f6a2db4ce4cbadb920134fc7c334c9d7c3004e3beb4748b894601145c3"
+    },
+    {
+      "path": "content/champions/community-review-02-20260907.json",
+      "sha256": "1e434ba3de0052763f793fba96675dd8c45d203eda098eb733214fea6d7e955a"
+    },
+    {
+      "path": "content/champions/community-review-03-20260907.json",
+      "sha256": "3efe6b674848853c6a40acbb6896249e934aee2f45ea29d0ac775376550d2755"
+    },
+    {
+      "path": "content/champions/community-review-04-20260907.json",
+      "sha256": "150b2563648e3a67e7c2dc0f7843f8e9282eb696364c9db6c48ef2a7c7e78880"
+    },
+    {
+      "path": "content/champions/community-review-05-20260907.json",
+      "sha256": "ad0381949ae299de30c0af8c6bd07c664e6c8bc722869adf6b672a750adb75ae"
+    },
+    {
+      "path": "content/champions/community-review-06-20260907.json",
+      "sha256": "ae47d258e866be7ca486bb69f0a888e0de65884d06866b0f8950a112f3f19b43"
+    },
+    {
+      "path": "content/champions/community-review-07-20260907.json",
+      "sha256": "6533f068781f126bebeaef16c48edac55429ffd5adefd25a6e306c8cdcc65966"
+    },
+    {
+      "path": "content/champions/community-review-08-20260907.json",
+      "sha256": "ab21de8584f9a7d627e8d86770723363c7d2290192a8064301f0f85c9274f812"
+    },
+    {
+      "path": "content/champions/community-review-09-20260907.json",
+      "sha256": "8572f7d681f39fc76d0ce9779160bbac6e22a88bb79b9aa6c50eae0566c50b2f"
+    },
+    {
+      "path": "content/champions/community-review-10-20260907.json",
+      "sha256": "1aca82abbf54063f80dedae72b98cb8297b2e1600fffa2432312dd8b9d2e8d37"
+    },
+    {
+      "path": "content/champions/community-review-11-20260907.json",
+      "sha256": "25450d00a5ee3e48ffe6429f76ff8f915f00ea0f6554d0de122b92966d332a49"
+    },
+    {
+      "path": "content/champions/community-review-12-20260907.json",
+      "sha256": "8eec57a60984068e5e8c45537c8d87bdf89c8d68a9e4ca7566982bf542df49be"
+    },
+    {
+      "path": "content/champions/community-review-13-20260907.json",
+      "sha256": "00b15590bbc20d2ff2a0c269225be0107d68d97e203b1061549f883700041129"
+    },
+    {
+      "path": "content/champions/community-review-14-20260907.json",
+      "sha256": "eb57fd0277112af4e4c1425bfed5883ff02a7eb9fd6e14d7ee34d4b70cdadf6c"
+    },
+    {
+      "path": "content/champions/community-review-15-20260907.json",
+      "sha256": "8da5a100b06b4dab9e1d063392373d3f7eda03a944a43ad417e5393f203086ed"
+    },
+    {
+      "path": "content/champions/community-review-16-20260907.json",
+      "sha256": "1451ace0e346b93cf8b65930cd1a3ddbcbd5ddba3bb72e048ec29e3ee27b35c4"
+    },
+    {
+      "path": "content/champions/community-review-17-20260907.json",
+      "sha256": "9f3d703d98bd7fe8ee46fbae4b77ef899a1051c191448429fd9888cb3c90f985"
+    },
+    {
+      "path": "content/champions/community-review-18-20260907.json",
+      "sha256": "19321700e277f7c1e1b3641df4e2234d235e5464dae12aef181cae8cbf0a1c7c"
+    },
+    {
+      "path": "content/champions/community-review-19-20260907.json",
+      "sha256": "be7245649b4850a2cc6cee7ea073b01b0be212f4bc382f82e74dfb125f9e1dd1"
+    },
+    {
+      "path": "content/champions/community-review-20-20260907.json",
+      "sha256": "0ca4f75da6b573957e26a876ccecc543bfbd52a9c580b332c435764d07e7ba6b"
+    },
+    {
+      "path": "content/champions/community-review-21-20260907.json",
+      "sha256": "f9fbfd73722e80bad4f09f101246cfe5304d82b329af12a8a05390c669c59e6d"
+    },
+    {
+      "path": "content/champions/community-review-22-20260907.json",
+      "sha256": "12a0a15e2f54f9843014efeffccb8777c9d5be33bbc9c11baad55483bf2fd608"
+    },
+    {
+      "path": "content/champions/community-review-23-20260907.json",
+      "sha256": "9162f4b837a6841569df15bc1c8682951ab59b21a9b8fab8f127477f53a6a5d7"
+    },
+    {
+      "path": "content/champions/community-review-24-20260907.json",
+      "sha256": "425fae96e853c68be037c3939296615b5cded6fe493fc092f342045f0cf27df2"
+    },
+    {
+      "path": "content/champions/community-review-25-20260907.json",
+      "sha256": "fd6fa27dd1d3767302b95a75c95dc2ac8fbdf7d587e67e7f101fedbcb138b6ed"
+    },
+    {
+      "path": "content/champions/community-review-26-20260907.json",
+      "sha256": "d0b623fd99f1be570f131b098b80e14a215c1f10e61c0d719a291c53551ae969"
+    },
+    {
+      "path": "content/champions/community-review-27-20260907.json",
+      "sha256": "fda1a5bb93cd75123aa2ead3f35aa31745150c7a9587bb56cef454b19fc13c9c"
+    },
+    {
+      "path": "content/champions/community-review-28-20260907.json",
+      "sha256": "83a25b3aead694a32eeee57962a62fd40c33f42d3d26c662e2253b8542456341"
+    },
+    {
+      "path": "content/champions/community-review-29-20260907.json",
+      "sha256": "732b67cd0df14c6b4e01cb110a0a2785882f7194d54934f4ca75a0e80fa1662f"
+    },
+    {
+      "path": "content/champions/community-review-30-20260907.json",
+      "sha256": "ac936f94ceaf8d1df750c3e9ad56a61fed1d98d44ce07f191dc21e750922f32a"
+    },
+    {
+      "path": "content/champions/community-review-31-20260907.json",
+      "sha256": "b6d08c2356b26c6e8eefb61300cf049fba3618b544d7cb3ff4e3473fe887720d"
+    },
+    {
+      "path": "content/champions/community-review-32-20260907.json",
+      "sha256": "40a20809874865d2aeab68846c219280b03cad6cdba90e4036235a15a598a433"
+    },
+    {
+      "path": "content/champions/community-review-33-20260907.json",
+      "sha256": "d124954a927e1f05520226c3552c32ffc050983c3deca19d18419e6ff3c507b8"
+    },
+    {
+      "path": "content/champions/community-review-34-20260907.json",
+      "sha256": "30ed26872f3f0883c40311555f960affbee73fb2e7dcfff424fb0a8b4a0b9e86"
+    },
+    {
+      "path": "content/champions/community-review-35-20260907.json",
+      "sha256": "2689855db9664e26af5d3b5c4e53664fc7b8399192464f519a4f53fe4f8569fb"
+    },
+    {
+      "path": "content/champions/community-review-36-20260907.json",
+      "sha256": "61183ef1455784b2531864eef77873921225a62324b8e7c8b623719ed76adf15"
+    },
+    {
+      "path": "content/champions/community-review-37-20260907.json",
+      "sha256": "4c79ff7fb29d0369f41523c881a15d1c1ea3a02dbfd5565a3e0ccdf1d8fd75e7"
+    },
+    {
+      "path": "content/champions/godie-e001.json",
+      "sha256": "bbb8fea3f96e6f483e155dbb79dbab6d0b66855db68827d82ebffbf903fe4f69"
+    },
+    {
+      "path": "content/champions/godie-e002.json",
+      "sha256": "62f511a9c915a2041b456a0f6ea986511005c58b7f49208a3d891d314a6aa7ed"
+    },
+    {
+      "path": "content/champions/godie-e007.json",
+      "sha256": "4e844d3a678966a1b86f452802e121654353e11028ddeded00ab1ed6aa28c66f"
+    },
+    {
+      "path": "content/champions/godie-e008.json",
+      "sha256": "cbdd6cbf80bdc05d2ad7106eba26abe7f1c57ee4157c5971b0e34cfe6c9f6608"
+    },
+    {
+      "path": "content/champions/godie-e00l.json",
+      "sha256": "fe0f42fe5f8f39d2a29bf7fe5743ba321ee0ccdb85cc82fdb33f51b0b6952f79"
+    },
+    {
+      "path": "content/champions/godie-e00n.json",
+      "sha256": "97b831e44608df3d2d8ca684c341dbcfce74495ad5edfaaa4394f819ee6d5943"
+    },
+    {
+      "path": "content/champions/godie-e00r.json",
+      "sha256": "03b6d914a4f73f892d9e507f594157613900e2dd79a2732ce3f46d6fb0592d9e"
+    },
+    {
+      "path": "content/champions/godie-e00s.json",
+      "sha256": "3962859549258e04f6f2e2f0ac7f78b21ffb08f1326a87237719add714947581"
+    },
+    {
+      "path": "content/champions/godie-e00w.json",
+      "sha256": "0f1d6572e021e452c69b697b5a607de6299ea2cabb26de4e56dd944e2b12ddbe"
+    },
+    {
+      "path": "content/champions/godie-e00x.json",
+      "sha256": "324f6e9793e1f237d9f46a59b5b054a48091dec7059343fe3f7f378105bd04cf"
+    },
+    {
+      "path": "content/champions/godie-e010.json",
+      "sha256": "7aa4ec19affe971d14daebec2abbf553cf8c761dd92def35ac83b4b123fee01a"
+    },
+    {
+      "path": "content/champions/godie-edem.json",
+      "sha256": "7ffdd06a1549f12f71085f6e3066a628fc21f273b8a59797366a9e8531c4b5ad"
+    },
+    {
+      "path": "content/champions/godie-efur.json",
+      "sha256": "9bb0134a48cae9de6f81a4a073fe30f3513c32c2ec202e32246b2aa27a4b84b7"
+    },
+    {
+      "path": "content/champions/godie-emfr.json",
+      "sha256": "7bb496c7ea21f45d6e5598853277358825f383a5f7454bdb7070dbed3ad3a63d"
+    },
+    {
+      "path": "content/champions/godie-emns.json",
+      "sha256": "5e0b8ca901c1ad36061ce2ee90ad9e083e5cba853ae877859f9c1a368384aabd"
+    },
+    {
+      "path": "content/champions/godie-etyr.json",
+      "sha256": "0f99df2493c7b4fab6cbffd57e2ab5ffa8ccadc544216a8bae65e687485fba88"
+    },
+    {
+      "path": "content/champions/godie-ewar.json",
+      "sha256": "343467af6fde85a6b1929e767b2983ed4c27e4ab87d939eae2c9c1506798df39"
+    },
+    {
+      "path": "content/champions/godie-h00l.json",
+      "sha256": "c725129f4cc44f72b65fe45b18eaa44557c35771c0b822b80c4a024bfdb03268"
+    },
+    {
+      "path": "content/champions/godie-h01n.json",
+      "sha256": "ff1167e0af17843149d946acdf6f271361a999bd9cfbf3e99ec827333e3c9a45"
+    },
+    {
+      "path": "content/champions/godie-h01o.json",
+      "sha256": "d77d1886baf33618d12774e60da93a549e0bd05efe188c7fd294f6e1e9c90047"
+    },
+    {
+      "path": "content/champions/godie-h01u.json",
+      "sha256": "33a541ae51e93159794ca321d57d699fdde839c706e0b5540286a06dfd81daea"
+    },
+    {
+      "path": "content/champions/godie-h020.json",
+      "sha256": "d3ce7b177622b6306e09c25ea17b96fbd2d74ad8b8b3f0baf50b8d4abacd120f"
+    },
+    {
+      "path": "content/champions/godie-h02k.json",
+      "sha256": "33b18cc2c3ab650d01b9edbb4f8cbb6c03600239b472836154756f2be1b52e2b"
+    },
+    {
+      "path": "content/champions/godie-h02r.json",
+      "sha256": "b4583b754bfdcf0b64b8429598fd2ff2c48efe2b066bf84ce7c9217e4633c9d1"
+    },
+    {
+      "path": "content/champions/godie-h02u.json",
+      "sha256": "482779a588c45ab209ee29b12c05aff0b401fc58fb65165fb90321a86471a82f"
+    },
+    {
+      "path": "content/champions/godie-h02v.json",
+      "sha256": "1d49faa7872e8b017fcd3954c7c473a0085ea4c74cfa5dae2bede04a9277bdf6"
+    },
+    {
+      "path": "content/champions/godie-hapm.json",
+      "sha256": "3a7ee74d94b50c1d081b266101210273529d0d27194350156c751f6297cac77f"
+    },
+    {
+      "path": "content/champions/godie-hart.json",
+      "sha256": "e31c296a8c99b2c7a0f688c9d73447d30be886ac5642ce7f40c72d71d4bffae9"
+    },
+    {
+      "path": "content/champions/godie-hgam.json",
+      "sha256": "5ac000458bdd8968c9687421eba926b426b9f1e1ac3cfa67918858a4ab0240e1"
+    },
+    {
+      "path": "content/champions/godie-hjai.json",
+      "sha256": "71f7da2b784b28d3f6857ec8abfca4d85f81a442eb8869042933ac3218ad1515"
+    },
+    {
+      "path": "content/champions/godie-hpb1.json",
+      "sha256": "540a86d0d7f884c5cce6a9e5210d226e95b0cefa3ef6db84bfd32d709717a530"
+    },
+    {
+      "path": "content/champions/godie-huth.json",
+      "sha256": "2ec13bdff9980379d0d8f358ba536d46a40e5ea53f8511e70da13c233e2ccf74"
+    },
+    {
+      "path": "content/champions/godie-hvsh.json",
+      "sha256": "3a653494065be0ac698cb70bf7554ff68d2ec194df29fe984a29aa50896d73e4"
+    },
+    {
+      "path": "content/champions/godie-hvwd.json",
+      "sha256": "6e017745a804976e83c8f19a28b6fa3fb638c4d1e0f3d0ee13f620ceb40fc7f7"
+    },
+    {
+      "path": "content/champions/godie-n003.json",
+      "sha256": "fdd4091033f2f39255b9355eea9f02aacb42d7ce44a241ce0850719e2913cd20"
+    },
+    {
+      "path": "content/champions/godie-n00b.json",
+      "sha256": "2c1ee413fb41f2a4e63f9f775d1874a60f299d46e7c1dfcc10ec6600f5a3ee5a"
+    },
+    {
+      "path": "content/champions/godie-n00p.json",
+      "sha256": "8a950bad05ac125dfde89c82425f9be8f854c792cdabe2a1559fc4cad9cfc97c"
+    },
+    {
+      "path": "content/champions/godie-n01c.json",
+      "sha256": "5fa4802bb88c2353072e6f9b2fc9bf0c520a375144ba8ebe106eb8133507d2e8"
+    },
+    {
+      "path": "content/champions/godie-n01g.json",
+      "sha256": "068fb6c8981faff9807251968c38e1d57bb75b8a15d63c16106100a912d242ae"
+    },
+    {
+      "path": "content/champions/godie-nbbc.json",
+      "sha256": "d10b8a373d5d3f4b1a110bf25bbd8af3aea171de9367bb7a9d62d6f279313894"
+    },
+    {
+      "path": "content/champions/godie-nsjs.json",
+      "sha256": "a72ff454d4487e27cef189ee668a92f33cd9c60be714a6f558bf2e743a9b38e0"
+    },
+    {
+      "path": "content/champions/godie-o00k.json",
+      "sha256": "fd7ccc16e9d2ea570a069516f830621cc965ccf3f08821aed67c183d622c4866"
+    },
+    {
+      "path": "content/champions/godie-o00l.json",
+      "sha256": "d9e36f6a595d4dd07e3c802587c61a078eef9ee25cfd0b1fcdb53af60643f50e"
+    },
+    {
+      "path": "content/champions/godie-o00x.json",
+      "sha256": "82dfb67f593e5fd71b53fe96748de5cdf02d3ba7f4607de65b7717c3c1972214"
+    },
+    {
+      "path": "content/champions/godie-o02l.json",
+      "sha256": "62241079f94ef799e65e9293f3d8364b001a86217cb37d33476da8b5ff66fc5e"
+    },
+    {
+      "path": "content/champions/godie-o02p.json",
+      "sha256": "600257f3b0e4f81e0a9e9b3f6444b27f41c9797bc2526947cea5aa5b1ee3cdf3"
+    },
+    {
+      "path": "content/champions/godie-o030.json",
+      "sha256": "a60d800eb92873b5bf30f699a9051f52377af432ead97f383b045af453b741e2"
+    },
+    {
+      "path": "content/champions/godie-ofar.json",
+      "sha256": "138200f3698f5581261bd16b0d1be3bb1bbe93bb77ad7c0fad7f27b57fcadf17"
+    },
+    {
+      "path": "content/champions/godie-ogld.json",
+      "sha256": "c90abdd5c26ebfc7d35403bf023ada99a7f07be562f7cb05018d0c3125ba7ee9"
+    },
+    {
+      "path": "content/champions/godie-ogrh.json",
+      "sha256": "94ef7666aae8830dc778991a5395b4a9f39af0828cbd369a70c9a7fd9cfd9e86"
+    },
+    {
+      "path": "content/champions/godie-orkn.json",
+      "sha256": "c8eba93f5792ba9bbb3fa9d7b8d81da2026047edbce38c05826ce845deb34eb9"
+    },
+    {
+      "path": "content/champions/godie-osam.json",
+      "sha256": "ac72f410acb771feb46a9fa2c2446a2ba0e44274ec16f5568d2ffdd1bd0d33c3"
+    },
+    {
+      "path": "content/champions/godie-u00h.json",
+      "sha256": "abd137cb8abbbd0c0d659a1f13623a4e1b4e1caa4eeb81f8f2468883f3a83e6e"
+    },
+    {
+      "path": "content/champions/godie-u00j.json",
+      "sha256": "83b1908930a4034f59fea36cb87d26af7a5b70aae2dba87bc3de22fef9908812"
+    },
+    {
+      "path": "content/champions/godie-u00k.json",
+      "sha256": "d2455a4e2f3fa579e7f6858a788c41f0dd001407e73b45a4ceebd3a30cafce23"
+    },
+    {
+      "path": "content/champions/godie-u00l.json",
+      "sha256": "76fb654048ca4df701040e0e0fc5652fb6292193ee9d312189daff51b487025c"
+    },
+    {
+      "path": "content/champions/godie-u00n.json",
+      "sha256": "dd2a94dc8583de0c7e0c2e8ac6ab75ce3d6ced37308c6e4e27cb09f86adb791b"
+    },
+    {
+      "path": "content/champions/godie-u00o.json",
+      "sha256": "0ee8fc3410845a3aa28f49172e16c796f5f26cddf67c8745b4dcf289d63041d7"
+    },
+    {
+      "path": "content/champions/godie-u00v.json",
+      "sha256": "9bb95ba79eb71c2b922ad6f89a093e83dac3d71b3cf07e6b16f5aae6168ea7f0"
+    },
+    {
+      "path": "content/champions/godie-u010.json",
+      "sha256": "83f505aba5a7bcb8c6ee6e95d8a1eb868796c28c5c3d7ec48de454a9862562fe"
+    },
+    {
+      "path": "content/champions/godie-u01u.json",
+      "sha256": "57b953ca02cc89387c343e7e2c5000dae2d711dd0ffbdf3c5ba50808351d737c"
+    },
+    {
+      "path": "content/champions/godie-u034.json",
+      "sha256": "1a2ccea9680ac269ad6e5b34aff6a02dd95603b1fac631d2063aa55ceaf4e16c"
+    },
+    {
+      "path": "content/champions/godie-ubal.json",
+      "sha256": "8f3262619025857b943d73548b0bea3fa06f1d9b8a54c29a1a6092b386104713"
+    },
+    {
+      "path": "content/champions/godie-ucrl.json",
+      "sha256": "b0ef1a5eb68b19df3630992d8cdb1425e2774c64c5a564716bb86eb6d248da03"
+    },
+    {
+      "path": "content/champions/godie-udea.json",
+      "sha256": "901852d0bc881ffbb07745ab588bd9999e0be2cf32645fb2e63b74204fce55c0"
+    },
+    {
+      "path": "content/champions/godie-udre.json",
+      "sha256": "b5d0b293d269e72f7307193d5fb264e415671afa36a2c1105565ab480be6330b"
+    },
+    {
+      "path": "content/champions/godie-umal.json",
+      "sha256": "75a5ee329f21737d16081d983f1cf35468112c97614954d7af5bee1bdb390fa2"
+    },
+    {
+      "path": "content/champions/godie-uvng.json",
+      "sha256": "8027c4b0f95041c6f20fae3a6bd43abbbfd10a1779a1ccaed42229593bc3bc7d"
+    },
+    {
+      "path": "content/champions/godie-zombiex.json",
+      "sha256": "e8ee481ffe0df0da75e1577062a774d13d8f521f916365cd314b2e567b1b6b5a"
+    },
+    {
+      "path": "content/champions/lol-karthus.json",
+      "sha256": "418684ca3d9408816f6df19b5ddbebe1a764c0005b393b3c2936adc1f3d93eee"
+    },
+    {
+      "path": "content/champions/lol-leesin.json",
+      "sha256": "6a7eb70a08bc8bfeb521e6da2c5f192bf14acd13ebbb8504ecc9bef1f5b77c7b"
+    },
+    {
+      "path": "content/champions/lol-lux.json",
+      "sha256": "111eb65f6676e09abda68d24878b98ba0b3d128a300dd0e0d8942609346a0291"
+    },
+    {
+      "path": "content/champions/lol-missfortune.json",
+      "sha256": "b391f0707af394f06259ab5a1d0dd31571e1a21e52adb0034984d2d0fc8cad57"
+    },
+    {
+      "path": "content/champions/lol-warwick.json",
+      "sha256": "d04c42a30b775de4875f1a34a9c98159fa7ac8c67e148ab2fb34fd07626359fc"
+    },
+    {
+      "path": "content/champions/lol-xerath.json",
+      "sha256": "614a407beff99b91512a34f78858003f1ae59a865a0b1e077a4aeb4fa5683318"
+    },
+    {
+      "path": "content/champions/lol-yasuo.json",
+      "sha256": "2650ff41dc73d3f274f2d1a50741c68118224c6f4c6aa40c0975f03e5b75ee41"
+    },
+    {
+      "path": "content/champions/sela.json",
+      "sha256": "e0b5e98481f2de33611b1227353d07a2b8d0bee92857eb97190434052b508cdf"
+    },
+    {
+      "path": "content/champions/thorne.json",
+      "sha256": "ea9264dfae37958b9be688c0863e02bc6e097ec3bda9b6adf6f80bed51f150cc"
+    }
+  ],
+  "codeInputs": [
+    {
+      "path": "packages/shared/src/content/schema/model.ts",
+      "sha256": "75b1128c87a01558cdc91346dcd0c2c2f3e973008ad98c55a1d8ad8b989c0c84"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/inspect.ts",
+      "sha256": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/glb.ts",
+      "sha256": "daaa10f7e0d9caa47fbb394bb920af9ad6bca8aa53dcc5f7f96eddc4a816598a"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "99a05abcb803576e41f5896f9275c436cc40e32a96ebfdd4ddba6d3163696111"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModelSchema.ts",
+      "sha256": "1f80db96f459616f5fa67580891e22b9b82ff57d4d297f30e1d997e2f19025a5"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/budget.ts",
+      "sha256": "9601a77659df93610d8c047f811b0cf065f5ebf935aab399e7d7eccf8635e25f"
+    },
+    {
+      "path": "apps/content-api/src/modelVersions.ts",
+      "sha256": "ae52f65bd11de247b963a3dff825e5064a3c9a1349317525cce2ce369aeeda10"
+    },
+    {
+      "path": "packages/shared/src/content/heroForge/bodyModels.ts",
+      "sha256": "9fe4003b26cf2d9c8fe6ed4a785dc732fe5f89e04e1d7261bd46d76b189258ca"
+    }
+  ],
+  "rows": [
+    {
+      "id": "jetragon",
+      "name": "空渦龍",
+      "sourceId": "opgg-palworld-jetragon",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+      "bytes": 4297580,
+      "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+      "proposedGitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "readOnly": true,
+      "inspectPassed": true,
+      "budget": {
+        "errors": [],
+        "warnings": []
+      },
+      "triangles": 8468,
+      "meshes": 3,
+      "textureMaxEdge": 256,
+      "textures": 9,
+      "jointCount": 75,
+      "clips": [
+        {
+          "index": 0,
+          "name": "Carrying",
+          "duration": 7.5,
+          "channels": 225
+        },
+        {
+          "index": 1,
+          "name": "Carrying_Start",
+          "duration": 7.5,
+          "channels": 225
+        },
+        {
+          "index": 2,
+          "name": "Damage",
+          "duration": 1.875,
+          "channels": 225
+        },
+        {
+          "index": 3,
+          "name": "Eat",
+          "duration": 5,
+          "channels": 225
+        },
+        {
+          "index": 4,
+          "name": "Encount",
+          "duration": 1.875,
+          "channels": 225
+        },
+        {
+          "index": 5,
+          "name": "FarSkill_Action",
+          "duration": 0.4166666567325592,
+          "channels": 225
+        },
+        {
+          "index": 6,
+          "name": "FarSkill_ActionLoop",
+          "duration": 1,
+          "channels": 225
+        },
+        {
+          "index": 7,
+          "name": "FarSkill_End",
+          "duration": 1.0416666269302368,
+          "channels": 225
+        },
+        {
+          "index": 8,
+          "name": "FarSkill_Start",
+          "duration": 1.0416666269302368,
+          "channels": 225
+        },
+        {
+          "index": 9,
+          "name": "FarSkill_StartLoop",
+          "duration": 1.25,
+          "channels": 225
+        },
+        {
+          "index": 10,
+          "name": "GetUp_LeftDown",
+          "duration": 2,
+          "channels": 225
+        },
+        {
+          "index": 11,
+          "name": "GetUp_RightDown",
+          "duration": 2,
+          "channels": 225
+        },
+        {
+          "index": 12,
+          "name": "Idle",
+          "duration": 7.5,
+          "channels": 225
+        },
+        {
+          "index": 13,
+          "name": "JumpBeam_End",
+          "duration": 0.625,
+          "channels": 225
+        },
+        {
+          "index": 14,
+          "name": "JumpBeam_Loop",
+          "duration": 1,
+          "channels": 225
+        },
+        {
+          "index": 15,
+          "name": "JumpBeam_Start",
+          "duration": 0.7083333134651184,
+          "channels": 225
+        },
+        {
+          "index": 16,
+          "name": "Petting",
+          "duration": 5,
+          "channels": 225
+        },
+        {
+          "index": 17,
+          "name": "Rest01",
+          "duration": 5,
+          "channels": 225
+        },
+        {
+          "index": 18,
+          "name": "Rest02",
+          "duration": 5,
+          "channels": 225
+        },
+        {
+          "index": 19,
+          "name": "Rest03",
+          "duration": 2.5,
+          "channels": 225
+        },
+        {
+          "index": 20,
+          "name": "Run",
+          "duration": 1,
+          "channels": 225
+        },
+        {
+          "index": 21,
+          "name": "Run_Riding",
+          "duration": 1,
+          "channels": 225
+        },
+        {
+          "index": 22,
+          "name": "SleepEnd",
+          "duration": 4.083333492279053,
+          "channels": 225
+        },
+        {
+          "index": 23,
+          "name": "SleepLoop",
+          "duration": 4.583333492279053,
+          "channels": 225
+        },
+        {
+          "index": 24,
+          "name": "SleepStart",
+          "duration": 3.75,
+          "channels": 225
+        },
+        {
+          "index": 25,
+          "name": "Spa",
+          "duration": 2.5,
+          "channels": 225
+        },
+        {
+          "index": 26,
+          "name": "Sprint",
+          "duration": 1,
+          "channels": 225
+        },
+        {
+          "index": 27,
+          "name": "Walk",
+          "duration": 0.8333333134651184,
+          "channels": 225
+        },
+        {
+          "index": 28,
+          "name": "Walk_Riding",
+          "duration": 0.8333333134651184,
+          "channels": 225
+        }
+      ],
+      "validation": {
+        "numErrors": 0,
+        "numWarnings": 3,
+        "numInfos": 0,
+        "numHints": 3,
+        "messages": [
+          {
+            "code": "BUFFER_VIEW_TARGET_MISSING",
+            "message": "bufferView.target should be set for vertex or index data.",
+            "severity": 3,
+            "pointer": "/meshes/0/primitives/0/attributes/NORMAL"
+          },
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "BUFFER_VIEW_TARGET_MISSING",
+            "message": "bufferView.target should be set for vertex or index data.",
+            "severity": 3,
+            "pointer": "/meshes/0/primitives/1/attributes/NORMAL"
+          },
+          {
+            "code": "BUFFER_VIEW_TARGET_MISSING",
+            "message": "bufferView.target should be set for vertex or index data.",
+            "severity": 3,
+            "pointer": "/meshes/0/primitives/2/attributes/NORMAL"
+          },
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/2/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/75"
+          }
+        ],
+        "truncated": false
+      },
+      "matchingChampionIds": [],
+      "missingClipMapWithHeroBodyTrueAccepted": false,
+      "missingClipMapIssues": [
+        {
+          "path": [
+            "clipMap"
+          ],
+          "code": "invalid_type"
+        }
+      ],
+      "modelVersionsPrepare": false,
+      "fullHeroDocumentCreated": false
+    },
+    {
+      "id": "astralym",
+      "name": "枯星龍",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+      "bytes": 13224512,
+      "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09",
+      "proposedGitPath": "content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "readOnly": true,
+      "inspectPassed": true,
+      "budget": {
+        "errors": [],
+        "warnings": [
+          "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+          "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+        ]
+      },
+      "triangles": 23928,
+      "meshes": 3,
+      "textureMaxEdge": 256,
+      "textures": 9,
+      "jointCount": 145,
+      "clips": [
+        {
+          "index": 0,
+          "name": "Idle",
+          "duration": 7.666666507720947,
+          "channels": 435
+        },
+        {
+          "index": 1,
+          "name": "Walk",
+          "duration": 4.333333492279053,
+          "channels": 435
+        }
+      ],
+      "validation": {
+        "numErrors": 0,
+        "numWarnings": 2,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/145"
+          }
+        ],
+        "truncated": false
+      },
+      "matchingChampionIds": [],
+      "missingClipMapWithHeroBodyTrueAccepted": false,
+      "missingClipMapIssues": [
+        {
+          "path": [
+            "clipMap"
+          ],
+          "code": "invalid_type"
+        }
+      ],
+      "modelVersionsPrepare": false,
+      "fullHeroDocumentCreated": false
+    },
+    {
+      "id": "cattiva",
+      "name": "搗蛋貓",
+      "sourceId": "palworld-cattiva-opgg",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+      "bytes": 2148052,
+      "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+      "proposedGitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "readOnly": true,
+      "inspectPassed": true,
+      "budget": {
+        "errors": [],
+        "warnings": []
+      },
+      "triangles": 5798,
+      "meshes": 3,
+      "textureMaxEdge": 256,
+      "textures": 5,
+      "jointCount": 43,
+      "clips": [
+        {
+          "index": 0,
+          "name": "Architecture",
+          "duration": 0.5,
+          "channels": 129
+        },
+        {
+          "index": 1,
+          "name": "Carrying",
+          "duration": 1.6666666269302368,
+          "channels": 129
+        },
+        {
+          "index": 2,
+          "name": "Carrying_Start",
+          "duration": 1.6666666269302368,
+          "channels": 129
+        },
+        {
+          "index": 3,
+          "name": "CommonWork",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 4,
+          "name": "Damage",
+          "duration": 1.875,
+          "channels": 129
+        },
+        {
+          "index": 5,
+          "name": "Eat",
+          "duration": 3.3333332538604736,
+          "channels": 129
+        },
+        {
+          "index": 6,
+          "name": "Encount",
+          "duration": 1.875,
+          "channels": 129
+        },
+        {
+          "index": 7,
+          "name": "FarSkill_Action",
+          "duration": 0.4166666567325592,
+          "channels": 129
+        },
+        {
+          "index": 8,
+          "name": "FarSkill_ActionLoop",
+          "duration": 0.8333333134651184,
+          "channels": 129
+        },
+        {
+          "index": 9,
+          "name": "FarSkill_End",
+          "duration": 1.0416666269302368,
+          "channels": 129
+        },
+        {
+          "index": 10,
+          "name": "FarSkill_Start",
+          "duration": 1.0416666269302368,
+          "channels": 129
+        },
+        {
+          "index": 11,
+          "name": "FarSkill_StartLoop",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 12,
+          "name": "GetUp_FrontDown",
+          "duration": 1.875,
+          "channels": 129
+        },
+        {
+          "index": 13,
+          "name": "Gunner",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 14,
+          "name": "Idle",
+          "duration": 1.6666666269302368,
+          "channels": 129
+        },
+        {
+          "index": 15,
+          "name": "Idle_Swim",
+          "duration": 1,
+          "channels": 129
+        },
+        {
+          "index": 16,
+          "name": "Jail",
+          "duration": 1.6666666269302368,
+          "channels": 129
+        },
+        {
+          "index": 17,
+          "name": "JumpEnd",
+          "duration": 1.125,
+          "channels": 129
+        },
+        {
+          "index": 18,
+          "name": "JumpLoop",
+          "duration": 0.8333333134651184,
+          "channels": 129
+        },
+        {
+          "index": 19,
+          "name": "Mining",
+          "duration": 1.6666666269302368,
+          "channels": 129
+        },
+        {
+          "index": 20,
+          "name": "NekoPunch_End",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 21,
+          "name": "NekoPunch_Loop",
+          "duration": 0.6666666865348816,
+          "channels": 129
+        },
+        {
+          "index": 22,
+          "name": "NekoPunch_Start",
+          "duration": 0.625,
+          "channels": 129
+        },
+        {
+          "index": 23,
+          "name": "Petting",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 24,
+          "name": "Rest01",
+          "duration": 2.0833332538604736,
+          "channels": 129
+        },
+        {
+          "index": 25,
+          "name": "Rest02",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 26,
+          "name": "Rest03",
+          "duration": 3.3333332538604736,
+          "channels": 129
+        },
+        {
+          "index": 27,
+          "name": "Run",
+          "duration": 0.6666666865348816,
+          "channels": 129
+        },
+        {
+          "index": 28,
+          "name": "SleepEnd",
+          "duration": 3.75,
+          "channels": 129
+        },
+        {
+          "index": 29,
+          "name": "SleepLoop",
+          "duration": 2.5,
+          "channels": 129
+        },
+        {
+          "index": 30,
+          "name": "SleepStart",
+          "duration": 3.75,
+          "channels": 129
+        },
+        {
+          "index": 31,
+          "name": "Transport",
+          "duration": 1.25,
+          "channels": 129
+        },
+        {
+          "index": 32,
+          "name": "Walk",
+          "duration": 1.25,
+          "channels": 129
+        }
+      ],
+      "validation": {
+        "numErrors": 0,
+        "numWarnings": 2,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/2/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/43"
+          }
+        ],
+        "truncated": false
+      },
+      "matchingChampionIds": [],
+      "missingClipMapWithHeroBodyTrueAccepted": false,
+      "missingClipMapIssues": [
+        {
+          "path": [
+            "clipMap"
+          ],
+          "code": "invalid_type"
+        }
+      ],
+      "modelVersionsPrepare": false,
+      "fullHeroDocumentCreated": false
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.621e928d6f5f58a8b7fc18bde58c8e0b189843fd36202b2f",
+  "modelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -371,6 +371,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-470087-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.b0f51f214cce617a5b9046a281f70626b9ddbee8cccd1375",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.470087",
+      "modelSha256": "89e3f448d232ea002d5ce6f9df0aaaaba44ff81163f143d4c4e9865b4d39ff99",
+      "binarySha256": "3e617a7b923c6af0e4e51e46cfd764026b1f0e0add513677d24bef1f189f1494",
+      "registeredAt": "2026-09-10T14:45:33.685Z",
+      "source": {
+        "kind": "previous",
+        "character": "近衛刀太",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.470087.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a5b79ca7632788eb9e9c32f54b5c3c8fa3b6e06d2e865f1a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4823275304f57f71ffdb0a7cfdd26c821e2849b62f85fe8aeac4a7d0a2806f3d",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-10T14:45:33.695Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
+      "label": "蓝瞳靓仔版远野志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.470087-standard-v2",
+      "modelSha256": "5d5af802b79977595e19da37643b02d8e24e3905861fb53d2034ad4234406b29",
+      "binarySha256": "5310d15dc26874f9dcf0c3f3db64a519c9050d51f677b176f44acb9c8d628eb0",
+      "registeredAt": "2026-09-10T14:48:49.967Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蓝瞳靓仔版远野志贵",
+        "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-470087-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

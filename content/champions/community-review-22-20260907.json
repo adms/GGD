@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
+  "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -351,6 +351,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-311294-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.cc688f0c9acfeab9c68254e817d2ed85a6447f9b093bd3db",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.311294",
+      "modelSha256": "65a6524005796e3306e77f1e7e1667838c498f2473d9be3f3bda96485c9bc014",
+      "binarySha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
+      "registeredAt": "2026-09-10T14:45:31.415Z",
+      "source": {
+        "kind": "previous",
+        "character": "菜月昴",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.311294.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.3fb1524235ab7cd7eda871d312baf831c7885f6ddcb7a3cc",
+      "label": "夜斗",
+      "sourceModelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+      "modelSha256": "66e5be55728c19f8e6501da622b55d6768fc3f074a4c5411e7c158dbaa24356f",
+      "binarySha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "registeredAt": "2026-09-10T14:45:31.420Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "夜斗",
+        "work": "流浪神差／野良神",
+        "library": "300heroes",
+        "reference": "300heroes:64db6774e13416da32390b5b",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+      "label": "菜月昴（論壇模型）",
+      "sourceModelKey": "ou99.311294-standard-v2",
+      "modelSha256": "8e6e48b3155057f885634df3a9d3a7a288a451aa7a25537bec53ca52b1aee7fd",
+      "binarySha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+      "registeredAt": "2026-09-10T14:48:48.570Z",
+      "source": {
+        "kind": "exact",
+        "character": "菜月昴",
+        "work": "Re:從零開始的異世界生活",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

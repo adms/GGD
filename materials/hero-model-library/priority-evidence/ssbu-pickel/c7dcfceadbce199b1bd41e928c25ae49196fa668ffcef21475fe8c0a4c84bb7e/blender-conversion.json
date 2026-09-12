@@ -1,0 +1,111 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-pickel-alex-c01-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c01/pickel-alex-c01.blend",
+    "bytes": 4168692,
+    "sha256": "32da26ff5d5bc9c2581447348f74ce0ea5472dcdf736c8137fc7ada651cfe445"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": false
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-alex-c01-blender4513-v1/body.glb",
+    "bytes": 51896,
+    "sha256": "5005d54578aeb53dc15c7cb0b98df957b516e1de57f87af2e501d717009c6cdf"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -8.0,
+        -2.000002384185791,
+        -1.3435885648505064e-07
+      ],
+      [
+        8.0,
+        1.9999985694885254,
+        16.000001907348633
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.11249998564424606,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    31
+  ],
+  "sourceActionCount": 0,
+  "sourceImageCountUsed": 1,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_pickel_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 31,
+      "nodeName": "pickel_Openblink_VIS_O_OBJShape",
+      "previousParentIndex": 34,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 32,
+      "nodeName": "pickel_Openblink_VIS_O_OBJShape.001",
+      "previousParentIndex": 34,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 33,
+      "nodeName": "pickel_VIS_O_OBJ_NSCShape",
+      "previousParentIndex": 34,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

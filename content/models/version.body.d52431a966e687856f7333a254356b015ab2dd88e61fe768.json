@@ -1,0 +1,20 @@
+{
+  "id": "version.body.d52431a966e687856f7333a254356b015ab2dd88e61fe768",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/versions/1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell Four",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "ou99.493578",
+    "legacyAppearance": true
+  },
+  "yawOffsetDeg": 0
+}

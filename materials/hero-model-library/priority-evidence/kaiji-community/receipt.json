@@ -1,0 +1,80 @@
+{
+  "schema": "ggd-kaiji-runtime-delivery@1",
+  "candidateId": "kaiji-holya-procedural-six-state-v1",
+  "heroId": "b2-kaiji",
+  "sourceId": "thunderstore-holya-kaiji-suit2",
+  "sourceUrl": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+  "localSourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+  "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1",
+  "runtimeModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+  "glbPath": "content/assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+  "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+  "bytes": 319724,
+  "documentSha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8",
+  "nativeAnimationCount": 0,
+  "proceduralAnimationCount": 6,
+  "audioCount": 0,
+  "vfxCount": 0,
+  "visualSamples": 36,
+  "visualReview": "Front, side, all six midpoint states, quarter-cycle run and terminal death inspected; recognizable face, complete clothing textures and body retained. Generic gestures only.",
+  "readiness": "registered-runtime-option",
+  "productionDeployed": false,
+  "limitations": [
+    "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+    "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+    "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+    "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+    "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+    "技術模型驗收及後台登記與正式站部署分開記錄。"
+  ],
+  "evidence": [
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/animation.json",
+      "sha256": "0ff2f4763888fca07dc2e860e16c63ee9d183d323e42921df78357545bcd973d"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/contact.png",
+      "sha256": "2e7bdc0dfafc7d69e618ff4bb0a5d43935a662e80d9e63a16a0e5a04a41d269e"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/independent-check.json",
+      "sha256": "6373e503d23d3c8e9dfef2dae7828fdb2b0a76460ec130ec466b74b437ebb486"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/khronos.json",
+      "sha256": "4c56db4ad28a5ab240808fa4fadb3bbca290e14a7b52b47aacbe0e6ff5d35f8c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/native-preflight.json",
+      "sha256": "253dfa64ce777fce861991edb79b4e2dd3ab0dfaff1e4a350d39d53de64e935f"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/original-source-entry.json",
+      "sha256": "77d34c199502fbc3a92eab8408510f32f775f03a8881a2bba5445c305333cfaf"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/png-sar-fix.json",
+      "sha256": "fe61099a4bfc245d887874c98f22afc593fc4f9ad2b770572f6d84bec902fba7"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/preparation.json",
+      "sha256": "05e0f3521f3cc7c03a17261406d36d871983347197f7e87fb3caca355cb2bc35"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/render-proof.json",
+      "sha256": "719170716de9c5a36aaa016c9d835dec6dad4b23284db5ed22ee9455c6d21f66"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/render-run.json",
+      "sha256": "51eb832e6e7dfd2a6f5d4f71056bd525d9d5b7555acd82480528e45a5abbd44b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kaiji-community/source-s3-backup.json",
+      "sha256": "bf7ef0e91c25e8658c297c65f3c5afe3999f6f54437e6e937ebe9e2a85b9ee3e"
+    }
+  ],
+  "backendSelectionVerified": true,
+  "activeModelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+  "selectionMode": "automatic",
+  "registrationEvidence": "materials/hero-model-library/priority-evidence/kaiji-community/registration-readback.json"
+}

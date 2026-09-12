@@ -687,7 +687,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       catalogHistory.capture();
       modelVersions.writeArtifacts(prepared.artifacts);
       reindex("models");
-      const after = spliceMembers(before, { modelKey: prepared.champion.modelKey, modelVersions: prepared.champion.modelVersions });
+      const after = spliceMembers(before, { modelKey: prepared.champion.modelKey, modelVersions: prepared.champion.modelVersions, modelSelectionMode: prepared.champion.modelSelectionMode });
       let result: { collectionHash: string; contentVersion: string };
       try {
         writeTextAtomic(loc.file, after);

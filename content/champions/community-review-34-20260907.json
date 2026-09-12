@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.1c6835b90c39d1d3b1c6457a89d8fe0599cc6b5d09be22a1",
+  "modelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -374,6 +374,77 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-458013-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.1d73432509e2559827f926fb9990eb87166ce602e260127e",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.458013",
+      "modelSha256": "979ceed72b531df6b98b1c2dafe87aa97f05179f370452f8238bc5a0938803f7",
+      "binarySha256": "eb364c2548883235aeee94513085a94f49c0ac7af3c8580a6c3331fddd49c039",
+      "registeredAt": "2026-09-10T14:45:33.861Z",
+      "source": {
+        "kind": "previous",
+        "character": "高速婆婆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.458013.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.212ff917b27f83cc80d892846f193e8dbec56b77df1c43ad",
+      "label": "人妖喜乐（論壇相似模型）",
+      "sourceModelKey": "ou99.458013-standard",
+      "modelSha256": "18acbbd8868a47391877b62b3cbb2f1293373c0eb0ae1b04efe2cb5847c220db",
+      "binarySha256": "fb9fa9e36c1219ad787f3cb2af332afe0444b5bcdf56d32c335a20f88d227bf7",
+      "registeredAt": "2026-09-10T14:45:33.872Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "人妖喜乐",
+        "work": "來源作品待核；論壇標題：人妖喜乐",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-458013-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.f9c81aa5bab51aa9e278d56af541234807f54ed3af7fe01c",
+      "label": "八云紫",
+      "sourceModelKey": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+      "modelSha256": "a3289f881628bc7f976c07a89809021ce7922ba25dc7cd5f7ebe984f10172ef8",
+      "binarySha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "registeredAt": "2026-09-10T14:45:33.971Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "八云紫",
+        "work": "東方 Project",
+        "library": "300heroes",
+        "reference": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
+      "label": "高速婆婆｜招財貓形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
+      "modelSha256": "53a95a33bbd5e8d50e8bd512ad98e6507b53ce106ba462e8e7c26e262f8747a5",
+      "binarySha256": "02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3",
+      "registeredAt": "2026-09-10T14:45:34.056Z",
+      "source": {
+        "kind": "exact",
+        "character": "高速婆婆｜招財貓形態",
+        "work": "膽大黨 Dandadan",
+        "library": "Lethal Company MOD／inkiidonut",
+        "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

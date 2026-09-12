@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.de731caac2683e7c7ac6a1e1",
+  "title": "SUN樂（獨立副本／哈桑）",
+  "kind": "model-body",
+  "model": "models/community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:sunraku",
+        "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+        "glbPath": "assets/models/community/ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0.glb",
+        "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+        "bytes": 1058392,
+        "documentSha256": "de731caac2683e7c7ac6a1e1fa2580dbd25a703a68262418e7b6db04729c620a",
+        "sourceCharacter": "SUN樂（獨立副本／哈桑）",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "derivative:sunraku",
+        "sourceSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "community-review-31-20260907",
+          "targetName": "SUN樂",
+          "targetWork": "香格里拉・開拓異境",
+          "sourceId": "community:community-review-31-20260907",
+          "sourceSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+          "copyMode": "independent-embedded-copy",
+          "changes": "褲子與頭改藍色，上半身改膚色"
+        },
+        "bundleId": "ggd.model.de731caac2683e7c7ac6a1e1"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-31-20260907",
+        "name": "SUN樂"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

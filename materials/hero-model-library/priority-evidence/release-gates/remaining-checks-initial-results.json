@@ -1,0 +1,302 @@
+[
+  {
+    "command": "pnpm contract:numbers:check",
+    "exit": 0,
+    "seconds": 1.33,
+    "log": "/private/tmp/ggd-priority-remaining-checks/contract-numbers-check.log"
+  },
+  {
+    "command": "pnpm atlas:check",
+    "exit": 0,
+    "seconds": 8.48,
+    "log": "/private/tmp/ggd-priority-remaining-checks/atlas-check.log"
+  },
+  {
+    "command": "pnpm treasure:csv:check",
+    "exit": 0,
+    "seconds": 1.17,
+    "log": "/private/tmp/ggd-priority-remaining-checks/treasure-csv-check.log"
+  },
+  {
+    "command": "pnpm docs:readme:check",
+    "exit": 1,
+    "seconds": 1.87,
+    "log": "/private/tmp/ggd-priority-remaining-checks/docs-readme-check.log"
+  },
+  {
+    "command": "pnpm docs:status:check",
+    "exit": 0,
+    "seconds": 1.38,
+    "log": "/private/tmp/ggd-priority-remaining-checks/docs-status-check.log"
+  },
+  {
+    "command": "pnpm roster:check",
+    "exit": 0,
+    "seconds": 3.44,
+    "log": "/private/tmp/ggd-priority-remaining-checks/roster-check.log"
+  },
+  {
+    "command": "pnpm pitch:check",
+    "exit": 0,
+    "seconds": 7.02,
+    "log": "/private/tmp/ggd-priority-remaining-checks/pitch-check.log"
+  },
+  {
+    "command": "pnpm newhero:check",
+    "exit": 0,
+    "seconds": 4.81,
+    "log": "/private/tmp/ggd-priority-remaining-checks/newhero-check.log"
+  },
+  {
+    "command": "pnpm lowdmg:check",
+    "exit": 0,
+    "seconds": 3.74,
+    "log": "/private/tmp/ggd-priority-remaining-checks/lowdmg-check.log"
+  },
+  {
+    "command": "pnpm anchors:check",
+    "exit": 0,
+    "seconds": 3.03,
+    "log": "/private/tmp/ggd-priority-remaining-checks/anchors-check.log"
+  },
+  {
+    "command": "pnpm statcaps:check",
+    "exit": 0,
+    "seconds": 3.17,
+    "log": "/private/tmp/ggd-priority-remaining-checks/statcaps-check.log"
+  },
+  {
+    "command": "pnpm apconv:plan:check",
+    "exit": 0,
+    "seconds": 2.06,
+    "log": "/private/tmp/ggd-priority-remaining-checks/apconv-plan-check.log"
+  },
+  {
+    "command": "pnpm apconv:check",
+    "exit": 0,
+    "seconds": 1.6,
+    "log": "/private/tmp/ggd-priority-remaining-checks/apconv-check.log"
+  },
+  {
+    "command": "pnpm apdmg:check",
+    "exit": 0,
+    "seconds": 5.58,
+    "log": "/private/tmp/ggd-priority-remaining-checks/apdmg-check.log"
+  },
+  {
+    "command": "pnpm board:check",
+    "exit": 0,
+    "seconds": 1.7,
+    "log": "/private/tmp/ggd-priority-remaining-checks/board-check.log"
+  },
+  {
+    "command": "pnpm msgledger:check",
+    "exit": 0,
+    "seconds": 29.65,
+    "log": "/private/tmp/ggd-priority-remaining-checks/msgledger-check.log"
+  },
+  {
+    "command": "pnpm skillnorm:check",
+    "exit": 0,
+    "seconds": 12.47,
+    "log": "/private/tmp/ggd-priority-remaining-checks/skillnorm-check.log"
+  },
+  {
+    "command": "pnpm speedtiers:check",
+    "exit": 0,
+    "seconds": 3.76,
+    "log": "/private/tmp/ggd-priority-remaining-checks/speedtiers-check.log"
+  },
+  {
+    "command": "pnpm jasscombo:check",
+    "exit": 0,
+    "seconds": 1.52,
+    "log": "/private/tmp/ggd-priority-remaining-checks/jasscombo-check.log"
+  },
+  {
+    "command": "pnpm vfxbind:check",
+    "exit": 0,
+    "seconds": 1.59,
+    "log": "/private/tmp/ggd-priority-remaining-checks/vfxbind-check.log"
+  },
+  {
+    "command": "pnpm models:check",
+    "exit": 1,
+    "seconds": 23.59,
+    "log": "/private/tmp/ggd-priority-remaining-checks/models-check.log"
+  },
+  {
+    "command": "pnpm lod:check",
+    "exit": 0,
+    "seconds": 1.88,
+    "log": "/private/tmp/ggd-priority-remaining-checks/lod-check.log"
+  },
+  {
+    "command": "pnpm audit:check",
+    "exit": 0,
+    "seconds": 2.47,
+    "log": "/private/tmp/ggd-priority-remaining-checks/audit-check.log"
+  },
+  {
+    "command": "pnpm echoloop:check",
+    "exit": 0,
+    "seconds": 3.89,
+    "log": "/private/tmp/ggd-priority-remaining-checks/echoloop-check.log"
+  },
+  {
+    "command": "pnpm templates:check",
+    "exit": 0,
+    "seconds": 1.4,
+    "log": "/private/tmp/ggd-priority-remaining-checks/templates-check.log"
+  },
+  {
+    "command": "pnpm prose:check",
+    "exit": 0,
+    "seconds": 7.47,
+    "log": "/private/tmp/ggd-priority-remaining-checks/prose-check.log"
+  },
+  {
+    "command": "pnpm sfxbind:check",
+    "exit": 0,
+    "seconds": 1.37,
+    "log": "/private/tmp/ggd-priority-remaining-checks/sfxbind-check.log"
+  },
+  {
+    "command": "pnpm shapes:check",
+    "exit": 1,
+    "seconds": 1.53,
+    "log": "/private/tmp/ggd-priority-remaining-checks/shapes-check.log"
+  },
+  {
+    "command": "pnpm iconplan:check",
+    "exit": 0,
+    "seconds": 1.58,
+    "log": "/private/tmp/ggd-priority-remaining-checks/iconplan-check.log"
+  },
+  {
+    "command": "pnpm formreceipts:check",
+    "exit": 0,
+    "seconds": 70.69,
+    "log": "/private/tmp/ggd-priority-remaining-checks/formreceipts-check.log"
+  },
+  {
+    "command": "pnpm beam:check",
+    "exit": 0,
+    "seconds": 8.84,
+    "log": "/private/tmp/ggd-priority-remaining-checks/beam-check.log"
+  },
+  {
+    "command": "pnpm archetypes:check",
+    "exit": 0,
+    "seconds": 3.35,
+    "log": "/private/tmp/ggd-priority-remaining-checks/archetypes-check.log"
+  },
+  {
+    "command": "pnpm enableaudit:check",
+    "exit": 0,
+    "seconds": 2.07,
+    "log": "/private/tmp/ggd-priority-remaining-checks/enableaudit-check.log"
+  },
+  {
+    "command": "pnpm review:check",
+    "exit": 0,
+    "seconds": 5.53,
+    "log": "/private/tmp/ggd-priority-remaining-checks/review-check.log"
+  },
+  {
+    "command": "pnpm declshape:check",
+    "exit": 0,
+    "seconds": 3.49,
+    "log": "/private/tmp/ggd-priority-remaining-checks/declshape-check.log"
+  },
+  {
+    "command": "pnpm decor:check",
+    "exit": 1,
+    "seconds": 9.85,
+    "log": "/private/tmp/ggd-priority-remaining-checks/decor-check.log"
+  },
+  {
+    "command": "pnpm speedlists:check",
+    "exit": 0,
+    "seconds": 7.82,
+    "log": "/private/tmp/ggd-priority-remaining-checks/speedlists-check.log"
+  },
+  {
+    "command": "pnpm locust:check",
+    "exit": 0,
+    "seconds": 2.15,
+    "log": "/private/tmp/ggd-priority-remaining-checks/locust-check.log"
+  },
+  {
+    "command": "pnpm w3a:check",
+    "exit": 0,
+    "seconds": 5.64,
+    "log": "/private/tmp/ggd-priority-remaining-checks/w3a-check.log"
+  },
+  {
+    "command": "pnpm board:roll:check",
+    "exit": 0,
+    "seconds": 1.73,
+    "log": "/private/tmp/ggd-priority-remaining-checks/board-roll-check.log"
+  },
+  {
+    "command": "pnpm ruleslip:check",
+    "exit": 0,
+    "seconds": 1.29,
+    "log": "/private/tmp/ggd-priority-remaining-checks/ruleslip-check.log"
+  },
+  {
+    "command": "pnpm receipt:check",
+    "exit": 1,
+    "seconds": 3.88,
+    "log": "/private/tmp/ggd-priority-remaining-checks/receipt-check.log"
+  },
+  {
+    "command": "pnpm handback:check",
+    "exit": 0,
+    "seconds": 3.49,
+    "log": "/private/tmp/ggd-priority-remaining-checks/handback-check.log"
+  },
+  {
+    "command": "pnpm clipdeg:check",
+    "exit": 1,
+    "seconds": 5.5,
+    "log": "/private/tmp/ggd-priority-remaining-checks/clipdeg-check.log"
+  },
+  {
+    "command": "pnpm apcoeffdiff:check",
+    "exit": 0,
+    "seconds": 4.46,
+    "log": "/private/tmp/ggd-priority-remaining-checks/apcoeffdiff-check.log"
+  },
+  {
+    "command": "pnpm appearance:check",
+    "exit": 0,
+    "seconds": 5.6,
+    "log": "/private/tmp/ggd-priority-remaining-checks/appearance-check.log"
+  },
+  {
+    "command": "pnpm ptokens:check",
+    "exit": 0,
+    "seconds": 4.95,
+    "log": "/private/tmp/ggd-priority-remaining-checks/ptokens-check.log"
+  },
+  {
+    "command": "pnpm coord:check",
+    "exit": 1,
+    "seconds": 8.09,
+    "log": "/private/tmp/ggd-priority-remaining-checks/coord-check.log"
+  },
+  {
+    "command": "pnpm voices:check",
+    "exit": 0,
+    "seconds": 9.28,
+    "log": "/private/tmp/ggd-priority-remaining-checks/voices-check.log"
+  },
+  {
+    "command": "pnpm combat:check",
+    "exit": 1,
+    "seconds": 1.82,
+    "log": "/private/tmp/ggd-priority-remaining-checks/combat-check.log"
+  }
+]

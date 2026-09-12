@@ -337,7 +337,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-ned",
-  "modelKey": "version.body.db80a14d14fe5bf724271e3fc298b87ed497bb61f27a564b",
+  "modelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
   "name": "青蛙劍士 Ned",
   "origin": "鬥士",
   "passiveAbility": "b2-ned.passive",
@@ -383,6 +383,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-456917-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.456917",
+      "modelSha256": "63d3820cca08f697d3fb3761600b856592fb72d03dcb2872f3e82365d40d46aa",
+      "binarySha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+      "registeredAt": "2026-09-10T14:45:43.393Z",
+      "source": {
+        "kind": "previous",
+        "character": "青蛙劍士 Ned",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.456917.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.84de20dba609752ac3d0d1c6f1242d8752408655ec183580",
+      "label": "妙蛙種子模型",
+      "sourceModelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+      "modelSha256": "b3c19ef48278a9f94da54e4b71b1fdb3db48193acde9620b08bd52ef9623ad24",
+      "binarySha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+      "registeredAt": "2026-09-10T14:45:43.397Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "妙蛙種子模型",
+        "work": "Pokémon；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:bulbasaur",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
+      "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+      "sourceModelKey": "ou99.456917-standard-v2",
+      "modelSha256": "c920907527b571ecdc3c6deea3fd95ca6ce3591d7a6f523cd6975985181f5d78",
+      "binarySha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+      "registeredAt": "2026-09-10T14:48:58.431Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蛤蟆蘸酱柯松剑客",
+        "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-456917-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

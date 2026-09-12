@@ -327,7 +327,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-kaede",
-  "modelKey": "version.body.12d315398cde2fe6298c11f3889201a0ca9077c01e320907",
+  "modelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
   "name": "楓",
   "origin": "法鬥",
   "passiveAbility": "b2-kaede.passive",
@@ -373,6 +373,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-474258-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.dcb2b25b905cfeca7bcf4acd0184171db8a4948ee58c0af1",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.474258",
+      "modelSha256": "ff7e98f7e0a5d63cf04f1bd057010ad5d7160e2525363da576de7cacee611f70",
+      "binarySha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06",
+      "registeredAt": "2026-09-10T14:45:39.502Z",
+      "source": {
+        "kind": "previous",
+        "character": "楓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.474258.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
+      "label": "绯红女剑校服女（論壇相似模型）",
+      "sourceModelKey": "ou99.474258-standard",
+      "modelSha256": "f4f567bba0de527d65fdba4753826cdda1b1a88bbe27f871a70dccb1f846930c",
+      "binarySha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "registeredAt": "2026-09-10T14:45:39.516Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯红女剑校服女",
+        "work": "來源作品待核；論壇標題：绯红女剑校服女",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-474258-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a5b79ca7632788eb9e9c32f54b5c3c8fa3b6e06d2e865f1a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4823275304f57f71ffdb0a7cfdd26c821e2849b62f85fe8aeac4a7d0a2806f3d",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-10T14:45:39.591Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

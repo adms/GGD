@@ -1,0 +1,77 @@
+{
+  "id": "ggd.model.58505d3bb082ae9a68fd6b74",
+  "title": "佐罗",
+  "kind": "model-body",
+  "model": "models/community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:85",
+        "modelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+        "glbPath": "assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+        "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+        "bytes": 896312,
+        "documentSha256": "58505d3bb082ae9a68fd6b745b9c75510a14c2e26170c5243de84af9f79d4a64",
+        "sourceCharacter": "佐罗",
+        "sourceWork": "ONE PIECE 航海王",
+        "sourceAssetId": "300heroes:5666df594cba229f74ce4ed9",
+        "sourceSha256": "5174fe1661fb2e1a7f7bf40480877c82487c84c755d8e03c7eaccf4711397912",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.58505d3bb082ae9a68fd6b74"
+      },
+      {
+        "id": "community:community-review-36-20260907",
+        "modelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+        "glbPath": "assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+        "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+        "bytes": 896312,
+        "documentSha256": "58505d3bb082ae9a68fd6b745b9c75510a14c2e26170c5243de84af9f79d4a64",
+        "sourceCharacter": "佐罗",
+        "sourceWork": "ONE PIECE 航海王",
+        "sourceAssetId": "300heroes:5666df594cba229f74ce4ed9",
+        "sourceSha256": "5174fe1661fb2e1a7f7bf40480877c82487c84c755d8e03c7eaccf4711397912",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.58505d3bb082ae9a68fd6b74"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-u01u",
+        "name": "三刀流劍士 - 索隆"
+      },
+      {
+        "id": "godie-udre",
+        "name": "三刀流劍士 - 索隆"
+      },
+      {
+        "id": "community-review-36-20260907",
+        "name": "鬼畜王蘭斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

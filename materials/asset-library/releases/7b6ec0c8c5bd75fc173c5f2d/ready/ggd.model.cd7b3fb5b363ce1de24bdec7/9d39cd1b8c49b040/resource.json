@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.cd7b3fb5b363ce1de24bdec7",
+  "title": "富樫勇太",
+  "kind": "model-body",
+  "model": "models/community.body.e854c5c60388f5ecb54fe3cb34e5195ba4ad0128f79f733a.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:36",
+        "modelKey": "community.body.e854c5c60388f5ecb54fe3cb34e5195ba4ad0128f79f733a",
+        "glbPath": "assets/models/community/dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7.glb",
+        "sha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
+        "bytes": 683104,
+        "documentSha256": "cd7b3fb5b363ce1de24bdec71686f752ba5b33e5f65e93489b116bd869829797",
+        "sourceCharacter": "富樫勇太",
+        "sourceWork": "中二病也想談戀愛！",
+        "sourceAssetId": "300heroes:1dd02b6976c9ca0a89be6d66",
+        "sourceSha256": "60c52d4c58f3ae3beb70ef0c6b19753cbfbfee464e43dd1f108109425504a7e1",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.cd7b3fb5b363ce1de24bdec7"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-yogiri",
+        "name": "高遠夜霧"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,1127 @@
+{
+  "schema": "ggd-lol-native-event-bindings@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "sourceGame": "League of Legends",
+  "heroId": "example:missfortune",
+  "nativeId": "MissFortune",
+  "skinId": "skin0",
+  "reportedLocale": "ja_JP",
+  "releaseId": "7CAC3C60C863BF12",
+  "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+  "sourcePackage": "DATA/FINAL/Champions/MissFortune.wad.client",
+  "sourcePackageCompleteLocally": false,
+  "metadataAcquisitionStatus": "partial-extraction-from-official-release-chunks",
+  "inputs": {
+    "bin": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-metadata/MissFortune/skin0.bin",
+      "sha256": "c773a3ed5a1ad923d231601760cdad8535b9759e0a19c2454a66e994fbe2402a"
+    },
+    "eventsBnk": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/MissFortune.ja_JP/native/12bc02268a1edc11.bnk",
+      "sha256": "e412177c44148454c2ef507612ab32269ecff6dc7f8cc8212b823147f8a05ac7",
+      "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/missfortune/skins/base/missfortune_base_vo_events.bnk"
+    },
+    "audioBanks": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/MissFortune.ja_JP/native/03040df2bba20fb8.bnk",
+        "sha256": "2134128eb570fc4b9ba1167292902d4ca3c7dd6eb37476099950ddd33744d571",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/missfortune/skins/base/missfortune_base_vo_audio.bnk"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/MissFortune.ja_JP/native/c3a6ffb1d3e0562a.wpk",
+        "sha256": "37708d115beaa9a2490075420e234b58d2d117d66525e6383e8d505f49eb77dd",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/missfortune/skins/base/missfortune_base_vo_audio.wpk"
+      }
+    ],
+    "extraction": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/MissFortune.ja_JP/extraction.json",
+      "sha256": "05bb1b20bcc4db54f4c7792c064fc21359611831ab104c856c73e79324618e12"
+    },
+    "decoding": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/audio-index.json",
+      "sha256": "37d2978d15d40cb947e46a037af7f797a04e9ae2b1531913e505d2913ff66488"
+    },
+    "metadataReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/receipts/shared-event-metadata/project-seven-base-six-v1.json",
+      "sha256": "e51bdf3680f8b2c2159f098399121286c5afa3e0fed427ef0e175be558fec5ea"
+    }
+  },
+  "tool": {
+    "name": "league-tools",
+    "commit": "913150dd922e69b18aba519410670fcf017df2ff",
+    "mapping": "BIN event strings -> NativeHIRC event graph -> WEM ID"
+  },
+  "validation": {
+    "binEvents": 58,
+    "hircEvents": 12,
+    "mappedEvents": 9,
+    "mappedWemIds": 35,
+    "exactAudioBankDecodedFiles": 35,
+    "allMappedWemIdsFoundInExactAudioBank": true,
+    "allReferencedWavBytesAndSha256Verified": true,
+    "eventBindingsVerified": true,
+    "speakerVerified": false,
+    "perClipLanguageVerified": false,
+    "ggdSkillSemanticBindingsVerified": false,
+    "categoryCountsByEvent": {
+      "ability-cast": 3,
+      "attack": 1,
+      "death": 1,
+      "emote": 3,
+      "move": 1
+    },
+    "abilitySlotCountsByEvent": {
+      "Q": 1,
+      "R": 1,
+      "W": 1
+    }
+  },
+  "events": [
+    {
+      "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+      "eventId": 861965314,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1000916152,
+        1206520494,
+        1243901643,
+        1459585756,
+        1648963726,
+        1976086305
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_Death3D",
+      "eventId": 1154046355,
+      "category": "death",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        727305837,
+        815276809,
+        871873680,
+        1278310727
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_Joke3DGeneral",
+      "eventId": 3405664156,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        775186039
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_Laugh3DGeneral",
+      "eventId": 1258278094,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        63345298,
+        532199086,
+        732057397,
+        916550480
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_MissFortuneBulletTime_cast3D",
+      "eventId": 1619409555,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "R",
+      "wemIds": [
+        674096248,
+        1595191486,
+        1806137756
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_MissFortuneRicochetShot_cast3D",
+      "eventId": 2823007423,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        741050593,
+        783168764,
+        1116640417,
+        1681369677
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_MissFortuneViciousStrikes_cast3D",
+      "eventId": 299808203,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "W",
+      "wemIds": [
+        556523230,
+        1262970100,
+        1984231938,
+        2024985095
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_Move2DStandard",
+      "eventId": 514315002,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        25721618,
+        490327401,
+        1275445449,
+        1429660657,
+        1532364945,
+        1675889121,
+        1778467552,
+        2062611340
+      ]
+    },
+    {
+      "eventName": "Play_vo_MissFortune_Taunt3DGeneral",
+      "eventId": 1255606999,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1696704748
+      ]
+    }
+  ],
+  "files": [
+    {
+      "wemId": 25721618,
+      "sourceWem": "c3a6ffb1d3e0562a/00000-25721618.wem",
+      "sourceWemSha256": "7086d8ab6cb76e14fc0acc1589273c2dd285287ba73777c93e60fa17e9138e91",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00000-25721618.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00000-25721618.wav",
+      "bytes": 557100,
+      "sha256": "5478ccc3af5dccaf922647905e90110c6dc1ad9aca8f2fa54d1008d5288f6fab",
+      "seconds": 3.1579138321995464,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 63345298,
+      "sourceWem": "c3a6ffb1d3e0562a/00001-63345298.wem",
+      "sourceWemSha256": "88ebcd197c5204cd54d73b676873ffcd7f0bf3251319964f0216eb19fdcda42e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00001-63345298.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00001-63345298.wav",
+      "bytes": 786476,
+      "sha256": "c3b2104d221dc3ce0c0d043df06771f406787c95173e7541f44614f30241a76a",
+      "seconds": 4.458231292517007,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Laugh3DGeneral",
+          "eventId": 1258278094,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 490327401,
+      "sourceWem": "c3a6ffb1d3e0562a/00002-490327401.wem",
+      "sourceWemSha256": "1fc6e83ef9bee891ec779ca9d88717833216a4ddf4850daf558335f3b3d1b08e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00002-490327401.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00002-490327401.wav",
+      "bytes": 352300,
+      "sha256": "6ce7236b8bb41f67bc7a5026ce06346269af4f24567d3d2b35855f815d2dac19",
+      "seconds": 1.9969160997732427,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 532199086,
+      "sourceWem": "c3a6ffb1d3e0562a/00003-532199086.wem",
+      "sourceWemSha256": "b8b3705ff16f5d85bc80e32ce38db810124a15eaee1c979cbc9a3ab68879c28b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00003-532199086.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00003-532199086.wav",
+      "bytes": 802860,
+      "sha256": "31f487c47ba4fa6ba5104862ae485a6c91d6dc00b58e44fa6e19b3516fb3db21",
+      "seconds": 4.551111111111111,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Laugh3DGeneral",
+          "eventId": 1258278094,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 556523230,
+      "sourceWem": "c3a6ffb1d3e0562a/00004-556523230.wem",
+      "sourceWemSha256": "c59a4db33ebd14f3781214dec868b449e65beb451c49b5a67d06fc6e3df12ff5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00004-556523230.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00004-556523230.wav",
+      "bytes": 364588,
+      "sha256": "c333406c39fc69573df58160b6c52dcf3a8972a89ad4fff3fca99992ad3c90b3",
+      "seconds": 2.066575963718821,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneViciousStrikes_cast3D",
+          "eventId": 299808203,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 674096248,
+      "sourceWem": "c3a6ffb1d3e0562a/00005-674096248.wem",
+      "sourceWemSha256": "bdf0ee15cf9b6b41c2a7230a36fdff521ea95e829edda278f3c3d97a776b2c7b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00005-674096248.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00005-674096248.wav",
+      "bytes": 528428,
+      "sha256": "bd1fc200cc053d2548e59a593009533d2c720b3a399298d6aafc33a7b0a7175d",
+      "seconds": 2.995374149659864,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneBulletTime_cast3D",
+          "eventId": 1619409555,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 727305837,
+      "sourceWem": "c3a6ffb1d3e0562a/00006-727305837.wem",
+      "sourceWemSha256": "aef65c12081beed092bdd824dc1861e751e7322c3d02f966cfca0b89766964c2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00006-727305837.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00006-727305837.wav",
+      "bytes": 659500,
+      "sha256": "abe54a0c8a00653fa5eaec9e4f41993393c454088842182e36524acfbe96cc81",
+      "seconds": 3.7384126984126986,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Death3D",
+          "eventId": 1154046355,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 732057397,
+      "sourceWem": "c3a6ffb1d3e0562a/00007-732057397.wem",
+      "sourceWemSha256": "777bf210ec3800d09487bff2d7f14bedb7adccbe80669d5dbd24972db69b5485",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00007-732057397.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00007-732057397.wav",
+      "bytes": 827436,
+      "sha256": "9d3397c73498588eb00925bdd537ea891fd0978ee200ab4de3f954726c9b28c2",
+      "seconds": 4.690430839002268,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Laugh3DGeneral",
+          "eventId": 1258278094,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 741050593,
+      "sourceWem": "c3a6ffb1d3e0562a/00008-741050593.wem",
+      "sourceWemSha256": "082a3d887aa1e066976e17733b98de7ee4631783c24f83cb28ccf72f3b979fb1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00008-741050593.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00008-741050593.wav",
+      "bytes": 167980,
+      "sha256": "0696c5c37a6617ae7d3bca4af2edfe950def1845fd70ed6e98a343303cab4b78",
+      "seconds": 0.9520181405895691,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneRicochetShot_cast3D",
+          "eventId": 2823007423,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 775186039,
+      "sourceWem": "c3a6ffb1d3e0562a/00009-775186039.wem",
+      "sourceWemSha256": "2f98925ac38eea7a1b174e3692814acbcfed19cb8d113d76723206c8b9ca434d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00009-775186039.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00009-775186039.wav",
+      "bytes": 958508,
+      "sha256": "b47c443f3e628188f264dcf679f49b2d7fbecb083a46a2f15a647ea1bc9423b3",
+      "seconds": 5.433469387755102,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Joke3DGeneral",
+          "eventId": 3405664156,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 783168764,
+      "sourceWem": "c3a6ffb1d3e0562a/00010-783168764.wem",
+      "sourceWemSha256": "34fe77bdd706437f4b81e0fc63c99d4a83d6cb73434a326b0f26de200b0ee601",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00010-783168764.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00010-783168764.wav",
+      "bytes": 172076,
+      "sha256": "67835eeac9490bab4b07408b6de94ff3d7d2fcf7fc61131419b5a8bf7d57b453",
+      "seconds": 0.9752380952380952,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneRicochetShot_cast3D",
+          "eventId": 2823007423,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 815276809,
+      "sourceWem": "c3a6ffb1d3e0562a/00011-815276809.wem",
+      "sourceWemSha256": "449b234ace9a956c441f2c33183a4c15e7e610240d68632bcc26938699826ff2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00011-815276809.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00011-815276809.wav",
+      "bytes": 614444,
+      "sha256": "25ad2f7dc5f75a51e40f35309596a70906121b174b4712b1a2a19202db8d6f33",
+      "seconds": 3.4829931972789114,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Death3D",
+          "eventId": 1154046355,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 871873680,
+      "sourceWem": "c3a6ffb1d3e0562a/00012-871873680.wem",
+      "sourceWemSha256": "f954aade39f85f78d7b338789dc3432806010fc157613120c818612a287bc86c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00012-871873680.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00012-871873680.wav",
+      "bytes": 491564,
+      "sha256": "3e04b3a09ceca89c5d3014886da9182094f2ae5093ea3bfd4998cb83d7aac6bb",
+      "seconds": 2.786394557823129,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Death3D",
+          "eventId": 1154046355,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 916550480,
+      "sourceWem": "c3a6ffb1d3e0562a/00013-916550480.wem",
+      "sourceWemSha256": "10119b4001b68dc74e71fc9d3102d207e43d929b9e8810881397fdc501fc9a3c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00013-916550480.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00013-916550480.wav",
+      "bytes": 598060,
+      "sha256": "59b8241bf92c68c95e4650f2c0c716eaf7078fa93b141e373e29bffe7ec75ca8",
+      "seconds": 3.3901133786848074,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Laugh3DGeneral",
+          "eventId": 1258278094,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1000916152,
+      "sourceWem": "c3a6ffb1d3e0562a/00014-1000916152.wem",
+      "sourceWemSha256": "7dad188abe9f096e6cca666383320cacd3407e12f9829e62cbf1b2d999d9812f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00014-1000916152.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00014-1000916152.wav",
+      "bytes": 454700,
+      "sha256": "6a835b8b8e4a4d010e25946856ff72088b4d79fb97778fc5ecc889c1b03d1ffb",
+      "seconds": 2.5774149659863945,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+          "eventId": 861965314,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1116640417,
+      "sourceWem": "c3a6ffb1d3e0562a/00015-1116640417.wem",
+      "sourceWemSha256": "4dd381dc25db2ffc7d6e00672269f0f651035dad361d85a500fd8e8aefd00e42",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00015-1116640417.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00015-1116640417.wav",
+      "bytes": 217132,
+      "sha256": "9a12968126178ff32c9abc9582b9ca311ec71b88c3282c79f89e3c108ba1c65d",
+      "seconds": 1.230657596371882,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneRicochetShot_cast3D",
+          "eventId": 2823007423,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1206520494,
+      "sourceWem": "c3a6ffb1d3e0562a/00016-1206520494.wem",
+      "sourceWemSha256": "f03492e55bac8c50a71b0e08426920a1ee7674338b11a0c28c1cf6494cde49da",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00016-1206520494.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00016-1206520494.wav",
+      "bytes": 483372,
+      "sha256": "6b28e614e7824b31cd66a0c71bcbb048766305e9cea2fdf27951ea4f25ffa11d",
+      "seconds": 2.7399546485260773,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+          "eventId": 861965314,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1243901643,
+      "sourceWem": "c3a6ffb1d3e0562a/00017-1243901643.wem",
+      "sourceWemSha256": "7f199e74b70a3e9e94bdea4eee0776140f4962adb4a44ef2a3f0f8f5472270a3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00017-1243901643.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00017-1243901643.wav",
+      "bytes": 430124,
+      "sha256": "a1264274ae48008059b2cac1846a98c7b45c00ca64dbde0e1be5623d7b5d6116",
+      "seconds": 2.4380952380952383,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+          "eventId": 861965314,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1262970100,
+      "sourceWem": "c3a6ffb1d3e0562a/00018-1262970100.wem",
+      "sourceWemSha256": "b9812356984e96dc453b41f184de3d49e8860d7c0026ae5d688b584476e4ca17",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00018-1262970100.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00018-1262970100.wav",
+      "bytes": 364588,
+      "sha256": "1e1f0fa7bd3ea813971cf9e84de36a5af08047345b13527dea319c0ff6729b7d",
+      "seconds": 2.066575963718821,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneViciousStrikes_cast3D",
+          "eventId": 299808203,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1275445449,
+      "sourceWem": "c3a6ffb1d3e0562a/00019-1275445449.wem",
+      "sourceWemSha256": "ab6fe0f6ee757e98801c1b9a251387cb569cba41d1b61c3786122d2932b5f5e6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00019-1275445449.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00019-1275445449.wav",
+      "bytes": 372780,
+      "sha256": "ae7cf04dbf43b5c0784cff95a70915a7e5cb64b662b7066168c57cab0650a233",
+      "seconds": 2.1130158730158732,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1278310727,
+      "sourceWem": "c3a6ffb1d3e0562a/00020-1278310727.wem",
+      "sourceWemSha256": "62083f49f0f163d6ab52d375b5a51de29eacb6e45af78ff1c375422f39ea5bff",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00020-1278310727.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00020-1278310727.wav",
+      "bytes": 524332,
+      "sha256": "4f1860c8ff561b8672e5a4e8f15eadefc75f5e8af01ccbda9b8535adaed7c369",
+      "seconds": 2.972154195011338,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Death3D",
+          "eventId": 1154046355,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1429660657,
+      "sourceWem": "c3a6ffb1d3e0562a/00021-1429660657.wem",
+      "sourceWemSha256": "5eafa5922eefadc56c6d953e80e933010e1f28e2ba89e79d7fdb8b2ae96498a6",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00021-1429660657.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00021-1429660657.wav",
+      "bytes": 946220,
+      "sha256": "110cfdaa1be5e7316b98689a967f661e57eb6795d5dea9b7eb6273fb31ba535a",
+      "seconds": 5.363809523809524,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1459585756,
+      "sourceWem": "c3a6ffb1d3e0562a/00022-1459585756.wem",
+      "sourceWemSha256": "d3629f43230aba5d6fe145e3853a7942265286023ac20adcdf6f3eadb335315f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00022-1459585756.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00022-1459585756.wav",
+      "bytes": 421932,
+      "sha256": "383669fec090259d6029c57524f58bfb8433e20d89057d751dced50f0d7323f5",
+      "seconds": 2.391655328798186,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+          "eventId": 861965314,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1532364945,
+      "sourceWem": "c3a6ffb1d3e0562a/00023-1532364945.wem",
+      "sourceWemSha256": "9aa531da17649573842842685d3d09cc8b085bce00d2306ed687e2681fec9410",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00023-1532364945.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00023-1532364945.wav",
+      "bytes": 405548,
+      "sha256": "09889df2fb7cca50dcfc80c835af37718a32ab942e8291e1bc8e1e71e7df9fd5",
+      "seconds": 2.2987755102040817,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1595191486,
+      "sourceWem": "c3a6ffb1d3e0562a/00024-1595191486.wem",
+      "sourceWemSha256": "c3ca4740343fe4a15281828305ea006146492e67bb2fef6c06c13f93399cadcb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00024-1595191486.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00024-1595191486.wav",
+      "bytes": 577580,
+      "sha256": "4d5c0b05d210cd1ed138550f62cd35a3ffe9b2ca13c66d69073aeb705069175b",
+      "seconds": 3.274013605442177,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneBulletTime_cast3D",
+          "eventId": 1619409555,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1648963726,
+      "sourceWem": "c3a6ffb1d3e0562a/00025-1648963726.wem",
+      "sourceWemSha256": "d53d449f8057aa24b838a097f68c15292de90922b45e9f328d11195c6da67235",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00025-1648963726.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00025-1648963726.wav",
+      "bytes": 434220,
+      "sha256": "e2d7dca0a2e73a3a08f2ad11453dc35d16ebe685b1d5b482219fd2198eb84832",
+      "seconds": 2.461315192743764,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+          "eventId": 861965314,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1675889121,
+      "sourceWem": "c3a6ffb1d3e0562a/00026-1675889121.wem",
+      "sourceWemSha256": "dbb3db0d3acfa032f5eed5def26b5da48e6cca92a9e047ebb7623e4826422e99",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00026-1675889121.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00026-1675889121.wav",
+      "bytes": 557100,
+      "sha256": "c5a484a69338543b698a8e80818c6233cfaedcfc209e81b7a59aad3edfa71aff",
+      "seconds": 3.1579138321995464,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1681369677,
+      "sourceWem": "c3a6ffb1d3e0562a/00027-1681369677.wem",
+      "sourceWemSha256": "de0eaf0bcba5abe984a38f4296c06cdd01ae7c467705e336e439bc600b52dffb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00027-1681369677.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00027-1681369677.wav",
+      "bytes": 192556,
+      "sha256": "36678de02601d2676903b92b75c15fdf928105626996745710e8f745ab46170d",
+      "seconds": 1.0913378684807256,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneRicochetShot_cast3D",
+          "eventId": 2823007423,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1696704748,
+      "sourceWem": "c3a6ffb1d3e0562a/00028-1696704748.wem",
+      "sourceWemSha256": "4b9fa9b011ba1ef826ab8ca838f87cbe37caca0c0182b797cab1402e47192120",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00028-1696704748.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00028-1696704748.wav",
+      "bytes": 770092,
+      "sha256": "8ec4fb7d93c4b810fd6d19316232c9d076ae6331e0d3e48be182d3b28b90d668",
+      "seconds": 4.365351473922902,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Taunt3DGeneral",
+          "eventId": 1255606999,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1778467552,
+      "sourceWem": "c3a6ffb1d3e0562a/00029-1778467552.wem",
+      "sourceWemSha256": "0eea503dfc5156dc504688e531c6c4226e78af986e1ec8f288b17ffdb105641c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00029-1778467552.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00029-1778467552.wav",
+      "bytes": 303148,
+      "sha256": "a5432a398b00123a1f7349fca9b596dea742ae5cabe4756a1e48d404eeec3f84",
+      "seconds": 1.7182766439909296,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1806137756,
+      "sourceWem": "c3a6ffb1d3e0562a/00030-1806137756.wem",
+      "sourceWemSha256": "8e864220970b2ca3c09847cf5ce264df0ee4de55463e638bdc61fa6e90a04ad5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00030-1806137756.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00030-1806137756.wav",
+      "bytes": 557100,
+      "sha256": "c6da9c888099431d3c93f7942c9eb121bc623abac5be971394e283a9713ca87a",
+      "seconds": 3.1579138321995464,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneBulletTime_cast3D",
+          "eventId": 1619409555,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1976086305,
+      "sourceWem": "c3a6ffb1d3e0562a/00031-1976086305.wem",
+      "sourceWemSha256": "635ea10f5e13bb0143fae6167081ff68d4790b42a20bbb2e411f5cd7b0de86d4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00031-1976086305.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00031-1976086305.wav",
+      "bytes": 200748,
+      "sha256": "0f1827626519cdebc05f65d09f2b9cbbf58c386356f00cfc99cfd92d72d742e4",
+      "seconds": 1.1377777777777778,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Attack2DGeneral",
+          "eventId": 861965314,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1984231938,
+      "sourceWem": "c3a6ffb1d3e0562a/00032-1984231938.wem",
+      "sourceWemSha256": "e39643743e60bd5c671b74e83565e27a9a98f01e6f371b0accdaa68106377de7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00032-1984231938.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00032-1984231938.wav",
+      "bytes": 253996,
+      "sha256": "37b97cf0cd8b426e73dfd1036db06bb731f97866eb606eccc4fc903f14c11463",
+      "seconds": 1.4396371882086167,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneViciousStrikes_cast3D",
+          "eventId": 299808203,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2024985095,
+      "sourceWem": "c3a6ffb1d3e0562a/00033-2024985095.wem",
+      "sourceWemSha256": "02bf19a417b4365adf66a06a71a94c061376da50bee109440f7f47b2272c4ff5",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00033-2024985095.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00033-2024985095.wav",
+      "bytes": 348204,
+      "sha256": "2255d7065649996087c1634b085e8b4036eaa7a16fd3e81687f63fca52c8556d",
+      "seconds": 1.9736961451247166,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_MissFortuneViciousStrikes_cast3D",
+          "eventId": 299808203,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2062611340,
+      "sourceWem": "c3a6ffb1d3e0562a/00034-2062611340.wem",
+      "sourceWemSha256": "ba4332c01574dea1ac903f695a46ce9e8b447cd182d5b56595d5bbaf36410524",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00034-2062611340.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/MissFortune.ja_JP/wav/c3a6ffb1d3e0562a/00034-2062611340.wav",
+      "bytes": 282668,
+      "sha256": "7a7924e7508503577f0aed40931353c292a7127a0379aaada5b0e7619c86361f",
+      "seconds": 1.6021768707482993,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_MissFortune_Move2DStandard",
+          "eventId": 514315002,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    }
+  ],
+  "gaps": [
+    "Per-clip listening, speaker, language and transcript review are pending.",
+    "Ability slots are candidates derived from native event-name tokens; GGD runtime binding is pending.",
+    "The complete non-localized champion WAD has not been reconstructed or archived."
+  ]
+}

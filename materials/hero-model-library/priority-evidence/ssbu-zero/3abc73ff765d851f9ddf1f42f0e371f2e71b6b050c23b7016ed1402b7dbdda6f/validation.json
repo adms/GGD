@@ -1,0 +1,572 @@
+{
+  "schema": "ggd-ssbu-blend-component-validation@1",
+  "candidateId": "ssbu-zero-c00-blender4513-v4",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/assist/zero/model/body/c00/zero-c00.blend",
+    "bytes": 2387720,
+    "sha256": "e9ef80e0f910453a09c43d7b42282a65bbe9ecd45a9dae76be0a0c07dae26a21"
+  },
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/body.glb",
+    "bytes": 596332,
+    "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1"
+  },
+  "conversionReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-zero-blender4513-v4/conversion.json",
+    "sha256": "a1d53c3a4be29f38783e594e3f8b622bf16cfcd9ce3bb09e7ced4b5ba20cec05"
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 5276,
+    "drawPrimitives": 6,
+    "skinnedPrimitives": 6,
+    "skinCount": 1,
+    "joints": [
+      75
+    ],
+    "textureCount": 4,
+    "textures": [
+      {
+        "width": 128,
+        "height": 128,
+        "bytes": 598,
+        "sha256": "3a3e86d05915b70d4af437dd59de43754bc6ae0af4efc8c95b83557c7f5fedb0"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 95963,
+        "sha256": "0f2660975e4a04352a5627cf43c6db4f5b1a27f56cbf1977e3d06aef37867316"
+      },
+      {
+        "width": 128,
+        "height": 128,
+        "bytes": 6283,
+        "sha256": "ab185c2a7015abf0e8037a24f676d96dbb031840ee78eabedc5a14f336bb478a"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 48423,
+        "sha256": "2529b93b6340ab1b0dd23d25956e7d8ffff9a171085a988d75017ebb69d52ccf"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    },
+    "uploadReport": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v4.5.51",
+        "extensionsUsed": [
+          "KHR_materials_specular"
+        ],
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 568744
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 128,
+              "height": 128,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 128,
+              "height": 128,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/3",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 6,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 6,
+        "totalVertexCount": 5299,
+        "totalTriangleCount": 5276,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 8
+      }
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 25,
+    "valueCount": 64788,
+    "accessors": [
+      {
+        "index": 0,
+        "type": "VEC3",
+        "count": 46,
+        "values": 138,
+        "minimum": -0.2559340000152588,
+        "maximum": 1.613205909729004
+      },
+      {
+        "index": 1,
+        "type": "VEC3",
+        "count": 46,
+        "values": 138,
+        "minimum": -0.6885880827903748,
+        "maximum": 0.9788821339607239
+      },
+      {
+        "index": 2,
+        "type": "VEC2",
+        "count": 46,
+        "values": 92,
+        "minimum": 0.012115478515625,
+        "maximum": 0.98876953125
+      },
+      {
+        "index": 7,
+        "type": "VEC4",
+        "count": 46,
+        "values": 184,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 9,
+        "type": "MAT4",
+        "count": 75,
+        "values": 1200,
+        "minimum": -16.883060455322266,
+        "maximum": 16.82252311706543
+      },
+      {
+        "index": 10,
+        "type": "VEC3",
+        "count": 50,
+        "values": 150,
+        "minimum": -0.28881707787513733,
+        "maximum": 1.3375722169876099
+      },
+      {
+        "index": 11,
+        "type": "VEC3",
+        "count": 50,
+        "values": 150,
+        "minimum": -0.8345111608505249,
+        "maximum": 0.9918053150177002
+      },
+      {
+        "index": 12,
+        "type": "VEC2",
+        "count": 50,
+        "values": 100,
+        "minimum": 0.1552734375,
+        "maximum": 0.27734375
+      },
+      {
+        "index": 17,
+        "type": "VEC4",
+        "count": 50,
+        "values": 200,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 19,
+        "type": "VEC3",
+        "count": 60,
+        "values": 180,
+        "minimum": -0.8017292618751526,
+        "maximum": 1.32889986038208
+      },
+      {
+        "index": 20,
+        "type": "VEC3",
+        "count": 60,
+        "values": 180,
+        "minimum": -0.9998997449874878,
+        "maximum": 0.9998997449874878
+      },
+      {
+        "index": 21,
+        "type": "VEC2",
+        "count": 60,
+        "values": 120,
+        "minimum": 0.107666015625,
+        "maximum": 0.468017578125
+      },
+      {
+        "index": 26,
+        "type": "VEC4",
+        "count": 60,
+        "values": 240,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 28,
+        "type": "VEC3",
+        "count": 64,
+        "values": 192,
+        "minimum": -0.9038159251213074,
+        "maximum": 1.4677443504333496
+      },
+      {
+        "index": 29,
+        "type": "VEC3",
+        "count": 64,
+        "values": 192,
+        "minimum": -0.9867420196533203,
+        "maximum": 0.9880082607269287
+      },
+      {
+        "index": 30,
+        "type": "VEC2",
+        "count": 64,
+        "values": 128,
+        "minimum": -2,
+        "maximum": 1
+      },
+      {
+        "index": 34,
+        "type": "VEC4",
+        "count": 64,
+        "values": 256,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 36,
+        "type": "VEC3",
+        "count": 4895,
+        "values": 14685,
+        "minimum": -1.0306178331375122,
+        "maximum": 1.7999999523162842
+      },
+      {
+        "index": 37,
+        "type": "VEC3",
+        "count": 4895,
+        "values": 14685,
+        "minimum": -1,
+        "maximum": 1
+      },
+      {
+        "index": 38,
+        "type": "VEC2",
+        "count": 4895,
+        "values": 9790,
+        "minimum": -0.73193359375,
+        "maximum": 1.4697265625
+      },
+      {
+        "index": 43,
+        "type": "VEC4",
+        "count": 4895,
+        "values": 19580,
+        "minimum": 0,
+        "maximum": 1
+      },
+      {
+        "index": 45,
+        "type": "VEC3",
+        "count": 184,
+        "values": 552,
+        "minimum": -0.37451425194740295,
+        "maximum": 1.568166732788086
+      },
+      {
+        "index": 46,
+        "type": "VEC3",
+        "count": 184,
+        "values": 552,
+        "minimum": -0.9786500334739685,
+        "maximum": 0.9999716281890869
+      },
+      {
+        "index": 47,
+        "type": "VEC2",
+        "count": 184,
+        "values": 368,
+        "minimum": 0.0286407470703125,
+        "maximum": 0.95654296875
+      },
+      {
+        "index": 52,
+        "type": "VEC4",
+        "count": 184,
+        "values": 736,
+        "minimum": 0,
+        "maximum": 1
+      }
+    ]
+  },
+  "materials": [
+    {
+      "index": 0,
+      "alphaMode": "BLEND",
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "asf_glass_mat",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 1,
+      "alphaMode": "BLEND",
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "asf_glass_mat2",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 2,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "asf_sword_mat",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 3,
+      "alphaMode": "BLEND",
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "asf_zer_ani_mat",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 4,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "asf_zero_body_mat",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 4
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "index": 5,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "asf_skin_mat",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 5
+        },
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "primitives": [
+    {
+      "meshIndex": 0,
+      "meshName": "GameModelShape",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "COLOR_2",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 0
+    },
+    {
+      "meshIndex": 1,
+      "meshName": "GameModelShape.001",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "COLOR_2",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 1
+    },
+    {
+      "meshIndex": 2,
+      "meshName": "GameModelShape.002",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "COLOR_2",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 2
+    },
+    {
+      "meshIndex": 3,
+      "meshName": "GameModelShape.003",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 3
+    },
+    {
+      "meshIndex": 4,
+      "meshName": "GameModelShape.004",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "COLOR_2",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 4
+    },
+    {
+      "meshIndex": 5,
+      "meshName": "zero_base_VIS_O_OBJShape",
+      "primitiveIndex": 0,
+      "attributes": [
+        "COLOR_0",
+        "COLOR_1",
+        "COLOR_2",
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "materialIndex": 5
+    }
+  ],
+  "structuralValidationPassed": true,
+  "visualValidationPassed": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "Structural validation does not establish visual identity or source-game shader parity.",
+    "The source contains no actions; no native, procedural, or retargeted action was added.",
+    "Backend registration and runtime switching were not performed."
+  ]
+}

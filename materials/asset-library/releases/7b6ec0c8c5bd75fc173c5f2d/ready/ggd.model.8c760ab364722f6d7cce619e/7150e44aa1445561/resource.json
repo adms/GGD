@@ -1,0 +1,44 @@
+{
+  "id": "ggd.model.8c760ab364722f6d7cce619e",
+  "title": "妙蛙種子模型",
+  "kind": "model-body",
+  "model": "models/community.body.6db170052bfc70f342be8027580562fdefc595acec455209.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "existing:bulbasaur",
+        "modelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+        "glbPath": "assets/models/community/d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c.glb",
+        "sha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+        "bytes": 375904,
+        "documentSha256": "8c760ab364722f6d7cce619ec122c4799b8859cc56ce9341c5fcbb513d48cacb",
+        "sourceCharacter": "妙蛙種子模型",
+        "sourceWork": "Pokémon；現有匯入模型",
+        "sourceAssetId": "existing:bulbasaur",
+        "sourceSha256": "bb725f39e9fc21836526b4eb777ea50f72f788f2a12cddcef5f4f81a56c2cd9d",
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack",
+          "cast": "spell",
+          "hurt": "Stand",
+          "death": "death"
+        },
+        "limitations": [
+          "保留借用模型身形；未重製角色專屬外觀或複合身體。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.8c760ab364722f6d7cce619e"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-ned",
+        "name": "青蛙劍士 Ned"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

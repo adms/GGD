@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Copy only resource-library management sources into Git, never binary assets."""
+"""Export management sources only; finished binaries use tools/hero-model-library/pin-git-release.py."""
 import argparse
 import hashlib
 import json
@@ -40,7 +40,9 @@ def main():
     add(workspace/'ASSET_LIBRARIES.md')
     library = workspace/'GGD-Asset-Library'
     add(library)
-    for name in ['tools', 'intake', 'staging', 'ready']:
+    # Intake/staging contain half-finished parsing JSON as well as binaries.
+    # Finished ready payloads are exported only through the verified Git release tool.
+    for name in ['tools']:
         add(library/name, recursive=True)
     add(library/'shared')
     add(library/'shared/control')

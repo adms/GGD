@@ -25,7 +25,8 @@ export const resizeImageWithFfmpeg: ResizeImage = async (bytes, maxEdge) => {
     execFileSync("ffmpeg", [
       "-v", "error", "-y", "-i", src,
       // ⭐ 等比縮到最長邊 = maxEdge，⛔ 不放大（`min(iw,N)` 讓小圖原樣通過）
-      "-vf", `scale='if(gt(iw,ih),min(iw,${maxEdge}),-2)':'if(gt(iw,ih),-2,min(ih,${maxEdge}))':flags=lanczos`,
+      // PNGs without density metadata otherwise inherit SAR=0/1, which is invalid for glTF textures.
+      "-vf", `scale='if(gt(iw,ih),min(iw,${maxEdge}),-2)':'if(gt(iw,ih),-2,min(ih,${maxEdge}))':flags=lanczos,setsar=1`,
       out,
     ], { stdio: ["ignore", "ignore", "pipe"] });
     return new Uint8Array(readFileSync(out));

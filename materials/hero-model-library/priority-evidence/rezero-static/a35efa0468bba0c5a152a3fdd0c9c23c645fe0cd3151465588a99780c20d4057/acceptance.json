@@ -1,0 +1,28 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+      "nativeId": "emiliaPrefab",
+      "sha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "No GGD hero definition or skill binding exists for this exact identity.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit.",
+        "The uploader reports an Emilia rig problem. The static bind pose passed three-view review, but motion and retargeting remain unverified and are not accepted."
+      ]
+    }
+  ]
+}

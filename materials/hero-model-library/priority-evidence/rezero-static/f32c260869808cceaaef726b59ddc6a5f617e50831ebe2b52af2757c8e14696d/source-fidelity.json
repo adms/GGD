@@ -1,0 +1,35 @@
+{
+  "schema": "ggd.rezero-static-component-source-fidelity@1",
+  "sourceId": "thunderstore-rezero",
+  "componentId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "sourceConversionSha256": "fb4a79438505c05af73429e3d48bca8feb99aa35ad82461ef548758865cfda75",
+  "outputSha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
+  "sourceRootName": "felixPrefab",
+  "sourceUpAxis": "z",
+  "outputUpAxis": "y",
+  "sourceVertexCount": 11904,
+  "outputTriangleCount": 16444,
+  "sourceBoneCounts": [
+    137
+  ],
+  "outputJointCounts": [
+    137
+  ],
+  "sourceAnimationClipCount": 0,
+  "outputClipCount": 0,
+  "allAccessorBytesPreservedDuringNormalization": true,
+  "sourceWeightSumMaxError": 1.043081283569336e-07,
+  "skinPositionMaxError": 0.0,
+  "shaderParityVerified": false,
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/unity-conversion.json",
+    "bytes": 2958,
+    "sha256": "0662702eefd7ddd4379d6d7e2138c33e3bd0fd62e11fe86c1d81f4f6ad2832ed"
+  },
+  "normalizationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/normalization.json",
+    "bytes": 6778,
+    "sha256": "bf95698e8f2aaa6aeaea085d42728caf4a124206f3f9249444d57c03fe0a911e"
+  }
+}

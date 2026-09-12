@@ -412,7 +412,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-maple",
-  "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+  "modelKey": "version.body.516a9ba13596bee68805d424a072ff349c62ab532e8b0070",
   "name": "梅普露",
   "origin": "坦克",
   "passiveAbility": "b2-maple.passive",
@@ -431,5 +431,41 @@
     "counterpartId": "b2-maple-alt-9769eb88b85b",
     "role": "base"
   },
-  "icon": "assets/icons/champions/b2-maple.webp"
+  "icon": "assets/icons/champions/b2-maple.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.c9b2316d65cc39c9b96634011cccf4a0eb524694cde4cff2",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "modelSha256": "1b9b0db10df7e56f643bae4777fe7065702b6fe0f04e7f24776abe5584867aca",
+      "binarySha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+      "registeredAt": "2026-09-10T14:45:37.341Z",
+      "source": {
+        "kind": "previous",
+        "character": "梅普露",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.516a9ba13596bee68805d424a072ff349c62ab532e8b0070",
+      "label": "梅普露",
+      "sourceModelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "modelSha256": "61aee7f0c0127e71337821234780c4beff9127ec626b1b0d96f3d2dd6fd4a490",
+      "binarySha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+      "registeredAt": "2026-09-10T14:45:37.349Z",
+      "source": {
+        "kind": "exact",
+        "character": "梅普露",
+        "work": "怕痛的我，把防禦力點滿就對了",
+        "library": "300heroes",
+        "reference": "300heroes:143555c3ac43ac85b6538424",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

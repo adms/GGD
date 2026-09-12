@@ -1,0 +1,98 @@
+{
+  "schema": "ggd.source-package-analysis@1",
+  "sourceId": "mai-xv-raw",
+  "archive": {
+    "path": "raw/King of Fighters XV - Mai Shiranui.rar",
+    "bytes": 79735587,
+    "sha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67"
+  },
+  "extraction": "system libarchive entire archive read, path/type/link/duplicate/size checks before writes",
+  "files": [
+    {
+      "path": "extracted-v1/Raw Files/MAI_AO_FACE.tga",
+      "bytes": 10020848,
+      "sha256": "466bfe8a0477874a8d2d5fcb538ceeb754aa6f08cdbbbba882aa334d2fe55874",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_AO_HAIR.tga",
+      "bytes": 14947494,
+      "sha256": "f5d455136a00d0bc6ed31baeca9454446018b59d91e0fd3fd7186dc89d947bae",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_AO_OTR.tga",
+      "bytes": 812521,
+      "sha256": "2a8a48f0b04a96b2c3ab59c9f95b5492d0c2a32bfbc8a58889c617a44b8e4c80",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_FACE.tga",
+      "bytes": 20766107,
+      "sha256": "f125ba2c6ee32703b93fa65a9ffab62c9a8f83d0e394c2cb36e625c3a5f71607",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_HAIR.tga",
+      "bytes": 32261457,
+      "sha256": "85fff69811481ebe8bbced65a8212480b917ea9771602b7ca5dac9e0b4d45c48",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_MARK.tga",
+      "bytes": 613317,
+      "sha256": "414d1abab3db7a35071f243e80674ff2251f56a56cc7af2c7379fe12a97d1aa5",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_COL_OTR_P1.tga",
+      "bytes": 18036487,
+      "sha256": "fd2afd8b207c2ce3983903d55ebaff7ad8e7ee1e995207f6be705b2c0fc2693d",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_NOR_FACE.tga",
+      "bytes": 7044042,
+      "sha256": "28bab8bc8417e7dfa8a4d794f30b199c73e2afa6b733b10fa125d7a77abc134b",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_NOR_HAIR.tga",
+      "bytes": 35859167,
+      "sha256": "ed4aa3cd5b7f81821e199dece31e61bad37363c3562c684c2742b830464feb5a",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_NOR_OTR.tga",
+      "bytes": 13394217,
+      "sha256": "ac0b837054cad1fddeef192cd8817401d6f9837cf16c3351ea9eedbc462744af",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_SSS_FACE.tga",
+      "bytes": 40297902,
+      "sha256": "29fe9b2a3172b68463e9650af433a802455cd1fd2d196246203415515ea9f853",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/MAI_SSS_OTR.tga",
+      "bytes": 38266510,
+      "sha256": "17289fe158050c84bda92b065e8566bca201b7c090630410a62f4a3f4efa991e",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/Mai Shiranui.fbx",
+      "bytes": 10074400,
+      "sha256": "cf74b4e4f551fcd1a3dd89ea8813981bb36de16f0aa8fcbd72fc18a262e01afe",
+      "format": ".fbx"
+    }
+  ],
+  "formatCounts": {
+    ".tga": 12,
+    ".fbx": 1
+  },
+  "fileCount": 13,
+  "extractedBytes": 242394469,
+  "runtimeSelectable": false,
+  "conversion": "pending root workflow"
+}

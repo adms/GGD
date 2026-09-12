@@ -1,0 +1,110 @@
+{
+  "schema": "ggd.astralym.material-candidates@1",
+  "candidates": [
+    {
+      "id": "opgg-palworld-astralym-2026081102.full58",
+      "character": "Astralym / 枯星龍",
+      "heroIds": [],
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+        "bytes": 25503732,
+        "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf"
+      },
+      "readiness": "material-bound-full-library-json-over-current-upload-limit",
+      "nativeClipCount": 58,
+      "all58LibraryPreserved": true,
+      "textures": 9,
+      "triangles": 23928,
+      "joints": 145,
+      "drawPrimitives": 3,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "backendRegistered": false,
+      "validator": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/khronos-full.json",
+        "bytes": 4598,
+        "sha256": "2810b1f0f08be3024c247f7d4cdf4a442257fa781cc1f895618e11281516a501",
+        "errors": 0,
+        "warnings": 2,
+        "truncated": false
+      },
+      "babylonProof": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/babylon/render-proof.json",
+        "bytes": 76130,
+        "sha256": "2da429da3a2bb176933202b8b85eb98b9b386f76e6ae4a54bc58f02b7a5e9c26"
+      },
+      "motionLibrary": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/motion-library.json"
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-hd",
+      "character": "Astralym / 枯星龍",
+      "heroIds": [],
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk/astralym-idle-walk.glb",
+        "bytes": 21162960,
+        "sha256": "4ee29eb0d345df2a843c5981a4bc26596610c0676327fecf30cc217d50b19b16"
+      },
+      "readiness": "shared-inspection-passed-texture-budget-exceeded",
+      "nativeClipCount": 2,
+      "all58LibraryPreserved": true,
+      "textures": 9,
+      "triangles": 23928,
+      "joints": 145,
+      "drawPrimitives": 3,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "backendRegistered": false,
+      "validator": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk/khronos-full.json",
+        "bytes": 4506,
+        "sha256": "93b12b6e14e2fb443eccf2fc46b1fb39ee0b2333696931785c714dca83463f80",
+        "errors": 0,
+        "warnings": 2,
+        "truncated": false
+      },
+      "babylonProof": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/babylon-idle-walk/render-proof.json",
+        "bytes": 5599,
+        "sha256": "5b9c961f56a681116b7f00f429c0db84f5a4bb0a2e132cda288ba4cb709642f5"
+      },
+      "motionLibrary": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/motion-library.json"
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "character": "Astralym / 枯星龍",
+      "heroIds": [],
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+        "bytes": 13224512,
+        "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09"
+      },
+      "readiness": "shared-inspection-and-budget-passed-not-registered",
+      "nativeClipCount": 2,
+      "all58LibraryPreserved": true,
+      "textures": 9,
+      "triangles": 23928,
+      "joints": 145,
+      "drawPrimitives": 3,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "backendRegistered": false,
+      "validator": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/khronos-full.json",
+        "bytes": 4329,
+        "sha256": "385edb27d674876584388ed38e607b974db716699b06744943ebd85ecc41068b",
+        "errors": 0,
+        "warnings": 2,
+        "truncated": false
+      },
+      "babylonProof": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/babylon-idle-walk-256-final/render-proof.json",
+        "bytes": 6046,
+        "sha256": "02a88d58de518c0baaa9b9b7f49e26f8c29b32560c3c5ed7a3b4a88cbd681484"
+      },
+      "motionLibrary": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/motion-library.json"
+    }
+  ]
+}

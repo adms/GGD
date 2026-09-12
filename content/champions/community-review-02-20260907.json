@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.a89b32319ef8148b84d78d6db012d6dad16c406291505f5e",
+  "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -429,6 +429,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-313646-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.cc18457fd9e72014081ff16a6a34789f34e394d45844a8e5",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.313646",
+      "modelSha256": "88fb492e3522266d09fe6d72073703eeb9b2591f9d3f795ee1fdad92604621e5",
+      "binarySha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722",
+      "registeredAt": "2026-09-10T14:45:26.915Z",
+      "source": {
+        "kind": "previous",
+        "character": "八神庵",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.313646.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.14cef5b9cea7df81526c39dc63490b90f59d4497d86ee60e",
+      "label": "周防尊",
+      "sourceModelKey": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+      "modelSha256": "8d5d2d9ba5e1fc3e7fd6e2f11a4922d2b63cca2d714e60738a10409b867e23f6",
+      "binarySha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "registeredAt": "2026-09-10T14:45:26.944Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "周防尊",
+        "work": "K",
+        "library": "300heroes",
+        "reference": "300heroes:8bb741c66037340e2f7efec7",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+      "label": "八神庵（論壇模型）",
+      "sourceModelKey": "ou99.313646-standard-v2",
+      "modelSha256": "46b44c18727f68739cab5e7c8d6c90cb9a140ae64ed173a3fed2b83342bb42c2",
+      "binarySha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+      "registeredAt": "2026-09-10T14:48:45.453Z",
+      "source": {
+        "kind": "exact",
+        "character": "八神庵",
+        "work": "THE KING OF FIGHTERS",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-313646-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

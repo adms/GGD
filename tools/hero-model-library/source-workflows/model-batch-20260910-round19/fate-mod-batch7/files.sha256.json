@@ -1,0 +1,102 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3437,
+    "sha256": "c79037709f2812540f4c8883105e667a13fb4113d5cd529de86409d40436ebb3"
+  },
+  {
+    "path": "control/handoff.json",
+    "bytes": 2333,
+    "sha256": "fbb0d61967c3e5b0df8b47a8c13461215a41028a255123005dc58b940f393447"
+  },
+  {
+    "path": "control/spec-receipts.json",
+    "bytes": 601,
+    "sha256": "35d3e2bf858885e5b464007b1c33363fde04f6811ca04f490e6113994df852c6"
+  },
+  {
+    "path": "control/specs/HL1MDLLoader.cpp",
+    "bytes": 59126,
+    "sha256": "c91b237eb3346b007fc74a8ac62153ce424e80adaf064a7fef8e850f386bc34a"
+  },
+  {
+    "path": "control/specs/studio.h",
+    "bytes": 8052,
+    "sha256": "46eadf886bb301637a1289576f71cd45eab7593044eef29b7f080cc02af2edb5"
+  },
+  {
+    "path": "control/tool-dependencies.json",
+    "bytes": 758,
+    "sha256": "0d9994b848f79ae0d1548e67c82386025dba2f9500e91c7da8a8a6e6b39bceb2"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-download.py",
+    "bytes": 1644,
+    "sha256": "06c4c5f80b9dc7e98d87cfdbdac3d71db0ac025b6d4e806948e31c8de955519d"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-extract.py",
+    "bytes": 1406,
+    "sha256": "1db38d9cd957bd015edf96ac85fe93f9c481657bbadcd7f93e9c7f1834aa723f"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-freeze.py",
+    "bytes": 14685,
+    "sha256": "ddd5bf1bcd5caa19f3c677a67abb18a0cc3806fd5541217ce04143e4f96dc383"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-kirei-playback.py",
+    "bytes": 9441,
+    "sha256": "2c21b061cb051628d4208e09268632eff2e5375867bbf2a42a8f1c4cf8af142b"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-kirei.py",
+    "bytes": 13607,
+    "sha256": "90efbb0d23a81a8ba7f30440f33159fc89ce174c70f1d419e2d121a8e682f89c"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-process-sakura.py",
+    "bytes": 7433,
+    "sha256": "0cfe760bd4db80e647f5003c47c694ad08a5e7e02aaa57e8f402689d4625e7ca"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-sakura-preview.py",
+    "bytes": 7099,
+    "sha256": "0ffac878a27ae773ea74cc88743309d6e4017d0630ffbcdd9bc9c2a3276466bc"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch7-validate.cjs",
+    "bytes": 1196,
+    "sha256": "49de77b1fbd57075edd7b5043a24e01a5eab4febaf6d3db113442ccbf33a0680"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-convert-unity-outfit.py",
+    "bytes": 17886,
+    "sha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6"
+  },
+  {
+    "path": "page-receipts.json",
+    "bytes": 889,
+    "sha256": "81651df429176277d672f45aa2690810dac0b820ee71dda0940b27640199c20a"
+  },
+  {
+    "path": "receipts/dark-sakura-source-page.json",
+    "bytes": 2280,
+    "sha256": "becdd3b35db859983235ece47a248adf6b0fed3ea482beff79d94075a064c6ca"
+  },
+  {
+    "path": "receipts/kotomine-kirei-source-page.json",
+    "bytes": 1247,
+    "sha256": "2ce3fec025197e7c9f489691920774489cab9496fb5e5c1756516fd897a21926"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 3685,
+    "sha256": "ac50577cfb9aa8afb82f894351632533256bcb4cedea9f530d7d6b5aa442e33e"
+  },
+  {
+    "path": "source-search-followup.json",
+    "bytes": 999,
+    "sha256": "658ac117ca119c87efb20ec1d120b71a4e3a062c88ee7296a2870d10bf1de4b7"
+  }
+]

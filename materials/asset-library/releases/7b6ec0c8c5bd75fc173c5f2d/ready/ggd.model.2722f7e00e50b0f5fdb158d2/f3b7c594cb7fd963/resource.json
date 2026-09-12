@@ -1,0 +1,45 @@
+{
+  "id": "ggd.model.2722f7e00e50b0f5fdb158d2",
+  "title": "莉娜·因巴斯",
+  "kind": "model-body",
+  "model": "models/community.body.af43a6c7cc5f5a9d24de9bbff14e35867296d5e0d37063b8.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "mba:Chara02",
+        "modelKey": "community.body.af43a6c7cc5f5a9d24de9bbff14e35867296d5e0d37063b8",
+        "glbPath": "assets/models/community/f482e093ef36bed9c840288a9a1de9649d4445d5452909f1f494f47c3fe54e54.glb",
+        "sha256": "f482e093ef36bed9c840288a9a1de9649d4445d5452909f1f494f47c3fe54e54",
+        "bytes": 865608,
+        "documentSha256": "2722f7e00e50b0f5fdb158d2e927c758992b315d60f584f9002e6f5b3e378ee5",
+        "sourceCharacter": "莉娜·因巴斯",
+        "sourceWork": "秀逗魔導士",
+        "sourceAssetId": "mba:90e2e3fdffbbb5b1251958c6",
+        "sourceSha256": "aa36b9f905e53f52878c0288767f1abeb76244ccbb1c843a89a43f15a9c66486",
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.2722f7e00e50b0f5fdb158d2"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-h020",
+        "name": "黑魔導士 - 莉娜因巴斯"
+      },
+      {
+        "id": "godie-hjai",
+        "name": "黑魔導士 - 莉娜因巴斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

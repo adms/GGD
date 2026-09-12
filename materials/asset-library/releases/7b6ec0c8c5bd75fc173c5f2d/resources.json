@@ -1,0 +1,966 @@
+{
+  "schema": "ggd-shared-resource-index@1",
+  "scope": "standardized_only",
+  "resources": [
+    {
+      "id": "fx.prim.arcane.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.arcane.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.arcane.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.arcane.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.arcane.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.arcane.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.arcane.summon",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.arcane.summon.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_05.png"
+    },
+    {
+      "id": "fx.prim.blood.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.blood.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.blood.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.blood.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.fire.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.fire.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.fire.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.fire.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.fire.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.fire.bolt.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.fire.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.fire.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.fire.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.fire.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.fire.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.fire.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.holy.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.holy.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.holy.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.holy.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.holy.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.holy.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.holy.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.holy.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.holy.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.holy.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.holy.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.holy.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.ice.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ice.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.ice.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ice.bolt.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.ice.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ice.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.ice.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ice.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.ki.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ki.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.ki.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ki.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.ki.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ki.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.ki.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.ki.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.lightning.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.lightning.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.lightning.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.bolt.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.lightning.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.lightning.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.lightning.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.lightning.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.lightning.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.nature.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.nature.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.nature.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.nature.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.nature.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.nature.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.physical.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.physical.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.beam.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.physical.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.bolt.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.physical.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.physical.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.physical.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.physical.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.physical.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.sound.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.sound.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.sound.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.sound.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.sound.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.sound.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.void.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.void.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.void.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.void.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.void.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.void.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.void.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.void.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.void.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.void.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.void.summon",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.void.summon.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_05.png"
+    },
+    {
+      "id": "fx.prim.wind.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.wind.arc.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.wind.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.wind.nova.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.wind.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.wind.pulse.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.wind.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.wind.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.wind.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/vfx/fx.prim.wind.slash.json",
+      "texture": "ready/ggd.vfx.community37/a7a3e9f565ee9d4f/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "ggd.model.f7b821d40970ffb5bd6fa542",
+      "kind": "model",
+      "bundle_id": "ggd.model.f7b821d40970ffb5bd6fa542",
+      "path": "ready/ggd.model.f7b821d40970ffb5bd6fa542/f44b836d28a4435d"
+    },
+    {
+      "id": "ggd.model.cd7b3fb5b363ce1de24bdec7",
+      "kind": "model",
+      "bundle_id": "ggd.model.cd7b3fb5b363ce1de24bdec7",
+      "path": "ready/ggd.model.cd7b3fb5b363ce1de24bdec7/9d39cd1b8c49b040"
+    },
+    {
+      "id": "ggd.model.550c1060c9dfa0f2c6cd0e63",
+      "kind": "model",
+      "bundle_id": "ggd.model.550c1060c9dfa0f2c6cd0e63",
+      "path": "ready/ggd.model.550c1060c9dfa0f2c6cd0e63/5efe4cbe768bf7e0"
+    },
+    {
+      "id": "ggd.model.c8acfe272ce208d207ac0bc8",
+      "kind": "model",
+      "bundle_id": "ggd.model.c8acfe272ce208d207ac0bc8",
+      "path": "ready/ggd.model.c8acfe272ce208d207ac0bc8/31fcfb84467c0c4b"
+    },
+    {
+      "id": "ggd.model.a0d55bbf2b48f1c8f0d4eb99",
+      "kind": "model",
+      "bundle_id": "ggd.model.a0d55bbf2b48f1c8f0d4eb99",
+      "path": "ready/ggd.model.a0d55bbf2b48f1c8f0d4eb99/6bcc5631717fa3e8"
+    },
+    {
+      "id": "ggd.model.0903bb96e376c9b90c63f54d",
+      "kind": "model",
+      "bundle_id": "ggd.model.0903bb96e376c9b90c63f54d",
+      "path": "ready/ggd.model.0903bb96e376c9b90c63f54d/b162b727df548b5d"
+    },
+    {
+      "id": "ggd.model.58505d3bb082ae9a68fd6b74",
+      "kind": "model",
+      "bundle_id": "ggd.model.58505d3bb082ae9a68fd6b74",
+      "path": "ready/ggd.model.58505d3bb082ae9a68fd6b74/4153fdd8a30f6f05"
+    },
+    {
+      "id": "ggd.model.244d86c34abeeaa1e5177880",
+      "kind": "model",
+      "bundle_id": "ggd.model.244d86c34abeeaa1e5177880",
+      "path": "ready/ggd.model.244d86c34abeeaa1e5177880/c7ef51ad735d2ed2"
+    },
+    {
+      "id": "ggd.model.18f3135c07f3bd9acb02dbc1",
+      "kind": "model",
+      "bundle_id": "ggd.model.18f3135c07f3bd9acb02dbc1",
+      "path": "ready/ggd.model.18f3135c07f3bd9acb02dbc1/a420658b9c7143bb"
+    },
+    {
+      "id": "ggd.model.d2f724a650d13c43105fee70",
+      "kind": "model",
+      "bundle_id": "ggd.model.d2f724a650d13c43105fee70",
+      "path": "ready/ggd.model.d2f724a650d13c43105fee70/93f7b199125f8fc4"
+    },
+    {
+      "id": "ggd.model.6c79748db70aaebd473ffbbc",
+      "kind": "model",
+      "bundle_id": "ggd.model.6c79748db70aaebd473ffbbc",
+      "path": "ready/ggd.model.6c79748db70aaebd473ffbbc/3e7331ab1080c576"
+    },
+    {
+      "id": "ggd.model.e960075f5a62c21aca702d0c",
+      "kind": "model",
+      "bundle_id": "ggd.model.e960075f5a62c21aca702d0c",
+      "path": "ready/ggd.model.e960075f5a62c21aca702d0c/a47ffcd1e145c387"
+    },
+    {
+      "id": "ggd.model.6dc3ecdb1a61a91cbdfd6b6f",
+      "kind": "model",
+      "bundle_id": "ggd.model.6dc3ecdb1a61a91cbdfd6b6f",
+      "path": "ready/ggd.model.6dc3ecdb1a61a91cbdfd6b6f/4e90f6f25ba19881"
+    },
+    {
+      "id": "ggd.model.ca573ffd30ec4008a2681d85",
+      "kind": "model",
+      "bundle_id": "ggd.model.ca573ffd30ec4008a2681d85",
+      "path": "ready/ggd.model.ca573ffd30ec4008a2681d85/97d0b2b50d9e8cb1"
+    },
+    {
+      "id": "ggd.model.43c2daab596768f01cc4f702",
+      "kind": "model",
+      "bundle_id": "ggd.model.43c2daab596768f01cc4f702",
+      "path": "ready/ggd.model.43c2daab596768f01cc4f702/4212744ccb914a5f"
+    },
+    {
+      "id": "ggd.model.750e90fb6502c02246d7a2c2",
+      "kind": "model",
+      "bundle_id": "ggd.model.750e90fb6502c02246d7a2c2",
+      "path": "ready/ggd.model.750e90fb6502c02246d7a2c2/129aec939688931f"
+    },
+    {
+      "id": "ggd.model.ce98968890593b03cdf5641c",
+      "kind": "model",
+      "bundle_id": "ggd.model.ce98968890593b03cdf5641c",
+      "path": "ready/ggd.model.ce98968890593b03cdf5641c/24adc65f400b5f2a"
+    },
+    {
+      "id": "ggd.model.2901cfaa22964d163404c483",
+      "kind": "model",
+      "bundle_id": "ggd.model.2901cfaa22964d163404c483",
+      "path": "ready/ggd.model.2901cfaa22964d163404c483/c4ce3faedd3e63d3"
+    },
+    {
+      "id": "ggd.model.7f41043352ed86bd9208db4d",
+      "kind": "model",
+      "bundle_id": "ggd.model.7f41043352ed86bd9208db4d",
+      "path": "ready/ggd.model.7f41043352ed86bd9208db4d/3d06d5850b7a6d09"
+    },
+    {
+      "id": "ggd.model.615b6b76c4800c5ae0363493",
+      "kind": "model",
+      "bundle_id": "ggd.model.615b6b76c4800c5ae0363493",
+      "path": "ready/ggd.model.615b6b76c4800c5ae0363493/9e7464e3e817f390"
+    },
+    {
+      "id": "ggd.model.3cd69b3d3be17422970e3f4c",
+      "kind": "model",
+      "bundle_id": "ggd.model.3cd69b3d3be17422970e3f4c",
+      "path": "ready/ggd.model.3cd69b3d3be17422970e3f4c/782d98c3632f3dbf"
+    },
+    {
+      "id": "ggd.model.33f79fda5f82f1e4677c9ec8",
+      "kind": "model",
+      "bundle_id": "ggd.model.33f79fda5f82f1e4677c9ec8",
+      "path": "ready/ggd.model.33f79fda5f82f1e4677c9ec8/cb04b847e913e941"
+    },
+    {
+      "id": "ggd.model.01110beb6cdcbc910793f1b2",
+      "kind": "model",
+      "bundle_id": "ggd.model.01110beb6cdcbc910793f1b2",
+      "path": "ready/ggd.model.01110beb6cdcbc910793f1b2/f57c1e4763d1508a"
+    },
+    {
+      "id": "ggd.model.f897af4d5be5421e37872ee9",
+      "kind": "model",
+      "bundle_id": "ggd.model.f897af4d5be5421e37872ee9",
+      "path": "ready/ggd.model.f897af4d5be5421e37872ee9/c1dea3e56c109981"
+    },
+    {
+      "id": "ggd.model.d340b40a16e8b48ba3868597",
+      "kind": "model",
+      "bundle_id": "ggd.model.d340b40a16e8b48ba3868597",
+      "path": "ready/ggd.model.d340b40a16e8b48ba3868597/feaf695442fe08df"
+    },
+    {
+      "id": "ggd.model.0231908c8873f295e0e5bbd1",
+      "kind": "model",
+      "bundle_id": "ggd.model.0231908c8873f295e0e5bbd1",
+      "path": "ready/ggd.model.0231908c8873f295e0e5bbd1/ab428a9b9957e3d5"
+    },
+    {
+      "id": "ggd.model.f3ed5c49c35d72e1461e6f57",
+      "kind": "model",
+      "bundle_id": "ggd.model.f3ed5c49c35d72e1461e6f57",
+      "path": "ready/ggd.model.f3ed5c49c35d72e1461e6f57/93e235ebdb5db68a"
+    },
+    {
+      "id": "ggd.model.681e601fdf44816df09ffe49",
+      "kind": "model",
+      "bundle_id": "ggd.model.681e601fdf44816df09ffe49",
+      "path": "ready/ggd.model.681e601fdf44816df09ffe49/c3a0e849f99a7d3b"
+    },
+    {
+      "id": "ggd.model.53dbc3c40d35c966f2077db1",
+      "kind": "model",
+      "bundle_id": "ggd.model.53dbc3c40d35c966f2077db1",
+      "path": "ready/ggd.model.53dbc3c40d35c966f2077db1/803a078715b8f947"
+    },
+    {
+      "id": "ggd.model.91e76db9698f07890203dbd0",
+      "kind": "model",
+      "bundle_id": "ggd.model.91e76db9698f07890203dbd0",
+      "path": "ready/ggd.model.91e76db9698f07890203dbd0/8ba92e12a2081714"
+    },
+    {
+      "id": "ggd.model.2722f7e00e50b0f5fdb158d2",
+      "kind": "model",
+      "bundle_id": "ggd.model.2722f7e00e50b0f5fdb158d2",
+      "path": "ready/ggd.model.2722f7e00e50b0f5fdb158d2/f3b7c594cb7fd963"
+    },
+    {
+      "id": "ggd.model.3b029df61f62d0a19d68bed6",
+      "kind": "model",
+      "bundle_id": "ggd.model.3b029df61f62d0a19d68bed6",
+      "path": "ready/ggd.model.3b029df61f62d0a19d68bed6/832c10ceb4dea12d"
+    },
+    {
+      "id": "ggd.model.835f067560ca485a946c2e19",
+      "kind": "model",
+      "bundle_id": "ggd.model.835f067560ca485a946c2e19",
+      "path": "ready/ggd.model.835f067560ca485a946c2e19/46d86ab11229c2c7"
+    },
+    {
+      "id": "ggd.model.31994cac6c555570dfdf633c",
+      "kind": "model",
+      "bundle_id": "ggd.model.31994cac6c555570dfdf633c",
+      "path": "ready/ggd.model.31994cac6c555570dfdf633c/946caf09f5859e78"
+    },
+    {
+      "id": "ggd.model.bf8f10fb13575d84a343d24a",
+      "kind": "model",
+      "bundle_id": "ggd.model.bf8f10fb13575d84a343d24a",
+      "path": "ready/ggd.model.bf8f10fb13575d84a343d24a/8a43359703e92544"
+    },
+    {
+      "id": "ggd.model.645783fc8fde9826bebd4779",
+      "kind": "model",
+      "bundle_id": "ggd.model.645783fc8fde9826bebd4779",
+      "path": "ready/ggd.model.645783fc8fde9826bebd4779/ea66ce20ac4ca596"
+    },
+    {
+      "id": "ggd.model.eddbc49d92b98f9c9a017404",
+      "kind": "model",
+      "bundle_id": "ggd.model.eddbc49d92b98f9c9a017404",
+      "path": "ready/ggd.model.eddbc49d92b98f9c9a017404/12f0edbf2f69a3a8"
+    },
+    {
+      "id": "ggd.model.47ebc46da58908abb37ee42c",
+      "kind": "model",
+      "bundle_id": "ggd.model.47ebc46da58908abb37ee42c",
+      "path": "ready/ggd.model.47ebc46da58908abb37ee42c/b103ca589e963f85"
+    },
+    {
+      "id": "ggd.model.bf084d372ce1532ba48d15d2",
+      "kind": "model",
+      "bundle_id": "ggd.model.bf084d372ce1532ba48d15d2",
+      "path": "ready/ggd.model.bf084d372ce1532ba48d15d2/8b4087e9c5b32a66"
+    },
+    {
+      "id": "ggd.model.b5d55132dd1214ac6135a73d",
+      "kind": "model",
+      "bundle_id": "ggd.model.b5d55132dd1214ac6135a73d",
+      "path": "ready/ggd.model.b5d55132dd1214ac6135a73d/b23d8138bd58575b"
+    },
+    {
+      "id": "ggd.model.dc5874e08aaa2980f8287bdd",
+      "kind": "model",
+      "bundle_id": "ggd.model.dc5874e08aaa2980f8287bdd",
+      "path": "ready/ggd.model.dc5874e08aaa2980f8287bdd/d6c718c67f1c69b0"
+    },
+    {
+      "id": "ggd.model.b77c61d90930191a6c246fc9",
+      "kind": "model",
+      "bundle_id": "ggd.model.b77c61d90930191a6c246fc9",
+      "path": "ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f"
+    },
+    {
+      "id": "ggd.model.2edc9b2b73e70d1555474f3f",
+      "kind": "model",
+      "bundle_id": "ggd.model.2edc9b2b73e70d1555474f3f",
+      "path": "ready/ggd.model.2edc9b2b73e70d1555474f3f/d57c9b7580d74150"
+    },
+    {
+      "id": "ggd.model.de7ceb215b2e01016ca55b27",
+      "kind": "model",
+      "bundle_id": "ggd.model.de7ceb215b2e01016ca55b27",
+      "path": "ready/ggd.model.de7ceb215b2e01016ca55b27/78c1bd2dc362cc33"
+    },
+    {
+      "id": "ggd.model.25a630680653d8a6bd4c6ad8",
+      "kind": "model",
+      "bundle_id": "ggd.model.25a630680653d8a6bd4c6ad8",
+      "path": "ready/ggd.model.25a630680653d8a6bd4c6ad8/baef0c9a23da0efb"
+    },
+    {
+      "id": "ggd.model.afdaee645cbc462868e58bac",
+      "kind": "model",
+      "bundle_id": "ggd.model.afdaee645cbc462868e58bac",
+      "path": "ready/ggd.model.afdaee645cbc462868e58bac/0e0fbd1efa833a1a"
+    },
+    {
+      "id": "ggd.model.81abf8376825a650cdac1c0c",
+      "kind": "model",
+      "bundle_id": "ggd.model.81abf8376825a650cdac1c0c",
+      "path": "ready/ggd.model.81abf8376825a650cdac1c0c/b25a3d8f24a8cd84"
+    },
+    {
+      "id": "ggd.model.8a4f4237130086cd12c973cf",
+      "kind": "model",
+      "bundle_id": "ggd.model.8a4f4237130086cd12c973cf",
+      "path": "ready/ggd.model.8a4f4237130086cd12c973cf/13db4e307ff1b944"
+    },
+    {
+      "id": "ggd.model.97248fdcfa04b33f1ffda159",
+      "kind": "model",
+      "bundle_id": "ggd.model.97248fdcfa04b33f1ffda159",
+      "path": "ready/ggd.model.97248fdcfa04b33f1ffda159/58974318d5fa398b"
+    },
+    {
+      "id": "ggd.model.013312636edf7503d23eb32a",
+      "kind": "model",
+      "bundle_id": "ggd.model.013312636edf7503d23eb32a",
+      "path": "ready/ggd.model.013312636edf7503d23eb32a/bc0b28e7ebfefe32"
+    },
+    {
+      "id": "ggd.model.dbe17fa434831f1f0e2018c8",
+      "kind": "model",
+      "bundle_id": "ggd.model.dbe17fa434831f1f0e2018c8",
+      "path": "ready/ggd.model.dbe17fa434831f1f0e2018c8/a826c27c26453e89"
+    },
+    {
+      "id": "ggd.model.26f08f9e0c99ed0a4034f919",
+      "kind": "model",
+      "bundle_id": "ggd.model.26f08f9e0c99ed0a4034f919",
+      "path": "ready/ggd.model.26f08f9e0c99ed0a4034f919/9a78fc3861e40d35"
+    },
+    {
+      "id": "ggd.model.70385886335b0f9fcc5549ef",
+      "kind": "model",
+      "bundle_id": "ggd.model.70385886335b0f9fcc5549ef",
+      "path": "ready/ggd.model.70385886335b0f9fcc5549ef/1448e3a332e5392f"
+    },
+    {
+      "id": "ggd.model.783291279029e5bc6d9769b7",
+      "kind": "model",
+      "bundle_id": "ggd.model.783291279029e5bc6d9769b7",
+      "path": "ready/ggd.model.783291279029e5bc6d9769b7/adadb7e6a1d66ebf"
+    },
+    {
+      "id": "ggd.model.f656fb2bfbbb0e53b062c307",
+      "kind": "model",
+      "bundle_id": "ggd.model.f656fb2bfbbb0e53b062c307",
+      "path": "ready/ggd.model.f656fb2bfbbb0e53b062c307/5acae7539ced35e4"
+    },
+    {
+      "id": "ggd.model.453ddf775a0b56ee3f26684a",
+      "kind": "model",
+      "bundle_id": "ggd.model.453ddf775a0b56ee3f26684a",
+      "path": "ready/ggd.model.453ddf775a0b56ee3f26684a/15e62d31d978ec33"
+    },
+    {
+      "id": "ggd.model.4e28aa3db4037ab2a585483a",
+      "kind": "model",
+      "bundle_id": "ggd.model.4e28aa3db4037ab2a585483a",
+      "path": "ready/ggd.model.4e28aa3db4037ab2a585483a/26995f2cc399e737"
+    },
+    {
+      "id": "ggd.model.f06b631406f8efcc631f0578",
+      "kind": "model",
+      "bundle_id": "ggd.model.f06b631406f8efcc631f0578",
+      "path": "ready/ggd.model.f06b631406f8efcc631f0578/c0ec39f12abd1644"
+    },
+    {
+      "id": "ggd.model.4d5e2cd03ea2b3f58fa76446",
+      "kind": "model",
+      "bundle_id": "ggd.model.4d5e2cd03ea2b3f58fa76446",
+      "path": "ready/ggd.model.4d5e2cd03ea2b3f58fa76446/4ed6833db663fa43"
+    },
+    {
+      "id": "ggd.model.2421668c7f99f7f1f6731180",
+      "kind": "model",
+      "bundle_id": "ggd.model.2421668c7f99f7f1f6731180",
+      "path": "ready/ggd.model.2421668c7f99f7f1f6731180/7d9b6d7f4858c8eb"
+    },
+    {
+      "id": "ggd.model.e26c451829d181665393728d",
+      "kind": "model",
+      "bundle_id": "ggd.model.e26c451829d181665393728d",
+      "path": "ready/ggd.model.e26c451829d181665393728d/0b9de974f6f6f7ab"
+    },
+    {
+      "id": "ggd.model.7cb67d5b138d42e34bd59f29",
+      "kind": "model",
+      "bundle_id": "ggd.model.7cb67d5b138d42e34bd59f29",
+      "path": "ready/ggd.model.7cb67d5b138d42e34bd59f29/cf3f1fc6acbfc878"
+    },
+    {
+      "id": "ggd.model.578cc97e499867fb83e1b539",
+      "kind": "model",
+      "bundle_id": "ggd.model.578cc97e499867fb83e1b539",
+      "path": "ready/ggd.model.578cc97e499867fb83e1b539/f9d559b5c0319fe2"
+    },
+    {
+      "id": "ggd.model.72bac9a563f063323453de29",
+      "kind": "model",
+      "bundle_id": "ggd.model.72bac9a563f063323453de29",
+      "path": "ready/ggd.model.72bac9a563f063323453de29/36ab021d15afb5b0"
+    },
+    {
+      "id": "ggd.model.8793dcf75df24643459254bc",
+      "kind": "model",
+      "bundle_id": "ggd.model.8793dcf75df24643459254bc",
+      "path": "ready/ggd.model.8793dcf75df24643459254bc/382b975d21082721"
+    },
+    {
+      "id": "ggd.model.b06fff73ec09076455b6f115",
+      "kind": "model",
+      "bundle_id": "ggd.model.b06fff73ec09076455b6f115",
+      "path": "ready/ggd.model.b06fff73ec09076455b6f115/ed0a354d956b2d36"
+    },
+    {
+      "id": "ggd.model.08dd55647945618f8f60e193",
+      "kind": "model",
+      "bundle_id": "ggd.model.08dd55647945618f8f60e193",
+      "path": "ready/ggd.model.08dd55647945618f8f60e193/6b9ce100b4016f63"
+    },
+    {
+      "id": "ggd.model.6ea22f05888ba86042e5779b",
+      "kind": "model",
+      "bundle_id": "ggd.model.6ea22f05888ba86042e5779b",
+      "path": "ready/ggd.model.6ea22f05888ba86042e5779b/83d4ea19edd9200c"
+    },
+    {
+      "id": "ggd.model.6906c0aebd70a4dbb8d4946d",
+      "kind": "model",
+      "bundle_id": "ggd.model.6906c0aebd70a4dbb8d4946d",
+      "path": "ready/ggd.model.6906c0aebd70a4dbb8d4946d/a73c6fb00dadfb2e"
+    },
+    {
+      "id": "ggd.model.c04332eac54d8bad2e1c5b1b",
+      "kind": "model",
+      "bundle_id": "ggd.model.c04332eac54d8bad2e1c5b1b",
+      "path": "ready/ggd.model.c04332eac54d8bad2e1c5b1b/76e12f714f25dd6b"
+    },
+    {
+      "id": "ggd.model.1b8c59df56b9e416127499b6",
+      "kind": "model",
+      "bundle_id": "ggd.model.1b8c59df56b9e416127499b6",
+      "path": "ready/ggd.model.1b8c59df56b9e416127499b6/e4727c5b8c40f80b"
+    },
+    {
+      "id": "ggd.model.2d8b76e26b67689483a95f42",
+      "kind": "model",
+      "bundle_id": "ggd.model.2d8b76e26b67689483a95f42",
+      "path": "ready/ggd.model.2d8b76e26b67689483a95f42/b28f3962e16557ed"
+    },
+    {
+      "id": "ggd.model.f5b09564eab02d38a0560f53",
+      "kind": "model",
+      "bundle_id": "ggd.model.f5b09564eab02d38a0560f53",
+      "path": "ready/ggd.model.f5b09564eab02d38a0560f53/18f9017a9e35a979"
+    },
+    {
+      "id": "ggd.model.8c760ab364722f6d7cce619e",
+      "kind": "model",
+      "bundle_id": "ggd.model.8c760ab364722f6d7cce619e",
+      "path": "ready/ggd.model.8c760ab364722f6d7cce619e/7150e44aa1445561"
+    },
+    {
+      "id": "ggd.model.93011ca09d17b780568d3c89",
+      "kind": "model",
+      "bundle_id": "ggd.model.93011ca09d17b780568d3c89",
+      "path": "ready/ggd.model.93011ca09d17b780568d3c89/16a08d768499752a"
+    },
+    {
+      "id": "ggd.model.3efeb4dc4c0a6bf25fd8bab6",
+      "kind": "model",
+      "bundle_id": "ggd.model.3efeb4dc4c0a6bf25fd8bab6",
+      "path": "ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f"
+    },
+    {
+      "id": "ggd.model.ea975386405e8702b6fde096",
+      "kind": "model",
+      "bundle_id": "ggd.model.ea975386405e8702b6fde096",
+      "path": "ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1"
+    },
+    {
+      "id": "ggd.model.de731caac2683e7c7ac6a1e1",
+      "kind": "model",
+      "bundle_id": "ggd.model.de731caac2683e7c7ac6a1e1",
+      "path": "ready/ggd.model.de731caac2683e7c7ac6a1e1/bed1fdfa89271995"
+    },
+    {
+      "id": "ggd.model.8e43a2882a91a856c5dce141",
+      "kind": "model",
+      "bundle_id": "ggd.model.8e43a2882a91a856c5dce141",
+      "path": "ready/ggd.model.8e43a2882a91a856c5dce141/3b36c318a53f395e"
+    },
+    {
+      "id": "ggd.model.3f497f30c3e42510ebbb1237",
+      "kind": "model",
+      "bundle_id": "ggd.model.3f497f30c3e42510ebbb1237",
+      "path": "ready/ggd.model.3f497f30c3e42510ebbb1237/92482855c87ac724"
+    },
+    {
+      "id": "ggd.model.f0019265fd1745b7a29bd2b5",
+      "kind": "model",
+      "bundle_id": "ggd.model.f0019265fd1745b7a29bd2b5",
+      "path": "ready/ggd.model.f0019265fd1745b7a29bd2b5/0ca0b1d0152a2282"
+    },
+    {
+      "id": "ggd.model.9cdd717b3f778bf285181952",
+      "kind": "model",
+      "bundle_id": "ggd.model.9cdd717b3f778bf285181952",
+      "path": "ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648"
+    },
+    {
+      "id": "ggd.model.666d91f4dd2bcde9a6b27ede",
+      "kind": "model",
+      "bundle_id": "ggd.model.666d91f4dd2bcde9a6b27ede",
+      "path": "ready/ggd.model.666d91f4dd2bcde9a6b27ede/330a50c330be0ecc"
+    },
+    {
+      "id": "ggd.model.9fdf84432972781cd4377da8",
+      "kind": "model",
+      "bundle_id": "ggd.model.9fdf84432972781cd4377da8",
+      "path": "ready/ggd.model.9fdf84432972781cd4377da8/cb1e5b3cb073cf50"
+    },
+    {
+      "id": "ggd.model.eba1d1141943fb1855696a4c",
+      "kind": "model",
+      "bundle_id": "ggd.model.eba1d1141943fb1855696a4c",
+      "path": "ready/ggd.model.eba1d1141943fb1855696a4c/95daea05da65560c"
+    },
+    {
+      "id": "ggd.model.9fa3a3d6bd8823305a9854ed",
+      "kind": "model",
+      "bundle_id": "ggd.model.9fa3a3d6bd8823305a9854ed",
+      "path": "ready/ggd.model.9fa3a3d6bd8823305a9854ed/f617c0a5c24f9b96"
+    },
+    {
+      "id": "ggd.model.d76a057d4869e4913d9a7327",
+      "kind": "model",
+      "bundle_id": "ggd.model.d76a057d4869e4913d9a7327",
+      "path": "ready/ggd.model.d76a057d4869e4913d9a7327/ed8e7bb4a1f896ae"
+    },
+    {
+      "id": "ggd.model.5ad7e0cc65e3eca8ead74227",
+      "kind": "model",
+      "bundle_id": "ggd.model.5ad7e0cc65e3eca8ead74227",
+      "path": "ready/ggd.model.5ad7e0cc65e3eca8ead74227/85f8db2918bce5d9"
+    },
+    {
+      "id": "ggd.model.589d121ff37d383fbfaa85f6",
+      "kind": "model",
+      "bundle_id": "ggd.model.589d121ff37d383fbfaa85f6",
+      "path": "ready/ggd.model.589d121ff37d383fbfaa85f6/45ffb5e6023dfac3"
+    },
+    {
+      "id": "ggd.model.0817d46424cf8193b7b3229a",
+      "kind": "model",
+      "bundle_id": "ggd.model.0817d46424cf8193b7b3229a",
+      "path": "ready/ggd.model.0817d46424cf8193b7b3229a/dfea603a1ff3d1c4"
+    }
+  ]
+}

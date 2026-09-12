@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+  "modelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -316,5 +316,60 @@
     "magic"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-lux.webp"
+  "icon": "assets/icons/champions/lol-lux.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b66e6ed971eb3c071bf34c0ce11669ba7b2c1ad251cbbf1d",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "41cf995e51e62590239488985358729a47ac9c9a8335a387ff7d024426dae550",
+      "binarySha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "registeredAt": "2026-09-10T14:45:44.084Z",
+      "source": {
+        "kind": "previous",
+        "character": "拉克絲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.147f3d7695219be6c006ea69b00cd3cc805bce91d692c822",
+      "label": "拉克絲（LOL 原生模型）",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "dd748669e0885593010e0f4dd26738259eec1baa98e06085de55a847c0cb97c1",
+      "binarySha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "registeredAt": "2026-09-10T14:45:44.103Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-lux.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
+      "label": "拉克絲",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "627cf0393e8756c33db729fadb5555f8ba87460880d31f90e02b6d987981f099",
+      "binarySha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "registeredAt": "2026-09-10T14:45:44.191Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:lux",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

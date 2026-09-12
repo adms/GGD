@@ -1,0 +1,8 @@
+from pathlib import Path
+import json,subprocess,hashlib,shutil
+ROOT=Path('/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT');P=ROOT/'GGD-Asset-Library/intake/public-models-20260910/parallel-community-lina-rays-300-retarget-footloop-v2';run=P/'evidence/playback';out=[]
+for f in sorted(run.glob('*.webm')):
+ meta=subprocess.run(['ffprobe','-v','error','-count_frames','-show_streams','-show_format','-of','json',str(f)],check=True,capture_output=True,text=True);decoded=subprocess.run(['ffmpeg','-v','error','-i',str(f),'-f','framemd5','-'],check=True,capture_output=True,text=True);hashes=[s.split(',')[-1].strip() for s in decoded.stdout.splitlines() if s and not s.startswith('#')];(P/'evidence'/(f.stem+'.framemd5.txt')).write_text(decoded.stdout);out.append({'path':str(f),'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'decodedFrames':len(hashes),'distinctDecodedFrames':len(set(hashes)),'decodedAllFrames':True,'probe':json.loads(meta.stdout)})
+ if f.name.startswith('processed-') or 'worldspeed'in f.name:subprocess.run(['ffmpeg','-nostdin','-v','error','-n','-i',str(f),'-c:v','libx264','-crf','20','-pix_fmt','yuv420p','-movflags','+faststart',str(f.with_suffix('.mp4'))],check=True)
+for t in [1.0,1.5]:subprocess.run(['ffmpeg','-nostdin','-v','error','-n','-ss',str(t),'-i',str(run/'processed-run-worldspeed-playback.webm'),'-frames:v','1',str(run/f'processed-worldspeed-actual-frame-{int(t*1000)}.png')],check=True)
+(P/'evidence/video-validation.json').write_text(json.dumps(out,indent=2)+'\n');shutil.copyfile('/private/tmp/ggd-lina-footloop-video-audit.py',P/'scripts/ggd-lina-footloop-video-audit.py');print([(Path(x['path']).name,x['decodedFrames'],x['distinctDecodedFrames']) for x in out])

@@ -1,0 +1,107 @@
+{
+  "id": "ggd.model.244d86c34abeeaa1e5177880",
+  "title": "黑衣剑士",
+  "kind": "model-body",
+  "model": "models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:102",
+        "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+        "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+        "bytes": 1104488,
+        "documentSha256": "244d86c34abeeaa1e5177880603d7de0ade1833d4c952321ef2b15603749762a",
+        "sourceCharacter": "黑衣剑士",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+        "sourceSha256": "3523ceae3b2af7f175032e8517115abac59b81c09e128f3d6fd6ec4d77735e5d",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.244d86c34abeeaa1e5177880"
+      },
+      {
+        "id": "community:community-review-19-20260907",
+        "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+        "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+        "bytes": 1104488,
+        "documentSha256": "244d86c34abeeaa1e5177880603d7de0ade1833d4c952321ef2b15603749762a",
+        "sourceCharacter": "黑衣剑士",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+        "sourceSha256": "3523ceae3b2af7f175032e8517115abac59b81c09e128f3d6fd6ec4d77735e5d",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.244d86c34abeeaa1e5177880"
+      },
+      {
+        "id": "community:community-review-33-20260907",
+        "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+        "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+        "bytes": 1104488,
+        "documentSha256": "244d86c34abeeaa1e5177880603d7de0ade1833d4c952321ef2b15603749762a",
+        "sourceCharacter": "黑衣剑士",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+        "sourceSha256": "3523ceae3b2af7f175032e8517115abac59b81c09e128f3d6fd6ec4d77735e5d",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.244d86c34abeeaa1e5177880"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-19-20260907",
+        "name": "桐谷和人"
+      },
+      {
+        "id": "community-review-33-20260907",
+        "name": "近衛刀太"
+      },
+      {
+        "id": "b2-shadow",
+        "name": "闇影"
+      },
+      {
+        "id": "b2-kaede",
+        "name": "楓"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

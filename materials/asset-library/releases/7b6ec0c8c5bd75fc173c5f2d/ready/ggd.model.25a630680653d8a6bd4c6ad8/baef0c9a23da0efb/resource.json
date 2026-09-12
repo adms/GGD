@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.25a630680653d8a6bd4c6ad8",
+  "title": "法老王",
+  "kind": "model-body",
+  "model": "models/community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-01-20260907",
+        "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+        "glbPath": "assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
+        "sha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+        "bytes": 772664,
+        "documentSha256": "25a630680653d8a6bd4c6ad824f064999699984251bc8b1532e4180a375b5c74",
+        "sourceCharacter": "法老王",
+        "sourceWork": "遊戲王／遊戲王 怪獸之決鬥",
+        "sourceAssetId": "300heroes:70521f248a94658c5d1ed26c",
+        "sourceSha256": "e175becfc17dac6e2a1fb7183de58b6c9386d40ce1fc65efdf8d397734d0fd8a",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.25a630680653d8a6bd4c6ad8"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-01-20260907",
+        "name": "武藤遊戲"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

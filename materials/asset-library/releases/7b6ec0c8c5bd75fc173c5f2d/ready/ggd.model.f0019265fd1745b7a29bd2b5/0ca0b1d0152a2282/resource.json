@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.f0019265fd1745b7a29bd2b5",
+  "title": "阿爾巴斯（獨立副本／尤吉欧）",
+  "kind": "model-body",
+  "model": "models/community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:albus",
+        "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+        "glbPath": "assets/models/community/eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019.glb",
+        "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+        "bytes": 2355552,
+        "documentSha256": "f0019265fd1745b7a29bd2b50895a71fc611cade01687840277408704c4f9d95",
+        "sourceCharacter": "阿爾巴斯（獨立副本／尤吉欧）",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "sourceAssetId": "derivative:albus",
+        "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-albus",
+          "targetName": "阿爾巴斯",
+          "targetWork": "廻天のアルバス",
+          "sourceId": "300heroes:269",
+          "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+          "copyMode": "independent-embedded-copy",
+          "changes": "完整複製尤吉歐模型與貼圖"
+        },
+        "bundleId": "ggd.model.f0019265fd1745b7a29bd2b5"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-albus",
+        "name": "阿爾巴斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

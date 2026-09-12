@@ -1,0 +1,15 @@
+{
+  "tests": [
+    "literal",
+    "short-overlap",
+    "long-backref",
+    "reject-malformed",
+    "reject-malformed",
+    "reject-malformed",
+    "valid-table",
+    "reject-traversal"
+  ],
+  "count": 8,
+  "realNativeFpk": "not acquired or tested",
+  "note": "Synthetic checks only, do not claim game compatibility."
+}

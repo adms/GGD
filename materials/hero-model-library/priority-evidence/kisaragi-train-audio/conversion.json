@@ -1,0 +1,71 @@
+{
+  "schema": "ggd.kisaragi-train-audio@1",
+  "heroId": "b2-kisaragi",
+  "sourceManifestSha256": "ae96457dbbca1f38fd7ecfc05ac4cbecc1128ba3828eeda79a1ce4ac109ecd69",
+  "sourceManifestLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/manifest.json",
+  "conversion": {
+    "codec": "libmp3lame",
+    "bitrate": "128k",
+    "sampleRate": 44100,
+    "channels": 1,
+    "filter": "loudnorm=I=-16:TP=-1.5:LRA=11",
+    "trimmed": false,
+    "metadataCopied": false
+  },
+  "sourceAudioLicense": "unverified; website map CC attribution is not an audio license",
+  "listeningReviewComplete": false,
+  "files": [
+    {
+      "category": "taunt",
+      "gitPath": "content/assets/audio/voices/lines/b2-kisaragi/taunt.mp3",
+      "sha256": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45",
+      "bytes": 116654,
+      "seconds": 7.218821,
+      "fullDecodePassed": true,
+      "source": {
+        "src": "GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/doaShimarimasuFemale.mp3",
+        "name": "doaShimarimasuFemale",
+        "group": "public-railway:yamanote-app",
+        "sourceId": "yamanote-app-doaShimarimasuFemale",
+        "sha256": "ede6e2a4fff56342f55fb3bdb48172792fd761291b5181fbcaf5915ae67d4ee1",
+        "seconds": 7.218821,
+        "importedAt": "2026-09-10T16:25:51.950694+00:00",
+        "url": "https://yamanote.app/assets/sounds/doaShimarimasuFemale.mp3",
+        "sourcePage": "https://yamanote.app/",
+        "lang": "ja",
+        "assetKind": "station-announcement",
+        "selection": "owner-requested-train-audio",
+        "originalCharacterVoice": false,
+        "rightsStatus": "audio-reuse-license-unverified",
+        "listeningReviewComplete": false,
+        "excludedFromSpeechInput": true
+      }
+    },
+    {
+      "category": "victory",
+      "gitPath": "content/assets/audio/voices/lines/b2-kisaragi/victory.mp3",
+      "sha256": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
+      "bytes": 161376,
+      "seconds": 10.03102,
+      "fullDecodePassed": true,
+      "source": {
+        "src": "GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+        "name": "JR_Melody",
+        "group": "public-railway:yamanote-app",
+        "sourceId": "yamanote-app-JR_Melody",
+        "sha256": "e437c81e1d18fa3e7216901c52894e354566d5de7f948e58aec96e217749f0cd",
+        "seconds": 10.03102,
+        "importedAt": "2026-09-10T16:25:51.950694+00:00",
+        "url": "https://yamanote.app/assets/sounds/melodies/JR_Melody.mp3",
+        "sourcePage": "https://yamanote.app/",
+        "lang": "und",
+        "assetKind": "departure-melody",
+        "selection": "owner-requested-train-audio",
+        "originalCharacterVoice": false,
+        "rightsStatus": "audio-reuse-license-unverified",
+        "listeningReviewComplete": false,
+        "excludedFromSpeechInput": true
+      }
+    }
+  ]
+}

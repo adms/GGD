@@ -379,7 +379,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-elma",
-  "modelKey": "version.body.ae33cbab60225837fc6fa845c17da7ef550a0b87764ee533",
+  "modelKey": "version.body.d01b869b45b264aa7f43b3025a8c47363003290c792df741",
   "name": "艾爾瑪",
   "origin": "坦克",
   "passiveAbility": "b2-elma.passive",
@@ -425,6 +425,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-472038-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.2c6384416aafe2f8e7d2fbf1f4b79627065ee5c715516915",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.472038",
+      "modelSha256": "bb7e2c0743d9d2f3cae32cd9993ce00eb7d1e7a12d52f14c3960f1872bc70eda",
+      "binarySha256": "5da9da66a989c8c2fa3d504f0702c22ea59dc0f93e7ddf7d0a6cb317d53f2ba5",
+      "registeredAt": "2026-09-10T14:45:36.631Z",
+      "source": {
+        "kind": "previous",
+        "character": "艾爾瑪",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.472038.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.78fb667d88e454a748ee6dfc9691bc91184b1c3545a4ad82",
+      "label": "阿尔冯斯",
+      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+      "modelSha256": "00c1ffc5e546f566db58f13e0e892009428efedb78dece311f82f00856d8aa64",
+      "binarySha256": "595b1b9b1dd5a38888b1844eba9a5301cd148de00e14d0e50f1ffd09f861c469",
+      "registeredAt": "2026-09-10T14:45:36.636Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿尔冯斯",
+        "work": "鋼之鍊金術師",
+        "library": "300heroes",
+        "reference": "300heroes:aa89b351426082f8df362c89",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.d01b869b45b264aa7f43b3025a8c47363003290c792df741",
+      "label": "圣洁化身戚小姐（論壇相似模型）",
+      "sourceModelKey": "ou99.472038-standard-v2",
+      "modelSha256": "8feb1ce49dd38353fcab142243c3fbd5f13f1f421b62a9e479f74c1de171ebbb",
+      "binarySha256": "6b7a445de932cb0c658c0439e9fa6e83455186b511a609dd64c96311a033f380",
+      "registeredAt": "2026-09-10T14:48:52.625Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "圣洁化身戚小姐",
+        "work": "來源作品待核；論壇標題：圣洁化身戚小姐",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-472038-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

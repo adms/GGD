@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.2901cfaa22964d163404c483",
+  "title": "菲特",
+  "kind": "model-body",
+  "model": "models/community.body.e8e4c2896c54537d94959852daf0f1a7db924e4e7b003f78.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:169",
+        "modelKey": "community.body.e8e4c2896c54537d94959852daf0f1a7db924e4e7b003f78",
+        "glbPath": "assets/models/community/369a1e44340ca111866834e953921290e13d451a0037e400cdf12acb093576a2.glb",
+        "sha256": "369a1e44340ca111866834e953921290e13d451a0037e400cdf12acb093576a2",
+        "bytes": 1042452,
+        "documentSha256": "2901cfaa22964d163404c483d94b2998604398e22692b69d20df4f322e25ac1d",
+        "sourceCharacter": "菲特",
+        "sourceWork": "魔法少女奈葉",
+        "sourceAssetId": "300heroes:0c6034a40762acd7d56ee509",
+        "sourceSha256": "6815fa0f51e9a6c9066a04e7d883e0f33576cf0136737afb962b6c760c38fd97",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.2901cfaa22964d163404c483"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-ntin",
+        "name": "菲特"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

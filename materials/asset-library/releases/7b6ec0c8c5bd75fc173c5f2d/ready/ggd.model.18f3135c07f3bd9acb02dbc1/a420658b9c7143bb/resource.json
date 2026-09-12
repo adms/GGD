@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.18f3135c07f3bd9acb02dbc1",
+  "title": "夏娜",
+  "kind": "model-body",
+  "model": "models/community.body.4877f63ee5fd7ea6494c427aab0f69348b9845a849d444b6.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:109",
+        "modelKey": "community.body.4877f63ee5fd7ea6494c427aab0f69348b9845a849d444b6",
+        "glbPath": "assets/models/community/ae0e8a8f48d38d72348da0e28c43014e1e64c0e56c0d5d6c904f6f6471dd6849.glb",
+        "sha256": "ae0e8a8f48d38d72348da0e28c43014e1e64c0e56c0d5d6c904f6f6471dd6849",
+        "bytes": 893272,
+        "documentSha256": "18f3135c07f3bd9acb02dbc1946b4dd9bf50bb9340b08ca0c0a01b32b6366b46",
+        "sourceCharacter": "夏娜",
+        "sourceWork": "灼眼的夏娜",
+        "sourceAssetId": "300heroes:bf3e026ad02df6899219c6a6",
+        "sourceSha256": "248031fb3f7f04a7bf39670a3495123973e573ff880721748cd02f8217e7bbe3",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.18f3135c07f3bd9acb02dbc1"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-e008",
+        "name": "火霧戰士 - 夏娜"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "schema": "ggd-seven-audio-dai-batch-validation@1",
+  "baselineCommit": "b4369aad3c3dde9a497315362988094233ffa67a",
+  "sourceWorkflowCommits": [
+    "3a7e4472c9657ab19e3a1415fbc785a7ba59703d"
+  ],
+  "finished": {
+    "independentWeaponComponents": 2,
+    "fullCharacterModels": 0,
+    "nativeAnimations": 0,
+    "proceduralAnimations": 0,
+    "vfx": 0,
+    "gameSoundEffects": 0,
+    "gameVoices": 0,
+    "heroBindings": 0,
+    "backendOptions": 0,
+    "defaultChanges": 0
+  },
+  "indexedExistingAudio": {
+    "sourceRelationships": 4927,
+    "alreadyIndexedLocalPaths": 448,
+    "additionalLocalPaths": 4479,
+    "newAcquisition": false,
+    "gameReady": false
+  },
+  "targetedTests": {
+    "total": 82,
+    "passed": 81,
+    "skipped": 1,
+    "skipReason": "Existing FateUBW backup test requires explicitly configured local receipt/index paths; this invocation did not supply them."
+  },
+  "requiredChecks": [
+    {
+      "command": [
+        "pnpm",
+        "skills:check"
+      ],
+      "exitCode": 1,
+      "seconds": 107.14,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/skills-check.log",
+      "logSha256": "4ab6f6026bbdc756621b114994a361d089bd92d39351e020811135e007a999de",
+      "failureClassification": "pre-existing-project-gate",
+      "reason": "Prior-day message ledger entries remain unmapped."
+    },
+    {
+      "command": [
+        "pnpm",
+        "editor:accept:release"
+      ],
+      "exitCode": 1,
+      "seconds": 42.94,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/editor-accept-release.log",
+      "logSha256": "bbfc44d2906c66a4a57be40642326ef980ff07c09f09d3e8ba26988897abdf43",
+      "failureClassification": "pre-existing-project-gate",
+      "reason": "Existing Skill Forge capability-only acceptance set differs from current 47-skill catalog."
+    },
+    {
+      "command": [
+        "pnpm",
+        "coord:check"
+      ],
+      "exitCode": 1,
+      "seconds": 5.28,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/coord-check.log",
+      "logSha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb",
+      "failureClassification": "pre-existing-project-gate",
+      "reason": "Existing claim.editor-form-receipts has unchanged fingerprint but differs from origin/main."
+    }
+  ],
+  "publication": {
+    "branch": "codex/hero-model-library-options",
+    "pullRequest": "https://github.com/adms/GGD/pull/1152",
+    "merged": false,
+    "deployed": false
+  },
+  "s3": {
+    "audioAudit": {
+      "verified": true,
+      "receiptGitPath": "materials/hero-model-library/priority-evidence/seven-audio-dai-20260911/audio-audit-s3-receipt.json"
+    },
+    "sevenAudio": {
+      "readbackVerified": false,
+      "tracking": "public-source-files.json.pendingUploads",
+      "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+      "archiveSha256": "8840cff37666cb35ed04901be412d5b1c4836ded23993a16168e79ce1066d5fc"
+    },
+    "daiConversionStages": {
+      "readbackVerified": false,
+      "tracking": "public-source-files.json.pendingUploads",
+      "sourceId": "dai-rigid-props-20260911-v1",
+      "archiveSha256": "1d38bc3a7da4168078523bacc6ab61ffbd8023f3b7152783c5794dc6e11755e5"
+    },
+    "publicationEvidence": {
+      "verified": true,
+      "receiptGitPath": "materials/hero-model-library/priority-evidence/seven-audio-dai-20260911/publication-evidence-s3-receipt.json",
+      "receiptSha256": "a1c1ee261d7135da3767c5f79fb7a343ef8a2dda047a5ebb232b5e4d9c0e1f31",
+      "fileCount": 25
+    }
+  },
+  "rawEvidenceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911",
+  "limitations": [
+    "Dai props are a Daz community adaptation, not Infinity Strash native bodies.",
+    "No hero attachment fit or original Daz render equivalence accepted.",
+    "Seven audio source locale is not per-clip speaker/language/event verification.",
+    "Upload completion and branch publication do not prove full remote readback, merge, or deployment."
+  ],
+  "logPins": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/coord-check.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/editor-accept-release.log",
+      "bytes": 3197,
+      "sha256": "bbfc44d2906c66a4a57be40642326ef980ff07c09f09d3e8ba26988897abdf43"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-1.log",
+      "bytes": 89,
+      "sha256": "f27166418d9ce7b7420463a8558f3e797f9dcb996294877c8a78b185b31e31ea"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-2.log",
+      "bytes": 156,
+      "sha256": "d27c4ad0ec187b52947102f436b88feda85564ef4bdb30a511dce8afb866c1d4"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-3.log",
+      "bytes": 100,
+      "sha256": "417a1785f7be3798e668bae4e66f4d0ee0dda2ec4484145e3cdcd45a42627b8f"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-4.log",
+      "bytes": 50,
+      "sha256": "d336ba3953e71804df2bbb147bbad1c6dc1a5e0dbb84940e3b3fbced256c5f86"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-5.log",
+      "bytes": 435,
+      "sha256": "e0af3e280c4e56539caf791495feecdc5ad0c2c47d91cbfd554fd288c8c9ce57"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-6.log",
+      "bytes": 141,
+      "sha256": "d06207a868861ad0006deca976d9782f52e9abc66be0985e69b26607b5224206"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/skills-check.log",
+      "bytes": 40475,
+      "sha256": "4ab6f6026bbdc756621b114994a361d089bd92d39351e020811135e007a999de"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/supplemental-backup-tests-final.log",
+      "bytes": 1030,
+      "sha256": "7e030a1bd8949c4a041c5b897433cc4cbbb755b72c5dd08aa69e9075e73a1189"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/supplemental-backup-tests.log",
+      "bytes": 1030,
+      "sha256": "aa5e631aaa28b4b0d9d34cb9c0af23f2733ce03e9c06f9c0eb64d9e962e40b46"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/targeted-1.log",
+      "bytes": 2594,
+      "sha256": "99cb8c365d8b17d5b447ed52ddd18eca3fea4eae3e8fc91e0b91faebe0ac3689"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/targeted-2.log",
+      "bytes": 1594,
+      "sha256": "d463406faee72497319b8d155a165d488dee7662b2bd030b5b111ee8bb3b6d23"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/targeted-3.log",
+      "bytes": 731,
+      "sha256": "3e3438bffa7e67f75fd7fee0897aaa532de088cf7e3bf94a76e55593791c2c96"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/targeted-4.log",
+      "bytes": 1061,
+      "sha256": "3fce7b455169325081adb66c70c59e95372d47779608a8e5eaebe917a0e43d02"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/targeted-5.log",
+      "bytes": 790,
+      "sha256": "1bbe248e0a7bfd4ce5af87b40d4d491e1c5d8612eea91ba488f591a477e2d4eb"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/targeted-6.log",
+      "bytes": 1542,
+      "sha256": "e15c71ee381fd19078adf7c64a898412fa225828d8926b92c7a22a81a62bad12"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/voice-rebuild.log",
+      "bytes": 332,
+      "sha256": "725684948dc4569df666ffb7f8b6ea7f3e5222d263647bb2d50562b5876e123e"
+    }
+  ],
+  "indexChecks": [
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/inventory.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-1.log",
+      "logSha256": "f27166418d9ce7b7420463a8558f3e797f9dcb996294877c8a78b185b31e31ea"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/build_model_design_backlog.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-2.log",
+      "logSha256": "d27c4ad0ec187b52947102f436b88feda85564ef4bdb30a511dce8afb866c1d4"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/build_palworld_index.py",
+        "--workspace",
+        "..",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-3.log",
+      "logSha256": "417a1785f7be3798e668bae4e66f4d0ee0dda2ec4484145e3cdcd45a42627b8f"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/current_resource_index.py",
+        "--check",
+        "--check-git"
+      ],
+      "exitCode": 0,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-4.log",
+      "logSha256": "d336ba3953e71804df2bbb147bbad1c6dc1a5e0dbb84940e3b3fbced256c5f86"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/build_priority81_handoff.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-5.log",
+      "logSha256": "e0af3e280c4e56539caf791495feecdc5ad0c2c47d91cbfd554fd288c8c9ce57"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/hero-model-library/check-index.py"
+      ],
+      "exitCode": 0,
+      "log": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/seven-audio-dai-publication-20260911/validation/index-check-6.log",
+      "logSha256": "d06207a868861ad0006deca976d9782f52e9abc66be0985e69b26607b5224206"
+    }
+  ],
+  "voiceSummary": {
+    "groups": 976,
+    "audioFiles": 283921,
+    "bytes": 138384323141,
+    "sourceFileRelationshipRows": 283921,
+    "uniqueLocalPaths": 283473,
+    "uniqueSha256Payloads": 251608,
+    "uniqueLocalPathBytes": 137811394425,
+    "missingOrSizeChanged": 0,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "alternateFormatFiles": 168,
+    "prefetchAliases": 47
+  }
+}

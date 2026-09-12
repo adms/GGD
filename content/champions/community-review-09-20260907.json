@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "version.body.4aa18aa4c6b8ec0461050dd115ffd965c8662c57878182fa",
+  "modelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -335,6 +335,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-468771-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.9323d45f0296a46d95b7cb5ea6085878e851f37cd3311541",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.468771",
+      "modelSha256": "9b964de551b341cd4342f87abc0e7938c75d302168f3736a66648f90b1f5e678",
+      "binarySha256": "307c14bec801bf920ceda9962c2e47987277b74f91543d3f17717b37a32f5447",
+      "registeredAt": "2026-09-10T14:45:29.479Z",
+      "source": {
+        "kind": "previous",
+        "character": "赫蘿",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.468771.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f7568368073ada65fac6834932acc02361b3eff9a6804c29",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "f28e667799771669e45ca12e569c193ee06580db2cb497a90c3f96e8cb341413",
+      "binarySha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "registeredAt": "2026-09-10T14:45:29.492Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
+      "label": "赫蘿（論壇模型）",
+      "sourceModelKey": "ou99.468771-standard-v2",
+      "modelSha256": "14ffba3bf5fbbb60876eac8c90a0fda1ed1ab95c02e513e1bbb54df167b5d579",
+      "binarySha256": "5bfc823428d2352a0fbc2c585de6f1a8eb918406556c19883cb22a02870e7223",
+      "registeredAt": "2026-09-10T14:48:47.180Z",
+      "source": {
+        "kind": "exact",
+        "character": "赫蘿",
+        "work": "狼與辛香料",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-468771-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

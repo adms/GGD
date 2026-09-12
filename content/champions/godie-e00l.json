@@ -4,7 +4,7 @@
   "name": "亞瑟王 - Saber",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "imported.herosaber",
+  "modelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -482,5 +482,40 @@
       "rawcode": "A0DZ",
       "name": "20-01 風王結界"
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.herosaber",
+      "modelSha256": "71327f83a12629f61ea8d62fccc64cb12e59fcd86695204bed8be052a8a85e87",
+      "binarySha256": "fdfc941cde9432c19a8046d45b3f4aa0abf0351649ff0f11a267c0ac4a1231eb",
+      "registeredAt": "2026-09-09T07:13:26.294Z",
+      "source": {
+        "kind": "previous",
+        "character": "亞瑟王 - Saber",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herosaber.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.68cfd17a20e43e38be323af5ecc73ff21176d1af2e294bce",
+      "label": "亚瑟王",
+      "sourceModelKey": "community.body.0b0fa08d10dc191af2ecb20cea5baa60a42557f22d528915",
+      "modelSha256": "59c16513ec0fc3f8eb2206ecb07f2f1fa0a75b61079779a4a89b0881c5bc6b8a",
+      "binarySha256": "ada782968f855a1bb061fb26e54b0b2aaf77168222d2e60ab68bf9e886311caa",
+      "registeredAt": "2026-09-09T07:13:26.311Z",
+      "source": {
+        "kind": "exact",
+        "character": "亚瑟王",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:e7ac718fdf90602320f8d391",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

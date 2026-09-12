@@ -1,0 +1,53 @@
+{
+  "schema": "ggd.community-source-final-regeneration-check@1",
+  "reportPath": "/private/tmp/ggd-design-sources-community-final.json",
+  "sha256": "0fe01ca5204b464220fdd35ad8389249d81e5ed795dcaed7fa50976422ded7b4",
+  "summary": {
+    "not-defined": 146,
+    "designed": 46,
+    "identity-review": 247,
+    "characterGroups": 439,
+    "actualModelCandidateFiles": 2339,
+    "missingCandidatePaths": 0,
+    "publicSourcesInspected": 91,
+    "nativeSSBUGroups": 278,
+    "ssbuBlendFiles": 1793,
+    "uniqueExistingModelPaths": 2288,
+    "knownNotDefinedGroups": 146,
+    "historicalMutableManifestMismatchCount": 33
+  },
+  "oldGroups": 438,
+  "newGroups": 439,
+  "removedGroups": [],
+  "previousCandidateEntries": 2338,
+  "removedCandidateEntries": [],
+  "newRows": [
+    {
+      "id": "mediafire-shinypenguin-palworld-daedream:Daedream",
+      "name": "Daedream",
+      "work": "Palworld / 幻獸帕魯",
+      "sourceIds": [
+        "mediafire-shinypenguin-palworld-daedream"
+      ],
+      "designStatus": "identity-review",
+      "identityAmbiguity": [
+        "Explicit acquired source candidate manifest"
+      ]
+    }
+  ],
+  "supplementalDuplicatePaths": [
+    {
+      "scannerGroup": "mediafire-shinypenguin-palworld-daedream:Daedream",
+      "supplementalGroup": "community:palworld-daedream",
+      "candidateId": "mediafire-shinypenguin-palworld-daedream.body",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin/original/daedream.fbx",
+      "sha256": "b5e9cfbd4f35416fa5fb7c51b30627c0a269b77b7e79dac292eef552aa231024",
+      "scannerStatus": "identity-review"
+    }
+  ],
+  "actualPalworldShaMatches": true,
+  "toolSha256": "b83933fb779a7fd41f4c670ff34bb86117d800af200e58f72536514f16d0b709",
+  "commandExit": 0,
+  "issues": [],
+  "noCentralFilesModified": true
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "ggd-source-manifest@1",
+  "sourceId": "tmr-sinbad-baal",
+  "platform": "Nintendo 3DS",
+  "game": "Magi: Aratanaru Sekai",
+  "targetHeroIds": [
+    "b2-sinbad"
+  ],
+  "character": "Sinbad",
+  "form": "Baal Djinn Equip",
+  "authorOrUploader": "Ozci",
+  "sourcePageUrl": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+  "downloadUrl": "https://models.spriters-resource.com/media/assets/306/309579.zip?updated=1755502585",
+  "sourceArchive": {
+    "path": "original/source.zip",
+    "bytes": 468650,
+    "sha256": "cb8600b8fc10b57bb4197ba6f4c74e8fcd23ed609d75f8a8fcdd1ebd446c4e31",
+    "zipCRC": "passed"
+  },
+  "acquisitionThisBatch": "none; existing verified local source reused",
+  "nativeAssetEvidence": {
+    "sourceFile": "original/extracted/Magi_AS_character_SinbadBaalDjinnEquip_DAE/Magi_AS_character_SinbadBaalDjinnEquip_DAE.dae",
+    "sourceFilenameExplicitlyNamesBaalDjinnEquip": true,
+    "visualFormCheck": "Existing source preview and new runtime renders show blue armored Sinbad with headpiece, sword, waist cloth and long tail. No base-form substitution asserted.",
+    "retainedPngFiles": 6,
+    "embeddedReferencedPngFiles": 5,
+    "weightedJoints": 48,
+    "nativeAnimationClips": 0,
+    "nativeAudioFiles": 0,
+    "nativeVfxFiles": 0
+  },
+  "ownerDecision": "Parent reports explicit owner acceptance of Baal Djinn as Sinbad shared normal model; no central default changed by this agent.",
+  "licenseStatus": "Existing source attribution retained; no new license grant inferred."
+}

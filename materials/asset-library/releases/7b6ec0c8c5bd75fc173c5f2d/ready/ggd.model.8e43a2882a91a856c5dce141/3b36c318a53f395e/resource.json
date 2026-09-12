@@ -1,0 +1,53 @@
+{
+  "id": "ggd.model.8e43a2882a91a856c5dce141",
+  "title": "阿薩謝爾（獨立副本／喜羊羊）",
+  "kind": "model-body",
+  "model": "models/community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:azazel",
+        "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+        "glbPath": "assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+        "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+        "bytes": 679728,
+        "documentSha256": "8e43a2882a91a856c5dce141e03b3ed49384468c4e7c06b03b1a133d7a3a9de9",
+        "sourceCharacter": "阿薩謝爾（獨立副本／喜羊羊）",
+        "sourceWork": "喜羊羊與灰太狼",
+        "sourceAssetId": "derivative:azazel",
+        "sourceSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "community-review-32-20260907",
+          "targetName": "阿薩謝爾",
+          "targetWork": "召喚惡魔",
+          "sourceId": "community:community-review-32-20260907",
+          "sourceSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+          "copyMode": "independent-embedded-copy",
+          "changes": "上半身咖啡色、下半身深咖啡色"
+        },
+        "bundleId": "ggd.model.8e43a2882a91a856c5dce141"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-32-20260907",
+        "name": "阿薩謝爾"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

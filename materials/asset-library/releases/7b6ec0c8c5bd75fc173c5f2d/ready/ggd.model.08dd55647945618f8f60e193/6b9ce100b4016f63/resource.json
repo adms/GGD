@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.08dd55647945618f8f60e193",
+  "title": "万年小学生",
+  "kind": "model-body",
+  "model": "models/community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-26-20260907",
+        "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+        "glbPath": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+        "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+        "bytes": 589076,
+        "documentSha256": "08dd55647945618f8f60e19365b89bfa441e32d8420bb110681258a094723a33",
+        "sourceCharacter": "万年小学生",
+        "sourceWork": "名偵探柯南",
+        "sourceAssetId": "300heroes:48546d36bb328cf6b78a6e9b",
+        "sourceSha256": "6fbbe1b54569058b3ca2b17dfdff2217abdb0226f1c8378613476e373e4f095a",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.08dd55647945618f8f60e193"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-26-20260907",
+        "name": "名偵探柯南"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

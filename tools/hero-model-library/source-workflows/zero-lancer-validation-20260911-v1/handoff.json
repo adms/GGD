@@ -1,0 +1,52 @@
+{
+  "sourceId": "gamebanana-zero-lancer-493444",
+  "deliveryId": "zero-lancer-validation-20260911-v1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1",
+  "delivery": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/delivery.json",
+    "sha256": "4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3"
+  },
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/files-sha256.json",
+    "sha256": "ca1e7698c5ee8d42842fced4bd5f110f72341de8517e3080c94a5d6798ee7ba8",
+    "files": 769,
+    "bytes": 78326327
+  },
+  "components": [
+    {
+      "variant": "P1",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+      "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+      "bytes": 336732,
+      "triangles": 4984,
+      "joints": 59,
+      "textureCount": 1
+    },
+    {
+      "variant": "P2",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+      "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+      "bytes": 337856,
+      "triangles": 4984,
+      "joints": 59,
+      "textureCount": 1
+    }
+  ],
+  "acceptance": "independent-static-skinned-components-validated-with-recorded-gaps",
+  "nativeAnimationCount": 0,
+  "completeHeroCount": 0,
+  "runtimeReady": false,
+  "heroIds": [],
+  "sourceRebuild": {
+    "path": "evidence/source-rebuild.json",
+    "sha256": "054db586af3d3cda012a470f92f3f2f13aa5f9c9d42657de3ec48a5175100ca6",
+    "byteIdenticalP1P2": true
+  },
+  "gaps": [
+    "No native animation, morph or particle resources.",
+    "No source PSP/PS2 platform proof or original-game skeleton provenance.",
+    "Exact Unity toon outline/shader parity unverified.",
+    "Native 10-face vertex-normal versus geometric-normal diagnostic retained.",
+    "No action animation playback, GGD hero binding, runtime switching, default selection or deployment."
+  ]
+}

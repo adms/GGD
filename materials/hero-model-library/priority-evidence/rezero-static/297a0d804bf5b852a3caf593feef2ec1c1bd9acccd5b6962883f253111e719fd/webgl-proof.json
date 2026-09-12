@@ -1,0 +1,115 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.7524376611275727,
+      -3.383721214195168e-07,
+      -0.319077033571034
+    ],
+    "max": [
+      0.7524374323533891,
+      1.8000003941494924,
+      0.3190769560032718
+    ],
+    "extent": [
+      1.5048750934809618,
+      1.8000007325216139,
+      0.6381539895743058
+    ]
+  },
+  "geometry": [
+    {
+      "name": "emiliashuiyi renderer",
+      "vertices": 12902,
+      "indices": 54411,
+      "worldBounds": {
+        "min": [
+          -0.7524376611275727,
+          -3.383721214195168e-07,
+          -0.319077033571034
+        ],
+        "max": [
+          0.7524374323533891,
+          1.8000003941494924,
+          0.3190769560032718
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 174,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "emiliashuiyi",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "emiliashuiyi (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 700,
+        "height": 1
+      }
+    },
+    {
+      "name": "emiliashuiyi (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

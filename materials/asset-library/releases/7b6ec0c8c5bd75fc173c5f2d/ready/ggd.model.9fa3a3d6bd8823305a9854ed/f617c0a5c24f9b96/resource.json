@@ -1,0 +1,55 @@
+{
+  "id": "ggd.model.9fa3a3d6bd8823305a9854ed",
+  "title": "波吉（獨立副本／小桐人寵物）",
+  "kind": "model-body",
+  "model": "models/community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "derivative:bojji",
+        "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+        "glbPath": "assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb",
+        "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+        "bytes": 1519620,
+        "documentSha256": "9fa3a3d6bd8823305a9854ed7bdafbf0edac78c67a753e99119a71c177efbfce",
+        "sourceCharacter": "波吉（獨立副本／小桐人寵物）",
+        "sourceWork": "刀劍神域；依檔名與外觀推定",
+        "sourceAssetId": "derivative:bojji",
+        "sourceSha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "bat_run",
+          "attack": "bat_dance1",
+          "cast": "bat_dance2",
+          "hurt": "bat_idle",
+          "death": "bat_dead"
+        },
+        "limitations": [
+          "Pet dance clips adapt attack/cast; no native combat or separate hurt reaction.",
+          "Visual proxy only; character-specific remodeling and composite bodies are not included.",
+          "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "derivation": {
+          "heroId": "b2-bojji",
+          "targetName": "波吉",
+          "targetWork": "國王排名",
+          "sourceId": "pet:tiny-kirito",
+          "sourceSha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
+          "copyMode": "independent-embedded-copy",
+          "changes": "小桐人上半身藍色、下半身白色"
+        },
+        "bundleId": "ggd.model.9fa3a3d6bd8823305a9854ed"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-bojji",
+        "name": "波吉"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

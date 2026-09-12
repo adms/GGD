@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-local-audio-delivery-validation@1",
+  "deliveries": [
+    {
+      "sourceId": "parallel-ps-jumpforce-local-10",
+      "packageCount": 10,
+      "audioFiles": 2612,
+      "reportPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/deliveries/ggd-parallel-ps-frozen-10-20260910T115413Z.json",
+      "reportSha256": "beb2d3487233d1f29bb2ab92704f71f412dcb32b8b96697077ac79599f20ab05",
+      "s3ReadbackVerified": false,
+      "localUseAvailable": true
+    },
+    {
+      "sourceId": "parallel-voice-melee-local-29",
+      "packageCount": 29,
+      "audioFiles": 950,
+      "reportPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-remaining/deliveries/local-audio-delivery-20260910T115417111035Z.json",
+      "reportSha256": "09d4caa234bce3421244a4e89701cd1b87fc36ece34cbee0146a8bddc3ffb8db",
+      "s3ReadbackVerified": false,
+      "localUseAvailable": true
+    }
+  ],
+  "localUseRequiresS3": false
+}

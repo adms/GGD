@@ -1,0 +1,74 @@
+{
+  "schema": "ggd-kaiji-release-validation@1",
+  "contentVersion": "cv_258401b6b5a6",
+  "productionDeployed": false,
+  "fullReleaseChecksPassed": false,
+  "checks": [
+    {
+      "command": "pnpm content:build",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm assets:manifest",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/hero-model-library -p test_*.py",
+      "exitCode": 0,
+      "tests": 65,
+      "passed": 64,
+      "skipped": 1,
+      "skip": "Optional real TAR fixture: independently run with fixture by source agent and passed; see fateubw reader-fixed-verification.json."
+    },
+    {
+      "command": "pnpm exec vitest run apps/content-api/src/resizeImage.node.test.ts packages/shared/src/content/modelUpload/heroModel.test.ts apps/content-api/src/modelVersions.test.ts --pool=forks --maxWorkers=1 --minWorkers=1 --no-cache",
+      "exitCode": 0,
+      "tests": 17
+    },
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "initialFailure": "assets-manifest stale, fixed by generator",
+      "afterFixFailure": "prior-day message ledger unpaired or missing entries",
+      "evidence": "checks/skills-check-after-assets.log"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 1,
+      "failure": "existing Skill Forge capability-only catalog mismatches",
+      "evidence": "checks/editor-accept-release.log"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 1,
+      "failure": "existing claim.editor-form-receipts repeats merged fingerprint; asset-library claim passes",
+      "evidence": "checks/coord-check.log"
+    }
+  ],
+  "requiredThreeChecksStartedConcurrently": true,
+  "kaiji": {
+    "sharedPrepareAndVerify": true,
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "webglSamples": 36,
+    "nativeAnimations": 0,
+    "proceduralAnimations": 6,
+    "independentSourceAndRuntimeByteAudit": "independent-check.json",
+    "all81VersionVerification": "final-integrity.json",
+    "preservedPreviousKaijiCandidates": 3
+  },
+  "replayFix": {
+    "issue": "freeze rebuild followed by readback did not restore registered delivery metadata",
+    "resolution": "readback now restores verified active-model and registration fields after verifying all81; readback rerun passed"
+  },
+  "sourceArchiveBackups": {
+    "kaijiSource": "source-s3-backup.json",
+    "kaijiConversions": "conversion-s3-backup.json",
+    "fateubw": "../fateubw-community/source-s3-backup.json"
+  },
+  "limitations": [
+    "No new native voice, VFX or original-game motions for Kaiji.",
+    "Whole-game gameplay and deployment remain pending.",
+    "Global model census original source findings are retained, not reclassified by this addition."
+  ]
+}

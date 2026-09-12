@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "法刺",
-  "modelKey": "version.body.9573f2c4c672bb297a38c5fa2e05eb4962f9edb450f048f1",
+  "modelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -380,6 +380,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-472112-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.28f1ec9f19e95808015c6545b9fc1ce938dad71499e82c1f",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.472112",
+      "modelSha256": "df761e7eb54474493e713c1b4a0c563ddffcb381238dcf1999f867c4ca495ac7",
+      "binarySha256": "3d5c9fb99d0a3be253d3c413ba18b875136307183cc0eb75008375ab793ac35c",
+      "registeredAt": "2026-09-10T14:45:30.486Z",
+      "source": {
+        "kind": "previous",
+        "character": "殺老師",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.472112.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b5d663466cbefc8b01e2b04157a000918abbe1e1854960ec",
+      "label": "GGD 黃色觸手教師替身",
+      "sourceModelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+      "modelSha256": "73f7f7b0af6dc593d5f512ef8d3c3d9ccf32c0abdec7c1bf90f0d884b1528ae5",
+      "binarySha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+      "registeredAt": "2026-09-10T14:45:30.489Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "GGD 黃色觸手教師替身",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "generated:ggd-cartoon-proxy-yellow-teacher",
+        "tier": "original",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
+      "label": "殺老師（論壇模型）",
+      "sourceModelKey": "ou99.472112-standard-v2",
+      "modelSha256": "acedb2b5126e022bed5ed31d2213c6ff54bd981ea791faf0861ebf9334bc84ca",
+      "binarySha256": "b33f0742fb340cb674f22770e4325dfb723b63c0298e38a74ec485506673c46e",
+      "registeredAt": "2026-09-10T14:48:47.798Z",
+      "source": {
+        "kind": "exact",
+        "character": "殺老師",
+        "work": "暗殺教室",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-472112-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

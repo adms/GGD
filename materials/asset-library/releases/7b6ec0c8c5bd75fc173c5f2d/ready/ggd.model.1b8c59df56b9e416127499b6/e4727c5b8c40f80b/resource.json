@@ -1,0 +1,73 @@
+{
+  "id": "ggd.model.1b8c59df56b9e416127499b6",
+  "title": "喜羊羊",
+  "kind": "model-body",
+  "model": "models/community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-32-20260907",
+        "modelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+        "glbPath": "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+        "bytes": 553876,
+        "documentSha256": "1b8c59df56b9e416127499b653213a1716213af39552b3e9eac80abd1f06b89d",
+        "sourceCharacter": "喜羊羊",
+        "sourceWork": "喜羊羊與灰太狼",
+        "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "sourceSha256": "18377a5e6980c67367d59a615a3964df438feafded6ad862afc9ae7bcf8e2851",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.1b8c59df56b9e416127499b6"
+      },
+      {
+        "id": "community:community-review-37-20260907",
+        "modelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+        "glbPath": "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+        "bytes": 553876,
+        "documentSha256": "1b8c59df56b9e416127499b653213a1716213af39552b3e9eac80abd1f06b89d",
+        "sourceCharacter": "喜羊羊",
+        "sourceWork": "喜羊羊與灰太狼",
+        "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "sourceSha256": "18377a5e6980c67367d59a615a3964df438feafded6ad862afc9ae7bcf8e2851",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.1b8c59df56b9e416127499b6"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-32-20260907",
+        "name": "阿薩謝爾"
+      },
+      {
+        "id": "community-review-37-20260907",
+        "name": "吉伊卡哇"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

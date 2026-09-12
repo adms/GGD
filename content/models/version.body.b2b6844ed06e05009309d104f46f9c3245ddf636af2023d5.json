@@ -1,0 +1,20 @@
+{
+  "id": "version.body.b2b6844ed06e05009309d104f46f9c3245ddf636af2023d5",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "warwick_idle_v1",
+    "run": "warwick_run",
+    "attack": "warwick_attack1",
+    "cast": "warwick_spell1",
+    "hurt": "warwick_idle_v1",
+    "death": "warwick_death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

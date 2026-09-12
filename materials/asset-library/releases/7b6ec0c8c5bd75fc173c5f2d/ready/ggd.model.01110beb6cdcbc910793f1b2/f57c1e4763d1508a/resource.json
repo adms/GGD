@@ -1,0 +1,73 @@
+{
+  "id": "ggd.model.01110beb6cdcbc910793f1b2",
+  "title": "埼玉",
+  "kind": "model-body",
+  "model": "models/community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:256",
+        "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+        "glbPath": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+        "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+        "bytes": 852356,
+        "documentSha256": "01110beb6cdcbc910793f1b26658abaac1834e54af4dce74251db256f35ccc2b",
+        "sourceCharacter": "埼玉",
+        "sourceWork": "一拳超人 ONE-PUNCH MAN",
+        "sourceAssetId": "300heroes:8ab9713ac0d4058884378c3a",
+        "sourceSha256": "8647e1cbacfb2e9eb8ad87798a3098b91cc8484f05b6939235bd6bdc4cc80614",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.01110beb6cdcbc910793f1b2"
+      },
+      {
+        "id": "community:community-review-25-20260907",
+        "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+        "glbPath": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+        "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+        "bytes": 852356,
+        "documentSha256": "01110beb6cdcbc910793f1b26658abaac1834e54af4dce74251db256f35ccc2b",
+        "sourceCharacter": "埼玉",
+        "sourceWork": "一拳超人 ONE-PUNCH MAN",
+        "sourceAssetId": "300heroes:8ab9713ac0d4058884378c3a",
+        "sourceSha256": "8647e1cbacfb2e9eb8ad87798a3098b91cc8484f05b6939235bd6bdc4cc80614",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.01110beb6cdcbc910793f1b2"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-25-20260907",
+        "name": "一拳超人"
+      },
+      {
+        "id": "b2-luckyman",
+        "name": "幸運超人"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+  "modelKey": "version.body.1ad5f12b5d0bb1dd56fa32dc62c0b3e276b535ede1416373",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -323,5 +323,60 @@
     "gun"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-missfortune.webp"
+  "icon": "assets/icons/champions/lol-missfortune.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.9b0127aa10fd9e70d9e92c8151cf30ef2bafb3afdd61bcdf",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+      "modelSha256": "320d42ca7ab74cdd03dfb75668f83b96a1440eccebaa98883ee5e097d5055b1e",
+      "binarySha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+      "registeredAt": "2026-09-10T14:45:44.344Z",
+      "source": {
+        "kind": "previous",
+        "character": "好運姐",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.451b06a6cd6c757a02d0720e7b02a22fc0430c2eb90fed57",
+      "label": "好運姐（LOL 原生模型）",
+      "sourceModelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+      "modelSha256": "bca4df01b0c372bfb1ab53def868e1d9a430245ffe76bbf15be06020baa62b0f",
+      "binarySha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+      "registeredAt": "2026-09-10T14:45:44.358Z",
+      "source": {
+        "kind": "exact",
+        "character": "好運姐",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-missfortune.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.1ad5f12b5d0bb1dd56fa32dc62c0b3e276b535ede1416373",
+      "label": "好運姐",
+      "sourceModelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+      "modelSha256": "4dcbcd7cddd7158cfc2a134b01fbbbd3564f911141d8c9665afd12160e3a09ef",
+      "binarySha256": "8b81e5d5676ba4a01d2bfe814adf68a2827f46d93bf982487cdcc7587fd5425c",
+      "registeredAt": "2026-09-10T14:45:44.448Z",
+      "source": {
+        "kind": "exact",
+        "character": "好運姐",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:missfortune",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

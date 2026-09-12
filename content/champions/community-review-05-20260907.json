@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "version.body.29236b04b74aab09f6a72a3b70e82d3a49f4b308fddae01a",
+  "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -388,6 +388,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-287871-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.ca49559d6f92e4001caa12f9f4b9a84d02aa7b155d4476f7",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.287871",
+      "modelSha256": "eb42b676464398dccbf02385ced686f6eab6c2bad5d1eadef9650fddc8848f73",
+      "binarySha256": "7a5f9e627a13c041459d9b94d75bd2533b83226b12498915528b2ffb0e977bae",
+      "registeredAt": "2026-09-10T14:45:28.347Z",
+      "source": {
+        "kind": "previous",
+        "character": "洛克人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.287871.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b6382b383fc533970b07ad38b8a5477108de7d2346db87c8",
+      "label": "刑天",
+      "sourceModelKey": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+      "modelSha256": "1a2720d34b1c707b3d3bf898e10e24b6c9fbb368182821b03522a8fdbb7bc1e2",
+      "binarySha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "registeredAt": "2026-09-10T14:45:28.375Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "刑天",
+        "work": "鎧甲勇士刑天",
+        "library": "300heroes",
+        "reference": "300heroes:ad8377d942a4909779a1b20c",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+      "label": "洛克人（論壇模型）",
+      "sourceModelKey": "ou99.287871-standard",
+      "modelSha256": "d70b5698be825c5626e6c152473484a4a9903a62cdad19e34d609984d9dcd558",
+      "binarySha256": "6de65aa1d5e73074c35f10c0d1d536b5aae74b21d9b7ad9102f7cc6513343b9d",
+      "registeredAt": "2026-09-10T14:45:28.426Z",
+      "source": {
+        "kind": "exact",
+        "character": "洛克人",
+        "work": "Mega Man",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-287871-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

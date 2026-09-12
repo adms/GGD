@@ -1,0 +1,51 @@
+{
+  "id": "ggd.model.615b6b76c4800c5ae0363493",
+  "title": "司波达也",
+  "kind": "model-body",
+  "model": "models/community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:209",
+        "modelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+        "glbPath": "assets/models/community/ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b.glb",
+        "sha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+        "bytes": 783968,
+        "documentSha256": "615b6b76c4800c5ae0363493e2464cfaa4079481494653ac9653b0b52c95f34a",
+        "sourceCharacter": "司波达也",
+        "sourceWork": "魔法科高中的劣等生",
+        "sourceAssetId": "300heroes:6fe63c2b60adef813eea9cf2",
+        "sourceSha256": "d4ddb3b3daeb56c6647cc6e20a6b173c8e72c776e53ac2485f55007d5e1504a5",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.615b6b76c4800c5ae0363493"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-makoto",
+        "name": "深澄真"
+      },
+      {
+        "id": "b2-matthias",
+        "name": "馬提亞斯"
+      },
+      {
+        "id": "b2-klaus",
+        "name": "克勞斯"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

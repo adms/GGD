@@ -1,0 +1,138 @@
+{
+  "schema": "ggd-parallel-delivery-validation@1",
+  "jumpForce": {
+    "format": "Ogg Vorbis",
+    "fileCount": 701,
+    "bytes": 21635828,
+    "durationSeconds": 1182.9555349999996,
+    "errorCount": 0,
+    "sourceCategoryCounts": {
+      "sfx": 30,
+      "voice": 671
+    },
+    "modelCount": 0,
+    "skeletonCount": 0,
+    "animationCount": 0,
+    "vfxCount": 0,
+    "synthesisReady": false
+  },
+  "jstars": {
+    "bytes": 3164342,
+    "sha256": "90662836c3c3ac2ca78d8d108f0c45f2ac78bfd84514bb5c64b2433a3ecea806",
+    "archiveVerified": true,
+    "files": [
+      {
+        "path": "extracted/SAMPLE PAK FILES/character_model_009_i.pak",
+        "bytes": 956000,
+        "sha256": "143dcd6b72ff53e81c2497ab85901f14b051bbe0324a9b2a9ccb1e0fde9aad22",
+        "magicHex": "24434d50000e964b00000000000000000015cf00000e964b"
+      },
+      {
+        "path": "extracted/SAMPLE PAK FILES/character_model_009_m.pak",
+        "bytes": 287408,
+        "sha256": "804288516207ee498fed227ddfa0ce1f6ad86754588730b562642760a39f3b43",
+        "magicHex": "24434d50000462980000000000000000000a404000046298"
+      },
+      {
+        "path": "extracted/SAMPLE PAK FILES/character_model_009_v.pak",
+        "bytes": 2330800,
+        "sha256": "27775f7255fbc8d7603ad144e2b73b727770e822d329cc09cd879cf1be44d088",
+        "magicHex": "24434d500023909300000000000000000040ae8000239093"
+      }
+    ],
+    "characterIdentity": "unreviewed"
+  },
+  "ultimate14": {
+    "bodyModelFileCount": 0,
+    "nativeMotionFileCount": 435,
+    "uniqueNativeMotionFiles": 176,
+    "modelPartFileCount": 33,
+    "uniqueModelPartFiles": 6,
+    "nativeAudioBankFileCount": 56
+  },
+  "allAcquiredProgramsExecuted": false,
+  "ggdRuntimeReady": false,
+  "nsSources": [
+    {
+      "id": "parallel-ns-ultimate14",
+      "bodyModelFileCount": 0,
+      "modelPartFileCount": 33,
+      "nativeMotionFileCount": 435,
+      "uniqueNativeMotionFiles": 176,
+      "nativeAudioBankFileCount": 56,
+      "nativeFormatValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
+        "sha256": "f4ce659af8e256eb70ce5b0632e8a224c78e4319b67d20d2e239d6b3f10896f7",
+        "formatHeaderChecks": 666,
+        "formatHeaderErrors": [],
+        "nativeAudioBankFiles": 56,
+        "nativeAudioEntryCount": 152,
+        "uniqueNativeAudioBanks": 7
+      },
+      "limitations": [
+        "33 model components are weapon/projectile parts, not character body models or 33 heroes.",
+        "435 NUANMB files include reused colors and potentially skeletal/material/visibility tracks; unique file hashes are reported separately.",
+        "56 .patch3audio files are native NUS3 banks, not 56 playable clips or confirmed voices. No audio decoding or voice review was performed.",
+        "NRO/LC code and UI resources retained but never executed. Original game/base skeleton and conversion may still be required."
+      ]
+    },
+    {
+      "id": "parallel-ns-bowser-big-blast",
+      "bodyModelFileCount": 0,
+      "modelPartFileCount": 0,
+      "nativeMotionFileCount": 38,
+      "uniqueNativeMotionFiles": 5,
+      "nativeAudioBankFileCount": 0,
+      "nativeFormatValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/native-format-validation.json",
+        "sha256": "c758a065849519d68a1e8d4a3c1e523ce983090f250df74fcaba4f3826399c37",
+        "formatHeaderChecks": 38,
+        "formatHeaderErrors": [],
+        "nativeAudioBankFiles": 0,
+        "nativeAudioEntryCount": 0,
+        "uniqueNativeAudioBanks": 0
+      },
+      "limitations": [
+        "Animation-only release packages: no model body, skeleton or playable audio included.",
+        "All author-packaged color folders and both release variants preserved; duplicate animation hashes are not separate unique actions.",
+        "The separate 741 MB expanded full repository archive timed out and is retained only as a partial file. Its 17 Blender documents and 17 backups are NOT acquired. Both small release packages are complete."
+      ]
+    },
+    {
+      "id": "parallel-ns-alucard-ssbu",
+      "bodyModelFileCount": 1,
+      "modelPartFileCount": 5,
+      "nativeMotionFileCount": 112,
+      "uniqueNativeMotionFiles": 105,
+      "nativeAudioBankFileCount": 3,
+      "nativeFormatValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/native-format-validation.json",
+        "sha256": "8f5fe84d806d457b070296622a412ded724382125d51ea51515c9337843a13c6",
+        "formatHeaderChecks": 147,
+        "formatHeaderErrors": [],
+        "nativeAudioBankFiles": 3,
+        "nativeAudioEntryCount": 134,
+        "uniqueNativeAudioBanks": 3
+      },
+      "limitations": [
+        "Alucard is the Castlevania son of Dracula, not the Hellsing character. Do not map by name alone.",
+        "Native files are retained as a mod reserve; GGD conversion, visual acceptance, motion retargeting and default selection are not complete.",
+        "Archive plugin and scripts were retained, not executed. Native audio banks do not imply speaker/language validation.",
+        "3 NUS3 audio payload banks contain 134 indexed entries, plus 3 companion bank metadata files and 1 standalone IDSP. No decoded WAV was generated."
+      ]
+    }
+  ],
+  "partialDownloadsNotAcquired": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/original/bowser-e92f22cba88347c041df6004d54c63193abe10ef.partial-attempt1.zip",
+      "bytes": 12993993,
+      "sha256": "c0146eea293527a710665b14c125ad71783a96d78b66c2f6fc0df2e5174bd0ef",
+      "status": "download-timeout-exit-28",
+      "countedAsAcquired": false,
+      "expectedExpandedBytes": 741003114,
+      "sourceUrl": "https://github.com/CSharpM7/bowser/tree/e92f22cba88347c041df6004d54c63193abe10ef",
+      "downloadUrl": "https://github.com/CSharpM7/bowser/archive/e92f22cba88347c041df6004d54c63193abe10ef.zip",
+      "error": "curl timed out after 298180 ms; no ZIP extraction attempted, source Blender models remain unacquired."
+    }
+  ]
+}

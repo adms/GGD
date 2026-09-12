@@ -1,0 +1,220 @@
+{
+  "schema": "ggd.rezero-static-component-normalization@1",
+  "candidateId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+  "sourceId": "thunderstore-rezero",
+  "sourceVersion": "0.1.1",
+  "sourceRootName": "ramPrefab",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/source-conversion/ram/body.glb",
+    "bytes": 1342988,
+    "sha256": "4750cee3eb4d38330cf83552e764d7cefdb7c04ee64c0be1cbae549283ac27e3",
+    "conversionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/source-conversion/ram/conversion.json",
+    "sourceBundle": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero/bundles/ReZeroModelReplacements.mbundle.bundle",
+      "sha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88"
+    }
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+    "bytes": 1180240,
+    "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+    "triangles": 18454,
+    "drawPrimitives": 1,
+    "skins": 1,
+    "skinnedPrimitives": 1,
+    "joints": [
+      166
+    ],
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 38881,
+        "sha256": "6434ca07390b3730d46405c65cc0353896c58f068031021d7322a07773bf1352"
+      }
+    ],
+    "clips": []
+  },
+  "officialNormalization": {
+    "drawCalls": {
+      "before": 1,
+      "after": 1
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [],
+    "resizedTextures": [
+      [
+        2048,
+        256
+      ]
+    ],
+    "texturesOverCap": [],
+    "changed": true
+  },
+  "accessorPreservation": [
+    {
+      "index": 0,
+      "componentType": 5126,
+      "type": "VEC3",
+      "count": 15253,
+      "bytes": 183036,
+      "sha256": "36ca8a863dff733b4c139a72f77ff75d220942bb4e79c7a19e47b996e50cceb7",
+      "unchanged": true
+    },
+    {
+      "index": 1,
+      "componentType": 5126,
+      "type": "VEC3",
+      "count": 15253,
+      "bytes": 183036,
+      "sha256": "1061eb09000dca129813eaf875262ee6542f0d5591a225f5a34e081ebc69c126",
+      "unchanged": true
+    },
+    {
+      "index": 2,
+      "componentType": 5123,
+      "type": "VEC4",
+      "count": 15253,
+      "bytes": 122024,
+      "sha256": "74b242d0659b40529b223403f5f1a726419d98f70a17245febbc8142127baa0b",
+      "unchanged": true
+    },
+    {
+      "index": 3,
+      "componentType": 5126,
+      "type": "VEC4",
+      "count": 15253,
+      "bytes": 244048,
+      "sha256": "839cbbc0078cee815e46552bd67448d2399140ccae91fec79feffc8694532a5f",
+      "unchanged": true
+    },
+    {
+      "index": 4,
+      "componentType": 5126,
+      "type": "VEC2",
+      "count": 15253,
+      "bytes": 122024,
+      "sha256": "2f80304a6249b2ca845c9028664acb893edabf1b1dd2f806d0a10a5fec148687",
+      "unchanged": true
+    },
+    {
+      "index": 5,
+      "componentType": 5125,
+      "type": "SCALAR",
+      "count": 55362,
+      "bytes": 221448,
+      "sha256": "005ea4f58985645ff05f6001c3fc8ce05d1122cf475342d55049e3c496a1ef06",
+      "unchanged": true
+    },
+    {
+      "index": 6,
+      "componentType": 5126,
+      "type": "MAT4",
+      "count": 166,
+      "bytes": 10624,
+      "sha256": "ec030b854943eb354ce57702faf7c6c167df85edda5f250d0c5e542aca4801c9",
+      "unchanged": true
+    }
+  ],
+  "allAccessorBytesPreserved": true,
+  "jsonComparison": "JSON serialization equality; source negative zero may canonicalize to zero",
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 5,
+    "valueCount": 185692
+  },
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "budget": {
+    "errors": [],
+    "warnings": [
+      "三角面 18454 高於警戒值 16000，送審時需檢查演出負載。"
+    ]
+  },
+  "limits": {
+    "upload": {
+      "fileBytes": 33554432,
+      "jsonBytes": 4194304,
+      "jsonValues": 500000,
+      "depth": 64,
+      "nodes": 1024,
+      "clips": 256,
+      "accessors": 32768,
+      "accessorValues": 8000000,
+      "channels": 32768,
+      "clipChannels": 2048,
+      "clipSeconds": 300
+    },
+    "hero": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "c68ec3f4defa87ce5ca570ce7a3eca304825f2cba397c0c143f12a146ccc072c"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "7b404bcd2f050dbe6fc78c0d06d29fe2999d08d198179d2619839da8cc0303c9"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/inspect.ts",
+      "sha256": "95f15b3098d4baaad45e282f927978476b685a1a2116dc032838eb7c8215e0ad"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/glb.ts",
+      "sha256": "daaa10f7e0d9caa47fbb394bb920af9ad6bca8aa53dcc5f7f96eddc4a816598a"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "be545dddd055d1674bfec7123ce923951105170984a511d4f467474b2791b38c"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/budget.ts",
+      "sha256": "9601a77659df93610d8c047f811b0cf065f5ebf935aab399e7d7eccf8635e25f"
+    },
+    {
+      "path": "apps/content-api/src/resizeImage.node.ts",
+      "sha256": "a14c240d751e0c2b32f2d359e51000222b90f33f5d4719854785cd9d906dbc57"
+    }
+  ],
+  "ffmpegVersion": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "contractCommit": "1c0c6119cb3d3f112f5b49d6d7d4a61bfc79a7ef",
+  "status": {
+    "converted": true,
+    "structuralValidationPassed": true,
+    "visualValidationPassed": false,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "limitations": [
+    "The 2048px source texture is retained separately; the GGD candidate uses a 256px Lanczos PNG.",
+    "The source bundle contains no AnimationClip objects and the candidate has no clips.",
+    "Unity custom shader behavior is represented only by portable base-color PBR material data.",
+    "Hero binding, backend dropdown registration, runtime switching and deployment were not performed."
+  ]
+}

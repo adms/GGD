@@ -1,0 +1,73 @@
+{
+  "id": "ggd.model.70385886335b0f9fcc5549ef",
+  "title": "玉藻前",
+  "kind": "model-body",
+  "model": "models/community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-09-20260907",
+        "modelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+        "glbPath": "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+        "bytes": 1275656,
+        "documentSha256": "70385886335b0f9fcc5549ef3f1b37032675e54eb48f55819051282db2cd109d",
+        "sourceCharacter": "玉藻前",
+        "sourceWork": "Fate/EXTRA 系列",
+        "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+        "sourceSha256": "de4deeb6145f67a679cb616cff29b8607ef69151341a0bc4a26e86c379f43c22",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.70385886335b0f9fcc5549ef"
+      },
+      {
+        "id": "community:community-review-30-20260907",
+        "modelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+        "glbPath": "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+        "bytes": 1275656,
+        "documentSha256": "70385886335b0f9fcc5549ef3f1b37032675e54eb48f55819051282db2cd109d",
+        "sourceCharacter": "玉藻前",
+        "sourceWork": "Fate/EXTRA 系列",
+        "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+        "sourceSha256": "de4deeb6145f67a679cb616cff29b8607ef69151341a0bc4a26e86c379f43c22",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_a",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.70385886335b0f9fcc5549ef"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-09-20260907",
+        "name": "赫蘿"
+      },
+      {
+        "id": "community-review-30-20260907",
+        "name": "尼古貓貓"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

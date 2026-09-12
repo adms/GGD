@@ -1,3 +1,5 @@
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 /** Offline library preparation -> the same six-state model contract used by community uploads. */
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, statSync, existsSync } from "node:fs";
@@ -34,16 +36,19 @@ const output = resolve(values.out);
 assert.ok(!existsSync(output), "Choose a new output directory; previous versions are immutable");
 const temporary = mkdtempSync(join(tmpdir(), "ggd-library-model-finalize-"));
 try {
-  const original = readGlb(preparation.output.path);
+  const canonical = join(temporary, "opaque-alpha.glb");
+  const materialNormalization = JSON.parse(execFileSync("bash", [fileURLToPath(new URL("../../scripts/python-pillow.sh", import.meta.url)), fileURLToPath(new URL("./normalize_opaque_alpha.py", import.meta.url)), preparation.output.path, canonical], { encoding: "utf8" }));
+  preparation.materialNormalization = materialNormalization;
+  const original = readGlb(canonical);
   const chosen = [...new Set(Object.values(names))];
   const bytes = pruneAnimations(original, chosen);
   const candidate = join(temporary, "trimmed.glb");
   writeFileSync(candidate, bytes);
-  assert.equal(pruneDiff(preparation.output.path, candidate, chosen), null, "Animation pruning changed geometry, rig, materials or retained motion");
+  assert.equal(pruneDiff(canonical, candidate, chosen), null, "Animation pruning changed geometry, rig, materials or retained motion");
   const inspection = await inspectModelUpload(bytes);
   assert.equal(new Set(original.json.animations.map((clip: { name: string }) => clip.name)).size, original.json.animations.length, "Source clip names must be unique");
   const selections = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, inspection.clips.findIndex((clip) => clip.name === names[state])])) as Record<(typeof HERO_MODEL_STATES)[number], number>;
-  const body = await prepareUploadedHeroModel(bytes, selections);
+  const body = await prepareUploadedHeroModel(bytes, selections, preparation.yawOffsetDeg ?? 0);
   const verified = await verifyUploadedHeroModel(body.model, body.bytes);
   assert.deepEqual(verified.document, body.document);
   const receipt = {

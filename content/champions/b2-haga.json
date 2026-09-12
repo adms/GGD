@@ -352,7 +352,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-haga",
-  "modelKey": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
+  "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
   "name": "羽賀",
   "origin": "軟輔",
   "passiveAbility": "b2-haga.passive",
@@ -398,6 +398,77 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-495015-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.2226d94021dd15a4fb18d9e3f3793f1f20f546b4d88f403b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.495015",
+      "modelSha256": "3f801131b205b73083e3c263deac7f419fe31606c9715fcdae7d90033b764216",
+      "binarySha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3",
+      "registeredAt": "2026-09-10T14:45:38.603Z",
+      "source": {
+        "kind": "previous",
+        "character": "羽賀",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.495015.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc",
+      "label": "海星动画人（論壇相似模型）",
+      "sourceModelKey": "ou99.495015-standard",
+      "modelSha256": "21aa3826a40a9f8c90adc3a397b6db801227615cb834321dd0072c18a619a9f9",
+      "binarySha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+      "registeredAt": "2026-09-10T14:45:38.610Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:38.714Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "118e1b83730308721690a1aea000bc533f538ab63c4733a697b05a04a9ed4a44",
+      "binarySha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "registeredAt": "2026-09-10T15:37:39.574Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

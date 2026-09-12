@@ -394,7 +394,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-uncle",
-  "modelKey": "version.body.7135f29cae6eb26851a90d407801e0b7dc27671ca3b08909",
+  "modelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
   "name": "異世界舅舅",
   "origin": "法師",
   "passiveAbility": "b2-uncle.passive",
@@ -440,6 +440,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-454482-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.287ebb2bdd01052cd0faf8a27dafd0e9fe63623172b35bb9",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.454482",
+      "modelSha256": "744435cf208795ad276a54404e9a2e7a45770903690e990db9948eb40f768825",
+      "binarySha256": "ecc7c47a3ef75efa05bc9946d94d1ba2160b8b26e578a34cb9e6bdf11fc47bc1",
+      "registeredAt": "2026-09-10T14:45:35.477Z",
+      "source": {
+        "kind": "previous",
+        "character": "異世界舅舅",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.454482.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:35.497Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
+      "label": "光刀女剑二次元（論壇相似模型）",
+      "sourceModelKey": "ou99.454482-standard-v2",
+      "modelSha256": "48e3c0ecd91d5d12d0dcf269766b3db61efd9a7b39f77f495274414c80da900c",
+      "binarySha256": "86e0439dd73b2129c082567670f25587e0a958c57aef7958aebb5804ff00c016",
+      "registeredAt": "2026-09-10T14:48:51.342Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "光刀女剑二次元",
+        "work": "來源作品待核；論壇標題：光刀女剑二次元",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-454482-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

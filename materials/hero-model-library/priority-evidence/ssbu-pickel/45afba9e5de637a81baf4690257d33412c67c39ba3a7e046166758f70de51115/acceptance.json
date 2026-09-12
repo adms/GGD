@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "45afba9e5de637a81baf4690257d33412c67c39ba3a7e046166758f70de51115",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "ssbu-pickel-steve-c00-static-skinned-v1",
+      "variant": "c00",
+      "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Steve/Alex identity.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+        "Sixty-three hidden facial and costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+        "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    }
+  ]
+}

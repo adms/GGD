@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "法刺",
-  "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
+  "modelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -362,6 +362,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-497211-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.6fb9f6d8bbe5c0bbc7bd7f373a3b8591e3e27b7111d68b3b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.497211",
+      "modelSha256": "82fddcdc9a5c15764edb826fa69c4f4593eb1258709b9b8f1e9c8e20cecd16f0",
+      "binarySha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
+      "registeredAt": "2026-09-10T14:45:28.766Z",
+      "source": {
+        "kind": "previous",
+        "character": "西索",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.497211.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.4f73010d41762bbd09643127b948ef8688b79097a51fbd2b",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "04d86d34220dfcc63a74b79e6e29c2993e869054aca6d5c3e2e1ea07ad52eac3",
+      "binarySha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "registeredAt": "2026-09-10T14:45:28.774Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "8535c15a6cff530cad1b93cd634b04394e829ad346ed539dd72e712ce49636d4",
+      "binarySha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+      "registeredAt": "2026-09-10T14:48:46.653Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

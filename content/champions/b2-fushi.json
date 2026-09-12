@@ -426,7 +426,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-fushi",
-  "modelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
+  "modelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
   "name": "不死",
   "origin": "硬輔",
   "passiveAbility": "b2-fushi.passive",
@@ -472,6 +472,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-467227-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.dca02a145aeb23ef6fc2d02e14c45d70322d0f7617cec679",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.467227",
+      "modelSha256": "c89b2697bd14832e6fc42770b3bccda5e1b7b69f94d784207d580cebc77d8ce6",
+      "binarySha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612",
+      "registeredAt": "2026-09-10T14:45:41.345Z",
+      "source": {
+        "kind": "previous",
+        "character": "不死",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.467227.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
+      "label": "天使可爱小女孩派蒙（論壇相似模型）",
+      "sourceModelKey": "ou99.467227-standard",
+      "modelSha256": "a2d68e9705525f1d1bf43a6c092c7bf3125ae95705a1cd299735fd487dfa1fe7",
+      "binarySha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564",
+      "registeredAt": "2026-09-10T14:45:41.368Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "天使可爱小女孩派蒙",
+        "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.83a74a3e67615f3bd45b10b8cb101cedf53f48279ee413e1",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "576eb8b2260d049a406c88461750f6e344c1b1ed58ff4cba4058f6d82d24c5ab",
+      "binarySha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+      "registeredAt": "2026-09-10T14:45:41.442Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -343,7 +343,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-shadow",
-  "modelKey": "version.body.fefbd90d0746bfe2b0ec1eaa34346fd20f90fe551bb57f07",
+  "modelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
   "name": "闇影",
   "origin": "法刺",
   "passiveAbility": "b2-shadow.passive",
@@ -389,6 +389,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-481732-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.3ccd432e8428c1979753a484b9ed24f7e257a42fc5ca2756",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.481732",
+      "modelSha256": "9685e66b4791ee37fc38ac65df72716db81bdcd49dc1a9663219a970cedc686a",
+      "binarySha256": "91752f887b7604ff8c93d1dbe88497037193d0962209aa749bb4fc8516055f33",
+      "registeredAt": "2026-09-10T14:45:35.871Z",
+      "source": {
+        "kind": "previous",
+        "character": "闇影",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.481732.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a5b79ca7632788eb9e9c32f54b5c3c8fa3b6e06d2e865f1a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4823275304f57f71ffdb0a7cfdd26c821e2849b62f85fe8aeac4a7d0a2806f3d",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-10T14:45:35.880Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
+      "label": "202511z13（論壇相似模型）",
+      "sourceModelKey": "ou99.481732-standard-v2",
+      "modelSha256": "80a7994df1f89b3d0cf6ad54bd0794954bc52eb9159d2d8082d4c61decf37946",
+      "binarySha256": "46ad647216f840ee30776bfd1765434aac0f6add82e5ca6011112b51c449ca3c",
+      "registeredAt": "2026-09-10T14:48:51.784Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "202511z13",
+        "work": "來源作品待核；論壇標題：202511z13",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-481732-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

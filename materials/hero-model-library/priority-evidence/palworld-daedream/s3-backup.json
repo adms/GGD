@@ -1,0 +1,245 @@
+{
+  "schema": "ggd.immutable-source-backup@1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-shinypenguin",
+  "archivePath": "/private/tmp/ggd-palworld-s3/d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b.tar.gz",
+  "archiveBytes": 12387183,
+  "archiveSha256": "d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b",
+  "memberCount": 18,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1152,
+      "sha256": "19af21b589dd9172e8728d5acad5c7723ff714396e023b791502f3bdb0d7f80f"
+    },
+    {
+      "path": "acquisition.json",
+      "bytes": 1757,
+      "sha256": "a1e4fa067384d9856cd677fb30fb5ee35e678e3f236e0044619f97a624e45995"
+    },
+    {
+      "path": "analysis/static-analysis.json",
+      "bytes": 93620,
+      "sha256": "0c1b8795e4aa259fd796c629302e7bb51781cbcdb422e4d59bb024a33b692356"
+    },
+    {
+      "path": "audio-index.json",
+      "bytes": 278,
+      "sha256": "775340f4388b82d721011f7b873e4198b7ebb831464290f96142fa2a6538628e"
+    },
+    {
+      "path": "evidence/assimp-info.txt",
+      "bytes": 13661,
+      "sha256": "1aa97941b65b2f36f8c9fe647d5e48168ac5b4f90d4c41fc70147c1476514207"
+    },
+    {
+      "path": "evidence/daedream-download-page.html",
+      "bytes": 332145,
+      "sha256": "e0ed80122df07c70fcce912d8f552cecd4d6d57dde602951bbb76803265d1797"
+    },
+    {
+      "path": "evidence/public-folder-page.html",
+      "bytes": 160446,
+      "sha256": "a5bd9224ef37119ad6f326128d6cace03549416a7eaa0704766950e39eac0b73"
+    },
+    {
+      "path": "evidence/source-notes.json",
+      "bytes": 1693,
+      "sha256": "df1c29580dfa896a09823335a88087e021281901a0815dcf6bb43833ea77a909"
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Body_B.png",
+      "bytes": 1122784,
+      "sha256": "80135fffb304d5ac569e2d3036a3566a0e01bdb10535b2d3dff1ae2985dba4c8"
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Body_M.png",
+      "bytes": 1048087,
+      "sha256": "2691b6cd6dcc51990d7e8c69a7c0855752e8289f6cf71f514836f076f9a9fc23"
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Body_N.png",
+      "bytes": 3698948,
+      "sha256": "7e3f78259cbabff13cca3c7e96383b5d2c27f44025126591e50f63b2703fdb09"
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Eye_B.png",
+      "bytes": 37159,
+      "sha256": "938e8a9a99d453741ec5d5c552136ded654fe16d397c4d1f8aaf027340fa87e8"
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Mouth_B.png",
+      "bytes": 35699,
+      "sha256": "80fe57f74dcc79df3f07cd9e3b480325299f8c5c721806565e0d9f6a46da055a"
+    },
+    {
+      "path": "files-sha256.json",
+      "bytes": 2966,
+      "sha256": "08987353d88be3061dd66d9780629963cff5b5f4579b1be7145ab444c8ffaf44"
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 20456,
+      "sha256": "e577749e292c20dae7f48eac33937ab4cf92160a1c2d213709da22caaaa589e8"
+    },
+    {
+      "path": "original/daedream.fbx",
+      "bytes": 6421980,
+      "sha256": "b5e9cfbd4f35416fa5fb7c51b30627c0a269b77b7e79dac292eef552aa231024"
+    },
+    {
+      "path": "source-entry.json",
+      "bytes": 23513,
+      "sha256": "37ed633d4a2200e170d052882f9228c7d77f81156c298fe1f2adef159d5a31b0"
+    },
+    {
+      "path": "tools/static-analysis.py",
+      "bytes": 8865,
+      "sha256": "99b5014a9660cee1daeaeb9480ffaf9767666c93a184cb716fc0121b21e59225"
+    }
+  ],
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-shinypenguin-20260911/d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b.tar.gz",
+  "identityVerified": true,
+  "expectedRoleSubstring": "assumed-role/vibe-coding-s3-role/",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true,
+  "frozen": true,
+  "status": "s3-full-get-and-every-member-verified",
+  "uploaded": true,
+  "fullGetReadback": true,
+  "verifiedAt": "2026-09-10T17:33:27.638555+00:00",
+  "readbackPath": "/private/tmp/ggd-palworld-s3/full-get.tar.gz",
+  "readbackArchiveSha256": "d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b",
+  "allMembersVerified": true,
+  "memberChecks": [
+    {
+      "path": "README.md",
+      "archiveBytes": 1152,
+      "archiveSha256": "19af21b589dd9172e8728d5acad5c7723ff714396e023b791502f3bdb0d7f80f",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "acquisition.json",
+      "archiveBytes": 1757,
+      "archiveSha256": "a1e4fa067384d9856cd677fb30fb5ee35e678e3f236e0044619f97a624e45995",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/static-analysis.json",
+      "archiveBytes": 93620,
+      "archiveSha256": "0c1b8795e4aa259fd796c629302e7bb51781cbcdb422e4d59bb024a33b692356",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "audio-index.json",
+      "archiveBytes": 278,
+      "archiveSha256": "775340f4388b82d721011f7b873e4198b7ebb831464290f96142fa2a6538628e",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/assimp-info.txt",
+      "archiveBytes": 13661,
+      "archiveSha256": "1aa97941b65b2f36f8c9fe647d5e48168ac5b4f90d4c41fc70147c1476514207",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/daedream-download-page.html",
+      "archiveBytes": 332145,
+      "archiveSha256": "e0ed80122df07c70fcce912d8f552cecd4d6d57dde602951bbb76803265d1797",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/public-folder-page.html",
+      "archiveBytes": 160446,
+      "archiveSha256": "a5bd9224ef37119ad6f326128d6cace03549416a7eaa0704766950e39eac0b73",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/source-notes.json",
+      "archiveBytes": 1693,
+      "archiveSha256": "df1c29580dfa896a09823335a88087e021281901a0815dcf6bb43833ea77a909",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Body_B.png",
+      "archiveBytes": 1122784,
+      "archiveSha256": "80135fffb304d5ac569e2d3036a3566a0e01bdb10535b2d3dff1ae2985dba4c8",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Body_M.png",
+      "archiveBytes": 1048087,
+      "archiveSha256": "2691b6cd6dcc51990d7e8c69a7c0855752e8289f6cf71f514836f076f9a9fc23",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Body_N.png",
+      "archiveBytes": 3698948,
+      "archiveSha256": "7e3f78259cbabff13cca3c7e96383b5d2c27f44025126591e50f63b2703fdb09",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Eye_B.png",
+      "archiveBytes": 37159,
+      "archiveSha256": "938e8a9a99d453741ec5d5c552136ded654fe16d397c4d1f8aaf027340fa87e8",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_DreamDemon_Mouth_B.png",
+      "archiveBytes": 35699,
+      "archiveSha256": "80fe57f74dcc79df3f07cd9e3b480325299f8c5c721806565e0d9f6a46da055a",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "files-sha256.json",
+      "archiveBytes": 2966,
+      "archiveSha256": "08987353d88be3061dd66d9780629963cff5b5f4579b1be7145ab444c8ffaf44",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "model-candidates.json",
+      "archiveBytes": 20456,
+      "archiveSha256": "e577749e292c20dae7f48eac33937ab4cf92160a1c2d213709da22caaaa589e8",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/daedream.fbx",
+      "archiveBytes": 6421980,
+      "archiveSha256": "b5e9cfbd4f35416fa5fb7c51b30627c0a269b77b7e79dac292eef552aa231024",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "source-entry.json",
+      "archiveBytes": 23513,
+      "archiveSha256": "37ed633d4a2200e170d052882f9228c7d77f81156c298fe1f2adef159d5a31b0",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "tools/static-analysis.py",
+      "archiveBytes": 8865,
+      "archiveSha256": "99b5014a9660cee1daeaeb9480ffaf9767666c93a184cb716fc0121b21e59225",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    }
+  ],
+  "localUnchangedBeforeAfter": true,
+  "deterministicSecondArchiveSha256": "d783b9d4dd487219b4abbbbcf70c77bd674f7964dd65766cecacd70d50bce48b",
+  "excludedFiles": []
+}

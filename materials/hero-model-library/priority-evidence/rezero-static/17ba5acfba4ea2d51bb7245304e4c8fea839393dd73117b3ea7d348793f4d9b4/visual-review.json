@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+  "modelSha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Rem head, torso, arms, hands, legs and feet.",
+    "Hair, face and costume materials remain visible with no detached primary geometry, opaque face card or bind-pose collapse.",
+    "The corrected Z-up to Y-up output stands upright at 1.8 metres.",
+    "Review covers a static bind pose because source and output contain no animation clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/front.png",
+      "bytes": 138049,
+      "sha256": "2d33109e26707e18023da483009be6e669968907a343d634bdb1245da9542b22"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/back.png",
+      "bytes": 140205,
+      "sha256": "82961d2ad2788faab7f30e4a1c6721f7cb58842b36e42293051f3412eef96768"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/isometric.png",
+      "bytes": 127930,
+      "sha256": "3b575992388cfd237633d08847734da7b4239645145b74cb58e83ebc2707202a"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/contact-sheet.png",
+      "bytes": 273387,
+      "sha256": "90d06c9058bacc505cbe75dcd9462ee7352da873a790a95c7caa37168cab56b3"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/webgl-proof.json",
+    "bytes": 2396,
+    "sha256": "efe540f0b76ef3ccdb6b27f163c16e4c3c5220bbf6ed05bb737dee0a7fb0ef24"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

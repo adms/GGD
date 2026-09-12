@@ -1,0 +1,70 @@
+{
+  "schema": "ggd.acquired-model-source@1",
+  "sourceId": "kof-xv-mai-sfmlab-lordscrub-v1",
+  "character": "不知火舞 / Mai Shiranui",
+  "sourceGame": "The King of Fighters XV",
+  "sourceGamePlatform": "not specified by publisher",
+  "artifactTarget": "Source Filmmaker",
+  "acquisitionChannel": "author public model library (SFMLab)",
+  "author": "lordscrub",
+  "originalPortAuthor": "EnlightendShadow",
+  "sourceUrl": "https://sfmlab.com/project/96ca7f93-ac69-4a4e-a8ec-1f6617a7c40c/",
+  "upstreamUrl": "https://www.deviantart.com/enlightendshadow/art/KOFXV-Mai-EnlightendShadow-907248683",
+  "classification": "original-game model converted/modified for SFM; not unmodified raw game export",
+  "status": "complete-acquired-extracted",
+  "modelCandidates": [
+    {
+      "id": "kof-xv-mai-lordscrub-sfm",
+      "parts": [
+        "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.mdl",
+        "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.mdl"
+      ],
+      "nativeFormat": "Source MDL49/VVD/VTX",
+      "bodyBones": 152,
+      "headBones": 80,
+      "bodyVerticesLOD0": 42059,
+      "headVerticesLOD0": 26034,
+      "runtimeSelectable": false,
+      "standardConversion": "pending root workflow",
+      "defaultChange": false
+    }
+  ],
+  "nativeAnimations": {
+    "count": 0,
+    "singleFramePoses": 2,
+    "evidence": "both MDL embedded @idle animation descriptors are 1 frame at 30 FPS"
+  },
+  "vfx": {
+    "count": 0
+  },
+  "sfx": {
+    "count": 0
+  },
+  "voice": {
+    "count": 0
+  },
+  "audioFileIndex": null,
+  "textures": {
+    "pngFiles": 9,
+    "vtfFiles": 9,
+    "note": "PNG and VTF may encode matching textures; 18 files are not 18 distinct materials"
+  },
+  "limitations": [
+    "Publisher says fan is absent.",
+    "Publisher says back-of-outfit flower pattern is missing in the SFM setup.",
+    "Publisher warns jaw is two parts.",
+    "No native gameplay animations, VFX, SFX or voice included.",
+    "No GGD runtime/visual acceptance performed."
+  ],
+  "rights": {
+    "publisherLabel": "CC0 selected on SFMLab; site warns license unverified and fan-art rights may apply",
+    "originalOwner": "SNK",
+    "clearance": "not inferred"
+  },
+  "validationReport": "extraction-validation.json",
+  "headerAnalysis": "source-motion-mesh-header-analysis.json",
+  "retrievalNotes": [
+    "download-attempt-1 captured a normal mirror landing HTML, relocated as mirror-landing-1.html; it is not an archive.",
+    "download-attempt-2 obtained actual ZIP, expected size 90764853, libarchive whole-file read succeeded."
+  ]
+}

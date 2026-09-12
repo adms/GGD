@@ -1,0 +1,199 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "ou99:313646",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_313646.glb",
+      "bytes": 3331596,
+      "sha256": "7635b5493735a7d7c420cfb1eb8b630b2b097d86b3961314cb96e4d72b145722"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.313646/converted/body.glb",
+      "bytes": 3409576,
+      "sha256": "e655e95e7e49242a74cdabaceff025d5027f19acdc065ebdd9f62928492e0c7b"
+    },
+    "stateClips": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "death": "Death",
+      "hurt": "Stand ready"
+    },
+    "yawOffsetDeg": 0,
+    "nativeAnimation": true,
+    "nativeClipProof": "../control/standardization.json",
+    "limitations": [
+      "Merged transparent primitives can alter per-primitive depth-sort granularity; no triangles or alpha pixels discarded.",
+      "Only existing clipMap-referenced native clips are in runtime; all source clips retained in original/source.glb.",
+      "No animation channel was removed or resampled."
+    ]
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123",
+    "byteSize": 1182776,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "hurt": "Stand ready",
+      "death": "Death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "ou99.313646-standard-v2",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+    "scale": 1,
+    "collisionRadius": 0.55,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "hurt": "Stand ready",
+      "death": "Death"
+    }
+  },
+  "uploadedDocument": {
+    "id": "community.body.8deb094a131ad95af1cfcb289fec40a844d5a1b4a4ab0259",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/a34297acc17dabb0809c627f82d7e7c8df2b9f2cf0326fae32e6a635d3144123.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack 1",
+      "cast": "Spell one",
+      "hurt": "Stand ready",
+      "death": "Death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "selectedClips": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell one",
+    "death": "Death",
+    "hurt": "Stand ready"
+  },
+  "metrics": {
+    "triangles": 2267,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 320329,
+        "sha256": "92578a71e208731d364cc8ee4331e2f472f82e918313f1cc1de631ff668d8c47"
+      }
+    ]
+  },
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "Stand",
+      "duration": 2,
+      "channels": 91
+    },
+    {
+      "index": 1,
+      "name": "Walk",
+      "duration": 0.800000011920929,
+      "channels": 91
+    },
+    {
+      "index": 2,
+      "name": "Attack 1",
+      "duration": 1.3339999914169312,
+      "channels": 91
+    },
+    {
+      "index": 3,
+      "name": "Spell one",
+      "duration": 0.16699999570846558,
+      "channels": 91
+    },
+    {
+      "index": 4,
+      "name": "Stand ready",
+      "duration": 1,
+      "channels": 91
+    },
+    {
+      "index": 5,
+      "name": "Death",
+      "duration": 3.2339999675750732,
+      "channels": 91
+    }
+  ],
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "ACCESSOR_INDEX_TRIANGLE_DEGENERATE",
+          "message": "Indices accessor contains 2 degenerate triangles (out of 2267).",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/indices"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "ggd-w3x-import",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 976444
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 6,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 6736,
+      "totalTriangleCount": 2267,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "sharedPrepareAndVerify": true,
+    "originalModelBindingPreservedExceptIdAndPath": true,
+    "nativeMotionNotResampled": true,
+    "visualAcceptance": "pending"
+  }
+}

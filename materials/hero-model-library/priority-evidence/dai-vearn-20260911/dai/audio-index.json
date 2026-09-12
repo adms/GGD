@@ -1,0 +1,15 @@
+{
+  "schema": "ggd.dai-source-audio-index.v1",
+  "sourceId": "patreon-shinteo-dai-daz-v2",
+  "newAudioFiles": [],
+  "newAudioCount": 0,
+  "nativeAudioBanks": 0,
+  "existingSeparateAudio": {
+    "sourceId": "parallel-ps-jumpforce-audio",
+    "groupId": "parallel-ps-jumpforce-audio:JForce_Dai",
+    "fileCount": 261,
+    "newThisAcquisition": false,
+    "indexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+  },
+  "note": "No audio in this ZIP. Existing Jump Force audio is not counted as newly downloaded."
+}

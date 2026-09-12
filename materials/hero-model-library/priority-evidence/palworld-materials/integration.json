@@ -1,0 +1,823 @@
+{
+  "schema": "ggd-palworld-material-integration@1",
+  "sourceInputPins": [
+    {
+      "path": "materials/hero-model-library/download-sources.json",
+      "sha256": "7bc152e1d0d620b902760848c9ac0566dc963c902791b991f087a5b14ac8e762"
+    },
+    {
+      "path": "materials/hero-model-library/public-source-files.json",
+      "sha256": "54cae9aa7cc920600fe7f057472fa6d69524de58e6e4daabcffe414fdce0e74b"
+    },
+    {
+      "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
+      "sha256": "71595463751f9ae26875f08051fcad4c7eb8fc600c94d4b54ca0e8c4bae63cf4"
+    }
+  ],
+  "sourceReviewPath": "/private/tmp/ggd-palworld-material-integration-review-b5fd4fd0b.json",
+  "sourceReviewSha256": "fe3e2d0aa5ea9c5bd622c516f36482acf2b5c7a386e33d4565e1ee211d8028cb",
+  "newCandidates": [
+    {
+      "id": "opgg-palworld-jetragon.material-bound-native-res-v1",
+      "candidateId": "opgg-palworld-jetragon.material-bound-native-res-v1",
+      "label": "空渦龍 / Jetragon／原解析度材質版／29動作",
+      "character": "空渦龍 / Jetragon",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-native-res.glb",
+      "bytes": 11266728,
+      "sha256": "f3e0253139c6840a91a9ae15c5296861b7dfffad83790df93777749a8c4e126a",
+      "format": "glb",
+      "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-jetragon",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "boneCount": 75,
+      "nativeAnimationCount": 29,
+      "animationClipCount": 29,
+      "uniqueAnimationContentCount": 28,
+      "staticPoseClipCount": 0,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Carrying",
+        "Carrying_Start",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_LeftDown",
+        "GetUp_RightDown",
+        "Idle",
+        "JumpBeam_End",
+        "JumpBeam_Loop",
+        "JumpBeam_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "Run_Riding",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Spa",
+        "Sprint",
+        "Walk",
+        "Walk_Riding"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-jetragon-opgg-material-bound-v1",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-materials-20260911/f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5.tar.gz",
+      "s3ArchiveMember": "models/jetragon-materials-native-res.glb",
+      "limitations": [
+        "原生29條目／28種不同內容；未提供Death與六態映射。",
+        "次表面散射與眼睛／晶體透明深度細節仍與原作著色器有差異。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json"
+    },
+    {
+      "id": "opgg-palworld-jetragon.material-bound-256-v1",
+      "candidateId": "opgg-palworld-jetragon.material-bound-256-v1",
+      "label": "空渦龍 / Jetragon／256px材質元件／29動作",
+      "character": "空渦龍 / Jetragon",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+      "bytes": 4297580,
+      "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+      "format": "glb",
+      "readiness": "material-bound-component-pending-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-jetragon",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "boneCount": 75,
+      "nativeAnimationCount": 29,
+      "animationClipCount": 29,
+      "uniqueAnimationContentCount": 28,
+      "staticPoseClipCount": 0,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Carrying",
+        "Carrying_Start",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_LeftDown",
+        "GetUp_RightDown",
+        "Idle",
+        "JumpBeam_End",
+        "JumpBeam_Loop",
+        "JumpBeam_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "Run_Riding",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Spa",
+        "Sprint",
+        "Walk",
+        "Walk_Riding"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-jetragon-opgg-material-bound-v1",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-materials-20260911/f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5.tar.gz",
+      "s3ArchiveMember": "models/jetragon-materials-256.glb",
+      "limitations": [
+        "原生29條目／28種不同內容；未提供Death與六態映射。",
+        "次表面散射與眼睛／晶體透明深度細節仍與原作著色器有差異。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
+      "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb"
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.full58",
+      "candidateId": "opgg-palworld-astralym-2026081102.full58",
+      "label": "枯星龍／原解析度材質版／完整58動作",
+      "character": "枯星龍",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+      "bytes": 25503732,
+      "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf",
+      "format": "glb",
+      "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "boneCount": 145,
+      "nativeAnimationCount": 57,
+      "animationClipCount": 58,
+      "uniqueAnimationContentCount": 58,
+      "staticPoseClipCount": 1,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Damage",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "HaloBeam_End",
+        "HaloBeam_End_Ring",
+        "HaloBeam_Loop",
+        "HaloBeam_Loop_Ring",
+        "HaloBeam_Start",
+        "HaloBeam_Start_Ring",
+        "HaloCutter",
+        "HaloCutter_End_Ring",
+        "HaloCutter_Loop_Ring",
+        "HaloCutter_Start_Ring",
+        "Idle",
+        "Idle_Ring",
+        "LaserGliding_End",
+        "LaserGliding_End_Ring",
+        "LaserGliding_Loop",
+        "LaserGliding_Loop_Ring",
+        "LaserGliding_Start",
+        "LaserGliding_Start_Ring",
+        "PaldiumCannon_Attack",
+        "PaldiumCannon_Attack_Loop",
+        "PaldiumCannon_Attack_Loop_Ring",
+        "PaldiumCannon_Attack_Ring",
+        "PaldiumCannon_End",
+        "PaldiumCannon_End_Ring",
+        "PaldiumCannon_Start",
+        "PaldiumCannon_Start_Loop",
+        "PaldiumCannon_Start_Loop_Ring",
+        "PaldiumCannon_Start_Ring",
+        "PaldiumExplosion_Cancel",
+        "PaldiumExplosion_Cancel_Ring",
+        "PaldiumExplosion_End",
+        "PaldiumExplosion_End_Ring",
+        "PaldiumExplosion_Loop",
+        "PaldiumExplosion_Loop_Ring",
+        "PaldiumExplosion_Start",
+        "PaldiumExplosion_Start_Ring",
+        "PaldiumRain_End",
+        "PaldiumRain_Loop",
+        "PaldiumRain_Start",
+        "PaldiumShot_End",
+        "PaldiumShot_End_Ring",
+        "PaldiumShot_Loop",
+        "PaldiumShot_Loop_Ring",
+        "PaldiumShot_Start",
+        "PaldiumShot_Start_Ring",
+        "Supernova_End",
+        "Supernova_End_Ring",
+        "Supernova_Loop",
+        "Supernova_Loop_Ring",
+        "Supernova_Start",
+        "Supernova_Start_Ring",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "s3ArchiveMember": "palworld-astralym-materials-20260911/astralym-material-bound.glb",
+      "limitations": [
+        "256px元件只含Idle／Walk；完整58條目另存，含57段變動與1個固定姿勢。",
+        "23928面、435動畫通道接近限制；眼睛透明、塗層與原作著色仍待驗收。",
+        "未提供Death及六態映射。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json"
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-hd",
+      "candidateId": "opgg-palworld-astralym-2026081102.idle-walk-hd",
+      "label": "枯星龍／原解析度材質版／待機與行走",
+      "character": "枯星龍",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk/astralym-idle-walk.glb",
+      "bytes": 21162960,
+      "sha256": "4ee29eb0d345df2a843c5981a4bc26596610c0676327fecf30cc217d50b19b16",
+      "format": "glb",
+      "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "boneCount": 145,
+      "nativeAnimationCount": 2,
+      "animationClipCount": 2,
+      "uniqueAnimationContentCount": 2,
+      "staticPoseClipCount": 0,
+      "animationScope": "native-subset-Idle-Walk",
+      "animationNames": [
+        "Idle",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "s3ArchiveMember": "palworld-astralym-materials-20260911/idle-walk/astralym-idle-walk.glb",
+      "limitations": [
+        "256px元件只含Idle／Walk；完整58條目另存，含57段變動與1個固定姿勢。",
+        "23928面、435動畫通道接近限制；眼睛透明、塗層與原作著色仍待驗收。",
+        "未提供Death及六態映射。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json"
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "candidateId": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "label": "枯星龍／256px材質元件／待機與行走",
+      "character": "枯星龍",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+      "bytes": 13224512,
+      "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09",
+      "format": "glb",
+      "readiness": "material-bound-component-pending-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "boneCount": 145,
+      "nativeAnimationCount": 2,
+      "animationClipCount": 2,
+      "uniqueAnimationContentCount": 2,
+      "staticPoseClipCount": 0,
+      "animationScope": "native-subset-Idle-Walk",
+      "animationNames": [
+        "Idle",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "s3ArchiveMember": "palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+      "limitations": [
+        "256px元件只含Idle／Walk；完整58條目另存，含57段變動與1個固定姿勢。",
+        "23928面、435動畫通道接近限制；眼睛透明、塗層與原作著色仍待驗收。",
+        "未提供Death及六態映射。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
+      "gitPath": "content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb"
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-v1",
+      "candidateId": "palworld-cattiva-opgg-materials-v1",
+      "label": "搗蛋貓／原解析度材質版／33動作",
+      "character": "搗蛋貓",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1/result/body.glb",
+      "bytes": 16640188,
+      "sha256": "f1c7ddd235164ac83dd9eb48021cb76137292acf52f91473734be3e50bfb1934",
+      "format": "glb",
+      "readiness": "material-bound-reserve-pending-ggd-limits-and-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "palworld-cattiva-opgg",
+      "sourceUrl": "https://op.gg/palworld/pals/cattiva",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "boneCount": 43,
+      "nativeAnimationCount": 33,
+      "animationClipCount": 33,
+      "uniqueAnimationContentCount": 33,
+      "staticPoseClipCount": 0,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Architecture",
+        "Carrying",
+        "Carrying_Start",
+        "CommonWork",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_FrontDown",
+        "Gunner",
+        "Idle",
+        "Idle_Swim",
+        "Jail",
+        "JumpEnd",
+        "JumpLoop",
+        "Mining",
+        "NekoPunch_End",
+        "NekoPunch_Loop",
+        "NekoPunch_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Transport",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-palworld-cattiva-opgg-materials-20260911-v1",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-20260911-v1/4716aea7a2de5db0cb31a0cf042ad3a72499a1b7d58bbcc89aae017daa4f828b.tar.gz",
+      "s3ArchiveMember": "palworld-cattiva-opgg-materials-20260911-v1/result/body.glb",
+      "limitations": [
+        "保留原生33動作；未提供Death及六態映射。",
+        "眼嘴透明、深度偏移與互動表情UV尚未完全對應原作。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json"
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-256-v1",
+      "candidateId": "palworld-cattiva-opgg-materials-256-v1",
+      "label": "搗蛋貓／256px材質元件／33動作",
+      "character": "搗蛋貓",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+      "bytes": 2148052,
+      "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+      "format": "glb",
+      "readiness": "material-bound-component-pending-hero-binding",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "palworld-cattiva-opgg",
+      "sourceUrl": "https://op.gg/palworld/pals/cattiva",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "boneCount": 43,
+      "nativeAnimationCount": 33,
+      "animationClipCount": 33,
+      "uniqueAnimationContentCount": 33,
+      "staticPoseClipCount": 0,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Architecture",
+        "Carrying",
+        "Carrying_Start",
+        "CommonWork",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_FrontDown",
+        "Gunner",
+        "Idle",
+        "Idle_Swim",
+        "Jail",
+        "JumpEnd",
+        "JumpLoop",
+        "Mining",
+        "NekoPunch_End",
+        "NekoPunch_Loop",
+        "NekoPunch_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Transport",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "backupArchiveId": "conversion-palworld-cattiva-opgg-materials-256-20260911-v1",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-256-20260911-v1/61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c.tar.gz",
+      "s3ArchiveMember": "palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+      "limitations": [
+        "保留原生33動作；未提供Death及六態映射。",
+        "眼嘴透明、深度偏移與互動表情UV尚未完全對應原作。"
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
+      "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb"
+    }
+  ],
+  "archives": [
+    {
+      "id": "conversion-jetragon-opgg-material-bound-v1",
+      "localPath": "GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1",
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/jetragon-opgg-material-bound-v1/source.tar.gz",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-materials-20260911/f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5.tar.gz",
+      "bytes": 43958020,
+      "sha256": "f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/jetragon-opgg-material-bound-v1/readback.tar.gz",
+      "resourceRole": "model-conversion-backup"
+    },
+    {
+      "id": "conversion-palworld-astralym-materials-20260911",
+      "localPath": "GGD-Asset-Library/conversions/palworld-astralym-materials-20260911",
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/palworld-astralym-materials-20260911/source.tar.gz",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "bytes": 56052298,
+      "sha256": "f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "palworld-astralym-materials-20260911",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/palworld-astralym-materials-20260911/readback.tar.gz",
+      "resourceRole": "model-conversion-backup"
+    },
+    {
+      "id": "conversion-palworld-cattiva-opgg-materials-20260911-v1",
+      "localPath": "GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1",
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/palworld-cattiva-opgg-materials-20260911-v1/source.tar.gz",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-20260911-v1/4716aea7a2de5db0cb31a0cf042ad3a72499a1b7d58bbcc89aae017daa4f828b.tar.gz",
+      "bytes": 59324636,
+      "sha256": "4716aea7a2de5db0cb31a0cf042ad3a72499a1b7d58bbcc89aae017daa4f828b",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "palworld-cattiva-opgg-materials-20260911-v1",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/palworld-cattiva-opgg-materials-20260911-v1/readback.tar.gz",
+      "resourceRole": "model-conversion-backup"
+    },
+    {
+      "id": "conversion-palworld-cattiva-opgg-materials-256-20260911-v1",
+      "localPath": "GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1",
+      "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/palworld-cattiva-opgg-materials-256-20260911-v1/source.tar.gz",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-256-20260911-v1/61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c.tar.gz",
+      "bytes": 24237852,
+      "sha256": "61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "palworld-cattiva-opgg-materials-256-20260911-v1",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-materials-integrated-20260911/palworld-cattiva-opgg-materials-256-20260911-v1/readback.tar.gz",
+      "resourceRole": "model-conversion-backup"
+    }
+  ],
+  "gitCopies": [
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/backups/jetragon-opgg-material-bound-v1.json",
+      "sha256": "c899b9d30640b48040cc1e1a423b537f8659b2b0a469f357e6b79f0a30ea05de",
+      "bytes": 77796
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/README.md",
+      "sha256": "f22bfabdc8dec60b94a00bb2dab71ac873a1d2e82ad11ab10d418878912b2928",
+      "bytes": 5405
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/jetragon-opgg-material-bound-v1/files-sha256.json",
+      "sha256": "82c38b6bd80cfe536a5bbb8c00b68912f19780e5741fba2459bbda5e4d002f74",
+      "bytes": 29277
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/bind_materials.py",
+      "sha256": "3699266f1bdb1412af3cb50cdff08651d9697978dc534740ce51dc43752c42fe",
+      "bytes": 10800
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/check_ggd.mts",
+      "sha256": "5f3a73a979decf9e2e3132bf5f48d037b1e5af181bfae2ce8b564e94cb473dee",
+      "bytes": 2607
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/check_khronos.mjs",
+      "sha256": "56f693db801919da46923077ed8f51a582e307184b654e241562ca8696a2b0df",
+      "bytes": 991
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/generate_delivery.py",
+      "sha256": "4ffdb86fa642929903682f3b249ef6870aed3353fa49fc12dc2b8b8d2db1a767",
+      "bytes": 6670
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render-idle.mjs",
+      "sha256": "70768b83c27b3fa550029d1bacedb475c8337e0ba047e59a021b4cf1c15a3acf",
+      "bytes": 5458
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render-idle.py",
+      "sha256": "93b2f3b9f5c550ca90a5796005308c90a811e01ab588c6bb50bb40a5e934d45e",
+      "bytes": 3383
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render.mjs",
+      "sha256": "d99d804811bc45bea7db928f81926eddb3f7bcbe0717cb767613f1417c637956",
+      "bytes": 5414
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render.py",
+      "sha256": "93b2f3b9f5c550ca90a5796005308c90a811e01ab588c6bb50bb40a5e934d45e",
+      "bytes": 3383
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/verify_preservation.py",
+      "sha256": "41bc102447cec116ede858f71c2685f0088949554cfaa9f2f3d8151a446f629e",
+      "bytes": 2908
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/backups/palworld-astralym-materials-20260911.json",
+      "sha256": "a385286d405ba8f2d2caa8e1c401fa8a8d91314ebc6aeb601fa9681048cc35e9",
+      "bytes": 2293
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/README.md",
+      "sha256": "fcdaf7b4be943aee26c593840bb3cf5e958edee9ad4118c9607164fe1cd32812",
+      "bytes": 3367
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-astralym-materials-20260911/conversion-receipt.json",
+      "sha256": "3fa6bd72328ef8d8a033d2c1b5697c99714aab3451449b149ac98e9bbecd1792",
+      "bytes": 3523
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-astralym-materials-20260911/file-manifest.json",
+      "sha256": "eba999010a2e2dd704f30b7d0a1272336d89fd05d8b5c938f2a8b69ba84c5409",
+      "bytes": 11126
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-astralym-materials-20260911/model-candidates.json",
+      "sha256": "b27ffb22ccd5ce84f1e2cb4d04820cd045345f6a6aa0f0e1c95a7fb3f7ba56da",
+      "bytes": 5408
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/bind_materials.py",
+      "sha256": "613422a3dc80e83fd3a61a9f5c08e8b2df0f1f4e31ecd264c2319c11749dc3a9",
+      "bytes": 7753
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/bundle-render.mjs",
+      "sha256": "3bb0a20759125bcca5bda8042162f4eb715f64762e9a516d66977cac909044e8",
+      "bytes": 769
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/finalize_delivery.py",
+      "sha256": "0c578144fe6398c4a92bf0d693cd3e9de6b2e0c263dd5f45ef5d56d7033b2c97",
+      "bytes": 6189
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/freeze-intake.py",
+      "sha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c",
+      "bytes": 2576
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/make_idle_walk.py",
+      "sha256": "ec345a18f684ee540ce6a0f2ff97b169ff32266411ab1a6a3bbf1e6bed787db8",
+      "bytes": 5291
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/normalize_subset.mts",
+      "sha256": "7d69710e309e1760fc64b7015dbf60ee5a61e83b3bd2acb6fa2d98d02197d95b",
+      "bytes": 3822
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/render.mjs",
+      "sha256": "e13ca084de5e3fa364ebb49d94d5de2c74b8a8eefeec2ae87e2524d9614d49f3",
+      "bytes": 4167
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/render_server.py",
+      "sha256": "5e50fe0900439c00092937524f3348d448ea52e871545efe98a6d80fe400d0b1",
+      "bytes": 3038
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/validate.mts",
+      "sha256": "7a7bc5db72b3b23b65085a7857e8e23a171f8e8eff1c55b8c34d63be95b27b83",
+      "bytes": 1334
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/validate_subset.mts",
+      "sha256": "47429a453c9d00fbb36661747462478ec82e4998c393dd43d7f2d44f5dd2e73e",
+      "bytes": 1792
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/backups/palworld-cattiva-opgg-materials-20260911-v1.json",
+      "sha256": "bd56ec129aefb96df874302298007ad59a47d8dcfedc9f9d226a80a685aa0abc",
+      "bytes": 17977
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/README.md",
+      "sha256": "089b829dbf02608cac4b54ec223f8fdabceb05b2c0ff30d866170afd7bf30c68",
+      "bytes": 4055
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-cattiva-opgg-materials-20260911-v1/files-sha256.json",
+      "sha256": "7292ca1eeb157d25ed69a9cc07b91c2096e7f80cb7918a1c3c2961d8e53aba0a",
+      "bytes": 15986
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-cattiva-opgg-materials-20260911-v1/receipt.json",
+      "sha256": "3b240a073c830451eab07029acf97a5a7e722b88a36e5ddc833ec0f32ec77240",
+      "bytes": 4019
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/bundle.cjs",
+      "sha256": "f6fe328853a05a9902cd568cfdc61f74513a2a37ed30cbcd4e2c16aa25938ade",
+      "bytes": 591
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/contact_sheets.py",
+      "sha256": "62ef1dfd69cd72251f351570995faeab98118cd145b14c09d205e801bd4fa5e7",
+      "bytes": 915
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/convert.py",
+      "sha256": "8c8043ed31bd117bc865b49a89c12b36449fce40686d8503d578e07c25951e2f",
+      "bytes": 13494
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/freeze.py",
+      "sha256": "b571f37fb8e5c72117931ae30ca33794622f8a9b6ca14950e1f64245d9a6f3cf",
+      "bytes": 5633
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/render.mjs",
+      "sha256": "2d4a9b9989153a00655e0c43116255a1df9fe796a29213922ee76c3cc2dce765",
+      "bytes": 4124
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/render_server.py",
+      "sha256": "11dc1d9837da618b2a8dd8570b95f481ef9c8946befcabd1ac4107f93d5408d6",
+      "bytes": 3233
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/validate.mjs",
+      "sha256": "c9949d3903017f0ba730cec6c1f9bb4380d53ddc25295858348aaba1bda54598",
+      "bytes": 5282
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/backups/palworld-cattiva-opgg-materials-256-20260911-v1.json",
+      "sha256": "3e14edfe1eb8407a799a00d0fe33694844ef747a03edb4e848cb046a2ce7e2e6",
+      "bytes": 19150
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/README.md",
+      "sha256": "a4e49503824d16497c14fe3bbf7a4a76c0c8b117a097ed2fad7c2ffe7f76d613",
+      "bytes": 2529
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-cattiva-opgg-materials-256-20260911-v1/files-sha256.json",
+      "sha256": "c7f71cc813a916248417373756e298a38909db338f681c5475393e2d31299a8c",
+      "bytes": 17134
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-materials/controls/palworld-cattiva-opgg-materials-256-20260911-v1/receipt.json",
+      "sha256": "e6c8d2665ab812eb46e0dd5e0fee5a26e9982e8cfad279620ae3f2956dc758d9",
+      "bytes": 3265
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/backup_conversions.py",
+      "sha256": "4661887d27b2b71af127882ad51b2d06c0bb8ad72930d11feade51426b2fa85f",
+      "bytes": 6633
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/bundle.cjs",
+      "sha256": "f6fe328853a05a9902cd568cfdc61f74513a2a37ed30cbcd4e2c16aa25938ade",
+      "bytes": 591
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/contact_sheets.py",
+      "sha256": "62ef1dfd69cd72251f351570995faeab98118cd145b14c09d205e801bd4fa5e7",
+      "bytes": 915
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/freeze.py",
+      "sha256": "041771e5ec3e36f4159d747714e6315f0b18ed667681475d0558daba59a6f37a",
+      "bytes": 4249
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/normalize.mts",
+      "sha256": "8f4ac5db083cdf23874afb6dd5e8da37b42f5cb9a7475e30bc9955d0e0a2a2a5",
+      "bytes": 6915
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/render.mjs",
+      "sha256": "62ee5d5e8e3ff2efef0229ee13f3b4b9c7d78c64bd5f1859d1891be63a7f7080",
+      "bytes": 4146
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/render_server.py",
+      "sha256": "11dc1d9837da618b2a8dd8570b95f481ef9c8946befcabd1ac4107f93d5408d6",
+      "bytes": 3233
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/validate.mjs",
+      "sha256": "c9949d3903017f0ba730cec6c1f9bb4380d53ddc25295858348aaba1bda54598",
+      "bytes": 5282
+    },
+    {
+      "path": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+      "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+      "bytes": 4297580
+    },
+    {
+      "path": "content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb",
+      "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09",
+      "bytes": 13224512
+    },
+    {
+      "path": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+      "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+      "bytes": 2148052
+    }
+  ],
+  "originalCandidatesPreserved": 15,
+  "totalPreservedCandidates": 22,
+  "newComponentCount": 3,
+  "heroDefinitionsCreated": 0,
+  "runtimeRegistrationComplete": false
+}

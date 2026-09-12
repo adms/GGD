@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.2421668c7f99f7f1f6731180",
+  "title": "安兹乌尔恭",
+  "kind": "model-body",
+  "model": "models/community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-17-20260907",
+        "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+        "glbPath": "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
+        "sha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+        "bytes": 1281464,
+        "documentSha256": "2421668c7f99f7f1f67311801dc6950fd138186c52edbb53f6ba6fd8d891e05a",
+        "sourceCharacter": "安兹乌尔恭",
+        "sourceWork": "OVERLORD",
+        "sourceAssetId": "300heroes:db4f9d278de0736a7541d18c",
+        "sourceSha256": "2ac82c6c6359a1b173b1bf7bc29be7097e8f50c26b7f6c113c51e3ac48a160f6",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.2421668c7f99f7f1f6731180"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-17-20260907",
+        "name": "安茲·烏爾·恭"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

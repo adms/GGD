@@ -1,0 +1,32 @@
+{
+  "schema": "ggd.priority81.audio-overlay-receipt@1",
+  "summary": {
+    "baselineRevision": "b6686109a2946664827e8e59529de670b844d7c6",
+    "baselineUniqueClipPaths": 1016,
+    "currentBranchAdditionalFiles": 2,
+    "currentUniqueClipPaths": 1018,
+    "currentHeroesCompleteExtended11": 74,
+    "mainMergedAdditions": false,
+    "productionPlaybackVerified": false
+  },
+  "baselineUnmodified": true,
+  "checks": {
+    "originalSourceSha": true,
+    "statusSha": true,
+    "runtimeManifestSha": true,
+    "combatOriginalsSha": true,
+    "previousNineFilesUnchanged": true
+  },
+  "products": [
+    {
+      "path": "overlay.json",
+      "bytes": 27368,
+      "sha256": "f91a3339f2292a49d855526e696a85bf9b30378dfdbbd3ca0e54b54b104a6548"
+    },
+    {
+      "path": "current-per-hero.json",
+      "bytes": 18802,
+      "sha256": "7de5e8aec054edf114a82a9acd6810372ec2978d589521bc73dada5a10d8035a"
+    }
+  ]
+}

@@ -30,6 +30,7 @@ owner 2026-09-10 逐字：
 ⚠️ 寫成名單的話，下一隻新分身會靜靜地通過（那正是「有實體而無宣告」）。
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -144,6 +145,33 @@ def _resolve_aliases(rows: list[dict], shipped: dict[str, dict]) -> tuple[dict, 
     return alias_of, aliased_ship, issues
 
 
+def _skeleton_model_source(repo: Path, model_key: str) -> str | None:
+    """Follow frozen model provenance; a versioned placeholder remains a placeholder."""
+    chain: list[str] = []
+    current = model_key
+    while True:
+        if not isinstance(current, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:-]*", current):
+            raise ValueError(f"Invalid model reference {current!r}; chain: {' -> '.join(chain)}")
+        if current in chain:
+            raise ValueError(f"Model provenance cycle: {' -> '.join(chain + [current])}")
+        chain.append(current)
+        path = repo / "content/models" / f"{current}.json"
+        if not path.is_file():
+            raise ValueError(f"Missing model document {path}; chain: {' -> '.join(chain)}")
+        try:
+            model = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            raise ValueError(f"Cannot read model document {path}: {error}") from error
+        if not isinstance(model, dict) or model.get("id") != current:
+            raise ValueError(f"Model document ID does not match {current}: {path}")
+        version = model.get("bodyVersion")
+        if version is None:
+            return current if current in SKELETON.values() else None
+        if not isinstance(version, dict) or not version.get("sourceModelKey"):
+            raise ValueError(f"Missing bodyVersion.sourceModelKey in {path}")
+        current = version["sourceModelKey"]
+
+
 def audit(inventory: Path, repo: Path) -> dict:
     """⭐ 一次回答三題，⛔ 而且每個數字都附**分母與探針**。"""
     lod = json.loads((repo / "content/config/model-lod.json").read_text(encoding="utf-8"))
@@ -194,11 +222,16 @@ def audit(inventory: Path, repo: Path) -> dict:
     # 逐字寫「用 GGD 原版」的**決定**。問題是**兩者長得一模一樣**：
     # 一個暫時的佔位與一個刻意的選擇，在 JSON 裡都只是 `champ.thorne`。
     # ⇒ ⭐ 每一名用骨架的都必須在棘輪裡**宣告它是哪一種**，並附一個能被反駁的理由。
-    skeleton_model_keys = set(SKELETON.values())
+    skeleton_sources = {}
+    for hid, champion in community.items():
+        try:
+            skeleton_sources[hid] = _skeleton_model_source(repo, champion.get("modelKey"))
+        except ValueError as error:
+            raise ValueError(f"{hid}: {error}") from error
     undeclared, declared = [], []
     for hid in sorted(community):
         mk = community[hid].get("modelKey")
-        if mk not in skeleton_model_keys:
+        if skeleton_sources[hid] is None:
             continue
         row = declared_skeletons.get(hid)
         if row is None:
@@ -209,7 +242,7 @@ def audit(inventory: Path, repo: Path) -> dict:
     # ⭐ 反方向也要走（形態⑫）：宣告了、而它今天**已經不用骨架了** ⇒ 那一列該退休。
     stale_declarations = [
         hid for hid in sorted(declared_skeletons)
-        if community.get(hid, {}).get("modelKey") not in skeleton_model_keys
+        if skeleton_sources.get(hid) is None
     ]
 
     return {

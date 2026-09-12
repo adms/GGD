@@ -1,0 +1,6 @@
+
+> ggd@0.0.0 docs:readme:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/reference/gen_readme_lists.py --check
+
+stale — run `pnpm docs:readme`: README:roster(replaced),abilities(replaced),items(replaced),grail(replaced),mechanics(replaced),arenas(replaced),combat-env(replaced),stat-bands(replaced),tiers(replaced); docs/reference/roster.md; docs/reference/abilities.md; docs/reference/items.md; docs/reference/grail-wishes.md; docs/reference/mechanics.md
+ ELIFECYCLE  Command failed with exit code 1.

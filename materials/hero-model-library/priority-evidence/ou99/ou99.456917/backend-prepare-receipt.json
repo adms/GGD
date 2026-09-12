@@ -1,0 +1,492 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-ned.json",
+  "sourceHeroSha256": "90c7f7060c3365ba70bb4b0d639dea101902ee5b1381d0dc0cddf34398adc971",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:e1ff74ca414f30d52431b44436907e7c99a00ec7a5ba594dd50b9b463181d05e",
+    "sourceModelKey": "ou99.456917-standard-v2",
+    "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "蛤蟆蘸酱柯松剑客",
+      "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-456917-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-ned",
+    "name": "青蛙劍士 Ned",
+    "description": "AVARTH｜青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "鬥士",
+    "modelKey": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.456917",
+        "modelSha256": "63d3820cca08f697d3fb3761600b856592fb72d03dcb2872f3e82365d40d46aa",
+        "binarySha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+        "registeredAt": "2026-09-10T14:37:52.766Z",
+        "source": {
+          "kind": "previous",
+          "character": "青蛙劍士 Ned",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.456917.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.869f7b298c2d7f19123363dce5e38b6933eeeede67c95de6",
+        "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.456917-standard-v2",
+        "modelSha256": "1dc3b96018d37cc7a387cb0d314d93bfc2a2ffa53e341a8964ef40a6ea60970c",
+        "binarySha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+        "registeredAt": "2026-09-10T14:37:52.771Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "蛤蟆蘸酱柯松剑客",
+          "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-456917-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 8,
+      "range": 1.6
+    },
+    "growth": {
+      "ad": 4.289142857142858,
+      "ap": 0,
+      "armor": 0.4578979591836735,
+      "as": 0,
+      "healthRegen": 0.13085306122448978,
+      "manaRegen": 0,
+      "maxHealth": 35.000204081632646,
+      "maxMana": 26.357142857142858,
+      "mr": 2.639795918367347
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 18,
+      "agi": 29,
+      "int": 13,
+      "strGrowth": 1.67,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.25,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-ned.q",
+        "name": "蛙跳出差交通費",
+        "provenance": "w3x-import",
+        "description": "「蛙跳出差交通費！」\n跳向指定合法落點，空中弧線與落地傷害由現有 leap-strike 執行；落地半徑約 1.8 單位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 1.83,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "leap",
+            "applyTo": "self",
+            "mode": "toPoint",
+            "apexHeight": 1,
+            "durationSec": 0.4,
+            "landRadius": 1.83,
+            "onLand": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.dash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.833,
+        "template": {
+          "ref": "hero-template.c908c89286a452169fdeb648106cf65dac155753e5cc6b52",
+          "params": {
+            "apexHeight": 250,
+            "applyTo": "self",
+            "castTimeSec": 0.833,
+            "damage": {
+              "damageTier": "極小"
+            },
+            "damageType": "physical",
+            "durationSec": 0.4,
+            "landRadius": 100,
+            "mode": "toPoint"
+          },
+          "contentSha256": "sha256:71dee08ad6f5383f956a3685e45b6cc874d0dbd0d4b70d909422d0b56ea70685"
+        }
+      },
+      "W": {
+        "id": "b2-ned.w",
+        "name": "不是舌頭是近身劍",
+        "provenance": "w3x-import",
+        "description": "「不是舌頭是近身劍！」\n只在自己與敵人距離不大於 2.5 時造成中級物理斬擊；站太遠揮空，不另補位移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "condition": {
+              "kind": "distance",
+              "op": "<=",
+              "value": 2.5
+            },
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "中"
+            }
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 1.7,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 1.7,
+            "castType": "targeted",
+            "effects": [
+              {
+                "amount": {
+                  "damageTier": "中"
+                },
+                "condition": {
+                  "kind": "distance",
+                  "op": "<=",
+                  "value": 2.5
+                },
+                "damageType": "physical",
+                "kind": "damage"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-ned.e",
+        "name": "請退後不要問會不會呱",
+        "provenance": "w3x-import",
+        "description": "「請退後不要問會不會呱！」\n對敵人造成極小物理傷害並推離 3 單位；改變後续近身與線斬位置。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "極小"
+            }
+          },
+          {
+            "kind": "knockback",
+            "distance": 3,
+            "speed": 12,
+            "from": "caster",
+            "subtractGap": false,
+            "uncontrollable": false
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.833,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.833,
+            "castType": "targeted",
+            "effects": [
+              {
+                "amount": {
+                  "damageTier": "極小"
+                },
+                "damageType": "physical",
+                "kind": "damage"
+              },
+              {
+                "distance": 3,
+                "from": "caster",
+                "kind": "knockback",
+                "speed": 12,
+                "subtractGap": false,
+                "uncontrollable": false
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "R": {
+        "id": "b2-ned.r",
+        "name": "青蛙劍術會議沿線開",
+        "provenance": "w3x-import",
+        "description": "「青蛙劍術會議沿線開！」\n沿直線打出物理劍波；用方向和線寬決定命中，不是假分身攻擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "ground",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "中"
+            },
+            "length": 9,
+            "width": 1.3,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.833,
+        "template": {
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+          "params": {
+            "aim": "target",
+            "castTimeSec": 0.833,
+            "damage": {
+              "damageTier": "中"
+            },
+            "damageType": "physical",
+            "length": 9,
+            "width": 1.3
+          },
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+        }
+      }
+    },
+    "exAbility": "b2-ned.ex",
+    "passiveAbility": "b2-ned.passive",
+    "icon": "assets/icons/champions/b2-ned.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack -1",
+          "cast": "Spell One",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.456917",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.456917",
+        "modelSha256": "63d3820cca08f697d3fb3761600b856592fb72d03dcb2872f3e82365d40d46aa",
+        "binarySha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+        "registeredAt": "2026-09-10T14:37:52.766Z",
+        "source": {
+          "kind": "previous",
+          "character": "青蛙劍士 Ned",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.456917.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 897596,
+      "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6"
+    },
+    {
+      "document": {
+        "id": "version.body.869f7b298c2d7f19123363dce5e38b6933eeeede67c95de6",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack -1",
+          "cast": "Spell One",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.456917-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.869f7b298c2d7f19123363dce5e38b6933eeeede67c95de6",
+        "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.456917-standard-v2",
+        "modelSha256": "1dc3b96018d37cc7a387cb0d314d93bfc2a2ffa53e341a8964ef40a6ea60970c",
+        "binarySha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+        "registeredAt": "2026-09-10T14:37:52.771Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "蛤蟆蘸酱柯松剑客",
+          "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-456917-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 886408,
+      "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

@@ -377,7 +377,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-touka",
-  "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
+  "modelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
   "name": "托卡・史考特",
   "origin": "鬥士",
   "passiveAbility": "b2-touka.passive",
@@ -423,6 +423,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-459257-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.459257",
+      "modelSha256": "460775bd6f2f4e02a5de58713cd51db429f9809a85927a283190dd2de3353e78",
+      "binarySha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+      "registeredAt": "2026-09-10T14:45:38.409Z",
+      "source": {
+        "kind": "previous",
+        "character": "托卡・史考特",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.459257.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.876b9fb91549a606116b97202d8f26287c67cf7ccd331fa4",
+      "label": "绯村剑心",
+      "sourceModelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+      "modelSha256": "dc754e8b9899900b4bd237f3729d1f405e636a582d7bb742a3364a8fa3d603ef",
+      "binarySha256": "9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077",
+      "registeredAt": "2026-09-10T14:45:38.417Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯村剑心",
+        "work": "神劍闖江湖／浪客劍心",
+        "library": "300heroes",
+        "reference": "300heroes:4e2be7df945bb18fbf27d02a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
+      "label": "白西装七夜志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.459257-standard-v2",
+      "modelSha256": "fd543e0b1006706ff39c5c1416fb98263d62e287b17e4cbd92fe83cbdd56ec26",
+      "binarySha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+      "registeredAt": "2026-09-10T14:48:54.293Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "白西装七夜志贵",
+        "work": "來源作品待核；論壇標題：白西装七夜志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459257-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

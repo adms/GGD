@@ -1,0 +1,48 @@
+{
+  "id": "ggd.model.dc5874e08aaa2980f8287bdd",
+  "title": "Cloud 克勞德模型",
+  "kind": "model-body",
+  "model": "models/community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "existing:cloud",
+        "modelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
+        "glbPath": "assets/models/community/595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea.glb",
+        "sha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
+        "bytes": 685580,
+        "documentSha256": "dc5874e08aaa2980f8287bddee9a14f2e789fd9b4c0e49ecf362bc22a9ce2961",
+        "sourceCharacter": "Cloud 克勞德模型",
+        "sourceWork": "Final Fantasy VII；現有匯入模型",
+        "sourceAssetId": "existing:cloud",
+        "sourceSha256": "af0aa7e553cb82193740fb98ba38156d763d7208b21fb5aa0da1013fbf3487ae",
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack",
+          "cast": "Spell",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "limitations": [
+          "保留借用模型身形；未重製角色專屬外觀或複合身體。",
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.dc5874e08aaa2980f8287bdd"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "b2-noor",
+        "name": "諾爾"
+      },
+      {
+        "id": "b2-guts",
+        "name": "凱茲"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

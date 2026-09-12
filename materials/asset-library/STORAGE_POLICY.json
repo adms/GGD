@@ -1,0 +1,52 @@
+{
+  "schema": "ggd-resource-storage-policy@1",
+  "decision_status": "confirmed",
+  "local_copies": "preserve",
+  "s3_primary": [
+    "original_game_downloads",
+    "original_models_textures_skeletons_animations_vfx_audio_voice",
+    "intermediate_assets",
+    "preparation_materials",
+    "bulk_native_parsing_json"
+  ],
+  "git_primary": [
+    "all_finished_assets_including_binary_models_textures_skeletons_animations_vfx_audio_voice",
+    "parsing_and_conversion_scripts",
+    "hero_and_ability_configuration_json",
+    "version_manifests",
+    "sha256_indexes",
+    "documentation"
+  ],
+  "published_runtime_copies": "Finished resources and controlling metadata must be committed and pushed to Git; existing S3 copies remain retained.",
+  "standardized_root": "materials/asset-library/releases/",
+  "restricted_backup_root": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/",
+  "legacy_automatic_consumption": false,
+  "legacy_requires_explicit_human_authorization": true,
+  "git_excluded_source_roots": [
+    "outputs/game-asset-library-20260907/300heroes/models/",
+    "outputs/game-asset-library-20260907/300heroes/raw/",
+    "outputs/game-asset-library-20260907/300heroes/client/",
+    "outputs/game-asset-library-20260907/300heroes/downloads/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/models/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/raw/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/client/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/downloads/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/patches/"
+  ],
+  "rule": "成品一律上傳至 Git；半成品、來源、準備材料等進 S3；本機全部保留。",
+  "git_release_pointer": "materials/asset-library/git-release.json",
+  "s3_existing_finished_copies": "preserve as verified mirrors and historical versions; never replace required Git publication",
+  "completion_boundary": "Validated reusable components may be finished assets; decoded/unclassified audio and pending model conversions remain intermediate. A finished component is not proof of a complete hero or deployment.",
+  "s3_backup_required": [
+    "original_assets",
+    "intermediate_assets",
+    "converted_assets",
+    "conversion_scripts_and_dependencies",
+    "versioned_control_indexes",
+    "acquisition_and_extraction_tools",
+    "parsers_and_generators"
+  ],
+  "git_snapshot_backup_root": "s3://ggd-390630837668-ap-east-2-an/legacy/git-asset-snapshots/",
+  "git_snapshot_backup_tool": "tools/hero-model-library/backup_git_assets.py",
+  "backup_rule": "原始檔、半成品、轉換檔、抓取器、解析器、轉換程式及產生器均保留一份 S3 備份並附逐檔 SHA-256 與完整讀回驗證；Git 仍是成品、程式與索引的共編發布來源，本機全保留。"
+}

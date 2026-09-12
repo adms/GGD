@@ -1,0 +1,30 @@
+{
+  "schema": "ggd.frozen-delivery@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+  "frozen": true,
+  "manifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/file-manifest.json",
+    "bytes": 3213,
+    "sha256": "a737913e84d5f1afcc6bc1b3a1b01ae29380868159b22f1c6df0d0ce5a5dc673"
+  },
+  "sourceReport": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/source-report.json",
+    "bytes": 13643,
+    "sha256": "7e447c10ec12f2b0b07aaad3b40f345f483ce7e1013536ab410ddb1c4ba095a7"
+  },
+  "sourceEntry": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/public-source-entry.json",
+    "bytes": 1097,
+    "sha256": "51a0033686e87cbf6321439c8e115b1d74d2c6caefba9adaa12d90b20214c246"
+  },
+  "acquiredAssetPayloadCount": 0,
+  "assetCounts": {
+    "model": 0,
+    "skeleton": 0,
+    "motion": 0,
+    "vfx": 0,
+    "sfx": 0,
+    "voice": 0,
+    "textures": 0
+  }
+}

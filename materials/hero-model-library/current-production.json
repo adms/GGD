@@ -1,0 +1,2800 @@
+{
+  "schema": "ggd-production-model-observation@1",
+  "observedAt": "2026-09-10T14:18:02.985521+00:00",
+  "url": "https://ggd.adms.ai",
+  "sourceMainCommit": "3b066f8dc19a549e17b438c0be0bd2566519a5c0",
+  "contentVersion": "cv_a5039179a7ff",
+  "whitelist": {
+    "version": 1,
+    "updatedAt": "2026-09-10T12:04:54.98101232Z",
+    "champions": [
+      "b2-aladdin",
+      "b2-albus",
+      "b2-bojji",
+      "b2-boxxo",
+      "b2-elma",
+      "b2-fushi",
+      "b2-goblin",
+      "b2-guts",
+      "b2-haga",
+      "b2-kaede",
+      "b2-kaiji",
+      "b2-keyaru",
+      "b2-kisaragi",
+      "b2-klaus",
+      "b2-kumoko",
+      "b2-luckyman",
+      "b2-makoto",
+      "b2-maomao",
+      "b2-maple",
+      "b2-matthias",
+      "b2-misery",
+      "b2-naofumi",
+      "b2-ned",
+      "b2-noor",
+      "b2-nube",
+      "b2-orphen",
+      "b2-popp",
+      "b2-rem",
+      "b2-rin",
+      "b2-shadow",
+      "b2-shinchan",
+      "b2-sinbad",
+      "b2-takopi",
+      "b2-touka",
+      "b2-uncle",
+      "b2-yogiri",
+      "b2-zenitsu",
+      "community-review-01-20260907",
+      "community-review-02-20260907",
+      "community-review-03-20260907",
+      "community-review-04-20260907",
+      "community-review-05-20260907",
+      "community-review-06-20260907",
+      "community-review-07-20260907",
+      "community-review-08-20260907",
+      "community-review-09-20260907",
+      "community-review-10-20260907",
+      "community-review-11-20260907",
+      "community-review-12-20260907",
+      "community-review-13-20260907",
+      "community-review-14-20260907",
+      "community-review-15-20260907",
+      "community-review-16-20260907",
+      "community-review-17-20260907",
+      "community-review-18-20260907",
+      "community-review-19-20260907",
+      "community-review-20-20260907",
+      "community-review-21-20260907",
+      "community-review-22-20260907",
+      "community-review-23-20260907",
+      "community-review-24-20260907",
+      "community-review-25-20260907",
+      "community-review-26-20260907",
+      "community-review-27-20260907",
+      "community-review-28-20260907",
+      "community-review-29-20260907",
+      "community-review-30-20260907",
+      "community-review-31-20260907",
+      "community-review-32-20260907",
+      "community-review-33-20260907",
+      "community-review-34-20260907",
+      "community-review-35-20260907",
+      "community-review-36-20260907",
+      "community-review-37-20260907",
+      "godie-e001",
+      "godie-e002",
+      "godie-e008",
+      "godie-e00r",
+      "godie-e00s",
+      "godie-e00w",
+      "godie-edem",
+      "godie-efur",
+      "godie-emfr",
+      "godie-emns",
+      "godie-etyr",
+      "godie-ewar",
+      "godie-h00l",
+      "godie-h01n",
+      "godie-h01u",
+      "godie-h02k",
+      "godie-h02v",
+      "godie-hapm",
+      "godie-hart",
+      "godie-hgam",
+      "godie-hjai",
+      "godie-hpb1",
+      "godie-huth",
+      "godie-hvsh",
+      "godie-hvwd",
+      "godie-n003",
+      "godie-n00b",
+      "godie-nbbc",
+      "godie-nsjs",
+      "godie-o00k",
+      "godie-o00l",
+      "godie-o02p",
+      "godie-ofar",
+      "godie-ogld",
+      "godie-ogrh",
+      "godie-orkn",
+      "godie-osam",
+      "godie-u00h",
+      "godie-u00j",
+      "godie-u00k",
+      "godie-u00n",
+      "godie-u00v",
+      "godie-ubal",
+      "godie-ucrl",
+      "godie-udea",
+      "godie-udre",
+      "godie-umal",
+      "godie-uvng",
+      "godie-zombiex",
+      "lol-karthus",
+      "lol-leesin",
+      "lol-lux",
+      "lol-missfortune",
+      "lol-warwick",
+      "lol-xerath",
+      "lol-yasuo"
+    ],
+    "items": [
+      "all-might-hair",
+      "bezoar-of-the-apothecary",
+      "book-of-gospel",
+      "bulwark-charge-greaves",
+      "cleaver-of-the-warden",
+      "collar-of-the-deadly-soul",
+      "endless-edge",
+      "fingerless-gloves",
+      "gantz-suit",
+      "godie-i000",
+      "godie-i004",
+      "godie-i006",
+      "godie-i007",
+      "godie-i00f",
+      "godie-i00i",
+      "godie-i00j",
+      "godie-i00l",
+      "godie-i00s",
+      "godie-i00u",
+      "godie-i00z",
+      "godie-i012",
+      "godie-i013",
+      "godie-i014",
+      "godie-i016",
+      "godie-i018",
+      "godie-i01d",
+      "godie-i01g",
+      "godie-i01i",
+      "godie-i01j",
+      "godie-i01n",
+      "godie-i01o",
+      "godie-i01s",
+      "godie-i01v",
+      "godie-i01w",
+      "godie-i020",
+      "godie-i027",
+      "godie-i02d",
+      "godie-i02e",
+      "godie-i02r",
+      "godie-i031",
+      "godie-i039",
+      "godie-i03b",
+      "godie-i03d",
+      "godie-i03f",
+      "godie-i03h",
+      "godie-i03m",
+      "godie-i040",
+      "godie-i041",
+      "godie-i045",
+      "godie-i049",
+      "godie-i04d",
+      "godie-i04i",
+      "godie-i05h",
+      "godie-i05o",
+      "godie-i060",
+      "godie-i061",
+      "godie-i067",
+      "godie-i06a",
+      "godie-i06d",
+      "godie-i06e",
+      "godie-i06f",
+      "godie-i06g",
+      "godie-i06i",
+      "godie-i06j",
+      "godie-i06n",
+      "godie-i06o",
+      "godie-i06q",
+      "gravity-sword-black-rod",
+      "grief-seed",
+      "icha-icha-paradise",
+      "lance-kongotetsu",
+      "legendary-orb",
+      "magic-armor-type-zero",
+      "master-ball",
+      "meat-cleaver",
+      "meteor-ring",
+      "millennium-puzzle",
+      "mystery-scrap-of-paper",
+      "nezuko-box",
+      "odm-gear",
+      "pale-moon-requiem-crown",
+      "red-comet-mask",
+      "sasumata",
+      "scouter",
+      "senzu-bean",
+      "shining-golden-orbs",
+      "slime-suit",
+      "soul-eater",
+      "soul-gem",
+      "spear-of-lightning",
+      "staff-of-ainz-ooal-gown",
+      "stat-attunement",
+      "stone-mask",
+      "teardrop-of-rebirth",
+      "torch-master",
+      "touyako",
+      "ultimate-mod-shiranui",
+      "usagizuki-twin-crescents"
+    ],
+    "abilities": [
+      "b2-aladdin.e",
+      "b2-aladdin.ex",
+      "b2-aladdin.q",
+      "b2-aladdin.r",
+      "b2-aladdin.w",
+      "b2-albus.e",
+      "b2-albus.ex",
+      "b2-albus.q",
+      "b2-albus.r",
+      "b2-albus.w",
+      "b2-bojji.e",
+      "b2-bojji.ex",
+      "b2-bojji.q",
+      "b2-bojji.r",
+      "b2-bojji.w",
+      "b2-boxxo.e",
+      "b2-boxxo.ex",
+      "b2-boxxo.q",
+      "b2-boxxo.r",
+      "b2-boxxo.w",
+      "b2-elma.e",
+      "b2-elma.ex",
+      "b2-elma.q",
+      "b2-elma.r",
+      "b2-elma.w",
+      "b2-fushi.e",
+      "b2-fushi.ex",
+      "b2-fushi.q",
+      "b2-fushi.r",
+      "b2-fushi.w",
+      "b2-goblin.e",
+      "b2-goblin.ex",
+      "b2-goblin.q",
+      "b2-goblin.r",
+      "b2-goblin.w",
+      "b2-guts.e",
+      "b2-guts.ex",
+      "b2-guts.q",
+      "b2-guts.r",
+      "b2-guts.w",
+      "b2-haga.e",
+      "b2-haga.ex",
+      "b2-haga.q",
+      "b2-haga.r",
+      "b2-haga.w",
+      "b2-kaede.e",
+      "b2-kaede.ex",
+      "b2-kaede.q",
+      "b2-kaede.r",
+      "b2-kaede.w",
+      "b2-kaiji.e",
+      "b2-kaiji.ex",
+      "b2-kaiji.q",
+      "b2-kaiji.r",
+      "b2-kaiji.w",
+      "b2-keyaru.e",
+      "b2-keyaru.ex",
+      "b2-keyaru.q",
+      "b2-keyaru.r",
+      "b2-keyaru.w",
+      "b2-kisaragi.e",
+      "b2-kisaragi.ex",
+      "b2-kisaragi.q",
+      "b2-kisaragi.r",
+      "b2-kisaragi.w",
+      "b2-klaus.e",
+      "b2-klaus.ex",
+      "b2-klaus.q",
+      "b2-klaus.r",
+      "b2-klaus.w",
+      "b2-kumoko.e",
+      "b2-kumoko.ex",
+      "b2-kumoko.q",
+      "b2-kumoko.r",
+      "b2-kumoko.w",
+      "b2-luckyman.e",
+      "b2-luckyman.ex",
+      "b2-luckyman.q",
+      "b2-luckyman.r",
+      "b2-luckyman.w",
+      "b2-makoto.e",
+      "b2-makoto.ex",
+      "b2-makoto.q",
+      "b2-makoto.r",
+      "b2-makoto.w",
+      "b2-maomao.e",
+      "b2-maomao.ex",
+      "b2-maomao.q",
+      "b2-maomao.r",
+      "b2-maomao.w",
+      "b2-maple.e",
+      "b2-maple.ex",
+      "b2-maple.q",
+      "b2-maple.r",
+      "b2-maple.w",
+      "b2-matthias.e",
+      "b2-matthias.ex",
+      "b2-matthias.q",
+      "b2-matthias.r",
+      "b2-matthias.w",
+      "b2-misery.e",
+      "b2-misery.ex",
+      "b2-misery.q",
+      "b2-misery.r",
+      "b2-misery.w",
+      "b2-naofumi.e",
+      "b2-naofumi.ex",
+      "b2-naofumi.q",
+      "b2-naofumi.r",
+      "b2-naofumi.w",
+      "b2-ned.e",
+      "b2-ned.ex",
+      "b2-ned.q",
+      "b2-ned.r",
+      "b2-ned.w",
+      "b2-noor.e",
+      "b2-noor.ex",
+      "b2-noor.q",
+      "b2-noor.r",
+      "b2-noor.w",
+      "b2-nube.e",
+      "b2-nube.ex",
+      "b2-nube.q",
+      "b2-nube.r",
+      "b2-nube.w",
+      "b2-orphen.e",
+      "b2-orphen.ex",
+      "b2-orphen.q",
+      "b2-orphen.r",
+      "b2-orphen.w",
+      "b2-popp.e",
+      "b2-popp.ex",
+      "b2-popp.q",
+      "b2-popp.r",
+      "b2-popp.w",
+      "b2-rem.e",
+      "b2-rem.ex",
+      "b2-rem.q",
+      "b2-rem.r",
+      "b2-rem.w",
+      "b2-rin.e",
+      "b2-rin.ex",
+      "b2-rin.q",
+      "b2-rin.r",
+      "b2-rin.w",
+      "b2-shadow.e",
+      "b2-shadow.ex",
+      "b2-shadow.q",
+      "b2-shadow.r",
+      "b2-shadow.w",
+      "b2-shinchan.e",
+      "b2-shinchan.ex",
+      "b2-shinchan.q",
+      "b2-shinchan.r",
+      "b2-shinchan.w",
+      "b2-sinbad.e",
+      "b2-sinbad.ex",
+      "b2-sinbad.q",
+      "b2-sinbad.r",
+      "b2-sinbad.w",
+      "b2-takopi.e",
+      "b2-takopi.ex",
+      "b2-takopi.q",
+      "b2-takopi.r",
+      "b2-takopi.w",
+      "b2-touka.e",
+      "b2-touka.ex",
+      "b2-touka.q",
+      "b2-touka.r",
+      "b2-touka.w",
+      "b2-uncle.e",
+      "b2-uncle.ex",
+      "b2-uncle.q",
+      "b2-uncle.r",
+      "b2-uncle.w",
+      "b2-yogiri.e",
+      "b2-yogiri.ex",
+      "b2-yogiri.q",
+      "b2-yogiri.r",
+      "b2-yogiri.w",
+      "b2-zenitsu.e",
+      "b2-zenitsu.ex",
+      "b2-zenitsu.q",
+      "b2-zenitsu.r",
+      "b2-zenitsu.w",
+      "community-review-01-20260907.e",
+      "community-review-01-20260907.ex",
+      "community-review-01-20260907.q",
+      "community-review-01-20260907.r",
+      "community-review-01-20260907.w",
+      "community-review-02-20260907.e",
+      "community-review-02-20260907.ex",
+      "community-review-02-20260907.q",
+      "community-review-02-20260907.r",
+      "community-review-02-20260907.w",
+      "community-review-03-20260907.e",
+      "community-review-03-20260907.ex",
+      "community-review-03-20260907.q",
+      "community-review-03-20260907.r",
+      "community-review-03-20260907.w",
+      "community-review-04-20260907.e",
+      "community-review-04-20260907.ex",
+      "community-review-04-20260907.q",
+      "community-review-04-20260907.r",
+      "community-review-04-20260907.w",
+      "community-review-05-20260907.e",
+      "community-review-05-20260907.ex",
+      "community-review-05-20260907.q",
+      "community-review-05-20260907.r",
+      "community-review-05-20260907.w",
+      "community-review-06-20260907.e",
+      "community-review-06-20260907.ex",
+      "community-review-06-20260907.q",
+      "community-review-06-20260907.r",
+      "community-review-06-20260907.w",
+      "community-review-07-20260907.e",
+      "community-review-07-20260907.ex",
+      "community-review-07-20260907.q",
+      "community-review-07-20260907.r",
+      "community-review-07-20260907.w",
+      "community-review-08-20260907.e",
+      "community-review-08-20260907.ex",
+      "community-review-08-20260907.q",
+      "community-review-08-20260907.r",
+      "community-review-08-20260907.w",
+      "community-review-09-20260907.e",
+      "community-review-09-20260907.ex",
+      "community-review-09-20260907.q",
+      "community-review-09-20260907.r",
+      "community-review-09-20260907.w",
+      "community-review-10-20260907.e",
+      "community-review-10-20260907.ex",
+      "community-review-10-20260907.q",
+      "community-review-10-20260907.r",
+      "community-review-10-20260907.w",
+      "community-review-11-20260907.e",
+      "community-review-11-20260907.ex",
+      "community-review-11-20260907.q",
+      "community-review-11-20260907.r",
+      "community-review-11-20260907.w",
+      "community-review-12-20260907.e",
+      "community-review-12-20260907.ex",
+      "community-review-12-20260907.q",
+      "community-review-12-20260907.r",
+      "community-review-12-20260907.w",
+      "community-review-13-20260907.e",
+      "community-review-13-20260907.ex",
+      "community-review-13-20260907.q",
+      "community-review-13-20260907.r",
+      "community-review-13-20260907.w",
+      "community-review-14-20260907.e",
+      "community-review-14-20260907.ex",
+      "community-review-14-20260907.q",
+      "community-review-14-20260907.r",
+      "community-review-14-20260907.w",
+      "community-review-15-20260907.e",
+      "community-review-15-20260907.ex",
+      "community-review-15-20260907.q",
+      "community-review-15-20260907.r",
+      "community-review-15-20260907.w",
+      "community-review-16-20260907.e",
+      "community-review-16-20260907.ex",
+      "community-review-16-20260907.q",
+      "community-review-16-20260907.r",
+      "community-review-16-20260907.w",
+      "community-review-17-20260907.e",
+      "community-review-17-20260907.ex",
+      "community-review-17-20260907.q",
+      "community-review-17-20260907.r",
+      "community-review-17-20260907.w",
+      "community-review-18-20260907.e",
+      "community-review-18-20260907.ex",
+      "community-review-18-20260907.q",
+      "community-review-18-20260907.r",
+      "community-review-18-20260907.w",
+      "community-review-19-20260907.e",
+      "community-review-19-20260907.ex",
+      "community-review-19-20260907.q",
+      "community-review-19-20260907.r",
+      "community-review-19-20260907.w",
+      "community-review-20-20260907.e",
+      "community-review-20-20260907.ex",
+      "community-review-20-20260907.q",
+      "community-review-20-20260907.r",
+      "community-review-20-20260907.w",
+      "community-review-21-20260907.e",
+      "community-review-21-20260907.ex",
+      "community-review-21-20260907.q",
+      "community-review-21-20260907.r",
+      "community-review-21-20260907.w",
+      "community-review-22-20260907.e",
+      "community-review-22-20260907.ex",
+      "community-review-22-20260907.q",
+      "community-review-22-20260907.r",
+      "community-review-22-20260907.w",
+      "community-review-23-20260907.e",
+      "community-review-23-20260907.ex",
+      "community-review-23-20260907.q",
+      "community-review-23-20260907.r",
+      "community-review-23-20260907.w",
+      "community-review-24-20260907.e",
+      "community-review-24-20260907.ex",
+      "community-review-24-20260907.q",
+      "community-review-24-20260907.r",
+      "community-review-24-20260907.w",
+      "community-review-25-20260907.e",
+      "community-review-25-20260907.ex",
+      "community-review-25-20260907.q",
+      "community-review-25-20260907.r",
+      "community-review-25-20260907.w",
+      "community-review-26-20260907.e",
+      "community-review-26-20260907.ex",
+      "community-review-26-20260907.q",
+      "community-review-26-20260907.r",
+      "community-review-26-20260907.w",
+      "community-review-27-20260907.e",
+      "community-review-27-20260907.ex",
+      "community-review-27-20260907.q",
+      "community-review-27-20260907.r",
+      "community-review-27-20260907.w",
+      "community-review-28-20260907.e",
+      "community-review-28-20260907.ex",
+      "community-review-28-20260907.q",
+      "community-review-28-20260907.r",
+      "community-review-28-20260907.w",
+      "community-review-29-20260907.e",
+      "community-review-29-20260907.ex",
+      "community-review-29-20260907.q",
+      "community-review-29-20260907.r",
+      "community-review-29-20260907.w",
+      "community-review-30-20260907.e",
+      "community-review-30-20260907.ex",
+      "community-review-30-20260907.q",
+      "community-review-30-20260907.r",
+      "community-review-30-20260907.w",
+      "community-review-31-20260907.e",
+      "community-review-31-20260907.ex",
+      "community-review-31-20260907.q",
+      "community-review-31-20260907.r",
+      "community-review-31-20260907.w",
+      "community-review-32-20260907.e",
+      "community-review-32-20260907.ex",
+      "community-review-32-20260907.q",
+      "community-review-32-20260907.r",
+      "community-review-32-20260907.w",
+      "community-review-33-20260907.e",
+      "community-review-33-20260907.ex",
+      "community-review-33-20260907.q",
+      "community-review-33-20260907.r",
+      "community-review-33-20260907.w",
+      "community-review-34-20260907.e",
+      "community-review-34-20260907.ex",
+      "community-review-34-20260907.q",
+      "community-review-34-20260907.r",
+      "community-review-34-20260907.w",
+      "community-review-35-20260907.e",
+      "community-review-35-20260907.ex",
+      "community-review-35-20260907.q",
+      "community-review-35-20260907.r",
+      "community-review-35-20260907.w",
+      "community-review-36-20260907.e",
+      "community-review-36-20260907.ex",
+      "community-review-36-20260907.q",
+      "community-review-36-20260907.r",
+      "community-review-36-20260907.w",
+      "community-review-37-20260907.e",
+      "community-review-37-20260907.ex",
+      "community-review-37-20260907.q",
+      "community-review-37-20260907.r",
+      "community-review-37-20260907.w",
+      "godie-e001.e",
+      "godie-e001.ex",
+      "godie-e001.q",
+      "godie-e001.r",
+      "godie-e001.w",
+      "godie-e002.e",
+      "godie-e002.ex",
+      "godie-e002.q",
+      "godie-e002.r",
+      "godie-e002.w",
+      "godie-e007.e",
+      "godie-e007.ex",
+      "godie-e007.q",
+      "godie-e007.r",
+      "godie-e007.w",
+      "godie-e008.e",
+      "godie-e008.ex",
+      "godie-e008.q",
+      "godie-e008.r",
+      "godie-e008.w",
+      "godie-e00r.e",
+      "godie-e00r.ex",
+      "godie-e00r.q",
+      "godie-e00r.r",
+      "godie-e00r.w",
+      "godie-e00s.e",
+      "godie-e00s.ex",
+      "godie-e00s.q",
+      "godie-e00s.r",
+      "godie-e00s.w",
+      "godie-e00w.e",
+      "godie-e00w.ex",
+      "godie-e00w.q",
+      "godie-e00w.r",
+      "godie-e00w.w",
+      "godie-edem.e",
+      "godie-edem.ex",
+      "godie-edem.q",
+      "godie-edem.r",
+      "godie-edem.w",
+      "godie-efur.e",
+      "godie-efur.ex",
+      "godie-efur.q",
+      "godie-efur.r",
+      "godie-efur.w",
+      "godie-emfr.e",
+      "godie-emfr.ex",
+      "godie-emfr.q",
+      "godie-emfr.r",
+      "godie-emfr.w",
+      "godie-emns.e",
+      "godie-emns.ex",
+      "godie-emns.q",
+      "godie-emns.r",
+      "godie-emns.w",
+      "godie-etyr.e",
+      "godie-etyr.ex",
+      "godie-etyr.q",
+      "godie-etyr.r",
+      "godie-etyr.w",
+      "godie-ewar.e",
+      "godie-ewar.ex",
+      "godie-ewar.q",
+      "godie-ewar.r",
+      "godie-ewar.w",
+      "godie-h00l.e",
+      "godie-h00l.ex",
+      "godie-h00l.q",
+      "godie-h00l.r",
+      "godie-h00l.w",
+      "godie-h01n.e",
+      "godie-h01n.ex",
+      "godie-h01n.q",
+      "godie-h01n.r",
+      "godie-h01n.w",
+      "godie-h01u.e",
+      "godie-h01u.ex",
+      "godie-h01u.q",
+      "godie-h01u.r",
+      "godie-h01u.w",
+      "godie-h020.e",
+      "godie-h020.ex",
+      "godie-h020.q",
+      "godie-h020.r",
+      "godie-h020.w",
+      "godie-h02k.e",
+      "godie-h02k.ex",
+      "godie-h02k.q",
+      "godie-h02k.r",
+      "godie-h02k.w",
+      "godie-h02r.e",
+      "godie-h02r.ex",
+      "godie-h02r.q",
+      "godie-h02r.r",
+      "godie-h02r.w",
+      "godie-h02u.e",
+      "godie-h02u.ex",
+      "godie-h02u.q",
+      "godie-h02u.r",
+      "godie-h02u.w",
+      "godie-h02v.e",
+      "godie-h02v.ex",
+      "godie-h02v.q",
+      "godie-h02v.r",
+      "godie-h02v.w",
+      "godie-hapm.e",
+      "godie-hapm.ex",
+      "godie-hapm.q",
+      "godie-hapm.r",
+      "godie-hapm.w",
+      "godie-hart.e",
+      "godie-hart.ex",
+      "godie-hart.q",
+      "godie-hart.r",
+      "godie-hart.w",
+      "godie-hgam.e",
+      "godie-hgam.ex",
+      "godie-hgam.q",
+      "godie-hgam.r",
+      "godie-hgam.w",
+      "godie-hjai.e",
+      "godie-hjai.ex",
+      "godie-hjai.q",
+      "godie-hjai.r",
+      "godie-hjai.w",
+      "godie-hpb1.e",
+      "godie-hpb1.ex",
+      "godie-hpb1.q",
+      "godie-hpb1.r",
+      "godie-hpb1.w",
+      "godie-huth.e",
+      "godie-huth.ex",
+      "godie-huth.q",
+      "godie-huth.r",
+      "godie-huth.w",
+      "godie-hvsh.e",
+      "godie-hvsh.ex",
+      "godie-hvsh.q",
+      "godie-hvsh.r",
+      "godie-hvsh.w",
+      "godie-hvwd.e",
+      "godie-hvwd.ex",
+      "godie-hvwd.q",
+      "godie-hvwd.r",
+      "godie-hvwd.w",
+      "godie-n003.e",
+      "godie-n003.ex",
+      "godie-n003.q",
+      "godie-n003.r",
+      "godie-n003.w",
+      "godie-n00b.e",
+      "godie-n00b.ex",
+      "godie-n00b.q",
+      "godie-n00b.r",
+      "godie-n00b.w",
+      "godie-n00p.e",
+      "godie-n00p.ex",
+      "godie-n00p.q",
+      "godie-n00p.r",
+      "godie-n00p.w",
+      "godie-n01c.e",
+      "godie-n01c.ex",
+      "godie-n01c.q",
+      "godie-n01c.r",
+      "godie-n01c.w",
+      "godie-nbbc.e",
+      "godie-nbbc.ex",
+      "godie-nbbc.q",
+      "godie-nbbc.r",
+      "godie-nbbc.w",
+      "godie-nsjs.e",
+      "godie-nsjs.ex",
+      "godie-nsjs.q",
+      "godie-nsjs.r",
+      "godie-nsjs.w",
+      "godie-o00k.e",
+      "godie-o00k.ex",
+      "godie-o00k.q",
+      "godie-o00k.r",
+      "godie-o00k.w",
+      "godie-o00l.e",
+      "godie-o00l.ex",
+      "godie-o00l.q",
+      "godie-o00l.r",
+      "godie-o00l.w",
+      "godie-o00x.e",
+      "godie-o00x.ex",
+      "godie-o00x.q",
+      "godie-o00x.r",
+      "godie-o00x.w",
+      "godie-o02p.e",
+      "godie-o02p.ex",
+      "godie-o02p.q",
+      "godie-o02p.r",
+      "godie-o02p.w",
+      "godie-ofar.e",
+      "godie-ofar.ex",
+      "godie-ofar.q",
+      "godie-ofar.r",
+      "godie-ofar.w",
+      "godie-ogld.e",
+      "godie-ogld.ex",
+      "godie-ogld.q",
+      "godie-ogld.r",
+      "godie-ogld.w",
+      "godie-ogrh.e",
+      "godie-ogrh.ex",
+      "godie-ogrh.q",
+      "godie-ogrh.r",
+      "godie-ogrh.w",
+      "godie-orkn.e",
+      "godie-orkn.ex",
+      "godie-orkn.q",
+      "godie-orkn.r",
+      "godie-orkn.w",
+      "godie-osam.e",
+      "godie-osam.ex",
+      "godie-osam.q",
+      "godie-osam.r",
+      "godie-osam.w",
+      "godie-u00h.e",
+      "godie-u00h.ex",
+      "godie-u00h.q",
+      "godie-u00h.r",
+      "godie-u00h.w",
+      "godie-u00j.e",
+      "godie-u00j.ex",
+      "godie-u00j.q",
+      "godie-u00j.r",
+      "godie-u00j.w",
+      "godie-u00k.e",
+      "godie-u00k.ex",
+      "godie-u00k.q",
+      "godie-u00k.r",
+      "godie-u00k.w",
+      "godie-u00l.e",
+      "godie-u00l.ex",
+      "godie-u00l.q",
+      "godie-u00l.r",
+      "godie-u00l.w",
+      "godie-u00n.e",
+      "godie-u00n.ex",
+      "godie-u00n.q",
+      "godie-u00n.r",
+      "godie-u00n.w",
+      "godie-u00v.e",
+      "godie-u00v.ex",
+      "godie-u00v.q",
+      "godie-u00v.r",
+      "godie-u00v.w",
+      "godie-u010.e",
+      "godie-u010.ex",
+      "godie-u010.q",
+      "godie-u010.r",
+      "godie-u010.w",
+      "godie-u01u.e",
+      "godie-u01u.ex",
+      "godie-u01u.q",
+      "godie-u01u.r",
+      "godie-u01u.w",
+      "godie-ubal.e",
+      "godie-ubal.ex",
+      "godie-ubal.q",
+      "godie-ubal.r",
+      "godie-ubal.w",
+      "godie-ucrl.e",
+      "godie-ucrl.ex",
+      "godie-ucrl.q",
+      "godie-ucrl.r",
+      "godie-ucrl.w",
+      "godie-udea.e",
+      "godie-udea.ex",
+      "godie-udea.q",
+      "godie-udea.r",
+      "godie-udea.w",
+      "godie-udre.e",
+      "godie-udre.ex",
+      "godie-udre.q",
+      "godie-udre.r",
+      "godie-udre.w",
+      "godie-umal.e",
+      "godie-umal.ex",
+      "godie-umal.q",
+      "godie-umal.r",
+      "godie-umal.w",
+      "godie-uvng.e",
+      "godie-uvng.ex",
+      "godie-uvng.q",
+      "godie-uvng.r",
+      "godie-uvng.w",
+      "godie-zombiex.e",
+      "godie-zombiex.ex",
+      "godie-zombiex.q",
+      "godie-zombiex.r",
+      "godie-zombiex.w",
+      "lol-karthus.e",
+      "lol-karthus.ex",
+      "lol-karthus.q",
+      "lol-karthus.r",
+      "lol-karthus.w",
+      "lol-leesin.e",
+      "lol-leesin.ex",
+      "lol-leesin.q",
+      "lol-leesin.r",
+      "lol-leesin.w",
+      "lol-lux.e",
+      "lol-lux.ex",
+      "lol-lux.q",
+      "lol-lux.r",
+      "lol-lux.w",
+      "lol-missfortune.e",
+      "lol-missfortune.ex",
+      "lol-missfortune.q",
+      "lol-missfortune.r",
+      "lol-missfortune.w",
+      "lol-warwick.e",
+      "lol-warwick.ex",
+      "lol-warwick.q",
+      "lol-warwick.r",
+      "lol-warwick.w",
+      "lol-xerath.e",
+      "lol-xerath.ex",
+      "lol-xerath.q",
+      "lol-xerath.r",
+      "lol-xerath.w",
+      "lol-yasuo.e",
+      "lol-yasuo.ex",
+      "lol-yasuo.q",
+      "lol-yasuo.r",
+      "lol-yasuo.w"
+    ]
+  },
+  "champions": {
+    "b2-aladdin": {
+      "description": "魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-aladdin",
+      "modelKey": "ou99.473324",
+      "name": "阿拉丁",
+      "origin": "法師"
+    },
+    "b2-albus": {
+      "description": "勇者再次啟程｜勇者速通，NPC台詞一律跳過。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-albus",
+      "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "name": "阿爾巴斯",
+      "origin": "鬥士"
+    },
+    "b2-bojji": {
+      "description": "國王排名｜你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-bojji",
+      "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "name": "波吉",
+      "origin": "鬥士"
+    },
+    "b2-boxxo": {
+      "description": "轉生成自動販賣機｜拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-boxxo",
+      "modelKey": "ou99.491448",
+      "name": "阿箱＋拉蜜絲",
+      "origin": "硬輔"
+    },
+    "b2-elma": {
+      "description": "轉生重騎士無雙｜攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-elma",
+      "modelKey": "ou99.472038",
+      "name": "艾爾瑪",
+      "origin": "坦克"
+    },
+    "b2-fushi": {
+      "description": "致不滅的你｜學會新形態前先學會別把隊友認錯。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-fushi",
+      "modelKey": "ou99.467227",
+      "name": "不死",
+      "origin": "硬輔"
+    },
+    "b2-goblin": {
+      "description": "哥布林殺手｜所有敵人都先填哥布林風險評估表。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-goblin",
+      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "name": "哥布林殺手",
+      "origin": "鬥士"
+    },
+    "b2-guts": {
+      "description": "烙印勇士｜武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-guts",
+      "modelKey": "champ.thorne",
+      "name": "凱茲",
+      "origin": "狂戰"
+    },
+    "b2-haga": {
+      "description": "這個世界漏洞百出｜把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-haga",
+      "modelKey": "ou99.495015",
+      "name": "羽賀",
+      "origin": "軟輔"
+    },
+    "b2-kaede": {
+      "description": "異世界轉移魔法劍士｜附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-kaede",
+      "modelKey": "ou99.474258",
+      "name": "楓",
+      "origin": "法鬥"
+    },
+    "b2-kaiji": {
+      "description": "賭博默示錄｜局內籌碼賭運氣，贏了就喊最後一把。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-kaiji",
+      "modelKey": "champ.thorne",
+      "name": "伊藤開司",
+      "origin": "軟輔"
+    },
+    "b2-keyaru": {
+      "description": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-keyaru",
+      "modelKey": "ou99.458777",
+      "name": "凱亞爾",
+      "origin": "法鬥"
+    },
+    "b2-kisaragi": {
+      "description": "如月車站・GGD原創｜一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-kisaragi",
+      "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+      "name": "如月電車",
+      "origin": "坦克"
+    },
+    "b2-klaus": {
+      "description": "覺醒了自動機能｜把工作交給自動功能，自己只負責按錯確認。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-klaus",
+      "modelKey": "ou99.487487-7yzc0mtk",
+      "name": "克勞斯",
+      "origin": "射手"
+    },
+    "b2-kumoko": {
+      "description": "轉生成蜘蛛又怎樣｜宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-kumoko",
+      "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
+      "name": "蜘蛛子",
+      "origin": "法刺"
+    },
+    "b2-luckyman": {
+      "description": "幸運超人｜對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-luckyman",
+      "modelKey": "ou99.457594",
+      "name": "幸運超人",
+      "origin": "坦克"
+    },
+    "b2-makoto": {
+      "description": "月光下的異世界之旅｜商人試射新商品，順便把店面拆了。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-makoto",
+      "modelKey": "ou99.478642",
+      "name": "深澄真",
+      "origin": "法師"
+    },
+    "b2-maomao": {
+      "description": "藥師少女的獨語｜把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-maomao",
+      "modelKey": "champ.thorne",
+      "name": "貓貓",
+      "origin": "軟輔"
+    },
+    "b2-maple": {
+      "description": "怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-maple",
+      "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "name": "梅普露",
+      "origin": "坦克",
+      "transform": {
+        "counterpartId": "b2-maple-alt-9769eb88b85b",
+        "role": "base"
+      }
+    },
+    "b2-maple-alt-9769eb88b85b": {
+      "description": "怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-maple-alt-9769eb88b85b",
+      "modelKey": "champ.thorne",
+      "name": "梅普露（變身）",
+      "origin": "坦克",
+      "transform": {
+        "counterpartId": "b2-maple",
+        "role": "alternate"
+      }
+    },
+    "b2-matthias": {
+      "description": "失格紋的最強賢者｜拿舊課本批改敵人，分數直接扣血。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-matthias",
+      "modelKey": "ou99.465884",
+      "name": "馬提亞斯",
+      "origin": "法鬥"
+    },
+    "b2-misery": {
+      "description": "來自魔界｜免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-misery",
+      "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "name": "米瑟利",
+      "origin": "法師"
+    },
+    "b2-naofumi": {
+      "description": "盾之勇者｜盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-naofumi",
+      "modelKey": "champ.thorne",
+      "name": "岩谷尚文",
+      "origin": "硬輔"
+    },
+    "b2-ned": {
+      "description": "AVARTH｜青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-ned",
+      "modelKey": "ou99.456917",
+      "name": "青蛙劍士 Ned",
+      "origin": "鬥士"
+    },
+    "b2-noor": {
+      "description": "我要招架一切｜能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-noor",
+      "modelKey": "ou99.453949",
+      "name": "諾爾",
+      "origin": "坦克"
+    },
+    "b2-nube": {
+      "description": "靈異教師神眉｜抓鬼兼點名，打架也不能逃早自習。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-nube",
+      "modelKey": "ou99.487484",
+      "name": "鵺野鳴介",
+      "origin": "硬輔"
+    },
+    "b2-orphen": {
+      "description": "魔術士歐菲｜咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-orphen",
+      "modelKey": "ou99.496452",
+      "name": "歐菲",
+      "origin": "法鬥"
+    },
+    "b2-popp": {
+      "description": "神龍之謎｜撤退也是施法距離管理。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-popp",
+      "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "name": "何布",
+      "origin": "法師"
+    },
+    "b2-rem": {
+      "description": "Re:從零開始｜女僕服務包含拖地與拖走客人。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-rem",
+      "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+      "name": "蕾姆",
+      "origin": "狂戰"
+    },
+    "b2-rin": {
+      "description": "Fate｜把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-rin",
+      "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+      "name": "遠坂凜",
+      "origin": "法師"
+    },
+    "b2-shadow": {
+      "description": "我想成為影之強者｜先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-shadow",
+      "modelKey": "ou99.481732",
+      "name": "闇影",
+      "origin": "法刺"
+    },
+    "b2-shinchan": {
+      "description": "蠟筆小新｜把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-shinchan",
+      "modelKey": "champ.thorne",
+      "name": "野原新之助",
+      "origin": "軟輔"
+    },
+    "b2-sinbad": {
+      "description": "辛巴達的冒險｜用宴會與推銷開局，最後變成強制商業合作。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-sinbad",
+      "modelKey": "ou99.491497",
+      "name": "辛巴達",
+      "origin": "鬥士"
+    },
+    "b2-takopi": {
+      "description": "章魚嗶的原罪｜開心道具全部誤用，但認真把隊友救回來。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-takopi",
+      "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
+      "name": "章魚嗶",
+      "origin": "軟輔"
+    },
+    "b2-touka": {
+      "description": "勇者死了｜挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-touka",
+      "modelKey": "ou99.459257",
+      "name": "托卡・史考特",
+      "origin": "鬥士"
+    },
+    "b2-uncle": {
+      "description": "異世界舅舅｜精靈客服與遊戲攻略，戰鬥全程社交事故。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-uncle",
+      "modelKey": "ou99.454482",
+      "name": "異世界舅舅",
+      "origin": "法師"
+    },
+    "b2-yogiri": {
+      "description": "秒殺外掛太強了｜秒殺外掛改成催眠式下班通知，不按通知的人更倒楣。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-yogiri",
+      "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
+      "name": "高遠夜霧",
+      "origin": "法師"
+    },
+    "b2-zenitsu": {
+      "description": "鬼滅之刃｜清醒時申請離職，睡著後開始加班。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "id": "b2-zenitsu",
+      "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+      "name": "我妻善逸",
+      "origin": "法刺"
+    },
+    "community-review-01-20260907": {
+      "description": "武藤遊戲 社群英雄功能驗收稿。作品：《遊戲王》  \n採用：武藤遊戲／闇遊戲的黑魔導牌組意象。  \n定位：召喚、陷阱、協同施法。\n\n視覺方向：卡片框光、紫色法陣；R 使用金色雷電，召喚代理保持可受擊輪廓。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-01-20260907",
+      "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
+      "name": "武藤遊戲",
+      "origin": "法師"
+    },
+    "community-review-02-20260907": {
+      "description": "八神庵 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n採用：具有紫炎的八神庵。  \n定位：接續輸入、近身連段、爆發。\n\n視覺方向：紫炎低飽和外圈、白色拳爪切線；末段亮度提高但不延長實際判定。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-02-20260907",
+      "modelKey": "ou99.313646",
+      "name": "八神庵",
+      "origin": "鬥士"
+    },
+    "community-review-03-20260907": {
+      "description": "不知火舞 社群英雄功能驗收稿。作品：《THE KING OF FIGHTERS》  \n定位：飛行道具、近身範圍、突進。\n\n視覺方向：紅扇軌跡、橘焰弧、落點火星；殘像只作演出，不增加完整英雄。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-03-20260907",
+      "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "name": "不知火舞",
+      "origin": "鬥士"
+    },
+    "community-review-04-20260907": {
+      "description": "空條承太郎 社群英雄功能驗收稿。作品：《JoJo 的奇妙冒險》  \n採用：第三部後期、已能停止時間。  \n定位：替身近戰、局部時停。\n\n視覺方向：白金之星為待製副模型；拳線紫白、時停要求灰階環界與恢復裂紋，視覺不能代替模擬。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-04-20260907",
+      "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+      "name": "空條承太郎",
+      "origin": "鬥士"
+    },
+    "community-review-05-20260907": {
+      "description": "洛克人 社群英雄功能驗收稿。作品：《Mega Man》  \n採用：初代洛克人，不混入 X 或 EXE。  \n定位：蓄力、武器能源、技能切換。\n\n視覺方向：青藍砲口、白心彈體；刀刃用金屬灰、Leaf Shield 用綠色。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-05-20260907",
+      "modelKey": "ou99.287871",
+      "name": "洛克人",
+      "origin": "射手"
+    },
+    "community-review-06-20260907": {
+      "description": "卡比 社群英雄功能驗收稿。作品：《星之卡比》  \n定位：吸入、吐出、受控技能複製。\n\n視覺方向：粉紅輪廓、黃色星星、石頭灰面、巨劍金白；保留公平碰撞尺寸。\n以 GGD 坦克 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-06-20260907",
+      "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "name": "卡比",
+      "origin": "坦克"
+    },
+    "community-review-07-20260907": {
+      "description": "西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-07-20260907",
+      "modelKey": "ou99.497211",
+      "name": "西索",
+      "origin": "法刺"
+    },
+    "community-review-08-20260907": {
+      "description": "米卡莎 社群英雄功能驗收稿。作品：《進擊的巨人》  \n採用：配備立體機動裝置與雷槍的版本。  \n定位：錨點移動、氣體與刀刃雙資源。\n\n視覺方向：雙刃白線、鋼索細線、瓦斯短尾跡、雷槍橘色延遲警示圈。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-08-20260907",
+      "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "name": "米卡莎",
+      "origin": "鬥士"
+    },
+    "community-review-09-20260907": {
+      "description": "赫蘿 社群英雄功能驗收稿。作品：《狼與辛香料》  \n定位：資源支援、判斷、狼形態。  \n註：戰鬥招式及交易效果為依角色特徵創編。\n\n視覺方向：麥金色護盾、麥穗環、赤褐狼影；交易用小型籌碼提示，狼本體待製。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-09-20260907",
+      "modelKey": "ou99.468771",
+      "name": "赫蘿",
+      "origin": "軟輔"
+    },
+    "community-review-10-20260907": {
+      "description": "魯路修 社群英雄功能驗收稿。作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。\n\n視覺方向：紅色 Geass 眼形、棋盤格區域、黑紅戰術標記；控制完成要有清楚復原提示。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-10-20260907",
+      "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "name": "魯路修",
+      "origin": "軟輔"
+    },
+    "community-review-11-20260907": {
+      "description": "利姆路 社群英雄功能驗收稿。作品：《關於我轉生變成史萊姆這檔事》  \n採用：以大賢者、捕食者、擬態為核心的版本。  \n定位：吸收分析、有限技能取得、變形。\n\n視覺方向：水藍水刃、黑紫黑炎、解析圓環；史萊姆與人形本體待製。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-11-20260907",
+      "modelKey": "ou99.457280",
+      "name": "利姆路",
+      "origin": "法鬥"
+    },
+    "community-review-12-20260907": {
+      "description": "衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-12-20260907",
+      "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+      "name": "衛宮士郎",
+      "origin": "法鬥"
+    },
+    "community-review-13-20260907": {
+      "description": "朝田詩乃 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：GGO 的詩乃，使用 Hecate II。  \n定位：瞄準、視線、狙擊與撤離。\n\n視覺方向：青色狙擊線、金色槍口火、灰色翻滾塵；採 GGO 槍械版本。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-13-20260907",
+      "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "name": "朝田詩乃",
+      "origin": "射手"
+    },
+    "community-review-14-20260907": {
+      "description": "殺老師 社群英雄功能驗收稿。作品：《暗殺教室》  \n定位：高速移動、觸手多工、限時防禦。\n\n視覺方向：黄色觸手弧、三段殘像、白金防禦球；球體不得藏掉可受擊位置。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-14-20260907",
+      "modelKey": "ou99.472112",
+      "name": "殺老師",
+      "origin": "法刺"
+    },
+    "community-review-15-20260907": {
+      "description": "比利海靈頓 社群英雄功能驗收稿。來源：摔角與網路迷因形象。  \n定位：抓取、雙人動作同步、近身支援。  \n註：本組招式名稱為 GGD 創編。\n\n視覺方向：藍白摔角衝擊線、落地塵環、夥伴鼓舞光；招式名均為 GGD 創編。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-15-20260907",
+      "modelKey": "ou99.457123",
+      "name": "比利海靈頓",
+      "origin": "硬輔"
+    },
+    "community-review-16-20260907": {
+      "description": "魔法少女☆伊莉雅 社群英雄功能驗收稿。作品：《Fate/kaleid liner 魔法少女☆伊莉雅》  \n定位：魔杖射擊、職階卡、限時武裝。\n\n視覺方向：粉白魔法陣、紅寶石杖尖、Saber 金藍裝甲與金色光束。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-16-20260907",
+      "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+      "name": "魔法少女☆伊莉雅",
+      "origin": "法師"
+    },
+    "community-review-17-20260907": {
+      "description": "安茲·烏爾·恭 社群英雄功能驗收稿。作品：《OVERLORD》  \n定位：死亡魔法、召喚、延遲終結。\n\n視覺方向：紫黑骷髏法印、綠色情緒抑制光、墜落天空白熱預警；社群 ID 不覆蓋飛鼠。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-17-20260907",
+      "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+      "name": "安茲·烏爾·恭",
+      "origin": "法師"
+    },
+    "community-review-18-20260907": {
+      "description": "吉爾伽美什 社群英雄功能驗收稿。作品：《Fate》  \n採用：Archer 英雄王。  \n定位：多投射物、束縛、大型蓄力攻擊。\n\n視覺方向：金色門環、寶物白金軌跡、天之鎖金線、Ea 紅色旋流。\n以 GGD 砲手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-18-20260907",
+      "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+      "name": "吉爾伽美什",
+      "origin": "砲手"
+    },
+    "community-review-19-20260907": {
+      "description": "桐谷和人 社群英雄功能驗收稿。作品：《刀劍神域》  \n採用：SAO 二刀流桐人。  \n定位：多段近戰、連擊中斷、雙武器動作。\n\n視覺方向：黑白雙劍加青色斬線；命中特效節流，只有末段放大閃光。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-19-20260907",
+      "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "name": "桐谷和人",
+      "origin": "鬥士"
+    },
+    "community-review-20-20260907": {
+      "description": "御坂美琴 社群英雄功能驗收稿。作品：《科學超電磁砲》  \n定位：電擊連鎖、電磁防禦、直線爆發。\n\n視覺方向：藍白放電、橘白超電磁砲、灰黑鐵砂盾；鏈線不得超出實際目標序列。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-20-20260907",
+      "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+      "name": "御坂美琴",
+      "origin": "法師"
+    },
+    "community-review-21-20260907": {
+      "description": "鹿目圓 社群英雄功能驗收稿。作品：《魔法少女小圓》  \n採用：魔法少女圓為主，EX 借用圓環之理意象。  \n定位：弓箭、保護、有限救援。\n\n視覺方向：粉白弓光、玫瑰花瓣盾、圓環環帶；不使用時停。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-21-20260907",
+      "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "name": "鹿目圓",
+      "origin": "軟輔"
+    },
+    "community-review-22-20260907": {
+      "description": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-22-20260907",
+      "modelKey": "ou99.311294",
+      "name": "菜月昴",
+      "origin": "硬輔"
+    },
+    "community-review-23-20260907": {
+      "description": "坂田銀時 社群英雄功能驗收稿。作品：《銀魂》  \n定位：木刀近戰、反擊、喜劇節奏。\n\n視覺方向：木刀淺藍斬線、粉白補給光、漫畫速度線與短吐槽，不讓文字解析成機制。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-23-20260907",
+      "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "name": "坂田銀時",
+      "origin": "鬥士"
+    },
+    "community-review-24-20260907": {
+      "description": "奇犽 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：電力資源、高速移動、自動反應。\n\n視覺方向：藍白短電弧、側移殘像、神速輪廓電流；電量 UI 不以裝飾光冒充。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-24-20260907",
+      "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "name": "奇犽",
+      "origin": "法刺"
+    },
+    "community-review-25-20260907": {
+      "description": "一拳超人 社群英雄功能驗收稿。作品：《一拳超人》  \n角色實體：埼玉；保留「一拳超人」顯示名稱。  \n定位：高辨識單擊、長起手、傷害上限。\n\n視覺方向：白拳壓、黃色衣色識別、認真一拳前安靜蓄勢後單次強衝擊。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-25-20260907",
+      "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "name": "一拳超人",
+      "origin": "狂戰"
+    },
+    "community-review-26-20260907": {
+      "description": "名偵探柯南 社群英雄功能驗收稿。作品：《名偵探柯南》  \n角色實體：江戶川柯南；保留指定顯示名稱。  \n定位：情報標記、可喚醒控制、道具射擊。\n\n視覺方向：足球白線、麻醉針微光、藍色滑板尾跡、放大鏡標記；不用黑客式資訊揭露。\n以 GGD 射手 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-26-20260907",
+      "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+      "name": "名偵探柯南",
+      "origin": "射手"
+    },
+    "community-review-27-20260907": {
+      "description": "庫洛魔法使 社群英雄功能驗收稿。作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n視覺方向：粉金牌框、綠風、葉枝束縛、羽翼與細劍；各牌圖示跟真實狀態同步。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-27-20260907",
+      "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "name": "庫洛魔法使",
+      "origin": "軟輔"
+    },
+    "community-review-28-20260907": {
+      "description": "艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-28-20260907",
+      "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "origin": "鬥士"
+    },
+    "community-review-29-20260907": {
+      "description": "芙莉蓮 社群英雄功能驗收稿。作品：《葬送的芙莉蓮》  \n定位：魔法射擊、防壁、魔力資訊、生活魔法改編。\n\n視覺方向：淡金 Zoltraak、青白六角防壁、柔色花田；不把其他角色專屬魔法填入。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-29-20260907",
+      "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
+      "name": "芙莉蓮",
+      "origin": "法師"
+    },
+    "community-review-30-20260907": {
+      "description": "尼古貓貓 社群英雄功能驗收稿。作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。\n\n視覺方向：灰煙低透明、雜物卡通輪廓、紅色驚慌符號；技能全部為 GGD 日常惡搞改編。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-30-20260907",
+      "modelKey": "ou99.498214",
+      "name": "尼古貓貓",
+      "origin": "法師"
+    },
+    "community-review-31-20260907": {
+      "description": "SUN樂 社群英雄功能驗收稿。作品：《香格里拉・開拓異境》  \n角色實體：サンラク／陽務樂郎。  \n定位：精準回避、反擊、短期強化。  \n來源錨點：作者公開小說中的實際招式。\n\n視覺方向：鳥頭面具待製、青色滑步線、反擊橙色火花、螺旋短刃切線。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-31-20260907",
+      "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "name": "SUN樂",
+      "origin": "鬥士"
+    },
+    "community-review-32-20260907": {
+      "description": "阿薩謝爾 社群英雄功能驗收稿。作品：《召喚惡魔／よんでますよ、アザゼルさん。》  \n角色實體：アザゼル篤史。  \n定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\n\n**查證紀錄**：\n\n- 淫奔：角色的職能，官方動畫介紹可確認。\n- 肩パンチ：招式辭典記載於第 34 話，使用者為阿薩謝爾。\n- THE END OF SON：官方動畫採此拼法；辭典記載漫畫第 64 話出現。\n- 闇ぱんち：辭典記載第 73 話，使用者為闇阿薩謝爾。\n- 流精群（ホワイトレイン）：辭典記載第 160 話，使用者為阿薩謝爾。\n- THE END OF SON FAINAL：辭典的終章條目原樣拼字，尚未核對漫畫原頁。\n- 遊戲以 THE END OF SON〔終章〕顯示最後一項；「終章」是本稿區分標籤。\n- ファイナルビッグベン 屬於貝西卜，不納入阿薩謝爾本人基本技能。\n\n視覺方向：Q 普通一拳配誇張凝重起手；W 白色魔力雨；R 紫黑能量球；EX 反轉時敵人金光、施法者驚愕。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-32-20260907",
+      "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "name": "阿薩謝爾",
+      "origin": "法鬥"
+    },
+    "community-review-33-20260907": {
+      "description": "近衛刀太 社群英雄功能驗收稿。作品：《UQ HOLDER!》  \n採用：不死身與重力劍為核心的版本。  \n定位：再生、武器重量、有限致死恢復。\n\n視覺方向：暗紅再生細線、重劍深色厚軌、輕劍白色細軌；再起保留可辨識硬直。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-33-20260907",
+      "modelKey": "ou99.470087",
+      "name": "近衛刀太",
+      "origin": "狂戰"
+    },
+    "community-review-34-20260907": {
+      "description": "高速婆婆 社群英雄功能驗收稿。作品：《膽大黨》  \n採用：高速婆婆本體的妖怪戰鬥意象。  \n定位：高速追擊、轉向、有限詛咒。\n\n視覺方向：紅黑風線、追獵咒紋、急轉地面擦痕；採妖怪本體，不用厄卡倫或招財貓。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-34-20260907",
+      "modelKey": "ou99.458013",
+      "name": "高速婆婆",
+      "origin": "狂戰"
+    },
+    "community-review-35-20260907": {
+      "description": "炭治郎 社群英雄功能驗收稿。作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n視覺方向：青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-35-20260907",
+      "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
+      "name": "炭治郎",
+      "origin": "鬥士"
+    },
+    "community-review-36-20260907": {
+      "description": "鬼畜王蘭斯 社群英雄功能驗收稿。作品：《鬼畜王蘭斯／Rance》  \n角色實體：蘭斯；與鬼眼狂刀 KYO 無關。  \n定位：近戰爆發、有限成長、隊伍衝鋒。\n\n視覺方向：綠色勇猛光、厚重白斬、漫畫喊招；不導入成人情節或其他人的招式。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-36-20260907",
+      "modelKey": "ou99.493578",
+      "name": "鬼畜王蘭斯",
+      "origin": "狂戰"
+    },
+    "community-review-37-20260907": {
+      "description": "吉伊卡哇 社群英雄功能驗收稿。作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。\n\n視覺方向：奶白輪廓、淡橘討伐叉線、星形勇氣提示、小點心回復光。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+      "id": "community-review-37-20260907",
+      "modelKey": "ou99.459617",
+      "name": "吉伊卡哇",
+      "origin": "硬輔"
+    },
+    "godie-e001": {
+      "description": "故事：\n來自雛見澤的小女孩，喜歡把\"好可愛\"的東西帶回家。\n(出自:寒蟬鳴泣之時)\n\n推薦玩家 : 追擊殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.80\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬼隱之擊\n、染血的柴刀、五吋釘、雛見澤症候群L5",
+      "id": "godie-e001",
+      "modelKey": "imported.renaryugu2",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "origin": "狂戰",
+      "transform": {
+        "alternateUnitRawcode": "E00N",
+        "counterpartId": "godie-e00n",
+        "normalUnitRawcode": "E001",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 75
+          },
+          "durationSec": {
+            "1": 7,
+            "2": 14,
+            "3": 21,
+            "4": 28
+          },
+          "name": "22-04 雛見澤症候群L5",
+          "rawcode": "A02Q"
+        }
+      }
+    },
+    "godie-e002": {
+      "description": "故事：\n在偶然的情況下與衛宮士郎定下契約的 、外觀嬌小的女性SERVANT，就是被認為能力最高的聖靈。\n(出自:Fate/stay night)\n\n推薦玩家 : 破塔PK\n上手度 : 中\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.80\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n風王結界、感知能力、約束與勝利之劍、Avalon-永恆的理想鄉",
+      "id": "godie-e002",
+      "modelKey": "imported.herosaber",
+      "name": "亞瑟王 - Saber",
+      "origin": "法鬥",
+      "transform": {
+        "alternateUnitRawcode": "E00L",
+        "counterpartId": "godie-e00l",
+        "normalUnitRawcode": "E002",
+        "role": "base",
+        "triggerAbility": {
+          "name": "20-01 風王結界",
+          "rawcode": "A0DZ"
+        }
+      }
+    },
+    "godie-e007": {
+      "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n柳術、鬥仙術、雲體風身之術、仙氣發勁",
+      "id": "godie-e007",
+      "modelKey": "imported.herolingtong",
+      "name": "龍之子 - 天地志狼",
+      "transform": {
+        "alternateUnitRawcode": "E007",
+        "counterpartId": "godie-ewar",
+        "normalUnitRawcode": "EWAR",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 45,
+            "2": 45,
+            "3": 45,
+            "4": 45
+          },
+          "durationSec": {
+            "1": 12,
+            "2": 18,
+            "3": 24,
+            "4": 30
+          },
+          "name": "12-03 破凰之心-徒手空破山",
+          "rawcode": "A02W"
+        }
+      }
+    },
+    "godie-e008": {
+      "description": "故事：\n身分為火霧戰士，為了存在感稀薄的人而戰。\n(出自:灼眼的夏娜)\n\n推薦玩家 : 團戰殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 310\n\n可學習的技能：\n拔焰刀、火羽、赤焰爆發、討滅封絕",
+      "id": "godie-e008",
+      "modelKey": "imported.heroshana",
+      "name": "火霧戰士 - 夏娜",
+      "origin": "法鬥"
+    },
+    "godie-e00l": {
+      "id": "godie-e00l",
+      "modelKey": "imported.herosaber",
+      "name": "亞瑟王 - Saber",
+      "transform": {
+        "alternateUnitRawcode": "E00L",
+        "counterpartId": "godie-e002",
+        "normalUnitRawcode": "E002",
+        "role": "alternate",
+        "triggerAbility": {
+          "name": "20-01 風王結界",
+          "rawcode": "A0DZ"
+        }
+      }
+    },
+    "godie-e00n": {
+      "id": "godie-e00n",
+      "modelKey": "imported.renaryugu2",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "transform": {
+        "alternateUnitRawcode": "E00N",
+        "counterpartId": "godie-e001",
+        "normalUnitRawcode": "E001",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 75
+          },
+          "durationSec": {
+            "1": 7,
+            "2": 14,
+            "3": 21,
+            "4": 28
+          },
+          "name": "22-04 雛見澤症候群L5",
+          "rawcode": "A02Q"
+        }
+      }
+    },
+    "godie-e00r": {
+      "description": "故事：\n『汎用人型決戰兵器』EVANGELION初號機，採用半生物機械的製造，因此雖然能力強大,但是不好控制。作業系統為[J-Win95]，因此很容易發生\"應用程式錯誤\"而失控暴走 。\n\n推薦玩家 : KUSO破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 300\n\n可學習的技能：\n吞噬、高震動周波短刀、AT力場、野戰型陽電子砲",
+      "id": "godie-e00r",
+      "modelKey": "w3x.stock.satyrtrickster",
+      "name": "最終泛用人型決戰兵器 - 初號機",
+      "origin": "狂戰"
+    },
+    "godie-e00s": {
+      "description": "故事：\n白木家族是捍衛世界樹種族之一，與黃金龍族不同的是，通常處於被動守護狀態而不像黃金龍族常巡邏出擊，白木家族擅長控制自然元素牽制敵人。卡迪那本來是一顆瀕臨枯死的老樹精，受到飛鼠先生的祝福之後重生也得到了異常的魔法能量。\n(出自:去死團逆襲原創)\n\n推薦玩家 : 團戰殺人\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.10\n智慧 + 2.80\n基礎跑速 250\n\n可學習的技能：\n伸卡球、大怒石、木束縛之術、千年練成",
+      "id": "godie-e00s",
+      "modelKey": "champ.sela",
+      "name": "白木老樹精 - 白木卡迪那",
+      "origin": "硬輔",
+      "transform": {
+        "alternateUnitRawcode": "E010",
+        "counterpartId": "godie-e010",
+        "normalUnitRawcode": "E00S",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 15
+          },
+          "name": "70-00 紮根",
+          "rawcode": "A0O6"
+        }
+      }
+    },
+    "godie-e00w": {
+      "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n百烈櫻華斬、雷鳴劍、GLADIARIA ALAT、真-雷光劍",
+      "id": "godie-e00w",
+      "modelKey": "imported.mfls",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "E00X",
+        "counterpartId": "godie-e00x",
+        "normalUnitRawcode": "E00W",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 6,
+            "2": 12,
+            "3": 18,
+            "4": 24
+          },
+          "name": "77-03 GLADIARIA ALAT",
+          "rawcode": "A0JG"
+        }
+      }
+    },
+    "godie-e00x": {
+      "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n斬魔劍、百烈櫻華斬、GLADIARIA ALAT、真雷光劍",
+      "id": "godie-e00x",
+      "modelKey": "imported.mfls",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "transform": {
+        "alternateUnitRawcode": "E00X",
+        "counterpartId": "godie-e00w",
+        "normalUnitRawcode": "E00W",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 6,
+            "2": 12,
+            "3": 18,
+            "4": 24
+          },
+          "name": "77-03 GLADIARIA ALAT",
+          "rawcode": "A0JG"
+        }
+      }
+    },
+    "godie-e010": {
+      "id": "godie-e010",
+      "modelKey": "champ.sela",
+      "name": "白木老樹精 - 白木卡迪那",
+      "transform": {
+        "alternateUnitRawcode": "E010",
+        "counterpartId": "godie-e00s",
+        "normalUnitRawcode": "E00S",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 15
+          },
+          "name": "70-00 紮根",
+          "rawcode": "A0O6"
+        }
+      }
+    },
+    "godie-edem": {
+      "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
+      "id": "godie-edem",
+      "modelKey": "imported.herosasuke",
+      "name": "寫輪眼復仇者 - 宇智波佐助",
+      "origin": "法刺"
+    },
+    "godie-efur": {
+      "description": "故事：\n來自殺手世家揍敵客家族，其才能在揍敵客家族歷史也是非常優秀。擁有超強的念能力，可以任意操縱敵人的生死。暗殺家族揍敵客家的家長。奇犽的祖父。 穿著「一日一殺」和「生涯現役」等刺繡的衣服。\n(出自:偽獵人X獵人)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.20\n智慧 + 2.30\n基礎跑速 315\n\n可學習的技能：\n暗步。極限之圓、龍頭戲畫。牙突、龍頭戲畫。佈壁、龍星群",
+      "id": "godie-efur",
+      "modelKey": "champ.sela",
+      "name": "揍敵客大家長 - 揍敵客桀諾",
+      "origin": "鬥士"
+    },
+    "godie-emfr": {
+      "description": "故事：\n英國某間魔法學校修行的首席畢業生涅吉，目前還只是個10歲的少年。他的目標是成為「出色的魔法使」。\n(出自:魔法老師)\n\n推薦玩家 : 團戰牽制\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.40\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n風精召喚、沉睡之霧、雷電風暴、千之雷",
+      "id": "godie-emfr",
+      "modelKey": "imported.negi",
+      "name": "魔法老師 - 涅吉。史普林。菲爾德",
+      "origin": "狂戰"
+    },
+    "godie-emns": {
+      "description": "故事：\n英俊瀟灑，謹慎且機智，雖然極有女人緣但對異性不感興趣。高中三年級時在學校撿到了死神路克遺留人間界的死亡筆記\"DEATH NOTE\"，從而擁有了操縱生死的能力，並以\"新世界的神\"的名義君臨天下。\n(出自:死亡筆記本)\n\n推薦玩家 : 心機暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.50\n智慧 + 2.70\n基礎跑速 300\n\n可學習的技能：\n死神的規則、機警、火車輾過、心臟麻痺",
+      "id": "godie-emns",
+      "modelKey": "imported.herolight",
+      "name": "奇樂 - 夜神月",
+      "origin": "法師"
+    },
+    "godie-etyr": {
+      "description": "故事：\n父母家在京都的關西咒術協會，父親近衛詠春是關西咒術協會會長，祖父是關東魔法協會會長與麻帆良學園的校長，自身擁有驚世駭俗的魔法力量，有可能能成為世界頂級的治癒術師，在關東魔法協會一戰中被天崎千草借其魔力召喚出過百惡魔。\n(2007部族盃比賽獎品 出自:魔法老師)\n\n推薦玩家 : 輔助團戰\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.20\n智慧 + 3.20\n基礎跑速 295\n\n可學習的技能：\n東風繪扇、南風末廣、式神炸裂、魔力應援、聖夜降臨",
+      "id": "godie-etyr",
+      "modelKey": "imported.herooichi",
+      "name": "治癒系公主 - 木乃香",
+      "origin": "軟輔"
+    },
+    "godie-ewar": {
+      "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n推薦玩家 : 團戰狙擊\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬥仙術、仙氣．採藥、破凰之心．徒手空破山、龍氣爆發",
+      "id": "godie-ewar",
+      "modelKey": "imported.herolingtong",
+      "name": "龍之子 - 天地志狼",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "E007",
+        "counterpartId": "godie-e007",
+        "normalUnitRawcode": "EWAR",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 45,
+            "2": 45,
+            "3": 45,
+            "4": 45
+          },
+          "durationSec": {
+            "1": 12,
+            "2": 18,
+            "3": 24,
+            "4": 30
+          },
+          "name": "12-03 破凰之心-徒手空破山",
+          "rawcode": "A02W"
+        }
+      }
+    },
+    "godie-h00l": {
+      "description": "故事：原本在森林中被當成『永遠不會長大的科奇利族人』般的生活著，直到某天因葛諾多夫的陰謀而知道自己真正的身世，為了對抗葛諾多夫，林克成為時空勇者 。\n(出自:薩爾達傳說)\n\n推薦玩家 : 肉盾牽制\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 2.00\n智慧 + 1.20\n基礎跑速 295\n\n可學習的技能：\n科奇利族迴旋鏢、鎖鏈槍、海拉爾之盾的庇護、迴旋斬",
+      "id": "godie-h00l",
+      "modelKey": "imported.linkstik",
+      "name": "時空勇者 - 林克",
+      "origin": "鬥士"
+    },
+    "godie-h01n": {
+      "description": "故事：黑崎一護除了能夠看見靈之外，是個很普通的高中生，但是有一天，出現了一個叫做〔虛〕的惡靈找上了他，此時！他遇見了死神朽木露琪亞，為了拯救家人，踏上代理死神這條路 。\n(出自:死神BLEACH)\n\n推薦玩家 : 輸出殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.45\n智慧 + 1.6\n基礎跑速 295\n\n可學習的技能：\n瞬步、斬擊、月牙天衝、卍解",
+      "id": "godie-h01n",
+      "modelKey": "imported.heroichigo",
+      "name": "開外掛的死神 - 黑崎一護",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "H01O",
+        "counterpartId": "godie-h01o",
+        "normalUnitRawcode": "H01N",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 30
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 16,
+            "3": 24,
+            "4": 25
+          },
+          "name": "79-04 卍解",
+          "rawcode": "A0LN"
+        }
+      }
+    },
+    "godie-h01o": {
+      "id": "godie-h01o",
+      "modelKey": "imported.heroichigo-bankai",
+      "name": "外掛開很大的死神 - 黑崎一護",
+      "transform": {
+        "alternateUnitRawcode": "H01O",
+        "counterpartId": "godie-h01n",
+        "normalUnitRawcode": "H01N",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 30
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 16,
+            "3": 24,
+            "4": 25
+          },
+          "name": "79-04 卍解",
+          "rawcode": "A0LN"
+        }
+      }
+    },
+    "godie-h01u": {
+      "description": "故事：呂布（公元151年—公元198年），字奉先，五原（今內蒙古包頭市）人。三國時代的著名武將。呂布因其驍勇善戰，但又勢利多變。在民間對他評價為「人中呂布，馬中赤兔」。\n(出自:東漢世紀末傳說)\n\n推薦玩家 : PK破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 305\n\n可學習的技能：\n天下無雙、弒鬼神、鬼神烈戟、赤兔咆哮",
+      "id": "godie-h01u",
+      "modelKey": "imported.lubu",
+      "name": "亂世癿王者 - 呂布奉先",
+      "origin": "鬥士"
+    },
+    "godie-h020": {
+      "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬(需要惡夢魔王碎片)",
+      "id": "godie-h020",
+      "modelKey": "imported.linainvers",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "transform": {
+        "alternateUnitRawcode": "H020",
+        "counterpartId": "godie-hjai",
+        "normalUnitRawcode": "HJAI",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 70,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 20,
+            "2": 12,
+            "3": 18,
+            "4": 24
+          },
+          "name": "04-002 惡夢魔王的碎片",
+          "rawcode": "A0OE"
+        }
+      }
+    },
+    "godie-h02k": {
+      "description": "故事：\n來自四川的熊貓，經歷過四川的地震以後，流落到馬戲團賣藝，雖然自稱賣藝不賣身，但是為了生活還是常常到228公園去，而支持他苟延殘喘活下來的動力，就是希望在有生之年能拍一張彩色的照片。\n(出自:去死團原創)\n\n推薦玩家 : 人品爆發\n上手度 : 殘\n\n角色成長：\n力量 + 2.5（原作寫 1~4，取中點）\n敏捷 + 1.5（原作寫 1~2，取中點）\n智慧 + 0.5（原作寫 0~1，取中點）\n基礎跑速 305\n\n【修正紀錄】w3x 裡這三個成長全部是 0.0，是作者自己填的 —— 也就是說牠原本永遠停在 1 級，跟牠自己的說明矛盾。owner 2026-07-26 裁定「應該照說明成長」。原作寫的是區間，但模擬器是確定性的（不能擲骰），所以取中點。\n\n可學習的技能：\n憤怒的門牙、憤怒的菊花、憤怒的胸毛、憤怒的簡諧運動",
+      "id": "godie-h02k",
+      "modelKey": "champ.skin.barbarian",
+      "name": "國寶級的畜生 - 熊貓",
+      "origin": "坦克"
+    },
+    "godie-h02r": {
+      "id": "godie-h02r",
+      "modelKey": "imported.bulbasaur",
+      "name": "種子神奇寶貝 - 妙蛙花",
+      "transform": {
+        "alternateUnitRawcode": "H02R",
+        "counterpartId": "godie-hgam",
+        "normalUnitRawcode": "HGAM",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 75,
+            "4": 30
+          },
+          "durationSec": {
+            "1": 18,
+            "4": 25
+          },
+          "name": "90-002 超進化! 妙蛙花",
+          "rawcode": "A0VG"
+        }
+      }
+    },
+    "godie-h02u": {
+      "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n憂鬱的眼神、臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+      "id": "godie-h02u",
+      "modelKey": "imported.horse",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "transform": {
+        "alternateUnitRawcode": "H02U",
+        "counterpartId": "godie-h02v",
+        "normalUnitRawcode": "H02V",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 40,
+            "2": 40,
+            "3": 20,
+            "4": 20
+          },
+          "durationSec": {
+            "1": 10,
+            "2": 10,
+            "3": 5,
+            "4": 5
+          },
+          "name": "92-01 臥草泥馬",
+          "rawcode": "A0W9"
+        }
+      }
+    },
+    "godie-h02v": {
+      "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+      "id": "godie-h02v",
+      "modelKey": "imported.horse",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "origin": "坦克",
+      "transform": {
+        "alternateUnitRawcode": "H02U",
+        "counterpartId": "godie-h02u",
+        "normalUnitRawcode": "H02V",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 40,
+            "2": 40,
+            "3": 20,
+            "4": 20
+          },
+          "durationSec": {
+            "1": 10,
+            "2": 10,
+            "3": 5,
+            "4": 5
+          },
+          "name": "92-01 臥草泥馬",
+          "rawcode": "A0W9"
+        }
+      }
+    },
+    "godie-hapm": {
+      "description": "故事：\nBerserker是希臘神話中著名的英雄海格力斯(Hercules) ，血統為半神半人，力大無窮，曾在聖杯戰爭中被召喚為SENVENT與嬌小的Master依利亞並肩作戰。\n(第一屆去死團大賽獎勵角色 出自:Fate/stay night)\n\n推薦玩家 : 衝鋒殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n狂戰士之怒、蹂躪編年史、無銘斧劍、巨神一擊",
+      "id": "godie-hapm",
+      "modelKey": "champ.thorne",
+      "name": "海克力斯 - Berserker",
+      "origin": "坦克"
+    },
+    "godie-hart": {
+      "description": "故事：\nCloud的名字暗示著他神祕，不清楚的過去以及他那不可預知的將來，為了過去奮戰們的朋友，使得他不得不重新提起沉重的大刀迎敵。\n(出自:太空戰士7)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.80\n智慧 + 1.90\n基礎跑速 310\n\n可學習的技能：\n凶斬、隕石擊、畫龍點睛、超究武神霸斬",
+      "id": "godie-hart",
+      "modelKey": "imported.cloud",
+      "name": "最終幻想 - 克勞德",
+      "origin": "鬥士"
+    },
+    "godie-hgam": {
+      "description": "故事：\n一出生背上就負著不可思議的種子。背上的種子裡面，擁有大量的營養 ，種子會跟著身體一起長大。\n(出自:神奇寶貝)\n\n推薦玩家 : 牽制會戰\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.00\n智慧 + 2.30\n基礎跑速 300\n\n可學習的技能：\n飛葉快刀、麻痺粉、藤鞭、陽光烈焰",
+      "id": "godie-hgam",
+      "modelKey": "imported.bulbasaur",
+      "name": "種子神奇寶貝 - 妙蛙種子",
+      "origin": "軟輔",
+      "transform": {
+        "alternateUnitRawcode": "H02R",
+        "counterpartId": "godie-h02r",
+        "normalUnitRawcode": "HGAM",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 75,
+            "4": 30
+          },
+          "durationSec": {
+            "1": 18,
+            "4": 25
+          },
+          "name": "90-002 超進化! 妙蛙花",
+          "rawcode": "A0VG"
+        }
+      }
+    },
+    "godie-hjai": {
+      "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬",
+      "id": "godie-hjai",
+      "modelKey": "imported.linainvers",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "origin": "法師",
+      "transform": {
+        "alternateUnitRawcode": "H020",
+        "counterpartId": "godie-h020",
+        "normalUnitRawcode": "HJAI",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 70,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 20,
+            "2": 12,
+            "3": 18,
+            "4": 24
+          },
+          "name": "04-002 惡夢魔王的碎片",
+          "rawcode": "A0OE"
+        }
+      }
+    },
+    "godie-hpb1": {
+      "description": "故事：\n無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義感的蒼月潮為了阻止去死團的破壞拿起獸矛奮戰了。\n(出自:魔力小馬、潮與虎)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.10\n敏捷 + 2.00\n智慧 + 1.70\n基礎跑速 310\n\n可學習的技能：\n臨兵鬥、者皆陣、列在前、神聖結界",
+      "id": "godie-hpb1",
+      "modelKey": "imported.herotoshiiemaeda",
+      "name": "獸矛傳承使 - 蒼月潮",
+      "origin": "狂戰"
+    },
+    "godie-huth": {
+      "description": "故事：\n看似貪玩可愛，骨子裡卻充滿邪惡的魔人普烏。擁有強大的分身再生能力，摧毀敵人也只不過是他的娛樂。\n(出自:七龍珠)\n\n推薦玩家 : 破塔堵人\n上手度 : 易\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.85\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n吃掉你、把你變成餅乾、分身、破滅能量彈",
+      "id": "godie-huth",
+      "modelKey": "imported.herobuu",
+      "name": "超級普烏 - 魔人普烏",
+      "origin": "坦克"
+    },
+    "godie-hvsh": {
+      "description": "故事：\n高爾根為蛇髮女怪，她們是海神Phorcys和ceto所生的三女妖：大姐司提娜(Stheno)是代表力量，二姐尤里艾蕾(Euryale)是代表自由(飛翔)，三妹梅杜莎(Medusa)是代表悲哀(女王)。她們三姊妹當中只有梅杜沙是人類的身軀。\n(出自:Fate/stay night)\n\n推薦玩家 : 團戰牽制\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n魔法鎖鍊、心眼、鮮血神殿、騎英之韁繩",
+      "id": "godie-hvsh",
+      "modelKey": "imported.herorider",
+      "name": "梅杜莎 - Rider",
+      "origin": "法鬥"
+    },
+    "godie-hvwd": {
+      "description": "故事：\n原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨念。\n(出自:犬夜叉)\n\n推薦玩家 : 牽制輔助\n上手度 : 易\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.40\n智慧 + 1.80\n基礎跑速 295\n\n可學習的技能：\n破魔之箭、明鏡止水、魂飛魄散、百鬼夜行",
+      "id": "godie-hvwd",
+      "modelKey": "imported.kikyou",
+      "name": "除魔巫女 - 桔梗",
+      "origin": "射手"
+    },
+    "godie-n003": {
+      "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.20\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+      "id": "godie-n003",
+      "modelKey": "imported.long",
+      "name": "黑暗福音 - 依文潔琳",
+      "origin": "法師",
+      "transform": {
+        "alternateUnitRawcode": "N01G",
+        "counterpartId": "godie-n01g",
+        "normalUnitRawcode": "N003",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 7,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "42-002 魔力印章",
+          "rawcode": "A06K"
+        }
+      }
+    },
+    "godie-n00b": {
+      "description": "故事：\n從21世紀來的機械貓，因為感受到體內KUSO魂呼喚，所以決定在去死團大闖天下。\n(出自:小叮噹)\n\n推薦玩家 : 團戰輔助\n上手度 : 中\n\n角色成長：\n力量 + 2.00\n敏捷 + 1.85\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n空氣砲、任意門、複製鏡、竹蜻蜓",
+      "id": "godie-n00b",
+      "modelKey": "imported.doraemon-cat",
+      "name": "小叮噹 - 哆拉A夢",
+      "origin": "軟輔"
+    },
+    "godie-n00p": {
+      "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n寄生種子、風華圓舞陣、妖狐變化、魔界樹海",
+      "id": "godie-n00p",
+      "modelKey": "imported.fox",
+      "name": "妖狐藏馬 - 南野秀一",
+      "transform": {
+        "alternateUnitRawcode": "N00P",
+        "counterpartId": "godie-nsjs",
+        "normalUnitRawcode": "NSJS",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 12,
+            "3": 16,
+            "4": 20
+          },
+          "name": "18-03 妖狐變化",
+          "rawcode": "A0IH"
+        }
+      }
+    },
+    "godie-n01c": {
+      "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
+      "id": "godie-n01c",
+      "modelKey": "imported.sd2",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "transform": {
+        "alternateUnitRawcode": "N01C",
+        "counterpartId": "godie-nbbc",
+        "normalUnitRawcode": "NBBC",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 20,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "08-002 龍魔人",
+          "rawcode": "A0T1"
+        }
+      }
+    },
+    "godie-n01g": {
+      "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
+      "id": "godie-n01g",
+      "modelKey": "imported.long",
+      "name": "黑暗福音 - 依文潔琳",
+      "transform": {
+        "alternateUnitRawcode": "N01G",
+        "counterpartId": "godie-n003",
+        "normalUnitRawcode": "N003",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 7,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "42-002 魔力印章",
+          "rawcode": "A06K"
+        }
+      }
+    },
+    "godie-nbbc": {
+      "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
+      "id": "godie-nbbc",
+      "modelKey": "imported.sd2",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "origin": "法鬥",
+      "transform": {
+        "alternateUnitRawcode": "N01C",
+        "counterpartId": "godie-n01c",
+        "normalUnitRawcode": "NBBC",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 20,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "08-002 龍魔人",
+          "rawcode": "A0T1"
+        }
+      }
+    },
+    "godie-nsjs": {
+      "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n推薦玩家 : 追擊破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n風華圓舞陣、寄生種子、妖狐變化、億年樹",
+      "id": "godie-nsjs",
+      "modelKey": "imported.fox2",
+      "name": "妖狐藏馬 - 南野秀一",
+      "origin": "法師",
+      "transform": {
+        "alternateUnitRawcode": "N00P",
+        "counterpartId": "godie-n00p",
+        "normalUnitRawcode": "NSJS",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 12,
+            "3": 16,
+            "4": 20
+          },
+          "name": "18-03 妖狐變化",
+          "rawcode": "A0IH"
+        }
+      }
+    },
+    "godie-o00k": {
+      "description": "故事：\n相當傲嬌的皮卡丘，從小就展現出超出一般水準的戰鬥能力，是個斗S，喜歡身為M的主人小智，。\n(出自:SATO X PICA)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 2.60\n智慧 + 1.80\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、電光一閃、神鳴、打雷絕招",
+      "id": "godie-o00k",
+      "modelKey": "imported.pika",
+      "name": "傲嬌電氣老鼠 - 皮卡娘",
+      "origin": "法刺"
+    },
+    "godie-o00l": {
+      "description": "故事：\n隸屬於獸王底下的神官，是非常高等的魔族，擁有強大的魔法破壞力，不過通常隱身在幕後扮演調查和輔助的角色。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.40\n智慧 + 3.10\n基礎跑速 295\n\n可學習的技能：\n強化炸彈陣、獸王牙操彈、破法對咒、暴爆咒",
+      "id": "godie-o00l",
+      "modelKey": "imported.heroxelloss",
+      "name": "獸神官 - 傑洛士",
+      "origin": "法刺"
+    },
+    "godie-o00x": {
+      "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n※ 這是【賽亞人 - 悟空】的變身態（w3x O00X「(09超三)」），不能直接選，只能靠 09-03 超級賽亞人 進入。\n\n變身態的身體（w3x war3map.w3u 自己寫的四項）：\n‧ 攻擊間隔 1.90 → 1.20 秒（ua1c）＝ 攻擊速度 ×1.58\n‧ 移動速度 310 → 400（umvs）\n‧ 浮空 30（umvt=hover / umvh=30）—— 這是設定，不是 #168 那個要壓回地面的 bug\n‧ 普攻換成【超賽攻擊】（A017）：命中時多一圈衝擊波與金色氣爆\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 400",
+      "id": "godie-o00x",
+      "modelKey": "imported.goku",
+      "name": "超級賽亞人 - 悟空",
+      "transform": {
+        "alternateUnitRawcode": "O00X",
+        "counterpartId": "godie-ogrh",
+        "normalUnitRawcode": "OGRH",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 12,
+            "3": 16,
+            "4": 20
+          },
+          "name": "09-03 超級賽亞人",
+          "rawcode": "A09E"
+        }
+      }
+    },
+    "godie-o02l": {
+      "id": "godie-o02l",
+      "modelKey": "imported.picacugy",
+      "name": "神騎寶貝 - 皮卡丘",
+      "transform": {
+        "alternateUnitRawcode": "O02L",
+        "counterpartId": "godie-ofar",
+        "normalUnitRawcode": "OFAR",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 6,
+            "2": 12,
+            "3": 18,
+            "4": 24
+          },
+          "name": "58-04 瘋狂皮卡丘",
+          "rawcode": "A040"
+        }
+      }
+    },
+    "godie-o02p": {
+      "description": "故事：\n人類史上第一個紅遍全球的虛擬歌姬，儘管到了今日仍在發光發熱，甚至有專屬初音的感謝祭演場會。\n(出自:HATSUNE MIKU)\n\n推薦玩家 : 輔助戰鬥\n上手度 : 易\n\n角色成長：\n力量 + 2.00\n敏捷 + 2.30\n智慧 + 1.70\n基礎跑速 315\n\n可學習的技能：\n甩蔥歌、最初的聲音、初音未來的消失、世界第一的公主殿下",
+      "id": "godie-o02p",
+      "modelKey": "imported.heromiku",
+      "name": "夢幻之星 - 初音",
+      "origin": "軟輔"
+    },
+    "godie-o030": {
+      "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n|CFFFF0000推薦玩家 : |CFFFE890D牽制殺人\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+      "id": "godie-o030",
+      "modelKey": "ou99.456546",
+      "name": "電車癡漢 - 臭作",
+      "transform": {
+        "alternateUnitRawcode": "O030",
+        "counterpartId": "godie-orkn",
+        "normalUnitRawcode": "ORKN",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 15,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "30-002 變態紳士",
+          "rawcode": "A0YT"
+        }
+      }
+    },
+    "godie-ofar": {
+      "description": "故事：\n自從皮卡丘成為國際巨星後，開始也擺起架勢把小智當傭人使喚，直到有一天在森林裡吃蘋果的時候，發現已經身在這場戰鬥中。\n(出自:神奇寶貝)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.90\n智慧 + 1.60\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、鋼鐵尾巴、就決定是你了!小智、瘋狂皮卡丘",
+      "id": "godie-ofar",
+      "modelKey": "imported.heropikachu",
+      "name": "神奇寶貝兒 - 皮卡丘",
+      "origin": "射手",
+      "transform": {
+        "alternateUnitRawcode": "O02L",
+        "counterpartId": "godie-o02l",
+        "normalUnitRawcode": "OFAR",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 6,
+            "2": 12,
+            "3": 18,
+            "4": 24
+          },
+          "name": "58-04 瘋狂皮卡丘",
+          "rawcode": "A040"
+        }
+      }
+    },
+    "godie-ogld": {
+      "description": "故事：\n曾是魔法界首屈一指美白專家，個性善良；但在一次魔法決鬥中敗給飛鼠先生。自認為輸給飛鼠是因為智慧不夠，所以希望在有生之年收個聰明的徒弟一雪前恥。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1\n敏捷 + 1.50\n智慧 + 1.50\n基礎跑速 250\n\n可學習的技能：\n洗刷刷、黑人牙菌斑、超亮白牙膏、黑化",
+      "id": "godie-ogld",
+      "modelKey": "champ.sela",
+      "name": "美白大法師 - 黑人牙膏",
+      "origin": "砲手"
+    },
+    "godie-ogrh": {
+      "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n推薦玩家 : 追擊破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 310\n\n可學習的技能：\n界王拳、瞬間移動、超級賽亞人、龜派氣功",
+      "id": "godie-ogrh",
+      "modelKey": "imported.goku",
+      "name": "賽亞人 - 悟空",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "O00X",
+        "counterpartId": "godie-o00x",
+        "normalUnitRawcode": "OGRH",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 12,
+            "3": 16,
+            "4": 20
+          },
+          "name": "09-03 超級賽亞人",
+          "rawcode": "A09E"
+        }
+      }
+    },
+    "godie-orkn": {
+      "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+      "id": "godie-orkn",
+      "modelKey": "ou99.456546",
+      "name": "電車癡漢 - 臭作",
+      "origin": "法師",
+      "transform": {
+        "alternateUnitRawcode": "O030",
+        "counterpartId": "godie-o030",
+        "normalUnitRawcode": "ORKN",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 15,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "30-002 變態紳士",
+          "rawcode": "A0YT"
+        }
+      }
+    },
+    "godie-osam": {
+      "description": "故事：\n犬夜叉同父異母的哥哥。他是完全的妖怪，能力要強得多，性格非常冷酷殘忍，對付自己的弟弟也是手下毫不留情。為了獲得更強大的力量加入去死團。\n(出自:犬夜叉)\n\n推薦玩家 : 龜裝PK\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n合氣斬、風華之爪、爆碎丸、奧義蒼龍破",
+      "id": "godie-osam",
+      "modelKey": "imported.sesshomaru",
+      "name": "犬妖 - 殺生丸",
+      "origin": "鬥士"
+    },
+    "godie-u00h": {
+      "description": "故事：\n關原之戰後四年千人斬傳說復活！\n手拿五尺大刀，背上有太極圖徽紋\n臉上有如鬼般的深紅雙眼！\n懸賞一百萬兩的通緝犯\n江湖上稱他為鬼畜狂刀。\n(出自:鬼眼狂刀KYO)\n\n推薦玩家 : 團戰殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.40\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n無名神風流-白虎 、無名神風流-朱雀、無明神風流-蛟龍、四神召喚 金色神風",
+      "id": "godie-u00h",
+      "modelKey": "imported.herokyo",
+      "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+      "origin": "法鬥"
+    },
+    "godie-u00j": {
+      "description": "故事：\n賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成年輕的他成了神羅最強的精英戰士，與扎克斯和克勞德到了尼布爾罕做觀察，在那裡的神羅建築地下室發現自己真正的身世，毀了尼布爾罕之後，開始向全世界「復仇」，尋找「約束之地」。\n(出自:最終幻想7)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.10\n智慧 + 1.90\n基礎跑速 295\n\n可學習的技能：\n獄門、八刀一閃、闇之天使、最終殞落星",
+      "id": "godie-u00j",
+      "modelKey": "imported.herosephiroth",
+      "name": "神性的流失 - 賽菲洛斯",
+      "origin": "法鬥"
+    },
+    "godie-u00k": {
+      "description": "故事：\n所有邪惡的聚合體，從上古時代就誕生的惡魔，與飛鼠先生一戰後魂飛魄散，在此次戰役中被召喚回來。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 2.00\n智慧 + 3.00\n基礎跑速 275\n\n可學習的技能：\n死亡隕落、靈魂吸取、厄夜靈魂、萬惡歸宗",
+      "id": "godie-u00k",
+      "modelKey": "champ.sela",
+      "name": "邪惡意念集合體 - 死之王",
+      "origin": "法鬥"
+    },
+    "godie-u00l": {
+      "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔拳、北斗神拳秘訣轉龍呼吸法、北斗百裂拳、ChangeDNA",
+      "id": "godie-u00l",
+      "modelKey": "imported.heropikachu",
+      "name": "北斗之鼠 - 拳四郎",
+      "transform": {
+        "alternateUnitRawcode": "U00L",
+        "counterpartId": "godie-umal",
+        "normalUnitRawcode": "UMAL",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 75
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 16,
+            "3": 24,
+            "4": 28
+          },
+          "name": "25-04 ChangeDNA",
+          "rawcode": "A0HW"
+        }
+      }
+    },
+    "godie-u00n": {
+      "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n推薦玩家 : 牽制殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔 - 巨人迴旋彈",
+      "id": "godie-u00n",
+      "modelKey": "imported.luffe",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "origin": "法鬥",
+      "transform": {
+        "alternateUnitRawcode": "U00O",
+        "counterpartId": "godie-u00o",
+        "normalUnitRawcode": "U00N",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60
+          },
+          "durationSec": {
+            "1": 20
+          },
+          "name": "76-00 二檔",
+          "rawcode": "A0IR"
+        }
+      }
+    },
+    "godie-u00o": {
+      "description": "故事：\n魯夫小時候崇拜海賊「紅髮傑克」而夢想將來做個海賊，某一天，魯夫因為誤食惡魔果實成了橡膠人，卻也因此一輩子成為不能落水的旱鴨子！另魯夫崇拜的海賊傑克曾經為了拯救落海的魯夫免於海怪的襲擊，替魯夫擋下一次危難，卻也因此遭海怪咬斷了左手臂，而後，在紅髮傑克即將離開村莊之際，將自己的象徵物「草帽」寄給了魯夫，從此開啟了一位小男孩的海賊冒險之旅...\n(出自:航海王)\n\n角色成長：\n力量 + 2.95\n敏捷 + 1.60\n智慧 + 1.50\n基礎跑速 315\n\n可學習的技能：\n伸縮自如的橡膠戰斧、伸縮自如的橡膠火箭炮、伸縮自如的槍亂打、三檔",
+      "id": "godie-u00o",
+      "modelKey": "imported.luffe",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "transform": {
+        "alternateUnitRawcode": "U00O",
+        "counterpartId": "godie-u00n",
+        "normalUnitRawcode": "U00N",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60
+          },
+          "durationSec": {
+            "1": 20
+          },
+          "name": "76-00 二檔",
+          "rawcode": "A0IR"
+        }
+      }
+    },
+    "godie-u00v": {
+      "description": "故事：\n前黑手黨老大，被手下背叛炸爛後接合回去所以身上有須多接痕及顏色，平常安靜，必要時非常的暴躁，武功高強，刀槍不入，有潔癖，愛帆布鞋成痴。\n(出自:監獄兔)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.60\n敏捷 + 1.60\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n斬鐵拳、地走龍牙破、廬山昇龍破、死亡噴射肘擊",
+      "id": "godie-u00v",
+      "modelKey": "imported.rabbit",
+      "name": "黑手黨老大 - 基廉列克",
+      "origin": "鬥士"
+    },
+    "godie-u010": {
+      "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+      "id": "godie-u010",
+      "modelKey": "imported.herohehi",
+      "name": "邪眼師 - 飛影",
+      "transform": {
+        "alternateUnitRawcode": "U010",
+        "counterpartId": "godie-uvng",
+        "normalUnitRawcode": "UVNG",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60
+          },
+          "durationSec": {
+            "1": 10
+          },
+          "name": "38-00 邪眼全開",
+          "rawcode": "A0OH"
+        }
+      }
+    },
+    "godie-u01u": {
+      "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
+      "id": "godie-u01u",
+      "modelKey": "imported.heromusashimiyamoto",
+      "name": "三刀流劍士 - 索隆",
+      "transform": {
+        "alternateUnitRawcode": "U01U",
+        "counterpartId": "godie-udre",
+        "normalUnitRawcode": "UDRE",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 15,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "11-002 武裝色霸氣",
+          "rawcode": "A10N"
+        }
+      }
+    },
+    "godie-u034": {
+      "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n流流舞、猜猜拳-剪刀、猜猜拳-拳頭、猜猜拳-布",
+      "id": "godie-u034",
+      "modelKey": "imported.herobiggon",
+      "name": "職業獵人 - 傑 富力士",
+      "transform": {
+        "alternateUnitRawcode": "U034",
+        "counterpartId": "godie-ucrl",
+        "normalUnitRawcode": "UCRL",
+        "role": "alternate",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60
+          },
+          "durationSec": {
+            "1": 7,
+            "2": 14,
+            "3": 21
+          },
+          "name": "06-04 傑桑變化",
+          "rawcode": "A0Y1"
+        }
+      }
+    },
+    "godie-ubal": {
+      "description": "故事：\n巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有機會再使用，但是老邁身軀仍然擁有深不可測的智慧和魔力...。\n(出自:神龍之謎)\n\n推薦玩家 : 破塔殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 1.95\n智慧 + 2.55\n基礎跑速 295\n\n可學習的技能：\n凱薩之鷹、黑核晶、災難之牆、魔界之王",
+      "id": "godie-ubal",
+      "modelKey": "ou99.457883",
+      "name": "魔界霸主 - 巴恩大魔王",
+      "origin": "法師"
+    },
+    "godie-ucrl": {
+      "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n山形修煉-放出系、山形修煉-變化系、山形修煉-強化系、傑桑",
+      "id": "godie-ucrl",
+      "modelKey": "imported.herobiggon",
+      "name": "職業獵人 - 傑 富力士",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "U034",
+        "counterpartId": "godie-u034",
+        "normalUnitRawcode": "UCRL",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60
+          },
+          "durationSec": {
+            "1": 7,
+            "2": 14,
+            "3": 21
+          },
+          "name": "06-04 傑桑變化",
+          "rawcode": "A0Y1"
+        }
+      }
+    },
+    "godie-udea": {
+      "description": "故事：\n神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 1.00\n智慧 + 4.00\n基礎跑速 320\n\n可學習的技能：\n神出鬼沒、寒冰破碎、魔法膨脹、天譴、永恆的愚蠢鄉",
+      "id": "godie-udea",
+      "modelKey": "champ.thorne",
+      "name": "至尊學長 - 飛鼠先生",
+      "origin": "法鬥"
+    },
+    "godie-udre": {
+      "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
+      "id": "godie-udre",
+      "modelKey": "imported.heromusashimiyamoto",
+      "name": "三刀流劍士 - 索隆",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "U01U",
+        "counterpartId": "godie-u01u",
+        "normalUnitRawcode": "UDRE",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 60
+          },
+          "durationSec": {
+            "1": 15,
+            "2": 15,
+            "3": 21,
+            "4": 27
+          },
+          "name": "11-002 武裝色霸氣",
+          "rawcode": "A10N"
+        }
+      }
+    },
+    "godie-umal": {
+      "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n推薦玩家 : KUSO殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔權、北斗神拳秘訣轉龍呼吸法、北斗百烈拳、ChangeDNA",
+      "id": "godie-umal",
+      "modelKey": "champ.skin.barbarian",
+      "name": "北斗神拳掌門人 - 拳四郎",
+      "origin": "鬥士",
+      "transform": {
+        "alternateUnitRawcode": "U00L",
+        "counterpartId": "godie-u00l",
+        "normalUnitRawcode": "UMAL",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60,
+            "2": 60,
+            "3": 60,
+            "4": 75
+          },
+          "durationSec": {
+            "1": 8,
+            "2": 16,
+            "3": 24,
+            "4": 28
+          },
+          "name": "25-04 ChangeDNA",
+          "rawcode": "A0HW"
+        }
+      }
+    },
+    "godie-uvng": {
+      "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+      "id": "godie-uvng",
+      "modelKey": "imported.herohehi",
+      "name": "邪眼師 - 飛影",
+      "origin": "法刺",
+      "transform": {
+        "alternateUnitRawcode": "U010",
+        "counterpartId": "godie-u010",
+        "normalUnitRawcode": "UVNG",
+        "role": "base",
+        "triggerAbility": {
+          "cooldownSec": {
+            "1": 60
+          },
+          "durationSec": {
+            "1": 10
+          },
+          "name": "38-00 邪眼全開",
+          "rawcode": "A0OH"
+        }
+      }
+    },
+    "godie-zombiex": {
+      "description": "故事：\n黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了印度麥可，因為專幹壞事，人稱喪標麥可。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 45 / 級（基礎 380）\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n【#244 數值理由】380 是「全場最脆，但不會被一套秒」的位置（Saber 580、揍敵客 420、魯夫 480）。成長刻意壓回接近一般的 45 — 這隻的爆發力不能來自看不見的成長曲線，要來自天生技「黑泥吞噬」：玩家看得到、也賺得到。\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥吞噬（天生）、肝泥抹德、黑天覆七重咖哩・硬啦、咕咕嘎嘎、百式・哈基米、此世全部之咖哩・バタンキュー（EX）",
+      "id": "godie-zombiex",
+      "modelKey": "champ.godie-zombiex",
+      "name": "聖杯黑泥醬 - 喪標麥可",
+      "origin": "硬輔"
+    },
+    "lol-karthus": {
+      "description": "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。\n\n概念來源：LoL 卡爾瑟斯\nhttps://www.leagueoflegends.com/zh-tw/champions/karthus/\n\n本遊戲改編：\n• 死亡後施法改為每場一次的免死續命，仍須存活才能施法。\n• 安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-karthus",
+      "modelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+      "name": "卡爾瑟斯",
+      "origin": "法師"
+    },
+    "lol-leesin": {
+      "description": "以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\n\n概念來源：LoL 李星\nhttps://www.leagueoflegends.com/zh-tw/champions/leesin/\n\n本遊戲改編：\n• 能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。\n• 聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-leesin",
+      "modelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+      "name": "李星",
+      "origin": "鬥士"
+    },
+    "lol-lux": {
+      "description": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-lux",
+      "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "name": "拉克絲",
+      "origin": "軟輔"
+    },
+    "lol-missfortune": {
+      "description": "以雙重射擊、機動增益與持續彈雨控制交戰區域。\n\n概念來源：LoL 好運姐\nhttps://www.leagueoflegends.com/zh-tw/champions/missfortune/\n\n本遊戲改編：\n• 換目標額外傷害改為固定內置冷卻，不因切換目標重置。\n• 彈射使用最多兩人的連鎖判定；大招改為有界落點彈幕，非自由轉向的錐形掃射。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-missfortune",
+      "modelKey": "community.body.e45bcd1295cf8dec23dffc6cdc201a6ea76586c778534981",
+      "name": "好運姐",
+      "origin": "射手"
+    },
+    "lol-warwick": {
+      "description": "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\n\n概念來源：LoL 沃維克\nhttps://www.leagueoflegends.com/zh-tw/champions/warwick/\n\n本遊戲改編：\n• 低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。\n• 減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-warwick",
+      "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+      "name": "沃維克",
+      "origin": "狂戰"
+    },
+    "lol-xerath": {
+      "description": "以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。\n\n概念來源：LoL 齊勒斯\nhttps://www.leagueoflegends.com/zh-tw/champions/xerath/\n\n本遊戲改編：\n• 普攻回魔改為 EX 主動回復固定比例魔力，受冷卻限制。\n• 蓄力及大招重瞄準改為一次施放的固定時序；最遠射程使用極大級距。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-xerath",
+      "modelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+      "name": "齊勒斯",
+      "origin": "法師"
+    },
+    "lol-yasuo": {
+      "description": "以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。\n\n概念來源：LoL 犽宿\nhttps://www.leagueoflegends.com/zh-tw/champions/yasuo/\n\n本遊戲改編：\n• 第三次斬擊旋風改為獨立 EX；大招不要求擊飛，但有固定鎖足與冷卻。\n• 風牆改為限時物理護盾，不摧毀投射物；不提供雙倍暴擊或無限突進。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+      "id": "lol-yasuo",
+      "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "name": "犽宿",
+      "origin": "鬥士"
+    },
+    "sela": {
+      "id": "sela",
+      "modelKey": "champ.sela",
+      "name": "Sela, the Ember Sage"
+    },
+    "thorne": {
+      "id": "thorne",
+      "modelKey": "champ.thorne",
+      "name": "Thorne, the Bramble Knight"
+    }
+  },
+  "bundleSha256": "19c0ae94a55cd70e94032e4228058a16b40712100d2bc3b2bea531d27c7734d2",
+  "deploymentPerformed": false
+}

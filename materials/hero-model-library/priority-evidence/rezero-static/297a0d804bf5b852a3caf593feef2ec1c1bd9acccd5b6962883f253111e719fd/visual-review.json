@@ -1,0 +1,49 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+  "modelSha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Emilia head, torso, arms, hands, legs and feet.",
+    "Hair, face and costume materials remain visible with no detached primary geometry, opaque face card or bind-pose collapse.",
+    "The corrected Z-up to Y-up output stands upright at 1.8 metres.",
+    "Review covers a static bind pose because source and output contain no animation clips.",
+    "Emilia's uploader-reported motion rig problem remains untested; this review accepts only the static bind pose."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/front.png",
+      "bytes": 173983,
+      "sha256": "52ec343d4191866f595164ef8565874755e97816444a901740daca41d0678583"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/back.png",
+      "bytes": 116422,
+      "sha256": "23f4f344097310e0b297176177cc0ebc58718fbe5ac2b6ca24c558edec7a4140"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/isometric.png",
+      "bytes": 136955,
+      "sha256": "fbef3adc537070f5898af0b226f571649459bd6fdc7f0be248c8a3cf5c6f0439"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/contact-sheet.png",
+      "bytes": 267076,
+      "sha256": "cd91140bbfd07d76289d25336fc9aa9ba0a5c54a2d638724f86074666ed1d8b1"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/webgl-proof.json",
+    "bytes": 2428,
+    "sha256": "d3e2f68be5e16cd58688f8a374ae90e51232b400664d005047d7a2ad2331131f"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

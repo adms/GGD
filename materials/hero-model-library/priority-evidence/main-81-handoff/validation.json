@@ -1,0 +1,84 @@
+{
+  "schema": "ggd-priority81-merge-validation@1",
+  "branchBaseline": "1b1bd17f2d0982a24a0fa36c41fc4deb64a6f1f5",
+  "mergedMain": "b6686109a2946664827e8e59529de670b844d7c6",
+  "requiredChecksRunConcurrently": true,
+  "requiredChecks": [
+    {
+      "command": "pnpm skills:check",
+      "exit": 1,
+      "log": "release-gates/skills-check.log",
+      "logSha256": "93d39f1ed304b0e6683bad9f5d46b89076b231fe75ca5a91c505a27ff80de9ad",
+      "result": "msgledger:check: previous-day ledger has unmapped messages; earlier checks including regenerated coverage passed"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exit": 1,
+      "log": "release-gates/editor-accept-release.log",
+      "logSha256": "76305a6c703998fef8286fdc752a2a43a9910ddbfebf218fe75d81e7b44968d6",
+      "result": "Existing Skill Forge capability-only catalog mismatch (consumeStatus/evasion/orbitEntity/reflectDamage)"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exit": 1,
+      "log": "release-gates/coord-check.log",
+      "logSha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb",
+      "result": "Existing claim.editor-form-receipts duplicate at unchanged type fingerprint; this asset claim passes"
+    }
+  ],
+  "fullReleaseChecksPassed": false,
+  "specificChecks": [
+    {
+      "command": "pnpm models:check",
+      "exit": 1,
+      "log": "release-gates/models-check.log",
+      "logSha256": "2ffb62f2d026104ddbc55306c0c5c0a6d15f1b2d3a2a59550a17f7722db50ff0",
+      "result": "529 GLBs; 25 retained static/native geometry findings; no original or frozen version removed"
+    },
+    {
+      "command": "pnpm combat:check",
+      "exit": 1,
+      "log": "release-gates/combat-check.log",
+      "logSha256": "7e8cc354e5d6897943770e558a37def87ff22fb4091e0b6c60d53fc7972dd0b2",
+      "result": "Synthesis reference WAV inputs absent from this checkout; 1016 finished MP3 hashes independently verified"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/hero-model-library -p 'test_*.py'",
+      "exit": 0,
+      "log": "release-gates/asset-python-tests.log",
+      "logSha256": "c400bd3a886751c727970fc1febbc435d342110e7c97e829ef75a8545dd2aec3",
+      "result": "60 tests passed"
+    }
+  ],
+  "modelImportTests": {
+    "passed": 36,
+    "evidence": "merge-review.json"
+  },
+  "modelIntegrity": {
+    "status": "passed",
+    "failures": 0,
+    "warnings": 0,
+    "heroes": 81,
+    "versionReferences": 282,
+    "uniqueVersionDocuments": 244,
+    "manualDefaultsPreserved": 15,
+    "approvedDerivativesPreserved": 11,
+    "evidence": "final-integrity.json"
+  },
+  "audio": {
+    "mainFinishedFilesShaVerified": 1016,
+    "mainFinishedHeroes": 74,
+    "localSourceFilesShaVerified": 17278,
+    "lolJapaneseReserveFiles": 4927,
+    "postMergeAudioProjectionsVerified": true,
+    "evidence": "audio-postmerge-check.json"
+  },
+  "inventoryFreshness": "passed: 157 roles/forms",
+  "productionDeployed": false,
+  "missingWork": [
+    "Kaiji acquired body pending conversion; prior placeholder retained",
+    "LoL seven PCM reserves pending runtime combat category binding",
+    "Kisaragi taunt/victory: owner now requests JR Yamanote announcement and departure melody; acquisition in progress"
+  ],
+  "note": "Prior failed logs and original source records remain retained. Mergeable Git history is separate from complete release-gate approval."
+}

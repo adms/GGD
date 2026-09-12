@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+  "modelSha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Beatrice head, torso, arms, hands, legs and feet.",
+    "Hair, face and costume materials remain visible with no detached primary geometry, opaque face card or bind-pose collapse.",
+    "The corrected Z-up to Y-up output stands upright at 1.8 metres; the earlier sideways assumption remains only in the S3 backup.",
+    "Review covers a static bind pose because source and output contain no animation clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/front.png",
+      "bytes": 320320,
+      "sha256": "a712fcec6edcd9fbff02adfcd286db90d515350b21fd02337c154ad0a8f9e009"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/back.png",
+      "bytes": 222672,
+      "sha256": "fff965f0d7c6037a1f068eb43be50f5e89d00231b6da6ff1f3eeafa134e09002"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/isometric.png",
+      "bytes": 265242,
+      "sha256": "188ba4eb56547ab46774379b41e13e17de8234f4adec122649a9aa117d2a1bea"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/contact-sheet.png",
+      "bytes": 545503,
+      "sha256": "99b5e3f91ed96bc488620e6e1eb9ca5aa64bd9faa05ea2b9c83dc11cd0deefab"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/webgl-proof.json",
+    "bytes": 2429,
+    "sha256": "364e35066f3f7d3adf18b77bbca52bbcd467e741fe1bccdb1ae5b0f9f623429d"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

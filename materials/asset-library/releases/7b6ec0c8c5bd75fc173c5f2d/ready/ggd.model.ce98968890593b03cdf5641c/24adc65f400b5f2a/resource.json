@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.ce98968890593b03cdf5641c",
+  "title": "高町奈叶",
+  "kind": "model-body",
+  "model": "models/community.body.12f9e789017398035c27f1acd69cc59550d864899c6eb3a7.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:165",
+        "modelKey": "community.body.12f9e789017398035c27f1acd69cc59550d864899c6eb3a7",
+        "glbPath": "assets/models/community/37a88fa104f54e13fee3a478059830543d55db07183aeadf20b30e103b501e27.glb",
+        "sha256": "37a88fa104f54e13fee3a478059830543d55db07183aeadf20b30e103b501e27",
+        "bytes": 1314016,
+        "documentSha256": "ce98968890593b03cdf5641c90f0c0d0546eaa4c75d6c95ca83ea9ff70730987",
+        "sourceCharacter": "高町奈叶",
+        "sourceWork": "魔法少女奈葉",
+        "sourceAssetId": "300heroes:ba23560781257ee688fd40b6",
+        "sourceSha256": "32fba0be0bdc50ee757e5454bc4c7234c8a63f43835c83195b8e247326366f81",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.ce98968890593b03cdf5641c"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-o01z",
+        "name": "高町奈葉"
+      },
+      {
+        "id": "godie-o02v",
+        "name": "高町奈葉"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

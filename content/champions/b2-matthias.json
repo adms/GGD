@@ -328,7 +328,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-matthias",
-  "modelKey": "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
+  "modelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
   "name": "馬提亞斯",
   "origin": "法鬥",
   "passiveAbility": "b2-matthias.passive",
@@ -374,6 +374,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-465884-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.eb4aebd7df2667ce6fb86153e5104ca3c06cf94902932195",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.465884",
+      "modelSha256": "bd22ed5bb21970f6021d3c42ebfe373972d8f27734a98b2332f0007ac0940029",
+      "binarySha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a",
+      "registeredAt": "2026-09-10T14:45:39.869Z",
+      "source": {
+        "kind": "previous",
+        "character": "馬提亞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.465884.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
+      "label": "休闲西装版七夜智贵（論壇相似模型）",
+      "sourceModelKey": "ou99.465884-standard",
+      "modelSha256": "b44b7ac422bf50e0bf622933800441641bae463ef1bfd8c1ede2a3a787db2d2d",
+      "binarySha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+      "registeredAt": "2026-09-10T14:45:39.893Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "休闲西装版七夜智贵",
+        "work": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-465884-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.689f7ba0800ee63c56192ca9cd95163249ad898c3008a5b5",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "43f59f9de5e171a28e7066c9f3b89370000d66ae676a77424a79c6ace69eaf60",
+      "binarySha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+      "registeredAt": "2026-09-10T14:45:39.953Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

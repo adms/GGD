@@ -1,0 +1,45 @@
+{
+  "id": "ggd.model.835f067560ca485a946c2e19",
+  "title": "高町奈葉（StrikerS 成年版）",
+  "kind": "model-body",
+  "model": "models/community.body.3a1e2d90176c4c9e50cc3abf1f0c26e7867a9daf51df1589.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "mba:Chara12_01",
+        "modelKey": "community.body.3a1e2d90176c4c9e50cc3abf1f0c26e7867a9daf51df1589",
+        "glbPath": "assets/models/community/229c2dce4a639b861c7b55084a2f9f5bae41e4225646d028c05899992aa2f607.glb",
+        "sha256": "229c2dce4a639b861c7b55084a2f9f5bae41e4225646d028c05899992aa2f607",
+        "bytes": 851152,
+        "documentSha256": "835f067560ca485a946c2e190d66addefe7f862ce8f2d3722a7e3243a93ec103",
+        "sourceCharacter": "高町奈葉（StrikerS 成年版）",
+        "sourceWork": "魔法少女奈葉",
+        "sourceAssetId": "mba:ce3faa520be57ce3ae02f104",
+        "sourceSha256": "2c8514f3fa022894d50304a76efcdc88a9afec76379e6ece66e837b7d7805a81",
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "limitations": [],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.835f067560ca485a946c2e19"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-o01z",
+        "name": "高町奈葉"
+      },
+      {
+        "id": "godie-o02v",
+        "name": "高町奈葉"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

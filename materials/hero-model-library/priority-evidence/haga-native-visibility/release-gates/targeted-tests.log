@@ -1,0 +1,39 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+
+stdout | packages/shared/src/ops/inventoryRosterSync.test.ts > 盤點表 ↔ 上架設定的雙向同步（GH#1165） > ⭐ 對帳真的跑起來了 —— ⛔ 跑不到就要**出聲**，不可以安靜跳過
+📊 分母：盤點表 81 列（LOL 追加 7 名／第一批 37 名／第二批 37 名）
+        出貨 champion@1 153 名 ⇒ 反向母體 82 名
+        （⛔ 扣掉 godie-* 與引擎骨架 sela／thorne）
+🔬 探針：變身態豁免 1 筆（b2-maple-alt-9769eb88b85b → b2-maple）
+🔑 別名：7 筆驗過的 rowId→出貨 id（example:karthus→lol-karthus）（example:leesin→lol-leesin）（example:lux→lol-lux）（example:missfortune→lol-missfortune）（example:warwick→lol-warwick）（example:xerath→lol-xerath）（example:yasuo→lol-yasuo）
+📐 出貨通道上限 = 500（content/config/model-lod.json）
+
+stdout | packages/shared/src/ops/inventoryRosterSync.test.ts > 盤點表 ↔ 上架設定的雙向同步（GH#1165） > ⭐ 掛在骨架上的每一名都要**宣告理由** ⇒ 靜靜給骨架就 🔴
+🦴 掛骨架 2 名（全部有宣告）：
+   · b2-kaiji [pending-source] 全角色模型盤點中伊藤開司仍為原有 Thorne 模型；其他工作流交付審核 current-priority-other-workflow-audit.json 尚未找到他的可用新模型。
+   · b2-maple-alt-9769eb88b85b [alternate-inherits-base] transform.role = alternate，counterpart b2-maple **已有真模型** community.body.449bf321…；⛔ 玩家在選角畫面選不到變身態
+
+ ✓ packages/shared/src/ops/inventoryRosterSync.test.ts (6 tests) 17ms
+ ✓ packages/shared/src/content/modelUpload/modelUpload.test.ts (11 tests) 1000ms
+   ✓ community GLB import boundaries > bounds sizes, primitive arrays, tree depth, and sparse implicit allocations 358ms
+ ✓ packages/shared/src/ops/inventoryRosterModelHistory.test.ts (6 tests) 778ms
+ ✓ apps/content-api/src/modelVersions.test.ts (10 tests) 12467ms
+   ✓ retained hero model versions > retains paid delivery aliases of identical bytes as independent selectable versions 2854ms
+   ✓ retained hero model versions > retains unapproved high-tier proxies for manual selection while automatic mode uses approved candidates 1703ms
+   ✓ retained hero model versions > defaults to the new frozen body, retains old bytes/bindings, and rolls both ways after the import source is deleted 1420ms
+   ✓ retained hero model versions > prioritizes 300 > MBA > original > W3X and preserves manual choices across imports 2608ms
+   ✓ retained hero model versions > rejects stale and simultaneous selections without losing a version 823ms
+   ✓ retained hero model versions > blocks direct replacement, history removal, frozen-model edits/deletes, and pre-version backup restore 847ms
+   ✓ retained hero model versions > rejects incomplete bindings and missing original files before publishing anything 459ms
+   ✓ retained hero model versions > detects damaged retained bytes and refuses to activate them 646ms
+   ✓ retained hero model versions > shared loading rejects dangling selection and duplicate version keys 729ms
+   ✓ retained hero model versions > rejects a model document linked outside the content root 376ms
+ ✓ packages/shared/src/ops/inventoryBlockerReasonsFresh.test.ts (4 tests) 462ms
+
+ Test Files  5 passed (5)
+      Tests  37 passed (37)
+   Start at  23:39:17
+   Duration  23.21s (transform 5.45s, setup 0ms, collect 8.79s, tests 14.72s, environment 1ms, prepare 856ms)
+

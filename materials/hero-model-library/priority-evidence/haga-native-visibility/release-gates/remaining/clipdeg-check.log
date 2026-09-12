@@ -1,0 +1,6 @@
+
+> ggd@0.0.0 clipdeg:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> bash scripts/gencheck.sh tsx tools/clip-degradation/gen.ts --check
+
+⛔ ggd-clip-degradation.json 過期 —— 跑 `bash scripts/genrun.sh clipdeg:build`
+ ELIFECYCLE  Command failed with exit code 1.

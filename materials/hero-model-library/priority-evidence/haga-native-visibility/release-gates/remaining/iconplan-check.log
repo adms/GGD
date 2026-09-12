@@ -1,0 +1,22 @@
+
+> ggd@0.0.0 iconplan:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> python3 tools/icon-gen/src/plan.py --check
+
+icon-gen plan  (content digest 614e25d80879318a)
+  family         docs   have   drop  blocked  generate
+  champions       153    153      0        0         0
+  abilities       907    907      0        0         0
+  items           142    142      0        0         0
+  TOTAL          1202   1202      0        0         0
+
+  generate = tier1 0 (live surface today) + tier2 0
+
+  dropped, by rule:
+  blocked, by rule:
+
+  why the art is missing (importer's own resolution):
+
+  ⚠ live-surface files NOT found (veto may be too narrow):
+    data/curation/whitelist.json
+
+✓ content/config/icon-plan.json 是最新的

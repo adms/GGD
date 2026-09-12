@@ -1,0 +1,340 @@
+{
+  "schema": "ggd-independent-derivative-validation@1",
+  "count": 11,
+  "entries": [
+    {
+      "id": "community-review-03-20260907",
+      "derivativeId": "derivative:mai",
+      "sourceId": "community:community-review-03-20260907",
+      "sourceSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "934757be92b4fabd218ab4898837a736d79e5f04aa6c1dfe2f5e2c041dd04c1a",
+          "sourceSha256": "2264cfc9141453f4787f80f26dd4d28f6b9cab3b998da254f00706ee39234e80",
+          "edited": true
+        },
+        {
+          "index": 1,
+          "sha256": "65352c22291720d192d01d701013e65df80918677434a556e5678b950247dffe",
+          "sourceSha256": "65352c22291720d192d01d701013e65df80918677434a556e5678b950247dffe",
+          "edited": false
+        },
+        {
+          "index": 2,
+          "sha256": "65352c22291720d192d01d701013e65df80918677434a556e5678b950247dffe",
+          "sourceSha256": "65352c22291720d192d01d701013e65df80918677434a556e5678b950247dffe",
+          "edited": false
+        },
+        {
+          "index": 3,
+          "sha256": "65352c22291720d192d01d701013e65df80918677434a556e5678b950247dffe",
+          "sourceSha256": "65352c22291720d192d01d701013e65df80918677434a556e5678b950247dffe",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v3/mai/runtime"
+    },
+    {
+      "id": "community-review-06-20260907",
+      "derivativeId": "derivative:kirby",
+      "sourceId": "community:community-review-06-20260907",
+      "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+          "sourceSha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/kirby/runtime"
+    },
+    {
+      "id": "community-review-31-20260907",
+      "derivativeId": "derivative:sunraku",
+      "sourceId": "community:community-review-31-20260907",
+      "sourceSha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+      "sha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "e2bb2e2d91284d31b7084fd79f24e97bb7ba4132bcf2912071bef9f0405f5a60",
+          "sourceSha256": "95872788aef41b7e7555966569c1ac36002f43d68b5d036e5ce02eeca9a0fbb6",
+          "edited": true
+        },
+        {
+          "index": 1,
+          "sha256": "76b17ee6bc3f10e50b7731a2f96713742cd080530afc252942f63296974874da",
+          "sourceSha256": "76b17ee6bc3f10e50b7731a2f96713742cd080530afc252942f63296974874da",
+          "edited": false
+        },
+        {
+          "index": 2,
+          "sha256": "b04bee344d23e4a34cf5acbcbbe6acd32a0919d2eee2f7acdb4e93e47bc7ffdf",
+          "sourceSha256": "b04bee344d23e4a34cf5acbcbbe6acd32a0919d2eee2f7acdb4e93e47bc7ffdf",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v5/sunraku/runtime"
+    },
+    {
+      "id": "community-review-32-20260907",
+      "derivativeId": "derivative:azazel",
+      "sourceId": "community:community-review-32-20260907",
+      "sourceSha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "256e971b9bf38f19f70ea87c1ffd805a78d45dc5090e28aaaa8f0b83b6c36da2",
+          "sourceSha256": "c8e5bce6ff22c66284dc5ee30128bdaa39b86e0c710425032bf64d14c18f4032",
+          "edited": true
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v3/azazel/runtime"
+    },
+    {
+      "id": "b2-popp",
+      "derivativeId": "derivative:popp",
+      "sourceId": "300heroes:119",
+      "sourceSha256": "7ffe75534d3ad07dbc48c7eb1ead585fd1b385ef1fed1428f6764683f346b1b1",
+      "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "ac6ce5e5e25f99353418ce573d00d3f54daa2674fc602addc53a7828dd0de871",
+          "sourceSha256": "ac6ce5e5e25f99353418ce573d00d3f54daa2674fc602addc53a7828dd0de871",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/popp/runtime"
+    },
+    {
+      "id": "b2-albus",
+      "derivativeId": "derivative:albus",
+      "sourceId": "300heroes:269",
+      "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+      "sha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        },
+        {
+          "index": 1,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        },
+        {
+          "index": 2,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        },
+        {
+          "index": 3,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/albus/runtime"
+    },
+    {
+      "id": "b2-goblin",
+      "derivativeId": "derivative:goblin",
+      "sourceId": "300heroes:269",
+      "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": false,
+      "geometryNote": "Identical body vertices merged by material; two added hand attachments",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        },
+        {
+          "index": 1,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        },
+        {
+          "index": 2,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        },
+        {
+          "index": 3,
+          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "edited": false
+        }
+      ],
+      "attachments": [
+        {
+          "name": "goblin-right-small-sword",
+          "parentNode": 34,
+          "parentName": "Bip001 R Hand",
+          "node": 67
+        },
+        {
+          "name": "goblin-left-small-shield",
+          "parentNode": 15,
+          "parentName": "Bip001 L Hand",
+          "node": 68
+        }
+      ],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v4/goblin/runtime"
+    },
+    {
+      "id": "b2-yogiri",
+      "derivativeId": "derivative:yogiri",
+      "sourceId": "300heroes:36",
+      "sourceSha256": "dcc78b1e4c4b630460efa3e947417a3bb5858fb653035f6bdad079db32fa91c7",
+      "sha256": "fe62599a460e7cecdfe5ac5726a09a4d6e4a44663576c8529b3c2be6841a984c",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "52c414bb0dc4f68ac8b5575099b1d73378c6f8cf9a80b1205ae9a96b96c1512f",
+          "sourceSha256": "52c414bb0dc4f68ac8b5575099b1d73378c6f8cf9a80b1205ae9a96b96c1512f",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/yogiri/runtime"
+    },
+    {
+      "id": "b2-takopi",
+      "derivativeId": "derivative:takopi",
+      "sourceId": "pet:octopus",
+      "sourceSha256": "2e50327ee16753849cd5add1c414300095bc433124b6c1a79bd741364faa70c1",
+      "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "12d9a0a0f5fc7d2c79584b71cfa15edb85c737ab8e1c8ef5da0dea47bea50bd5",
+          "sourceSha256": "02c002345a852d8e49ae02e35dff431ac1f37118c15af757c8f274e897d5af3e",
+          "edited": true
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v3/takopi/runtime"
+    },
+    {
+      "id": "b2-misery",
+      "derivativeId": "derivative:misery",
+      "sourceId": "300heroes:199",
+      "sourceSha256": "e3c20564a3b2927cbba9dcc95b2a326df79eb7c70198b2d0585440b8091d00ef",
+      "sha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "5ae0221c1b59fc0194c164c541f91dce003f3e39ca74d6452e6bc6b99e09cb4b",
+          "sourceSha256": "5ae0221c1b59fc0194c164c541f91dce003f3e39ca74d6452e6bc6b99e09cb4b",
+          "edited": false
+        },
+        {
+          "index": 1,
+          "sha256": "7a97d64fc6b2d1a66ee0bc34e56ec7a540dfd795c663eaba8e07b2992a2bcea1",
+          "sourceSha256": "7a97d64fc6b2d1a66ee0bc34e56ec7a540dfd795c663eaba8e07b2992a2bcea1",
+          "edited": false
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/misery/runtime"
+    },
+    {
+      "id": "b2-bojji",
+      "derivativeId": "derivative:bojji",
+      "sourceId": "pet:tiny-kirito",
+      "sourceSha256": "9ec9db1cdf67fd5b22013c499845992610d408a034d4e6ad5dfb6b0d264c3b16",
+      "sha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "physicalCopy": true,
+      "embeddedResources": true,
+      "skinAndAnimationPayloadUnchanged": true,
+      "geometryPayloadUnchanged": true,
+      "geometryNote": "Complete source geometry retained",
+      "textures": [
+        {
+          "index": 0,
+          "sha256": "4c9675fb6332b411cd651650a531a3a8579d4cde03143db01c6f06e3cb091bfc",
+          "sourceSha256": "4c9675fb6332b411cd651650a531a3a8579d4cde03143db01c6f06e3cb091bfc",
+          "edited": false
+        },
+        {
+          "index": 1,
+          "sha256": "b5c2e9b943d97bf4c4de12a7ef3180d719efa26f4c430cc1438f8a9ba3b4199b",
+          "sourceSha256": "503f65292cdcf2f258c7e1faab0213a3f2696dfe29d4f877ea7aa395a8817434",
+          "edited": true
+        }
+      ],
+      "attachments": [],
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v3/bojji/runtime"
+    }
+  ],
+  "visualScope": "Local Babylon preview; not production deployment or gameplay acceptance"
+}

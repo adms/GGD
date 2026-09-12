@@ -1,0 +1,42 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-zero-c00-static-skinned-v1",
+  "modelSha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible c00 Zero body, helmet, face, hair, armor, hands, boots and integrated beam saber.",
+    "No detached body part, missing material, opaque alpha card or obvious skinning collapse is visible in the reviewed static bind pose.",
+    "This review does not cover animation playback because the source contains no actions."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/front.png",
+      "bytes": 177143,
+      "sha256": "5c4274608ee368cbfce33bb90309a4b8bd21aedd987ed6e917afcaa2337bb68e"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/back.png",
+      "bytes": 152824,
+      "sha256": "d0446eed02d446eda98077b00144764e86a004a18c24b6882615b98fceb5cc9d"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/isometric.png",
+      "bytes": 194392,
+      "sha256": "49efaa172510ead26fdadea81e6790f2029e678c374a9ae844c9f68f16f474c2"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-zero/3abc73ff765d851f9ddf1f42f0e371f2e71b6b050c23b7016ed1402b7dbdda6f/webgl-proof.json",
+    "bytes": 7403,
+    "sha256": "662c17992ea03a1949896bd9cc53c5abb116dd8609ec24b2c39b636e2bf0ea54"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

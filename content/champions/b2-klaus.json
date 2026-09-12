@@ -327,7 +327,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-klaus",
-  "modelKey": "version.body.165caee7a12e8a86a1af39acc54bd4547454e2a6ba0d0556",
+  "modelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
   "name": "克勞斯",
   "origin": "射手",
   "passiveAbility": "b2-klaus.passive",
@@ -373,6 +373,77 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-487487-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.06f84bffd4849686b5a832e8e458fc52bc01c585cf25c062",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.487487-7yzc0mtk",
+      "modelSha256": "95da0de26da496ff347279390d42a26c823814f4e9a77959dc29e44c60fff43d",
+      "binarySha256": "9fc2682a36ae8bce8ebe5ef185ba46fadc4d14a80873fafe1009dd63057b8f18",
+      "registeredAt": "2026-09-10T14:45:41.760Z",
+      "source": {
+        "kind": "previous",
+        "character": "克勞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.487487-7yzc0mtk.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.24c681b07af5092a882abc56c1bbd4ff4f402a20931bebb8",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-sbhhkedr-standard",
+      "modelSha256": "48cbff23c8e12e1eb26354b8e6d3e9cee5b13990994b9cc31f2879591af72fc4",
+      "binarySha256": "ebc3f5f9cac0107f92f2d116ef0eef68cdd8d8f71b272a450423d6b03db41b3b",
+      "registeredAt": "2026-09-10T14:45:41.769Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.689f7ba0800ee63c56192ca9cd95163249ad898c3008a5b5",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "43f59f9de5e171a28e7066c9f3b89370000d66ae676a77424a79c6ace69eaf60",
+      "binarySha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+      "registeredAt": "2026-09-10T14:45:41.878Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
+      "label": "银发动漫正装男（論壇相似模型）",
+      "sourceModelKey": "ou99.487487-7yzc0mtk-standard-v2",
+      "modelSha256": "9735cdf294928758aeefcdda1f0f91743eb32c8066ff05637a1b550d739db0b3",
+      "binarySha256": "030381fb36ea4c9cf6dfd7e74b1ee1f54b56cad79f29b5289e3de7b78213a2d0",
+      "registeredAt": "2026-09-10T14:48:57.173Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "银发动漫正装男",
+        "work": "來源作品待核；論壇標題：银发动漫正装男",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487487-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

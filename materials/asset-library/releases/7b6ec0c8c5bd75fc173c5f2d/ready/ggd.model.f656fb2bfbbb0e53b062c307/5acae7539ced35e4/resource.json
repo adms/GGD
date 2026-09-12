@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.f656fb2bfbbb0e53b062c307",
+  "title": "珂朵莉",
+  "kind": "model-body",
+  "model": "models/community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-11-20260907",
+        "modelKey": "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a",
+        "glbPath": "assets/models/community/90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e.glb",
+        "sha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+        "bytes": 792376,
+        "documentSha256": "f656fb2bfbbb0e53b062c307a35e9b087d8c88de8d15f0be8b15b7382514aa37",
+        "sourceCharacter": "珂朵莉",
+        "sourceWork": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+        "sourceAssetId": "300heroes:69984f1ef03f84baa007b28d",
+        "sourceSha256": "6124386a3ec3c5d80773544aa6fd1615ed34d02e0f7da0f4af1b67817a7a79c3",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_a",
+          "cast": "single_skill_01",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.f656fb2bfbbb0e53b062c307"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-11-20260907",
+        "name": "利姆路"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "ggd.model.681e601fdf44816df09ffe49",
+  "title": "草帽小子",
+  "kind": "model-body",
+  "model": "models/community.body.8db1ff20165f108b20c94e940493e6d06944afb44e98c9ef.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "300heroes:48",
+        "modelKey": "community.body.8db1ff20165f108b20c94e940493e6d06944afb44e98c9ef",
+        "glbPath": "assets/models/community/5a3e6085538174519370e5348ff199a60cd2d4637da9edf6a61f498d6e714a68.glb",
+        "sha256": "5a3e6085538174519370e5348ff199a60cd2d4637da9edf6a61f498d6e714a68",
+        "bytes": 1231156,
+        "documentSha256": "681e601fdf44816df09ffe49dab5657d19cd65e04290a40640f1ac2a66347f89",
+        "sourceCharacter": "草帽小子",
+        "sourceWork": "ONE PIECE 航海王",
+        "sourceAssetId": "300heroes:6831f37192755a6d7bcce1f8",
+        "sourceSha256": "881994f83579e9d7dc80f62eae81a26de3aabba222dffa318472f7b41a80304c",
+        "clipMap": {
+          "idle": "bat_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_attack_attcom_1",
+          "hurt": "bat_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.681e601fdf44816df09ffe49"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "godie-u00n",
+        "name": "草帽小子 - 蒙其.D.魯夫"
+      },
+      {
+        "id": "godie-u00o",
+        "name": "草帽小子 - 蒙其.D.魯夫"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

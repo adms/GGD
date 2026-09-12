@@ -27,7 +27,7 @@
     }
    ],
    "text": "（原檔）voice_joke_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0009-163_voice_joke_1.ogg",
    "state": "generated",
@@ -47,7 +47,7 @@
   "quote.2": {
    "takes": [],
    "text": "（原檔）voice_joke_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0006-163_voice_joke_2.ogg",
    "state": "generated",
@@ -67,7 +67,7 @@
   "quote.3": {
    "takes": [],
    "text": "（原檔）voice_joke_3",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0013-163_voice_joke_3.ogg",
    "state": "generated",
@@ -386,7 +386,7 @@
     }
    ],
    "text": "（原檔）voice_death_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0015-163_voice_death_1.ogg",
    "state": "generated",
@@ -406,7 +406,7 @@
   "defeat.2": {
    "takes": [],
    "text": "（原檔）voice_death_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0012-163_voice_death_2.ogg",
    "state": "generated",
@@ -443,7 +443,7 @@
     }
    ],
    "text": "（原檔）chr0340_ActVoice#64",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#64.ogg",
    "state": "generated",
@@ -463,7 +463,7 @@
   "hurt.2": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#192",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#192.ogg",
    "state": "generated",
@@ -500,7 +500,7 @@
     }
    ],
    "text": "（原檔）chr0340_ActVoice#68",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#68.ogg",
    "state": "generated",
@@ -520,7 +520,7 @@
   "hurt-heavy.2": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#35",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#35.ogg",
    "state": "generated",
@@ -549,7 +549,7 @@
     }
    ],
    "text": "（原檔）voice_to_270_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0019-163_voice_to_270_1.ogg",
    "state": "generated",
@@ -569,7 +569,7 @@
   "taunt.2": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#6",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#6.ogg",
    "state": "generated",
@@ -589,7 +589,7 @@
   "taunt.3": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#200",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#200.ogg",
    "state": "generated",
@@ -609,7 +609,7 @@
   "attack-light": {
    "takes": [],
    "text": "（原檔）voice_attack_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0021-163_voice_attack_2.ogg",
    "state": "generated",
@@ -629,7 +629,7 @@
   "attack-light.2": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#177",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#177.ogg",
    "state": "generated",
@@ -649,7 +649,7 @@
   "attack-heavy": {
    "takes": [],
    "text": "（原檔）voice_attack_3",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0002-163_voice_attack_3.ogg",
    "state": "generated",
@@ -669,7 +669,7 @@
   "attack-heavy.2": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#71",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#71.ogg",
    "state": "generated",
@@ -689,7 +689,7 @@
   "jump": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#128",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#128.ogg",
    "state": "generated",
@@ -709,7 +709,7 @@
   "respond.ok": {
    "takes": [],
    "text": "（原檔）voice_move_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0025-163_voice_move_1.ogg",
    "state": "generated",
@@ -729,7 +729,7 @@
   "free-move": {
    "takes": [],
    "text": "（原檔）voice_move_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0001-163_voice_move_2.ogg",
    "state": "generated",
@@ -766,7 +766,7 @@
     }
    ],
    "text": "（原檔）voice_kill_255_1_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:163/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/163/01-0007-163_voice_kill_255_1_1.ogg",
    "state": "generated",
@@ -786,7 +786,7 @@
   "kill-1.2": {
    "takes": [],
    "text": "（原檔）chr0340_ActVoice#141",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:parallel-ps-jumpforce-local-next32:jumpforce-jotaro/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio-remaining/JForce_Jotaro/extracted/JForce_Jotaro/chr0340_ActVoice/chr0340_ActVoice#141.ogg",
    "state": "generated",

@@ -344,11 +344,14 @@ def _pending_block(doc, heading_level):
         "",
         f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
         "",
+        "`追蹤鍵` 原樣保存來源快照的值；英雄卡尚未進 `content/champions/` 時，"
+        "不得將該值宣稱為目前可用的 GGD hero ID，也不代表已上架。",
+        "",
         "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
     ])
     for g in doc["groups"]:
         out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
-                "| # | ID | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
+                "| # | 追蹤鍵 | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
         for i, r in enumerate(g["rows"], 1):
             out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
         out.append("")

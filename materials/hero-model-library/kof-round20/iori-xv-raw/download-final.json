@@ -1,0 +1,19 @@
+{
+  "sourceId": "iori-xv-raw",
+  "expectedBytes": 100817444,
+  "filename": "The King of Fighters XV - Iori Yagami.rar",
+  "publicPage": "https://drive.google.com/file/d/1wOyuTZI7gRLrMdIbjTXYc4wHvITsOuhd/view",
+  "steps": [
+    {
+      "url": "https://drive.usercontent.google.com/download?id=1wOyuTZI7gRLrMdIbjTXYc4wHvITsOuhd&export=download&confirm=t&uuid=03ab7bb3-8706-4e26-9460-e88ee1936473",
+      "http": "200",
+      "exitCode": 0,
+      "error": ""
+    }
+  ],
+  "bytes": 100817444,
+  "magic": "526172211a0701004a67b6ae",
+  "sha256": "40d327cd60a6a196541b993370549f8563e9578d7b1c00e7b49507c338f50329",
+  "path": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/iori-xv-raw/raw/The King of Fighters XV - Iori Yagami.rar",
+  "status": "downloaded-rar"
+}

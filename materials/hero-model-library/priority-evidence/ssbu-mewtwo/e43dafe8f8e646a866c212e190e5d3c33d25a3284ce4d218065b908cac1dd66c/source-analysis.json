@@ -1,0 +1,348 @@
+{
+  "schema": "ggd-ssbu-blend-source-analysis@1",
+  "candidateId": "ssbu-mewtwo-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/mewtwo-c00.blend",
+  "sourceBytes": 3463792,
+  "sourceSha256": "a75e399676876d88bcb8ae48f08d6d1efd4d6ae9e3dd224479a6e5b15a3a4a74",
+  "blenderVersion": "4.5.13 LTS",
+  "embeddedScriptsExecuted": false,
+  "embeddedTextBlockCount": 1,
+  "mutedDrivers": [],
+  "visibleMeshes": [
+    {
+      "name": "GamemodelShape",
+      "vertices": 3780,
+      "polygons": 6162,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_mewtwo_001"
+      ]
+    },
+    {
+      "name": "Mewtwo_Eye_VIS_O_OBJShape",
+      "vertices": 24,
+      "polygons": 26,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001",
+        "UVMap.002"
+      ],
+      "materials": [
+        "EyeL"
+      ]
+    },
+    {
+      "name": "Mewtwo_Eye_VIS_O_OBJShape.001",
+      "vertices": 24,
+      "polygons": 26,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001",
+        "UVMap.002"
+      ],
+      "materials": [
+        "EyeR"
+      ]
+    },
+    {
+      "name": "Mewtwo_Openblink_VIS_O_OBJShape",
+      "vertices": 184,
+      "polygons": 272,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_mewtwo_001"
+      ]
+    },
+    {
+      "name": "Mewtwo_Mouth_FaceN_VIS_O_OBJShape",
+      "vertices": 348,
+      "polygons": 486,
+      "vertexGroups": 75,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_mewtwo_001"
+      ]
+    }
+  ],
+  "hiddenOrNonrenderMeshes": [
+    "Mewtwo_Eye2_VIS_O_OBJShape",
+    "Mewtwo_Eye2_VIS_O_OBJShape.001",
+    "Mewtwo_Eye_Ouch_VIS_O_OBJShape",
+    "Mewtwo_Eye_Ouch_VIS_O_OBJShape.001",
+    "Mewtwo_Halfblink1_VIS_O_OBJShape",
+    "Mewtwo_Halfblink1_VIS_O_OBJShape.001",
+    "Mewtwo_Halfblink2_VIS_O_OBJShape",
+    "Mewtwo_Halfblink2_VIS_O_OBJShape.001",
+    "Mewtwo_Halfblink3_VIS_O_OBJShape",
+    "Mewtwo_Halfblink3_VIS_O_OBJShape.001",
+    "Mewtwo_Halfblink4_VIS_O_OBJShape",
+    "Mewtwo_Halfblink4_VIS_O_OBJShape.001",
+    "Mewtwo_Blink_VIS_O_OBJShape",
+    "Mewtwo_Blink_VIS_O_OBJShape.001",
+    "Mewtwo_Blink2_VIS_O_OBJShape",
+    "Mewtwo_Blink2_VIS_O_OBJShape.001",
+    "Mewtwo_Eye_Bound_VIS_O_OBJShape",
+    "Mewtwo_Eye_Bound_VIS_O_OBJShape.001",
+    "Mewtwo_Eye_Talk_VIS_O_OBJShape",
+    "Mewtwo_Mouth_HeavyAttack_VIS_O_OBJShape",
+    "Mewtwo_Mouth_Ouch_VIS_O_OBJShape",
+    "Mewtwo_Mouth_Capture_VIS_O_OBJShape",
+    "Mewtwo_Mouth_Result_VIS_O_OBJShape"
+  ],
+  "armatures": [
+    {
+      "name": "model-armature",
+      "bones": 75,
+      "boneNames": [
+        "Trans",
+        "Rot",
+        "Hip",
+        "Waist",
+        "Bust",
+        "Neck",
+        "Head",
+        "Pipe1",
+        "Pipe2",
+        "Pipe3",
+        "Pipe4",
+        "Pipe5",
+        "Mouth1",
+        "ClavicleC",
+        "ClavicleL",
+        "ShoulderL",
+        "ArmL",
+        "HandL",
+        "HaveL",
+        "FingerL10",
+        "FingerL20",
+        "FingerL30",
+        "FingerL31",
+        "FingerL32",
+        "FingerL33",
+        "FingerL21",
+        "FingerL22",
+        "FingerL23",
+        "FingerL11",
+        "FingerL12",
+        "FingerL13",
+        "ClavicleR",
+        "ShoulderR",
+        "ArmR",
+        "HandR",
+        "HaveR",
+        "FingerR10",
+        "FingerR20",
+        "FingerR30",
+        "FingerR31",
+        "FingerR32",
+        "FingerR33",
+        "FingerR21",
+        "FingerR22",
+        "FingerR23",
+        "FingerR11",
+        "FingerR12",
+        "FingerR13",
+        "LegC",
+        "LegL",
+        "KneeL",
+        "FootL",
+        "ToeL",
+        "LegR",
+        "KneeR",
+        "FootR",
+        "ToeR",
+        "LegL2",
+        "H_LegL3",
+        "LegR2",
+        "H_LegR3",
+        "H_LegL1",
+        "H_LegL2",
+        "H_LegR1",
+        "H_LegR2",
+        "S_Tail1",
+        "S_Tail2",
+        "S_Tail3",
+        "S_Tail4",
+        "S_Tail5",
+        "S_Tail6",
+        "S_Tail7",
+        "S_Tail8_null",
+        "Throw",
+        "Have"
+      ]
+    }
+  ],
+  "actions": [],
+  "usedMaterials": [
+    {
+      "name": "EyeL",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "EyeR",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "def_mewtwo_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    }
+  ],
+  "usedImages": [
+    {
+      "name": "def_mewtwo_001_col.png",
+      "source": "FILE",
+      "filepath": "//def_mewtwo_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/def_mewtwo_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 1024,
+      "height": 1024,
+      "bytes": 507978,
+      "sha256": "6d0b6261c73048d484fc35e71db491c78a2f4a812d5f1ee7625b27464d7b0845"
+    },
+    {
+      "name": "eye_mewtwo_b_col.png",
+      "source": "FILE",
+      "filepath": "//eye_mewtwo_b_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/eye_mewtwo_b_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 256,
+      "height": 256,
+      "bytes": 28446,
+      "sha256": "f461da1984e6583e005549b51de33cd607e17dd3992f6bfe574cf918aa7bb854"
+    },
+    {
+      "name": "eye_mewtwo_w_col.png",
+      "source": "FILE",
+      "filepath": "//eye_mewtwo_w_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/eye_mewtwo_w_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 512,
+      "height": 512,
+      "bytes": 40374,
+      "sha256": "3d022f4716ab8a33c29c4848d484845f38e4d24bef2e06c15626deeaf4bd9410"
+    }
+  ],
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "def_mewtwo_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "def_mewtwo_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/derived-textures/def_mewtwo_001_col.png.ggd-256.png",
+      "derivedBytes": 72073,
+      "derivedSha256": "09bb4be9f0633485be8da2a65423c3e67a8ec3e72a77e2c79cd9f348cbc0e7e3",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "eye_mewtwo_w_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/derived-textures/eye_mewtwo_w_col.png.ggd-256.png",
+      "derivedBytes": 19513,
+      "derivedSha256": "a9397f157718a24d51b7ddd91ac6cfa9f6ac95f13e0f757af2703b75524b4361",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 75,
+      "nodeName": "GamemodelShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 76,
+      "nodeName": "Mewtwo_Eye_VIS_O_OBJShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 77,
+      "nodeName": "Mewtwo_Eye_VIS_O_OBJShape.001",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 78,
+      "nodeName": "Mewtwo_Mouth_FaceN_VIS_O_OBJShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 79,
+      "nodeName": "Mewtwo_Openblink_VIS_O_OBJShape",
+      "previousParentIndex": 80,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceUnits": {
+    "system": "METRIC",
+    "scaleLength": 1.0
+  }
+}

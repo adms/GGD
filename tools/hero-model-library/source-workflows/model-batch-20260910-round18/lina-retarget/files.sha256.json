@@ -1,0 +1,62 @@
+[
+  {
+    "path": "scripts/ggd-lina-retarget-delivery-audit.py",
+    "bytes": 8521,
+    "sha256": "df374ec43157233d898154aa459d2ba873b5846473be3872b7494208c1951769"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-foot-audit-v3.py",
+    "bytes": 3838,
+    "sha256": "071cd5f966f6c5a316c3e90f3059647d1bfa6522f2eaa8f21b5ed71ce80daf60"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-foot-audit.py",
+    "bytes": 4908,
+    "sha256": "b9d0ce1218f5220a1c04ba68d1893a8a11a69043397f38f8b52d4f878dc7fa92"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-freeze.py",
+    "bytes": 15821,
+    "sha256": "2b6b9e4f0f2bc5e353df8462acfd16e125ea120024908a9dbb9d894a6dc2a548"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-render-server-v3.py",
+    "bytes": 3388,
+    "sha256": "ffc267879a90356e9309b8e965fb0d7be5e991364d417e5ab67fc3b1d8e15c95"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-render-server.py",
+    "bytes": 3525,
+    "sha256": "4cdb2aaa3a0c7efce6e5ad6590e29096c3b83e949eb9c59994002ff557f913c0"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-render.mjs",
+    "bytes": 4567,
+    "sha256": "058bf9b3c0c8389a1137e22bcc186fe2aeffb3978f97a1803374ed08d3ea1227"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-resampled.py",
+    "bytes": 12855,
+    "sha256": "f1dc98d64751db133ae558bd620e196efa24f84b3ba7604f2214b7162d670ac4"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget-stable-torso.py",
+    "bytes": 12567,
+    "sha256": "86d9a68790e7a7cb6e08a5334e795ede5a51e96cc2ef2e346902310c8cf537d7"
+  },
+  {
+    "path": "scripts/ggd-lina-retarget.py",
+    "bytes": 12325,
+    "sha256": "bc3f322509bc701633ff6961416e8137f4ba611a973824096dd0b40907512f28"
+  },
+  {
+    "path": "scripts/glb_io.py",
+    "bytes": 6754,
+    "sha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e"
+  },
+  {
+    "path": "scripts/retarget_math.py",
+    "bytes": 1340,
+    "sha256": "db3a6c59b6383025b0f027d0239d132f9303c486e2cb09ad01c9255cb6ef254d"
+  }
+]

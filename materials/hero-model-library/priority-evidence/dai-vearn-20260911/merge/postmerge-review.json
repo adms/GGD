@@ -1,0 +1,573 @@
+{
+  "schema": "ggd.main-e36-postmerge-review@1",
+  "reviewedAt": "2026-09-10T19:00:53.189700+00:00",
+  "readOnly": true,
+  "authority": {
+    "head": "1267de2e9b9c8d9da0ab30873d141228ab9dffe6",
+    "mergeHead": "e36a5acda3522ab0bb2677891a367e56eefb05a1",
+    "baselineOurs": "1267de2e9b9c8d9da0ab30873d141228ab9dffe6",
+    "incomingMain": "e36a5acda3522ab0bb2677891a367e56eefb05a1"
+  },
+  "unresolvedEntryCount": 0,
+  "mergeCommitted": false,
+  "generatorCompletion": {
+    "commandCount": 20,
+    "allRecordedExitZero": true,
+    "successFooterCount": 20,
+    "evidence": [
+      {
+        "command": [
+          "pnpm",
+          "assets:manifest"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/00-assets-manifest.txt",
+        "logSha256": "47307fcd3d724516956cc5b517f09a95450245084bcbb92005c45ade46250dd9"
+      },
+      {
+        "command": [
+          "bash",
+          "scripts/genrun.sh",
+          "content:build",
+          "content:build:indexes-only"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/01-content-indexes.txt",
+        "logSha256": "cb5476865c00a6f96015539c178bf419889563e763bc9001db4909cbbecdb82d"
+      },
+      {
+        "command": [
+          "pnpm",
+          "caps:export"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/02-caps-export.txt",
+        "logSha256": "8409fb09fa109cbd4c0a19feba946f65753d5871c00b4d22cdb1bceb24c57285"
+      },
+      {
+        "command": [
+          "pnpm",
+          "spec:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/03-spec-build.txt",
+        "logSha256": "5cf2bfe7311ec472e82bfb37524866340a31c006a489555d3a7c11218e8000ed"
+      },
+      {
+        "command": [
+          "pnpm",
+          "overview:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/04-overview-build.txt",
+        "logSha256": "551968e22f4ccc95041610d9bb66d61a12864661e98149c08b2e68f77a8cf751"
+      },
+      {
+        "command": [
+          "pnpm",
+          "editorcov:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/05-editorcov-build.txt",
+        "logSha256": "e891099b53192f025a1fdcc30c57ecaa52a48f1deb65447c45f48829545da81a"
+      },
+      {
+        "command": [
+          "pnpm",
+          "appearance:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/06-appearance-build.txt",
+        "logSha256": "412f865b5f997aec0d5f6dc2460292d3de533d6de31c345eaf65e867862acda4"
+      },
+      {
+        "command": [
+          "pnpm",
+          "clipdeg:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/07-clipdeg-build.txt",
+        "logSha256": "ef1bfe540ba3a31661ded5260d68f27ed85b81a6afc50811bfb021cbb2878ec5"
+      },
+      {
+        "command": [
+          "pnpm",
+          "receipt:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/08-receipt-build.txt",
+        "logSha256": "daa31eaf23e491d496105d582ec33b441a2f506db76d47534c14775486da2eb5"
+      },
+      {
+        "command": [
+          "pnpm",
+          "decor:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/09-decor-build.txt",
+        "logSha256": "b0d1c1741798fbacf0704792987462c54fd85ed423ee8f0b3084cf441e456370"
+      },
+      {
+        "command": [
+          "pnpm",
+          "bricks:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/10-bricks-build.txt",
+        "logSha256": "8bb2b71dda356281fe82f09323e3c2c5942aebbc1c69e4edbf300ece97cf3d2f"
+      },
+      {
+        "command": [
+          "pnpm",
+          "formreceipts:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/11-formreceipts-build.txt",
+        "logSha256": "36fe694f35df73cfb0143c2d21536d0e39701857408c406a4dd2c6a63050b2e0"
+      },
+      {
+        "command": [
+          "pnpm",
+          "bricks:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/12-bricks-build.txt",
+        "logSha256": "f8f4fa3f22bc03fedb1e23c3420991a4b37721f39051687c89de062df7d3d92d"
+      },
+      {
+        "command": [
+          "pnpm",
+          "skillremake:docs"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/13-skillremake-docs.txt",
+        "logSha256": "52be08108cbc5615df0a56d5998f1694f8bfd6a99e05f95d4bbf6eeda75eb01c"
+      },
+      {
+        "command": [
+          "pnpm",
+          "contract:numbers"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/14-contract-numbers.txt",
+        "logSha256": "d05c26d0fbe39701a8192d65f09e02738a7270819fd2fb91eae460a02d9de8dc"
+      },
+      {
+        "command": [
+          "pnpm",
+          "atlas:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/15-atlas-build.txt",
+        "logSha256": "99bf9a35fe63521fbef92b596818486f6abc3bfe5fd2d1d4731cf4e58c761038"
+      },
+      {
+        "command": [
+          "pnpm",
+          "docs:readme"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/16-docs-readme.txt",
+        "logSha256": "9e96a7114ecaaee74a7a4f3d1388e1d9fbfd861a8ba5a4dabc56fe2590b681fc"
+      },
+      {
+        "command": [
+          "pnpm",
+          "skillforge:audit"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/17-skillforge-audit.txt",
+        "logSha256": "9a3da7808bc4f6aecdc6f91919192914704d6d618745a30a91b041b776c06d0e"
+      },
+      {
+        "command": [
+          "pnpm",
+          "board:roll"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/18-board-roll.txt",
+        "logSha256": "ef29659c5bd7443b4f0e014933ee0b81fb1fdaabc49825484f6d1a1163368cf6"
+      },
+      {
+        "command": [
+          "pnpm",
+          "board:build"
+        ],
+        "exitCode": 0,
+        "log": "/private/tmp/ggd-main-merge-checks/19-board-build.txt",
+        "logSha256": "ca935d94b8acfbf9843249c029022305911b9e8493b358a2944f3c46f7123621"
+      }
+    ],
+    "artifactCount": 36,
+    "regeneratedArtifactCount": 31,
+    "mainFinalArtifactCount": 5,
+    "freshnessAllIndependentRechecked": false
+  },
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "e6250f56860e331304753811dd19f73f84f51b8062e3757718b6256d2355ffca",
+      "bytes": 243096,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "content/assets-manifest.json",
+      "sha256": "3f50f1392f112a26adba3d8a12e478d16e8a85ab2f1baddc705f01c870d58932",
+      "bytes": 867623,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "content/bundle.json",
+      "sha256": "85f9ff101ced6e9f32fd0b390da68c08e70c3a2af2cfd44b657b68f33a3c6441",
+      "bytes": 4479818,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "content/champions/_index.json",
+      "sha256": "8b5998aa2a37789a562f52b56e2ee2824b1f7eddbfd291390025e8bddd2efcfc",
+      "bytes": 21467,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "content/config/_index.json",
+      "sha256": "cae47be9baf9ab68f0e3bd9a667654d467d4e7bb5f5ac34637f145c4f9109ada",
+      "bytes": 13443,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "content/editor-target-profile.json",
+      "sha256": "7e135feaf51617d6b781a6c3865952a93dfc581571be513055bf967600e416de",
+      "bytes": 363055,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "content/manifest.json",
+      "sha256": "cd54fd979a147f1bef206073ba1668fcdf54b3d044ae593ee5a94bebf8cd600e",
+      "bytes": 1862,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/_daily/2026-09-11.md",
+      "sha256": "e5536352533a704b6c4e67bfaf93bdf434f609892ab3240a0254830f3ca3b59a",
+      "bytes": 1566,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "take-main-final"
+    },
+    {
+      "path": "docs/_daily/ledger-source_temp_20260910.md",
+      "sha256": "abb28877209388ecfd195b47f65bbe698fdfce05cce25cd3ada92c484fd501df",
+      "bytes": 22008,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "take-main-final"
+    },
+    {
+      "path": "docs/_daily/ledger-source_temp_20260911.md",
+      "sha256": "9870935463895ae66ef611895ba3d956822e9f03ae9ba7373e8a699208a92ce7",
+      "bytes": 1216,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "take-main-final"
+    },
+    {
+      "path": "docs/_release/ggd-board.html",
+      "sha256": "ef05d244de7e51e1c72ddf974b30ea2987cac7cf2ac698a8fd4aa0c0fca0038b",
+      "bytes": 402118,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/_release/戰情版-20260911.md",
+      "sha256": "dd6814ef95aba12c4028703a2b67c4cc79ba14bca0afeeaf868e9b0000c2368b",
+      "bytes": 79497,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/_reports/editor-skill-acceptance-42x46.json",
+      "sha256": "2e73d05d73faf2662b2ac90905501a92e3116b48b993764bf2fc93ff22bf7b14",
+      "bytes": 175990,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/_reports/editor-skill-acceptance-42x46.md",
+      "sha256": "3cf3f97656ca0e4fb8e7f1807e53731280e240fb94fdea82c6c2c2190f11002d",
+      "bytes": 11278,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/_task-ledger.json",
+      "sha256": "94c141628490511f3167856318ef86228d21b0942bb88fdd49df5c3d2ab01b53",
+      "bytes": 45834,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "take-main-final"
+    },
+    {
+      "path": "docs/editor-contract/coordination/claim.editor-form-receipts.json",
+      "sha256": "0315403e16fc1f35124a6c65a42accf431978b46e93a8d6748fddf1d993d5b4c",
+      "bytes": 492810,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-bricks.json",
+      "sha256": "ac0b3d28191c8fb387876fb56b2188c06f79706afb7037df483db55ab2470a15",
+      "bytes": 441339,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-bricks.md",
+      "sha256": "3f2eb7de3bab652b10dc52d3cd9947c12944ed633a00f4573c45e03e4ed8b9cb",
+      "bytes": 14220,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-clip-degradation.json",
+      "sha256": "7b8b81210a9c937cad7f35f8a588432263f1bf9b73e97f30139c4581bc2342dd",
+      "bytes": 106875,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-config-decoration-census.json",
+      "sha256": "da7cedcf872a7d78f9b4a49b7f393f1a642c5b44d89e4ffd86d193d8004b3892",
+      "bytes": 17906,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-config-decoration-census.md",
+      "sha256": "fd7bf925d2ac9b8c4dd3a91f578d9efe703b46095ce3d7d60c47a1af4f9a4cfd",
+      "bytes": 13879,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-editor-coverage.json",
+      "sha256": "4ad7aa778a0b6bc1238fa87677ba95bedec9421f2f84e509e62442888a569aa0",
+      "bytes": 603231,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-presentation-receipt.json",
+      "sha256": "5f13ba908aedb6f8fa08b7124e5906f5752df2dc6c4796240cd793cf8eeffbc9",
+      "bytes": 8806,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-resolved-appearance.json",
+      "sha256": "ca74dbca4723387f95ba77807f4026162ab16e754163f66006c3cbc42f63dbb5",
+      "bytes": 182763,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-runtime-capabilities.json",
+      "sha256": "0e8d5aa673f42ff1b837450d93adcf36c7aaf9f5a442fc220fca998ce0422ff6",
+      "bytes": 107976,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/editor-contract/ggd-runtime-capabilities.md",
+      "sha256": "f0f63fbb40e8f2f868836f3d459adc3e224248d6f4f56ef301cc718805f9b6d5",
+      "bytes": 100439,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/engine-atlas.json",
+      "sha256": "2e6aa391b367fefb2b978a1a2808ffa7e18bd2161dfe7e7879954feff7e3fa4d",
+      "bytes": 98632,
+      "jsonParsePassed": true,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/reference/abilities.md",
+      "sha256": "92cbfdea969af59c2f0ab9c68701c71953160ed009a20a5edf7a19822e4262b9",
+      "bytes": 179338,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/reference/grail-wishes.md",
+      "sha256": "7c90e0b8f30339a5179e410ef81cab60f1e2f4b8d82251a8327715daec2bf20c",
+      "bytes": 116302,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/reference/items.md",
+      "sha256": "bd38e1251e517aad4f0d77f152a7d82b892d3ba85d6d2d9478b788b9cfc1b2ee",
+      "bytes": 28918,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/reference/mechanics.md",
+      "sha256": "1d3acc649649cbb6aa185ee24974d748f52b82aabbe0aac9ffbdd469f46209fe",
+      "bytes": 47245,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/reference/roster.md",
+      "sha256": "65b79b2d85c4153415506a5cfcbbb53b20de344fec46396c7a2f5dec8a3f0a65",
+      "bytes": 48586,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/requirements-status.md",
+      "sha256": "26d541440a6b4cbaaf45fae99013476c75c87649e1c1571d1d7974ccaf016b4a",
+      "bytes": 503601,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "take-main-final"
+    },
+    {
+      "path": "docs/固有能力及寶具總覽.md",
+      "sha256": "fad9250b3f3c7e34ac15098e261d4a56615ce44c6d2208069cd3670a719d697f",
+      "bytes": 200337,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/技能標記機制與效果規則.md",
+      "sha256": "3ec6f216749b18fcdd6a87f1a5392389e2726aaace745d8c01e8f282783ee0b9",
+      "bytes": 297885,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    },
+    {
+      "path": "docs/技能編輯器引擎須知 20260811.md",
+      "sha256": "69a80b6db84da08b34a5b106e6fcad039ad128defb7f2d3ed3daf8ac976f5a3b",
+      "bytes": 407692,
+      "jsonParsePassed": null,
+      "conflictMarkers": false,
+      "resolution": "seed-main-then-regenerate"
+    }
+  ],
+  "preservation": {
+    "readmeNonGeneratedMatchesOursMainBase": true,
+    "readmeNonGeneratedSha256": "a2a3fef789dd5771e580f9be32d11f068b5777f0d675a9c087bcb08749b92c41",
+    "daily": [
+      {
+        "path": "docs/_daily/2026-09-11.md",
+        "sameBytesAsMain": true,
+        "oursMissingNonblankLines": []
+      },
+      {
+        "path": "docs/_daily/ledger-source_temp_20260910.md",
+        "sameBytesAsMain": true,
+        "oursMissingNonblankLines": []
+      },
+      {
+        "path": "docs/_daily/ledger-source_temp_20260911.md",
+        "sameBytesAsMain": true,
+        "oursMissingNonblankLines": []
+      }
+    ],
+    "taskLedgerAndStatusMatchMain": true,
+    "rawAssetsChampionsAbilitiesOrOptionsUnexpectedDiff": [],
+    "mainMechanismPathCount": 18,
+    "mainMechanismByteMismatches": []
+  },
+  "findings": [
+    {
+      "priority": 1,
+      "code": "FORM_RECEIPT_COORD_HISTORY_CONFLICT",
+      "path": "docs/editor-contract/coordination/claim.editor-form-receipts.json",
+      "measuredCheck": "node tools/coord/check.mjs",
+      "exitCode": 1,
+      "packetCount": 27,
+      "failedPackets": 1,
+      "evidence": "Only source.capabilityFingerprint changes dbeac382 -> 600485a2; 178 receipts, brickInputSha256, typeCatalogSha256 and all other fields identical to incoming Main. Same merged dedupeKey and typeCatalog fingerprint 34e36ee3486cf36a is rejected.",
+      "remediation": "Parent now authorized independent source patch preserving historical packet bytes only when actual measurement and input hashes are unchanged; central not edited by reviewer."
+    },
+    {
+      "priority": 2,
+      "code": "DAILY_AUTOMERGE_DUPLICATE_ROWS",
+      "path": "docs/_daily/2026-09-10.md",
+      "evidence": "19:43 and 19:58 owner messages each retained in both unmapped ours and ticket 1165 Main rendering; board roll reports 347 rows, not de-duplicated unique messages. No original message missing.",
+      "remediation": "Preserve raw transcript/history; if deduplicating later, fix source ledger identity/row merge rules rather than dropping text ad hoc."
+    },
+    {
+      "priority": 2,
+      "code": "GENERATED_WORKTREE_NOT_YET_STAGED",
+      "evidence": "Many resolved artifact paths are MM: Main seed is staged but current regenerated bytes remain worktree-only. Root must stage reviewed generated paths before commit."
+    }
+  ],
+  "releaseChecks": [
+    {
+      "command": "pnpm skills:check",
+      "requirement": "AGENTS.md:33-38",
+      "executedByReviewer": false,
+      "behavior": "Sequential && chain stops at first failed command; includes formreceipts measurement and coord lint. May write temporary measurement/test outputs; no broad command executed in this read-only review.",
+      "failureAction": "Keep full first failure log/exit, run that exact named checker only to diagnose, fix its source and regenerate owned artifacts. Preserve manual hero/model/audio content; do not use skills:sync or exempt/disable checks just to clear red. Run all three required commands against final source once fixes complete."
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "executedByReviewer": false,
+      "behavior": "Full tests/typecheck plus Editor production build writes build output; optional proof import writes source proof/reports when --proof is explicitly passed. Not a read-only checker.",
+      "failureAction": "Use printed FAIL stage and saved output; capability/coverage freshness -> owning generator, test/type/build -> exact failure source. Skill Forge currently repeats several stages and calls visual-advisory unconditionally at tail even under --machine-only; do not treat earlier PENDING as advisory passing. Preserve real visual-review limits."
+    },
+    {
+      "command": "pnpm coord:check",
+      "executedByReviewer": true,
+      "exitCode": 1,
+      "behavior": "Default reads files + git history only; --run-repro executes packet commands and was not used.",
+      "failureAction": "Fix formreceipts source/history conflict described above; do not fabricate typeCatalog fingerprint, delete historical claim, change expectedExit merely to pass, or open duplicate PR. Historical unchanged packets may keep old evidence; changed actual measurements require distinct authorized claim handling."
+    }
+  ],
+  "centralFilesEditedByReviewer": [],
+  "limits": [
+    "Generator exit logs prove successful runs, not independent byte-for-byte recomputation of all 31 artifacts.",
+    "Current root is still finishing merge; report is a pinned review snapshot, not final committed/pushed state."
+  ]
+}

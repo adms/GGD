@@ -1,0 +1,32 @@
+{
+  "id": "parallel-vearn-priority-source-audit-20260911",
+  "target": "巴恩大魔王：老年與年輕真身",
+  "heroIds": [
+    "godie-ubal"
+  ],
+  "sourceGame": "Infinity Strash: DRAGON QUEST The Adventure of Dai; alternate community leads separately identified",
+  "platform": "mixed-leads-not-acquired",
+  "sourceKind": "research-only",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+  "sourcePage": "https://steamcommunity.com/app/1895810/allnews/",
+  "sourceReport": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit/source-report.json",
+  "verification": "Infinity Strash contains an elderly Vearn boss despite main-story arc limit. Young true-body inclusion remains unproven. No Vearn body/animation/VFX/audio package acquired this round.",
+  "defaultEligible": false,
+  "modelCandidates": [],
+  "audioFileIndex": [],
+  "acquiredAssetPayloadCount": 0,
+  "acquisitionStatus": "research-only-no-asset-package",
+  "backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/vearn-priority-20260911/f9960f2d04b13deef099767e4b54deeab0274245e1844f36abe4641945872f56.tar.gz",
+    "sha256": "f9960f2d04b13deef099767e4b54deeab0274245e1844f36abe4641945872f56",
+    "bytes": 666761,
+    "archiveFormat": "tar-gzip",
+    "archiveMemberRoot": "parallel-vearn-priority-source-audit",
+    "verified": true,
+    "fullGetAndEveryFileVerified": true,
+    "inventoryUri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-research/vearn-priority-20260911/f9960f2d04b13deef099767e4b54deeab0274245e1844f36abe4641945872f56.files.json",
+    "inventorySha256": "43e9bc616ff726b07e5d60d00d83f5e25f406b2051ecb71d8371ff9aa7806a3e",
+    "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/vearn-source-research-20260911/s3-backup-receipt.json",
+    "receiptSha256": "2795eb9819a4fc2129cebab9c3e20c4c0deb9f5d3f895758d536aa715a68a2f8"
+  }
+}

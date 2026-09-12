@@ -1,0 +1,43 @@
+{
+  "id": "ggd.model.453ddf775a0b56ee3f26684a",
+  "title": "卫宫",
+  "kind": "model-body",
+  "model": "models/community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef.json",
+  "provenance": {
+    "sources": [
+      {
+        "id": "community:community-review-12-20260907",
+        "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+        "glbPath": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+        "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+        "bytes": 1001788,
+        "documentSha256": "453ddf775a0b56ee3f26684a836b9a491915e861b737735d35c353c816b972b6",
+        "sourceCharacter": "卫宫",
+        "sourceWork": "Fate/stay night",
+        "sourceAssetId": "300heroes:234e90fbb7002fcae4985063",
+        "sourceSha256": "46cf835d199ad776cf5a2f066cffc42c14b518e6c2c0298a2e00451fe37b3a38",
+        "clipMap": {
+          "idle": "single_idle",
+          "run": "single_run",
+          "attack": "single_attack_attcom_1",
+          "cast": "single_skill_01_b",
+          "hurt": "single_idle",
+          "death": "dead"
+        },
+        "limitations": [
+          "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        ],
+        "validation": "shared-upload-and-runtime-motion",
+        "fullCharacterPackage": false,
+        "bundleId": "ggd.model.453ddf775a0b56ee3f26684a"
+      }
+    ],
+    "heroes": [
+      {
+        "id": "community-review-12-20260907",
+        "name": "衛宮士郎"
+      }
+    ],
+    "scope": "模型與動作綁定選項；不代表完整角色專屬特效、音效或技能驗收。"
+  }
+}

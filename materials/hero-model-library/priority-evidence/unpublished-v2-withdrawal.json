@@ -1,0 +1,152 @@
+{
+  "schema": "ggd-unpublished-invalid-draft-withdrawal@1",
+  "reason": "Three unpublished v2 atlas candidates fail unchanged backdrop checks; replaced by v3. Original local outputs preserved. No previously committed version removed.",
+  "files": [
+    {
+      "previousRepoPath": "content/models/ou99.458777-standard-v2.json",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/models/ou99.458777-standard-v2.json",
+      "sha256": "82d35c3ce48f06a587830513dfd3dec9c742338a3df298b2a475bf2bbe00474b",
+      "bytes": 364
+    },
+    {
+      "previousRepoPath": "content/assets/models/community/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/assets/models/community/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+      "sha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+      "bytes": 1614000
+    },
+    {
+      "previousRepoPath": "content/models/version.body.21d390a4228f8eb5d966bad5c731539ab80476a7edb417cf.json",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/models/version.body.21d390a4228f8eb5d966bad5c731539ab80476a7edb417cf.json",
+      "sha256": "d583aa3ec6f97db305b1ede589c89a54f5e8971a4cd833290aa6ee2ebd787290",
+      "bytes": 535
+    },
+    {
+      "previousRepoPath": "content/assets/models/community/versions/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/assets/models/community/versions/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+      "sha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+      "bytes": 1614000
+    },
+    {
+      "previousRepoPath": "content/models/ou99.473324-standard-v2.json",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/models/ou99.473324-standard-v2.json",
+      "sha256": "3a42f4b46e20da14f1b559a37e645f0b6a6db6fb0b5f3f360cf713d436c3814b",
+      "bytes": 364
+    },
+    {
+      "previousRepoPath": "content/assets/models/community/e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26.glb",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/assets/models/community/e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26.glb",
+      "sha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26",
+      "bytes": 1591956
+    },
+    {
+      "previousRepoPath": "content/models/version.body.516beb456fa24911addd638d4bbacb45cab901c191dd0776.json",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/models/version.body.516beb456fa24911addd638d4bbacb45cab901c191dd0776.json",
+      "sha256": "4d699de46d0ae7e03bfda0feccd90bb2c9ccb4e89c1cdbf82f6c090960abe2d2",
+      "bytes": 535
+    },
+    {
+      "previousRepoPath": "content/assets/models/community/versions/e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26.glb",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/assets/models/community/versions/e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26.glb",
+      "sha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26",
+      "bytes": 1591956
+    },
+    {
+      "previousRepoPath": "content/models/ou99.491448-standard-v2.json",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/models/ou99.491448-standard-v2.json",
+      "sha256": "53d602d6a5994e16b8c76e81a7f10a028078f1770546ec009fe9631d2e0722a4",
+      "bytes": 364
+    },
+    {
+      "previousRepoPath": "content/assets/models/community/e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468.glb",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/assets/models/community/e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468.glb",
+      "sha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+      "bytes": 1226524
+    },
+    {
+      "previousRepoPath": "content/models/version.body.d99f01fd88dba50edfb9d83d8708d3509507a6f987d354d5.json",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/models/version.body.d99f01fd88dba50edfb9d83d8708d3509507a6f987d354d5.json",
+      "sha256": "75ae99634a7c80fe3cd15b94882ab4a0c377a1a341cc50c985510961ffff4169",
+      "bytes": 535
+    },
+    {
+      "previousRepoPath": "content/assets/models/community/versions/e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468.glb",
+      "preservedLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v3-20260910/withdrawn-unpublished-registry/content/assets/models/community/versions/e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468.glb",
+      "sha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+      "bytes": 1226524
+    }
+  ],
+  "champions": [
+    {
+      "id": "b2-keyaru",
+      "withdrawnUnpublishedVersions": [
+        {
+          "modelKey": "version.body.21d390a4228f8eb5d966bad5c731539ab80476a7edb417cf",
+          "label": "假面绅士（論壇相似模型）",
+          "sourceModelKey": "ou99.458777-standard-v2",
+          "modelSha256": "c4e7aa50dc394c8e8e14317cdc303d55704d3c195eac34276ae1dbee363f49dd",
+          "binarySha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+          "registeredAt": "2026-09-10T14:48:55.058Z",
+          "source": {
+            "kind": "style-proxy",
+            "character": "假面绅士",
+            "work": "來源作品待核；論壇標題：假面绅士",
+            "library": "ou99",
+            "reference": "https://www.ou99.com/thread-458777-1-1.html",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy"
+          },
+          "automaticEligible": true
+        }
+      ],
+      "restoredModelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0"
+    },
+    {
+      "id": "b2-aladdin",
+      "withdrawnUnpublishedVersions": [
+        {
+          "modelKey": "version.body.516beb456fa24911addd638d4bbacb45cab901c191dd0776",
+          "label": "龙族亚瑟王（論壇相似模型）",
+          "sourceModelKey": "ou99.473324-standard-v2",
+          "modelSha256": "cd355c763abd100d92e4c0ad0ca31b64d957378272d0b80405f6d8e6340ab57a",
+          "binarySha256": "e0caa5ed91859ca071c1684c8cafb8fbc3b3986a580443e96796eac3f083cc26",
+          "registeredAt": "2026-09-10T14:48:58.286Z",
+          "source": {
+            "kind": "style-proxy",
+            "character": "龙族亚瑟王",
+            "work": "來源作品待核；論壇標題：龙族亚瑟王",
+            "library": "ou99",
+            "reference": "https://www.ou99.com/thread-473324-1-1.html",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy"
+          },
+          "automaticEligible": true
+        }
+      ],
+      "restoredModelKey": "version.body.328f28d049faed1a48b85b53adb9804761b98e7ccf3093e6"
+    },
+    {
+      "id": "b2-boxxo",
+      "withdrawnUnpublishedVersions": [
+        {
+          "modelKey": "version.body.d99f01fd88dba50edfb9d83d8708d3509507a6f987d354d5",
+          "label": "逃亡的盗墓女孩（論壇相似模型）",
+          "sourceModelKey": "ou99.491448-standard-v2",
+          "modelSha256": "a6b8a65a279df1cbf690c60f729606521c1058a91b8344027a747a75bf08066f",
+          "binarySha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+          "registeredAt": "2026-09-10T14:48:51.625Z",
+          "source": {
+            "kind": "style-proxy",
+            "character": "逃亡的盗墓女孩",
+            "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+            "library": "ou99",
+            "reference": "https://www.ou99.com/thread-491448-1-1.html",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy"
+          },
+          "automaticEligible": true
+        }
+      ],
+      "restoredModelKey": "version.body.671511d9b65665e63376d243d1dce315078056f36646ebc2"
+    }
+  ]
+}

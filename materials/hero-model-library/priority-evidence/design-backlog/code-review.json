@@ -1,0 +1,139 @@
+{
+  "schema": "ggd-design-backlog-code-review@1",
+  "changedFile": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/audit_community.py",
+    "sha256": "b83933fb779a7fd41f4c670ff34bb86117d800af200e58f72536514f16d0b709"
+  },
+  "pathValidation": [
+    {
+      "case": "default current Main checkout, sibling exists",
+      "result": {
+        "repo": "/private/tmp/ggd-design-path-review-_og8m_af/GGD",
+        "workspace": "/private/tmp/ggd-design-path-review-_og8m_af",
+        "exit": 0
+      }
+    },
+    {
+      "case": "explicit repo independent from asset workspace",
+      "result": {
+        "repo": "/private/tmp/ggd-design-path-review-_og8m_af/GGD",
+        "workspace": "/private/tmp/ggd-design-path-review-_og8m_af/raw-resources",
+        "exit": 0
+      }
+    },
+    {
+      "case": "invalid cwd must not fall back to existing sibling",
+      "result": {
+        "exit": 2,
+        "stderr": "usage: audit_community.py [-h] [--repo REPO] [--workspace WORKSPACE]\n                          [--output OUTPUT] [--generated-at GENERATED_AT]\naudit_community.py: error: --repo must identify a GGD checkout containing content/champions: /private/tmp/ggd-design-path-review-_og8m_af\n"
+      }
+    }
+  ],
+  "scope": "AST executes actual CLI/path setup only; no source rescans, no central output writes",
+  "findings": [
+    {
+      "id": "template-dependency-staleness",
+      "priority": 1,
+      "file": "tools/hero-model-library/build_model_design_backlog.py",
+      "lines": [
+        49,
+        57
+      ],
+      "status": "fixed-and-bounded-fixture-tested",
+      "detail": "Freshness checks cover champion and direct ability files but prior compact coverage omitted template/schema/resolver/cross-ref input SHA. Dependency-only changes could preserve designed status."
+    },
+    {
+      "id": "explicit-placeholder-with-mechanic",
+      "priority": 2,
+      "file": "tools/hero-model-library/design-backlog/audit_design.py",
+      "line": 48,
+      "status": "fixed-and-bounded-fixture-tested",
+      "detail": "Explicit placeholder evidence affects status but not implemented; builder uses implemented alone, so a schema-valid placeholder with an effect is hidden in designed. No current hero is asserted affected; this is a reproducible maintenance regression.",
+      "fixture": {
+        "explicitPlaceholderDetected": true,
+        "mechanicPayload": true,
+        "schemaValid": true,
+        "templateExpansionValid": true,
+        "actualExpressionImplemented": true
+      }
+    },
+    {
+      "id": "repo-location-hardcoded",
+      "priority": 2,
+      "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/audit_community.py",
+      "lines": [
+        3,
+        13
+      ],
+      "status": "fixed-and-path-tested",
+      "detail": "Added --repo defaulting to cwd, explicit content/champions guard, independent --workspace raw-root, and removed fixed sibling path from the three synthetic paid/runtime source descriptors."
+    },
+    {
+      "id": "analysis-to-coverage-template-window",
+      "priority": 2,
+      "status": "remaining-narrow-race",
+      "file": "tools/hero-model-library/design-backlog/audit_design.py",
+      "lines": [
+        68,
+        71
+      ],
+      "relatedFile": "tools/hero-model-library/design-backlog/analyze_abilities.mts:23",
+      "detail": "Template and schema inputs are hashed in Python after consuming the separate analysis JSON. The analysis does not include the template/schema fingerprints used for expansion. If another workflow modifies a template between the Node analysis and Python coverage phases, old expansion mechanics can be paired with fresh template hashes. Existing stability check fingerprints only abilities and champions, not templates.",
+      "recommendation": "Emit analysis-stage input fingerprints and validate them before generating coverage; reject stale input sets instead of stamping them with current hashes.",
+      "scope": "Current recheck proves invalidation for edits after coverage creation. It does not claim transactional snapshot integrity across analysis and coverage stages."
+    }
+  ],
+  "selfIndexReview": {
+    "directCycleFound": false,
+    "evidence": "audit_300_mba.py excludes design-backlog path components and the produced 已取得模型待設計英雄.json from recursive material scan; community audit uses named control inputs."
+  },
+  "currentRevisionRecheck": {
+    "tests": [
+      {
+        "case": "exact/proxy/unknown identity classification",
+        "result": {
+          "exact": "designed",
+          "borrowed": "not-defined",
+          "unknown": "identity-review"
+        }
+      },
+      {
+        "case": "template-only edit invalidates old coverage",
+        "result": "Refresh hero-design-coverage; changed inputs: content/ability-templates/test.json"
+      },
+      {
+        "case": "missing dependency invalidates coverage",
+        "result": "Refresh hero-design-coverage; changed inputs: content/ability-templates/test.json"
+      },
+      {
+        "case": "old compact schema without complete pins rejected",
+        "result": "Refresh hero-design-coverage with complete inputFiles before building the backlog."
+      },
+      {
+        "case": "valid mechanics plus explicit placeholder remain in backlog",
+        "heroImplemented": false,
+        "result": {
+          "exact": "definitions-incomplete",
+          "borrowed": "not-defined",
+          "unknown": "identity-review"
+        }
+      }
+    ],
+    "centralOutputWrites": false,
+    "allPassed": true,
+    "reviewedFiles": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/build_model_design_backlog.py",
+        "sha256": "9d49dfd6456fab518726c20018ff74810278239bfd894d094709e20f5e4929d7"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/audit_design.py",
+        "sha256": "3c049200b7bb8478d780138898817e1bcea92371c11d820e2decf0cf8618609d"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/audit_community.py",
+        "sha256": "b83933fb779a7fd41f4c670ff34bb86117d800af200e58f72536514f16d0b709"
+      }
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "schema": "ggd-kaiji-runtime-preparation@1",
+  "sourceSha256": "fd3a30074df4ee1c5a5db9f47c97a21de2db5b6bf4891703fa12ad8beab0fc85",
+  "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+  "bytes": 319724,
+  "modelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+  "clipMap": {
+    "idle": "GGD_procedural_idle",
+    "run": "GGD_procedural_run",
+    "attack": "GGD_procedural_attack",
+    "cast": "GGD_procedural_cast",
+    "hurt": "GGD_procedural_hurt",
+    "death": "GGD_procedural_death"
+  },
+  "nativeAnimations": 0,
+  "proceduralAnimations": 6,
+  "before": {
+    "triangles": 2176,
+    "drawPrimitives": 3,
+    "textures": [
+      {
+        "width": 2048,
+        "height": 2048,
+        "bytes": 249046,
+        "sha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc"
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "bytes": 81779,
+        "sha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f"
+      },
+      {
+        "width": 2048,
+        "height": 1024,
+        "bytes": 1795718,
+        "sha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b"
+      }
+    ]
+  },
+  "after": {
+    "triangles": 2176,
+    "drawPrimitives": 3,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 30818,
+        "sha256": "0d07e0936724d386187f241566d7aefd93d8fd8397b91c1b61f17dd29eabe731"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 16839,
+        "sha256": "250fa89b09ee411179512eec57fa1e0b4ee6a960044e6dbbecb742ca2cc6dca2"
+      },
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 57716,
+        "sha256": "47b13ccd2ec02fa9607c3cdb4ebc536f6abe00f025605acf9ed51d49b84bf1ed"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_procedural_idle",
+        "duration": 2.4000000953674316,
+        "channels": 14
+      },
+      {
+        "index": 1,
+        "name": "GGD_procedural_run",
+        "duration": 0.800000011920929,
+        "channels": 14
+      },
+      {
+        "index": 2,
+        "name": "GGD_procedural_attack",
+        "duration": 1,
+        "channels": 14
+      },
+      {
+        "index": 3,
+        "name": "GGD_procedural_cast",
+        "duration": 1.600000023841858,
+        "channels": 14
+      },
+      {
+        "index": 4,
+        "name": "GGD_procedural_hurt",
+        "duration": 0.550000011920929,
+        "channels": 14
+      },
+      {
+        "index": 5,
+        "name": "GGD_procedural_death",
+        "duration": 1.25,
+        "channels": 14
+      }
+    ]
+  },
+  "normalization": {
+    "drawCalls": {
+      "before": 3,
+      "after": 3
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "resizedTextures": [
+      [
+        2048,
+        256
+      ],
+      [
+        2048,
+        256
+      ],
+      [
+        2048,
+        256
+      ]
+    ],
+    "texturesOverCap": [],
+    "changed": true
+  },
+  "warnings": [],
+  "sharedPreparePassed": true,
+  "sharedVerifyPassed": true,
+  "khronos": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 0
+  },
+  "rendered": false,
+  "centralWrites": false
+}

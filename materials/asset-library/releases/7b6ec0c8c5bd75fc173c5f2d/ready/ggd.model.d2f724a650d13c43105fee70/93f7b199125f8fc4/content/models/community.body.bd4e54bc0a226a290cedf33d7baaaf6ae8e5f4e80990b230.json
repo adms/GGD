@@ -1,0 +1,16 @@
+{
+  "id": "community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/32ee7ed7d6490ce94a919dc94acebaa06d7f79b4c26626e929a9a166ddae6811.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "yawOffsetDeg": 0
+}

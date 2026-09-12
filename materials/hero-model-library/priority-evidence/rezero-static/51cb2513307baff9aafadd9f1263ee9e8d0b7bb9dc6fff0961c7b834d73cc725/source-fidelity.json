@@ -1,0 +1,32 @@
+{
+  "schema": "ggd.rezero-static-component-source-fidelity@1",
+  "sourceId": "thunderstore-rezero",
+  "componentId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "sourceConversionSha256": "4750cee3eb4d38330cf83552e764d7cefdb7c04ee64c0be1cbae549283ac27e3",
+  "outputSha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+  "sourceRootName": "ramPrefab",
+  "sourceUpAxis": "z",
+  "outputUpAxis": "y",
+  "sourceVertexCount": 15253,
+  "outputTriangleCount": 18454,
+  "sourceBoneCount": 166,
+  "outputJointCount": 166,
+  "sourceAnimatorComponentCount": 6,
+  "sourceAnimationClipCount": 0,
+  "outputClipCount": 0,
+  "allAccessorBytesPreservedDuringNormalization": true,
+  "sourceWeightSumMaxError": 1.043081283569336e-07,
+  "skinPositionMaxError": 0.0,
+  "shaderParityVerified": false,
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/51cb2513307baff9aafadd9f1263ee9e8d0b7bb9dc6fff0961c7b834d73cc725/unity-conversion.json",
+    "bytes": 3055,
+    "sha256": "baa26f2968052a5eafa1b20f98406c286e14ea4c25664e510e4067a54ccee840"
+  },
+  "normalizationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/51cb2513307baff9aafadd9f1263ee9e8d0b7bb9dc6fff0961c7b834d73cc725/normalization.json",
+    "bytes": 6739,
+    "sha256": "02ead0d47c40f2e0628835023a746c025cba57ff50df165c57b65d4c355e1a91"
+  }
+}

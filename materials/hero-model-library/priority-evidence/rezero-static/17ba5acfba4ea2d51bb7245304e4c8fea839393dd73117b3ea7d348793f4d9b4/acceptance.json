@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+      "nativeId": "remPrefab",
+      "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.3139ca177291a0bdad27850cbc7aaa17b65f07f2f6775272",
+  "modelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -392,6 +392,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-493578-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.d52431a966e687856f7333a254356b015ab2dd88e61fe768",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.493578",
+      "modelSha256": "af2a6cd91032c0b30f5c8938122eea599d70d0884f1465a304c7242f05cb9fb7",
+      "binarySha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51",
+      "registeredAt": "2026-09-10T14:45:34.390Z",
+      "source": {
+        "kind": "previous",
+        "character": "鬼畜王蘭斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.493578.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.127a3bc9de614071940358cbee2e4e907b3658184d0c1f1c",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "a60c3edf2da865a339986080cc911bfdd3d39ca8125d2f67810012696c0112b1",
+      "binarySha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+      "registeredAt": "2026-09-10T14:45:34.399Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
+      "label": "篮球小男孩（論壇相似模型）",
+      "sourceModelKey": "ou99.493578-standard-v2",
+      "modelSha256": "e713ab23cdb58fe6927fc37cb31e4b74e5dc14c76b7cebb5181e9cd72e950694",
+      "binarySha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894",
+      "registeredAt": "2026-09-10T14:48:50.492Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "篮球小男孩",
+        "work": "來源作品待核；論壇標題：篮球小男孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

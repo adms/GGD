@@ -1,0 +1,239 @@
+{
+  "schema": "ggd-transparent-component-material-normalization-batch@1",
+  "rule": "transparent atlas materials use BLEND",
+  "records": [
+    {
+      "candidateId": "historical-kita-kita-7bc2fa3f8",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "bytes": 373464,
+        "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-kita-kita-7bc2fa3f8/component.glb",
+        "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+        "bytes": 373212,
+        "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e"
+      },
+      "changes": [
+        "mat0:MBA diffuse atlas transparent=86.32%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb"
+      }
+    },
+    {
+      "candidateId": "historical-lord-nightmares-7bc2fa3f8",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "bytes": 695600,
+        "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/historical-lord-nightmares-7bc2fa3f8/component.glb",
+        "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+        "bytes": 695020,
+        "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c"
+      },
+      "changes": [
+        "mat0:MBA diffuse atlas transparent=73.29%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb"
+      }
+    },
+    {
+      "candidateId": "ssbu-mario-c00-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+        "bytes": 817900,
+        "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mario-c00-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
+        "bytes": 818052,
+        "sha256": "bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6"
+      },
+      "changes": [
+        "mat2:EyeL transparent=81.61%",
+        "mat3:EyeR transparent=81.61%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+        "s3ArchiveMember": "body.glb"
+      }
+    },
+    {
+      "candidateId": "ssbu-mewtwo-c00-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+        "bytes": 667840,
+        "sha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-mewtwo-c00-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
+        "bytes": 667904,
+        "sha256": "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9"
+      },
+      "changes": [
+        "mat1:EyeL transparent=68.44%",
+        "mat2:EyeR transparent=68.44%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mewtwo-c00-blender4513-v1/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+        "s3ArchiveMember": "body.glb"
+      }
+    },
+    {
+      "candidateId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+        "bytes": 1373696,
+        "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-female-c01-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+        "bytes": 1373732,
+        "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec"
+      },
+      "changes": [
+        "mat4:EyeL transparent=66.49%",
+        "mat5:EyeR transparent=66.49%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+        "s3ArchiveMember": "body.glb"
+      }
+    },
+    {
+      "candidateId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+        "bytes": 1316992,
+        "sha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ptrainer-male-c00-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+        "bytes": 1317084,
+        "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b"
+      },
+      "changes": [
+        "mat3:EyeL transparent=61.21%",
+        "mat4:EyeR transparent=61.21%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+        "s3ArchiveMember": "body.glb"
+      }
+    },
+    {
+      "candidateId": "ssbu-ryu-c00-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+        "bytes": 1005688,
+        "sha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ryu-c00-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+        "bytes": 1005808,
+        "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c"
+      },
+      "changes": [
+        "mat3:EyeL transparent=89.58%",
+        "mat4:EyeR transparent=89.59%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-blender4513-v3-backup/21820fa83bbe4f0703f8471ba8325fa06c99b5b2d124e89e7a26c03529dfcfe6.tar.gz",
+        "s3ArchiveMember": "body.glb"
+      }
+    },
+    {
+      "candidateId": "zero-lancer-p1-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+        "bytes": 336732,
+        "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p1-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
+        "bytes": 336752,
+        "sha256": "ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184"
+      },
+      "changes": [
+        "mat0:P1 transparent=39.06%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p1/component.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+        "s3ArchiveMember": "outputs/p1/component.glb"
+      }
+    },
+    {
+      "candidateId": "zero-lancer-p2-static-skinned-v1",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+        "bytes": 337856,
+        "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6"
+      },
+      "output": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/zero-lancer-p2-static-skinned-v1/component.glb",
+        "gitPath": "content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
+        "bytes": 337876,
+        "sha256": "2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8"
+      },
+      "changes": [
+        "mat0:P2 transparent=39.06%"
+      ],
+      "binaryChunkByteIdentical": true,
+      "nonMaterialJsonByteSemanticIdentical": true,
+      "sourcePreservation": {
+        "local": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/outputs/p2/component.glb",
+        "gitArchivePath": null,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/zero-lancer-validation-20260911-v1/f4a7b28c5cd8d862c21cce54853799fff4ed0b7f5b7c4f4f213113c49f3459c1.tar.gz",
+        "s3ArchiveMember": "outputs/p2/component.glb"
+      }
+    }
+  ],
+  "sourceBytesPreserved": true,
+  "runtimeSelectable": false,
+  "deployed": false
+}

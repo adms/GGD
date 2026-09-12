@@ -52,14 +52,20 @@ export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: st
 
 /** Final bytes contain only clips explicitly mapped to GGD's six runtime states. */
 export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0, options: { resizeImage?: ResizeImage } = {}) {
+  const originalIndices = HERO_MODEL_STATES.map((state) => selections[state]);
+  if (originalIndices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
   // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
   // ⇒ 合併「畫起來一樣」的 primitive ＋ 丟掉長度為零的署名片段，⛔ 不要求作者自己先修。
   const { bytes: source, report: normalized } = await normalizeUploadedModel(rawSource, { resizeImage: options.resizeImage });
-  const indices = HERO_MODEL_STATES.map((state) => selections[state]);
-  if (indices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
+  const indices = originalIndices.map((index) => {
+    const retained = normalized.clipIndexMap[index];
+    if (retained === null) throw new Error("選定的動作片段已因長度為零被移除，請重新選擇可播放片段。");
+    if (retained === undefined) throw new Error("動作選擇不在模型片段範圍內。");
+    return retained;
+  });
   const chosen = [...new Set(indices)];
   const prepared = await selectModelAnimations(source, chosen);
-  const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, prepared.inspected.clips[chosen.indexOf(selections[state])]!.name]));
+  const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state, index) => [state, prepared.inspected.clips[chosen.indexOf(indices[index]!)]!.name]));
   const model = zUploadedHeroModel.parse({ schema: "ggd-uploaded-hero-model@1", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg });
   const budget = heroModelBudgetIssues(prepared.inspected);
   if (budget.errors.length) throw new Error(budget.errors.join("\n"));

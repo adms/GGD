@@ -364,7 +364,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-luckyman",
-  "modelKey": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
+  "modelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
   "name": "幸運超人",
   "origin": "坦克",
   "passiveAbility": "b2-luckyman.passive",
@@ -410,6 +410,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457594-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.09c536c10feffc8537a2fad2d376fd18aef6885a0b7ef472",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457594",
+      "modelSha256": "823cb9466028cdbdc32a99163fd5554497915150de7587689a58e00a36921d90",
+      "binarySha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
+      "registeredAt": "2026-09-10T14:45:42.126Z",
+      "source": {
+        "kind": "previous",
+        "character": "幸運超人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457594.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.bd10ca5bb86915328b51bb601e4c8a82996e69678bda1255",
+      "label": "埼玉",
+      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "modelSha256": "a138dbe68ddb41ea1999e5ce4c410f9cd2b6a8572541e20b1f958f25faa3ed1a",
+      "binarySha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "registeredAt": "2026-09-10T14:45:42.134Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "埼玉",
+        "work": "一拳超人 ONE-PUNCH MAN",
+        "library": "300heroes",
+        "reference": "300heroes:8ab9713ac0d4058884378c3a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
+      "label": "雷欧·凹凸曼无披风版（論壇相似模型）",
+      "sourceModelKey": "ou99.457594-standard-v2",
+      "modelSha256": "e71274ef5fa4328df3892add83a9a7a2b7fec33487254796eb6ee0c40aedd952",
+      "binarySha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+      "registeredAt": "2026-09-10T14:48:57.391Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "雷欧·凹凸曼无披风版",
+        "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457594-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

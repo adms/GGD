@@ -356,7 +356,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-nube",
-  "modelKey": "version.body.8edb328689a62ca31c36c2c1f5d880366ecd1d05a805d552",
+  "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
   "name": "鵺野鳴介",
   "origin": "硬輔",
   "passiveAbility": "b2-nube.passive",
@@ -402,6 +402,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-487484-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.04ac799e4dec3187128088349514230154549edad278c191",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.487484",
+      "modelSha256": "53f1b2dcefa76fe5566886ea6de0da0ea534cf2575291b95a864c0ac1ba0e0da",
+      "binarySha256": "50e109a3fe7381a04802135af8f33396d9d495901c13297f9dfdb222acec883b",
+      "registeredAt": "2026-09-10T14:45:42.552Z",
+      "source": {
+        "kind": "previous",
+        "character": "鵺野鳴介",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.487484.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "30da6ecaa7ae9a17f1e845ca917eb0d5ce9f09b5db8b04e1b1433251786eb230",
+      "binarySha256": "773bb3e6bdf69c681c6d12b0dc18516ceca11720683f227f21af7eaf12bf491a",
+      "registeredAt": "2026-09-10T14:45:42.565Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:42.708Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

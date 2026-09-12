@@ -5,6 +5,32 @@ import { inspectModelUpload } from "./inspect";
 import { HERO_MODEL_BUDGET } from "./budget";
 import { encodeUploadGlb } from "./glb";
 
+function sourceWithLeadingZeroClip() {
+  const source = modelUploadFixture(), clip = source.json.animations![0]!, sampler = clip.samplers[0]!;
+  source.json.animations![1]!.name = "Cast";
+  const input = source.json.accessors.length;
+  source.json.accessors.push({ ...source.json.accessors[sampler.input]!, count: 1, min: [0], max: [0] });
+  const output = source.json.accessors.length;
+  source.json.accessors.push({ ...source.json.accessors[sampler.output]!, count: 1 });
+  source.json.animations!.unshift({ name: "ZeroPose", channels: structuredClone(clip.channels), samplers: [{ ...sampler, input, output }] });
+  return encodeUploadGlb(source.json, source.bin);
+}
+
+it("preserves original selected clip identities when normalization removes an earlier zero-length clip", async () => {
+  const bytes = sourceWithLeadingZeroClip(), original = bytes.slice();
+  const result = await prepareUploadedHeroModel(bytes, { idle: 1, run: 1, attack: 2, cast: 2, hurt: 1, death: 2 });
+  expect(result.model.clipMap).toEqual({ idle: "Motion", run: "Motion", attack: "Cast", cast: "Cast", hurt: "Motion", death: "Cast" });
+  expect(result.inspected.json.animations!.map((clip) => clip.channels[0]!.target.path)).toEqual(["translation", "rotation"]);
+  await expect(verifyUploadedHeroModel(result.model, result.bytes)).resolves.toBeDefined();
+  expect(bytes).toEqual(original);
+});
+
+it("rejects a selected zero-length clip instead of substituting the next animation", async () => {
+  const bytes = sourceWithLeadingZeroClip(), original = bytes.slice();
+  await expect(prepareUploadedHeroModel(bytes, { idle: 0, run: 1, attack: 2, cast: 2, hurt: 1, death: 2 })).rejects.toThrow("長度為零");
+  expect(bytes).toEqual(original);
+});
+
 it("allows one clip to serve all six states and verifies the exact prepared bytes", async () => {
   const source = modelUploadFixture(), before = source.bytes.slice();
   const result = await prepareUploadedHeroModel(source.bytes, { idle: 0, run: 0, attack: 0, cast: 0, hurt: 0, death: 0 });

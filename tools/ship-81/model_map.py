@@ -75,6 +75,9 @@ def catalog_titles(catalog: Path) -> dict[str, dict]:
 
 def resolve(row: dict, titles: dict[str, dict], role: str) -> dict:
     """⭐ 一列 → `{modelKey, state, why}`。⛔ 每一種狀態都說得出**為什麼**。"""
+    explicit = re.search(r"`((?:version\.body\.|community\.body\.|ou99\.|champ\.|imported\.|w3x\.)[a-zA-Z0-9._-]+)`", row["defaultModel"])
+    if explicit:
+        return {"modelKey": explicit.group(1), "state": "real", "why": "盤點表明列模型 ID；不以顯示名稱猜配對"}
     name = row["defaultModel"].strip().strip("*")
     entry = titles.get(name)
     if entry:
@@ -104,6 +107,26 @@ def _model_key(entry: dict) -> str:
     if not key:
         raise ValueError(f"⛔ catalog 的 {entry.get('id')} 沒有 modelKey —— 它入庫時就缺了")
     return key
+
+
+def preserve_model_history(champion: dict, existing: dict) -> dict:
+    """Regeneration retains registered choices and manual selections verbatim."""
+    versions = existing.get('modelVersions')
+    if not versions:
+        return champion
+    champion['modelVersions'] = versions
+    champion['modelSelectionMode'] = existing.get('modelSelectionMode', 'automatic')
+    if champion['modelSelectionMode'] == 'manual':
+        champion['modelKey'] = existing['modelKey']
+        return champion
+    wanted = champion.get('modelKey')
+    version = next((v for v in versions if v['modelKey'] == wanted), None)
+    if version is None:
+        version = next((v for v in reversed(versions) if v['sourceModelKey'] == wanted), None)
+    if version is None:
+        raise ValueError(f"{champion['id']}: inventory model {wanted} is not registered; add it through ModelVersions before regenerating")
+    champion['modelKey'] = version['modelKey']
+    return champion
 
 
 # ⭐⭐ 盤點表的**阻塞理由**也會過期 —— 而它過期時沒有任何東西會紅。

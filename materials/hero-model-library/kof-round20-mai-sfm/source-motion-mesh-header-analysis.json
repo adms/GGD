@@ -1,0 +1,42 @@
+[
+  {
+    "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.mdl",
+    "animationName": "@idle",
+    "frames": 1,
+    "fps": 30.0
+  },
+  {
+    "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.vvd",
+    "magic": "IDSV",
+    "lodVertexCounts": [
+      42059,
+      42059,
+      42059,
+      42059,
+      42059,
+      42059,
+      42059,
+      42059
+    ]
+  },
+  {
+    "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.mdl",
+    "animationName": "@idle",
+    "frames": 1,
+    "fps": 30.0
+  },
+  {
+    "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.vvd",
+    "magic": "IDSV",
+    "lodVertexCounts": [
+      26034,
+      26034,
+      26034,
+      26034,
+      26034,
+      26034,
+      26034,
+      26034
+    ]
+  }
+]

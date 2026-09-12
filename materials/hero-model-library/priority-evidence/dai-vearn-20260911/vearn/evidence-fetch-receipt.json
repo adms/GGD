@@ -1,0 +1,50 @@
+{
+  "schema": "ggd.public-evidence-fetch@1",
+  "files": [
+    {
+      "url": "https://steamcommunity.com/app/1895810/allnews/",
+      "path": "evidence/steam-official-news.html",
+      "purpose": "source evidence only; not a character/game asset package",
+      "status": "downloaded-evidence",
+      "httpResult": "200 https://steamcommunity.com/app/1895810/allnews/",
+      "bytes": 61235,
+      "sha256": "e9a6d7db4deaaadd7bb3412750add83cd977d3038a5bb3d51a2d111abf52cc57"
+    },
+    {
+      "url": "https://www.square-enix-games.com/en_US/home/infinity-strash-dragon-quest-adventure-dai-out-now",
+      "path": "evidence/square-enix-story-coverage.html",
+      "purpose": "source evidence only; not a character/game asset package",
+      "status": "downloaded-evidence",
+      "httpResult": "200 https://www.square-enix-games.com/en_US/home/infinity-strash-dragon-quest-adventure-dai-out-now",
+      "bytes": 25166,
+      "sha256": "1f281735631b5d9cafef5cf18fb6b77e0e0aa4318429f0b079506ca4e01ac98b"
+    },
+    {
+      "url": "https://dq-tact.github.io/units/truedarkkingvearn.html",
+      "path": "evidence/dqtact-true-vearn.html",
+      "purpose": "source evidence only; not a character/game asset package",
+      "status": "downloaded-evidence",
+      "httpResult": "200 https://dq-tact.github.io/units/truedarkkingvearn.html",
+      "bytes": 13302,
+      "sha256": "def991f9d252acbaee8486bf3f15c0329191407fdad2ff152132077c65aa72d1"
+    },
+    {
+      "url": "https://api.github.com/repos/dq-tact/dq-tact.github.io",
+      "path": "evidence/dqtact-repository.json",
+      "purpose": "source evidence only; not a character/game asset package",
+      "status": "downloaded-evidence",
+      "httpResult": "200 https://api.github.com/repos/dq-tact/dq-tact.github.io",
+      "bytes": 5764,
+      "sha256": "a9c0a4baf9675aa8b3db77849415de17e566866cc56f8137785e3f45d8eb037e"
+    },
+    {
+      "url": "https://www.dragonquest.jp/hoshidora/raid_event3/",
+      "path": "evidence/official-hoshidora-vearn-event.html",
+      "purpose": "source evidence only; not a character/game asset package",
+      "status": "downloaded-evidence",
+      "httpResult": "200 https://www.dragonquest.jp/hoshidora/raid_event3/",
+      "bytes": 25189,
+      "sha256": "35cee29f6cf018f21c220064f8d56581097564433a4e247df184fe49b8fa4a59"
+    }
+  ]
+}

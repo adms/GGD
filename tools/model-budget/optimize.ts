@@ -286,7 +286,7 @@ function planKey(file: string, plan: Plan): string {
   };
   return sha256(Buffer.from(JSON.stringify(shape)));
 }
-const TOOL_VERSION = "model-budget/optimize@1";
+const TOOL_VERSION = "model-budget/optimize@2";
 
 // ---- texture resize (ffmpeg) ------------------------------------------------
 
@@ -423,7 +423,7 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
         { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
       );
       void raw;
-      res.rig = checkRig(plan.file, geoOut);
+      res.rig = checkRig(plan.file, geoOut, "fewer");
       if (!res.rig.ok) {
         res.rejected = `geometry decimation broke the rig (${res.rig.reasons.join("; ")}) — candidate rejected, not written`;
         return res;

@@ -1,0 +1,25 @@
+
+> ggd@0.0.0 combat:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options
+> node --import tsx tools/voice-gen/src/build-combat-lines.mjs --check
+
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/voice-gen/src/build-combat-lines.mjs' imported from /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:861:10)
+    at defaultResolve (node:internal/modules/esm/resolve:988:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:697:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:714:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/register-zZ7SWseA.mjs:2:9102)
+    at resolveDirectorySync (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/register-zZ7SWseA.mjs:2:10315)
+    at resolveTsPathsSync (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/register-zZ7SWseA.mjs:2:11547)
+    at resolve (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/register-zZ7SWseA.mjs:2:13365) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/voice-gen/src/build-combat-lines.mjs'
+}
+
+Node.js v25.9.0
+ ELIFECYCLE  Command failed with exit code 1.

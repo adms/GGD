@@ -1,0 +1,105 @@
+{
+  "schema": "ggd.source-package-analysis@1",
+  "sourceId": "iori-xv-raw",
+  "archive": {
+    "path": "raw/The King of Fighters XV - Iori Yagami.rar",
+    "bytes": 100817444,
+    "sha256": "40d327cd60a6a196541b993370549f8563e9578d7b1c00e7b49507c338f50329"
+  },
+  "extraction": "system libarchive entire archive read, path/type/link/duplicate/size checks before writes",
+  "files": [
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_FACE.tga",
+      "bytes": 4194322,
+      "sha256": "d5bb0a6437a5067457cf6d2ae96d8393e3b6ac40a13a6089d1815d1e782792c9",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_HAIR.tga",
+      "bytes": 4194322,
+      "sha256": "c4b83541f0ed7c540a0e821d5d585faf3b4e3ae4042629186e849959247f1869",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_OTR.tga",
+      "bytes": 4194322,
+      "sha256": "346cd77ade628b5e503d3197e40f0df51f106dc812afad5112f0512f1f423761",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_FACE_P1.tga",
+      "bytes": 67108882,
+      "sha256": "6aac9c09c267d6449911df98d287610dc2243090c422002a37c3fa939de1f850",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_HAIR_P1.tga",
+      "bytes": 67108882,
+      "sha256": "d672c6244fb806dc19ee1f07445c11cdb03fa3e8bee4843624824cd201ddc43a",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_OTR_P1.tga",
+      "bytes": 67108882,
+      "sha256": "14d8cf41c3ece7fb7b010daa16562f67affb8070e2cefb8afa818635a3f7b171",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_FACE.tga",
+      "bytes": 67108882,
+      "sha256": "3f7f54fbe4b7ffc773bc1f96a386c2808f5375c146e263168a82fa77e71f0a13",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_HAIR.tga",
+      "bytes": 67108882,
+      "sha256": "fd2b3fc4dd2a37e261c206a3368b303f3bc863e7c878568ff60e429b1e35fab9",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_OTR.tga",
+      "bytes": 67108882,
+      "sha256": "c968e63b49d63fd88097e1f8f3b774e2bde163b2377daba3109c2e09688a6a60",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_FACE.tga",
+      "bytes": 67108882,
+      "sha256": "e06b1fbe4356e39db672f6c0eef6dda8638d0ff4db92a3bc7e6609c532087b98",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_HAIR.tga",
+      "bytes": 16777234,
+      "sha256": "ef9b3ed882dcde841fdc5d6247eb9fae2391760f8f0fa94f3e6a97792bcb461a",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_OTR.tga",
+      "bytes": 67108882,
+      "sha256": "f7cbb622e1fe4b0c55978e6392bf73c0a6aea62223640353d6e590ec76627b15",
+      "format": ".tga"
+    },
+    {
+      "path": "extracted-v1/Raw Files/Iori Yagami.fbx",
+      "bytes": 6416000,
+      "sha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
+      "format": ".fbx"
+    },
+    {
+      "path": "extracted-v1/Raw Files/desktop.ini",
+      "bytes": 434,
+      "sha256": "3bd2eb1ada998f1678b9a534cb25ac736054391e09fd58b9dec22a8a0dbb18dc",
+      "format": ".ini"
+    }
+  ],
+  "formatCounts": {
+    ".tga": 12,
+    ".fbx": 1,
+    ".ini": 1
+  },
+  "fileCount": 14,
+  "extractedBytes": 572647690,
+  "runtimeSelectable": false,
+  "conversion": "pending root workflow"
+}

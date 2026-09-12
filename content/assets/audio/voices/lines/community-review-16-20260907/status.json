@@ -27,7 +27,7 @@
     }
    ],
    "text": "（原檔）voice_joke_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0011-168_voice_joke_1.ogg",
    "state": "generated",
@@ -47,7 +47,7 @@
   "quote.2": {
    "takes": [],
    "text": "（原檔）voice_joke_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0002-168_voice_joke_2.ogg",
    "state": "generated",
@@ -389,7 +389,7 @@
     }
    ],
    "text": "（原檔）voice_death_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0013-168_voice_death_1.ogg",
    "state": "generated",
@@ -542,7 +542,7 @@
   "attack-light": {
    "takes": [],
    "text": "（原檔）voice_attack_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0003-168_voice_attack_1.ogg",
    "state": "generated",
@@ -562,7 +562,7 @@
   "attack-heavy": {
    "takes": [],
    "text": "（原檔）voice_attack_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0009-168_voice_attack_2.ogg",
    "state": "generated",
@@ -582,7 +582,7 @@
   "crit": {
    "takes": [],
    "text": "（原檔）voice_attack_3",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0000-168_voice_attack_3.ogg",
    "state": "generated",
@@ -602,7 +602,7 @@
   "respond.ok": {
    "takes": [],
    "text": "（原檔）voice_move_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0010-168_voice_move_1.ogg",
    "state": "generated",
@@ -622,7 +622,7 @@
   "free-move": {
    "takes": [],
    "text": "（原檔）voice_move_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:168/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/168/01-0008-168_voice_move_2.ogg",
    "state": "generated",

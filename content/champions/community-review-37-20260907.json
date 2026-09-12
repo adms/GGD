@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
+  "modelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -377,6 +377,59 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-459617-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.a011af79ef5884f8ced07c1f0d367d90d5b046aee2eb24c8",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.459617",
+      "modelSha256": "951dee6f99c70d849437e14d620330adf266aca4338b77cb04804bf31e4052c4",
+      "binarySha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
+      "registeredAt": "2026-09-10T14:45:34.528Z",
+      "source": {
+        "kind": "previous",
+        "character": "吉伊卡哇",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.459617.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
+      "label": "可爱小宠物chii吉伊（論壇相似模型）",
+      "sourceModelKey": "ou99.459617-standard",
+      "modelSha256": "e372ff7c98df5585e3d4a7eb72b6b3339f65f8409949e2d43c2a3e5101bd25d1",
+      "binarySha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "registeredAt": "2026-09-10T14:45:34.542Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a5943deb83a8ee7899c8637d19359fb87fd2c0cd940c84af",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "67cacd00d20185d8b988fddcb02b586feb49d1a642e07ecb36fc5fe9cb632952",
+      "binarySha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "registeredAt": "2026-09-10T14:45:34.597Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -33,7 +33,7 @@ try {
   const display = new TransformNode("motion-proof-root", scene);
   for (const node of instance.rootNodes) node.parent = display;
   const meshes = display.getChildMeshes().filter((mesh) => mesh.getTotalVertices() > 0);
-  assert.ok(meshes.length > 0 && instance.skeletons.length > 0, "Expected a visible model with its original rig");
+  assert.ok(meshes.length > 0 && (instance.skeletons.length > 0 || instance.animationGroups.length > 0), "Expected a visible model with skin or node animation");
   const pose = () => {
     for (const node of display.getDescendants()) if (node.computeWorldMatrix) node.computeWorldMatrix(true);
     for (const skeleton of instance.skeletons) skeleton.prepare(true);

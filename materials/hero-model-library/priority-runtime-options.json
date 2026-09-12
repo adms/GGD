@@ -1,0 +1,476 @@
+{
+  "schema": "ggd-priority-runtime-options@1",
+  "models": [
+    {
+      "id": "runtime:guts-community-procedural-ready-20260910",
+      "modelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+      "glbPath": "assets/models/community/183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1.glb",
+      "sha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1",
+      "bytes": 4389196,
+      "documentSha256": "02d9872a35e93854de3cbf7b8207643e6a4b860a7c4980a8facf516b797295ab",
+      "sourceCharacter": "凱茲｜狂戰士鎧甲",
+      "sourceWork": "烙印勇士 Berserk",
+      "sourceAssetId": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "LOD uses Blender COLLAPSE; 2048 body texture reduced to1024; other three material textures retained.",
+        "Cape follows source skin weights without cloth simulation; death is a generic sideways fall."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:maomao-community-procedural-ready-20260910",
+      "modelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+      "glbPath": "assets/models/community/a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67.glb",
+      "sha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67",
+      "bytes": 2255820,
+      "documentSha256": "03250a8b206fe27d8c62e88b34cf8940572e6a1d84bfff502e51c44c57d78cb9",
+      "sourceCharacter": "貓貓｜中性表情／小步幅",
+      "sourceWork": "藥師少女的獨語",
+      "sourceAssetId": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "This explicitly named neutral-face derivative omits 58 source facial morph targets; original Unity bundle retains all 58, whose defaults are zero.",
+        "Run amplitude is 0.18 of initial procedural fallback to limit leg/skirt intersections; it is a restrained running-state gesture, not original character running motion.",
+        "The high-resolution original and original topology remain preserved; LOD uses Blender COLLAPSE and textures are reduced from2048 to1024.",
+        "Initial runtime-v1 is retained as historical review variant with visible large-stride skirt clipping; prefer runtime-v2."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:turbo-granny-community-procedural-ready-20260910",
+      "modelKey": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
+      "glbPath": "assets/models/community/02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3.glb",
+      "sha256": "02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3",
+      "bytes": 875584,
+      "documentSha256": "72f43e059e28e506d3126eca0bf3807aeaf8176c563e89f5fcaa79c146da5d7d",
+      "sourceCharacter": "高速婆婆｜招財貓形態",
+      "sourceWork": "膽大黨 Dandadan",
+      "sourceAssetId": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "Confirmed lucky-cat form; distinct from pre-existing ou99.458013 owner-listed similar proxy.",
+        "All 9432 source triangles and five material slots retained; no decimation required."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:tmr-sinbad-baal-procedural-six-state-v1",
+      "modelKey": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+      "glbPath": "assets/models/community/535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5.glb",
+      "sha256": "535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5",
+      "bytes": 568520,
+      "documentSha256": "7679d7aced0d9eeb50223f7aa475bf09e09300526dd41eee40419d19c2c22c4a",
+      "sourceCharacter": "辛巴達（巴力魔裝）",
+      "sourceWork": "魔奇少年 Magi",
+      "sourceAssetId": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "使用者允許巴力魔裝兼用一般形態；未取得另一套一般服裝。",
+        "六段均為 GGD 程序化替補動作，原生模型不含遊戲動作。",
+        "原始 DAE、六張 PNG、完整原包保留；不代表專屬技能、特效、音訊及實戰時序已完成。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:gta5mod-shinchan-kstamil-procedural-six-state-v1",
+      "modelKey": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+      "glbPath": "assets/models/community/faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b.glb",
+      "sha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+      "bytes": 1424356,
+      "documentSha256": "be27bdd44a4c1aecfd8f8f96ba6e4150d0c237af9796b0d07bc7e4c3b8615447",
+      "sourceCharacter": "野原新之助（normal outfit 紅衣／黃褲）",
+      "sourceWork": "蠟筆小新",
+      "sourceAssetId": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "六段皆為 GGD 程序化替補，來源未附 YCD／原作動作。",
+        "原始 58,752 面模型、骨架及貼圖全部保留；可用副本減至 25,262 面，1024 貼圖圖集。",
+        "KS 另8張作者替換貼圖已保存，尚待組合，未冒稱已成後台外觀選項。",
+        "來源權利聲明原文保存；技術檢查未代表完成來源再散布授權確認。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:gta5mod-shinchan-sd2-procedural-six-state-v1",
+      "modelKey": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
+      "glbPath": "assets/models/community/9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e.glb",
+      "sha256": "9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e",
+      "bytes": 1459204,
+      "documentSha256": "20f51a6f820bfc182a054630cb186ce23e5546af0998fa51187baf297c34dbc3",
+      "sourceCharacter": "野原新之助（normal outfit 彩色條紋衣／綠褲）",
+      "sourceWork": "蠟筆小新",
+      "sourceAssetId": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "六段皆為 GGD 程序化替補，來源未附 YCD／原作動作。",
+        "原始 58,752 面模型、骨架及貼圖全部保留；可用副本減至 25,262 面，1024 貼圖圖集。",
+        "KS 另8張作者替換貼圖已保存，尚待組合，未冒稱已成後台外觀選項。",
+        "來源權利聲明原文保存；技術檢查未代表完成來源再散布授權確認。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:naofumi-native-material-fixed-procedural-v2",
+      "modelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+      "glbPath": "assets/models/community/cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11.glb",
+      "sha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11",
+      "bytes": 2741368,
+      "documentSha256": "770e5c2c88f7604f9be0e14864073314ed5ddb44a2fac1886984e72d654e120a",
+      "sourceCharacter": "岩谷尚文",
+      "sourceWork": "盾之勇者成名錄",
+      "sourceAssetId": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "原生模型轉出32骨及四材質；修復錯誤 BLEND 模式為來源對應 OPAQUE，保留完整貼圖與 specular。",
+        "減面至26,000面；全部八組骨權重保留，原始高面數 DFF/TXD 與錯誤試作另存。",
+        "六段均為GGD程序化替补動作，非原生遊戲動作；技能實戰及專用特效未宣稱完成。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:haga-native-visibility-v1",
+      "modelKey": "ou99.495015-native-visibility-v1",
+      "glbPath": "assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "bytes": 658700,
+      "documentSha256": "e529f1cd3a8a776f4da7c13a517c781d48218558ffee67b148db825be0e53f0d",
+      "sourceCharacter": "海星动画人",
+      "sourceWork": "來源作品待核；論壇標題：海星动画人",
+      "sourceAssetId": "https://www.ou99.com/thread-495015-1-1.html",
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack",
+        "cast": "Spell",
+        "hurt": "Stand Ready",
+        "death": "Death"
+      },
+      "limitations": [
+        "This remains the previously approved Patrick Star style proxy for Haga; no identity upgrade.",
+        "All 13 original clips, original geometry, textures and motion channels retained; binary source GEOA restored by exclusive leaf-joint STEP scale.",
+        "Direct playback across 13 clips sampled; animation blending may transiently scale the decay-only geoset.",
+        "Production deployment and full gameplay acceptance remain pending."
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "nativeAnimationCount": 13,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-inspect-budget-backend-prepare-and-82-sample-babylon-comparison-passed",
+      "fullCharacterPackage": false
+    },
+    {
+      "id": "runtime:kaiji-holya-procedural-six-state-v1",
+      "modelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+      "glbPath": "assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "bytes": 319724,
+      "documentSha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8",
+      "sourceCharacter": "伊藤開司",
+      "sourceWork": "賭博默示錄",
+      "sourceAssetId": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "limitations": [
+        "六段皆為 GGD 程序化基本動作，非來源原生動畫或重定向動作；原包動畫、音效、語音、特效均為零。",
+        "完整原生 1766 頂點／2176 三角、33 骨、三材質及全部權重保留。高解析原圖另存，成品縮圖為256×256、256×256及256×128。",
+        "已抽查36個時間點及視角；程序化跑步、伸手攻擊及側倒不代表原作招式，未包含腳部IK、布料模擬、技能時序或完整實戰驗收。",
+        "每幀接地修正在30Hz關鍵格計算；抽查插值最低約0.39毫米穿地，轉場仍需遊戲驗收。",
+        "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
+        "技術模型驗收及後台登記與正式站部署分開記錄。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "validation": "shared-prepare-verify-khronos-and-36-sample-babylon-render-passed",
+      "fullCharacterPackage": false
+    }
+  ],
+  "heroes": [
+    {
+      "id": "b2-guts",
+      "name": "凱茲",
+      "options": [
+        {
+          "sourceId": "runtime:guts-community-procedural-ready-20260910",
+          "sourceModelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+          "label": "凱茲｜狂戰士鎧甲（GGD 程序化動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Lethal Company MOD／RRoD",
+            "character": "凱茲｜狂戰士鎧甲",
+            "work": "烙印勇士 Berserk",
+            "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "options": [
+        {
+          "sourceId": "runtime:maomao-community-procedural-ready-20260910",
+          "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+          "label": "貓貓｜中性表情／小步幅（GGD 程序化動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Lethal Company MOD／GrogCompany",
+            "character": "貓貓｜中性表情／小步幅",
+            "work": "藥師少女的獨語",
+            "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "options": [
+        {
+          "sourceId": "runtime:turbo-granny-community-procedural-ready-20260910",
+          "sourceModelKey": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
+          "label": "高速婆婆｜招財貓形態（GGD 程序化動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "manual",
+            "library": "Lethal Company MOD／inkiidonut",
+            "character": "高速婆婆｜招財貓形態",
+            "work": "膽大黨 Dandadan",
+            "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "options": [
+        {
+          "sourceId": "runtime:tmr-sinbad-baal-procedural-six-state-v1",
+          "sourceModelKey": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+          "label": "辛巴達｜巴力魔裝兼用一般形態（GGD 程序化動作）",
+          "source": {
+            "kind": "alternate",
+            "tier": "original",
+            "selectionClass": "manual",
+            "library": "3DS Magi／The Models Resource",
+            "character": "辛巴達（巴力魔裝）",
+            "work": "魔奇少年 Magi",
+            "reference": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "options": [
+        {
+          "sourceId": "runtime:gta5mod-shinchan-kstamil-procedural-six-state-v1",
+          "sourceModelKey": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+          "label": "野原新之助｜GTA V MOD 紅衣／黃褲＋GGD 程序化六態",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "GTA V MOD／Ksplaytamilyt / KS PLAY TAMIL",
+            "character": "野原新之助（normal outfit 紅衣／黃褲）",
+            "work": "蠟筆小新",
+            "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/"
+          }
+        },
+        {
+          "sourceId": "runtime:gta5mod-shinchan-sd2-procedural-six-state-v1",
+          "sourceModelKey": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
+          "label": "野原新之助｜GTA V MOD 彩色條紋衣／綠褲＋GGD 程序化六態",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "GTA V MOD／GTA5OPMOD",
+            "character": "野原新之助（normal outfit 彩色條紋衣／綠褲）",
+            "work": "蠟筆小新",
+            "reference": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "options": [
+        {
+          "sourceId": "runtime:naofumi-native-material-fixed-procedural-v2",
+          "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+          "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "GTA SA 社群 MOD",
+            "character": "岩谷尚文",
+            "work": "盾之勇者成名錄",
+            "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-haga",
+      "name": "羽賀",
+      "options": [
+        {
+          "sourceId": "runtime:haga-native-visibility-v1",
+          "sourceModelKey": "ou99.495015-native-visibility-v1",
+          "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+          "source": {
+            "kind": "style-proxy",
+            "tier": "w3x",
+            "selectionClass": "similar-proxy",
+            "library": "ou99",
+            "character": "海星动画人",
+            "work": "來源作品待核；論壇標題：海星动画人",
+            "reference": "https://www.ou99.com/thread-495015-1-1.html"
+          }
+        }
+      ],
+      "pending": []
+    },
+    {
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "options": [
+        {
+          "sourceId": "runtime:kaiji-holya-procedural-six-state-v1",
+          "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+          "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "library": "Lethal Company MOD／holya",
+            "character": "伊藤開司",
+            "work": "賭博默示錄",
+            "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/"
+          }
+        }
+      ],
+      "pending": []
+    }
+  ]
+}
