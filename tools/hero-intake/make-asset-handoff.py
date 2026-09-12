@@ -11,16 +11,30 @@ python3 tools/hero-intake/collect-review-inputs.py --work <work>
 python3 tools/hero-intake/make-asset-handoff.py --audit /tmp/a5.json --work <work> --out docs/素材缺口交接單.md
 ```
 """
-import argparse, collections, json, pathlib
+import argparse, collections, hashlib, json, pathlib, re, subprocess, datetime
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--audit", default="/private/tmp/a5.json")
-ap.add_argument("--work", required=True, help="collect-review-inputs.py 的輸出目錄")
+ap.add_argument("--audit", default="-", help="audit-five-axes.py 的輸出；`-` ＝ 自己量一次")
+ap.add_argument("--work", default="-", help="collect-review-inputs.py 的輸出目錄；`-` ＝ 自己量一次")
 ap.add_argument("--out", default="docs/素材缺口交接單.md")
+ap.add_argument("--check", action="store_true",
+                help="⭐ 只比對**資料指紋**：現況與文件裡記的不一致就回非零（⛔ 不比日期，⛔ 不比全文）")
 ARG = ap.parse_args()
 
-A = json.load(open(ARG.audit))
 R = pathlib.Path(__file__).resolve().parents[2]; C = R/'content'
+
+# ⭐ `--check` 要**自給自足**：輸入不在就自己先量一次（⛔ 不要求呼叫端記得跑另外兩支，
+#    一個「要記得先跑三行」的閘，⛔ 就是一個沒有人跑的閘）。
+if not pathlib.Path(ARG.audit).exists() or not (pathlib.Path(ARG.work)/'quotes60.json').exists():
+    import subprocess as _sp, tempfile as _tf
+    _w = pathlib.Path(ARG.work if ARG.work != "-" else _tf.mkdtemp())
+    _w.mkdir(parents=True, exist_ok=True)
+    _a = pathlib.Path(ARG.audit if ARG.audit != "-" else _w/'a5.json')
+    _sp.run(["python3", str(R/"tools/hero-intake/audit-five-axes.py"), str(_a)], cwd=R, check=True, capture_output=True)
+    _sp.run(["python3", str(R/"tools/hero-intake/collect-review-inputs.py"), "--work", str(_w)], cwd=R, check=True, capture_output=True)
+    ARG.audit, ARG.work = str(_a), str(_w)
+
+A = json.load(open(ARG.audit))
 jl = lambda p: json.loads(pathlib.Path(p).read_text(encoding='utf-8'))
 champs = {f.stem: jl(f) for f in sorted((C/'champions').glob('*.json')) if not f.name.startswith('_')}
 models = {}
@@ -45,19 +59,80 @@ s34_novoice = [h for h in ship34['heroes'] if not (h['voice'].get('candidates') 
 def row(x, extra=''):
     return f"| `{x['id']}` | {x['name']} |{extra}"
 
+def git(*a):
+    return subprocess.run(["git", *a], cwd=R, capture_output=True, text=True).stdout.strip()
+
+# ⭐ 指紋只涵蓋**會影響結論的那些事實**；⛔ 日期與 commit 刻意排除在外
+#   （CLAUDE.md：「任何隨時鐘變動的欄位都會讓逐位元組比對永遠不相等，
+#     於是 --check 只能被放寬成模糊比對 —— 而一條被放寬的閘等於沒有閘」）
+FACTS = json.dumps({
+    "rig": sorted(x["id"] for x in rig),
+    "voiceGap": sorted(x["id"] for x in voice_gap),
+    "voiceSlot": sorted(x["id"] for x in voice_slot),
+    "sfxNone": sorted(x["id"] for x in sfx_none),
+    "sfxPart": sorted(x["id"] for x in sfx_part),
+    "quotes": sorted(r["id"] for r in q60),
+    "diffPairs": sorted(p["modelKey"] for p in diff_pairs),
+    "s34NoModel": sorted(h["id"] for h in s34_nomodel),
+    "s34NoVoice": sorted(h["id"] for h in s34_novoice),
+}, ensure_ascii=False, sort_keys=True)
+DIGEST = hashlib.sha256(FACTS.encode()).hexdigest()[:16]
+
+if ARG.check:
+    prev = pathlib.Path(ARG.out)
+    if not prev.exists():
+        print(f"⛔ {ARG.out} 不存在 —— 跑一次 make-asset-handoff.py"); raise SystemExit(2)
+    m = re.search(r"資料指紋\s*\|\s*`([0-9a-f]{16})`", prev.read_text(encoding="utf-8"))
+    if not m:
+        print("⛔ 文件裡沒有資料指紋 —— 它是舊格式，重產一次"); raise SystemExit(2)
+    if m.group(1) != DIGEST:
+        print(f"⛔ **這份交接單過期了**：文件記 {m.group(1)} ≠ 現況 {DIGEST}\n"
+              f"   ⇒ 缺口清單已經變了（有人補了素材，或又多了缺口）。\n"
+              f"   ⇒ 重跑：python3 tools/hero-intake/make-asset-handoff.py --audit <a5.json> --work <work> --out {ARG.out}")
+        raise SystemExit(2)
+    print(f"✓ {ARG.out} 與現況一致（資料指紋 {DIGEST}）")
+    raise SystemExit(0)
+
+TODAY = datetime.date.today().isoformat()
+HEAD = git("rev-parse", "--short", "HEAD") or "(不在 git 裡)"
+BRANCH = git("rev-parse", "--abbrev-ref", "HEAD") or "?"
+
 L = []
 w = L.append
 w("# 🧾 素材缺口交接單 —— 給**去找素材**的那條工作流")
 w("")
-w("> owner 2026-09-11：「我要讓**別的工作流去找對應素材** 請你做成一個 md」")
+w("> owner 2026-09-12：「我要讓**別的工作流去找對應素材** 請你做成一個 md」")
+w("> owner 2026-09-12：「你應該要 commit 加上日期 讓別的工作流可以讀到 **但又不會讓日後的工作流誤會**」")
 w("")
-w("⭐ 這一份是**自足**的：你不需要讀任何對話就能開工。")
-w("⚠️ 數字是 2026-09-11 的快照 —— **開工前先重量一次**，⛔ 不要照抄這裡的數字：")
+w("| | |")
+w("|---|---|")
+w(f"| 🗓 **量測日期** | **{TODAY}** |")
+w(f"| 🔖 量測的 commit | `{HEAD}`（分支 `{BRANCH}`）|")
+w(f"| 🔑 資料指紋 | `{DIGEST}` |")
+w("")
+w("### ⛔⛔ 讀這一份之前，先跑這一行 —— ⛔ 不要相信上面的日期")
 w("")
 w("```sh")
-w("python3 tools/hero-intake/audit-five-axes.py /tmp/a5.json   # 印六軸統計，明細寫 /tmp/a5.json")
-w("python3 tools/hero-intake/collect-review-inputs.py --work /tmp/gap  # 體素／對白／共用模型三份清單")
+w("python3 tools/hero-intake/make-asset-handoff.py --check      # ⭐ 一行，它自己會重量一次")
 w("```")
+w("")
+w("⭐ **綠的** ⇒ 下面每一份清單今天仍然成立，照著做。")
+w("⛔ **紅的** ⇒ 這份文件**過期了**（有人補了素材，或又多了缺口）——")
+w("⛔ 不要照抄裡面的數字，重產一份再開工：")
+w("")
+w("```sh")
+w("python3 tools/hero-intake/make-asset-handoff.py --out docs/素材缺口交接單.md")
+w("```")
+w("")
+w("⭐ 這條閘也掛在測試裡（`packages/shared/src/ops/assetHandoffFresh.test.ts`）——")
+w("⛔ 所以「忘記重產」會在 `pnpm test` 就紅，⛔ 不會等到有人照著過期清單做完才發現。")
+w("")
+w("⚠️ **為什麼不是只寫一個日期**：一個日期是**散文** —— 它在過期之後還是長得一模一樣，")
+w("而這個 repo 記錄過五次「一句活過保存期限的散文，而沒有任何東西變紅」。")
+w("⭐ 指紋只涵蓋**清單本身**（哪些英雄缺哪一軸），⛔ 刻意**不含日期與 commit** ——")
+w("不然時鐘會讓 `--check` 永遠紅，然後它就會被放寬成沒有用的東西。")
+w("")
+w("⭐ 這一份是**自足**的：你不需要讀任何對話就能開工。")
 w("")
 w("---")
 w("")
