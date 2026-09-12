@@ -439,7 +439,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-noor.w.webp"
+      "icon": "assets/icons/abilities/b2-noor.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "tank",

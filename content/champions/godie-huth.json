@@ -246,18 +246,19 @@
                 }
               ]
             },
-            "intervalSec": 1.0,
-            "durationSec": 5.0,
+            "intervalSec": 1,
+            "durationSec": 5,
             "stacking": "refresh"
           },
           "status": {
             "statusId": "slow35",
-            "duration": 5.0,
+            "duration": 5,
             "moveSpeedMult": 0.65
           },
           "castTimeSec": 2.267
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

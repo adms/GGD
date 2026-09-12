@@ -92,13 +92,14 @@
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.433,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-u00k.w",
@@ -191,7 +192,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00k.r",
@@ -236,7 +238,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

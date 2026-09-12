@@ -39,10 +39,10 @@
       "dot": {
         "damageType": "magic",
         "amountPerTick": {
-          "flat": 60.0
+          "flat": 60
         },
-        "intervalSec": 1.0,
-        "durationSec": 2.0,
+        "intervalSec": 1,
+        "durationSec": 2,
         "stacking": "refresh"
       },
       "castTimeSec": 1.133
@@ -52,5 +52,6 @@
   "schema": "ability@1",
   "castTimeSec": 1.133,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

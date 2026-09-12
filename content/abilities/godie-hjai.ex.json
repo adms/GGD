@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -20,7 +20,7 @@
     "ref": "tpl-transform",
     "params": {
       "to": "alternate",
-      "durationSec": 20.0,
+      "durationSec": 20,
       "modifiers": [
         {
           "stat": "ad",
@@ -28,7 +28,7 @@
           "value": 0.35
         }
       ],
-      "buffDurationSec": 6.0,
+      "buffDurationSec": 6,
       "castTimeSec": 1.033
     }
   },
@@ -40,5 +40,6 @@
       "vfxKey": "attach.ex.midchilder-aura",
       "attach": "origin"
     }
-  ]
+  ],
+  "castTimeTier": "極大"
 }

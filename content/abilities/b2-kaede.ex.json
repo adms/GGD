@@ -25,7 +25,7 @@
   ],
   "id": "b2-kaede.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "卸載附魔清快取",
@@ -68,5 +68,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-kaede.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

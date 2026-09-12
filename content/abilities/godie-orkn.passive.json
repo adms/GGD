@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 12.0,
+  "range": 12,
   "effects": [
     {
       "kind": "spawnVfx",
@@ -27,16 +27,16 @@
       "kind": "applyBuff",
       "applyTo": "self",
       "modifiers": [],
-      "duration": 30.0,
+      "duration": 30,
       "vision": {
-        "trueSightRadius": 8.0
+        "trueSightRadius": 8
       }
     },
     {
       "kind": "applyStatus",
       "applyTo": "target",
       "statusId": "camera-mark",
-      "duration": 30.0
+      "duration": 30
     },
     {
       "kind": "blink",
@@ -55,6 +55,7 @@
   ],
   "castTimeSec": 1.033,
   "rangeTier": "極大",
-  "radius": 8.0,
-  "radiusTier": "大"
+  "radius": 8,
+  "radiusTier": "大",
+  "castTimeTier": "極大"
 }

@@ -28,7 +28,7 @@
   ],
   "id": "b2-shinchan.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "玩具箱彈簧送客",
@@ -75,5 +75,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-shinchan.ex.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

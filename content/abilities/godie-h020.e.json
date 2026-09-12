@@ -152,7 +152,7 @@
               }
             ]
           },
-          "radius": 8.0,
+          "radius": 8,
           "radiusTier": "大",
           "includeOrigin": true,
           "onHitTargets": [
@@ -221,10 +221,11 @@
   ],
   "vfxKey": "fx.prim.fire.beam",
   "targetsEnemies": true,
-  "radius": 8.0,
+  "radius": 8,
   "schema": "ability@1",
   "castTimeSec": 1.233,
   "rangeTier": "極大",
   "range": 12,
-  "radiusTier": "大"
+  "radiusTier": "大",
+  "castTimeTier": "極大"
 }

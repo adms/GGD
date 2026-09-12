@@ -40,11 +40,12 @@
   },
   "vfxKey": "fx.prim.fire.slash",
   "targetsEnemies": true,
-  "radius": 3.0,
+  "radius": 3,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-u00h.w.png",
   "castTimeSec": 1.433,
   "rangeTier": "大",
   "range": 8,
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

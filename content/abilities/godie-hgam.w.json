@@ -15,19 +15,19 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "effects": [],
   "template": {
     "ref": "tpl-apply-status",
     "params": {
       "status": {
         "statusId": "slow60",
-        "duration": 4.0,
+        "duration": 4,
         "moveSpeedMult": 0.4
       },
       "radius": 327.27,
@@ -36,8 +36,9 @@
   },
   "vfxKey": "fx.prim.arcane.nova",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
   "castTimeSec": 1.133,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

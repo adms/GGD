@@ -164,7 +164,7 @@
         "params": {
           "mode": "toPoint",
           "applyTo": "self",
-          "apexHeight": 600.0,
+          "apexHeight": 600,
           "durationSec": 0.82,
           "landRadius": 249.82,
           "damage": {
@@ -184,7 +184,8 @@
           },
           "castTimeSec": 1.133
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-hart.e",
@@ -232,7 +233,7 @@
           ],
           "dispellable": true,
           "polarity": "debuff",
-          "duration": 5.0,
+          "duration": 5,
           "perRank": [
             {
               "modifiers": [
@@ -242,7 +243,7 @@
                   "value": -3
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             },
             {
               "modifiers": [
@@ -252,7 +253,7 @@
                   "value": -6
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             },
             {
               "modifiers": [
@@ -262,7 +263,7 @@
                   "value": -9
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             },
             {
               "modifiers": [
@@ -272,7 +273,7 @@
                   "value": -12
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             }
           ]
         },
@@ -283,23 +284,24 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 2.0,
+          "scale": 2,
           "tint": [
             0.5882,
             0.5882,
-            1.0
+            1
           ]
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.633,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-hart.r",
@@ -374,7 +376,7 @@
               "sizeScale": 1.2,
               "riseSpeed": 1.6,
               "durationSec": 1.1,
-              "driftSpeed": 1.0,
+              "driftSpeed": 1,
               "driftAngleDeg": 0,
               "driftAngleStepDeg": 270,
               "driftFrom": "casterFacing"
@@ -455,7 +457,7 @@
           "modelKey": "imported.herocloudstrife",
           "alpha": 0.6,
           "path": "toTarget",
-          "speed": 30.0,
+          "speed": 30,
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -485,7 +487,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

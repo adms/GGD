@@ -28,8 +28,8 @@
       "damageTier": "小",
       "apRatio": 0.6,
       "damageType": "magic",
-      "intervalSec": 1.0,
-      "durationSec": 7.0,
+      "intervalSec": 1,
+      "durationSec": 7,
       "stacking": "refresh",
       "castTimeSec": 1.133
     }
@@ -39,5 +39,6 @@
   "schema": "ability@1",
   "castTimeSec": 1.133,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

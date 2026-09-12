@@ -94,13 +94,14 @@
       },
       "vfxKey": "fx.prim.sound.nova",
       "targetsEnemies": true,
-      "radius": 8.0,
+      "radius": 8,
       "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-o02p.w",

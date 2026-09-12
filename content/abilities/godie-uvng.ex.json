@@ -23,9 +23,9 @@
       "modelKey": "imported.darkraor",
       "path": "fan",
       "count": 3,
-      "distance": 8.0,
+      "distance": 8,
       "speed": 7.7,
-      "spinDegPerSec": 240.0,
+      "spinDegPerSec": 240,
       "scale": 2.4,
       "arriveSoundKey": "explosion",
       "onArrive": [
@@ -51,9 +51,9 @@
       "path": "orbit",
       "count": 12,
       "distance": 6.42,
-      "speed": 30.0,
-      "lifeSec": 3.0,
-      "scale": 1.0,
+      "speed": 30,
+      "lifeSec": 3,
+      "scale": 1,
       "soundKey": "guardianSlam"
     },
     {
@@ -83,8 +83,9 @@
   },
   "vfxKey": "fx.prim.void.explosion-lg",
   "schema": "ability@1",
-  "radius": 6.0,
+  "radius": 6,
   "targetsEnemies": true,
   "castTimeSec": 2.233,
-  "radiusTier": "中"
+  "radiusTier": "中",
+  "castTimeTier": "極大"
 }

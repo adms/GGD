@@ -101,7 +101,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow50",
-          "duration": 5.0,
+          "duration": 5,
           "moveSpeedMult": 0.5,
           "condition": {
             "kind": "learned",
@@ -118,7 +118,7 @@
     },
     {
       "kind": "knockback",
-      "distance": 8.0,
+      "distance": 8,
       "speed": 16,
       "distanceTier": "極大",
       "from": "caster",
@@ -138,7 +138,7 @@
           "shape": "single",
           "to": "targetUnit",
           "applyTo": "self",
-          "stopShortUnits": 1.0
+          "stopShortUnits": 1
         },
         {
           "kind": "weightedBranch",
@@ -153,7 +153,7 @@
                 {
                   "kind": "applyStatus",
                   "statusId": "stun",
-                  "duration": 1.0,
+                  "duration": 1,
                   "stun": true
                 }
               ]
@@ -183,8 +183,8 @@
         "damageTier": "極小",
         "mult": 0.6
       },
-      "intervalSec": 1.0,
-      "durationSec": 8.0,
+      "intervalSec": 1,
+      "durationSec": 8,
       "stacking": "refresh",
       "condition": {
         "all": [
@@ -215,5 +215,6 @@
   "sfxKey": "wc3.mortarteampissed9",
   "castTimeSec": 1.7,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

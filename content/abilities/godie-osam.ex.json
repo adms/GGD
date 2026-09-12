@@ -26,10 +26,10 @@
       "scale": 2.5,
       "tint": [
         0.3922,
-        0.0,
-        0.0
+        0,
+        0
       ],
-      "lifeSec": 7.0
+      "lifeSec": 7
     }
   ],
   "template": {
@@ -56,5 +56,6 @@
   "castTimeSec": 2.233,
   "rangeTier": "大",
   "range": 8,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

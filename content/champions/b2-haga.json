@@ -168,9 +168,9 @@
       ],
       "id": "b2-haga.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "測試結束回收增益與魔力",
@@ -224,7 +224,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-haga.r.webp"
+      "icon": "assets/icons/abilities/b2-haga.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.467,

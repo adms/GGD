@@ -32,14 +32,14 @@
       "soundKey": "wc3.parasite",
       "path": "orbit",
       "count": 9,
-      "distance": 3.0,
-      "scale": 2.0,
+      "distance": 3,
+      "scale": 2,
       "tint": [
         0.1176,
-        0.0,
-        0.0
+        0,
+        0
       ],
-      "lifeSec": 8.0
+      "lifeSec": 8
     }
   ],
   "template": {
@@ -65,5 +65,6 @@
   "vfxKey": "fx.prim.void.nova-lg",
   "targetsEnemies": true,
   "castTimeSec": 1.5,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

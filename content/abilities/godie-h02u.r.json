@@ -35,7 +35,7 @@
           }
         ]
       },
-      "radius": 8.0,
+      "radius": 8,
       "radiusTier": "大",
       "includeOrigin": true
     },
@@ -48,14 +48,14 @@
           "value": 0.25
         }
       ],
-      "duration": 3.0
+      "duration": 3
     },
     {
       "kind": "delayed",
       "shape": "single",
-      "intervalSec": 1.0,
+      "intervalSec": 1,
       "count": 6,
-      "delaySec": 1.0,
+      "delaySec": 1,
       "effects": [
         {
           "kind": "grantGold",
@@ -67,5 +67,6 @@
   ],
   "vfxKey": "fx.prim.nature.explosion-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.433
+  "castTimeSec": 1.433,
+  "castTimeTier": "極大"
 }

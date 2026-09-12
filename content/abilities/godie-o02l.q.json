@@ -30,7 +30,7 @@
   "castTimeSec": 1.133,
   "rangeTier": "極大",
   "range": 12,
-  "radius": 6.0,
+  "radius": 6,
   "radiusTier": "中",
   "template": {
     "ref": "tpl-instant-blast",
@@ -48,5 +48,6 @@
       "damageType": "magic",
       "castTimeSec": 1.133
     }
-  }
+  },
+  "castTimeTier": "極大"
 }

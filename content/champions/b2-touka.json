@@ -254,7 +254,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-touka.r.webp"
+      "icon": "assets/icons/abilities/b2-touka.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.567,

@@ -252,7 +252,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-rin.r.webp"
+      "icon": "assets/icons/abilities/b2-rin.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 1.233,
@@ -355,7 +356,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-rin.w.webp"
+      "icon": "assets/icons/abilities/b2-rin.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "mage",

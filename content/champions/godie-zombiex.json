@@ -102,7 +102,8 @@
       "range": 6,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-zombiex.w",
@@ -237,14 +238,14 @@
           "soundKey": "wc3.parasite",
           "path": "orbit",
           "count": 9,
-          "distance": 3.0,
-          "scale": 2.0,
+          "distance": 3,
+          "scale": 2,
           "tint": [
             0.1176,
-            0.0,
-            0.0
+            0,
+            0
           ],
-          "lifeSec": 8.0
+          "lifeSec": 8
         }
       ],
       "vfxKey": "fx.prim.void.nova-lg",
@@ -272,7 +273,8 @@
       },
       "cooldownTier": "中",
       "manaCostTier": "極小",
-      "radiusTier": "小"
+      "radiusTier": "小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

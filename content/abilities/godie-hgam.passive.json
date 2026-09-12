@@ -25,9 +25,9 @@
       "damageTier": "小",
       "apRatio": 0.6,
       "damageType": "magic",
-      "leechFlat": 50.0,
-      "intervalSec": 1.0,
-      "durationSec": 5.0,
+      "leechFlat": 50,
+      "intervalSec": 1,
+      "durationSec": 5,
       "stacking": "refresh",
       "castTimeSec": 1.7
     }
@@ -35,5 +35,6 @@
   "vfxKey": "fx.prim.nature.bolt",
   "castTimeSec": 1.7,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

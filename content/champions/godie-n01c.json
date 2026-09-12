@@ -175,7 +175,7 @@
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
-          "scale": 1.0,
+          "scale": 1,
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -207,7 +207,8 @@
           "damageType": "magic",
           "castTimeSec": 1.633
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-n01c.r",

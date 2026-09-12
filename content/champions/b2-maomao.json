@@ -179,7 +179,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-maomao.q.webp"
+      "icon": "assets/icons/abilities/b2-maomao.q.webp",
+      "castTimeTier": "極大"
     },
     "R": {
       "castTimeSec": 1.033,
@@ -229,9 +230,9 @@
       ],
       "id": "b2-maomao.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "憑樣本換一張處方",
@@ -293,7 +294,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-maomao.r.webp"
+      "icon": "assets/icons/abilities/b2-maomao.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
       "castTimeSec": 0.067,

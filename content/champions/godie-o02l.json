@@ -98,7 +98,8 @@
         }
       },
       "radiusTier": "中",
-      "radius": 6.0
+      "radius": 6,
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-o02l.w",
@@ -356,7 +357,8 @@
           "damageType": "magic",
           "castTimeSec": 1.633
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

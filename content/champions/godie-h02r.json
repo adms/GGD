@@ -131,16 +131,16 @@
         30.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.nature.swarm",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.133,
       "cooldownTier": "極小",
       "radiusTier": "中",
@@ -149,13 +149,14 @@
         "params": {
           "status": {
             "statusId": "slow60",
-            "duration": 4.0,
+            "duration": 4,
             "moveSpeedMult": 0.4
           },
           "radius": 327.27,
           "castTimeSec": 1.133
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-h02r.e",
@@ -201,7 +202,8 @@
           "damageType": "magic",
           "castTimeSec": 1.233
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-h02r.r",

@@ -139,7 +139,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-ubal.e",
@@ -229,7 +230,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

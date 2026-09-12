@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    60
   ],
   "manaCost": [
-    0.0
+    0
   ],
-  "range": 0.0,
+  "range": 0,
   "targetsEnemies": false,
   "effects": [
     {
       "kind": "applyBuff",
       "modifiers": [],
-      "duration": 5.0,
+      "duration": 5,
       "hooks": [
         {
           "on": "onDamageTaken",
@@ -28,11 +28,11 @@
               "kind": "damage",
               "damageType": "magic",
               "amount": {
-                "flat": 0.0
+                "flat": 0
               },
               "incomingPct": {
                 "perRank": [
-                  1.0
+                  1
                 ],
                 "negateOriginal": true
               }
@@ -50,9 +50,9 @@
       "modelKey": "imported.aquaspikeversion2",
       "clip": "idle",
       "soundKey": "wc3.nagabuildingcancel",
-      "scale": 2.0,
-      "distance": 1.0,
-      "lifeSec": 3.0
+      "scale": 2,
+      "distance": 1,
+      "lifeSec": 3
     }
   ],
   "passive": {
@@ -68,12 +68,12 @@
                 "shape": "single",
                 "source": "incomingDamage",
                 "to": "mana",
-                "ratio": 1.0,
+                "ratio": 1,
                 "who": "self",
                 "buff": {
                   "stat": "ap",
-                  "durationSec": 5.0,
-                  "ratio": 1.0
+                  "durationSec": 5,
+                  "ratio": 1
                 }
               }
             ],
@@ -86,5 +86,6 @@
   "icon": "assets/icons/abilities/godie-emfr.ex.webp",
   "vfxKey": "fx.prim.wind.tornado-lg",
   "cooldownTier": "極大",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "castTimeTier": "極大"
 }

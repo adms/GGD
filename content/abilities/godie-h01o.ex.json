@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [
@@ -25,7 +25,7 @@
           "value": 0.35
         }
       ],
-      "duration": 6.0
+      "duration": 6
     },
     {
       "kind": "applyBuff",
@@ -36,10 +36,11 @@
           "value": 60
         }
       ],
-      "duration": 15.0
+      "duration": 15
     }
   ],
   "vfxKey": "fx.prim.nature.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1.033,
+  "castTimeTier": "極大"
 }
