@@ -80,8 +80,11 @@ def validate_component(candidate, repo):
         require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']),
                 'Re:Zero validation output pin mismatch')
         inspection=validation.get('ggdInspection',{})
+        expected_joints=candidate.get('jointCounts')
+        if expected_joints is None:
+            expected_joints=[candidate.get('jointCount')]
         require(inspection.get('skinCount') == candidate.get('skinCount') and
-                inspection.get('joints') == [candidate.get('jointCount')], 'Unexpected Re:Zero skin/joint shape')
+                inspection.get('joints') == expected_joints, 'Unexpected Re:Zero skin/joint shape')
         require(inspection.get('skinnedPrimitives') == inspection.get('drawPrimitives') == candidate.get('drawPrimitives'),
                 'Every Re:Zero model primitive must be skinned')
         require(inspection.get('clips') == [] and inspection.get('clipCount') == 0,

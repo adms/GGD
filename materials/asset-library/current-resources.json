@@ -6156,6 +6156,457 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb"
     },
     {
+      "id": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+      "conversionCandidateId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "菜月昴",
+      "originalName": "Natsuki Subaru",
+      "workZh": "Re:Zero",
+      "sourceGame": "Lethal Company community model replacement",
+      "sourceGameReleasedAt": null,
+      "platform": "PC / Unity AssetBundle",
+      "nativeId": "subaruPrefab",
+      "sourceVersion": "0.1.1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/subaru/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/subaru/body.glb",
+      "bytes": 497032,
+      "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+      "gitPath": "content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "subaru"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 8122,
+      "drawPrimitives": 3,
+      "skinCount": 2,
+      "jointCount": 42,
+      "jointCounts": [
+        41,
+        1
+      ],
+      "textureCount": 1,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Thunderstore Re:Zero 0.1.1 subaruPrefab was converted from Y-up Unity data to an upright 1.8 m GGD GLB: 8,122 triangles, 3 skinned draw primitives, [41, 1] glTF joints across 2 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 70,968 float values are finite, and three WebGL views were accepted as a static component only.",
+      "limitations": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "The source face renderer contains no bones, bind poses, joint indices or weights; it is preserved as a one-joint hierarchy-rigid skin below the native head.",
+        "The rejected Z-up conversion is retained in the S3 archive; Subaru is visually verified as Y-up."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/delivery.json",
+        "bytes": 5246,
+        "sha256": "05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/acceptance.json",
+        "bytes": 1470,
+        "sha256": "11991b758157251e968f18ba3f25cf5695b4cfeba4efca41dded3289b4e5af83"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/validation.json",
+        "bytes": 2685,
+        "sha256": "8c9da7fb9edb731eef149fc34e9031a9e75e9ed3eab8d49f14bac69e5766438f"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/visual-review.json",
+        "bytes": 2373,
+        "sha256": "af799ec9423ab149c6d1b0933c0b96a61a3862e3157067b72c945de6332ad703"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/webgl-proof.json",
+        "bytes": 4843,
+        "sha256": "c90d3d2d744df9dacf8d7c783f0809759cb867969fafa4e00c1dca3f8cbf1858"
+      },
+      "sourceFidelityEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/source-fidelity.json",
+        "bytes": 1497,
+        "sha256": "6836f785c9619da90491e9e1960ce2c770d986394e4fb7c75cf566f665377fdf"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/source-rebuild.json",
+        "bytes": 1639,
+        "sha256": "87d4370d334c3e91cca9892d623c3fd24a11ee382e52d757c4326d5c5b38888f"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/subaru/body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+          "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+      "s3ArchiveMember": "conversion/final/subaru/body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+      "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb"
+    },
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+      "conversionCandidateId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "蕾姆",
+      "originalName": "Rem",
+      "workZh": "Re:Zero",
+      "sourceGame": "Lethal Company community model replacement",
+      "sourceGameReleasedAt": null,
+      "platform": "PC / Unity AssetBundle",
+      "nativeId": "remPrefab",
+      "sourceVersion": "0.1.1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/rem/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/rem/body.glb",
+      "bytes": 1173224,
+      "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+      "gitPath": "content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "rem"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 18328,
+      "drawPrimitives": 1,
+      "skinCount": 1,
+      "jointCount": 151,
+      "jointCounts": [
+        151
+      ],
+      "textureCount": 1,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Thunderstore Re:Zero 0.1.1 remPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,328 triangles, 1 skinned draw primitives, [151] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 184,720 float values are finite, and three WebGL views were accepted as a static component only.",
+      "limitations": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/delivery.json",
+        "bytes": 5035,
+        "sha256": "74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/acceptance.json",
+        "bytes": 1286,
+        "sha256": "b94fbd59958461ba8985476008a77d8b0fca4d659ad399ada978255fe6d7e657"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/validation.json",
+        "bytes": 2552,
+        "sha256": "a0606767964648a2bc3cb013f758b2085e4a74d5bc4f548e8e3828bcac2a8132"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/visual-review.json",
+        "bytes": 2290,
+        "sha256": "b1c7d179dad26cadf1b5249b6c788c90d588ad75f74bfbcf08f05dbd27dc86ca"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/webgl-proof.json",
+        "bytes": 2396,
+        "sha256": "efe540f0b76ef3ccdb6b27f163c16e4c3c5220bbf6ed05bb737dee0a7fb0ef24"
+      },
+      "sourceFidelityEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/source-fidelity.json",
+        "bytes": 1481,
+        "sha256": "a9ae64d8f49bbb260d1b8b7e855d10a0669466fdb1406666bbf7bdcf003135c0"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/source-rebuild.json",
+        "bytes": 1636,
+        "sha256": "8840812dceba30ad74305597951a845160fcc1d373c208e95b8f8ad80406c5ef"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/rem/body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+          "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+      "s3ArchiveMember": "conversion/final/rem/body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+      "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb"
+    },
+    {
+      "id": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+      "conversionCandidateId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "愛蜜莉雅",
+      "originalName": "Emilia",
+      "workZh": "Re:Zero",
+      "sourceGame": "Lethal Company community model replacement",
+      "sourceGameReleasedAt": null,
+      "platform": "PC / Unity AssetBundle",
+      "nativeId": "emiliaPrefab",
+      "sourceVersion": "0.1.1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/emilia/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/emilia/body.glb",
+      "bytes": 1037796,
+      "sha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+      "gitPath": "content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "emilia"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 18137,
+      "drawPrimitives": 1,
+      "skinCount": 1,
+      "jointCount": 171,
+      "jointCounts": [
+        171
+      ],
+      "textureCount": 1,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Thunderstore Re:Zero 0.1.1 emiliaPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 18,137 triangles, 1 skinned draw primitives, [171] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 157,560 float values are finite, and three WebGL views were accepted as a static component only.",
+      "limitations": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "No GGD hero definition or skill binding exists for this exact identity.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit.",
+        "The uploader reports an Emilia rig problem. The static bind pose passed three-view review, but motion and retargeting remain unverified and are not accepted."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/delivery.json",
+        "bytes": 5168,
+        "sha256": "a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/acceptance.json",
+        "bytes": 1399,
+        "sha256": "e3292c7407b25d363cf1f27ac3b3dc11d1a8532579d4eac94188c8201a814dd1"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/validation.json",
+        "bytes": 2561,
+        "sha256": "74cdb7a39913d798b18cd05f1318eb765c84ac1217c101842c3f852f2daead74"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/visual-review.json",
+        "bytes": 2414,
+        "sha256": "e1e7acb6e11ff6d162fce6a5d3becf2acac154bb45fc98958b7a1949dd3bba79"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/webgl-proof.json",
+        "bytes": 2428,
+        "sha256": "d3e2f68be5e16cd58688f8a374ae90e51232b400664d005047d7a2ad2331131f"
+      },
+      "sourceFidelityEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/source-fidelity.json",
+        "bytes": 1486,
+        "sha256": "98f9c59662950188897a33c31e99cfbf26814993e7d5a01193c5a5094b44b117"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/source-rebuild.json",
+        "bytes": 1639,
+        "sha256": "1b334da4a8f23047423e6c452dfa0e5a8f95044710d55b14aa3d7193c456e477"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/emilia/body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+          "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+      "s3ArchiveMember": "conversion/final/emilia/body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+      "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb"
+    },
+    {
+      "id": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+      "conversionCandidateId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "菲利克斯／菲莉絲",
+      "originalName": "Felix Argyle",
+      "workZh": "Re:Zero",
+      "sourceGame": "Lethal Company community model replacement",
+      "sourceGameReleasedAt": null,
+      "platform": "PC / Unity AssetBundle",
+      "nativeId": "felixPrefab",
+      "sourceVersion": "0.1.1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/felix/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/felix/body.glb",
+      "bytes": 948284,
+      "sha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
+      "gitPath": "content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "felix"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 0,
+      "triangles": 16444,
+      "drawPrimitives": 1,
+      "skinCount": 1,
+      "jointCount": 137,
+      "jointCounts": [
+        137
+      ],
+      "textureCount": 1,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "auditEvidence": "Thunderstore Re:Zero 0.1.1 felixPrefab was converted from Z-up Unity data to an upright 1.8 m GGD GLB: 16,444 triangles, 1 skinned draw primitives, [137] glTF joints across 1 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 145,040 float values are finite, and three WebGL views were accepted as a static component only.",
+      "limitations": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "No GGD hero definition or skill binding exists for this exact identity.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/delivery.json",
+        "bytes": 5013,
+        "sha256": "f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/acceptance.json",
+        "bytes": 1228,
+        "sha256": "674eff8407558bdbd328f2fc388801fc2e65988fa4376763f9d04b75db3fab3d"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/validation.json",
+        "bytes": 2557,
+        "sha256": "af47f5f23be6e96328df9999b07de6df23236796ec1a43ec9c399d5992a19ece"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/visual-review.json",
+        "bytes": 2301,
+        "sha256": "85726322ab643500c4fcb40dbb1845726b75b3b06712390216691d0695faae8a"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/webgl-proof.json",
+        "bytes": 2404,
+        "sha256": "64ad096916cd8f8fcaa6ba3dcc148b4b4dc78d9080291069d5c572aaa917217b"
+      },
+      "sourceFidelityEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/source-fidelity.json",
+        "bytes": 1484,
+        "sha256": "8cff40380c5df718b8e576849a57e99ed653d5cad691e7a2dba9feccaabbe0a9"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/source-rebuild.json",
+        "bytes": 1638,
+        "sha256": "f6f9d0c022e29556addf047d1a4aeb1fffe4d058e0164ea5c2efa5eadea868c2"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+          "s3ArchiveMember": "conversion/final/felix/body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+          "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+      "s3ArchiveMember": "conversion/final/felix/body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+      "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb"
+    },
+    {
       "id": "ssbu-zero-c00-static-skinned-v1",
       "conversionCandidateId": "ssbu-zero-c00-blender4513-v4",
       "sourceId": "gitlab-ssbu-models",
@@ -8009,7 +8460,7 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb"
     }
   ],
-  "modelComponentCount": 21,
+  "modelComponentCount": 25,
   "historicalModelSourceArtifacts": [
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
@@ -8111,10 +8562,10 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "1abd69d22f6c46031260f688cae3ab0f847465e8c4dfb3520239cef825e61cde"
+    "sha256": "b886ad65846bd3f950395f2f8d69f2fc51c4b8a4018524f064933f7fa69d8d1b"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "0d06b13139fe27c7ed6271aa2e95d381aabea1c57aff9d45f18d45bd048eb203"
+    "sha256": "d33597656e6ccda0fe1866345c1637c8f62eb6aaea32b22f41e562ff15976a1c"
   }
 }

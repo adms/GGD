@@ -29,6 +29,10 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "zero-megaman": (1, 1, 0),
             "ram": (1, 1, 1),
             "beatrice": (1, 1, 1),
+            "subaru": (1, 1, 1),
+            "rem": (1, 1, 1),
+            "emilia": (1, 1, 1),
+            "felix": (1, 1, 1),
             "ssbu-mario": (16, 10, 0),
             "ssbu-mewtwo": (8, 2, 0),
             "ssbu-ptrainer": (8, 3, 0),
@@ -118,6 +122,22 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "beatrice": (
                 "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
                 "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+            ),
+            "subaru": (
+                "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+                "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+            ),
+            "rem": (
+                "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+                "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+            ),
+            "emilia": (
+                "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+                "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+            ),
+            "felix": (
+                "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+                "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
             ),
         }
         for identity, (component_id, digest) in expected.items():
