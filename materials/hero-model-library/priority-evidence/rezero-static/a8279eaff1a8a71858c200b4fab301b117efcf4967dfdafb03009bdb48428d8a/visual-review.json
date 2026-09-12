@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+  "modelSha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Natsuki Subaru head, torso, arms, hands, legs and feet.",
+    "Hair, face and costume materials remain visible with no detached primary geometry, opaque face card or bind-pose collapse.",
+    "The visually verified Y-up Subaru output stands upright at 1.8 metres; the rejected Z-up horizontal output remains in the S3 backup.",
+    "Review covers a static bind pose because source and output contain no animation clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/front.png",
+      "bytes": 146760,
+      "sha256": "e972da21c006bd1510970569335b2865ef6bc426f55dd1385544da16765a9143"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/back.png",
+      "bytes": 135747,
+      "sha256": "7bb52ab3fe1686984e451f162457295d02e6e87aadb270029b85da99c5ad0dfe"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/isometric.png",
+      "bytes": 139369,
+      "sha256": "32bd796e018b55ff43ed69eecd8f36e1fe56f67895ea0355b19d66cd16a4cdd1"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/contact-sheet.png",
+      "bytes": 262634,
+      "sha256": "9cacec8a4b81fb4ddb6f6a8400756b7383e8457d5354107e8c4971bf9867c4e6"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/webgl-proof.json",
+    "bytes": 4843,
+    "sha256": "c90d3d2d744df9dacf8d7c783f0809759cb867969fafa4e00c1dca3f8cbf1858"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

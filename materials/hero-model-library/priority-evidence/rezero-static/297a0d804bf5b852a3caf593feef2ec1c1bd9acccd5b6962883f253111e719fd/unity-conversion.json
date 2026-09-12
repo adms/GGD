@@ -1,0 +1,136 @@
+{
+  "schema": "ggd-unity-prefab-conversion@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/staging/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/source/bundles/ReZeroModelReplacements.mbundle.bundle",
+    "sha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88"
+  },
+  "unityPy": "1.25.3",
+  "rootName": "emiliaPrefab",
+  "removedScenePlacement": {
+    "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": -9221613420318595329
+    },
+    "m_LocalRotation": {
+      "x": -0.7071068286895752,
+      "y": 0.0,
+      "z": -0.0,
+      "w": 0.7071068286895752
+    },
+    "m_LocalPosition": {
+      "x": -0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "m_LocalScale": {
+      "x": 81.40665435791016,
+      "y": 81.40665435791016,
+      "z": 81.40665435791016
+    },
+    "m_Children": [
+      {
+        "m_FileID": 0,
+        "m_PathID": 890737207567007330
+      },
+      {
+        "m_FileID": 0,
+        "m_PathID": 8109297550271487495
+      }
+    ],
+    "m_Father": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    }
+  },
+  "meshes": [
+    {
+      "meshPathId": "-4723428257784514001",
+      "rendererPathId": "6644919287759985033",
+      "name": "emiliashuiyi",
+      "vertices": 12902,
+      "triangles": 18137,
+      "bones": 171,
+      "implicitSingleBoneWeight": false,
+      "sourceWeightSumMaxError": 8.940696716308594e-08,
+      "skinPositionMaxError": 0.0
+    }
+  ],
+  "sourceUpAxis": "z",
+  "sourceToGltfOrientation": {
+    "rotation": [
+      -0.7071067811865476,
+      0.0,
+      0.0,
+      0.7071067811865476
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "output": {
+    "path": "body.glb",
+    "sha256": "b2791d26879151467502f2b62bacfbdc9dfb483682df8fd50e8d71c7bcce4745",
+    "bytes": 1218104,
+    "height": 1.8,
+    "materials": 1,
+    "textures": 1,
+    "nodes": 178,
+    "animations": 0
+  },
+  "drawPrimitives": 1,
+  "sourceAnimationClips": 0,
+  "sourceAnimatorComponents": 6,
+  "sourceBoundsBeforeOrientation": {
+    "min": [
+      -0.6697663470327099,
+      -0.2228079285761227,
+      -0.03183764477534022
+    ],
+    "max": [
+      0.6697658950200448,
+      0.34523107338210124,
+      1.5703939968564244
+    ]
+  },
+  "sourceBoundsBeforeNormalization": {
+    "min": [
+      -0.6697663470327099,
+      -0.03183764477534022,
+      -0.34523107338210124
+    ],
+    "max": [
+      0.6697658950200448,
+      1.5703939968564244,
+      0.2228079285761227
+    ]
+  },
+  "limitations": [
+    "Source bundle contains 6 Animator component(s) but zero AnimationClip objects; no native animation clips were available to convert.",
+    "Unity custom shader logic is reduced to base color, metallic and roughness."
+  ],
+  "runtimeReady": false,
+  "backendSelectionVerified": false
+}

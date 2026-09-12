@@ -238,6 +238,8 @@ def convert(bundle, output, root_name, height=1.8, source_up_axis='y'):
         if obj.path_id in readers:
             raise ValueError('Ambiguous path IDs across serialized files')
         readers[obj.path_id] = obj
+    source_animation_clips = sum(obj.type.name == 'AnimationClip' for obj in readers.values())
+    source_animator_components = sum(obj.type.name == 'Animator' for obj in readers.values())
     trees = {pid: obj.read_typetree() for pid, obj in readers.items()
              if obj.type.name in {'Transform', 'GameObject', 'SkinnedMeshRenderer', 'Material'}}
     transforms = {pid: tree for pid, tree in trees.items() if readers[pid].type.name == 'Transform'}
@@ -281,7 +283,22 @@ def convert(bundle, output, root_name, height=1.8, source_up_axis='y'):
                                  'extras': {'unityTransformPathId': str(pid)}})
     glb.doc['nodes'][0]['children'].append(node_ids[root])
     texture_cache, material_cache = {}, {}
-    limitations = ['No animation conversion; native clips and Animator remain in the source archive.',
+    if source_animation_clips:
+        animation_limitation = (
+            f'No animation conversion; {source_animation_clips} native AnimationClip object(s) remain '
+            'in the source archive.'
+        )
+    elif source_animator_components:
+        animation_limitation = (
+            f'Source bundle contains {source_animator_components} Animator component(s) but zero '
+            'AnimationClip objects; no native animation clips were available to convert.'
+        )
+    else:
+        animation_limitation = (
+            'Source bundle contains zero Animator components and zero AnimationClip objects; '
+            'no native animation clips were available to convert.'
+        )
+    limitations = [animation_limitation,
                    'Unity custom shader logic is reduced to base color, metallic and roughness.']
 
     def material(pid):
@@ -443,7 +460,8 @@ def convert(bundle, output, root_name, height=1.8, source_up_axis='y'):
                           'height': height, 'materials': len(glb.doc['materials']), 'textures': len(glb.doc['textures']),
                           'nodes': len(glb.doc['nodes']), 'animations': 0},
                'drawPrimitives': sum(len(m['primitives']) for m in glb.doc['meshes']),
-               'sourceAnimationClips': sum(o.type.name == 'AnimationClip' for o in readers.values()),
+               'sourceAnimationClips': source_animation_clips,
+               'sourceAnimatorComponents': source_animator_components,
                'sourceBoundsBeforeOrientation': {'min': positions.min(axis=0).tolist(),
                                                   'max': positions.max(axis=0).tolist()},
                'sourceBoundsBeforeNormalization': {'min': minimum.tolist(), 'max': maximum.tolist()},

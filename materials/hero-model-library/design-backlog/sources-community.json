@@ -6784,7 +6784,7 @@
           "identityReviewRequired": false
         },
         {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/subaru/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/subaru/body.glb",
           "existsLocal": true,
           "bytes": 497032,
           "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
@@ -6823,20 +6823,22 @@
             "The rejected Z-up conversion is retained in the S3 archive; Subaru is visually verified as Y-up."
           ],
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/validation.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/validation.json",
             "bytes": 2685,
             "sha256": "8c9da7fb9edb731eef149fc34e9031a9e75e9ed3eab8d49f14bac69e5766438f"
           },
           "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/05d1cccf72083ccef26427042c18705765d530e9e2b4483d1f92fdddcc01ca76/visual-review.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/visual-review.json",
             "bytes": 2373,
-            "sha256": "af799ec9423ab149c6d1b0933c0b96a61a3862e3157067b72c945de6332ad703"
+            "sha256": "327f6aa6dac15ddd83d2e5a1b8017072d9337a1518410daee980e14d2b439d1e"
           },
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
           "s3ArchiveMember": "conversion/final/subaru/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 497032,
-          "sizeMatchesManifest": true
+          "sizeMatchesManifest": true,
+          "sourceAnimatorComponentCount": 6,
+          "sourceAnimationClipCount": 0
         },
         {
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684.glb",
@@ -6869,8 +6871,8 @@
       "designStatus": "designed",
       "evidence": [
         "Exact named Mesh + Avatar in extraction.json; bundle contains full rig; 0 AnimationClip.",
-        "Thunderstore Re:Zero 0.1.1 subaruPrefab was converted from Y-up Unity data to an upright 1.8 m GGD GLB: 8,122 triangles, 3 skinned draw primitives, [41, 1] glTF joints across 2 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 70,968 float values are finite, and three WebGL views were accepted as a static component only.",
-        "workflow-model-options candidate identity status: [('community-review-22-20260907', 'character-labelled-by-delivering-workflow')]"
+        "workflow-model-options candidate identity status: [('community-review-22-20260907', 'character-labelled-by-delivering-workflow')]",
+        "Thunderstore Re:Zero 0.1.1 subaruPrefab was converted from Y-up Unity data to an upright 1.8 m GGD GLB: 8,122 triangles, 3 skinned draw primitives, [41, 1] glTF joints across 2 skin(s), one 256px texture and zero clips. Two builds are byte-identical; Khronos reports zero errors/warnings, 70,968 float values are finite, and three WebGL views were accepted as a static component only."
       ],
       "aliases": [
         "ZHS002_Natsuki_Subaru",
@@ -7041,7 +7043,7 @@
           "identityReviewRequired": false
         },
         {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/rem/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
           "existsLocal": true,
           "bytes": 1173224,
           "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
@@ -7079,20 +7081,22 @@
             "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
           ],
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/validation.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/validation.json",
             "bytes": 2552,
             "sha256": "a0606767964648a2bc3cb013f758b2085e4a74d5bc4f548e8e3828bcac2a8132"
           },
           "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/74ed13c1b737dd7e0c04df0c1683831d212d30065f526dc475ba9f72cce92b22/visual-review.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/17ba5acfba4ea2d51bb7245304e4c8fea839393dd73117b3ea7d348793f4d9b4/visual-review.json",
             "bytes": 2290,
-            "sha256": "b1c7d179dad26cadf1b5249b6c788c90d588ad75f74bfbcf08f05dbd27dc86ca"
+            "sha256": "9556a4059308c6ee9c6c6a1e2a8bcae2d8f5eb1b7e6167c7318f4cc5ffafbd34"
           },
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
           "s3ArchiveMember": "conversion/final/rem/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1173224,
-          "sizeMatchesManifest": true
+          "sizeMatchesManifest": true,
+          "sourceAnimatorComponentCount": 6,
+          "sourceAnimationClipCount": 0
         }
       ],
       "mappedHeroIds": [
@@ -41033,7 +41037,7 @@
           "identityReviewRequired": false
         },
         {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/emilia/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/emilia/body.glb",
           "existsLocal": true,
           "bytes": 1037796,
           "sha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
@@ -41072,20 +41076,22 @@
             "The uploader reports an Emilia rig problem. The static bind pose passed three-view review, but motion and retargeting remain unverified and are not accepted."
           ],
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/validation.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/validation.json",
             "bytes": 2561,
             "sha256": "74cdb7a39913d798b18cd05f1318eb765c84ac1217c101842c3f852f2daead74"
           },
           "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a35efa0468bba0c5a152a3fdd0c9c23c645fe0cd3151465588a99780c20d4057/visual-review.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/297a0d804bf5b852a3caf593feef2ec1c1bd9acccd5b6962883f253111e719fd/visual-review.json",
             "bytes": 2414,
-            "sha256": "e1e7acb6e11ff6d162fce6a5d3becf2acac154bb45fc98958b7a1949dd3bba79"
+            "sha256": "4112d45f0fd580b4849405b17c04e191c6c9c26e3da2e1424b7030e70423973c"
           },
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
           "s3ArchiveMember": "conversion/final/emilia/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1037796,
-          "sizeMatchesManifest": true
+          "sizeMatchesManifest": true,
+          "sourceAnimatorComponentCount": 6,
+          "sourceAnimationClipCount": 0
         }
       ],
       "mappedHeroIds": [],
@@ -41151,7 +41157,7 @@
           "identityReviewRequired": false
         },
         {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/ram/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-receipt-v2/final/ram/body.glb",
           "existsLocal": true,
           "bytes": 1180240,
           "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
@@ -41189,20 +41195,22 @@
             "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
           ],
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/validation.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/51cb2513307baff9aafadd9f1263ee9e8d0b7bb9dc6fff0961c7b834d73cc725/validation.json",
             "bytes": 2530,
             "sha256": "4ed161528a987e60c1e91def771c1fca0de561a3c783f987e6feacceba1ceba5"
           },
           "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/e66fadb046fbdfe6eaa17affb986e2350024bd6aeb5ed7f917bbe2455e9a401a/visual-review.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/51cb2513307baff9aafadd9f1263ee9e8d0b7bb9dc6fff0961c7b834d73cc725/visual-review.json",
             "bytes": 2353,
-            "sha256": "6032881df738ce81ec4632524e488fd4d877aa05939fce793f0c8e35cd6c1ac6"
+            "sha256": "73632466e5f18c86a898a96a72c75e2f6c934ebff566c701fe02bfe2631608f4"
           },
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
           "s3ArchiveMember": "conversion/final/ram/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1180240,
-          "sizeMatchesManifest": true
+          "sizeMatchesManifest": true,
+          "sourceAnimatorComponentCount": 6,
+          "sourceAnimationClipCount": 0
         }
       ],
       "mappedHeroIds": [],
@@ -41268,7 +41276,7 @@
           "identityReviewRequired": false
         },
         {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-receipt-v2/final/beatrice/body.glb",
           "existsLocal": true,
           "bytes": 1246640,
           "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
@@ -41306,20 +41314,22 @@
             "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
           ],
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/validation.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/72d1f3d274000ab7a37ae30448ad6d67478bebb4825a1cf400f5adb7208a444a/validation.json",
             "bytes": 2545,
             "sha256": "1f1de627f44ff7bd741ea63dd65a9cbdad207e50b44f7777a1839eb31b72ee10"
           },
           "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/dba94fe1050363aeb9441a3de4982adae8a1d5726500f9cf84924cbf8572b9c9/visual-review.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/72d1f3d274000ab7a37ae30448ad6d67478bebb4825a1cf400f5adb7208a444a/visual-review.json",
             "bytes": 2363,
-            "sha256": "9434d9445e936700c1faca9ca4552176110eab1033ed060411b1b0884e504f41"
+            "sha256": "404f48bbb285f2fc1af73f04f591ae30c86d1afcd94d8df95d45e4284cea784b"
           },
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/bb48604313c5662a3173cf206bdbde3cd87cc72b4b93cb9a2463c03d6fd355fe.tar.gz",
           "s3ArchiveMember": "conversion/final/beatrice/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 1246640,
-          "sizeMatchesManifest": true
+          "sizeMatchesManifest": true,
+          "sourceAnimatorComponentCount": 6,
+          "sourceAnimationClipCount": 0
         }
       ],
       "mappedHeroIds": [],
@@ -41385,7 +41395,7 @@
           "identityReviewRequired": false
         },
         {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/felix/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/felix/body.glb",
           "existsLocal": true,
           "bytes": 948284,
           "sha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
@@ -41423,20 +41433,22 @@
             "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
           ],
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/validation.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a60d9141a3b28836540c95cd89c76f104b870697c2e2b7b503b2ffa5c4cc04f4/validation.json",
             "bytes": 2557,
             "sha256": "af47f5f23be6e96328df9999b07de6df23236796ec1a43ec9c399d5992a19ece"
           },
           "visualEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/visual-review.json",
+            "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a60d9141a3b28836540c95cd89c76f104b870697c2e2b7b503b2ffa5c4cc04f4/visual-review.json",
             "bytes": 2301,
-            "sha256": "85726322ab643500c4fcb40dbb1845726b75b3b06712390216691d0695faae8a"
+            "sha256": "b79266aa9e6e7e6e5d7c69b4d8e63ffe3d88674823ba473d3bb8d3feea0526a8"
           },
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
           "s3ArchiveMember": "conversion/final/felix/body.glb",
           "identityReviewRequired": false,
           "recordedBytes": 948284,
-          "sizeMatchesManifest": true
+          "sizeMatchesManifest": true,
+          "sourceAnimatorComponentCount": 6,
+          "sourceAnimationClipCount": 0
         }
       ],
       "mappedHeroIds": [],

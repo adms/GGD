@@ -12,6 +12,7 @@ from skinned_components import require
 
 SOURCE_ID = "thunderstore-rezero"
 BACKUP_ID = "rezero-ram-beatrice-thunderstore-0.1.1-v1-backup"
+CORRECTION_BACKUP_ID = "rezero-static-receipt-correction-v2"
 SOURCE_BUNDLE_SHA256 = "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88"
 SOURCE_ARCHIVE_SHA256 = "e846f2bf183ae9234c9ab675debfe62025e08e3aa2d8fa6871573185f9164a27"
 CONFIGS = (
@@ -80,7 +81,7 @@ def upsert(rows: list[dict], item: dict, label: str,
 
 def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: dict,
                       source: dict, backlog_row: dict, archive: dict,
-                      rebuild_receipt: dict) -> tuple[dict[Path, bytes], dict, Path]:
+                      correction_archive: dict, rebuild_receipt: dict) -> tuple[dict[Path, bytes], dict, Path]:
     component_id = config["componentId"]
     conversion = load(final_root.parents[1] / "source-conversion" / config["key"] / "conversion.json")
     normalization = load(final_root / "normalization.json")
@@ -92,7 +93,9 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
     require(conversion.get("source", {}).get("sha256") == SOURCE_BUNDLE_SHA256, "Changed Re:Zero bundle")
     require(conversion.get("rootName") == config["nativeId"], "Wrong Re:Zero prefab root")
     require(conversion.get("sourceUpAxis") == "z", "Re:Zero source must be interpreted as Z-up")
-    require(conversion.get("sourceAnimationClips") == 0 and conversion["output"]["animations"] == 0,
+    require(conversion.get("sourceAnimationClips") == 0 and
+            conversion.get("sourceAnimatorComponents") == 6 and
+            conversion["output"]["animations"] == 0,
             "Re:Zero source unexpectedly contains AnimationClip output")
     require(conversion["output"]["sha256"] == config["sourceConversionSha256"], "Changed source conversion")
     require(normalization.get("candidateId") == component_id, "Wrong Re:Zero candidate")
@@ -129,6 +132,20 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
         "s3Use": "backup-only-not-runtime-entry", "backupReceiptPath": archive["receiptPath"],
         "backupReceiptSha256": archive["receiptSha256"],
     }
+    correction_member_path = (
+        "conversions/rezero-ram-beatrice-thunderstore-0.1.1-receipt-v2/"
+        f"final/{config['key']}/body.glb"
+    )
+    correction_member = [row for row in correction_archive["files"] if row["path"] == correction_member_path]
+    require(len(correction_member) == 1 and
+            (correction_member[0]["sha256"], correction_member[0]["bytes"]) ==
+            (config["outputSha256"], config["outputBytes"]),
+            "Correction-stage S3 archive does not contain final Re:Zero GLB")
+    correction_locator = {
+        "s3Uri": correction_archive["s3Uri"], "s3ArchiveMember": correction_member_path,
+        "s3Use": "backup-only-not-runtime-entry", "backupReceiptPath": correction_archive["receiptPath"],
+        "backupReceiptSha256": correction_archive["receiptSha256"],
+    }
     gaps = [
         "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
         "No GGD hero definition or skill binding exists for this exact identity.",
@@ -150,11 +167,14 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
         "metrics": {"triangles": config["triangles"], "drawPrimitives": 1, "skinCount": 1,
                     "jointCount": config["joints"], "textureCount": 1,
                     "nativeAnimationCount": 0, "proceduralAnimationCount": 0,
+                    "sourceAnimatorComponentCount": 6, "sourceAnimationClipCount": 0,
                     "worldHeightMeters": webgl["worldSkinnedBounds"]["extent"][1]},
         "validation": {"khronosErrors": 0, "khronosWarnings": 0, "ggdBudgetErrors": 0,
                        "finiteFloatValuesChecked": config["finiteFloatValues"], "webglLoadComplete": True,
                        "visualViewsReviewed": ["front", "back", "isometric"]},
         "backup": locator, "backupFileCount": archive["fileCount"],
+        "conversionStageBackup": correction_locator,
+        "conversionStageBackupFileCount": correction_archive["fileCount"],
         "status": {"downloaded": True, "extracted": True, "converted": True,
                    "structurallyValidated": True, "visuallyAcceptedIndependentComponent": True,
                    "completeHero": False, "heroBound": False, "runtimeSelectable": False, "deployed": False},
@@ -200,7 +220,7 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
         "sourceRootName": config["nativeId"], "sourceUpAxis": "z", "outputUpAxis": "y",
         "sourceVertexCount": conversion["meshes"][0]["vertices"], "outputTriangleCount": config["triangles"],
         "sourceBoneCount": conversion["meshes"][0]["bones"], "outputJointCount": config["joints"],
-        "sourceAnimationClipCount": 0, "outputClipCount": 0,
+        "sourceAnimatorComponentCount": 6, "sourceAnimationClipCount": 0, "outputClipCount": 0,
         "allAccessorBytesPreservedDuringNormalization": normalization["allAccessorBytesPreserved"],
         "sourceWeightSumMaxError": conversion["meshes"][0]["sourceWeightSumMaxError"],
         "skinPositionMaxError": conversion["meshes"][0]["skinPositionMaxError"],
@@ -212,6 +232,7 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
         "sourceBundleSha256": SOURCE_BUNDLE_SHA256, "outputSha256": config["outputSha256"],
         "sourceConversionByteIdentical": replay["sourceConversion"]["byteIdentical"],
         "normalizedGlbByteIdentical": replay["normalized"]["byteIdentical"],
+        "conversionStageBackup": correction_locator,
         "toolPins": rebuild_receipt["toolPins"], "rebuildReceipt": evidence("rebuild.json"),
         "limitations": ["Receipt JSON contains run-specific absolute paths; both GLB stages are byte-identical.",
                         "Static deterministic output does not establish gameplay animation readiness."],
@@ -245,13 +266,14 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
         "nativeAnimationCount": 0, "proceduralAnimationCount": 0,
         "triangles": config["triangles"], "drawPrimitives": 1, "skinCount": 1,
         "jointCount": config["joints"], "textureCount": 1,
+        "sourceAnimatorComponentCount": 6, "sourceAnimationClipCount": 0,
         "readiness": "accepted-independent-static-skinned-component-actions-missing",
         "auditEvidence": evidence_note, "limitations": gaps,
         "deliveryEvidence": evidence("delivery.json"), "acceptanceEvidence": evidence("acceptance.json"),
         "validationEvidence": evidence("validation.json"), "visualEvidence": evidence("visual-review.json"),
         "webglProofEvidence": evidence("webgl-proof.json"), "sourceFidelityEvidence": evidence("source-fidelity.json"),
         "sourceRebuildEvidence": evidence("source-rebuild.json"), "backupStatus": "s3-full-readback-verified",
-        "backupLocations": [locator], **locator,
+        "backupLocations": [locator, correction_locator], **locator,
     }
     candidate = upsert(source.setdefault("componentCandidates", []), candidate, component_id)
     attempt = {
@@ -269,6 +291,7 @@ def prepare_component(repo: Path, final_root: Path, rebuild_root: Path, config: 
         "bytes": candidate["bytes"], "sha256": candidate["sha256"], "format": "glTF Binary",
         "resourceRole": candidate["resourceRole"], "readiness": candidate["readiness"], "converted": True,
         "componentReady": True, "nativeAnimationCount": 0, "proceduralAnimationCount": 0,
+        "sourceAnimatorComponentCount": 6, "sourceAnimationClipCount": 0,
         "runtimeSelectable": False, "defaultEligible": False, "validationEvidence": candidate["validationEvidence"],
         "visualEvidence": candidate["visualEvidence"], "limitations": candidate["limitations"],
     }
@@ -300,6 +323,15 @@ def prepare(repo: Path, conversion_root: Path, rebuild_root: Path):
     archives = [row for row in archive_index.get("sources", []) if row.get("id") == BACKUP_ID]
     require(len(archives) == 1 and archives[0].get("fullReadbackVerified") is True, "Re:Zero archive missing")
     archive = archives[0]
+    correction_links = [row for row in source.get("supplementalDeliveries", [])
+                        if row.get("id") == CORRECTION_BACKUP_ID]
+    require(len(correction_links) == 1 and correction_links[0].get("fullReadbackVerified") is True,
+            "Re:Zero correction-stage backup not linked")
+    correction_archives = [row for row in archive_index.get("sources", [])
+                           if row.get("id") == CORRECTION_BACKUP_ID]
+    require(len(correction_archives) == 1 and correction_archives[0].get("fullReadbackVerified") is True,
+            "Re:Zero correction-stage archive missing")
+    correction_archive = correction_archives[0]
     rebuild_receipt = load(rebuild_root / "rebuild.json")
     require(rebuild_receipt.get("allSourceConversionsByteIdentical") is True and
             rebuild_receipt.get("allNormalizedModelsByteIdentical") is True, "Re:Zero rebuild failed")
@@ -312,7 +344,7 @@ def prepare(repo: Path, conversion_root: Path, rebuild_root: Path):
                 config["name"] + " must remain an unbound design-backlog identity")
         part, candidate, evidence_root = prepare_component(
             repo, conversion_root / "final" / config["key"], rebuild_root / "final" / config["key"],
-            config, source, row, archive, rebuild_receipt)
+            config, source, row, archive, correction_archive, rebuild_receipt)
         require(not (set(writes) & set(part)), "Re:Zero components tried to write the same immutable file")
         writes.update(part)
         results.append({"componentId": candidate["id"], "sha256": candidate["sha256"],

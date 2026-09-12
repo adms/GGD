@@ -1,0 +1,34 @@
+{
+  "schema": "ggd.rezero-static-component-source-rebuild@1",
+  "componentId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "outputSha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+  "sourceConversionByteIdentical": true,
+  "normalizedGlbByteIdentical": true,
+  "conversionStageBackup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/rezero-static-receipt-correction-v2/28b6417a3af1e8c4779da512fe6ee3358e2eb8bc852191d6662bad7fdb8d641f.tar.gz",
+    "s3ArchiveMember": "conversions/rezero-ram-beatrice-thunderstore-0.1.1-receipt-v2/final/ram/body.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-static-receipt-correction-v2/acd92cd404f4cb19fc8dc0bd3101cbf23d003539f545032bb0b861547deaa639/receipt.json",
+    "backupReceiptSha256": "7a62ebd57e746b4656489bda4a44732b90e668aa64597c2a15683e294bf62799"
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "1050488df70b0a79b783a1b4b3cf8e11db3bdb7c9563761c72c92e035e404db8"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v1/normalize_validate.mts",
+      "sha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f"
+    }
+  ],
+  "rebuildReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/51cb2513307baff9aafadd9f1263ee9e8d0b7bb9dc6fff0961c7b834d73cc725/rebuild.json",
+    "bytes": 6469,
+    "sha256": "15e5d69a4c1a341cc1df2349776eed052f20b48601b5838ed3c2ed8ad32c208b"
+  },
+  "limitations": [
+    "Receipt JSON contains run-specific absolute paths; both GLB stages are byte-identical.",
+    "Static deterministic output does not establish gameplay animation readiness."
+  ]
+}
