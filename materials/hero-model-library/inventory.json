@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-12T08:12:15+08:00",
-  "inputsSha256": "51607273c5603e5603d5d4bbfa860a7201bf2347d4af7fc790519fa9fb9738db",
+  "generatedAt": "2026-09-12T08:29:54+08:00",
+  "inputsSha256": "32a413f72c1c004bfdf34bc6ab75b9532b01ca68019c51c56211274b14a2c3c1",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -90981,6 +90981,58 @@
             "receiptSha256": "4f6eee04184442587bb9a3a2cb5ad9fbeb8c47c5d8578d8a0b955422b26cc131",
             "manifestSha256": "d3fa2b21ba7bd3c4e3c4839a9311066781a2f9cdecb16e14f12380893b9e61ac",
             "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "ssbu-ptrainer-male-c00-blender4513-v1-backup",
+            "sourceId": "gitlab-ssbu-models",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-full-readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.files.json",
+            "bytes": 4804751,
+            "sha256": "cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d",
+            "fileCount": 17,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-verified-receipt.json",
+            "receiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3",
+            "manifestSha256": "4dabd9d44ae59444d1238034c3e6086d1003428fb980aab4832d8cfd46ac87b9",
+            "s3Use": "backup-only-not-runtime-entry"
+          },
+          {
+            "id": "ssbu-ptrainer-female-c01-blender4513-v1-backup",
+            "sourceId": "gitlab-ssbu-models",
+            "resourceRole": "model-conversion-backup",
+            "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1",
+            "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/source.tar.gz",
+            "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-full-readback.tar.gz",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.files.json",
+            "bytes": 4859517,
+            "sha256": "c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e",
+            "fileCount": 17,
+            "archiveFormat": "tar-gzip",
+            "archiveMemberRoot": "",
+            "readbackVerified": true,
+            "fullReadbackVerified": true,
+            "s3ReadbackVerified": true,
+            "localPreserved": true,
+            "acquiredAssetPayloadCount": 0,
+            "snapshotScope": "manifest-listed-files-only",
+            "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+            "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-verified-receipt.json",
+            "receiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f",
+            "manifestSha256": "ecfad69acb8dd475e493dbf7902198a7a09012598249e463cd805b0c3e7150b4",
+            "s3Use": "backup-only-not-runtime-entry"
           }
         ],
         "conversionAttempts": [
@@ -91167,6 +91219,46 @@
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-pickel-alex-c01-blender4513-v1-backup/s3-verified-receipt.json",
             "backupReceiptSha256": "4f6eee04184442587bb9a3a2cb5ad9fbeb8c47c5d8578d8a0b955422b26cc131"
+          },
+          {
+            "id": "ssbu-ptrainer-male-c00-blender4513-v1",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1",
+            "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/ssbu-ptrainer-male-c00-rebuild-v1",
+            "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/normalization.json",
+            "reportSha256": "e6b9599e2029f18ff89bc47c42152f4ddb9100766f8856041f3c5d9c1031c8cb",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+            "outputSha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
+            "nativeAnimationCount": 0,
+            "componentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "backupStatus": "s3-full-readback-verified",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3"
+          },
+          {
+            "id": "ssbu-ptrainer-female-c01-blender4513-v1",
+            "status": "accepted-independent-static-skinned-component-actions-missing",
+            "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1",
+            "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/ssbu-ptrainer-female-c01-rebuild-v1",
+            "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/normalization.json",
+            "reportSha256": "2f752b1090e734b16f445f4f6bf794082525b605dd145bb8f7d1964fa87f3fc5",
+            "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+            "outputSha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+            "nativeAnimationCount": 0,
+            "componentId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "backupStatus": "s3-full-readback-verified",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f"
           }
         ],
         "sourceClass": "original-game-extraction-community-repackage",
@@ -91964,6 +92056,350 @@
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-pickel-alex-c01-blender4513-v1-backup/s3-verified-receipt.json",
             "backupReceiptSha256": "4f6eee04184442587bb9a3a2cb5ad9fbeb8c47c5d8578d8a0b955422b26cc131"
+          },
+          {
+            "id": "ssbu-ptrainer-male-c00-static-skinned-v1",
+            "conversionCandidateId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+            "sourceId": "gitlab-ssbu-models",
+            "sourceClass": "original-game-extraction-community-repackage",
+            "selectionClass": "canonical-game",
+            "nameZh": "寶可夢訓練家（男）",
+            "originalName": "Pokémon Trainer (male)",
+            "workZh": "任天堂明星大亂鬥 特別版（原作：寶可夢）",
+            "sourceGame": "Super Smash Bros. Ultimate",
+            "sourceGameReleasedAt": "2018-12-07",
+            "platform": "Nintendo Switch",
+            "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+            "variant": "c00",
+            "equivalentSourceVariants": [
+              "c00",
+              "c02",
+              "c04",
+              "c06"
+            ],
+            "allNativeBodyVariants": [
+              {
+                "variant": "c00",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/ptrainer-c00.blend"
+              },
+              {
+                "variant": "c01",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/ptrainer-c01.blend"
+              },
+              {
+                "variant": "c02",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c02/ptrainer-c02.blend"
+              },
+              {
+                "variant": "c03",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c03/ptrainer-c03.blend"
+              },
+              {
+                "variant": "c04",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c04/ptrainer-c04.blend"
+              },
+              {
+                "variant": "c05",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c05/ptrainer-c05.blend"
+              },
+              {
+                "variant": "c06",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c06/ptrainer-c06.blend"
+              },
+              {
+                "variant": "c07",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c07/ptrainer-c07.blend"
+              }
+            ],
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+            "bytes": 1316992,
+            "sha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
+            "gitPath": "content/assets/models/community/953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ssbu-ptrainer"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 10698,
+            "drawPrimitives": 5,
+            "skinCount": 1,
+            "jointCount": 44,
+            "textureCount": 4,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "auditEvidence": "SSBU fighter/ptrainer c00 Pokémon Trainer (male) was converted with Blender 4.5.13 and GGD normalization to a 1,316,992-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 5 primitives are skinned to 44 joints, and 177,600 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions.",
+            "limitations": [
+              "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+              "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+              "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+              "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+              "25 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+              "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/delivery.json",
+              "bytes": 8299,
+              "sha256": "c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/acceptance.json",
+              "bytes": 1326,
+              "sha256": "6aaa308e43dbbeded76435321dd99997a137c2a3ab9447cd06fe8d71d408f614"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/validation.json",
+              "bytes": 33780,
+              "sha256": "a4b460da91fcdb5ca5d5b20fd248d9ddf0deb93d70f532e540883687a2e360fe"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/visual-review.json",
+              "bytes": 2315,
+              "sha256": "037ea89f2f24d5a5800ac44427d50dec14a7f7c264836440b69483bb775947ad"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/webgl-proof.json",
+              "bytes": 6612,
+              "sha256": "27979d44a58955865768dc1dc88f49af743f234c3b17f21760cee6f61f670dda"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/source-fidelity.json",
+              "bytes": 2537,
+              "sha256": "cbd349e8b4bbc37aa0c46a278119059570189030ebc6bf88dd695d577c7d4988"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/source-rebuild.json",
+              "bytes": 2935,
+              "sha256": "8b74cd96164e0c70c0ae988932b226b3afdf431c60ad9a4d3a502bbfa8b13151"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+                "s3ArchiveMember": "body.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-verified-receipt.json",
+                "backupReceiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-male-c00-blender4513-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "1116fa77fc4ac042082a288435ccd23a53beb36591c23218f7ebd418243604c3"
+          },
+          {
+            "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
+            "conversionCandidateId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+            "sourceId": "gitlab-ssbu-models",
+            "sourceClass": "original-game-extraction-community-repackage",
+            "selectionClass": "canonical-game",
+            "nameZh": "寶可夢訓練家（女）",
+            "originalName": "Pokémon Trainer (female)",
+            "workZh": "任天堂明星大亂鬥 特別版（原作：寶可夢）",
+            "sourceGame": "Super Smash Bros. Ultimate",
+            "sourceGameReleasedAt": "2018-12-07",
+            "platform": "Nintendo Switch",
+            "nativeId": "fighter/ptrainer/model/ptrainer/c01",
+            "variant": "c01",
+            "equivalentSourceVariants": [
+              "c01",
+              "c03",
+              "c05",
+              "c07"
+            ],
+            "allNativeBodyVariants": [
+              {
+                "variant": "c00",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/ptrainer-c00.blend"
+              },
+              {
+                "variant": "c01",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/ptrainer-c01.blend"
+              },
+              {
+                "variant": "c02",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c02/ptrainer-c02.blend"
+              },
+              {
+                "variant": "c03",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c03/ptrainer-c03.blend"
+              },
+              {
+                "variant": "c04",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c04/ptrainer-c04.blend"
+              },
+              {
+                "variant": "c05",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c05/ptrainer-c05.blend"
+              },
+              {
+                "variant": "c06",
+                "identity": "Pokémon Trainer male",
+                "bytes": 5274464,
+                "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c06/ptrainer-c06.blend"
+              },
+              {
+                "variant": "c07",
+                "identity": "Pokémon Trainer female",
+                "bytes": 5646396,
+                "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19",
+                "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c07/ptrainer-c07.blend"
+              }
+            ],
+            "resourceRole": "independent-static-skinned-model-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+            "bytes": 1373696,
+            "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+            "gitPath": "content/assets/models/community/8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ssbu-ptrainer"
+            ],
+            "nativeAnimationCount": 0,
+            "proceduralAnimationCount": 0,
+            "triangles": 11086,
+            "drawPrimitives": 6,
+            "skinCount": 1,
+            "jointCount": 72,
+            "textureCount": 5,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "auditEvidence": "SSBU fighter/ptrainer c01 Pokémon Trainer (female) was converted with Blender 4.5.13 and GGD normalization to a 1,373,696-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 6 primitives are skinned to 72 joints, and 177,708 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions.",
+            "limitations": [
+              "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+              "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+              "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+              "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+              "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+              "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/delivery.json",
+              "bytes": 8313,
+              "sha256": "5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/acceptance.json",
+              "bytes": 1328,
+              "sha256": "b8d7495c68d3ded6a0c7d81de81957974b736c9b13aacc1ef06bbd6dd22c791b"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/validation.json",
+              "bytes": 40238,
+              "sha256": "a770ca03f92c6a8b4ccb0b0f25848c23dec71e35e733dcfa454fa6ad44dfc222"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/visual-review.json",
+              "bytes": 2321,
+              "sha256": "4e1dfb85dd5b63b174684a6e5b5e81316f74671a6184133a85592a191c147a5c"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/webgl-proof.json",
+              "bytes": 7926,
+              "sha256": "9b8ab4959111906cd9d84e1fe312c4249999b315f70489cdf30149bff41fc613"
+            },
+            "sourceFidelityEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/source-fidelity.json",
+              "bytes": 2802,
+              "sha256": "277750538010955b59131326a9d6761a386d12263c4b2d18674406be81c06158"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/source-rebuild.json",
+              "bytes": 2947,
+              "sha256": "a5dc5a421888b8a8b4ebb3dc7d2c4bd048979cf9f5078fb42799b774053d4019"
+            },
+            "backupStatus": "s3-full-readback-verified",
+            "backupLocations": [
+              {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+                "s3ArchiveMember": "body.glb",
+                "s3Use": "backup-only-not-runtime-entry",
+                "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-verified-receipt.json",
+                "backupReceiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f"
+              }
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+            "s3ArchiveMember": "body.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-female-c01-blender4513-v1-backup/s3-verified-receipt.json",
+            "backupReceiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f"
           }
         ]
       },

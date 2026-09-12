@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "a84034d9e8d89db6e2e92db9920596799e63eb3bfa29d2fbf51e3fbf36a89754"
+      "sha256": "1432d7404ed0dd000eb8be7c574541e9a5117f065cdff227198732358e9b50e3"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "3459275f6df41915b002f5c008d63d03cb2ecaed377a0f0e23c1f1e6a401feb0"
+      "sha256": "03fc0117fd9f3c3a95b83118b318470d1efe0d3323f5cceda713bf827ccb5500"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,7 +71,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "58f21eb667d4a057b3953c59d5fa1e79fad7a3bb4864b07a4384ea5f4cb8fc29"
+      "sha256": "0953c28e2f29801b3c73d57ce790a4036cfd925ae0b113cff6d9f2cfd1bb5a69"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -175131,12 +175131,108 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c07/ptrainer-c07.blend",
           "localSizeMatches": true
+        },
+        {
+          "id": "ssbu-ptrainer-male-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+          "variantSlot": "c00",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc.glb",
+          "existsLocal": true,
+          "bytes": 1316992,
+          "sha256": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/validation.json",
+            "bytes": 33780,
+            "sha256": "a4b460da91fcdb5ca5d5b20fd248d9ddf0deb93d70f532e540883687a2e360fe"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/visual-review.json",
+            "bytes": 2315,
+            "sha256": "037ea89f2f24d5a5800ac44427d50dec14a7f7c264836440b69483bb775947ad"
+          },
+          "equivalentSourceVariants": [
+            "c00",
+            "c02",
+            "c04",
+            "c06"
+          ],
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "25 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/body.glb",
+          "localSizeMatches": true
+        },
+        {
+          "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "library": "community",
+          "nativeId": "fighter/ptrainer/model/ptrainer/c01",
+          "variantSlot": "c01",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46.glb",
+          "existsLocal": true,
+          "bytes": 1373696,
+          "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/validation.json",
+            "bytes": 40238,
+            "sha256": "a770ca03f92c6a8b4ccb0b0f25848c23dec71e35e733dcfa454fa6ad44dfc222"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/visual-review.json",
+            "bytes": 2321,
+            "sha256": "4e1dfb85dd5b63b174684a6e5b5e81316f74671a6184133a85592a191c147a5c"
+          },
+          "equivalentSourceVariants": [
+            "c01",
+            "c03",
+            "c05",
+            "c07"
+          ],
+          "limitations": [
+            "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+            "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+            "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+            "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+            "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+            "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-female-c01-blender4513-v1/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
-        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/ptrainer. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count."
+        "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/ptrainer. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
+        "SSBU fighter/ptrainer c00 Pokémon Trainer (male) was converted with Blender 4.5.13 and GGD normalization to a 1,316,992-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 5 primitives are skinned to 44 joints, and 177,600 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions.",
+        "SSBU fighter/ptrainer c01 Pokémon Trainer (female) was converted with Blender 4.5.13 and GGD normalization to a 1,373,696-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 6 primitives are skinned to 72 joints, and 177,708 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions."
       ],
       "aliases": [
         "fighter/ptrainer"
@@ -175157,7 +175253,7 @@
       "candidateBreakdown": {
         "characterBodySources": 8,
         "standaloneCharacterBodies": 8,
-        "componentsOrProps": 1,
+        "componentsOrProps": 3,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -175186,7 +175282,24 @@
         ],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
-        "motionCandidateCounts": [],
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
         "nativeMotionSources": [],
         "evidencePaths": [
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",

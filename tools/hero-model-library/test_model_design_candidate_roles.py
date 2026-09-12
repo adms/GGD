@@ -31,7 +31,7 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "beatrice": (1, 0, 1),
             "ssbu-mario": (16, 10, 0),
             "ssbu-mewtwo": (8, 2, 0),
-            "ssbu-ptrainer": (8, 1, 0),
+            "ssbu-ptrainer": (8, 3, 0),
             "ssbu-ryu": (8, 2, 0),
             "ssbu-pickel": (8, 25, 0),
         }
@@ -87,6 +87,20 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "ssbu-pickel-alex-c01-static-skinned-v1": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
         }
         candidates = {row["id"]: row for row in self.source["ssbu-pickel"]["modelCandidates"]}
+        for component_id, digest in expected.items():
+            with self.subTest(component_id=component_id):
+                candidate = candidates[component_id]
+                self.assertEqual(candidate["sha256"], digest)
+                self.assertEqual(candidate["readiness"], "accepted-independent-static-skinned-component-actions-missing")
+                self.assertFalse(candidate["runtimeSelectable"])
+                self.assertEqual(candidate["nativeAnimationCount"], 0)
+
+    def test_ptrainer_validated_components_survive_source_regeneration(self):
+        expected = {
+            "ssbu-ptrainer-male-c00-static-skinned-v1": "953251f5007b74b394a19803349de9131a47fb51cbdabe8325c80580484e5abc",
+            "ssbu-ptrainer-female-c01-static-skinned-v1": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+        }
+        candidates = {row["id"]: row for row in self.source["ssbu-ptrainer"]["modelCandidates"]}
         for component_id, digest in expected.items():
             with self.subTest(component_id=component_id):
                 candidate = candidates[component_id]

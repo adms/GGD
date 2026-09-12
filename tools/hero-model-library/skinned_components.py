@@ -101,6 +101,8 @@ def validate_component(candidate, repo):
             'ssbu-ryu-c00-static-skinned-v1': 'ggd.ssbu-ryu-source-rebuild@1',
             'ssbu-pickel-steve-c00-static-skinned-v1': 'ggd.ssbu-pickel-steve-source-rebuild@1',
             'ssbu-pickel-alex-c01-static-skinned-v1': 'ggd.ssbu-pickel-alex-source-rebuild@1',
+            'ssbu-ptrainer-male-c00-static-skinned-v1': 'ggd.ssbu-ptrainer-male-source-rebuild@1',
+            'ssbu-ptrainer-female-c01-static-skinned-v1': 'ggd.ssbu-ptrainer-female-source-rebuild@1',
         }
         require(rebuild.get('schema') == expected_rebuild_schemas.get(candidate['id']), 'Unexpected SSBU rebuild schema')
         require(rebuild.get('componentId') == candidate['id'], 'SSBU rebuild component ID mismatch')

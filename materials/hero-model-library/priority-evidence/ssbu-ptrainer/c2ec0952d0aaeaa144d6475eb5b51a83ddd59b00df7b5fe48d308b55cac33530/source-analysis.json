@@ -1,0 +1,504 @@
+{
+  "schema": "ggd-ssbu-blend-source-analysis@1",
+  "candidateId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/ptrainer-c00.blend",
+  "sourceBytes": 5274464,
+  "sourceSha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760",
+  "blenderVersion": "4.5.13 LTS",
+  "embeddedScriptsExecuted": false,
+  "embeddedTextBlockCount": 1,
+  "mutedDrivers": [],
+  "visibleMeshes": [
+    {
+      "name": "GamemodelShape",
+      "vertices": 2758,
+      "polygons": 3860,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_ptrainer_001"
+      ]
+    },
+    {
+      "name": "GamemodelShape.001",
+      "vertices": 1682,
+      "polygons": 2668,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ptrainer_001"
+      ]
+    },
+    {
+      "name": "gearShape",
+      "vertices": 204,
+      "polygons": 328,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_ptrainer_001"
+      ]
+    },
+    {
+      "name": "bagShape",
+      "vertices": 647,
+      "polygons": 950,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_ptrainer_001"
+      ]
+    },
+    {
+      "name": "headShape",
+      "vertices": 950,
+      "polygons": 1326,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "alp_ptrainer_001"
+      ]
+    },
+    {
+      "name": "headShape.001",
+      "vertices": 246,
+      "polygons": 362,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_ptrainer_001"
+      ]
+    },
+    {
+      "name": "ptrainer_faceN_Mouth_VIS_O_OBJShape",
+      "vertices": 297,
+      "polygons": 514,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ptrainer_001"
+      ]
+    },
+    {
+      "name": "ptrainer_Openblink_VIS_O_OBJShape",
+      "vertices": 216,
+      "polygons": 214,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "alp_ptrainer_001"
+      ]
+    },
+    {
+      "name": "ptrainer_Openblink_VIS_O_OBJShape.001",
+      "vertices": 338,
+      "polygons": 404,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ptrainer_001"
+      ]
+    },
+    {
+      "name": "ptrainer_eyeR_VIS_O_OBJShape",
+      "vertices": 28,
+      "polygons": 36,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001"
+      ],
+      "materials": [
+        "EyeR"
+      ]
+    },
+    {
+      "name": "ptrainer_eyeL_VIS_O_OBJShape",
+      "vertices": 28,
+      "polygons": 36,
+      "vertexGroups": 44,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001"
+      ],
+      "materials": [
+        "EyeL"
+      ]
+    }
+  ],
+  "hiddenOrNonrenderMeshes": [
+    "ptrainer_Ouch_Mouth_VIS_O_OBJShape",
+    "ptrainer_PatternA_Mouth_VIS_O_OBJShape",
+    "ptrainer_Final_Mouth_VIS_O_OBJShape",
+    "ptrainer_VoiceC_Mouth_VIS_O_OBJShape",
+    "ptrainer_Heavyattack_Mouth_VIS_O_OBJShape",
+    "ptrainer_VoiceB_Mouth_VIS_O_OBJShape",
+    "ptrainer_Talk_Mouth_VIS_O_OBJShape",
+    "ptrainer_Heavyattack_Blink_VIS_O_OBJShape",
+    "ptrainer_Heavyattack_Blink_VIS_O_OBJShape.001",
+    "ptrainer_Talk_Blink_VIS_O_OBJShape",
+    "ptrainer_Talk_Blink_VIS_O_OBJShape.001",
+    "ptrainer_Ouch_Blink_VIS_O_OBJShape",
+    "ptrainer_Ouch_Blink_VIS_O_OBJShape.001",
+    "ptrainer_HeavyOuch_Blink_VIS_O_OBJShape",
+    "ptrainer_HeavyOuch_Blink_VIS_O_OBJShape.001",
+    "ptrainer_Harfblink_VIS_O_OBJShape",
+    "ptrainer_Harfblink_VIS_O_OBJShape.001",
+    "ptrainer_Blink_VIS_O_OBJShape",
+    "ptrainer_Blink_VIS_O_OBJShape.001",
+    "ptrainer_Final_Blink_VIS_O_OBJShape",
+    "ptrainer_Final_Blink_VIS_O_OBJShape.001",
+    "ptrainer_PatternB_Blink_VIS_O_OBJShape",
+    "ptrainer_PatternB_Blink_VIS_O_OBJShape.001",
+    "ptrainer_pokeballR_VIS_O_OBJShape",
+    "ptrainer_pokeballL_VIS_O_OBJShape"
+  ],
+  "armatures": [
+    {
+      "name": "model-armature",
+      "bones": 44,
+      "boneNames": [
+        "Trans",
+        "Rot",
+        "Hip",
+        "LegC",
+        "LegL",
+        "KneeL",
+        "FootL",
+        "ToeL",
+        "LegR",
+        "KneeR",
+        "FootR",
+        "ToeR",
+        "Waist",
+        "Bust",
+        "Bag1",
+        "Bag2",
+        "ClavicleC",
+        "ClavicleL",
+        "ShoulderL",
+        "ArmL",
+        "HandL",
+        "FingerL11",
+        "FingerL12",
+        "FingerL21",
+        "FingerL22",
+        "FingerL51",
+        "FingerL52",
+        "HaveL",
+        "PokeballL",
+        "ClavicleR",
+        "ShoulderR",
+        "ArmR",
+        "HandR",
+        "FingerR11",
+        "FingerR12",
+        "FingerR21",
+        "FingerR22",
+        "FingerR51",
+        "FingerR52",
+        "HaveR",
+        "PokeballR",
+        "Neck",
+        "Head",
+        "Throw"
+      ]
+    }
+  ],
+  "actions": [],
+  "usedMaterials": [
+    {
+      "name": "EyeL",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "EyeR",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "alp_ptrainer_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "BLENDED"
+    },
+    {
+      "name": "def_ptrainer_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "skin_ptrainer_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    }
+  ],
+  "usedImages": [
+    {
+      "name": "alp_ptrainer_001_col.png",
+      "source": "FILE",
+      "filepath": "//alp_ptrainer_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/alp_ptrainer_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 512,
+      "height": 512,
+      "bytes": 88404,
+      "sha256": "4d3ceb8117a97798badc0c0ea13a723d586eaf4936b4b273863f32f9a249c4b6"
+    },
+    {
+      "name": "def_ptrainer_001_col.png",
+      "source": "FILE",
+      "filepath": "//def_ptrainer_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/def_ptrainer_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 1024,
+      "height": 1024,
+      "bytes": 1195710,
+      "sha256": "ca02d156891515041abbd4f8786d65d5b40022c7dc8ef81a9ca0bcc605da6bb8"
+    },
+    {
+      "name": "eye_ptrainer_b_col.png",
+      "source": "FILE",
+      "filepath": "//eye_ptrainer_b_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/eye_ptrainer_b_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 256,
+      "height": 256,
+      "bytes": 20088,
+      "sha256": "87dba9415af2968b637ef8b77abbd9e8a362d3267d39b549e81827b4a1098fdd"
+    },
+    {
+      "name": "eye_ptrainer_w_col.png",
+      "source": "FILE",
+      "filepath": "//eye_ptrainer_w_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/eye_ptrainer_w_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 128,
+      "height": 256,
+      "bytes": 7518,
+      "sha256": "9f1ed265a62f8df9d68da934517fe7da30555174356ee54a89cc3120e986def2"
+    },
+    {
+      "name": "skin_ptrainer_001_col.png",
+      "source": "FILE",
+      "filepath": "//skin_ptrainer_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/skin_ptrainer_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 512,
+      "height": 512,
+      "bytes": 79902,
+      "sha256": "3741ec836f64a08bd13b0b1b103b3a0242bc35541ae9d39b09092849edbc5ed1"
+    }
+  ],
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "alp_ptrainer_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_ptrainer_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_ptrainer_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "alp_ptrainer_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/derived-textures/alp_ptrainer_001_col.png.ggd-256.png",
+      "derivedBytes": 46663,
+      "derivedSha256": "38bdb97b2a96aeba019f9d8c0932a6deb963b53e119d0d3b2bb4896d406a7b05",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "def_ptrainer_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/derived-textures/def_ptrainer_001_col.png.ggd-256.png",
+      "derivedBytes": 102714,
+      "derivedSha256": "ad9032d2e200b4ea94cdf103bfff784b29dfc4ea438f0230b8ed639ffa995e9f",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_ptrainer_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-male-c00-blender4513-v1/derived-textures/skin_ptrainer_001_col.png.ggd-256.png",
+      "derivedBytes": 42705,
+      "derivedSha256": "8de52528367afd6a34b1fea7e7724372cad4a48f1829d42411b1cbe2c3f73675",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 44,
+      "nodeName": "bagShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 45,
+      "nodeName": "GamemodelShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 46,
+      "nodeName": "GamemodelShape.001",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 47,
+      "nodeName": "gearShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 48,
+      "nodeName": "headShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 49,
+      "nodeName": "headShape.001",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 50,
+      "nodeName": "ptrainer_eyeL_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 51,
+      "nodeName": "ptrainer_eyeR_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 52,
+      "nodeName": "ptrainer_faceN_Mouth_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 53,
+      "nodeName": "ptrainer_Openblink_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 54,
+      "nodeName": "ptrainer_Openblink_VIS_O_OBJShape.001",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceUnits": {
+    "system": "METRIC",
+    "scaleLength": 1.0
+  }
+}
