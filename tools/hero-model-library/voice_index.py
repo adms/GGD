@@ -30,6 +30,16 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def portable_input_path(path, workspace, repo=REPO):
+    """Record Git inputs relative to their checkout, including isolated worktrees."""
+    path = path.resolve()
+    repo = repo.resolve()
+    workspace = workspace.resolve()
+    if path.is_relative_to(repo):
+        return path.relative_to(repo).as_posix()
+    return path.relative_to(workspace).as_posix()
+
+
 def source_audio_spec(source):
     """A model-only delivery may explicitly declare its absent audio index null."""
     return source.get('audioFileIndex') or source.get('audioConversion') or {}
@@ -212,11 +222,11 @@ def main():
     inputs = []
 
     def read(path):
-        inputs.append({'path':str(path.relative_to(ws)), 'sha256':sha(path)})
+        inputs.append({'path':portable_input_path(path, ws), 'sha256':sha(path)})
         return json.loads(path.read_text())
 
     def jsonlines(path):
-        inputs.append({'path':str(path.relative_to(ws)), 'sha256':sha(path)})
+        inputs.append({'path':portable_input_path(path, ws), 'sha256':sha(path)})
         return [json.loads(line) for line in path.read_text().splitlines() if line]
 
     downloads = read(OUT/'download-sources.json')

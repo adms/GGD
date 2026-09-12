@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-12T11:25:55+08:00",
-  "inputsSha256": "456a18d78816988b4d3556006f13748d628f7dcaef3af63552c934ba116128fe",
+  "generatedAt": "2026-09-12T12:14:54+08:00",
+  "inputsSha256": "5d1fe13b5e4ae877a64cab65134b025bd2d9dc015d05ad59a12954edc8849521",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -87862,7 +87862,33 @@
             "nativeSourcesPreserved": true,
             "countAsNewPerformance": false
           }
-        ]
+        ],
+        "nativeMotionIndex": {
+          "schema": "ggd-ultimate14-native-motion-inventory@1",
+          "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+          "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23",
+          "parser": "ssbh_data_py==0.9.1",
+          "pathCount": 435,
+          "uniquePayloadCount": 176,
+          "parsedPathCount": 435,
+          "bodyMotionPathCount": 282,
+          "accessoryMotionPathCount": 129,
+          "modelAnimationMetadataPathCount": 24,
+          "transformMotionPathCount": 411,
+          "uniqueTransformMotionPayloadCount": 175,
+          "parseErrorPathCount": 0,
+          "parseErrorUniquePayloadCount": 0,
+          "convertedToGgdCount": 0,
+          "runtimeSelectableCount": 0,
+          "dependencyReceiptGitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/dependencies.json",
+          "dependency": {
+            "name": "ssbh_data_py",
+            "version": "0.9.1",
+            "wheelSha256": "0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/dependencies/ssbh_data_py/0.9.1/0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487.whl",
+            "readbackVerified": true
+          }
+        }
       },
       {
         "id": "parallel-ns-bowser-big-blast",

@@ -35,6 +35,7 @@
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |
+| 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
 | 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
 | 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |

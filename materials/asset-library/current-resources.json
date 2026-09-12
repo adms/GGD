@@ -5559,6 +5559,36 @@
     }
   },
   "windowsGameSourceDocument": "materials/hero-model-library/source-inventories/windows-game-library.md",
+  "ultimate14NativeMotionIndex": {
+    "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+    "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23",
+    "status": "parsed-native-mod-motion-reserve-pending-conversion-and-skeleton-playback",
+    "summary": {
+      "pathCount": 435,
+      "uniquePayloadCount": 176,
+      "parsedPathCount": 435,
+      "parseErrorPathCount": 0,
+      "parseErrorUniquePayloadCount": 0,
+      "motionDirectoryPathCount": 411,
+      "bodyMotionPathCount": 282,
+      "accessoryMotionPathCount": 129,
+      "modelAnimationMetadataPathCount": 24,
+      "transformMotionPathCount": 411,
+      "uniqueTransformMotionPayloadCount": 175,
+      "nuanmbVersionPathCounts": {
+        "2.0": 414,
+        "2.1": 21
+      },
+      "nuanmbVersionUniquePayloadCounts": {
+        "2.0": 169,
+        "2.1": 7
+      },
+      "fighterCount": 16,
+      "convertedToGgdCount": 0,
+      "skeletonPlaybackValidatedCount": 0,
+      "runtimeSelectableCount": 0
+    }
+  },
   "note": "Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.",
   "modelComponents": [
     {
@@ -8689,10 +8719,10 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "878031838a3f387afb5a07b8b23f0ed8ed881f3e01ce0d522df049093efaa595"
+    "sha256": "9ad83b4ec6674cd3b991368a586f085dcb5fe7f2c8d571f35ea3cb3f700b8d8c"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "3c21376a7bcaf342b7c5625dd233b2dd5cc382d41ee3e5407a3a389ccef03cd9"
+    "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c"
   }
 }

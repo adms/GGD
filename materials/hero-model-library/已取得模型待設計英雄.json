@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "61bf8d371521e908f826aae3337df0d8d3fa7dd23b79a0a184cc334d4e580e0a"
+      "sha256": "f1481e01aa4713a9b216cde3d36906fa728294d6d1c699554c4d72a1bd746d31"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "c84dc83e9d0e28ce6fc4b7c0734b2524ad33d61f1c716d8870fe9ae7da112ed8"
+      "sha256": "34535ad265436f5dbee66d53396bcd845cce45b792c77ffce1b8b69a43158dee"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -63,15 +63,15 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/resource-coverage.json",
-      "sha256": "df8bc01a142a4fc0b244fef72d894e8cc4b3386f85ba50b7e91a08ece70244fb"
+      "sha256": "81573b37fd0d7f077c631973039aa20bd93a01def81ace97776a0f72b17a14af"
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "ca96e7445433af9ebda229631cd7ae69c8a53e3f1d302e43cd02611444e33231"
+      "sha256": "45ba04d41ad86c444a74cac6a3b82a045c89b8f9f5371067ffbd70bcae370f63"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "3c21376a7bcaf342b7c5625dd233b2dd5cc382d41ee3e5407a3a389ccef03cd9"
+      "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -105058,7 +105058,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 25檔／24種 SHA；未轉 GGD。",
+        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：kirby: 本體 3檔／2種內容、配件 22檔／22種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -105105,7 +105105,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -107477,7 +107478,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 85檔／22種 SHA；parallel-ns-ultimate14 3檔／3種 SHA；未轉 GGD。",
+        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：link: 本體 61檔／19種內容、配件 24檔／3種內容；toonlink: 本體 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "另保留 1 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -107501,7 +107502,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -151489,7 +151491,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 9檔／9種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：chrom: 本體 9檔／9種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -151510,7 +151512,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -152973,7 +152976,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 13檔／13種 SHA；未轉 GGD。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：daisy: 本體 13檔／13種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -152992,7 +152995,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -153295,7 +153299,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 14檔／14種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：pitb: 本體 14檔／14種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -153316,7 +153320,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -153916,7 +153921,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 60檔／21種 SHA；未轉 GGD。",
+        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：samusd: 本體 60檔／21種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "另保留 2 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -153935,7 +153940,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -156393,7 +156399,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 10檔／10種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：ganon: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -156415,7 +156421,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -160222,7 +160229,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 4檔／4種 SHA；未轉 GGD。",
+        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：shizue: 本體 4檔／4種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -160241,7 +160248,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -163802,7 +163810,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 7檔／7種 SHA；未轉 GGD。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucas: 本體 7檔／7種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -163821,7 +163829,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -164124,7 +164133,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 105檔／20種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucina: 本體 41檔／13種內容、配件 48檔／6種內容、模型預設無Transform資料 16檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -164145,7 +164154,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -165325,7 +165335,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 64檔／8種 SHA；未轉 GGD。",
+        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：mario: 本體 40檔／5種內容、配件 16檔／2種內容、模型預設無Transform資料 8檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -165356,7 +165366,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -174205,7 +174216,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 1檔／1種 SHA；未轉 GGD。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：peach: 本體 1檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -174226,7 +174237,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -177669,7 +177681,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 5檔／5種 SHA；未轉 GGD。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：richter: 本體 2檔／2種內容、配件 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -177690,7 +177702,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -181731,7 +181744,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 20檔／6種 SHA；未轉 GGD。",
+        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：simon: 本體 4檔／4種內容、配件 16檔／2種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -181752,7 +181765,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -182729,7 +182743,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 10檔／10種 SHA；未轉 GGD。",
+        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：sonic: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -182750,7 +182764,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -196516,7 +196531,7 @@
           "parallel-community-lina-ssbu-ceruleancast"
         ],
         "model": "Ultimate14:0本體/33部件；Bowser:0本體；Alucard:1本體+5部件；Goblin:1 body mesh但缺骨架/材質；Lina:6本體候選+8卡比配件。",
-        "motion": "Ultimate14 435 NUANMB/176種 SHA；Bowser 38/5；Alucard112/105。來源是社群MOD，不冒稱原作未修改動作。",
+        "motion": "Ultimate14 435 NUANMB 路徑／176 種內容，其中 411 路徑在 motion/、24 路徑是 model/ 預設資料；全部解析成功但尚未轉 GGD。Bowser 38/5；Alucard 112/105。",
         "vfx": "Ultimate14 3 trail貼圖；Alucard8 EFF容器+2 trail貼圖；均未重建 GGD。",
         "sfx": "154 已解碼音訊紀錄；另Ultimate14 56 patch bank/152 entries、Alucard3 bank/134 entries 尚未作可播放音訊索引。",
         "voice": "Lina36角色音檔／83混合播報／1勝利曲分群；哥布林34條目僅2種原始payload。未逐段確認，不把合成播報混作原生莉娜語音。",
@@ -197778,7 +197793,7 @@
         ]
       },
       "kirby": {
-        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 25檔／24種 SHA；未轉 GGD。",
+        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：kirby: 本體 3檔／2種內容、配件 22檔／22種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -197815,11 +197830,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "link": {
-        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 85檔／22種 SHA；parallel-ns-ultimate14 3檔／3種 SHA；未轉 GGD。",
+        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：link: 本體 61檔／19種內容、配件 24檔／3種內容；toonlink: 本體 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "另保留 1 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -197833,7 +197849,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-native:assist/andross": {
@@ -200152,7 +200169,7 @@
         ]
       },
       "ssbu-chrom": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 9檔／9種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：chrom: 本體 9檔／9種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200163,7 +200180,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-kamui": {
@@ -200181,7 +200199,7 @@
         ]
       },
       "ssbu-daisy": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 13檔／13種 SHA；未轉 GGD。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：daisy: 本體 13檔／13種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -200190,11 +200208,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-pitb": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 14檔／14種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：pitb: 本體 14檔／14種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200205,11 +200224,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-samusd": {
-        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 60檔／21種 SHA；未轉 GGD。",
+        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：samusd: 本體 60檔／21種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "另保留 2 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -200218,7 +200238,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-diddy": {
@@ -200292,7 +200313,7 @@
         ]
       },
       "ssbu-ganon": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 10檔／10種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：ganon: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200304,7 +200325,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-gekkouga": {
@@ -200362,7 +200384,7 @@
         ]
       },
       "ssbu-shizue": {
-        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 4檔／4種 SHA；未轉 GGD。",
+        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：shizue: 本體 4檔／4種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -200371,7 +200393,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-pfushigisou": {
@@ -200486,7 +200509,7 @@
         ]
       },
       "ssbu-lucas": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 7檔／7種 SHA；未轉 GGD。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucas: 本體 7檔／7種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -200495,11 +200518,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-lucina": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 105檔／20種 SHA；未轉 GGD。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucina: 本體 41檔／13種內容、配件 48檔／6種內容、模型預設無Transform資料 16檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200510,7 +200534,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-luigi": {
@@ -200528,7 +200553,7 @@
         ]
       },
       "ssbu-mario": {
-        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 64檔／8種 SHA；未轉 GGD。",
+        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：mario: 本體 40檔／5種內容、配件 16檔／2種內容、模型預設無Transform資料 8檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200540,7 +200565,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-marth": {
@@ -200726,7 +200752,7 @@
         ]
       },
       "ssbu-peach": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 1檔／1種 SHA；未轉 GGD。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：peach: 本體 1檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200737,7 +200763,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-pichu": {
@@ -200831,7 +200858,7 @@
         ]
       },
       "ssbu-richter": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 5檔／5種 SHA；未轉 GGD。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：richter: 本體 2檔／2種內容、配件 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200842,7 +200869,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-ridley": {
@@ -200955,7 +200983,7 @@
         ]
       },
       "ssbu-simon": {
-        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 20檔／6種 SHA；未轉 GGD。",
+        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：simon: 本體 4檔／4種內容、配件 16檔／2種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200966,7 +200994,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-snake": {
@@ -200984,7 +201013,7 @@
         ]
       },
       "ssbu-sonic": {
-        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 另有 MOD 動作：parallel-ns-ultimate14 10檔／10種 SHA；未轉 GGD。",
+        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：sonic: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -200995,7 +201024,8 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-lfs-manifest.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/native-format-validation.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/design-backlog/sources-community.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+          "materials/hero-model-library/source-inventories/ultimate14-native-motions.json"
         ]
       },
       "ssbu-trail": {
@@ -204962,6 +204992,10 @@
         "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/character-candidates.json",
         "sha256": "bf6d2d2ca6c4938cfd60869dccd80efaf48b05df16f522e0219e1ccb4f06fcef",
         "kind": "native-character-motion-index"
+      },
+      {
+        "path": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+        "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23"
       }
     ],
     "auditReports": [

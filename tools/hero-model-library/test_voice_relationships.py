@@ -1,10 +1,28 @@
 """Shared local audio retains each source group without inflated file totals."""
+from pathlib import Path
 import unittest
 
-from voice_index import audio_file_counts, primary_audio_relationships, verify_prefetch_alias
+from voice_index import (
+    audio_file_counts,
+    portable_input_path,
+    primary_audio_relationships,
+    verify_prefetch_alias,
+)
 
 
 class VoiceRelationships(unittest.TestCase):
+    def test_git_inputs_are_portable_from_an_isolated_worktree(self):
+        repo = Path("/private/tmp/ggd-feature-worktree")
+        workspace = Path("/Users/example/ABxVFX_EDIT")
+        self.assertEqual(
+            "materials/hero-model-library/download-sources.json",
+            portable_input_path(
+                repo / "materials/hero-model-library/download-sources.json",
+                workspace,
+                repo,
+            ),
+        )
+
     def setUp(self):
         self.old = dict(path='shared/Lux.wav', groupId='lol-old:Lux', sha256='original', bytes=12,
                         backupId='original-archive')

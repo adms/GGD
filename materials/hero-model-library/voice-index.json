@@ -43436,15 +43436,15 @@
   },
   "inputs": [
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/download-sources.json",
-      "sha256": "28fa8da0612bbd3e6de56069d3c4ba7c6ba693ad9601cc5dfcc1358b253c85e5"
+      "path": "materials/hero-model-library/download-sources.json",
+      "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/public-source-files.json",
-      "sha256": "aeec3c32cf2f199b7e66721b0632a0017d440413a8b15bddfe00129f5c69aedf"
+      "path": "materials/hero-model-library/public-source-files.json",
+      "sha256": "4c8efa24cd3cc5206eb6c288aa8d380795ef6b7e0b9798154bafe6cd0fa06438"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/manifest.json",
+      "path": "materials/hero-model-library/manifest.json",
       "sha256": "829d66d59a09f0989b4007f8321002315d44a88b5265f53e4599f2a74606ca4d"
     },
     {
@@ -43456,31 +43456,31 @@
       "sha256": "91cbf8b1ac290bfee179988c1e4cfdc5117f90777d4deccbe0aa1526ce5c51ac"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/karthus-base.json",
       "sha256": "3566827cb5bbd736cc6f92b9b3cb7a3a7314b01721f314090c1dd1084a62e45d"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
       "sha256": "e64a5c58e6d0ed9a92730cc0582a9220c84ddc0acc9bbc15d8dac74386d49735"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
       "sha256": "0f9a38ce15ce2f5259957af9e732a4b63b439b8bab7016db25981f9f134b27c3"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
       "sha256": "e5b850bafbf12e58ac6d9f5d07f8bcb27d565f6613e52018f8cc039164a623e9"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
       "sha256": "7f55c3b13b0834a6efc2840ca4ca095ab0770f03e6f2b53ce8154d9e47269a9a"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
       "sha256": "330de713f82ad8281963c0d3350077fa070a44d14447cba72cfee41cf323cb36"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
+      "path": "materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
       "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4"
     },
     {
@@ -43848,7 +43848,7 @@
       "sha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e"
     },
     {
-      "path": "GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
+      "path": "materials/hero-model-library/lol-prefetch-resolution.json",
       "sha256": "173b92c9f7b690aae727b7390a9488347937d62f86df9a4e62d6e5b7bfbc347a"
     }
   ],

@@ -6823,7 +6823,33 @@
           "nativeSourcesPreserved": true,
           "countAsNewPerformance": false
         }
-      ]
+      ],
+      "nativeMotionIndex": {
+        "schema": "ggd-ultimate14-native-motion-inventory@1",
+        "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+        "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23",
+        "parser": "ssbh_data_py==0.9.1",
+        "pathCount": 435,
+        "uniquePayloadCount": 176,
+        "parsedPathCount": 435,
+        "bodyMotionPathCount": 282,
+        "accessoryMotionPathCount": 129,
+        "modelAnimationMetadataPathCount": 24,
+        "transformMotionPathCount": 411,
+        "uniqueTransformMotionPayloadCount": 175,
+        "parseErrorPathCount": 0,
+        "parseErrorUniquePayloadCount": 0,
+        "convertedToGgdCount": 0,
+        "runtimeSelectableCount": 0,
+        "dependencyReceiptGitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/dependencies.json",
+        "dependency": {
+          "name": "ssbh_data_py",
+          "version": "0.9.1",
+          "wheelSha256": "0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/dependencies/ssbh_data_py/0.9.1/0a4311259b040556fbb6ceeb58391a297554d41728950098a893218b6d6f4487.whl",
+          "readbackVerified": true
+        }
+      }
     },
     {
       "id": "parallel-ns-bowser-big-blast",

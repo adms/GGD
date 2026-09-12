@@ -22,6 +22,8 @@ def build():
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json'
     windows_game_inventory=read(windows_game_inventory_path)
+    ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
+    ultimate14_motion=read(ultimate14_motion_path)
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -56,6 +58,11 @@ def build():
             status=windows_game_inventory['statusSemantics']['current'],
             summary=windows_game_inventory['summary']),
         windowsGameSourceDocument='materials/hero-model-library/source-inventories/windows-game-library.md',
+        ultimate14NativeMotionIndex=dict(
+            gitPath=str(ultimate14_motion_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest(),
+            status='parsed-native-mod-motion-reserve-pending-conversion-and-skeleton-playback',
+            summary=ultimate14_motion['summary']),
         note='Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.')
     component_path=base/'palworld/帕魯三角色素材索引.json'
     component_data=read(component_path)
@@ -64,10 +71,14 @@ def build():
             raise ValueError('Refresh Palworld component index: '+pin['gitPath'])
     components=model_components(component_data,ROOT)
     component_source_path=base/'download-sources.json'
-    components.extend(source_weapon_components(read(component_source_path),ROOT))
-    components.extend(source_skinned_components(read(component_source_path),ROOT))
-    components.extend(source_historical_components(read(component_source_path),ROOT))
-    historical_artifacts=source_historical_artifacts(read(component_source_path),ROOT)
+    component_sources=read(component_source_path)
+    ultimate14_source=next(source for source in component_sources['publicSources'] if source['id']=='parallel-ns-ultimate14')
+    if ultimate14_source['nativeMotionIndex']['sha256'] != hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest():
+        raise ValueError('Refresh Ultimate14 native motion index relationship')
+    components.extend(source_weapon_components(component_sources,ROOT))
+    components.extend(source_skinned_components(component_sources,ROOT))
+    components.extend(source_historical_components(component_sources,ROOT))
+    historical_artifacts=source_historical_artifacts(component_sources,ROOT)
     restoration_receipt_path=base/'priority-evidence/historical-model-recovery/restoration-receipt.json'
     result.update(modelComponents=components,modelComponentCount=len(components),
         historicalModelSourceArtifacts=historical_artifacts,
