@@ -1,0 +1,59 @@
+{
+  "schema": "ggd.ssbu-death-substitution-review@1",
+  "candidates": [
+    {
+      "candidateId": "acquired-mario-hurt-rise-fade-death-v1",
+      "heroId": "acquired-mario",
+      "targetName": "Mario／瑪利歐",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [
+        "d01specialairsdash",
+        "d01specialairsend",
+        "d01specialairsjump",
+        "d01specialsdash",
+        "d01specialsend"
+      ],
+      "automaticBindingAllowed": false
+    },
+    {
+      "candidateId": "acquired-mewtwo-hurt-rise-fade-death-v1",
+      "heroId": "acquired-mewtwo",
+      "targetName": "Mewtwo／超夢",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [],
+      "automaticBindingAllowed": false
+    },
+    {
+      "candidateId": "acquired-pokemon-trainer-hurt-rise-fade-death-v1",
+      "heroId": "acquired-pokemon-trainer",
+      "targetName": "Pokémon Trainer／寶可夢訓練家",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [],
+      "automaticBindingAllowed": false
+    },
+    {
+      "candidateId": "acquired-minecraft-hurt-rise-fade-death-v1",
+      "heroId": "acquired-minecraft",
+      "targetName": "Steve／Alex",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [],
+      "automaticBindingAllowed": false
+    }
+  ]
+}

@@ -1,0 +1,752 @@
+{
+  "schema": "ggd.ssbu-missing-four-audit@1",
+  "generatedAt": "2026-09-14",
+  "scope": {
+    "heroes": 4,
+    "variants": 6,
+    "sourceIds": [
+      "gitlab-ssbu-models",
+      "parallel-ns-ultimate14"
+    ]
+  },
+  "summary": {
+    "acceptedModelComponents": 6,
+    "sourceFilesFreshlyHashed": 33,
+    "nativeMotionComponents": 1,
+    "nativeClipCount": 5,
+    "formalGeometryEligibleVariants": 4,
+    "formalDecimationRequiredVariants": 2,
+    "sixStateCompleteVariants": 0,
+    "newRuntimeDropdownOptions": 0,
+    "reviewMediaReady": 0,
+    "productionDeployed": 0
+  },
+  "currentManualDefaults": {
+    "acquired-mario": "imported.linkstik",
+    "acquired-mewtwo": "imported.herobuu",
+    "acquired-pokemon-trainer": "imported.heropikachu",
+    "acquired-minecraft": "champ.thorne"
+  },
+  "candidates": [
+    {
+      "heroId": "acquired-mario",
+      "nameZh": "Mario／瑪利歐",
+      "fighterId": "mario",
+      "formId": "c00",
+      "componentId": "ssbu-mario-c00-ultimate14-motion-v1",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "platform": "Nintendo Switch MOD",
+      "modelSourceId": "gitlab-ssbu-models",
+      "motionSourceId": "parallel-ns-ultimate14",
+      "nativeId": "fighter/mario/body/c00 + fighter/mario/motion/body/c00/d01special*",
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+          "bytes": 9190080,
+          "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/alp_mario_001_col.png",
+          "bytes": 105512,
+          "sha256": "f06fdf864d27bfbb375df9c45b27310a3109f17d2bd55632416bef91ab01c2ea"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/alp_mario_002_col.png",
+          "bytes": 878,
+          "sha256": "6c5c9633b5e93d51bda32f90601afc5b2bcf31c53d0aded73a58c03a1b4f52b5"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/def_mario_001_col.png",
+          "bytes": 660105,
+          "sha256": "98e0f59d9eb77a30880435a118ae78929acbd3b5f80511fca9d384b6efa4ee28"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/eye_mario_b_col.png",
+          "bytes": 16971,
+          "sha256": "6370eb1f915094a9ea89c2830390c965d59e8c771f82a995eb11409ac3b6c999"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/eye_mario_w_col.png",
+          "bytes": 13024,
+          "sha256": "d51e032425813e0ab7cfd35131e497418e19e21a54460477dde2b6b67e4a2d2a"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/skin_mario_001_col.png",
+          "bytes": 214673,
+          "sha256": "02f116d19622ec80d5513f98036c2a89a27af4a5f3ac1f562c8d8b036e8116c6"
+        }
+      ],
+      "nativeMotionFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsdash.nuanmb",
+          "bytes": 72833,
+          "sha256": "2247d9422dcbe9d4b0a5bec4461783b0b8d8587281f8490aaa9c313f322ae8c7",
+          "nativeClipName": "d01specialairsdash"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsend.nuanmb",
+          "bytes": 53388,
+          "sha256": "63d49bc1470daf9a268c664556168295b6d495d720bed7a3b428f73203f073b1",
+          "nativeClipName": "d01specialairsend"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialairsjump.nuanmb",
+          "bytes": 46756,
+          "sha256": "343b2b2ea5294c97496c34204117c047c2f59aee7f592a82d7273d3d46ecc927",
+          "nativeClipName": "d01specialairsjump"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsdash.nuanmb",
+          "bytes": 89477,
+          "sha256": "7b7d0071d8074b0cc6c4ae5a2561fac0a936c4dbe3c4f940ee83a7a05295a49e",
+          "nativeClipName": "d01specialsdash"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/extracted/Ultimate14/Ultimate14/fighter/mario/motion/body/c00/d01specialsend.nuanmb",
+          "bytes": 52569,
+          "sha256": "c27e9d9566b5d99625af7cca1010fa722b8b81f840f41762d5e04d2ab2d1e5b5",
+          "nativeClipName": "d01specialsend"
+        }
+      ],
+      "gitModel": {
+        "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+        "bytes": 1148100,
+        "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526"
+      },
+      "metrics": {
+        "triangles": 7189,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 294,
+        "skins": 1,
+        "joints": 98,
+        "clips": 5,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "nativeClipNames": [
+        "d01specialairsdash",
+        "d01specialairsend",
+        "d01specialairsjump",
+        "d01specialsdash",
+        "d01specialsend"
+      ],
+      "sourceMotionInventory": {
+        "aliasCount": 64,
+        "bodyAliasCount": 40,
+        "uniqueBodyPayloadCount": 5
+      },
+      "semanticClipMap": {},
+      "missingRequiredStates": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "modelComponentAccepted": true,
+      "sixStateComplete": false,
+      "modelOptionRegistered": false,
+      "defaultPreserved": "imported.linkstik",
+      "blocker": "six-state-actions-and-owner-semantic-review",
+      "s3": {
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-ultimate14-motion-v1/a97feabaf7121891fcde7828c7be85db84230602266abf7ebd3a269748440f05.tar.gz",
+        "readbackReverifiedByThisWorkflow": false
+      },
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-mewtwo",
+      "nameZh": "Mewtwo／超夢",
+      "fighterId": "mewtwo",
+      "formId": "c00",
+      "componentId": "ssbu-mewtwo-c00-static-skinned-v1",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "platform": "Nintendo Switch",
+      "modelSourceId": "gitlab-ssbu-models",
+      "motionSourceId": null,
+      "nativeId": "fighter/mewtwo/body/c00",
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/mewtwo-c00.blend",
+          "bytes": 3463792,
+          "sha256": "a75e399676876d88bcb8ae48f08d6d1efd4d6ae9e3dd224479a6e5b15a3a4a74"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/def_mewtwo_001_col.png",
+          "bytes": 507978,
+          "sha256": "6d0b6261c73048d484fc35e71db491c78a2f4a812d5f1ee7625b27464d7b0845"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/eye_mewtwo_b_col.png",
+          "bytes": 28446,
+          "sha256": "f461da1984e6583e005549b51de33cd607e17dd3992f6bfe574cf918aa7bb854"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mewtwo/model/body/c00/eye_mewtwo_w_col.png",
+          "bytes": 40374,
+          "sha256": "3d022f4716ab8a33c29c4848d484845f38e4d24bef2e06c15626deeaf4bd9410"
+        }
+      ],
+      "nativeMotionFiles": [],
+      "gitModel": {
+        "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
+        "bytes": 667904,
+        "sha256": "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9"
+      },
+      "metrics": {
+        "triangles": 6972,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 75,
+        "clips": 0,
+        "embeddedImages": 2
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "nativeClipNames": [],
+      "sourceMotionInventory": {
+        "aliasCount": 0,
+        "bodyAliasCount": 0,
+        "uniqueBodyPayloadCount": 0
+      },
+      "semanticClipMap": {},
+      "missingRequiredStates": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "modelComponentAccepted": true,
+      "sixStateComplete": false,
+      "modelOptionRegistered": false,
+      "defaultPreserved": "imported.herobuu",
+      "blocker": "six-state-actions-and-owner-semantic-review",
+      "s3": {
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-mewtwo-c00-blender4513-v1-backup/61a258b776f273dbe36732bb8857700fa537fb63c5678294e0fee3cfa67e6c9f.tar.gz",
+        "readbackReverifiedByThisWorkflow": false
+      },
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-pokemon-trainer",
+      "nameZh": "Pokémon Trainer／寶可夢訓練家（男）",
+      "fighterId": "ptrainer",
+      "formId": "male-c00",
+      "componentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "platform": "Nintendo Switch",
+      "modelSourceId": "gitlab-ssbu-models",
+      "motionSourceId": null,
+      "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/ptrainer-c00.blend",
+          "bytes": 5274464,
+          "sha256": "5fa83a89433458845ffed9964642f83d9a8535fce7105f7ba0019ddddf445760"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/alp_ptrainer_001_col.png",
+          "bytes": 88404,
+          "sha256": "4d3ceb8117a97798badc0c0ea13a723d586eaf4936b4b273863f32f9a249c4b6"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/def_ptrainer_001_col.png",
+          "bytes": 1195710,
+          "sha256": "ca02d156891515041abbd4f8786d65d5b40022c7dc8ef81a9ca0bcc605da6bb8"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/eye_ptrainer_b_col.png",
+          "bytes": 20088,
+          "sha256": "87dba9415af2968b637ef8b77abbd9e8a362d3267d39b549e81827b4a1098fdd"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/eye_ptrainer_w_col.png",
+          "bytes": 7518,
+          "sha256": "9f1ed265a62f8df9d68da934517fe7da30555174356ee54a89cc3120e986def2"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c00/skin_ptrainer_001_col.png",
+          "bytes": 79902,
+          "sha256": "3741ec836f64a08bd13b0b1b103b3a0242bc35541ae9d39b09092849edbc5ed1"
+        }
+      ],
+      "nativeMotionFiles": [],
+      "gitModel": {
+        "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+        "bytes": 1317084,
+        "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b"
+      },
+      "metrics": {
+        "triangles": 10698,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 44,
+        "clips": 0,
+        "embeddedImages": 4
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "nativeClipNames": [],
+      "sourceMotionInventory": {
+        "aliasCount": 0,
+        "bodyAliasCount": 0,
+        "uniqueBodyPayloadCount": 0
+      },
+      "semanticClipMap": {},
+      "missingRequiredStates": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "modelComponentAccepted": true,
+      "sixStateComplete": false,
+      "modelOptionRegistered": false,
+      "defaultPreserved": "imported.heropikachu",
+      "blocker": "formal-decimation-plus-six-state-actions-and-owner-semantic-review",
+      "s3": {
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-male-c00-blender4513-v1-backup/cd3fc022d8cd52ef162f53bc1669de5cd16709e718ebfad65e67be4b00e49c5d.tar.gz",
+        "readbackReverifiedByThisWorkflow": false
+      },
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-pokemon-trainer",
+      "nameZh": "Pokémon Trainer／寶可夢訓練家（女）",
+      "fighterId": "ptrainer",
+      "formId": "female-c01",
+      "componentId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "platform": "Nintendo Switch",
+      "modelSourceId": "gitlab-ssbu-models",
+      "motionSourceId": null,
+      "nativeId": "fighter/ptrainer/model/ptrainer/c01",
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/ptrainer-c01.blend",
+          "bytes": 5646396,
+          "sha256": "4825363f5edffc31ae2cee7e1aa31ddead4cb3ae715b718ac7ce1b43ecef8c19"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/alp_ptrainer_female_001_col.png",
+          "bytes": 136559,
+          "sha256": "4b6ac774659b8d5e2a6c9af6d2cabba7955932a477d49189f37960759a826c64"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/def_ptrainer_female_001_col.png",
+          "bytes": 984506,
+          "sha256": "bc0d1da4da82f9f9a364aab93994de535174efc81d9f3043756c64f5d0cfbc3f"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/eye_ptrainer_female_b_col.png",
+          "bytes": 19319,
+          "sha256": "0dca0cc0fc9ed66e7a357037e8804c89817d9214aa988e6a9b0c80301fd6e02b"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/eye_ptrainer_frmale_w_col.png",
+          "bytes": 7135,
+          "sha256": "bef003cf77fc4f5336bf57d416116353f2f531f188e19fc26ba842348b8585a8"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/metal_ptrainer_female_001_col.png",
+          "bytes": 34996,
+          "sha256": "c1522f8e11657f658672500d8a54d6d6ad0d66b0ecaf18c9a5ec7e6d7487df87"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ptrainer/model/ptrainer/c01/skin_ptrainer_female_001_col.png",
+          "bytes": 70279,
+          "sha256": "e183de5d92154935aa6988d7036526260da96d3cc7956533d5deca991a7bab5d"
+        }
+      ],
+      "nativeMotionFiles": [],
+      "gitModel": {
+        "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+        "bytes": 1373732,
+        "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec"
+      },
+      "metrics": {
+        "triangles": 11086,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 72,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "nativeClipNames": [],
+      "sourceMotionInventory": {
+        "aliasCount": 0,
+        "bodyAliasCount": 0,
+        "uniqueBodyPayloadCount": 0
+      },
+      "semanticClipMap": {},
+      "missingRequiredStates": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "modelComponentAccepted": true,
+      "sixStateComplete": false,
+      "modelOptionRegistered": false,
+      "defaultPreserved": "imported.heropikachu",
+      "blocker": "formal-decimation-plus-six-state-actions-and-owner-semantic-review",
+      "s3": {
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ptrainer-female-c01-blender4513-v1-backup/c209a2cc55477c649a2a41ec5aa8064fac72932c463e3e237d33a19e0124d19e.tar.gz",
+        "readbackReverifiedByThisWorkflow": false
+      },
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-minecraft",
+      "nameZh": "Steve／史蒂夫",
+      "fighterId": "pickel",
+      "formId": "steve-c00",
+      "componentId": "ssbu-pickel-steve-c00-static-skinned-v1",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "platform": "Nintendo Switch",
+      "modelSourceId": "gitlab-ssbu-models",
+      "motionSourceId": null,
+      "nativeId": "fighter/pickel/body/c00",
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/pickel-steve-c00.blend",
+          "bytes": 4211812,
+          "sha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/def_pickel_001_col.png",
+          "bytes": 2048,
+          "sha256": "2638a04abff9841f416a1152dbf5411cbb1c405a121c1d8d6f4fd5def6bce5f6"
+        }
+      ],
+      "nativeMotionFiles": [],
+      "gitModel": {
+        "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
+        "bytes": 51664,
+        "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75"
+      },
+      "metrics": {
+        "triangles": 828,
+        "meshes": 3,
+        "maxTextureEdge": 64,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 31,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "nativeClipNames": [],
+      "sourceMotionInventory": {
+        "aliasCount": 0,
+        "bodyAliasCount": 0,
+        "uniqueBodyPayloadCount": 0
+      },
+      "semanticClipMap": {},
+      "missingRequiredStates": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "modelComponentAccepted": true,
+      "sixStateComplete": false,
+      "modelOptionRegistered": false,
+      "defaultPreserved": "champ.thorne",
+      "blocker": "six-state-actions-and-owner-semantic-review",
+      "s3": {
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-steve-c00-blender4513-v1-backup/ec511ab6217a007d094bf99939a632bfd01f9590e5a7a53cdbc8599383b72f3e.tar.gz",
+        "readbackReverifiedByThisWorkflow": false
+      },
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-minecraft",
+      "nameZh": "Alex／艾莉克斯",
+      "fighterId": "pickel",
+      "formId": "alex-c01",
+      "componentId": "ssbu-pickel-alex-c01-static-skinned-v1",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "platform": "Nintendo Switch",
+      "modelSourceId": "gitlab-ssbu-models",
+      "motionSourceId": null,
+      "nativeId": "fighter/pickel/body/c01",
+      "sourceFiles": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c01/pickel-alex-c01.blend",
+          "bytes": 4168692,
+          "sha256": "32da26ff5d5bc9c2581447348f74ce0ea5472dcdf736c8137fc7ada651cfe445"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c01/def_pickel_001_col.png",
+          "bytes": 2342,
+          "sha256": "2977e12f66a4eb58cc8a2f95e773aa72fb844c7f6ac1964c7bd750d602cb9686"
+        }
+      ],
+      "nativeMotionFiles": [],
+      "gitModel": {
+        "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+        "bytes": 51960,
+        "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177"
+      },
+      "metrics": {
+        "triangles": 828,
+        "meshes": 3,
+        "maxTextureEdge": 64,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 31,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "nativeClipNames": [],
+      "sourceMotionInventory": {
+        "aliasCount": 0,
+        "bodyAliasCount": 0,
+        "uniqueBodyPayloadCount": 0
+      },
+      "semanticClipMap": {},
+      "missingRequiredStates": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "modelComponentAccepted": true,
+      "sixStateComplete": false,
+      "modelOptionRegistered": false,
+      "defaultPreserved": "champ.thorne",
+      "blocker": "six-state-actions-and-owner-semantic-review",
+      "s3": {
+        "existingUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-pickel-alex-c01-blender4513-v1-backup/13beca9a10a77aa080d8e234d8ca5d36ff7c30517cc53ade2dc315434c8c1b29.tar.gz",
+        "readbackReverifiedByThisWorkflow": false
+      },
+      "productionDeploymentVerified": false
+    }
+  ],
+  "deathSubstitutionReview": [
+    {
+      "candidateId": "acquired-mario-hurt-rise-fade-death-v1",
+      "heroId": "acquired-mario",
+      "targetName": "Mario／瑪利歐",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [
+        "d01specialairsdash",
+        "d01specialairsend",
+        "d01specialairsjump",
+        "d01specialsdash",
+        "d01specialsend"
+      ],
+      "automaticBindingAllowed": false
+    },
+    {
+      "candidateId": "acquired-mewtwo-hurt-rise-fade-death-v1",
+      "heroId": "acquired-mewtwo",
+      "targetName": "Mewtwo／超夢",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [],
+      "automaticBindingAllowed": false
+    },
+    {
+      "candidateId": "acquired-pokemon-trainer-hurt-rise-fade-death-v1",
+      "heroId": "acquired-pokemon-trainer",
+      "targetName": "Pokémon Trainer／寶可夢訓練家",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [],
+      "automaticBindingAllowed": false
+    },
+    {
+      "candidateId": "acquired-minecraft-hurt-rise-fade-death-v1",
+      "heroId": "acquired-minecraft",
+      "targetName": "Steve／Alex",
+      "proposal": "受傷或倒地動作後，角色向上位移並以 alpha 淡出；僅在 owner 視覺審查核准後可綁 death。",
+      "status": "blocked-no-verified-hurt-or-down-clip",
+      "verifiedTargetSkeletonMotion": false,
+      "reviewMediaReady": false,
+      "ownerDecision": "pending",
+      "sourceNativeClips": [],
+      "automaticBindingAllowed": false
+    }
+  ],
+  "decisions": [
+    "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
+    "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
+    "Pokémon Trainer 男／女現有模型各 10,698／11,086 面；runtime 硬上限通過，但依正式採用規則仍需不高於 8,000 面候選與視覺 A/B。",
+    "死亡替代目前都沒有目標骨架上的 hurt/down 播放證據，因此只保留提案，不建立 model@1、不加下拉選項、不自動綁定。",
+    "既有手動預設完全保留；本收據不代表 Main 合併或正式站部署。"
+  ]
+}
