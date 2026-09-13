@@ -4,13 +4,18 @@
   "files": [
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
-      "bytes": 1438644,
-      "sha256": "9e6783fce6003170b8c25e1d69bd0d5e0b17614562cd726bfda109af84a2b476"
+      "bytes": 1439248,
+      "sha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.md",
-      "bytes": 1661,
-      "sha256": "8359871517007880279d3085151335de4124fb5b516eb49a74078108cb27298c"
+      "bytes": 2315,
+      "sha256": "bf2b4ba26b47bf86a476864b97a1d333e31bf8310c8ff5ea45045e80b8006110"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/listening-review.html",
+      "bytes": 9671,
+      "sha256": "a2cec5fff684a63f8a3e84cd96a80803f8eb0a83632093675ebc5942ebb6af9e"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-decisions.json",
@@ -19,13 +24,23 @@
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/tools/build_listening_review_queue.py",
-      "bytes": 18340,
-      "sha256": "3a2a913a1315e2b5d98bf5e3289685e8343095b5b5a3313e770c859f4334c3ff"
+      "bytes": 30706,
+      "sha256": "314632ebba6a80e9389a8bd2acb9a877a703793ac177bbb0f0b61b4c4013ec9a"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/tools/test_build_listening_review_queue.py",
-      "bytes": 1630,
-      "sha256": "c3a9d93f4226f83835b8ed77f055e10e6ee7c66c8642a3c59bc7f1ffcf8889c1"
+      "bytes": 2355,
+      "sha256": "b09669d3884d76fe8b559ddc56ca6d6b7483b366c9768e5e15c75c0c6ddf7104"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/tools/serve_listening_review.py",
+      "bytes": 6798,
+      "sha256": "89b3b19067aec788e4519d8934a258b42017ee6200a22d1587e1a3ed6de7b669"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/tools/test_serve_listening_review.py",
+      "bytes": 2363,
+      "sha256": "78e6ba386825f4118d070e813926b471e8ae37bbaa7ffbb785eb6f57d5ac36d5"
     }
   ],
   "summary": {
@@ -34,6 +49,8 @@
     "bytes": 725636616,
     "seconds": 2636.8756009070285,
     "pendingReviews": 754,
+    "nativeTargetCandidates": 566,
+    "battleReviewCandidates": 311,
     "speakerVerified": 0,
     "perClipLanguageVerified": 0,
     "ggdSkillSemanticBindingVerified": 0,
@@ -65,6 +82,8 @@
         "missingAbilitySlotEventCandidates": [
           "Q"
         ],
+        "nativeTargetCandidates": 99,
+        "battleReviewCandidates": 52,
         "pendingReviews": 135,
         "runtimeApproved": 0
       },
@@ -90,6 +109,8 @@
           "R": 5
         },
         "missingAbilitySlotEventCandidates": [],
+        "nativeTargetCandidates": 114,
+        "battleReviewCandidates": 64,
         "pendingReviews": 151,
         "runtimeApproved": 0
       },
@@ -114,6 +135,8 @@
           "R": 6
         },
         "missingAbilitySlotEventCandidates": [],
+        "nativeTargetCandidates": 83,
+        "battleReviewCandidates": 48,
         "pendingReviews": 104,
         "runtimeApproved": 0
       },
@@ -139,6 +162,8 @@
         "missingAbilitySlotEventCandidates": [
           "E"
         ],
+        "nativeTargetCandidates": 35,
+        "battleReviewCandidates": 21,
         "pendingReviews": 35,
         "runtimeApproved": 0
       },
@@ -165,6 +190,8 @@
           "R": 11
         },
         "missingAbilitySlotEventCandidates": [],
+        "nativeTargetCandidates": 104,
+        "battleReviewCandidates": 59,
         "pendingReviews": 159,
         "runtimeApproved": 0
       },
@@ -189,6 +216,8 @@
           "R": 4
         },
         "missingAbilitySlotEventCandidates": [],
+        "nativeTargetCandidates": 58,
+        "battleReviewCandidates": 26,
         "pendingReviews": 79,
         "runtimeApproved": 0
       },
@@ -213,6 +242,8 @@
           "R": 3
         },
         "missingAbilitySlotEventCandidates": [],
+        "nativeTargetCandidates": 73,
+        "battleReviewCandidates": 41,
         "pendingReviews": 91,
         "runtimeApproved": 0
       }

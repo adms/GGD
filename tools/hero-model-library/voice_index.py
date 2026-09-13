@@ -213,6 +213,28 @@ def apply_native_event_binding(row, evidence):
     return row
 
 
+def apply_listening_review(row, review):
+    """Expose the review candidate/result without making it runtime selectable."""
+    assert (row['sha256'], row['bytes']) == (review['sha256'], review['bytes'])
+    assert review['eventBindingsVerified'] is True
+    assert review['candidateOnly'] is True
+    row['listeningReviewKey'] = review['key']
+    row['candidateRuntimeTarget'] = review['candidateRuntimeTarget']
+    row['reviewPriority'] = review['reviewPriority']
+    row['reviewStatus'] = review['reviewStatus']
+    row['speakerCandidate'] = review['speakerCandidate']
+    row['speakerVerified'] = review['speakerVerified']
+    row['language'] = review['language']
+    row['perClipLanguageVerified'] = review['perClipLanguageVerified']
+    row['transcriptStatus'] = review['transcriptStatus']
+    row['gainDecision'] = review['gainDecision']
+    row['ggdSkillSemanticBindingVerified'] = review['ggdSkillSemanticBindingVerified']
+    row['runtimeApproved'] = review['runtimeApproved']
+    row['runtimeSelectable'] = False
+    row['listeningReviewComplete'] = review['runtimeApproved']
+    return row
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=REPO.parent)
@@ -262,6 +284,31 @@ def main():
             mappedWemIds=report['validation']['mappedWemIds'],
             eventBindingsVerified=True, speakerVerified=False,
             perClipLanguageVerified=False, ggdSkillSemanticBindingsVerified=False))
+    review_queue = read(OUT/'lol-project-seven/listening-review-queue.json')
+    review_decisions = read(OUT/'lol-project-seven/listening-review-decisions.json')
+    assert review_queue['schema'] == 'ggd-lol-listening-review-queue@1'
+    assert review_queue['sourceId'] == 'lol-project-seven-ja-jp-16.18.8159717'
+    assert review_queue['summary']['uniqueWavFiles'] == 754
+    assert review_queue['inputs']['decisions']['sha256'] == sha(OUT/'lol-project-seven/listening-review-decisions.json')
+    assert review_decisions['sourceId'] == review_queue['sourceId']
+    listening_reviews = {}
+    for review in review_queue['records']:
+        evidence = event_bindings[review['path']]
+        assert (review['sha256'], review['bytes']) == (evidence['sha256'], evidence['bytes'])
+        assert review['eventBindings'] == evidence['eventBindings']
+        assert review['nativeEventCategories'] == sorted(set(evidence['categories']))
+        assert set(review['abilitySlotCandidates']) == set(evidence['abilitySlotCandidates'])
+        assert review['decision'] == review_decisions['decisions'].get(review['key'])
+        prior = listening_reviews.get(review['path'])
+        assert prior is None, 'Duplicate listening review path: '+review['path']
+        listening_reviews[review['path']] = review
+    assert set(listening_reviews) == set(event_bindings)
+    review_by_native = {row['nativeId']: row for row in review_queue['summary']['byCharacter']}
+    for source in event_binding_sources:
+        review = review_by_native[source['nativeId']]
+        source['nativeTargetCandidateFiles'] = review['nativeTargetCandidates']
+        source['battleReviewCandidateFiles'] = review['battleReviewCandidates']
+        source['listeningReviewApprovedFiles'] = review['runtimeApproved']
     source_models = {m['id']:m for m in models['models']}
 
     def hero_ids(source_id):
@@ -522,13 +569,27 @@ def main():
 
     bound_relationship_rows = 0
     bound_groups = Counter()
+    review_candidate_groups = Counter()
+    battle_candidate_groups = Counter()
+    approved_review_groups = Counter()
     for row in files:
         evidence = event_bindings.get(row['path'])
         if evidence is None:
             continue
         apply_native_event_binding(row, evidence)
+        review = listening_reviews[row['path']]
+        apply_listening_review(row, review)
         bound_relationship_rows += 1
         bound_groups[row['groupId']] += 1
+        if review['candidateRuntimeTarget']:
+            review_candidate_groups[row['groupId']] += 1
+        if review['candidateRuntimeTarget'] and (
+            review['candidateRuntimeTarget'].startswith('ability-')
+            or review['candidateRuntimeTarget'] in {'attack', 'death'}
+        ):
+            battle_candidate_groups[row['groupId']] += 1
+        if review['runtimeApproved']:
+            approved_review_groups[row['groupId']] += 1
 
     audio_leads=[s for s in downloads.get('publicSourceLeads',[])
                  if s.get('resourceRole')=='audio-supplement' or 'audio' in s.get('assetKinds',[])]
@@ -537,6 +598,11 @@ def main():
         g['languagePreferenceBasis']='reported-language-only; listening review still required'
         if bound_groups[g['id']]:
             g['nativeEventBoundFiles']=bound_groups[g['id']]
+            g['nativeTargetCandidateFiles']=review_candidate_groups[g['id']]
+            g['battleReviewCandidateFiles']=battle_candidate_groups[g['id']]
+            g['listeningReviewApprovedFiles']=approved_review_groups[g['id']]
+            g['listeningReviewQueue']='materials/hero-model-library/lol-project-seven/listening-review-queue.json'
+            g['listeningReviewPage']='materials/hero-model-library/lol-project-seven/listening-review.html'
     categories={key:Counter() for key in groups}
     for f in files:categories[f['groupId']][f['category']]+=1
     for key,g in groups.items():g['categoryCounts']=dict(categories[key])
@@ -550,6 +616,16 @@ def main():
         groups=list(groups.values()),backups=stores,inputs=inputs,audioSourceLeads=audio_leads,nativeAudioSources=native_audio,
         alternateAudioSources=alternate_audio,prefetchAliases=prefetch_aliases,
         nativeEventBindingSources=event_binding_sources,
+        listeningReview=dict(
+            queuePath='materials/hero-model-library/lol-project-seven/listening-review-queue.json',
+            queueSha256=sha(OUT/'lol-project-seven/listening-review-queue.json'),
+            pagePath='materials/hero-model-library/lol-project-seven/listening-review.html',
+            decisionsPath='materials/hero-model-library/lol-project-seven/listening-review-decisions.json',
+            uniqueWavFiles=review_queue['summary']['uniqueWavFiles'],
+            nativeTargetCandidates=review_queue['summary']['nativeTargetCandidates'],
+            battleReviewCandidates=review_queue['summary']['battleReviewCandidates'],
+            runtimeApproved=review_queue['summary']['runtimeApproved'],
+            runtimeConfigChanged=False),
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
@@ -561,7 +637,11 @@ def main():
             nativeEventBindingReports=len(event_binding_sources),
             nativeEventBoundUniqueFiles=len(event_bindings),
             nativeEventBoundRelationshipRows=bound_relationship_rows,
-            nativeEventMappedEvents=sum(row['mappedEvents'] for row in event_binding_sources)))
+            nativeEventMappedEvents=sum(row['mappedEvents'] for row in event_binding_sources),
+            listeningReviewUniqueFiles=review_queue['summary']['uniqueWavFiles'],
+            nativeTargetCandidateFiles=review_queue['summary']['nativeTargetCandidates'],
+            battleReviewCandidateFiles=review_queue['summary']['battleReviewCandidates'],
+            listeningReviewApprovedFiles=review_queue['summary']['runtimeApproved']))
     manifest=''.join(json.dumps(f,ensure_ascii=False,separators=(',',':'))+'\n' for f in files)
     (OUT/'voice-files.jsonl').write_text(manifest)
     compressed=gzip.compress(manifest.encode(),mtime=0)
@@ -582,6 +662,7 @@ def main():
         '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
         'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
         f'LoL 已核對 {len(prefetch_aliases)} 個 BNK 預載片段，逐位元組前綴與 RIFF 完整長度均對應同角色 WPK 的完整音訊。`prefetchAliases` 指向已計入的主要 WAV、完整 WEM 及原片段；查詢回傳三者本機路徑。原片段與失敗報告保留，不補零、不改 RIFF 標頭，也不另算新音訊。', '',
+        f'LoL 七名逐項聽審入口為 `materials/hero-model-library/lol-project-seven/listening-review.html`：{review_queue["summary"]["uniqueWavFiles"]} 個事件關聯 WAV 中，{review_queue["summary"]["nativeTargetCandidates"]} 個有單一原生用途候選，{review_queue["summary"]["battleReviewCandidates"]} 個屬於 Q／W／E／R、攻擊或死亡；目前逐項核准 {review_queue["summary"]["runtimeApproved"]} 個。候選不等於技能綁定，未逐項核准的片段不啟用 runtime。', '',
         *event_binding_lines, *([''] if event_binding_lines else []),
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{counts["sourceFileRelationshipRows"]:,} 筆來源與檔案關係、{counts["uniqueLocalPaths"]:,} 個不同本機檔案路徑、{counts["uniqueSha256Payloads"]:,} 份不同 SHA-256 內容**。不同本機路徑的檔案大小合計 {counts["uniqueLocalPathBytes"]:,} bytes。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；以上均**不是已確認角色語音數**。同一路徑可保留原來源及指定角色子集的多筆關係，不能把新增來源關係當成新增音檔。', '',
         '相容欄位 `summary.audioFiles` 與 `summary.bytes` 仍依逐列來源關係加總；去重取檔請使用 `uniqueLocalPaths`／`uniqueLocalPathBytes`，內容去重數見 `uniqueSha256Payloads`。這些數字只涵蓋主要可播放音訊清單，原始容器、舊備份及診斷 PCM16 仍另外保留。', '',

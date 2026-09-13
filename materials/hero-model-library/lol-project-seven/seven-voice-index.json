@@ -1,7 +1,7 @@
 {
   "schema": "ggd.project-seven-voice-subset@1",
   "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven",
   "sourceMetadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717",
   "scopeConfig": "project-seven-config.json",
   "sourceDelivery": {
@@ -14,6 +14,17 @@
     "reportSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
     "rowsProperty": "files",
     "rowNativeIdProperty": "nativeId"
+  },
+  "listeningReview": {
+    "queuePath": "listening-review-queue.json",
+    "queueSha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60",
+    "pagePath": "listening-review.html",
+    "decisionsPath": "listening-review-decisions.json",
+    "uniqueWavFiles": 754,
+    "nativeTargetCandidates": 566,
+    "battleReviewCandidates": 311,
+    "runtimeApproved": 0,
+    "runtimeConfigChanged": false
   },
   "characters": [
     {
@@ -42,12 +53,17 @@
       "nativeEventBoundFiles": 135,
       "nativeEventMappedEvents": 35,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 99,
+      "battleReviewCandidateFiles": 52,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     },
     {
@@ -76,12 +92,17 @@
       "nativeEventBoundFiles": 151,
       "nativeEventMappedEvents": 50,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 114,
+      "battleReviewCandidateFiles": 64,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     },
     {
@@ -110,12 +131,17 @@
       "nativeEventBoundFiles": 104,
       "nativeEventMappedEvents": 39,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 83,
+      "battleReviewCandidateFiles": 48,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     },
     {
@@ -144,12 +170,17 @@
       "nativeEventBoundFiles": 35,
       "nativeEventMappedEvents": 9,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 35,
+      "battleReviewCandidateFiles": 21,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     },
     {
@@ -178,12 +209,17 @@
       "nativeEventBoundFiles": 159,
       "nativeEventMappedEvents": 46,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 104,
+      "battleReviewCandidateFiles": 59,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     },
     {
@@ -212,12 +248,17 @@
       "nativeEventBoundFiles": 79,
       "nativeEventMappedEvents": 24,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 58,
+      "battleReviewCandidateFiles": 26,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     },
     {
@@ -246,12 +287,17 @@
       "nativeEventBoundFiles": 91,
       "nativeEventMappedEvents": 29,
       "eventBindingCoverage": "partial-by-skin",
+      "nativeTargetCandidateFiles": 73,
+      "battleReviewCandidateFiles": 41,
+      "listeningReviewApprovedFiles": 0,
+      "listeningReviewComplete": false,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
+      "runtimeSelectable": false,
       "englishPackageAcquired": false
     }
   ],
@@ -464,7 +510,10 @@
     "packagesWithUnresolvedErrors": 0,
     "nativeEventBindingReports": 7,
     "nativeEventBoundUniqueFiles": 754,
-    "nativeEventMappedEvents": 232
+    "nativeEventMappedEvents": 232,
+    "nativeTargetCandidateFiles": 566,
+    "battleReviewCandidateFiles": 311,
+    "listeningReviewApprovedFiles": 0
   },
   "scope": {
     "fullRosterEnabled": false,
@@ -483,6 +532,7 @@
     "Resolve every PCM path from sourceDelivery.files against localRoot.",
     "This index references complete original native and PCM files; no audio is synthesized or duplicated.",
     "Native event reports prove only the listed skin and WEM relationships; speaker, per-clip language, transcript and GGD skill binding remain pending.",
+    "Every runtime approval must be recorded per WAV in listening-review-decisions.json; the review page never modifies skill/runtime configuration.",
     "Seven Japanese source packages only; older full-roster files remain preserved outside this subset."
   ]
 }

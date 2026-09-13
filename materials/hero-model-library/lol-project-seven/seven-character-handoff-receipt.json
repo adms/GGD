@@ -1,13 +1,13 @@
 {
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven",
   "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
   "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-project-seven-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T142545872117Z.json",
   "manifestSha256": "9e6d357f2f284777cf45c2483ab02d76bcf08dadacbb626e67c1fd67f8222eda",
-  "voiceIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/seven-voice-index.json",
-  "voiceIndexSha256": "2b6c526dac301d8ce4c2ce6a8a728d419d9c6597f4bef719f648446a7480687a",
-  "gitHandoffPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/git-handoff-files.json",
-  "gitHandoffSha256": "8a7173064b3efd42b22925939b5675c9bdf03f2fb5a30d551d06c4545dbad7fb",
-  "scopeControlPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven/control/allowlist.json",
+  "voiceIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven/seven-voice-index.json",
+  "voiceIndexSha256": "ab42b1349341bd0f57e5a99ef12c4522e8c09bb7495870854a2b65b25d843eac",
+  "gitHandoffPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven/git-handoff-files.json",
+  "gitHandoffSha256": "aae71ca9c3a00c5093d5cc1f34f2ba5cd80344e8d7654a1f9bbb1344e8baf93e",
+  "scopeControlPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven/control/allowlist.json",
   "totals": {
     "completeWads": 7,
     "completeAudioWads": 7,
@@ -24,7 +24,10 @@
     "packagesWithUnresolvedErrors": 0,
     "nativeEventBindingReports": 7,
     "nativeEventBoundUniqueFiles": 754,
-    "nativeEventMappedEvents": 232
+    "nativeEventMappedEvents": 232,
+    "nativeTargetCandidateFiles": 566,
+    "battleReviewCandidateFiles": 311,
+    "listeningReviewApprovedFiles": 0
   },
   "characters": [
     {

@@ -1,6 +1,6 @@
 {
   "schema": "ggd.seven-voice-git-handoff@1",
-  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-project-seven",
+  "metadataRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/lol-project-seven",
   "sourceLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
   "allowedContent": "scripts, settings, immutable index manifests, SHA-256 and docs only",
   "files": [
@@ -26,13 +26,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 3514,
-      "sha256": "1f1e7f4f1cc5525196096e0abf29c505e884f9c8eaea3e5fc4adbed9becf7900"
+      "bytes": 5181,
+      "sha256": "b55a787407b719cd9852020a02f0c4400d7fb32e17fe696eb0caff5ec552ad9a"
     },
     {
       "path": "seven-voice-index.json",
-      "bytes": 17608,
-      "sha256": "2b6c526dac301d8ce4c2ce6a8a728d419d9c6597f4bef719f648446a7480687a"
+      "bytes": 19653,
+      "sha256": "ab42b1349341bd0f57e5a99ef12c4522e8c09bb7495870854a2b65b25d843eac"
     },
     {
       "path": "latest-seven-delivery-receipt.json",
@@ -75,6 +75,31 @@
       "sha256": "7a43cc8a79b960c25738aff7810565a1da3bed93ac947f0be502b7846aa04df4"
     },
     {
+      "path": "listening-review-decisions.json",
+      "bytes": 129,
+      "sha256": "01e68bdc36793c13caf0663e1f9ae66495bd996f8df6d84154f32e9bbe36fa43"
+    },
+    {
+      "path": "listening-review-queue.json",
+      "bytes": 1439248,
+      "sha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60"
+    },
+    {
+      "path": "listening-review-queue.md",
+      "bytes": 2315,
+      "sha256": "bf2b4ba26b47bf86a476864b97a1d333e31bf8310c8ff5ea45045e80b8006110"
+    },
+    {
+      "path": "listening-review-receipt.json",
+      "bytes": 7397,
+      "sha256": "1f89afcf93ad6f208e67136f2ce2ec6daa470204a9e12ad43cf974669362de4d"
+    },
+    {
+      "path": "listening-review.html",
+      "bytes": 9671,
+      "sha256": "a2cec5fff684a63f8a3e84cd96a80803f8eb0a83632093675ebc5942ebb6af9e"
+    },
+    {
       "path": "tools/acquire_project_ja.py",
       "bytes": 6009,
       "sha256": "42599afa9f640bac92aeb0c08c3d5f3cef56c3aad6ce4ff741465bdcb3908db0"
@@ -88,6 +113,11 @@
       "path": "tools/build_event_bindings.py",
       "bytes": 12286,
       "sha256": "b9170b36db9441463c2d790073c355671a19e2753398479ee7d1316a54e153b6"
+    },
+    {
+      "path": "tools/build_listening_review_queue.py",
+      "bytes": 30706,
+      "sha256": "314632ebba6a80e9389a8bd2acb9a877a703793ac177bbb0f0b61b4c4013ec9a"
     },
     {
       "path": "tools/bundle_event_bindings.py",
@@ -121,8 +151,8 @@
     },
     {
       "path": "tools/make_seven_handoff.py",
-      "bytes": 6211,
-      "sha256": "e5c9af845fdb5635589a68d79fc55bd0cd7d804dc6c318e7687b2b4253d73322"
+      "bytes": 7855,
+      "sha256": "b759b1b938f7f787718910a7da5f33954d6bcd2333e56f8207a2c33a196c0590"
     },
     {
       "path": "tools/recover_project_ja.py",
@@ -140,6 +170,11 @@
       "sha256": "6d71f7e1d0d5d03409f08b57b238ff1f7e3f54426fcc75253fadca15ee55ac0c"
     },
     {
+      "path": "tools/serve_listening_review.py",
+      "bytes": 6798,
+      "sha256": "89b3b19067aec788e4519d8934a258b42017ee6200a22d1587e1a3ed6de7b669"
+    },
+    {
       "path": "tools/sync_event_binding_evidence.py",
       "bytes": 6050,
       "sha256": "4079d40b6618a946f6892dfa4bc8687d9b55bb964e897e4484426b9bafc15b8d"
@@ -153,6 +188,16 @@
       "path": "tools/test_build_event_bindings.py",
       "bytes": 1446,
       "sha256": "edce557a1c02e140b59e6b25dfde5ba5ae3b357865f22b4262ba33f0c63e8444"
+    },
+    {
+      "path": "tools/test_build_listening_review_queue.py",
+      "bytes": 2355,
+      "sha256": "b09669d3884d76fe8b559ddc56ca6d6b7483b366c9768e5e15c75c0c6ddf7104"
+    },
+    {
+      "path": "tools/test_serve_listening_review.py",
+      "bytes": 2363,
+      "sha256": "78e6ba386825f4118d070e813926b471e8ae37bbaa7ffbb785eb6f57d5ac36d5"
     }
   ],
   "audioBinaryCount": 0,

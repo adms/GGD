@@ -3,7 +3,7 @@ import struct
 import unittest
 
 from extract_lol_audio import wpk_media
-from voice_index import apply_native_event_binding, language_rank
+from voice_index import apply_listening_review, apply_native_event_binding, language_rank
 
 
 class LocalAudio(unittest.TestCase):
@@ -52,6 +52,24 @@ class LocalAudio(unittest.TestCase):
         self.assertFalse(result['speakerVerified'])
         self.assertFalse(result['perClipLanguageVerified'])
         self.assertFalse(result['synthesisReady'])
+
+    def test_review_candidate_is_visible_but_not_runtime_selectable(self):
+        row = {'sha256': 'abc', 'bytes': 12}
+        review = {
+            'key': 'Lux:skin0:1', 'sha256': 'abc', 'bytes': 12,
+            'eventBindingsVerified': True, 'candidateOnly': True,
+            'candidateRuntimeTarget': 'ability-Q', 'reviewPriority': 1,
+            'reviewStatus': 'pending', 'speakerCandidate': 'Lux',
+            'speakerVerified': False, 'language': 'unreviewed',
+            'perClipLanguageVerified': False, 'transcriptStatus': 'not-transcribed',
+            'gainDecision': 'pending', 'ggdSkillSemanticBindingVerified': False,
+            'runtimeApproved': False,
+        }
+        result = apply_listening_review(row, review)
+        self.assertEqual(result['candidateRuntimeTarget'], 'ability-Q')
+        self.assertFalse(result['runtimeApproved'])
+        self.assertFalse(result['runtimeSelectable'])
+        self.assertFalse(result['listeningReviewComplete'])
 
 
 if __name__ == '__main__':

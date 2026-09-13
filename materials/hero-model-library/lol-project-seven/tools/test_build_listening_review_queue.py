@@ -22,6 +22,13 @@ class ListeningReviewQueueTest(unittest.TestCase):
         self.assertIsNone(mod.runtime_target(["ability-cast"], []))
         self.assertIsNone(mod.runtime_target(["ability-cast"], ["Q", "R"]))
 
+    def test_battle_review_scope_is_explicit(self):
+        self.assertTrue(mod.is_battle_target("ability-Q"))
+        self.assertTrue(mod.is_battle_target("attack"))
+        self.assertTrue(mod.is_battle_target("death"))
+        self.assertFalse(mod.is_battle_target("move"))
+        self.assertFalse(mod.is_battle_target(None))
+
     def test_runtime_approval_requires_completed_review_evidence(self):
         with self.assertRaisesRegex(ValueError, "lacks completed review evidence"):
             mod.validate_decision("Lux:skin0:1", {"runtimeApproved": True})
@@ -35,7 +42,15 @@ class ListeningReviewQueueTest(unittest.TestCase):
             "ggdSkillSemanticBindingVerified": True,
             "gainDecision": "-3 dB",
             "runtimeApproved": True,
-        })
+        }, "ability-Q")
+
+    def test_semantic_target_must_match_native_event_candidate(self):
+        with self.assertRaisesRegex(ValueError, "differs from native event evidence"):
+            mod.validate_decision("Lux:skin0:1", {
+                "status": "verified",
+                "ggdRuntimeTarget": "ability-R",
+                "ggdSkillSemanticBindingVerified": True,
+            }, "ability-Q")
 
 
 if __name__ == "__main__":

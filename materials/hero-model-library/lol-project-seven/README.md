@@ -36,4 +36,13 @@ git-handoff-files.json 列出窄版 Git 交付：程式、設定、精簡索引�
 
 七名指定英雄的 base／skin0 均已建立事件證據，合計 232 個原生事件、754 個事件對應 WAV：Karthus 35／135、LeeSin 50／151、Lux 39／104、MissFortune 9／35、Warwick 46／159、Xerath 24／79、Yasuo 29／91。每份 `event-bindings/*-base.json` 的 `eventBindingsVerified=true` 只證明該基礎造型的原生事件圖關係。`abilitySlotCandidate` 來自固定控制檔中的原生事件名稱 token，還不是 GGD 技能綁定；其他造型、逐段語言、說話者、台詞與聽審仍為 false／pending。中央索引由 `tools/hero-model-library/voice_index.py` 讀取這些報告重建，不能只手改 `voice-files.jsonl.gz`。
 
-逐檔聽審入口為 [listening-review-queue.md](listening-review-queue.md) 與 `listening-review-queue.json`，驗證收據為 `listening-review-receipt.json`。佇列會重新核對 754 個本機 WAV 的大小與 SHA-256，並保留原生事件、類別與技能槽候選；人工結果只寫入 `listening-review-decisions.json`，再由 `tools/build_listening_review_queue.py` 重建。未聽審的片段不會啟用 runtime，也不會把 Joke、Death 或技能事件改成另一種用途。
+逐檔聽審入口為 [listening-review-queue.md](listening-review-queue.md)、`listening-review-queue.json` 與可播放的 [listening-review.html](listening-review.html)，驗證收據為 `listening-review-receipt.json`。佇列會重新核對 754 個本機 WAV 的大小與 SHA-256，並保留原生事件、類別與技能槽候選；人工結果只寫入 `listening-review-decisions.json`，再由 `tools/build_listening_review_queue.py` 重建。未聽審的片段不會啟用 runtime，也不會把 Joke、Death 或技能事件改成另一種用途。
+
+用以下命令啟動本機審查頁，再開啟 `http://127.0.0.1:8765/`：
+
+```sh
+python3 materials/hero-model-library/lol-project-seven/tools/serve_listening_review.py \
+  --asset-workspace "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT"
+```
+
+頁面預設只顯示 Q／W／E／R、攻擊與死亡的戰鬥候選，可切換全部原生用途或全部 754 檔。它逐檔播放、逐檔寫入核准／拒絕／待更多上下文決定，沒有批次核准；正式核准必須同時確認說話者、實際語言或非語言、原生事件用途及增益。伺服器只監聽 loopback 並只供應佇列已登記的 WAV；儲存決定不會修改 `content/config/champion-voices.json` 或技能設定。
