@@ -17,7 +17,7 @@
       "const": "ggd.asset-review-decisions@1"
     },
     "sourceFingerprint": {
-      "const": "c88b9a74ebd2a93eecee3e977b9ff0042f10846dc9f881331d116249df75c820"
+      "const": "889c6c9c3d788f3c34761f3def42932321c06c2d1096ccd2c59e3fdd9df1f489"
     },
     "reviewer": {
       "type": "string",
@@ -32,8 +32,8 @@
     },
     "decisions": {
       "type": "array",
-      "minItems": 162,
-      "maxItems": 162,
+      "minItems": 161,
+      "maxItems": 161,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -207,8 +207,7 @@
               "palworld:palworld-cattiva-motion-attack",
               "palworld:palworld-cattiva-motion-cast",
               "palworld:palworld-cattiva-motion-hurt",
-              "palworld:palworld-cattiva-motion-death",
-              "borrowed:popp-native-hurt-ascend-fade-v1"
+              "palworld:palworld-cattiva-motion-death"
             ]
           },
           "decision": {

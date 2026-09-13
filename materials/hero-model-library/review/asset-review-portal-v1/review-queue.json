@@ -1,6 +1,6 @@
 {
   "schema": "ggd.asset-review-portal@1",
-  "sourceFingerprint": "c88b9a74ebd2a93eecee3e977b9ff0042f10846dc9f881331d116249df75c820",
+  "sourceFingerprint": "889c6c9c3d788f3c34761f3def42932321c06c2d1096ccd2c59e3fdd9df1f489",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json",
@@ -14,8 +14,8 @@
     },
     {
       "gitPath": "materials/hero-model-library/motion-review/borrowed-motion-review.json",
-      "bytes": 9207,
-      "sha256": "d13ba040cd5a2e569d964035878be8774f6f4e88108fa53bc19ca7e7098df62f"
+      "bytes": 6492,
+      "sha256": "eb480e1f5078b221e15a239b811e2caa3769bf1241497413e76a3705ea8366ac"
     },
     {
       "gitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/listening-review-groups.json",
@@ -29,18 +29,18 @@
     "runtimeMutationAllowed": false,
     "jumpForceGroupSampleApprovalDoesNotAuthorizeEventBinding": true,
     "borrowedAndDeathSubstitutionMotionsRequirePerCandidateApproval": true,
-    "hurtAscendFadeIsPresentationPreviewUntilRuntimeCalibration": true
+    "resolvedReceiptCandidatesAreNotRequeued": true
   },
   "summary": {
     "audioCandidateCount": 143,
     "poppEventAudioCandidateCount": 36,
     "palworldCreatureCryCandidateCount": 18,
     "jumpForceGroupSampleCount": 89,
-    "motionCandidateCount": 19,
+    "motionCandidateCount": 18,
     "palworldMotionCandidateCount": 18,
-    "borrowedOrDeathSubstitutionCandidateCount": 1,
+    "borrowedOrDeathSubstitutionCandidateCount": 0,
     "blockedMotionLeadCount": 2,
-    "pendingDecisionCount": 162,
+    "pendingDecisionCount": 161,
     "approvedDecisionCount": 0,
     "rejectedDecisionCount": 0,
     "runtimeBindingsChanged": 0,
@@ -7248,69 +7248,6 @@
       "decision": "pending",
       "runtimeSelectable": false,
       "runtimeBindingChanged": false
-    },
-    {
-      "candidateId": "borrowed:popp-native-hurt-ascend-fade-v1",
-      "sourceKind": "borrowed-or-death-substitution-motion",
-      "sourceId": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
-      "heroId": "b2-popp",
-      "characterNameZh": "何布／波普",
-      "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
-      "nativeCharacterId": "PN020/00",
-      "motionKind": "native",
-      "semanticState": "death",
-      "nativeClip": "GGD_native_down",
-      "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
-      "modelDocument": {
-        "gitPath": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json",
-        "bytes": 484,
-        "sha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc"
-      },
-      "eventCandidates": [
-        "death"
-      ],
-      "eventMeaningConfidence": "explicit-substitution-candidate",
-      "approvalScope": "motion-event-suggestion",
-      "presentation": {
-        "mode": "hurt-ascend-fade",
-        "durationMs": 2200,
-        "fadeStartRatio": 0.35,
-        "translateYPixels": -80,
-        "previewScope": "whole-iframe compositing mockup",
-        "runtimeWorldSpaceCalibrationRequired": true
-      },
-      "skeletonCompatibility": {
-        "status": "compatible-verified",
-        "method": "exact-same-model-and-skeleton",
-        "sourceSkeleton": "PN020 SK_PN020_Skeleton converted into the accepted target GLB",
-        "targetSkeleton": "same accepted PN020/00 target GLB",
-        "mappingEvidence": "No retarget map is used because source and target are the same accepted model."
-      },
-      "validationEvidence": [
-        {
-          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
-          "bytes": 7162,
-          "sha256": "45fceada138dbd02ecb611f1606986f15e1766e7aa02e4daf5c69b0ef2adb2d3"
-        },
-        {
-          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/runtime-webgl-proof.json",
-          "bytes": 9706,
-          "sha256": "fd199307119f036a77fcd5d69fbde0703016cf4f65a255dd9b37e171a99a49f0"
-        },
-        {
-          "gitPath": "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
-          "bytes": 2367208,
-          "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe"
-        }
-      ],
-      "gaps": [
-        "Owner review decision is pending.",
-        "The ascend/fade presentation is a browser compositing preview; runtime world-space timing and opacity handling are not implemented.",
-        "Approval does not establish full combat or production deployment readiness."
-      ],
-      "decision": "pending",
-      "runtimeSelectable": false,
-      "runtimeBindingChanged": false
     }
   ],
   "blockedMotionLeads": [
@@ -7386,8 +7323,8 @@
         },
         {
           "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-          "bytes": 43391,
-          "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e"
+          "bytes": 65351,
+          "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f"
         }
       ],
       "gaps": [
