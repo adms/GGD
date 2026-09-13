@@ -1,0 +1,110 @@
+{
+  "schema": "ggd.borrowed-motion-review-source@1",
+  "policy": {
+    "reviewDraftSchema": "ggd.borrowed-motion-review-decisions@1",
+    "decisionValues": [
+      "approve",
+      "reject"
+    ],
+    "defaultDecision": null,
+    "runtimeMutationAllowed": false,
+    "candidateKinds": [
+      "native",
+      "borrowed-same-skeleton",
+      "retargeted",
+      "procedural-presentation"
+    ],
+    "deathSubstitutionModes": [
+      "none",
+      "hurt-ascend-fade",
+      "same-work-borrowed"
+    ],
+    "skeletonCompatibilityStatuses": [
+      "compatible-verified",
+      "compatible-with-mapping-verified",
+      "incompatible",
+      "unverified"
+    ],
+    "reviewRule": "Only candidates with a target-side audition model, a resolvable clip and pinned validation evidence enter the playable queue. Every playable candidate requires an explicit approve or reject decision. Approval is review evidence only and never changes runtime or hero configuration automatically."
+  },
+  "candidates": [
+    {
+      "id": "popp-native-hurt-ascend-fade-v1",
+      "labelZh": "何布／波普：原生受傷倒地＋升天淡出",
+      "motionKind": "native",
+      "deathSubstitutionMode": "hurt-ascend-fade",
+      "sameWorkBorrowed": false,
+      "source": {
+        "heroId": "b2-popp",
+        "heroNameZh": "何布／波普",
+        "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "nativeCharacterId": "PN020/00",
+        "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+        "modelDocument": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json"
+      },
+      "target": {
+        "heroId": "b2-popp",
+        "heroNameZh": "何布／波普",
+        "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+        "modelDocument": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json"
+      },
+      "clip": {
+        "state": "hurt",
+        "embeddedName": "GGD_native_down",
+        "sourceKind": "native PN020 down loop",
+        "loopIntent": false
+      },
+      "skeletonCompatibility": {
+        "status": "compatible-verified",
+        "method": "exact-same-model-and-skeleton",
+        "sourceSkeleton": "PN020 SK_PN020_Skeleton converted into the accepted target GLB",
+        "targetSkeleton": "same accepted PN020/00 target GLB",
+        "mappingEvidence": "No retarget map is used because source and target are the same accepted model."
+      },
+      "presentation": {
+        "mode": "hurt-ascend-fade",
+        "durationMs": 2200,
+        "fadeStartRatio": 0.35,
+        "translateYPixels": -80,
+        "previewScope": "whole-iframe compositing mockup",
+        "runtimeWorldSpaceCalibrationRequired": true
+      },
+      "validationEvidence": [
+        "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
+        "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/runtime-webgl-proof.json",
+        "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb"
+      ],
+      "blockers": [
+        "Owner review decision is pending.",
+        "The ascend/fade presentation is a browser compositing preview; runtime world-space timing and opacity handling are not implemented.",
+        "Approval does not establish full combat or production deployment readiness."
+      ]
+    }
+  ],
+  "blockedLeads": [
+    {
+      "id": "lina-rays-300-retarget-idle-run-v2",
+      "motionKind": "retargeted",
+      "sourceHero": "300英雄 莉娜動作來源",
+      "sourceModel": "300英雄 Lina motion rig",
+      "targetHero": "莉娜·因巴斯",
+      "targetModel": "Tales of the Rays body candidate d7523f8c6faf64e0e8f19b817ba0806c09fa2ac2f8c28c78a948a4f8921b5f9f",
+      "clips": [
+        "300heroes_bat_idle_retargeted_to_Rays_Lina_processed_footplant_loop",
+        "300heroes_single_run_retargeted_to_Rays_Lina_processed_footplant_loop"
+      ],
+      "skeletonCompatibility": "visual samples exist, but runtime importer compatibility is not accepted",
+      "validationEvidence": [
+        "materials/hero-model-library/reviews/lina-real-ggd-20260910/REPORT.json",
+        "materials/hero-model-library/reviews/lina-retarget-20260910/evidence.json"
+      ],
+      "blockers": [
+        "The current GLB is rejected by the real importer because it declares unsupported extensions.",
+        "Only idle and run exist; attack, cast, hurt and death are absent.",
+        "Registration, backend dropdown presence and moving-match validation are false."
+      ],
+      "playableReviewEligible": false
+    }
+  ]
+}
