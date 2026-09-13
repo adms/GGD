@@ -11,11 +11,15 @@
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "06ef41abecf60c627e0c82949db7a8319a43662b57a0f5d07a88ecbe81adef3a"
+      "sha256": "4318599ddd99e47edac7afa7df5aee1d6ac2de752fd60da70ae9d6c07f680a27"
     },
     {
       "gitPath": "materials/hero-model-library/palworld/character-settings.json",
       "sha256": "c72f2ae21f85f960d49b78689d5744d202f5e918f93eb44522b13e5d2dfc8e17"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+      "sha256": "7f1a0b2787f8c8bacbe611026229a93e8e2cfac9121aa55a397aaecc4ac7412c"
     }
   ],
   "characterCount": 3,
@@ -23,6 +27,7 @@
   "preservedModelFileCount": 22,
   "distinctCryCount": 18,
   "characterSettingsGitPath": "materials/hero-model-library/palworld/character-settings.json",
+  "heroIntegrationReceipt": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
   "characters": [
     {
       "id": "jetragon",
@@ -772,9 +777,53 @@
       "spokenDialogueCount": 0,
       "standaloneVfxAcquired": false,
       "skillSpecificSfxAcquired": false,
-      "ggdHeroImplemented": false,
+      "ggdHeroImplemented": true,
+      "heroId": "acquired-jetragon",
+      "heroIntegration": {
+        "identityId": "community:palworld-jetragon",
+        "heroId": "acquired-jetragon",
+        "name": "空渦龍",
+        "authoringState": "six-slot-package-verified",
+        "backendDropdownRegistered": true,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "defaultModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+        "modelOptions": [
+          "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb"
+        ],
+        "modelDocument": {
+          "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json",
+          "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+          "bytes": 455
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+          "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+          "bytes": 3221852
+        },
+        "slots": [
+          "acquired-jetragon.passive",
+          "acquired-jetragon.q",
+          "acquired-jetragon.w",
+          "acquired-jetragon.e",
+          "acquired-jetragon.r",
+          "acquired-jetragon.ex"
+        ],
+        "recipeSha256": "sha256:1fd31127af8f4396654a50b4eb040849b0c3576dda2baad34ddde458e78673c6",
+        "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
+        "package": {
+          "status": "passed",
+          "digest": "sha256:c88a275574d2687ffc786c9e40bf3d5e6973b7c7bea8dee424ef12c0a07b8b21",
+          "zipSha256": "sha256:6c9a6d7c0c84759def48a88d067ece40d85d2dd8b7a1a2b9218e0c457def3996",
+          "zipBytes": 6288798,
+          "exactSource": true,
+          "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "productionDeploymentVerified": false
+      },
+      "backendDropdownRegistered": true,
+      "productionDeploymentVerified": false,
       "runtimeSelectable": false,
-      "status": "model-components-available-pending-hero-design-and-binding"
+      "status": "authoring-complete-package-verified-production-pending"
     },
     {
       "id": "astralym",
@@ -2094,9 +2143,53 @@
       "spokenDialogueCount": 0,
       "standaloneVfxAcquired": false,
       "skillSpecificSfxAcquired": false,
-      "ggdHeroImplemented": false,
+      "ggdHeroImplemented": true,
+      "heroId": "acquired-astralym",
+      "heroIntegration": {
+        "identityId": "community:palworld-astralym",
+        "heroId": "acquired-astralym",
+        "name": "枯星龍",
+        "authoringState": "six-slot-package-verified",
+        "backendDropdownRegistered": true,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+        "modelOptions": [
+          "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59"
+        ],
+        "modelDocument": {
+          "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json",
+          "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+          "bytes": 456
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+          "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+          "bytes": 3876004
+        },
+        "slots": [
+          "acquired-astralym.passive",
+          "acquired-astralym.q",
+          "acquired-astralym.w",
+          "acquired-astralym.e",
+          "acquired-astralym.r",
+          "acquired-astralym.ex"
+        ],
+        "recipeSha256": "sha256:a9982c91c92b7db4643c4cb37e1c1e6d6af677111ad2b0287e81b42b6b8a7928",
+        "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
+        "package": {
+          "status": "passed",
+          "digest": "sha256:0dacef00fe2b783364b08fd11502bf51e6444217ce6f867ba73551b705537bbe",
+          "zipSha256": "sha256:898cd82710c4f7ef061b6dd161b652fe9c1dc628bfa947a08d7f8c06c8c7b657",
+          "zipBytes": 6855944,
+          "exactSource": true,
+          "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "productionDeploymentVerified": false
+      },
+      "backendDropdownRegistered": true,
+      "productionDeploymentVerified": false,
       "runtimeSelectable": false,
-      "status": "model-components-available-pending-hero-design-and-binding"
+      "status": "authoring-complete-package-verified-production-pending"
     },
     {
       "id": "cattiva",
@@ -3152,16 +3245,61 @@
       "spokenDialogueCount": 0,
       "standaloneVfxAcquired": false,
       "skillSpecificSfxAcquired": false,
-      "ggdHeroImplemented": false,
+      "ggdHeroImplemented": true,
+      "heroId": "acquired-cattiva",
+      "heroIntegration": {
+        "identityId": "community:palworld-cattiva",
+        "heroId": "acquired-cattiva",
+        "name": "搗蛋貓",
+        "authoringState": "six-slot-package-verified",
+        "backendDropdownRegistered": true,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "defaultModelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+        "modelOptions": [
+          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+        ],
+        "modelDocument": {
+          "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json",
+          "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+          "bytes": 456
+        },
+        "modelGlb": {
+          "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+          "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+          "bytes": 1428876
+        },
+        "slots": [
+          "acquired-cattiva.passive",
+          "acquired-cattiva.q",
+          "acquired-cattiva.w",
+          "acquired-cattiva.e",
+          "acquired-cattiva.r",
+          "acquired-cattiva.ex"
+        ],
+        "recipeSha256": "sha256:1d988cf53901b1b8a223b7442db4474cd3e6f23a21bfe77c547a922ce41f232a",
+        "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
+        "package": {
+          "status": "passed",
+          "digest": "sha256:f13b3010acefa2e0c95880caa4173dc671c52c8481d7d7c77c52c4348da5cac8",
+          "zipSha256": "sha256:9edf9282d4ac21985e0c8aa61655298389b7d6a50d9fa6bcc67f96c3d9c7c77d",
+          "zipBytes": 4401663,
+          "exactSource": true,
+          "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "productionDeploymentVerified": false
+      },
+      "backendDropdownRegistered": true,
+      "productionDeploymentVerified": false,
       "runtimeSelectable": false,
-      "status": "model-components-available-pending-hero-design-and-binding"
+      "status": "authoring-complete-package-verified-production-pending"
     }
   ],
   "limitations": [
     "Source copies and intermediate models require manual use from S3 legacy.",
     "Creature cries are sound effects, not Japanese or English spoken dialogue.",
     "PalDB settings are community snapshots, not original game DataTables or GGD abilities.",
-    "Khronos structural validation does not prove material fidelity or GGD runtime acceptance."
+    "Khronos structural validation does not prove material fidelity or GGD runtime acceptance.",
+    "Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified."
   ],
   "gitModelComponentCount": 3,
   "gitModelComponents": [

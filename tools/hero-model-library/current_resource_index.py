@@ -128,6 +128,10 @@ def build():
         if hashlib.sha256((ROOT/pin['gitPath']).read_bytes()).hexdigest()!=pin['sha256']:
             raise ValueError('Refresh Palworld component index: '+pin['gitPath'])
     components=model_components(component_data,ROOT)
+    palworld_hero_receipt_path=base/'priority-evidence/palworld-hero-integration/receipt.json'
+    palworld_hero_receipt=read(palworld_hero_receipt_path)
+    if palworld_hero_receipt.get('status')!='authoring-complete-production-pending':
+        raise ValueError('Palworld hero integration receipt is not current')
     component_source_path=base/'download-sources.json'
     component_sources=read(component_source_path)
     ultimate14_source=next(source for source in component_sources['publicSources'] if source['id']=='parallel-ns-ultimate14')
@@ -147,6 +151,12 @@ def build():
             sha256=hashlib.sha256(restoration_receipt_path.read_bytes()).hexdigest()),
         modelComponentIndex=dict(gitPath=str(component_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_path.read_bytes()).hexdigest()),
+        palworldHeroIntegrationReceipt=dict(
+            gitPath=str(palworld_hero_receipt_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(palworld_hero_receipt_path.read_bytes()).hexdigest(),
+            heroIds=[row['heroId'] for row in palworld_hero_receipt['integrations']],
+            status=palworld_hero_receipt['status'],
+            productionDeploymentVerified=False),
         modelComponentSourceIndex=dict(gitPath=str(component_source_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_source_path.read_bytes()).hexdigest()))
     return result
@@ -175,6 +185,7 @@ def main():
                 result['assetWorkflowRestorationManifest'],
                 result['historicalModelRestorationReceipt'],
                 result['modelComponentIndex'],
+                result['palworldHeroIntegrationReceipt'],
                 result['modelComponentSourceIndex'],
             ]
         )

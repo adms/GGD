@@ -47,8 +47,10 @@ def model_components(data, repo=ROOT):
 
 def build(workspace):
     paths = [BASE / 'download-sources.json', BASE / 'public-source-files.json',
-             BASE / 'design-backlog/sources-supplemental.json', BASE / 'palworld/character-settings.json']
-    downloads, archives, supplemental, settings = [read(path) for path in paths]
+             BASE / 'design-backlog/sources-supplemental.json', BASE / 'palworld/character-settings.json',
+             BASE / 'priority-evidence/palworld-hero-integration/receipt.json']
+    downloads, archives, supplemental, settings, integration_receipt = [read(path) for path in paths]
+    integrations = {row['identityId']: row for row in integration_receipt['integrations']}
     sources = {row['id']: row for row in downloads['publicSources']}
     archived = {row['id']: row for row in archives['sources']}
     identities = {row['id']: row for row in supplemental['characters']}
@@ -91,24 +93,31 @@ def build(workspace):
                 sourceUrl=audio_source['url'], category='sound-effect', synthesisReady=False))
         forms = [form for form in settings['forms'] if form['character'] == english]
         assert forms and forms[0]['factualFields']['Stats']['Code'] == code
+        integration = integrations[identity['id']]
+        assert integration['heroId'] in identity.get('mappedHeroIds', [])
+        assert integration['backendDropdownRegistered'] is True
+        assert integration['productionDeploymentVerified'] is False
         characters.append(dict(id=key, name=name, englishName=english, sourceCode=code,
             backlogIdentity=identity['id'], modelCandidates=models, modelSources=model_sources,
             audioSourceId=audio_id, audioFiles=audio_files, audioBackup=audio_source['backup'],
             settingsForms=forms, spokenDialogueCount=0, standaloneVfxAcquired=False,
-            skillSpecificSfxAcquired=False, ggdHeroImplemented=False,
-            runtimeSelectable=False, status=('model-components-available-pending-hero-design-and-binding'
-                if any(m.get('componentReady') for m in models) else 'source-reserve-pending-standardization')))
+            skillSpecificSfxAcquired=False, ggdHeroImplemented=True,
+            heroId=integration['heroId'], heroIntegration=integration,
+            backendDropdownRegistered=True, productionDeploymentVerified=False,
+            runtimeSelectable=False, status='authoring-complete-package-verified-production-pending'))
     result = dict(schema='ggd-palworld-three-resource-index@1',
         inputs=[dict(gitPath=str(path.relative_to(ROOT)), sha256=sha(path)) for path in paths],
         characterCount=len(characters), modelSourceCount=sum(len(c['modelSources']) for c in characters),
         preservedModelFileCount=sum(len(c['modelCandidates']) for c in characters),
         distinctCryCount=sum(len(c['audioFiles']) for c in characters),
         characterSettingsGitPath='materials/hero-model-library/palworld/character-settings.json',
+        heroIntegrationReceipt='materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json',
         characters=characters,
         limitations=['Source copies and intermediate models require manual use from S3 legacy.',
             'Creature cries are sound effects, not Japanese or English spoken dialogue.',
             'PalDB settings are community snapshots, not original game DataTables or GGD abilities.',
-            'Khronos structural validation does not prove material fidelity or GGD runtime acceptance.'])
+        'Khronos structural validation does not prove material fidelity or GGD runtime acceptance.',
+        'Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified.'])
     components = model_components(result)
     result['gitModelComponentCount'] = len(components)
     result['gitModelComponents'] = components
@@ -118,7 +127,7 @@ def build(workspace):
 def render(data):
     lines = ['# ' + TITLE, '',
         '固定入口；模型、動作、叫聲與角色／技能設定可由同名 JSON 查詢。三位均已列入 [已取得模型待設計英雄](../已取得模型待設計英雄.md)。', '',
-        '來源與半成品已保留本機並備份 S3 `legacy/`，僅供人工指定使用。材質綁定及資源限制通過的模型元件另放 Git；英雄設計、六態綁定及後台選項尚待完成，不能以元件入庫代表英雄已上架。', '',
+        '來源與半成品已保留本機並備份 S3 `legacy/`。三名的 Hero Forge 六技能配方、六態模型綁定、精確來源套件與 acquired-model 後台下拉選項已通過本機驗證；正式站合併與部署仍待 Main 驗證，不以本機套件通過冒稱已部署。', '',
         '| 角色 | 模型來源 | 動作 | 叫聲 | 設定資料 |',
         '|---|---|---|---|---|']
     for c in data['characters']:
@@ -133,14 +142,14 @@ def render(data):
         lines.append(f"| {c['name']}／{c['englishName']} | {source_links} | {motion} | 6 段非語言叫聲 | {forms} |")
     lines += ['', f"全部保留 {data['preservedModelFileCount']} 個原始、解壓與材質版本，其中 {data['gitModelComponentCount']} 份模型元件可從 Git 取得。這些版本不是不同角色。空渦龍的 `Carrying` 與 `Carrying_Start` 內容相同；枯星龍的 `HaloCutter_Loop_Ring` 為固定姿勢。搗蛋貓另有 AtlasForge 的單一待機版本。", '',
         '## Git 模型元件', '',
-        '固定共用入口 `materials/asset-library/current-resources.json → modelComponents`。此處只表示可重用模型元件；原生完整動作版及所有半成品仍保留於下方。', '',
+        '固定共用入口 `materials/asset-library/current-resources.json → modelComponents`。此處列的是可重用模型元件；Hero Forge 現行默認模型及下拉註冊見同名 JSON 的 `characters[].heroIntegration`。其他保留版本須有完整 model@1、六態映射與人工驗收後才能新增選項。', '',
         '| 角色 | Git 模型檔 | 本版動作條目 | 限制 |', '|---|---|---|---|']
     for c in data['gitModelComponents']:
         limitations = c.get('limitations', [])
         if isinstance(limitations, str):
             limitations = [limitations]
         lines.append(f"| {c['characterName']} | [{c['id']}](<{c['gitAbsolutePath']}>) | {c.get('animationClipCount', c.get('nativeAnimationCount', 0))} | "
-            + '；'.join(str(x).replace('|', '／') for x in limitations + ['待英雄設計、六態與後台綁定']) + ' |')
+            + '；'.join(str(x).replace('|', '／') for x in limitations + ['已有獨立 Hero Forge 成品；本元件本身仍待六態與候選選項驗收']) + ' |')
     lines += ['',
         '## 本機直接取用', '', '音訊事件包含 Normal、Joy、Anger、Sorrow、Pain、Death；MP3 與 WAV 編碼副本不重複計為新叫聲。', '']
     for c in data['characters']:
@@ -169,7 +178,7 @@ def render(data):
         lines += ['', 'S3 音訊來源備份：`' + c['audioBackup']['s3Uri'] + '`。', '']
     lines += ['## 設定與待完成項目', '',
         '[角色與技能設定 JSON](character-settings.json) 保留 5 份資料頁、34 條技能與空渦龍／搗蛋貓各 5 階夥伴技能。枯星龍一般資料沒有學習技能列；兩個首領形態各 8 條，分別保存。', '',
-        '三份 256px 元件已完成材質綁定及 GGD 結構／資源限制檢查；枯星龍此版只有 Idle／Walk，完整 58 動作版另外保留。原作材質特殊著色差異、表情及完整动作播放仍須逐項驗收；三角色尚待英雄設計、六態映射及後台成品選項。未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；叫聲可先作設計素材。', '',
+        '三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。三份 256px 獨立元件另行保留；枯星龍該元件版只有 Idle／Walk，不冒稱它已可替換現行成品。未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；叫聲仍待使用者逐項聽審。正式站尚未驗證部署。', '',
         '維護：更新來源與補充身份索引後，執行 `python3 tools/hero-model-library/build_palworld_index.py --workspace ..`；加 `--check` 檢查文件是否與來源一致。', '']
     return '\n'.join(lines)
 

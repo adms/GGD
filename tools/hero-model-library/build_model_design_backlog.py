@@ -74,6 +74,12 @@ def build():
     supplemental=DATA/'sources-supplemental.json'
     if supplemental.exists():
         audits.append(read(supplemental));inputs.append(dict(path=supplemental.relative_to(ROOT).as_posix(),sha256=sha(supplemental)))
+    forge_receipt_path=BASE/'priority-evidence/palworld-hero-integration/receipt.json'
+    forge_proof={}
+    if forge_receipt_path.exists():
+        forge_receipt=read(forge_receipt_path)
+        forge_proof={row['heroId']:row for row in forge_receipt.get('integrations',[])}
+        inputs.append(dict(path=forge_receipt_path.relative_to(ROOT).as_posix(),sha256=sha(forge_receipt_path)))
     heroes={}
     for p in sorted((ROOT/'content/champions').glob('*.json')):
         if p.name.startswith('_'):continue
@@ -114,6 +120,13 @@ def build():
             checks=[]
             for hid in ids:
                 if hid not in heroes:
+                    if hid in forge_proof:
+                        current=forge_proof[hid]
+                        checks.append(dict(heroId=hid,name=current.get('name',hid),implemented=True,
+                            mechanicsAuditStale=False,designComplete=None,missingRefs=[],
+                            status='hero-forge-six-slot-package-verified',
+                            availability='Hero Forge 成品及後台模型選項已通過本機驗證；正式站部署未驗證'))
+                        continue
                     checks.append(dict(heroId=hid,name=hid,implemented=False,mechanicsAuditStale=False,designComplete=None,
                         missingRefs=['content/champions/'+hid+'.json'],status='mapped-id-without-current-definition',availability='目前無英雄檔案；來源索引曾登記此ID'))
                     continue
@@ -148,6 +161,7 @@ def build():
     # Source identities are not claimed to be unique fictional characters across libraries.
     counts={s:sum(r['designStatus']==s for r in rows) for s in ['not-defined','definitions-incomplete','identity-review','designed','source-unavailable']}
     result=dict(schema='ggd-acquired-model-design-backlog@1',sourceIdentityCount=len(rows),counts=counts,heroesInProject=len(heroes),
+        heroForgeRecipesVerified=len(forge_proof),
         coverageSummary=coverage.get('summary',{}),availabilitySnapshot=coverage.get('availabilitySnapshot'),inputs=inputs,characters=rows,
         localization=dict(locale='zh-TW',identityUnchanged=True,
             pendingChineseNames=sum(r['nameTranslationBasis']=='pending-chinese-name' for r in rows),
@@ -179,7 +193,7 @@ def render(data):
         '固定共編入口：`materials/hero-model-library/'+TITLE+'.md`。完整候選、來源及判定證據見同名 JSON；完整模型盤點見 [全角色模型盤點.md](全角色模型盤點.md)。','',
         '**用途：列出已取得模型、尚待建立英雄設計或實作的候選。人物與作品名稱以中文優先，括號保留原文供查找。** 模型是否已轉換、英雄是否有技能、是否上架分開記錄；不把已有英雄重新標成未設計。未知身份與缺少本機檔案另列，不混入確定待設計。','',
         f"本次逐庫來源身份記錄：尚未建立英雄 **{n['not-defined']}** 筆；已有定義但需補查／實作 **{n['definitions-incomplete']}** 筆；身份待確認 **{n['identity-review']}** 筆。另有 {n['designed']} 筆已對應有機制資料的英雄、{n['source-unavailable']} 筆無可核對本機模型，不列入可用待辦。跨庫同角色及形態未經核准合併前，這些數字不是去重後的新英雄總數。",'',
-        f"目前專案有 {data['heroesInProject']} 份英雄定義。技能檔存在與機制可解析，不等於完整設計、平衡或實戰驗收完成；上架狀態只採盤點內既有白名單快照，並非即時正式站檢查。",'',
+        f"目前專案有 {data['heroesInProject']} 份靜態英雄定義，另有 {data.get('heroForgeRecipesVerified',0)} 份已驗證 Hero Forge 配方被納入本索引的設計核對。技能檔存在與機制可解析，不等於平衡、實戰或正式站驗收完成；上架狀態只採盤點內既有快照，並非即時正式站檢查。",'',
         '## 維護方式','',
         '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. 執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`；Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
     lines+=source_overview(data['resourceCoverage'])

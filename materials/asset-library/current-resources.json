@@ -9600,7 +9600,18 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "9e28bca7b870d859324798cb86d91eab6d8c9e9976c70f4a16eaea21b5a1798b"
+    "sha256": "149a323a8a1c53cb6ae4241296adf2a2fda9940a66a9c4f2321ca71ddfb79957"
+  },
+  "palworldHeroIntegrationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+    "sha256": "7f1a0b2787f8c8bacbe611026229a93e8e2cfac9121aa55a397aaecc4ac7412c",
+    "heroIds": [
+      "acquired-jetragon",
+      "acquired-astralym",
+      "acquired-cattiva"
+    ],
+    "status": "authoring-complete-production-pending",
+    "productionDeploymentVerified": false
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",

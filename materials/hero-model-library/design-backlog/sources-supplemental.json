@@ -1484,12 +1484,15 @@
           "gitPath": "content/assets/models/community/1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09.glb"
         }
       ],
-      "mappedHeroIds": [],
-      "identityHeroIds": [],
+      "mappedHeroIds": [
+        "acquired-astralym"
+      ],
+      "identityHeroIds": [
+        "acquired-astralym"
+      ],
       "proxyUseHeroIds": [],
       "possibleIdentityHeroIds": [],
-      "designStatus": "not-defined",
-      "noDesignReason": "No exact Palworld character identity, canonical/internal alias or mapping in all 153 current champion definitions and authoritative model-library inventory/manifest. Acquired identity is confirmed; absence is not an unknown-identity placeholder.",
+      "designStatus": "designed",
       "evidence": {
         "nameAndWorkCatalogChecked": true,
         "heroDefinitionCount": 153,
@@ -1593,7 +1596,8 @@
       ],
       "supersedesAuditRows": [
         "opgg-palworld-astralym-2026081102:枯星龍 / Astralym"
-      ]
+      ],
+      "heroIntegrationEvidence": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json"
     },
     {
       "id": "community:palworld-cattiva",
@@ -2286,12 +2290,15 @@
           "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb"
         }
       ],
-      "mappedHeroIds": [],
-      "identityHeroIds": [],
+      "mappedHeroIds": [
+        "acquired-cattiva"
+      ],
+      "identityHeroIds": [
+        "acquired-cattiva"
+      ],
       "proxyUseHeroIds": [],
       "possibleIdentityHeroIds": [],
-      "designStatus": "not-defined",
-      "noDesignReason": "No exact Palworld character identity, canonical/internal alias or mapping in all 153 current champion definitions and authoritative model-library inventory/manifest. Acquired identity is confirmed; absence is not an unknown-identity placeholder.",
+      "designStatus": "designed",
       "evidence": {
         "nameAndWorkCatalogChecked": true,
         "heroDefinitionCount": 153,
@@ -2422,7 +2429,8 @@
       "supersedesAuditRows": [
         "palworld-cattiva-atlasforge:Cattiva",
         "palworld-cattiva-opgg:Cattiva"
-      ]
+      ],
+      "heroIntegrationEvidence": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json"
     },
     {
       "id": "community:palworld-jetragon",
@@ -2700,12 +2708,15 @@
         "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
         "opgg-palworld-jetragon:空渦龍 / Jetragon"
       ],
-      "mappedHeroIds": [],
-      "identityHeroIds": [],
+      "mappedHeroIds": [
+        "acquired-jetragon"
+      ],
+      "identityHeroIds": [
+        "acquired-jetragon"
+      ],
       "proxyUseHeroIds": [],
       "possibleIdentityHeroIds": [],
-      "designStatus": "not-defined",
-      "noDesignReason": "Exact confirmed Jetragon/JetDragon/空渦龍 aliases checked against current content/champions; no champion definition found at acquisition time. Re-evaluate on later generated backlog updates.",
+      "designStatus": "designed",
       "evidence": {
         "identitySourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
         "sourceManifestPalId": "JetDragon",
@@ -2734,7 +2745,8 @@
         "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
         "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/full-get.tar.gz",
         "receiptPath": "materials/hero-model-library/priority-evidence/palworld-three/jetragon-s3-backup.json"
-      }
+      },
+      "heroIntegrationEvidence": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json"
     },
     {
       "id": "community:multiversus-superman-payload-20260910",

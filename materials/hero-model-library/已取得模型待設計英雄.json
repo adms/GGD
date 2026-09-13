@@ -2,13 +2,14 @@
   "schema": "ggd-acquired-model-design-backlog@1",
   "sourceIdentityCount": 734,
   "counts": {
-    "not-defined": 390,
+    "not-defined": 387,
     "definitions-incomplete": 11,
     "identity-review": 247,
-    "designed": 86,
+    "designed": 89,
     "source-unavailable": 0
   },
   "heroesInProject": 153,
+  "heroForgeRecipesVerified": 3,
   "coverageSummary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -67,7 +68,7 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "d701ded6393976ae3b35a7592c2a08fc6fe697658ab75485f315ae011611ee8f"
+      "sha256": "ff3d26781294baaabfe121294cedc729bb224c511134d122babb0acd426aeded"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
@@ -75,7 +76,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "06ef41abecf60c627e0c82949db7a8319a43662b57a0f5d07a88ecbe81adef3a"
+      "sha256": "4318599ddd99e47edac7afa7df5aee1d6ac2de752fd60da70ae9d6c07f680a27"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+      "sha256": "7f1a0b2787f8c8bacbe611026229a93e8e2cfac9121aa55a397aaecc4ac7412c"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -194896,12 +194901,15 @@
           "localSizeMatches": true
         }
       ],
-      "mappedHeroIds": [],
-      "identityHeroIds": [],
+      "mappedHeroIds": [
+        "acquired-astralym"
+      ],
+      "identityHeroIds": [
+        "acquired-astralym"
+      ],
       "proxyUseHeroIds": [],
       "possibleIdentityHeroIds": [],
-      "designStatus": "not-defined",
-      "noDesignReason": "No exact Palworld character identity, canonical/internal alias or mapping in all 153 current champion definitions and authoritative model-library inventory/manifest. Acquired identity is confirmed; absence is not an unknown-identity placeholder.",
+      "designStatus": "designed",
       "evidence": {
         "nameAndWorkCatalogChecked": true,
         "heroDefinitionCount": 153,
@@ -195006,6 +195014,7 @@
       "supersedesAuditRows": [
         "opgg-palworld-astralym-2026081102:枯星龍 / Astralym"
       ],
+      "heroIntegrationEvidence": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
       "candidateBreakdown": {
         "characterBodySources": 6,
         "standaloneCharacterBodies": 0,
@@ -195013,8 +195022,18 @@
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
-      "currentHeroChecks": [],
-      "suggestedHeroIds": [],
+      "currentHeroChecks": [
+        {
+          "heroId": "acquired-astralym",
+          "name": "枯星龍",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "hero-forge-six-slot-package-verified",
+          "availability": "Hero Forge 成品及後台模型選項已通過本機驗證；正式站部署未驗證"
+        }
+      ],
       "nameZh": "枯星龍",
       "workZh": "幻獸帕魯",
       "displayName": "枯星龍",
@@ -195812,12 +195831,15 @@
           "localSizeMatches": true
         }
       ],
-      "mappedHeroIds": [],
-      "identityHeroIds": [],
+      "mappedHeroIds": [
+        "acquired-cattiva"
+      ],
+      "identityHeroIds": [
+        "acquired-cattiva"
+      ],
       "proxyUseHeroIds": [],
       "possibleIdentityHeroIds": [],
-      "designStatus": "not-defined",
-      "noDesignReason": "No exact Palworld character identity, canonical/internal alias or mapping in all 153 current champion definitions and authoritative model-library inventory/manifest. Acquired identity is confirmed; absence is not an unknown-identity placeholder.",
+      "designStatus": "designed",
       "evidence": {
         "nameAndWorkCatalogChecked": true,
         "heroDefinitionCount": 153,
@@ -195949,6 +195971,7 @@
         "palworld-cattiva-atlasforge:Cattiva",
         "palworld-cattiva-opgg:Cattiva"
       ],
+      "heroIntegrationEvidence": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
       "candidateBreakdown": {
         "characterBodySources": 8,
         "standaloneCharacterBodies": 0,
@@ -195956,8 +195979,18 @@
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
-      "currentHeroChecks": [],
-      "suggestedHeroIds": [],
+      "currentHeroChecks": [
+        {
+          "heroId": "acquired-cattiva",
+          "name": "搗蛋貓",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "hero-forge-six-slot-package-verified",
+          "availability": "Hero Forge 成品及後台模型選項已通過本機驗證；正式站部署未驗證"
+        }
+      ],
       "nameZh": "搗蛋貓",
       "workZh": "幻獸帕魯",
       "displayName": "搗蛋貓",
@@ -196357,12 +196390,15 @@
         "mediafire-shinypenguin-palworld-jetragon:空渦龍 / Jetragon",
         "opgg-palworld-jetragon:空渦龍 / Jetragon"
       ],
-      "mappedHeroIds": [],
-      "identityHeroIds": [],
+      "mappedHeroIds": [
+        "acquired-jetragon"
+      ],
+      "identityHeroIds": [
+        "acquired-jetragon"
+      ],
       "proxyUseHeroIds": [],
       "possibleIdentityHeroIds": [],
-      "designStatus": "not-defined",
-      "noDesignReason": "Exact confirmed Jetragon/JetDragon/空渦龍 aliases checked against current content/champions; no champion definition found at acquisition time. Re-evaluate on later generated backlog updates.",
+      "designStatus": "designed",
       "evidence": {
         "identitySourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
         "sourceManifestPalId": "JetDragon",
@@ -196392,6 +196428,7 @@
         "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-jetragon-20260911/full-get.tar.gz",
         "receiptPath": "materials/hero-model-library/priority-evidence/palworld-three/jetragon-s3-backup.json"
       },
+      "heroIntegrationEvidence": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
       "candidateBreakdown": {
         "characterBodySources": 8,
         "standaloneCharacterBodies": 0,
@@ -196399,8 +196436,18 @@
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
-      "currentHeroChecks": [],
-      "suggestedHeroIds": [],
+      "currentHeroChecks": [
+        {
+          "heroId": "acquired-jetragon",
+          "name": "空渦龍",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "hero-forge-six-slot-package-verified",
+          "availability": "Hero Forge 成品及後台模型選項已通過本機驗證；正式站部署未驗證"
+        }
+      ],
       "nameZh": "空渦龍 / Jetragon",
       "workZh": "幻獸帕魯",
       "displayName": "空渦龍 / Jetragon",
