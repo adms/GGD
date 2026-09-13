@@ -37,6 +37,7 @@
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 查模型、貼圖、mesh、動畫通道、VFX、粒子與音訊上架限制 | [模型動作特效上架限制.md](模型動作特效上架限制.md)；由 `generate_policy_doc.ts` 產生，不在 README 抄寫數字 |
+| 查英靈殿 b2 13 位＋community 24 位模型讀取鏈與正式站缺檔 | [37 位 E2E 稽核](../hero-model-library/priority-evidence/valhalla-37-model-options-v1/README.md)；程序讀 `audit.json`，離線重驗用 `python3 tools/hero-model-library/audit_valhalla_37.py` |
 | 看優先 15 名按現行門檻重算的通過／阻擋狀態 | [優先 15 名模型現行政策稽核](../hero-model-library/priority-model-policy-audit.md)；由 `audit_priority_release.ts` 直接量測目前 GLB |
 | 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測，數量以 `totals.audited` 為準 |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |

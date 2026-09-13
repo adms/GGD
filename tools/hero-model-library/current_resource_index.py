@@ -194,6 +194,12 @@ def build(git_link_root=ROOT):
         raise ValueError('Community inventory 300/MBA authority pointer is stale')
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
     windows_game_inventory=read(windows_game_inventory_path)
+    valhalla37_audit_path=base/'priority-evidence/valhalla-37-model-options-v1/audit.json'
+    valhalla37_audit=read(valhalla37_audit_path)
+    if (valhalla37_audit.get('schema')!='ggd.valhalla-37-model-option-audit@1'
+        or valhalla37_audit.get('summary',{}).get('championDocumentsGitTracked')!=37
+        or valhalla37_audit.get('summary',{}).get('localContentBundleResolvable')!=37):
+        raise ValueError('Valhalla 37 model option audit is absent or stale')
     fate_unlimited_codes_platform_path=base/'priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json'
     fate_unlimited_codes_platform=read(fate_unlimited_codes_platform_path)
     if (fate_unlimited_codes_platform.get('schema')!='ggd-fuc-platform-source-index@1'
@@ -339,6 +345,11 @@ def build(git_link_root=ROOT):
         palworldResourceIndex='materials/hero-model-library/palworld/帕魯三角色素材索引.json',
         palworldResourceDocument='materials/hero-model-library/palworld/帕魯三角色素材索引.md',
         projectSevenJapaneseVoiceIndex='materials/hero-model-library/lol-project-seven/seven-voice-index.json',
+        valhalla37ModelOptionAudit=dict(
+            gitPath=str(valhalla37_audit_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(valhalla37_audit_path.read_bytes()).hexdigest(),
+            status='feature-branch-registered-and-bundle-resolvable; production-glbs-http-404; visual-e2e-unverified',
+            summary=valhalla37_audit['summary']),
         windowsGameSourceInventory=dict(
             gitPath=str(windows_game_inventory_path.relative_to(ROOT)),
             sha256=hashlib.sha256(windows_game_inventory_path.read_bytes()).hexdigest(),
@@ -630,6 +641,7 @@ def main():
             result['sourceManifests']
             + [
                 result['windowsGameSourceInventory'],
+                result['valhalla37ModelOptionAudit'],
                 result['fateUnlimitedCodesPlatformIndex'],
                 result['fateUnlimitedCodesPlatformDocument'],
                 result['legacySmashSourceInventory'],

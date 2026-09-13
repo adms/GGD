@@ -1,0 +1,51 @@
+# 英靈殿 37 位模型選項 E2E 稽核
+
+本稽核固定涵蓋 b2 13 位與 community 24 位。它逐一驗證 champion、model@1、GLB、六態映射、modelVersions、Git index、資產 manifest、本機 bundle、後台 selector 與英靈殿讀取鏈。
+
+- 功能分支：37/37 位 champion、37/37 份作用中 model@1、37/37 顆 GLB、37/37 六態映射通過；共 139 個模型選項。
+- 正式站觀察：`cv_114e59b0b552`，37/37 位 champion 與 37/37 份作用中模型文件可解析，但 production 舊作用中 GLB HTTP 200 為 0/37，分支新作用中 GLB 在正式 origin HTTP 200 為 0/37。
+- 正式 bundle 的 37 位均未含 modelVersions（有版本清單者 0/37），且 asset CDN `enabled=false`。
+- 狀態判定：功能分支已註冊且本機 bundle 可解析；正式站內容檔未同步，畫面 E2E 仍為未部署／未驗證。HTTP 探測不能取代實際 3D 畫面驗收。
+- 正式站探測時間：`2026-09-13T22:53:50.961215Z`；bundle SHA-256：`5534a2879925b45d2820d0959a9025eb5d6f7c76c41d76b5d259f4aceeb7eb91`。
+
+| 批次 | hero ID | 角色 | 作用中選項 | 選項數 | 六態／不同 clip | 正式舊 GLB | 分支新 GLB（正式 origin） | 狀態 |
+| --- | --- | --- | --- | ---: | --- | ---: | ---: | --- |
+| b2 | `b2-albus` | 阿爾巴斯 | 阿爾巴斯（獨立副本／尤吉欧）（300heroes） | 5 | 6／4 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-bojji` | 波吉 | 波吉（獨立副本／小桐人寵物）（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-goblin` | 哥布林殺手 | 哥布林殺手（獨立副本／尤吉欧）（300heroes） | 5 | 6／4 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-kisaragi` | 如月電車 | GGD 原創如月電車（original） | 3 | 6／6 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-kumoko` | 蜘蛛子 | 蜘蛛子（300英雄寵物版）（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-maple` | 梅普露 | 梅普露（300heroes） | 4 | 6／4 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-misery` | 米瑟利 | 米瑟利（獨立副本／优克莉伍德）（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-popp` | 何布 | 何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）（Infinity Strash Steam 原作擷取） | 10 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-rem` | 蕾姆 | 蕾姆（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-rin` | 遠坂凜 | 远坂凛（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-takopi` | 章魚嗶 | 章魚嗶（獨立副本／八爪魚寵物 11_bazhuayu）（300heroes） | 3 | 6／6 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-yogiri` | 高遠夜霧 | 高遠夜霧（獨立副本／富樫勇太）（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| b2 | `b2-zenitsu` | 我妻善逸 | 我妻善逸（300heroes） | 3 | 6／4 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-01-20260907` | 武藤遊戲 | 法老王（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-03-20260907` | 不知火舞 | 不知火舞（獨立副本／真田幸村）（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-04-20260907` | 空條承太郎 | 空条承太郎（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-06-20260907` | 卡比 | 卡比（獨立副本／GGD 圓滾滾粉紅替身）（original） | 5 | 6／6 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-08-20260907` | 米卡莎 | 笠笠笠（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-10-20260907` | 魯路修 | 鲁路修（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-12-20260907` | 衛宮士郎 | 卫宫（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-13-20260907` | 朝田詩乃 | 冰之狙击手（300heroes） | 3 | 6／4 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-16-20260907` | 魔法少女☆伊莉雅 | 伊莉雅（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-17-20260907` | 安茲·烏爾·恭 | 安兹乌尔恭（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-18-20260907` | 吉爾伽美什 | 吉尔伽美什（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-19-20260907` | 桐谷和人 | 黑衣剑士（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-20-20260907` | 御坂美琴 | 御坂美琴（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-21-20260907` | 鹿目圓 | 鹿目圆香（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-23-20260907` | 坂田銀時 | 坂田银时（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-24-20260907` | 奇犽 | 奇犽（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-25-20260907` | 一拳超人 | 埼玉（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-26-20260907` | 名偵探柯南 | 万年小学生（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-27-20260907` | 庫洛魔法使 | 木之本櫻（mba） | 3 | 6／6 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-28-20260907` | 艾莉絲·伯雷亞斯·格雷拉特 | 艾莉丝（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-29-20260907` | 芙莉蓮 | 芙莉莲（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-31-20260907` | SUN樂 | SUN樂（獨立副本／哈桑）（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-32-20260907` | 阿薩謝爾 | 阿薩謝爾（獨立副本／喜羊羊）（300heroes） | 5 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+| community | `community-review-35-20260907` | 炭治郎 | 灶门炭治郎（300heroes） | 3 | 6／5 | 404 | 404 | 分支已註冊；正式站 GLB 缺檔 |
+
+完整逐選項 SHA-256、位元組數、來源分類、路徑與 HTTP 收據見 `audit.json`；原始正式站回應見 `production-probe.json`。

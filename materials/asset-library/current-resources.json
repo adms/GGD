@@ -6177,6 +6177,25 @@
   "palworldResourceIndex": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
   "palworldResourceDocument": "materials/hero-model-library/palworld/帕魯三角色素材索引.md",
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
+  "valhalla37ModelOptionAudit": {
+    "gitPath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+    "sha256": "b7dfb57b59fc0ca7b6eb16d14aa263517304c763669522f8017ba462741515c8",
+    "status": "feature-branch-registered-and-bundle-resolvable; production-glbs-http-404; visual-e2e-unverified",
+    "summary": {
+      "championDocumentsGitTracked": 37,
+      "activeModelDocumentsValid": 37,
+      "activeGlbsValidAndGitTracked": 37,
+      "activeSixStateClipMapsValid": 37,
+      "registeredModelVersions": 139,
+      "localContentBundleResolvable": 37,
+      "productionChampionDocumentsPresent": 37,
+      "productionActiveModelDocumentsPresent": 37,
+      "productionChampionsWithModelVersions": 0,
+      "productionActiveGlbsHttp200": 0,
+      "branchActiveGlbsHttp200OnProductionOrigin": 0,
+      "productionVisualE2eVerified": 0
+    }
+  },
   "windowsGameSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
     "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486",

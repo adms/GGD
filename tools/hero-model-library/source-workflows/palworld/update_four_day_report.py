@@ -14,6 +14,7 @@ INTEGRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-he
 DROPDOWN = ROOT / "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json"
 HISTORICAL = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json"
 LOL_RUNTIME = ROOT / "materials/hero-model-library/lol-project-seven/runtime-registration.json"
+VALHALLA_37 = ROOT / "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json"
 
 
 def render() -> str:
@@ -22,6 +23,7 @@ def render() -> str:
     dropdown = json.loads(DROPDOWN.read_text())
     historical = json.loads(HISTORICAL.read_text())
     lol_runtime = json.loads(LOL_RUNTIME.read_text())
+    valhalla = json.loads(VALHALLA_37.read_text())
     by_hero = {row["heroId"]: row for row in integration["integrations"]}
     summary = dropdown["summary"]
     lol_names = {
@@ -35,6 +37,14 @@ def render() -> str:
     )
     lines = REPORT.read_text().splitlines()
     replacements = {
+        "這 37 位逐一對照後": (
+            "這 37 位逐一對照後，功能分支的內容鏈已可解析：37/37 都有 Git 追蹤的 champion、作用中 `model@1`、"
+            f"實體 GLB、六態映射與 modelVersions，共 {valhalla['summary']['registeredModelVersions']} 個模型選項；"
+            "本機 `content/bundle.json` 也能逐位解析。正式站探測則顯示 37/37 位 champion 與舊作用中模型文件雖在 bundle 內，"
+            f"但舊作用中 GLB HTTP 200 為 {valhalla['summary']['productionActiveGlbsHttp200']}/37，"
+            f"分支新作用中 GLB 在正式 origin HTTP 200 也為 {valhalla['summary']['branchActiveGlbsHttp200OnProductionOrigin']}/37。"
+            "因此目前精確狀態是「功能分支已註冊且本機 bundle 可解析；正式內容檔未部署，英靈殿畫面未驗證」，不能標成已上架。"
+        ),
         "| LOL 七角色語音 |": (
             f"| LOL 七角色語音 | 使用者逐項聽審 {lol_runtime['summary']['approved']}/"
             f"{lol_runtime['summary']['approved']} 通過，"
@@ -67,6 +77,22 @@ def render() -> str:
             f"{len(by_hero['acquired-cattiva']['modelOptions'])} 個 5,798 面選項；新選項保留 33 條原生動作 | "
             "合格；新選項為非預設 | 原作 VFX/SFX 未完成 | 未驗證 |"
         ),
+        "- **已找到 37/37": (
+            f"- **已找到 37/37、已轉換 37/37、已註冊 37/37**；共有 {valhalla['summary']['registeredModelVersions']} 個模型選項。"
+            "每位都有六態映射，作用中模型實際不同 clip 為 4～6 個，不能把六態說成六段原生動作。"
+        ),
+        "- 除波普本批另有完整": (
+            "- 除波普本批另有完整 Infinity Strash 結構、WebGL 與視覺驗收收據外，本稽核只證明文件、雜湊、GLB 結構、動作映射與讀取鏈完整；"
+            "其他 36 位的完整視覺／玩法驗收仍未建立。"
+        ),
+        "- 37 位的內容資產與本輪狀態文件": (
+            f"- 37 位的內容資產與本輪狀態文件目前以本稽核為準。正式站 bundle `{valhalla['productionObservation']['bundle']['contentVersion']}` 有 37/37 位舊 champion 與舊作用中 model@1，"
+            "但 37/37 位都沒有 modelVersions，且作用中 GLB URL 全部不是 HTTP 200；本分支尚未 push、Main 合併與正式站部署未驗證。"
+        ),
+        "- 「功能分支內容配置已指向」": (
+            "- 「功能分支內容配置已指向」的英靈殿來源鏈為 `Champions.tryGet(championId)` → `readPreviewModelDoc(modelKey)` → `StorePreviewCanvas`。"
+            "目前正式 `asset-cdn.enabled=false`，所以缺少的 `/content/assets/...glb` 不會由 CDN 補上；需完成內容 volume 同步後再逐位畫面驗收。"
+        ),
         "下拉稽核目前涵蓋": (
             "下拉稽核目前涵蓋靜態英雄 `modelVersions` 與 Hero Forge acquired-model selector。"
             f"產生器現行記錄為：{summary['modelAt1Documents']:,} 份 `model@1` 文件、"
@@ -78,6 +104,19 @@ def render() -> str:
             "數字由 `audit_model_dropdown_coverage.py` 重建並以 `all-model-dropdown-audit.json` 的 `summary` 為準。"
         ),
     }
+    for row in valhalla["rows"]:
+        active = row["activeOption"]
+        source = active["source"]
+        production_http = (row["production"].get("productionActiveGlbHttp") or {}).get("status", "error")
+        branch_http = row["production"]["branchActiveGlbHttp"].get("status", "error")
+        acceptance = ("**已轉換、已驗收**；另有 Infinity Strash WebGL／視覺收據" if row["heroId"] == "b2-popp"
+                      else "已轉換；GLB 結構、雜湊與六態映射通過；完整視覺／玩法驗收未建立")
+        replacements[f"| `{row['heroId']}` |"] = (
+            f"| `{row['heroId']}` | {row['name']} | {active['label']}（{source['library']}） | "
+            f"{row['modelVersionCount']} | 6 態／{active['distinctMappedClips']} 個不同 clip | {acceptance} | "
+            "功能分支已註冊；本機 bundle、後台 route 與英靈殿資料入口可解析 | "
+            f"正式舊 GLB HTTP {production_http}；分支新 GLB HTTP {branch_http}；未部署／畫面未驗證 |"
+        )
     found = {key: False for key in replacements}
     output = []
     for line in lines:
@@ -104,6 +143,10 @@ def render() -> str:
     if lol_evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("- LOL 七角色：")) + 1
         output.insert(position, lol_evidence)
+    valhalla_evidence = "- 英靈殿 37 位模型選項 E2E：`materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json`"
+    if valhalla_evidence not in output:
+        position = next(index for index, line in enumerate(output) if line.startswith("## 九、主要證據入口")) + 2
+        output.insert(position, valhalla_evidence)
     return "\n".join(output) + "\n"
 
 
