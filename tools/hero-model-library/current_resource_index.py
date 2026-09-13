@@ -10,15 +10,32 @@ ROOT=Path(__file__).resolve().parents[2]
 def read(path):
     payload = gzip.decompress(path.read_bytes()) if path.suffix == '.gz' else path.read_bytes()
     return json.loads(payload.decode('utf-8'))
-def verify_component_git_contents(components, repo=ROOT):
-    """Check staged blobs, so ignored or unstaged local copies cannot be published."""
-    for component in components:
-        path = component['gitPath']
+
+
+def verify_git_contents(entries, repo=ROOT):
+    """Require each catalogued Git path to exist in the index with its declared digest."""
+    for entry in entries:
+        path = entry['gitPath']
         result = subprocess.run(['git', 'show', ':' + path], cwd=repo, capture_output=True)
         if result.returncode:
-            raise ValueError('Model component is absent from the Git index: ' + path)
-        if len(result.stdout) != component['bytes'] or hashlib.sha256(result.stdout).hexdigest() != component['sha256']:
-            raise ValueError('Model component Git blob differs from the catalog: ' + path)
+            raise ValueError('Catalogued file is absent from the Git index: ' + path)
+        if hashlib.sha256(result.stdout).hexdigest() != entry['sha256']:
+            raise ValueError('Catalogued Git blob differs from the index: ' + path)
+        if 'bytes' in entry and len(result.stdout) != entry['bytes']:
+            raise ValueError('Catalogued Git blob byte count differs from the index: ' + path)
+
+
+def verify_component_git_contents(components, repo=ROOT):
+    """Check staged blobs, so ignored or unstaged local copies cannot be published."""
+    try:
+        verify_git_contents(components, repo)
+    except ValueError as error:
+        message = str(error)
+        if message.startswith('Catalogued file is absent'):
+            raise ValueError(message.replace('Catalogued file', 'Model component', 1)) from error
+        if message.startswith('Catalogued Git blob'):
+            raise ValueError(message.replace('Catalogued Git blob', 'Model component Git blob', 1)) from error
+        raise
 
 
 def build():
@@ -110,6 +127,16 @@ def main():
         # current-resources.json look complete.
         verify_component_git_contents(
             result['modelComponents'] + result['historicalModelSourceArtifacts']
+        )
+        verify_git_contents(
+            result['sourceManifests']
+            + [
+                result['windowsGameSourceInventory'],
+                result['ultimate14NativeMotionIndex'],
+                result['historicalModelRestorationReceipt'],
+                result['modelComponentIndex'],
+                result['modelComponentSourceIndex'],
+            ]
         )
     path = ROOT/'materials/asset-library/current-resources.json'
     encoded = json.dumps(result, ensure_ascii=False, indent=2)+'\n'
