@@ -168,6 +168,8 @@
     "modelpolicy:priority-audit:check": "pnpm --filter @ggd/model-budget budget:priority-audit:check",
     "modelpolicy:component-audit": "node --import tsx tools/hero-model-library/audit_current_component_policy.mts",
     "modelpolicy:component-audit:check": "node --import tsx tools/hero-model-library/audit_current_component_policy.mts --check",
+    "models:historical-options": "node --import tsx tools/hero-model-library/register_historical_model_options.mts",
+    "models:historical-options:check": "node --import tsx tools/hero-model-library/register_historical_model_options.mts --check",
     "modelbudget:guard": "node --import tsx tools/model-budget/guard.ts",
     "modelbudget:optimize": "node --import tsx tools/model-budget/optimize.ts",
     "modelbudget:check": "pnpm --filter @ggd/model-budget budget:check",

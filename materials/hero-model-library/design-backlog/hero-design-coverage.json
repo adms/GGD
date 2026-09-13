@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T18:10:03.691713+00:00",
+  "generatedAt": "2026-09-13T18:22:10.904368+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next",
-  "revision": "26aceee3e3f7a9183e6417fd96ac086f085b189a",
+  "revision": "009833bd8a6ac6dffb791811c0e5326a1de8f448",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5772,8 +5772,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 28629,
-      "sha256": "f6e850da5880a3f2b2391cc7ce6514959d49f924cb185d362ca18da6da9cbbab"
+      "bytes": 28877,
+      "sha256": "239d286eb2e592808c9625a8f3efc4f8c2ccb15658112646beb121474c600193"
     },
     {
       "path": "packages/shared/src/art/fatePalette.ts",
@@ -6937,8 +6937,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "bytes": 5076,
-      "sha256": "2ecd26a076e18cc0773f0b6e70e871c4d7adf7e5bc2cf37fd0623536171ed457"
+      "bytes": 5284,
+      "sha256": "59cd0036897bd9d9347f5855811c52ab3f357fa2c84d4b4a43a0ff333ef844e9"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -14733,7 +14733,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "5574c3e6bde4e428534d201dacafbfb079dcbc2ddeff1ff0c2326065707e9cac"
+    "sha256": "e687746f0f0e7683d9f1a9a19f5a14702b9bf903f84464d1e23e187222f2efd9"
   },
   "heroes": [
     {

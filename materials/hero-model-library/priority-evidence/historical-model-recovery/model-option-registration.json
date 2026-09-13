@@ -1,0 +1,143 @@
+{
+  "schema": "ggd-historical-model-option-registration@1",
+  "scope": "Three current-policy-eligible recovered GLBs registered as non-default Hero Forge model options. This is local authoring evidence, not Main merge or production deployment proof.",
+  "generatedFrom": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
+      "bytes": 65157,
+      "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
+      "bytes": 41794,
+      "sha256": "b09a2817b9cb4aabdbfd581276799446210af7dbc930899ff9d2bab6f86500fa"
+    },
+    {
+      "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
+      "bytes": 5277,
+      "sha256": "7ebd2c8e1e0a924ea22f9884213b3d2d205b24c19a96dc8ad41e15d1a70b7d43"
+    },
+    {
+      "gitPath": "tools/hero-model-library/register_historical_model_options.mts",
+      "bytes": 7323,
+      "sha256": "ea312fec16643ce2ea4e6154f428455834978676a9fcc2bddad7bd87c65ee77d"
+    }
+  ],
+  "blocked": [
+    {
+      "componentId": "historical-astralym-7bc2fa3f8",
+      "heroId": "acquired-astralym",
+      "reason": "source exceeds 10,000 triangles; a separately validated candidate at or below 8,000 triangles is required",
+      "runtimeDropdownRegistered": false
+    }
+  ],
+  "registrations": [
+    {
+      "componentId": "historical-jetragon-7bc2fa3f8",
+      "heroId": "acquired-jetragon",
+      "modelKey": "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+      "label": "空渦龍／7bc2fa3f8 歷史復原版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
+        "bytes": 455,
+        "sha256": "0cad8166f0b691c52606f6891ab7caaf56b9de497e0fd88709c7ba523409473a"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "bytes": 3224424,
+        "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6"
+      },
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "FarSkill_Action",
+        "cast": "JumpBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "nativeClipCount": 5,
+      "metrics": {
+        "triangles": 8468,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 225,
+        "skins": 1
+      },
+      "deathPresentation": "native-hurt-clip-plus-authorized-runtime-fade",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
+      "componentId": "historical-kita-kita-7bc2fa3f8",
+      "heroId": "acquired-kita-kita",
+      "modelKey": "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9",
+      "label": "吉他吉他老伯／7bc2fa3f8 歷史復原版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9.json",
+        "bytes": 448,
+        "sha256": "361c39ebddb1cb13c8b464f869520141ea0a129d822fd88e4772c7467c95c4f0"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+        "bytes": 373212,
+        "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e"
+      },
+      "selectedClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "nativeClipCount": 6,
+      "metrics": {
+        "triangles": 1202,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 54,
+        "skins": 1
+      },
+      "deathPresentation": "native-death-clip",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
+      "componentId": "historical-lord-nightmares-7bc2fa3f8",
+      "heroId": "acquired-lord-nightmares",
+      "modelKey": "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd",
+      "label": "惡夢之王／7bc2fa3f8 歷史復原版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd.json",
+        "bytes": 452,
+        "sha256": "96cdb58fb688baae6b657dc41bfc308934a891832adb63f9f24782b9d6fdeaf6"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+        "bytes": 695020,
+        "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c"
+      },
+      "selectedClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "maryokudan_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "nativeClipCount": 6,
+      "metrics": {
+        "triangles": 3274,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 96,
+        "skins": 1
+      },
+      "deathPresentation": "native-death-clip",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "summary": {
+    "registered": 3,
+    "blockedPendingDecimation": 1,
+    "productionDeploymentVerified": false
+  }
+}

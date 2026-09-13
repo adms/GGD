@@ -143,12 +143,23 @@ def build():
     components.extend(source_historical_components(component_sources,ROOT))
     historical_artifacts=source_historical_artifacts(component_sources,ROOT)
     restoration_receipt_path=base/'priority-evidence/historical-model-recovery/restoration-receipt.json'
+    historical_option_registration_path=base/'priority-evidence/historical-model-recovery/model-option-registration.json'
+    historical_option_registration=read(historical_option_registration_path)
+    if historical_option_registration.get('schema')!='ggd-historical-model-option-registration@1':
+        raise ValueError('Historical model option registration is not current')
     result.update(modelComponents=components,modelComponentCount=len(components),
         historicalModelSourceArtifacts=historical_artifacts,
         historicalModelSourceArtifactCount=len(historical_artifacts),
         historicalModelRestorationReceipt=dict(
             gitPath=str(restoration_receipt_path.relative_to(ROOT)),
             sha256=hashlib.sha256(restoration_receipt_path.read_bytes()).hexdigest()),
+        historicalModelOptionRegistration=dict(
+            gitPath=str(historical_option_registration_path.relative_to(ROOT)),
+            bytes=historical_option_registration_path.stat().st_size,
+            sha256=hashlib.sha256(historical_option_registration_path.read_bytes()).hexdigest(),
+            registeredHeroIds=[row['heroId'] for row in historical_option_registration['registrations']],
+            blockedHeroIds=[row['heroId'] for row in historical_option_registration['blocked']],
+            productionDeploymentVerified=False),
         modelComponentIndex=dict(gitPath=str(component_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_path.read_bytes()).hexdigest()),
         palworldHeroIntegrationReceipt=dict(
@@ -184,6 +195,7 @@ def main():
                 result['ultimate14NativeMotionIndex'],
                 result['assetWorkflowRestorationManifest'],
                 result['historicalModelRestorationReceipt'],
+                result['historicalModelOptionRegistration'],
                 result['modelComponentIndex'],
                 result['palworldHeroIntegrationReceipt'],
                 result['modelComponentSourceIndex'],

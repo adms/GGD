@@ -9873,6 +9873,20 @@
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/restoration-receipt.json",
     "sha256": "8a0659e08fca61c50766c2f76da1ea5f0061b6cd1023bfe3733c39904a84be86"
   },
+  "historicalModelOptionRegistration": {
+    "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
+    "bytes": 5400,
+    "sha256": "eff4d651e342c0aa2492cac59c8d1dc7d0a09b5401f1dc631a7f7f039fc61268",
+    "registeredHeroIds": [
+      "acquired-jetragon",
+      "acquired-kita-kita",
+      "acquired-lord-nightmares"
+    ],
+    "blockedHeroIds": [
+      "acquired-astralym"
+    ],
+    "productionDeploymentVerified": false
+  },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
     "sha256": "260d048375ea3c9c1189d57f648f1fa6b9e9c14258167fc5a7f8433c0dde9436"

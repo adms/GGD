@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_d2cddb720a68",
+  "contentVersion": "cv_89eee5086041",
   "collections": {
     "champions": {
       "hash": "0474fd305ca9",
@@ -47,13 +47,13 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "2553d1c1d6c2",
+      "hash": "88214faf2c90",
       "count": 104,
       "path": "config/_index.json"
     },
     "models": {
-      "hash": "cc4658667d00",
-      "count": 1000,
+      "hash": "f20795aeefaf",
+      "count": 1003,
       "path": "models/_index.json"
     },
     "vfx": {
