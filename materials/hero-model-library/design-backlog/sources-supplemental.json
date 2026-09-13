@@ -2813,6 +2813,58 @@
         "fullGetAndMemberShaVerified": true,
         "s3Use": "backup-only-not-runtime-entry"
       }
+    },
+    {
+      "id": "community:kof-xiv-kyo-native-v1",
+      "name": "草薙京",
+      "work": "THE KING OF FIGHTERS XIV",
+      "sourceIds": [
+        "steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
+      ],
+      "aliases": [
+        "草薙京",
+        "Kyo Kusanagi",
+        "KYO"
+      ],
+      "modelCandidates": [
+        {
+          "id": "kof-xiv-native-kyo-body-obac-v1",
+          "sourceCandidateId": "kof-xiv-native-kyo-raw-v1",
+          "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+          "library": "community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.obac",
+          "bytes": 7191320,
+          "sha256": "368782bd79355f725b7fdbf8e41c4fc97702df78bf61a676fc549550959702f2",
+          "format": "kofxiv-obac",
+          "versionStage": "native-extracted-v1",
+          "readiness": "native-character-body-extracted-pending-proprietary-format-conversion",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "canonical-game-direct-extraction",
+          "modelSourceUrl": "https://store.steampowered.com/app/571260/",
+          "sourceGame": "THE KING OF FIGHTERS XIV",
+          "sourcePlatform": "Windows (Steam, Release 1.26 marker)",
+          "nativeAnimationCount": 3,
+          "textureCount": 93,
+          "skeletonFileCount": 2,
+          "audioCount": 170,
+          "nativeEffectRecordCount": 27,
+          "defaultEligible": false,
+          "runtimeSelectable": false
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "KOF XIV 原生 KYO 目錄與 KYO.obac 已驗證；目前沒有草薙京的 GGD 英雄定義，因此保留作品、來源 ID 與原生角色 ID，未杜撰英雄 ID。",
+      "evidence": {
+        "nativeCharacterId": "KYO",
+        "identityConfidence": "native-character-directory-exact",
+        "sourceManifestGitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+        "sourceManifestSha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+      }
     }
   ],
   "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate. ｜ ou99 偶久網付費下載（owner 2026-09-11 授權）：18 顆已轉換入庫並在 GGD 主線 content/models/_index.json 裡，heroBody:true ⇒ 後台與編輯器選單可選。"

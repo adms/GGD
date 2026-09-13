@@ -1,8 +1,8 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 732,
+  "sourceIdentityCount": 733,
   "counts": {
-    "not-defined": 388,
+    "not-defined": 389,
     "definitions-incomplete": 11,
     "identity-review": 247,
     "designed": 86,
@@ -55,7 +55,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "a7cbac7d9ca553f688ba8198e4235a6a201248d4406eac46a7f96f3e86cbc5f6"
+      "sha256": "ef200e88124ac50342e974ba6aab6815d36db8234f943ba516a128dbc0ae259c"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -67,15 +67,15 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "ebdf35b54d30dd67ca5402b1f808052b5dfdb7c099a89e73991678e3190ce88c"
+      "sha256": "b7d3dada164f9b35635f2c56c3c4a2736325cd1b6ee5a638ddbce6aca39d8013"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "7e6fe7fdc2e579ef9362dfff6b101a8912269abd53cae407e4064c2aa91cc1fd"
+      "sha256": "33d89906d5ad87ebafa0ff160f9a06bd65363d8733a63f99db3f2710198ed58a"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "88156ae9e208ac57c045c7109b68cc90e171e54795a58de813c60448f4a6c833"
+      "sha256": "7c5d99d0bfbf5d36299ee5ef73739d5c19000b9fcde5bb6a490b6684f52e987c"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -196632,13 +196632,114 @@
         "evidencePaths": [],
         "classificationIsAcquisitionSnapshot": true
       }
+    },
+    {
+      "id": "community:kof-xiv-kyo-native-v1",
+      "name": "草薙京",
+      "work": "THE KING OF FIGHTERS XIV",
+      "sourceIds": [
+        "steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
+      ],
+      "aliases": [
+        "草薙京",
+        "Kyo Kusanagi",
+        "KYO"
+      ],
+      "modelCandidates": [
+        {
+          "id": "kof-xiv-native-kyo-body-obac-v1",
+          "sourceCandidateId": "kof-xiv-native-kyo-raw-v1",
+          "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+          "library": "community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.obac",
+          "bytes": 7191320,
+          "sha256": "368782bd79355f725b7fdbf8e41c4fc97702df78bf61a676fc549550959702f2",
+          "format": "kofxiv-obac",
+          "versionStage": "native-extracted-v1",
+          "readiness": "native-character-body-extracted-pending-proprietary-format-conversion",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceClass": "canonical-game-direct-extraction",
+          "modelSourceUrl": "https://store.steampowered.com/app/571260/",
+          "sourceGame": "THE KING OF FIGHTERS XIV",
+          "sourcePlatform": "Windows (Steam, Release 1.26 marker)",
+          "nativeAnimationCount": 3,
+          "textureCount": 93,
+          "skeletonFileCount": 2,
+          "audioCount": 170,
+          "nativeEffectRecordCount": 27,
+          "defaultEligible": false,
+          "runtimeSelectable": false,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.obac",
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "KOF XIV 原生 KYO 目錄與 KYO.obac 已驗證；目前沒有草薙京的 GGD 英雄定義，因此保留作品、來源 ID 與原生角色 ID，未杜撰英雄 ID。",
+      "evidence": {
+        "nativeCharacterId": "KYO",
+        "identityConfidence": "native-character-directory-exact",
+        "sourceManifestGitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+        "sourceManifestSha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+      },
+      "candidateBreakdown": {
+        "characterBodySources": 1,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "草薙京",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "草薙京",
+      "displayWork": "作品中文名稱待確認（THE KING OF FIGHTERS XIV）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "模型內最多 3 個動作條目；版本分列，未相加",
+        "vfx": "同來源包已含特效；角色對應與轉換待核",
+        "sfx": "同來源包 474 個音訊檔；角色／音效分型待核",
+        "voice": "同來源音訊已建檔；尚未逐角色確認語音",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [
+          "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-ior-native-audio",
+          "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-kyo-native-audio",
+          "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-mai-native-audio"
+        ],
+        "sourceLabels": [],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "kof-xiv-native-kyo-body-obac-v1",
+            "count": 3,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "native-character-body-extracted-pending-proprietary-format-conversion",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
     }
   ],
   "localization": {
     "locale": "zh-TW",
     "identityUnchanged": true,
     "pendingChineseNames": 0,
-    "pendingChineseWorks": 2
+    "pendingChineseWorks": 3
   },
   "resourceCoverage": {
     "schema": "ggd-design-backlog-resource-coverage@1",

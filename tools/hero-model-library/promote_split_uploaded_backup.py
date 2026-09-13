@@ -42,8 +42,13 @@ def verify_members(archive, rows):
         if bundle.namelist() != paths:
             raise ValueError('ZIP member list differs from the frozen pending record')
         for row in rows:
-            payload = bundle.read(row['path'])
-            if len(payload) != row['bytes'] or hashlib.sha256(payload).hexdigest() != row['sha256']:
+            member_digest = hashlib.sha256()
+            member_bytes = 0
+            with bundle.open(row['path']) as stream:
+                for payload in iter(lambda: stream.read(1 << 20), b''):
+                    member_bytes += len(payload)
+                    member_digest.update(payload)
+            if member_bytes != row['bytes'] or member_digest.hexdigest() != row['sha256']:
                 raise ValueError('ZIP member verification failed: ' + row['path'])
 
 

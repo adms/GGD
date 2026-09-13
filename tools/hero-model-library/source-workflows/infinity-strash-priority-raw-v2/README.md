@@ -12,3 +12,5 @@ This workflow reads the authorized Windows Steam `pakchunk0-WindowsClient.pak` t
 The helper in `src/main.rs` opens the PAK index once and streams only the selected members. Build and verify it with `cargo test --release --locked`, `cargo build --release --locked`, and `python3 -m unittest -v test_extract.py`. Run the Python wrapper with explicit `--pak`, `--repak`, `--extractor`, and new `--output` paths.
 
 After extraction, run `integrate.py --workspace <ABxVFX_EDIT>` to rehash all 5,530 files and update the central source registry plus compact Git evidence. Then use the repository `archive-intake.py` workflow for the local/S3 `legacy/` archive. Registration records raw acquisition only; conversion, acceptance, backend selection and deployment require later evidence.
+
+`integrate_primary_paks.py` separately registers a byte-identical local mirror of both full primary PAKs. This keeps complete original-container preservation distinct from the 5,530-package priority extraction and prevents the smaller archive from being described as a full-game backup.

@@ -44048,6 +44048,100 @@
       "categoryCounts": {
         "sound-effect": 60
       }
+    },
+    {
+      "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-ior-native-audio",
+      "name": "八神庵",
+      "library": "公開來源",
+      "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 154,
+      "bytes": 3300044,
+      "knownDurationSeconds": 0.0,
+      "durationMeasuredFiles": 0,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/571260/",
+      "work": "THE KING OF FIGHTERS XIV",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 154
+      }
+    },
+    {
+      "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-kyo-native-audio",
+      "name": "草薙京",
+      "library": "公開來源",
+      "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 170,
+      "bytes": 3590745,
+      "knownDurationSeconds": 0.0,
+      "durationMeasuredFiles": 0,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/571260/",
+      "work": "THE KING OF FIGHTERS XIV",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 170
+      }
+    },
+    {
+      "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126:kofxiv-mai-native-audio",
+      "name": "不知火舞",
+      "library": "公開來源",
+      "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 150,
+      "bytes": 3699097,
+      "knownDurationSeconds": 0.0,
+      "durationMeasuredFiles": 0,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/571260/",
+      "work": "THE KING OF FIGHTERS XIV",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 150
+      }
     }
   ],
   "backups": {
@@ -44807,16 +44901,30 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:steam-kofxiv-priority-mai-ior-kyo-build-local-v126": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kofxiv-priority-mai-ior-kyo-build-local-v126/8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227.zip",
+      "bytes": 283879018,
+      "sha256": "8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227",
+      "archiveFormat": "zip",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
+      "localRoot": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "7e6fe7fdc2e579ef9362dfff6b101a8912269abd53cae407e4064c2aa91cc1fd"
+      "sha256": "33d89906d5ad87ebafa0ff160f9a06bd65363d8733a63f99db3f2710198ed58a"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
-      "sha256": "c4a5c2b01afe75c313ca4c2b7264b84f1b3a41c31692578a69ccfb1575979bd9"
+      "sha256": "7d4f2594a99e6f0ee2211bcb1b756565a544a4a03d57cca44828c696a28bddd7"
     },
     {
       "path": "materials/hero-model-library/manifest.json",
@@ -45237,6 +45345,14 @@
     {
       "path": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/audio-file-index.json",
       "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-file-index.json",
+      "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-file-index.json",
+      "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
     },
     {
       "path": "materials/hero-model-library/lol-prefetch-resolution.json",
@@ -95931,13 +96047,13 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 1030,
-    "audioFiles": 290796,
-    "bytes": 141743771597,
-    "sourceFileRelationshipRows": 290796,
-    "uniqueLocalPaths": 290348,
-    "uniqueSha256Payloads": 257936,
-    "uniqueLocalPathBytes": 141170842881,
+    "groups": 1033,
+    "audioFiles": 291270,
+    "bytes": 141754361483,
+    "sourceFileRelationshipRows": 291270,
+    "uniqueLocalPaths": 290822,
+    "uniqueSha256Payloads": 258410,
+    "uniqueLocalPathBytes": 141181432767,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
@@ -95948,6 +96064,6 @@
     "nativeEventBoundRelationshipRows": 968,
     "nativeEventMappedEvents": 232
   },
-  "sourceFileManifestSha256": "b228befd9a11abb3c644685c9539a5ef30596f431c0159a171464ea859a8bb60",
-  "uncompressedFileManifestSha256": "7d4bdc50ae62d0070d59baeb5ce0e5fb4168723724acd7d193da086b7621e48e"
+  "sourceFileManifestSha256": "be7a8e19bf77a974e15bb59041891fb998cf1cf9a5bb201c6b905993b641fb7b",
+  "uncompressedFileManifestSha256": "2e28ea4fc0a0910c0dd53997da6535f5be055cd370b2ce00434967383f3ca742"
 }

@@ -11,6 +11,7 @@ import zipfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
+ALREADY_COMPRESSED_SUFFIXES = {'.7z', '.awb', '.gz', '.pak', '.rar', '.wad', '.zip'}
 
 
 def file_sha256(path):
@@ -59,17 +60,28 @@ def main():
         archive = Path(temp) / 'backup.zip'
         with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as z:
             for path in files:
-                blob = path.read_bytes()
                 rel = path.relative_to(home).as_posix()
                 info = zipfile.ZipInfo(rel, date_time=(1980, 1, 1, 0, 0, 0))
-                info.compress_type = zipfile.ZIP_DEFLATED
+                info.compress_type = (zipfile.ZIP_STORED if path.suffix.lower() in ALREADY_COMPRESSED_SUFFIXES
+                                      else zipfile.ZIP_DEFLATED)
                 info.external_attr = 0o100644 << 16
-                z.writestr(info, blob)
-                rows.append({'path': rel, 'bytes': len(blob), 'sha256': hashlib.sha256(blob).hexdigest()})
+                digest = hashlib.sha256()
+                size = 0
+                with path.open('rb') as input_stream, z.open(info, 'w', force_zip64=True) as destination:
+                    for block in iter(lambda: input_stream.read(1024 * 1024), b''):
+                        destination.write(block)
+                        digest.update(block)
+                        size += len(block)
+                rows.append({'path': rel, 'bytes': size, 'sha256': digest.hexdigest()})
         with zipfile.ZipFile(archive) as z:
             for row in rows:
-                blob = z.read(row['path'])
-                if len(blob) != row['bytes'] or hashlib.sha256(blob).hexdigest() != row['sha256']:
+                digest = hashlib.sha256()
+                size = 0
+                with z.open(row['path']) as member:
+                    for block in iter(lambda: member.read(1024 * 1024), b''):
+                        digest.update(block)
+                        size += len(block)
+                if size != row['bytes'] or digest.hexdigest() != row['sha256']:
                     raise SystemExit('Backup readback mismatch: ' + row['path'])
         digest = file_sha256(archive)
         final = output / (digest + '.zip')

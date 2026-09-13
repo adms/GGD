@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T15:58:22+08:00",
-  "inputsSha256": "35a7e0b2d6894113f2d48aef543d261ed2d76a07117e897a458ac025ec05a160",
+  "generatedAt": "2026-09-13T16:36:56+08:00",
+  "inputsSha256": "0bf4059de33032abf8600fbcd0b6a3ec33b8fae7e4397052fd1419903f1b824a",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -42279,6 +42279,96 @@
             "fullGetVerified": true,
             "allMemberSha256Verified": true
           }
+        },
+        {
+          "id": "steam-infinity-strash-primary-paks-build-local-20240328",
+          "target": "Infinity Strash Windows Steam 兩個主 PAK 完整原件",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c",
+            "b2-popp",
+            "godie-ubal"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+          "uploader": "User-owned local Steam install exposed through read-only SMB",
+          "format": "Unreal Engine 4.26 PAK v11 / Zlib",
+          "accessStatus": "local-installed-game-readonly-share",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "complete-primary-containers-mirrored-pending-full-extraction",
+          "purchaseDecision": "no-purchase-user-owned-install",
+          "defaultEligible": false,
+          "resourceRole": "complete-original-container-reserve",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "platform": "Windows (Steam)",
+          "selectionClass": "canonical-game",
+          "discoveryChannel": "local-readonly-smb",
+          "assetKinds": [
+            "complete-game-container",
+            "model",
+            "texture",
+            "skeleton",
+            "animation",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "publicationStatus": "s3-readback-verified",
+          "files": [
+            {
+              "path": "original/pakchunk0-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+              "bytes": 8332792957,
+              "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 181304
+            },
+            {
+              "path": "original/pakchunk1-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk1-WindowsClient.pak",
+              "bytes": 4382548320,
+              "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 12254
+            }
+          ],
+          "filesManifest": {
+            "path": "source-manifest.json",
+            "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
+          },
+          "derivedSourceIds": [
+            "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "complete-container-reserve-priority-export-pending",
+            "selectionVerified": false,
+            "release": null
+          },
+          "verification": "Both primary PAKs were copied from the read-only SMB share to the local asset library and independently matched by byte size and SHA-256. Their indexes are readable and unencrypted. Priority PN010/EN801/EN653 packages are tracked by the derived source; the rest of the game remains reserved and unconverted. 已完成分段 ZIP 的逐片與有序整體 S3 讀回、以及固定 ZIP 逐成員 SHA-256 驗證。",
+          "limitations": [
+            "The mounted game directory does not expose Steam appmanifest build metadata, so no Steam build ID is asserted.",
+            "Complete PAK preservation does not mean every contained character or resource has been extracted, classified or converted.",
+            "The public game-specific UModel exporter obtained for this title is Windows-only.",
+            "No model option, animation, effect, audio binding or deployment is accepted merely from these containers."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/manifest-f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c.json",
+            "bytes": 12715342764,
+            "sha256": "9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9",
+            "archiveFormat": "split-zip",
+            "archiveManifestSha256": "f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c",
+            "readbackVerified": true,
+            "orderedArchiveReadbackVerified": true,
+            "allMemberSha256Verified": true
+          }
         }
       ],
       "paidCandidates": [],
@@ -42894,6 +42984,96 @@
             "archiveFormat": "zip",
             "readbackVerified": true,
             "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
+        },
+        {
+          "id": "steam-infinity-strash-primary-paks-build-local-20240328",
+          "target": "Infinity Strash Windows Steam 兩個主 PAK 完整原件",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c",
+            "b2-popp",
+            "godie-ubal"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+          "uploader": "User-owned local Steam install exposed through read-only SMB",
+          "format": "Unreal Engine 4.26 PAK v11 / Zlib",
+          "accessStatus": "local-installed-game-readonly-share",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "complete-primary-containers-mirrored-pending-full-extraction",
+          "purchaseDecision": "no-purchase-user-owned-install",
+          "defaultEligible": false,
+          "resourceRole": "complete-original-container-reserve",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "platform": "Windows (Steam)",
+          "selectionClass": "canonical-game",
+          "discoveryChannel": "local-readonly-smb",
+          "assetKinds": [
+            "complete-game-container",
+            "model",
+            "texture",
+            "skeleton",
+            "animation",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "publicationStatus": "s3-readback-verified",
+          "files": [
+            {
+              "path": "original/pakchunk0-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+              "bytes": 8332792957,
+              "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 181304
+            },
+            {
+              "path": "original/pakchunk1-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk1-WindowsClient.pak",
+              "bytes": 4382548320,
+              "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 12254
+            }
+          ],
+          "filesManifest": {
+            "path": "source-manifest.json",
+            "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
+          },
+          "derivedSourceIds": [
+            "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "complete-container-reserve-priority-export-pending",
+            "selectionVerified": false,
+            "release": null
+          },
+          "verification": "Both primary PAKs were copied from the read-only SMB share to the local asset library and independently matched by byte size and SHA-256. Their indexes are readable and unencrypted. Priority PN010/EN801/EN653 packages are tracked by the derived source; the rest of the game remains reserved and unconverted. 已完成分段 ZIP 的逐片與有序整體 S3 讀回、以及固定 ZIP 逐成員 SHA-256 驗證。",
+          "limitations": [
+            "The mounted game directory does not expose Steam appmanifest build metadata, so no Steam build ID is asserted.",
+            "Complete PAK preservation does not mean every contained character or resource has been extracted, classified or converted.",
+            "The public game-specific UModel exporter obtained for this title is Windows-only.",
+            "No model option, animation, effect, audio binding or deployment is accepted merely from these containers."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/manifest-f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c.json",
+            "bytes": 12715342764,
+            "sha256": "9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9",
+            "archiveFormat": "split-zip",
+            "archiveManifestSha256": "f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c",
+            "readbackVerified": true,
+            "orderedArchiveReadbackVerified": true,
             "allMemberSha256Verified": true
           }
         }
@@ -45853,6 +46033,96 @@
             "fullGetVerified": true,
             "allMemberSha256Verified": true
           }
+        },
+        {
+          "id": "steam-infinity-strash-primary-paks-build-local-20240328",
+          "target": "Infinity Strash Windows Steam 兩個主 PAK 完整原件",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c",
+            "b2-popp",
+            "godie-ubal"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+          "uploader": "User-owned local Steam install exposed through read-only SMB",
+          "format": "Unreal Engine 4.26 PAK v11 / Zlib",
+          "accessStatus": "local-installed-game-readonly-share",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "complete-primary-containers-mirrored-pending-full-extraction",
+          "purchaseDecision": "no-purchase-user-owned-install",
+          "defaultEligible": false,
+          "resourceRole": "complete-original-container-reserve",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "platform": "Windows (Steam)",
+          "selectionClass": "canonical-game",
+          "discoveryChannel": "local-readonly-smb",
+          "assetKinds": [
+            "complete-game-container",
+            "model",
+            "texture",
+            "skeleton",
+            "animation",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "publicationStatus": "s3-readback-verified",
+          "files": [
+            {
+              "path": "original/pakchunk0-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+              "bytes": 8332792957,
+              "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 181304
+            },
+            {
+              "path": "original/pakchunk1-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk1-WindowsClient.pak",
+              "bytes": 4382548320,
+              "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 12254
+            }
+          ],
+          "filesManifest": {
+            "path": "source-manifest.json",
+            "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
+          },
+          "derivedSourceIds": [
+            "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "complete-container-reserve-priority-export-pending",
+            "selectionVerified": false,
+            "release": null
+          },
+          "verification": "Both primary PAKs were copied from the read-only SMB share to the local asset library and independently matched by byte size and SHA-256. Their indexes are readable and unencrypted. Priority PN010/EN801/EN653 packages are tracked by the derived source; the rest of the game remains reserved and unconverted. 已完成分段 ZIP 的逐片與有序整體 S3 讀回、以及固定 ZIP 逐成員 SHA-256 驗證。",
+          "limitations": [
+            "The mounted game directory does not expose Steam appmanifest build metadata, so no Steam build ID is asserted.",
+            "Complete PAK preservation does not mean every contained character or resource has been extracted, classified or converted.",
+            "The public game-specific UModel exporter obtained for this title is Windows-only.",
+            "No model option, animation, effect, audio binding or deployment is accepted merely from these containers."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/manifest-f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c.json",
+            "bytes": 12715342764,
+            "sha256": "9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9",
+            "archiveFormat": "split-zip",
+            "archiveManifestSha256": "f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c",
+            "readbackVerified": true,
+            "orderedArchiveReadbackVerified": true,
+            "allMemberSha256Verified": true
+          }
         }
       ],
       "paidCandidates": [],
@@ -47572,6 +47842,258 @@
               "reason": "Assimp preserved unresolved source material filenames as external GLB image URIs. Supplied TGA files have no verified per-material binding in the FBX metadata, so this workflow must not infer replacements."
             }
           ]
+        },
+        {
+          "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+          "target": "KOF XIV 原作素材／不知火舞、八神庵、草薙京",
+          "heroIds": [
+            "community-review-02-20260907",
+            "community-review-03-20260907"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://store.steampowered.com/app/571260/",
+          "uploader": "User-owned local Steam install exposed through read-only SMB",
+          "format": "AGAR WAD 1.1 / OBAC, OMIR, OSEC, OTRA, DDS, PNG, OGG and effect/config records",
+          "accessStatus": "local-installed-game-readonly-share",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "native-assets-extracted-pending-proprietary-format-conversion",
+          "purchaseDecision": "no-purchase-user-owned-install",
+          "defaultEligible": false,
+          "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+          "sourceGame": "THE KING OF FIGHTERS XIV",
+          "platform": "Windows (Steam, Release 1.26 marker)",
+          "selectionClass": "canonical-game",
+          "discoveryChannel": "local-readonly-smb",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "publicationStatus": "s3-readback-verified",
+          "files": [],
+          "filesManifest": {
+            "path": "source-manifest.json",
+            "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+          },
+          "extractedFilesIndex": {
+            "path": "files.jsonl.gz",
+            "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+          },
+          "audioFileIndex": {
+            "reportPath": "audio-file-index.json",
+            "reportSha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+          },
+          "audioCount": 474,
+          "primaryAudioFormats": [
+            ".ogg"
+          ],
+          "audioGroups": [
+            {
+              "id": "kofxiv-ior-native-audio",
+              "name": "八神庵",
+              "characterName": "八神庵",
+              "nativeCharacterId": "IOR",
+              "heroIds": [
+                "community-review-02-20260907"
+              ],
+              "pathPrefixes": [
+                "extracted/Chara/IOR/Sound/"
+              ],
+              "classification": "native-character-directory-audio-pending-listening-review",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "eventReviewed": false,
+              "synthesisReady": false
+            },
+            {
+              "id": "kofxiv-kyo-native-audio",
+              "name": "草薙京",
+              "characterName": "草薙京",
+              "nativeCharacterId": "KYO",
+              "heroIds": [],
+              "pathPrefixes": [
+                "extracted/Chara/KYO/Sound/"
+              ],
+              "classification": "native-character-directory-audio-pending-listening-review",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "eventReviewed": false,
+              "synthesisReady": false
+            },
+            {
+              "id": "kofxiv-mai-native-audio",
+              "name": "不知火舞",
+              "characterName": "不知火舞",
+              "nativeCharacterId": "MAI",
+              "heroIds": [
+                "community-review-03-20260907"
+              ],
+              "pathPrefixes": [
+                "extracted/Chara/MAI/Sound/"
+              ],
+              "classification": "native-character-directory-audio-pending-listening-review",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "eventReviewed": false,
+              "synthesisReady": false
+            }
+          ],
+          "gitEvidence": [
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+              "bytes": 4686,
+              "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/files.jsonl.gz",
+              "bytes": 65628,
+              "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-files.jsonl.gz",
+              "bytes": 28265,
+              "sha256": "c7ae294a46e1917b9d3b7dc039de8079d1b6f35e0147c1dad03e603ad6031577"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+              "bytes": 273693,
+              "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+            }
+          ],
+          "modelCandidates": [
+            {
+              "candidateId": "kof-xiv-native-mai-raw-v1",
+              "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+              "name": "不知火舞",
+              "character": "不知火舞 / Mai Shiranui",
+              "nativeCharacterId": "MAI",
+              "heroIds": [
+                "community-review-03-20260907"
+              ],
+              "sourceGame": "THE KING OF FIGHTERS XIV",
+              "platform": "Windows (Steam, Release 1.26 marker)",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "animation",
+                "audio",
+                "audio-metadata",
+                "configuration",
+                "model",
+                "skeleton",
+                "texture",
+                "vfx"
+              ],
+              "fileCount": 369,
+              "bytes": 133417084,
+              "modelState": "native-obac-extracted-pending-conversion",
+              "animationState": "native-otra-extracted-pending-conversion",
+              "vfxState": "native-effect-records-extracted-pending-conversion",
+              "audioState": "ogg-extracted-pending-listening-review",
+              "designStatus": "existing-ggd-hero-definition",
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "deployed": false
+            },
+            {
+              "candidateId": "kof-xiv-native-ior-raw-v1",
+              "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+              "name": "八神庵",
+              "character": "八神庵 / Iori Yagami",
+              "nativeCharacterId": "IOR",
+              "heroIds": [
+                "community-review-02-20260907"
+              ],
+              "sourceGame": "THE KING OF FIGHTERS XIV",
+              "platform": "Windows (Steam, Release 1.26 marker)",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "animation",
+                "audio",
+                "audio-metadata",
+                "configuration",
+                "model",
+                "skeleton",
+                "texture",
+                "vfx"
+              ],
+              "fileCount": 365,
+              "bytes": 150154256,
+              "modelState": "native-obac-extracted-pending-conversion",
+              "animationState": "native-otra-extracted-pending-conversion",
+              "vfxState": "native-effect-records-extracted-pending-conversion",
+              "audioState": "ogg-extracted-pending-listening-review",
+              "designStatus": "existing-ggd-hero-definition",
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "deployed": false
+            },
+            {
+              "candidateId": "kof-xiv-native-kyo-raw-v1",
+              "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+              "name": "草薙京",
+              "character": "草薙京 / Kyo Kusanagi",
+              "nativeCharacterId": "KYO",
+              "heroIds": [],
+              "sourceGame": "THE KING OF FIGHTERS XIV",
+              "platform": "Windows (Steam, Release 1.26 marker)",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "animation",
+                "audio",
+                "audio-metadata",
+                "configuration",
+                "model",
+                "skeleton",
+                "texture",
+                "vfx"
+              ],
+              "fileCount": 354,
+              "bytes": 140968470,
+              "modelState": "native-obac-extracted-pending-conversion",
+              "animationState": "native-otra-extracted-pending-conversion",
+              "vfxState": "native-effect-records-extracted-pending-conversion",
+              "audioState": "ogg-extracted-pending-listening-review",
+              "designStatus": "acquired-model-awaiting-hero-design",
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "deployed": false
+            }
+          ],
+          "unboundNativeCharacters": [
+            {
+              "nativeCharacterId": "KYO",
+              "nameZh": "草薙京",
+              "originalName": "Kyo Kusanagi",
+              "state": "acquired-model-awaiting-hero-design",
+              "reason": "No verified GGD hero definition was found; no hero ID was invented."
+            }
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-conversion-validation-and-binding",
+            "selectionVerified": false
+          },
+          "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "limitations": [
+            "OBAC/OMIR/OSEC/OTRA and native effect records remain proprietary KOF XIV formats and are not yet converted to GGD runtime formats.",
+            "OGG files are extracted and hashed, but speaker, dialogue/SFX role, language and skill-event binding remain pending listening review.",
+            "MAI, IOR and KYO directory identity is exact; individual alternate costume/form semantics remain unreviewed.",
+            "This extraction is source preservation and does not establish a backend model option or deployment."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kofxiv-priority-mai-ior-kyo-build-local-v126/8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227.zip",
+            "bytes": 283879018,
+            "sha256": "8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
         }
       ],
       "paidCandidates": [],
@@ -48165,6 +48687,258 @@
               "reason": "Assimp preserved unresolved source material filenames as external GLB image URIs. Supplied TGA files have no verified per-material binding in the FBX metadata, so this workflow must not infer replacements."
             }
           ]
+        },
+        {
+          "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+          "target": "KOF XIV 原作素材／不知火舞、八神庵、草薙京",
+          "heroIds": [
+            "community-review-02-20260907",
+            "community-review-03-20260907"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://store.steampowered.com/app/571260/",
+          "uploader": "User-owned local Steam install exposed through read-only SMB",
+          "format": "AGAR WAD 1.1 / OBAC, OMIR, OSEC, OTRA, DDS, PNG, OGG and effect/config records",
+          "accessStatus": "local-installed-game-readonly-share",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "native-assets-extracted-pending-proprietary-format-conversion",
+          "purchaseDecision": "no-purchase-user-owned-install",
+          "defaultEligible": false,
+          "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+          "sourceGame": "THE KING OF FIGHTERS XIV",
+          "platform": "Windows (Steam, Release 1.26 marker)",
+          "selectionClass": "canonical-game",
+          "discoveryChannel": "local-readonly-smb",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "animation",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "publicationStatus": "s3-readback-verified",
+          "files": [],
+          "filesManifest": {
+            "path": "source-manifest.json",
+            "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+          },
+          "extractedFilesIndex": {
+            "path": "files.jsonl.gz",
+            "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+          },
+          "audioFileIndex": {
+            "reportPath": "audio-file-index.json",
+            "reportSha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+          },
+          "audioCount": 474,
+          "primaryAudioFormats": [
+            ".ogg"
+          ],
+          "audioGroups": [
+            {
+              "id": "kofxiv-ior-native-audio",
+              "name": "八神庵",
+              "characterName": "八神庵",
+              "nativeCharacterId": "IOR",
+              "heroIds": [
+                "community-review-02-20260907"
+              ],
+              "pathPrefixes": [
+                "extracted/Chara/IOR/Sound/"
+              ],
+              "classification": "native-character-directory-audio-pending-listening-review",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "eventReviewed": false,
+              "synthesisReady": false
+            },
+            {
+              "id": "kofxiv-kyo-native-audio",
+              "name": "草薙京",
+              "characterName": "草薙京",
+              "nativeCharacterId": "KYO",
+              "heroIds": [],
+              "pathPrefixes": [
+                "extracted/Chara/KYO/Sound/"
+              ],
+              "classification": "native-character-directory-audio-pending-listening-review",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "eventReviewed": false,
+              "synthesisReady": false
+            },
+            {
+              "id": "kofxiv-mai-native-audio",
+              "name": "不知火舞",
+              "characterName": "不知火舞",
+              "nativeCharacterId": "MAI",
+              "heroIds": [
+                "community-review-03-20260907"
+              ],
+              "pathPrefixes": [
+                "extracted/Chara/MAI/Sound/"
+              ],
+              "classification": "native-character-directory-audio-pending-listening-review",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "eventReviewed": false,
+              "synthesisReady": false
+            }
+          ],
+          "gitEvidence": [
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+              "bytes": 4686,
+              "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/files.jsonl.gz",
+              "bytes": 65628,
+              "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-files.jsonl.gz",
+              "bytes": 28265,
+              "sha256": "c7ae294a46e1917b9d3b7dc039de8079d1b6f35e0147c1dad03e603ad6031577"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+              "bytes": 273693,
+              "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+            }
+          ],
+          "modelCandidates": [
+            {
+              "candidateId": "kof-xiv-native-mai-raw-v1",
+              "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+              "name": "不知火舞",
+              "character": "不知火舞 / Mai Shiranui",
+              "nativeCharacterId": "MAI",
+              "heroIds": [
+                "community-review-03-20260907"
+              ],
+              "sourceGame": "THE KING OF FIGHTERS XIV",
+              "platform": "Windows (Steam, Release 1.26 marker)",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "animation",
+                "audio",
+                "audio-metadata",
+                "configuration",
+                "model",
+                "skeleton",
+                "texture",
+                "vfx"
+              ],
+              "fileCount": 369,
+              "bytes": 133417084,
+              "modelState": "native-obac-extracted-pending-conversion",
+              "animationState": "native-otra-extracted-pending-conversion",
+              "vfxState": "native-effect-records-extracted-pending-conversion",
+              "audioState": "ogg-extracted-pending-listening-review",
+              "designStatus": "existing-ggd-hero-definition",
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "deployed": false
+            },
+            {
+              "candidateId": "kof-xiv-native-ior-raw-v1",
+              "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+              "name": "八神庵",
+              "character": "八神庵 / Iori Yagami",
+              "nativeCharacterId": "IOR",
+              "heroIds": [
+                "community-review-02-20260907"
+              ],
+              "sourceGame": "THE KING OF FIGHTERS XIV",
+              "platform": "Windows (Steam, Release 1.26 marker)",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "animation",
+                "audio",
+                "audio-metadata",
+                "configuration",
+                "model",
+                "skeleton",
+                "texture",
+                "vfx"
+              ],
+              "fileCount": 365,
+              "bytes": 150154256,
+              "modelState": "native-obac-extracted-pending-conversion",
+              "animationState": "native-otra-extracted-pending-conversion",
+              "vfxState": "native-effect-records-extracted-pending-conversion",
+              "audioState": "ogg-extracted-pending-listening-review",
+              "designStatus": "existing-ggd-hero-definition",
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "deployed": false
+            },
+            {
+              "candidateId": "kof-xiv-native-kyo-raw-v1",
+              "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+              "name": "草薙京",
+              "character": "草薙京 / Kyo Kusanagi",
+              "nativeCharacterId": "KYO",
+              "heroIds": [],
+              "sourceGame": "THE KING OF FIGHTERS XIV",
+              "platform": "Windows (Steam, Release 1.26 marker)",
+              "selectionClass": "canonical-game",
+              "assetKinds": [
+                "animation",
+                "audio",
+                "audio-metadata",
+                "configuration",
+                "model",
+                "skeleton",
+                "texture",
+                "vfx"
+              ],
+              "fileCount": 354,
+              "bytes": 140968470,
+              "modelState": "native-obac-extracted-pending-conversion",
+              "animationState": "native-otra-extracted-pending-conversion",
+              "vfxState": "native-effect-records-extracted-pending-conversion",
+              "audioState": "ogg-extracted-pending-listening-review",
+              "designStatus": "acquired-model-awaiting-hero-design",
+              "defaultEligible": false,
+              "backendSelectable": false,
+              "deployed": false
+            }
+          ],
+          "unboundNativeCharacters": [
+            {
+              "nativeCharacterId": "KYO",
+              "nameZh": "草薙京",
+              "originalName": "Kyo Kusanagi",
+              "state": "acquired-model-awaiting-hero-design",
+              "reason": "No verified GGD hero definition was found; no hero ID was invented."
+            }
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "pending-conversion-validation-and-binding",
+            "selectionVerified": false
+          },
+          "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "limitations": [
+            "OBAC/OMIR/OSEC/OTRA and native effect records remain proprietary KOF XIV formats and are not yet converted to GGD runtime formats.",
+            "OGG files are extracted and hashed, but speaker, dialogue/SFX role, language and skill-event binding remain pending listening review.",
+            "MAI, IOR and KYO directory identity is exact; individual alternate costume/form semantics remain unreviewed.",
+            "This extraction is source preservation and does not establish a backend model option or deployment."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kofxiv-priority-mai-ior-kyo-build-local-v126/8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227.zip",
+            "bytes": 283879018,
+            "sha256": "8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227",
+            "archiveFormat": "zip",
+            "readbackVerified": true,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true
+          }
         }
       ],
       "paidCandidates": [],
@@ -61613,7 +62387,98 @@
         "mode": "automatic"
       },
       "downloadSources": [],
-      "publicCandidates": [],
+      "publicCandidates": [
+        {
+          "id": "steam-infinity-strash-primary-paks-build-local-20240328",
+          "target": "Infinity Strash Windows Steam 兩個主 PAK 完整原件",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c",
+            "b2-popp",
+            "godie-ubal"
+          ],
+          "ownerEntryIds": [],
+          "url": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+          "uploader": "User-owned local Steam install exposed through read-only SMB",
+          "format": "Unreal Engine 4.26 PAK v11 / Zlib",
+          "accessStatus": "local-installed-game-readonly-share",
+          "acquisitionStatus": "downloaded-verified",
+          "readiness": "complete-primary-containers-mirrored-pending-full-extraction",
+          "purchaseDecision": "no-purchase-user-owned-install",
+          "defaultEligible": false,
+          "resourceRole": "complete-original-container-reserve",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "platform": "Windows (Steam)",
+          "selectionClass": "canonical-game",
+          "discoveryChannel": "local-readonly-smb",
+          "assetKinds": [
+            "complete-game-container",
+            "model",
+            "texture",
+            "skeleton",
+            "animation",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "publicationStatus": "s3-readback-verified",
+          "files": [
+            {
+              "path": "original/pakchunk0-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+              "bytes": 8332792957,
+              "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 181304
+            },
+            {
+              "path": "original/pakchunk1-WindowsClient.pak",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+              "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk1-WindowsClient.pak",
+              "bytes": 4382548320,
+              "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+              "pakVersion": 11,
+              "compression": "Zlib",
+              "indexEncrypted": false,
+              "indexedEntries": 12254
+            }
+          ],
+          "filesManifest": {
+            "path": "source-manifest.json",
+            "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
+          },
+          "derivedSourceIds": [
+            "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          ],
+          "backendIntegration": {
+            "required": true,
+            "state": "complete-container-reserve-priority-export-pending",
+            "selectionVerified": false,
+            "release": null
+          },
+          "verification": "Both primary PAKs were copied from the read-only SMB share to the local asset library and independently matched by byte size and SHA-256. Their indexes are readable and unencrypted. Priority PN010/EN801/EN653 packages are tracked by the derived source; the rest of the game remains reserved and unconverted. 已完成分段 ZIP 的逐片與有序整體 S3 讀回、以及固定 ZIP 逐成員 SHA-256 驗證。",
+          "limitations": [
+            "The mounted game directory does not expose Steam appmanifest build metadata, so no Steam build ID is asserted.",
+            "Complete PAK preservation does not mean every contained character or resource has been extracted, classified or converted.",
+            "The public game-specific UModel exporter obtained for this title is Windows-only.",
+            "No model option, animation, effect, audio binding or deployment is accepted merely from these containers."
+          ],
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/manifest-f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c.json",
+            "bytes": 12715342764,
+            "sha256": "9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9",
+            "archiveFormat": "split-zip",
+            "archiveManifestSha256": "f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c",
+            "readbackVerified": true,
+            "orderedArchiveReadbackVerified": true,
+            "allMemberSha256Verified": true
+          }
+        }
+      ],
       "paidCandidates": [],
       "supplementSources": [
         {
@@ -105610,11 +106475,13 @@
           "lead-vearn-crealitycloud-66d70beed164d01a74e934ca"
         ],
         "acquiredPublicSources": [
-          "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "steam-infinity-strash-primary-paks-build-local-20240328"
         ],
         "acquiredPaidSources": [],
         "acquiredSourceIds": [
-          "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "steam-infinity-strash-primary-paks-build-local-20240328"
         ],
         "retainedWorkflowSources": [],
         "purchaseHoldFor": [],
@@ -105655,11 +106522,13 @@
           "lead-vearn-crealitycloud-66d70beed164d01a74e934ca"
         ],
         "acquiredPublicSources": [
-          "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "steam-infinity-strash-primary-paks-build-local-20240328"
         ],
         "acquiredPaidSources": [],
         "acquiredSourceIds": [
-          "steam-infinity-strash-priority-original-assets-build-local-20240328"
+          "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "steam-infinity-strash-primary-paks-build-local-20240328"
         ],
         "retainedWorkflowSources": [],
         "purchaseHoldFor": [],
@@ -106392,13 +107261,15 @@
         "acquiredPublicSources": [
           "thunderstore-iori",
           "kof-xv-iori-whitemagesunny-raw",
-          "kof-xv-iori-audio-float32-v1"
+          "kof-xv-iori-audio-float32-v1",
+          "steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
         ],
         "acquiredPaidSources": [],
         "acquiredSourceIds": [
           "thunderstore-iori",
           "kof-xv-iori-whitemagesunny-raw",
-          "kof-xv-iori-audio-float32-v1"
+          "kof-xv-iori-audio-float32-v1",
+          "steam-kofxiv-priority-mai-ior-kyo-build-local-v126"
         ],
         "retainedWorkflowSources": [
           {
@@ -160253,6 +161124,348 @@
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
           "bytes": 240447329,
           "sha256": "57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229",
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
+        }
+      },
+      {
+        "id": "steam-infinity-strash-primary-paks-build-local-20240328",
+        "target": "Infinity Strash Windows Steam 兩個主 PAK 完整原件",
+        "heroIds": [
+          "godie-nbbc",
+          "godie-n01c",
+          "b2-popp",
+          "godie-ubal"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+        "uploader": "User-owned local Steam install exposed through read-only SMB",
+        "format": "Unreal Engine 4.26 PAK v11 / Zlib",
+        "accessStatus": "local-installed-game-readonly-share",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "complete-primary-containers-mirrored-pending-full-extraction",
+        "purchaseDecision": "no-purchase-user-owned-install",
+        "defaultEligible": false,
+        "resourceRole": "complete-original-container-reserve",
+        "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "platform": "Windows (Steam)",
+        "selectionClass": "canonical-game",
+        "discoveryChannel": "local-readonly-smb",
+        "assetKinds": [
+          "complete-game-container",
+          "model",
+          "texture",
+          "skeleton",
+          "animation",
+          "vfx",
+          "audio",
+          "configuration"
+        ],
+        "publicationStatus": "s3-readback-verified",
+        "files": [
+          {
+            "path": "original/pakchunk0-WindowsClient.pak",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+            "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+            "bytes": 8332792957,
+            "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+            "pakVersion": 11,
+            "compression": "Zlib",
+            "indexEncrypted": false,
+            "indexedEntries": 181304
+          },
+          {
+            "path": "original/pakchunk1-WindowsClient.pak",
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+            "originPath": "/Volumes/common/Strash/strash/Content/Paks/pakchunk1-WindowsClient.pak",
+            "bytes": 4382548320,
+            "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+            "pakVersion": 11,
+            "compression": "Zlib",
+            "indexEncrypted": false,
+            "indexedEntries": 12254
+          }
+        ],
+        "filesManifest": {
+          "path": "source-manifest.json",
+          "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
+        },
+        "derivedSourceIds": [
+          "steam-infinity-strash-priority-original-assets-build-local-20240328"
+        ],
+        "backendIntegration": {
+          "required": true,
+          "state": "complete-container-reserve-priority-export-pending",
+          "selectionVerified": false,
+          "release": null
+        },
+        "verification": "Both primary PAKs were copied from the read-only SMB share to the local asset library and independently matched by byte size and SHA-256. Their indexes are readable and unencrypted. Priority PN010/EN801/EN653 packages are tracked by the derived source; the rest of the game remains reserved and unconverted. 已完成分段 ZIP 的逐片與有序整體 S3 讀回、以及固定 ZIP 逐成員 SHA-256 驗證。",
+        "limitations": [
+          "The mounted game directory does not expose Steam appmanifest build metadata, so no Steam build ID is asserted.",
+          "Complete PAK preservation does not mean every contained character or resource has been extracted, classified or converted.",
+          "The public game-specific UModel exporter obtained for this title is Windows-only.",
+          "No model option, animation, effect, audio binding or deployment is accepted merely from these containers."
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/manifest-f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c.json",
+          "bytes": 12715342764,
+          "sha256": "9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9",
+          "archiveFormat": "split-zip",
+          "archiveManifestSha256": "f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c",
+          "readbackVerified": true,
+          "orderedArchiveReadbackVerified": true,
+          "allMemberSha256Verified": true
+        }
+      },
+      {
+        "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+        "target": "KOF XIV 原作素材／不知火舞、八神庵、草薙京",
+        "heroIds": [
+          "community-review-02-20260907",
+          "community-review-03-20260907"
+        ],
+        "ownerEntryIds": [],
+        "url": "https://store.steampowered.com/app/571260/",
+        "uploader": "User-owned local Steam install exposed through read-only SMB",
+        "format": "AGAR WAD 1.1 / OBAC, OMIR, OSEC, OTRA, DDS, PNG, OGG and effect/config records",
+        "accessStatus": "local-installed-game-readonly-share",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "native-assets-extracted-pending-proprietary-format-conversion",
+        "purchaseDecision": "no-purchase-user-owned-install",
+        "defaultEligible": false,
+        "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
+        "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
+        "sourceGame": "THE KING OF FIGHTERS XIV",
+        "platform": "Windows (Steam, Release 1.26 marker)",
+        "selectionClass": "canonical-game",
+        "discoveryChannel": "local-readonly-smb",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation",
+          "vfx",
+          "audio",
+          "configuration"
+        ],
+        "publicationStatus": "s3-readback-verified",
+        "files": [],
+        "filesManifest": {
+          "path": "source-manifest.json",
+          "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+        },
+        "extractedFilesIndex": {
+          "path": "files.jsonl.gz",
+          "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+        },
+        "audioFileIndex": {
+          "reportPath": "audio-file-index.json",
+          "reportSha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+        },
+        "audioCount": 474,
+        "primaryAudioFormats": [
+          ".ogg"
+        ],
+        "audioGroups": [
+          {
+            "id": "kofxiv-ior-native-audio",
+            "name": "八神庵",
+            "characterName": "八神庵",
+            "nativeCharacterId": "IOR",
+            "heroIds": [
+              "community-review-02-20260907"
+            ],
+            "pathPrefixes": [
+              "extracted/Chara/IOR/Sound/"
+            ],
+            "classification": "native-character-directory-audio-pending-listening-review",
+            "languageReviewed": false,
+            "speakerReviewed": false,
+            "eventReviewed": false,
+            "synthesisReady": false
+          },
+          {
+            "id": "kofxiv-kyo-native-audio",
+            "name": "草薙京",
+            "characterName": "草薙京",
+            "nativeCharacterId": "KYO",
+            "heroIds": [],
+            "pathPrefixes": [
+              "extracted/Chara/KYO/Sound/"
+            ],
+            "classification": "native-character-directory-audio-pending-listening-review",
+            "languageReviewed": false,
+            "speakerReviewed": false,
+            "eventReviewed": false,
+            "synthesisReady": false
+          },
+          {
+            "id": "kofxiv-mai-native-audio",
+            "name": "不知火舞",
+            "characterName": "不知火舞",
+            "nativeCharacterId": "MAI",
+            "heroIds": [
+              "community-review-03-20260907"
+            ],
+            "pathPrefixes": [
+              "extracted/Chara/MAI/Sound/"
+            ],
+            "classification": "native-character-directory-audio-pending-listening-review",
+            "languageReviewed": false,
+            "speakerReviewed": false,
+            "eventReviewed": false,
+            "synthesisReady": false
+          }
+        ],
+        "gitEvidence": [
+          {
+            "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+            "bytes": 4686,
+            "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+          },
+          {
+            "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/files.jsonl.gz",
+            "bytes": 65628,
+            "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
+          },
+          {
+            "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-files.jsonl.gz",
+            "bytes": 28265,
+            "sha256": "c7ae294a46e1917b9d3b7dc039de8079d1b6f35e0147c1dad03e603ad6031577"
+          },
+          {
+            "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+            "bytes": 273693,
+            "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+          }
+        ],
+        "modelCandidates": [
+          {
+            "candidateId": "kof-xiv-native-mai-raw-v1",
+            "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+            "name": "不知火舞",
+            "character": "不知火舞 / Mai Shiranui",
+            "nativeCharacterId": "MAI",
+            "heroIds": [
+              "community-review-03-20260907"
+            ],
+            "sourceGame": "THE KING OF FIGHTERS XIV",
+            "platform": "Windows (Steam, Release 1.26 marker)",
+            "selectionClass": "canonical-game",
+            "assetKinds": [
+              "animation",
+              "audio",
+              "audio-metadata",
+              "configuration",
+              "model",
+              "skeleton",
+              "texture",
+              "vfx"
+            ],
+            "fileCount": 369,
+            "bytes": 133417084,
+            "modelState": "native-obac-extracted-pending-conversion",
+            "animationState": "native-otra-extracted-pending-conversion",
+            "vfxState": "native-effect-records-extracted-pending-conversion",
+            "audioState": "ogg-extracted-pending-listening-review",
+            "designStatus": "existing-ggd-hero-definition",
+            "defaultEligible": false,
+            "backendSelectable": false,
+            "deployed": false
+          },
+          {
+            "candidateId": "kof-xiv-native-ior-raw-v1",
+            "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+            "name": "八神庵",
+            "character": "八神庵 / Iori Yagami",
+            "nativeCharacterId": "IOR",
+            "heroIds": [
+              "community-review-02-20260907"
+            ],
+            "sourceGame": "THE KING OF FIGHTERS XIV",
+            "platform": "Windows (Steam, Release 1.26 marker)",
+            "selectionClass": "canonical-game",
+            "assetKinds": [
+              "animation",
+              "audio",
+              "audio-metadata",
+              "configuration",
+              "model",
+              "skeleton",
+              "texture",
+              "vfx"
+            ],
+            "fileCount": 365,
+            "bytes": 150154256,
+            "modelState": "native-obac-extracted-pending-conversion",
+            "animationState": "native-otra-extracted-pending-conversion",
+            "vfxState": "native-effect-records-extracted-pending-conversion",
+            "audioState": "ogg-extracted-pending-listening-review",
+            "designStatus": "existing-ggd-hero-definition",
+            "defaultEligible": false,
+            "backendSelectable": false,
+            "deployed": false
+          },
+          {
+            "candidateId": "kof-xiv-native-kyo-raw-v1",
+            "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+            "name": "草薙京",
+            "character": "草薙京 / Kyo Kusanagi",
+            "nativeCharacterId": "KYO",
+            "heroIds": [],
+            "sourceGame": "THE KING OF FIGHTERS XIV",
+            "platform": "Windows (Steam, Release 1.26 marker)",
+            "selectionClass": "canonical-game",
+            "assetKinds": [
+              "animation",
+              "audio",
+              "audio-metadata",
+              "configuration",
+              "model",
+              "skeleton",
+              "texture",
+              "vfx"
+            ],
+            "fileCount": 354,
+            "bytes": 140968470,
+            "modelState": "native-obac-extracted-pending-conversion",
+            "animationState": "native-otra-extracted-pending-conversion",
+            "vfxState": "native-effect-records-extracted-pending-conversion",
+            "audioState": "ogg-extracted-pending-listening-review",
+            "designStatus": "acquired-model-awaiting-hero-design",
+            "defaultEligible": false,
+            "backendSelectable": false,
+            "deployed": false
+          }
+        ],
+        "unboundNativeCharacters": [
+          {
+            "nativeCharacterId": "KYO",
+            "nameZh": "草薙京",
+            "originalName": "Kyo Kusanagi",
+            "state": "acquired-model-awaiting-hero-design",
+            "reason": "No verified GGD hero definition was found; no hero ID was invented."
+          }
+        ],
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-conversion-validation-and-binding",
+          "selectionVerified": false
+        },
+        "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "limitations": [
+          "OBAC/OMIR/OSEC/OTRA and native effect records remain proprietary KOF XIV formats and are not yet converted to GGD runtime formats.",
+          "OGG files are extracted and hashed, but speaker, dialogue/SFX role, language and skill-event binding remain pending listening review.",
+          "MAI, IOR and KYO directory identity is exact; individual alternate costume/form semantics remain unreviewed.",
+          "This extraction is source preservation and does not establish a backend model option or deployment."
+        ],
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kofxiv-priority-mai-ior-kyo-build-local-v126/8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227.zip",
+          "bytes": 283879018,
+          "sha256": "8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227",
           "archiveFormat": "zip",
           "readbackVerified": true,
           "fullGetVerified": true,
