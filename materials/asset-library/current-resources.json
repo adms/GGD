@@ -14,7 +14,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
-      "sha256": "0d0b2dedb6cb2c6bb842e72397198cfd3d1881d51c62760b69724c1439fec9c8"
+      "sha256": "7e94286a1f1cb6d180177a2c8c64e3b4e2f47ac1764fa13f1def011e43afedb9"
     }
   ],
   "modelSourceCount": 156,
@@ -5725,10 +5725,10 @@
     {
       "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
       "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-      "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
-      "bytes": 2000480,
-      "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+      "glbPath": "assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
+      "sha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
+      "bytes": 2003920,
+      "documentSha256": "691994db783a94e5f189caed5395be54706a8239ccad0fe7f959d4d26ce148d9",
       "sourceCharacter": "小呆／達伊（PN010/02）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
@@ -5746,12 +5746,43 @@
         "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+      "gitPath": "content/assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
       "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
       "fullCharacterPackage": false,
+      "sourceDelivery": {
+        "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "bytes": 2000480,
+        "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "gitPathAtIngest": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+        "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb"
+      },
+      "validationSubjectSha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "postRepairVisualReviewPending": true,
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素"
+        ],
+        "binaryChunkByteIdentical": false,
+        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          1110
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      },
       "registeredFor": [
         "godie-nbbc"
       ],
@@ -5761,10 +5792,10 @@
     {
       "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
       "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
-      "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
-      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
-      "bytes": 2206692,
-      "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+      "glbPath": "assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
+      "sha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
+      "bytes": 2210132,
+      "documentSha256": "4fcd7e5a2d883ed9b039ddd3d95eda65e6a308767ca82e072e2adaf958462d94",
       "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
@@ -5783,7 +5814,7 @@
         "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "gitPath": "content/assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
       "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
@@ -5798,6 +5829,37 @@
         "readbackVerified": true,
         "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/s3-conversion-receipt.json"
       },
+      "sourceDelivery": {
+        "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "bytes": 2206692,
+        "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "gitPathAtIngest": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+        "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb"
+      },
+      "validationSubjectSha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "postRepairVisualReviewPending": true,
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素"
+        ],
+        "binaryChunkByteIdentical": false,
+        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          1116
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      },
       "registeredFor": [
         "godie-nbbc"
       ],
@@ -5807,10 +5869,10 @@
     {
       "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
       "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-      "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
-      "bytes": 3011048,
-      "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+      "glbPath": "assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
+      "sha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
+      "bytes": 3003920,
+      "documentSha256": "1aaec913cb159c542310994bab40cd62cd51b2c33fb495ebce051fb8d011e4be",
       "sourceCharacter": "巴恩大魔王（EN801，變身前／老巴恩）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
@@ -5829,12 +5891,43 @@
         "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+      "gitPath": "content/assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
       "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
       "fullCharacterPackage": false,
+      "sourceDelivery": {
+        "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "bytes": 3011048,
+        "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "gitPathAtIngest": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+        "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb"
+      },
+      "validationSubjectSha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "postRepairVisualReviewPending": true,
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat0:GGD_body flatten-alpha —— OPAQUE 材質上的藏色透明壓成 255：image 1 的 alpha 改了 22.47% 像素，RGB 0 像素"
+        ],
+        "binaryChunkByteIdentical": false,
+        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          1131
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      },
       "registeredFor": [
         "godie-ubal"
       ],
@@ -6357,7 +6450,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "dai-shinteo-v2-sword-handheld-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -6453,7 +6546,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "dai-shinteo-v2-sword-back-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -6582,7 +6675,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -6711,7 +6804,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -6845,7 +6938,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -6977,7 +7070,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -7110,7 +7203,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -7242,7 +7335,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -7373,7 +7466,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-zero-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -7528,7 +7621,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-mario-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -7673,7 +7766,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-mewtwo-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -7818,7 +7911,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-ryu-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8001,7 +8094,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-pickel-steve-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -8183,7 +8276,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-pickel-alex-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -8392,7 +8485,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-ptrainer-male-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8601,7 +8694,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-ptrainer-female-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8726,7 +8819,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "zero-lancer-p1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -8851,7 +8944,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "zero-lancer-p2-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -8973,7 +9066,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9101,7 +9194,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-mario-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9238,7 +9331,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "ssbu-ryu-c00-procedural-six-state-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9362,7 +9455,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "historical-astralym-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9397,9 +9490,9 @@
         "texture",
         "native-animation"
       ],
-      "bytes": 3795720,
-      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
-      "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "bytes": 3782388,
+      "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
+      "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
       "componentReady": true,
       "runtimeSelectable": true,
       "defaultEligible": false,
@@ -9489,11 +9582,44 @@
         "allMemberSha256Verified": true,
         "localUnchanged": true
       },
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "sourceArtifact": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+        "bytes": 3795720,
+        "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+        "gitPathAtIngest": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz",
+        "s3ArchiveMember": "historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+        "backupReceiptPath": null,
+        "backupReceiptSha256": null,
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb"
+      },
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat1:MI_WorldTreeDragon_Extra zero-hidden-rgb —— alpha ≤ 5（檢查器的 ALPHA_BACKGROUND_MAX）的像素 RGB 歸零，2548 px",
+          "mat2:MI_WorldTreeDragon_Eye zero-hidden-rgb —— 同上，3934 px"
+        ],
+        "binaryChunkByteIdentical": false,
+        "nonMaterialJsonByteSemanticIdentical": false,
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          4,
+          6
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      },
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "historical-astralym-decimated-f77cf1ee",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9536,9 +9662,9 @@
         "texture",
         "native-animation"
       ],
-      "bytes": 3224424,
-      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-      "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "bytes": 3222184,
+      "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+      "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
       "componentReady": true,
       "runtimeSelectable": true,
       "defaultEligible": false,
@@ -9619,11 +9745,43 @@
       "s3Use": "backup-only-not-runtime-entry",
       "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
       "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
-      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "sourceArtifact": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "bytes": 3224424,
+        "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+        "gitPathAtIngest": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb"
+      },
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat2:MI_JetDragon_Extra key-carrier —— BLEND 平面卡的紅色不透明底（94.58%／邊緣 98.0%）摳成透明，保留 8 個粉紅菱形",
+          "mat2:MI_JetDragon_Extra zero-hidden-rgb —— 材質帶 emissive，摳掉的底色 RGB 歸零，⛔ 否則自發光把它照回來（量到 94.60%）"
+        ],
+        "binaryChunkByteIdentical": false,
+        "nonMaterialJsonByteSemanticIdentical": false,
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          10
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      },
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "historical-jetragon-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9778,7 +9936,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "historical-kita-kita-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9933,7 +10091,7 @@
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
         "bytes": 43391,
-        "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e",
+        "sha256": "75dd8423940ba496aa1cea55e11fad5f603b328a3dc40ea65aa86355b09491da",
         "recordId": "historical-lord-nightmares-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9954,6 +10112,96 @@
   ],
   "modelComponentCount": 29,
   "historicalModelSourceArtifacts": [
+    {
+      "id": "historical-astralym-decimated-f77cf1ee:exact-historical-source",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "sourceCandidateId": "historical-astralym-decimated-f77cf1ee",
+      "nameZh": "枯星龍",
+      "originalName": "Astralym",
+      "workZh": "幻獸帕魯 Palworld",
+      "sourceGame": "Palworld",
+      "platform": "PC（原始遊戲 build 未由歷史 GLB 固定）",
+      "variant": "歷史 GGD 256px 五動作 emissive-lock 減面版／7bc2fa3f8 原始位元組",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "native-animation"
+      ],
+      "bytes": 3795720,
+      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+      "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "recoveredFromGitCommit": "7bc2fa3f8",
+      "normalizedReplacementSha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
+      "normalizedReplacementGitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "readiness": "archived-exact-historical-source; normalized replacement retained separately",
+      "limitations": [
+        "Expected low-poly faceting is visible after 23,928 to 7,996 triangle reduction; five-clip A/B remains under the 5% visual threshold.",
+        "Damage is reused for hurt and the authorized ascend/fade death presentation; no native Death clip is claimed.",
+        "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states.",
+        "保留合併前的精確 Git 位元組；未取代材質正規化版本，也不宣稱可切換或已部署。"
+      ],
+      "sourceArtifactBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz",
+        "s3ArchiveMember": "historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb"
+      }
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8:exact-historical-source",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "sourceCandidateId": "historical-jetragon-7bc2fa3f8",
+      "nameZh": "空渦龍",
+      "originalName": "Jetragon",
+      "workZh": "幻獸帕魯 Palworld",
+      "sourceGame": "Palworld",
+      "platform": "PC（原始遊戲 build 未由歷史 GLB 固定）",
+      "variant": "歷史 GGD 256px 動作版／7bc2fa3f8 原始位元組",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "native-animation"
+      ],
+      "bytes": 3224424,
+      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+      "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "recoveredFromGitCommit": "7bc2fa3f8",
+      "normalizedReplacementSha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+      "normalizedReplacementGitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "readiness": "archived-exact-historical-source; normalized replacement retained separately",
+      "limitations": [
+        "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
+        "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
+        "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified.",
+        "保留合併前的精確 Git 位元組；未取代材質正規化版本，也不宣稱可切換或已部署。"
+      ],
+      "sourceArtifactBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+        "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+        "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+        "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+      }
+    },
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
@@ -10047,7 +10295,7 @@
       }
     }
   ],
-  "historicalModelSourceArtifactCount": 2,
+  "historicalModelSourceArtifactCount": 4,
   "historicalModelRestorationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/restoration-receipt.json",
     "sha256": "8a0659e08fca61c50766c2f76da1ea5f0061b6cd1023bfe3733c39904a84be86"
@@ -10055,7 +10303,7 @@
   "historicalModelOptionRegistration": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
     "bytes": 6985,
-    "sha256": "c44f22e823b51e53323a270584fd9e037cd70e485a06c1e46b9fdf2d5c1bba2e",
+    "sha256": "ef17b9368f5e2936f1a6cc18f88b084fb18b3b5066e989d1d39ea7c15010b77d",
     "registeredHeroIds": [
       "acquired-jetragon",
       "acquired-astralym",
@@ -10067,11 +10315,11 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "2884ae7d345e0ef72d4aabe8da42f6f0e61cb1258263d274b3cb209a7d5f4077"
+    "sha256": "d6658c170004b8b2831ef9d4137df2a73e8be414045aa2d76deecdba62e06041"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-    "sha256": "da6f6410867dcace47605c1f691666d507c34c0822fb9ed3e42054bfe3c0c8ef",
+    "sha256": "a0724d4293b908a14d71065d519aaf8a541a5e74088206f825dc50104e91d50c",
     "heroIds": [
       "acquired-jetragon",
       "acquired-astralym",
@@ -10082,6 +10330,6 @@
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "b4f5af9f9fe41f5810cfeb402f0416784718e4679e705d872323a0170053c38c"
+    "sha256": "8f0eac926b06ea838b36c5c7a56f1bb4882f02a44fd1e6be54200bd7ab442953"
   }
 }

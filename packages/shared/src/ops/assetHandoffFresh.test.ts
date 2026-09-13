@@ -51,7 +51,8 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
       "acquired-mario": ["ssbu-mario-c00-static-skinned-v1", "ssbu-mario-c00-ultimate14-motion-v1"],
       "acquired-mewtwo": ["ssbu-mewtwo-c00-static-skinned-v1"],
       "acquired-pokemon-trainer": ["ssbu-ptrainer-female-c01-static-skinned-v1", "ssbu-ptrainer-male-c00-static-skinned-v1"],
-      "acquired-ryu": ["ssbu-ryu-c00-static-skinned-v1"],
+      // ⚠️ 8c73fa1e1（09-13 14:53）加了程序化六態動作元件；這一格寫於 180486a9b（同日 09:06）而沒跟上
+      "acquired-ryu": ["ssbu-ryu-c00-procedural-six-state-v1", "ssbu-ryu-c00-static-skinned-v1"],
       "acquired-minecraft": ["ssbu-pickel-alex-c01-static-skinned-v1", "ssbu-pickel-steve-c00-static-skinned-v1"],
     };
 
@@ -66,7 +67,7 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
     }
 
     expect(doc.counts.independentComponentPending).toBe(8);
-    expect(doc.counts.independentComponents).toBe(11);
+    expect(doc.counts.independentComponents).toBe(12);
     expect(doc.counts.modelCompletelyMissing).toBe(0);
     expect((byId.get("acquired-zero") as any).model.components.map((component: any) => component.id)).not.toContain("zero-lancer-p1-static-skinned-v1");
     expect((byId.get("acquired-mario") as any).model.nativeAnimationCount).toBe(5);
@@ -77,13 +78,15 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
     const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8"));
     const byId = new Map(doc.heroes.map((hero: any) => [hero.id, hero]));
 
-    for (const heroId of ["acquired-jetragon", "acquired-astralym"]) {
+    for (const heroId of ["acquired-astralym"]) {
       const model: any = (byId.get(heroId) as any)?.model;
       expect(model?.filesInRepo, heroId).toBe(2);
       expect(model?.filesArchivedInRepo ?? 0, heroId).toBe(0);
     }
 
     const relocated: Record<string, string> = {
+      // ⭐ PR #1152 合併準備：空渦龍的交付原件修過貼圖背板（0d9eed3a… → 0d533af8…），原件照 kita-kita 前例歸檔
+      "acquired-jetragon": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
       "acquired-kita-kita": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
       "acquired-lord-nightmares": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
     };

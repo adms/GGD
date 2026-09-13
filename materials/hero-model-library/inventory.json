@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T04:09:38+08:00",
-  "inputsSha256": "87a5c76e635bfad7b88b6aadc36d12c097b8b78f5237f86fbbfa3d4e5952bf4a",
+  "generatedAt": "2026-09-14T04:39:48+08:00",
+  "inputsSha256": "64bb3a1a033673166e4a2f148043f2f2d0d365df262e9e61842cb4f1a8aea37c",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -44922,13 +44922,13 @@
         "defaultEligible": true,
         "asset": {
           "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-          "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-          "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+          "glbPath": "assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
+          "sha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
           "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
           "s3Uri": null,
           "s3ManifestUri": null,
           "s3ReadbackVerified": null,
-          "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "gitPath": "content/assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
           "limitations": [
             "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
             "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
@@ -44950,13 +44950,13 @@
         "defaultEligible": true,
         "asset": {
           "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-          "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-          "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+          "glbPath": "assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
+          "sha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
           "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
           "s3Uri": null,
           "s3ManifestUri": null,
           "s3ReadbackVerified": null,
-          "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "gitPath": "content/assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
           "limitations": [
             "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
             "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
@@ -44990,13 +44990,13 @@
           "defaultEligible": true,
           "asset": {
             "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-            "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-            "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+            "glbPath": "assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
+            "sha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
             "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
             "s3Uri": null,
             "s3ManifestUri": null,
             "s3ReadbackVerified": null,
-            "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+            "gitPath": "content/assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
             "limitations": [
               "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
               "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
@@ -45020,13 +45020,13 @@
           "defaultEligible": true,
           "asset": {
             "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
-            "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
-            "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+            "glbPath": "assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
+            "sha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
             "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.tar.gz",
             "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.files.json",
             "s3ReadbackVerified": true,
-            "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+            "gitPath": "content/assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
             "limitations": [
               "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
               "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
@@ -50683,13 +50683,13 @@
         "defaultEligible": true,
         "asset": {
           "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-          "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-          "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+          "glbPath": "assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
+          "sha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
           "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
           "s3Uri": null,
           "s3ManifestUri": null,
           "s3ReadbackVerified": null,
-          "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "gitPath": "content/assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
           "limitations": [
             "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
             "GGD hurt/death 共用原生死亡序列。",
@@ -50712,13 +50712,13 @@
         "defaultEligible": true,
         "asset": {
           "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-          "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-          "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+          "glbPath": "assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
+          "sha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
           "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
           "s3Uri": null,
           "s3ManifestUri": null,
           "s3ReadbackVerified": null,
-          "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "gitPath": "content/assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
           "limitations": [
             "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
             "GGD hurt/death 共用原生死亡序列。",
@@ -50753,13 +50753,13 @@
           "defaultEligible": true,
           "asset": {
             "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-            "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-            "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+            "glbPath": "assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
+            "sha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
             "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
             "s3Uri": null,
             "s3ManifestUri": null,
             "s3ReadbackVerified": null,
-            "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+            "gitPath": "content/assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
             "limitations": [
               "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
               "GGD hurt/death 共用原生死亡序列。",
@@ -169212,8 +169212,8 @@
             },
             "normalizationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
-              "bytes": 3585,
-              "sha256": "f74c020f1cccefe6e8d2cd2474b39a6a56d7646b9aa827137523773ec2592052"
+              "bytes": 9377,
+              "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
             }
           },
           {
@@ -169349,8 +169349,8 @@
             },
             "normalizationEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
-              "bytes": 3585,
-              "sha256": "f74c020f1cccefe6e8d2cd2474b39a6a56d7646b9aa827137523773ec2592052"
+              "bytes": 9377,
+              "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
             }
           },
           {

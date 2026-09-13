@@ -9,12 +9,12 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "d580bcfa2cdede8d8f49c95bd4687245d56c81c21fc63c16581a007e7b5e59be",
+      "sha256": "70a99567c0aaa428d5d48eeed481801f1c68e6962ebe57032dd8b79729a2c124",
       "fileCount": 1009
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "edeaa7cadc8982fcc55a327c03230088e68de7947aa13f13efbb39def9a06cef",
+      "sha256": "70e7ed06b3188439ecd877d1194733ede5afaa0386cfb8fdf2dea9bb53792834",
       "fileCount": 154
     },
     "heroForgeOptions": {
@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "18ec900c4b420900bc11ffdcc33ac4caa5b52179bbfad7b6904ae57fe3e8853a"
+      "sha256": "7696535f7f364f1e02c7a5d197f6ff46013b37bf4b342aaf1e3e2fe6ee75c68e"
     }
   },
   "summary": {
@@ -45,7 +45,7 @@
     "readyUnregisteredIndependentComponents": 25,
     "readyUnregisteredCharacterOrMotionComponents": 23,
     "readyUnregisteredWeaponComponents": 2,
-    "nonReadyHistoricalSourceArtifacts": 2,
+    "nonReadyHistoricalSourceArtifacts": 4,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
@@ -931,6 +931,32 @@
     }
   ],
   "nonReadyHistoricalSourceArtifacts": [
+    {
+      "id": "historical-astralym-decimated-f77cf1ee:exact-historical-source",
+      "nameZh": "枯星龍",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+      "blockers": [
+        "exact-historical-source-artifact-is-not-a-normalized-runtime-model",
+        "componentReady-is-false"
+      ]
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8:exact-historical-source",
+      "nameZh": "空渦龍",
+      "resourceRole": "exact-historical-model-source-artifact",
+      "componentReady": false,
+      "runtimeSelectable": false,
+      "gitPath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+      "blockers": [
+        "exact-historical-source-artifact-is-not-a-normalized-runtime-model",
+        "componentReady-is-false"
+      ]
+    },
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
       "nameZh": "吉他吉他老伯",

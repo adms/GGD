@@ -77,7 +77,7 @@
 
 ## 不能直接註冊的保留資料
 
-- 精確歷史來源 artifact：2 筆；`componentReady=false`，僅供還原與比對。
+- 精確歷史來源 artifact：4 筆；`componentReady=false`，僅供還原與比對。
 - orphan frozen version：67 筆；文件沒有 hero ID，不能安全推回任何英雄。完整逐筆清單在 JSON。
 - 其他未被中央驗證索引或英雄下拉解釋的 `model@1`：184 筆。部分已有技能／VFX 等非英雄參照，其他缺權威角色欄位；完整逐筆清單在 JSON。
 

@@ -60,6 +60,102 @@
       "changedImageBufferViews": [
         10
       ]
+    },
+    {
+      "candidateId": "runtime:infinity-strash-dai-pn010-02-native-v1",
+      "catalog": "materials/hero-model-library/priority-runtime-options.json",
+      "schema": "ggd-model-texture-backdrop-repair@1",
+      "source": {
+        "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "bytes": 2000480,
+        "gitCommit": "9c8783d0e",
+        "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab"
+      },
+      "output": {
+        "sha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
+        "bytes": 2003920,
+        "gitPath": "content/assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
+        "documentSha256": "691994db783a94e5f189caed5395be54706a8239ccad0fe7f959d4d26ce148d9"
+      },
+      "changes": [
+        "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素"
+      ],
+      "gateBefore": "MODEL_TEXTURE_BACKDROP mat2:GGD_faceDecal1 BLEND planar carrier=80.04% edge=95.5%",
+      "gateAfter": "MODEL_TEXTURE_BACKDROP 0 條",
+      "binaryChunkByteIdentical": false,
+      "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+      "nonImageBufferViewsByteIdentical": true,
+      "gltfJsonIdenticalExceptImageLayout": true,
+      "changedImageBufferViews": [
+        1110
+      ],
+      "visualNote": "⚠️ 18 態 Babylon WebGL 取樣是對修補前的位元組跑的；BLEND 貼花拿掉底卡是看得到的變化 —— 需要重跑取樣才能宣稱畫面驗收"
+    },
+    {
+      "candidateId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+      "catalog": "materials/hero-model-library/priority-runtime-options.json",
+      "schema": "ggd-model-texture-backdrop-repair@1",
+      "source": {
+        "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "bytes": 2206692,
+        "gitCommit": "9c8783d0e",
+        "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef"
+      },
+      "output": {
+        "sha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
+        "bytes": 2210132,
+        "gitPath": "content/assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
+        "documentSha256": "4fcd7e5a2d883ed9b039ddd3d95eda65e6a308767ca82e072e2adaf958462d94"
+      },
+      "changes": [
+        "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素"
+      ],
+      "gateBefore": "MODEL_TEXTURE_BACKDROP mat2:GGD_faceDecal1 BLEND planar carrier=80.04% edge=95.5%",
+      "gateAfter": "MODEL_TEXTURE_BACKDROP 0 條",
+      "binaryChunkByteIdentical": false,
+      "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+      "nonImageBufferViewsByteIdentical": true,
+      "gltfJsonIdenticalExceptImageLayout": true,
+      "changedImageBufferViews": [
+        1116
+      ],
+      "visualNote": "⚠️ 18 態 Babylon WebGL 取樣是對修補前的位元組跑的；BLEND 貼花拿掉底卡是看得到的變化 —— 需要重跑取樣才能宣稱畫面驗收"
+    },
+    {
+      "candidateId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+      "catalog": "materials/hero-model-library/priority-runtime-options.json",
+      "schema": "ggd-model-texture-backdrop-repair@1",
+      "source": {
+        "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "bytes": 3011048,
+        "gitCommit": "9c8783d0e",
+        "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c"
+      },
+      "output": {
+        "sha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
+        "bytes": 3003920,
+        "gitPath": "content/assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
+        "documentSha256": "1aaec913cb159c542310994bab40cd62cd51b2c33fb495ebce051fb8d011e4be"
+      },
+      "changes": [
+        "mat0:GGD_body flatten-alpha —— OPAQUE 材質上的藏色透明壓成 255：image 1 的 alpha 改了 22.47% 像素，RGB 0 像素"
+      ],
+      "gateBefore": "MODEL_TEXTURE_BACKDROP mat0:GGD_body transparent=2.16% alphaMode=OPAQUE",
+      "gateAfter": "MODEL_TEXTURE_BACKDROP 0 條",
+      "binaryChunkByteIdentical": false,
+      "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+      "nonImageBufferViewsByteIdentical": true,
+      "gltfJsonIdenticalExceptImageLayout": true,
+      "changedImageBufferViews": [
+        1131
+      ],
+      "visualNote": "OPAQUE 材質渲染時不讀 alpha ⇒ 預期畫面不變；⚠️ 但 18 態取樣仍是對修補前的位元組跑的，⛔ 未重跑"
     }
   ],
   "sourceBytesPreserved": true,

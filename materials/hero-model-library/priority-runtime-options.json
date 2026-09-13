@@ -300,10 +300,10 @@
     {
       "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
       "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-      "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
-      "bytes": 2000480,
-      "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+      "glbPath": "assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
+      "sha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
+      "bytes": 2003920,
+      "documentSha256": "691994db783a94e5f189caed5395be54706a8239ccad0fe7f959d4d26ce148d9",
       "sourceCharacter": "小呆／達伊（PN010/02）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
@@ -321,20 +321,51 @@
         "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+      "gitPath": "content/assets/models/community/450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59.glb",
       "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
-      "fullCharacterPackage": false
+      "fullCharacterPackage": false,
+      "sourceDelivery": {
+        "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "bytes": 2000480,
+        "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "gitPathAtIngest": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+        "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb"
+      },
+      "validationSubjectSha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "postRepairVisualReviewPending": true,
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素"
+        ],
+        "binaryChunkByteIdentical": false,
+        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          1110
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      }
     },
     {
       "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
       "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
-      "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
-      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
-      "bytes": 2206692,
-      "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+      "glbPath": "assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
+      "sha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
+      "bytes": 2210132,
+      "documentSha256": "4fcd7e5a2d883ed9b039ddd3d95eda65e6a308767ca82e072e2adaf958462d94",
       "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
@@ -353,7 +384,7 @@
         "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "gitPath": "content/assets/models/community/82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151.glb",
       "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
@@ -367,15 +398,46 @@
         "fileCount": 147,
         "readbackVerified": true,
         "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/s3-conversion-receipt.json"
+      },
+      "sourceDelivery": {
+        "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "bytes": 2206692,
+        "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "gitPathAtIngest": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+        "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb"
+      },
+      "validationSubjectSha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "postRepairVisualReviewPending": true,
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素"
+        ],
+        "binaryChunkByteIdentical": false,
+        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          1116
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
       }
     },
     {
       "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
       "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-      "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
-      "bytes": 3011048,
-      "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+      "glbPath": "assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
+      "sha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
+      "bytes": 3003920,
+      "documentSha256": "1aaec913cb159c542310994bab40cd62cd51b2c33fb495ebce051fb8d011e4be",
       "sourceCharacter": "巴恩大魔王（EN801，變身前／老巴恩）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
@@ -394,12 +456,43 @@
         "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+      "gitPath": "content/assets/models/community/a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49.glb",
       "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
-      "fullCharacterPackage": false
+      "fullCharacterPackage": false,
+      "sourceDelivery": {
+        "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "bytes": 3011048,
+        "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "gitPathAtIngest": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+        "gitCommitAtIngest": "9c8783d0e",
+        "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+        "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+        "gitArchivePath": "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb"
+      },
+      "validationSubjectSha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "postRepairVisualReviewPending": true,
+      "materialNormalization": {
+        "schema": "ggd-model-texture-backdrop-repair@1",
+        "revision": 1,
+        "changes": [
+          "mat0:GGD_body flatten-alpha —— OPAQUE 材質上的藏色透明壓成 255：image 1 的 alpha 改了 22.47% 像素，RGB 0 像素"
+        ],
+        "binaryChunkByteIdentical": false,
+        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+        "nonImageBufferViewsByteIdentical": true,
+        "gltfJsonIdenticalExceptImageLayout": true,
+        "changedImageBufferViews": [
+          1131
+        ]
+      },
+      "normalizationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+        "bytes": 9377,
+        "sha256": "50cc1f809069ec6fc3230407a59ffca2d3225699ff427176832baf58550ec6aa"
+      }
     },
     {
       "id": "runtime:infinity-strash-popp-pn020-00-magikaru-native-v2",

@@ -4,7 +4,7 @@
 owner 2026-09-14：「請你驗收合併這張票 解決英雄殿跟遊戲回合中 model, 特效, 音效, 語音 等遺漏與不足之處」
 
 ⭐ 為什麼要寫紀錄，⛔ 不是只換檔：這兩顆的價值之一是**出處**（空渦龍＝`7bc2fa3f8` 的逐位元組歷史復原；
-枯星龍候選＝減面產物，15 組三視角 A/B 就是對著那一份位元組跑的）。
+枯星龍候選＝減面產物，15 組三視角 A/B 就是對著那一份位元組跑的；神劍闖江湖三顆執行期交付＝18 態 WebGL 取樣對著那一份跑的）。
 ⇒ 原件**釘住**（位元組數＋sha256＋在哪裡找得回來），出貨的是新的內容定址 GLB，
 改了什麼逐條寫進 `materialNormalization`（⚠️ 這一次 `binaryChunkByteIdentical: false` —— 動到的是像素，⛔ 不假裝沒動）。
 
@@ -19,6 +19,9 @@ REPO = Path(__file__).resolve().parents[2]
 INDEX = REPO / "materials/hero-model-library/download-sources.json"
 EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json"
 ARCHIVE_7BC = "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8"
+# ⭐ 執行期交付（`priority-runtime-options.json`）的修補前原件 —— 它們被 WebGL 取樣驗收過的是**這一份**位元組
+RUNTIME_INDEX = REPO / "materials/hero-model-library/priority-runtime-options.json"
+ARCHIVE_RUNTIME = "materials/hero-model-library/source-artifacts/pre-texture-backdrop-repair-v1"
 
 # ⭐ 每一筆都指得到：修補前的位元組從哪一個 commit 撈得回來、修補後住哪、改了什麼、為什麼是這個修法
 REPAIRS = {
@@ -44,6 +47,47 @@ REPAIRS = {
         "gateBefore": "MODEL_TEXTURE_BACKDROP emissive bright-matte=1.41%／2.18%",
         "gateAfter": "emissive 亮藏色 0.000%／0.000%（MASK 材質 ⇒ 底色可見處一個像素都沒動，只清掉自發光照得到的藏色）",
         "visualNote": "⚠️ 15 組三視角 A/B 是對修補前的位元組跑的；這次只清 alpha≤5 的藏色，基底色可見像素不變，自發光的暈點會消失 —— 需要重跑 A/B 才能宣稱像素差不變",
+    },
+}
+
+
+# ⭐ 執行期交付：⛔ 在此之前 `apply-pr1152-model-fixes.mts` 只問「還有沒有 model 文件引用舊 GLB」就把它刪了，
+#    ⛔ 沒問中央素材庫（`priority-runtime-options.json` 釘著它的 sha256 與文件 sha256）⇒ `current_resource_index.py` 讀不到檔。
+#    ⇒ 原件逐位元組歸檔、目錄那一列改指修補後的位元組，並把「驗收跑在哪一份」寫明。
+# gateBefore／gateAfter 是 2026-09-14 用 `tools/vfx-asset-safety/check.py` 對兩份位元組實跑的輸出（⛔ 不是抄的）。
+RUNTIME_REPAIRS = {
+    "runtime:infinity-strash-dai-pn010-02-native-v1": {
+        "beforeSha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "afterSha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
+        "gitCommitOfBefore": "9c8783d0e",
+        "changes": [
+            "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素",
+        ],
+        "gateBefore": "MODEL_TEXTURE_BACKDROP mat2:GGD_faceDecal1 BLEND planar carrier=80.04% edge=95.5%",
+        "gateAfter": "MODEL_TEXTURE_BACKDROP 0 條",
+        "visualNote": "⚠️ 18 態 Babylon WebGL 取樣是對修補前的位元組跑的；BLEND 貼花拿掉底卡是看得到的變化 —— 需要重跑取樣才能宣稱畫面驗收",
+    },
+    "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1": {
+        "beforeSha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "afterSha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
+        "gitCommitOfBefore": "9c8783d0e",
+        "changes": [
+            "mat2:GGD_faceDecal1 key-carrier —— BLEND 平面臉部貼花的不透明底卡摳成透明：image 3 的 alpha 改了 88.95% 像素，RGB 0 像素",
+        ],
+        "gateBefore": "MODEL_TEXTURE_BACKDROP mat2:GGD_faceDecal1 BLEND planar carrier=80.04% edge=95.5%",
+        "gateAfter": "MODEL_TEXTURE_BACKDROP 0 條",
+        "visualNote": "⚠️ 18 態 Babylon WebGL 取樣是對修補前的位元組跑的；BLEND 貼花拿掉底卡是看得到的變化 —— 需要重跑取樣才能宣稱畫面驗收",
+    },
+    "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1": {
+        "beforeSha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "afterSha256": "a4f597cadea7977b21c95025b8407858cbb9a6a5fee9201376031002511bab49",
+        "gitCommitOfBefore": "9c8783d0e",
+        "changes": [
+            "mat0:GGD_body flatten-alpha —— OPAQUE 材質上的藏色透明壓成 255：image 1 的 alpha 改了 22.47% 像素，RGB 0 像素",
+        ],
+        "gateBefore": "MODEL_TEXTURE_BACKDROP mat0:GGD_body transparent=2.16% alphaMode=OPAQUE",
+        "gateAfter": "MODEL_TEXTURE_BACKDROP 0 條",
+        "visualNote": "OPAQUE 材質渲染時不讀 alpha ⇒ 預期畫面不變；⚠️ 但 18 態取樣仍是對修補前的位元組跑的，⛔ 未重跑",
     },
 }
 
@@ -92,7 +136,18 @@ def git_blob(commit: str, path: str) -> bytes:
     return subprocess.run(["git", "show", f"{commit}:{path}"], cwd=REPO, capture_output=True, check=True).stdout
 
 
-def build(index: dict):
+def before_bytes(archive_rel: str | None, commit: str, git_path: str, digest: str) -> bytes:
+    """⭐ 先讀 git 內的逐位元組歸檔 —— ⛔ PR 的 commit 在 squash 合併之後就不在 main 上了，
+    只靠 `git show <commit>:` 的話這支 `--check` 在 main 上**永遠不會綠**。歸檔還沒寫出來（第一次 --write）才回頭找 commit。"""
+    if archive_rel and (REPO / archive_rel).is_file():
+        data = (REPO / archive_rel).read_bytes()
+    else:
+        data = git_blob(commit, git_path)
+    assert sha(data) == digest, f"原件雜湊不符：{git_path}"
+    return data
+
+
+def build(index: dict, runtime: dict):
     updated = copy.deepcopy(index); rows = []; writes = []; found = set()
     for sec in ("publicSources", "paidSources"):
         for source in updated.get(sec, []):
@@ -101,8 +156,8 @@ def build(index: dict):
                 if not r: continue
                 found.add(c["id"])
                 before_git = f"content/assets/models/community/{r['beforeSha256']}.glb"
-                before = git_blob(r["gitCommitOfBefore"], before_git)
-                assert sha(before) == r["beforeSha256"], c["id"]
+                archive_rel = f"{ARCHIVE_7BC}/{r['beforeSha256']}.glb" if c.get("recoveredFromGitCommit") == "7bc2fa3f8" else None
+                before = before_bytes(archive_rel, r["gitCommitOfBefore"], before_git, r["beforeSha256"])
                 after_rel = f"content/assets/models/community/{r['afterSha256']}.glb"
                 after = (REPO / after_rel).read_bytes()
                 assert sha(after) == r["afterSha256"], c["id"]
@@ -131,6 +186,53 @@ def build(index: dict):
                              "binaryChunkByteIdentical": False, **proof,
                              **({"visualNote": r["visualNote"]} if r.get("visualNote") else {})})
     assert found == set(REPAIRS), (found, set(REPAIRS))
+
+    # ── 執行期交付 ────────────────────────────────────────────────────────
+    updated_runtime = copy.deepcopy(runtime); runtime_found = set()
+    for row in updated_runtime["models"]:
+        r = RUNTIME_REPAIRS.get(row.get("id"))
+        if not r: continue
+        runtime_found.add(row["id"])
+        prior = row.get("sourceDelivery") or {}
+        old_glb = prior.get("glbPath") or row["glbPath"]
+        src_doc_sha = prior.get("documentSha256") or row["documentSha256"]
+        doc_raw = (REPO / "content/models" / f"{row['modelKey']}.json").read_bytes()
+        doc_text = doc_raw.decode("utf-8")
+        new_glb = json.loads(doc_text)["glbPath"]
+        assert new_glb == f"assets/models/community/{r['afterSha256']}.glb", (row["id"], new_glb)
+        # ⭐ 文件只改了 glbPath 的**位元組層**證明：把那一格換回舊路徑，雜湊要等於驗收時釘住的文件雜湊
+        assert doc_text.count(json.dumps(new_glb)) == 1, row["id"]
+        rebuilt = doc_text.replace(json.dumps(new_glb), json.dumps(old_glb), 1).encode("utf-8")
+        assert sha(rebuilt) == src_doc_sha, f"⛔ {row['id']} 的模型文件除了 glbPath 還改了別的"
+        archive_rel = f"{ARCHIVE_RUNTIME}/{r['beforeSha256']}.glb"
+        before = before_bytes(archive_rel, r["gitCommitOfBefore"], "content/" + old_glb, r["beforeSha256"])
+        after = (REPO / "content" / new_glb).read_bytes()
+        assert sha(after) == r["afterSha256"], row["id"]
+        proof = non_image_data_identical(before, after)
+        src = copy.deepcopy(prior) or {
+            "sha256": r["beforeSha256"], "bytes": len(before), "glbPath": old_glb,
+            "gitPathAtIngest": "content/" + old_glb, "gitCommitAtIngest": r["gitCommitOfBefore"],
+            "documentSha256": src_doc_sha, "validation": row.get("validation"),
+        }
+        src["gitArchivePath"] = archive_rel
+        writes.append((REPO / archive_rel, before))
+        row.update({"glbPath": new_glb, "gitPath": "content/" + new_glb, "sha256": r["afterSha256"], "bytes": len(after),
+                    "documentSha256": sha(doc_raw), "sourceDelivery": src,
+                    "validationSubjectSha256": r["beforeSha256"], "postRepairVisualReviewPending": True,
+                    "materialNormalization": {
+                        "schema": "ggd-model-texture-backdrop-repair@1", "revision": 1,
+                        "changes": r["changes"], "binaryChunkByteIdentical": False,
+                        "modelDocumentChange": "glbPath-only-byte-reconstruction-verified", **proof}})
+        rows.append({"candidateId": row["id"], "catalog": RUNTIME_INDEX.relative_to(REPO).as_posix(),
+                     "schema": "ggd-model-texture-backdrop-repair@1",
+                     "source": {"sha256": r["beforeSha256"], "bytes": len(before), "gitCommit": r["gitCommitOfBefore"],
+                                "gitPath": "content/" + old_glb, "gitArchivePath": archive_rel, "documentSha256": src_doc_sha},
+                     "output": {"sha256": r["afterSha256"], "bytes": len(after), "gitPath": "content/" + new_glb,
+                                "documentSha256": sha(doc_raw)},
+                     "changes": r["changes"], "gateBefore": r["gateBefore"], "gateAfter": r["gateAfter"],
+                     "binaryChunkByteIdentical": False, "modelDocumentChange": "glbPath-only-byte-reconstruction-verified",
+                     **proof, "visualNote": r["visualNote"]})
+    assert runtime_found == set(RUNTIME_REPAIRS), (runtime_found, set(RUNTIME_REPAIRS))
     evidence = {"schema": "ggd-model-texture-backdrop-repair-batch@1",
                 "tool": "tools/model-fix/fix_glb_textures.py",
                 "gate": "tools/vfx-asset-safety/check.py MODEL_TEXTURE_BACKDROP",
@@ -142,7 +244,9 @@ def build(index: dict):
         for source in updated.get(sec, []):
             for c in source.get("componentCandidates", []):
                 if c.get("id") in REPAIRS: c["normalizationEvidence"] = pin
-    return updated, eb, writes
+    for row in updated_runtime["models"]:
+        if row.get("id") in RUNTIME_REPAIRS: row["normalizationEvidence"] = pin
+    return updated, updated_runtime, eb, writes
 
 
 def main() -> int:
@@ -151,9 +255,11 @@ def main() -> int:
     m.add_argument("--check", action="store_true"); m.add_argument("--write", action="store_true")
     a = ap.parse_args()
     current = json.loads(INDEX.read_text(encoding="utf-8"))
-    updated, eb, writes = build(current)
+    runtime = json.loads(RUNTIME_INDEX.read_text(encoding="utf-8"))
+    updated, updated_runtime, eb, writes = build(current, runtime)
     if a.check:
         assert current == updated, "download-sources.json 還沒記下貼圖背板修補"
+        assert runtime == updated_runtime, "priority-runtime-options.json 還沒記下貼圖背板修補"
         assert EVIDENCE.read_bytes() == eb, "修補證據過期"
         for p, data in writes: assert p.read_bytes() == data, f"歷史原件缺或不一致：{p}"
     else:
@@ -163,7 +269,8 @@ def main() -> int:
             else: p.write_bytes(data)
         EVIDENCE.parent.mkdir(parents=True, exist_ok=True); EVIDENCE.write_bytes(eb)
         INDEX.write_text(json.dumps(updated, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"records": len(REPAIRS), "written": a.write}, ensure_ascii=False))
+        RUNTIME_INDEX.write_text(json.dumps(updated_runtime, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"records": len(REPAIRS) + len(RUNTIME_REPAIRS), "written": a.write}, ensure_ascii=False))
     return 0
 
 

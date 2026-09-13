@@ -80,7 +80,7 @@ describe("新英雄上架一頁檢核 (hero-intake-review)", () => {
     };
     const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8")) as {
       delivery: { rows: number; claimed: number; unclaimed: string[]; doubleClaimed: string[] };
-      heroes: { id: string; model: { files?: number; modelKey?: string | null; severity?: string; gap?: string } }[];
+      heroes: { id: string; model: { files?: number; modelKey?: string | null; severity?: string; gap?: string; componentStatus?: string } }[];
     };
     expect(doc.delivery.doubleClaimed, "⛔ 同一列交付被兩位英雄認領 —— 那是 join key 漂掉的樣子").toEqual([]);
     // ⭐ 同一個材料目錄底下還住著那一批的**名單檔**（輸入）—— 它⛔ 不可以被讀成第二個同名批次
@@ -94,7 +94,10 @@ describe("新英雄上架一頁檢核 (hero-intake-review)", () => {
     for (const h of empty) {
       if (h.model.modelKey == null) {
         expect(h.model.severity, `${h.id}：0 個檔又沒有 modelKey ＝ **沒有模型**，⛔ 不可以算成只是順序沒到`).toBe("blocker");
-        expect(h.model.gap ?? "").toMatch(/沒有模型/);
+        // ⭐ 第三種狀態（PR #1152）：中央素材庫有已驗收的**獨立元件**但還沒有英雄 ⇒ 一樣擋，而且措辭要明說不能選用
+        expect(h.model.gap ?? "").toMatch(
+          h.model.componentStatus === "accepted-independent-components-pending-hero-integration" ? /不能選用或宣稱已上架/ : /沒有模型/,
+        );
       } else {
         expect(h.model.severity, `${h.id}：0 個檔但 modelKey 查得到（檔本來就在這裡）⇒ ⛔ 不是缺漏`).not.toBe("blocker");
       }

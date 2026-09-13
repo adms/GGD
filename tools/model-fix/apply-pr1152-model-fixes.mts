@@ -17,6 +17,7 @@
  *  ③ 雜湊傳播：每一份被改到的 `version.body.*` → 重算 `modelSha256`／`binarySha256` → 寫回每一位英雄的 `modelVersions`
  */
 import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync, mkdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { contentSha256 } from "../../packages/shared/src/content/import/jcs";
@@ -115,9 +116,17 @@ for (const f of readdirSync(champDir).filter((x) => x.endsWith(".json") && !x.st
   }
 }
 // ⑤ 舊 GLB：沒有任何文件再引用才刪（⛔ 還有人引用就留著）
+// ⛔⛔ 2026-09-14 第一版只問了 content/models ⇒ 刪掉 3 顆仍被中央素材庫（priority-runtime-options.json）釘住的神劍闖江湖 GLB，
+//    current_resource_index.py 當場讀不到檔（假綠燈⑫：只從一頭走）。⇒ 兩頭都問：materials/ 裡還有人寫著這個 sha 就不刪。
 const stillUsed = new Set([...byKey.values()].map((d) => d.glbPath).filter(Boolean));
+const catalogued = (p: string) =>
+  spawnSync("git", ["grep", "-l", "-F", basename(p, ".glb"), "--", "materials"], { cwd: ROOT, encoding: "utf8" }).stdout.trim() !== "";
 let removed = 0;
-for (const p of oldGlbFiles) if (!stillUsed.has(p) && existsSync(join(C, p))) { rmSync(join(C, p)); removed += 1; }
+for (const p of oldGlbFiles) {
+  if (stillUsed.has(p) || !existsSync(join(C, p))) continue;
+  if (catalogued(p)) { console.log(`⑤ 留著 ${basename(p).slice(0, 12)}：materials/ 仍釘著它 —— 先把原件歸檔並改寫目錄（tools/model-fix/record_backdrop_repairs.py）`); continue; }
+  rmSync(join(C, p)); removed += 1;
+}
 
 console.log(JSON.stringify({ modelDocsTouched: touched.size, versionEntriesRehashed: entries, verified, verifyFailed: failed.length, oldGlbRemoved: removed }));
 if (failed.length) { console.error(failed.slice(0, 10).join("\n")); process.exitCode = 1; }
