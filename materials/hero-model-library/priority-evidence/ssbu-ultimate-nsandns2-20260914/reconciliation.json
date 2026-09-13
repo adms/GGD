@@ -1,0 +1,481 @@
+{
+  "schema": "ggd-ssbu-ultimate-nsandns2-compact-evidence@1",
+  "auditedAt": "2026-09-13T16:45:55.857038+00:00",
+  "sourceId": "parallel-ns-ultimate14",
+  "sourceGame": "Super Smash Bros. Ultimate / Ultimate14 community MOD",
+  "platform": "Nintendo Switch",
+  "definitionOfSixteen": "Exactly 16 fighter IDs with NUANMB paths in Ultimate14 community MOD; 435 total NUANMB paths = 411 transform motion paths plus 24 model metadata paths, not 16 complete original-game heroes.",
+  "fixedMotionIndex": {
+    "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+    "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23"
+  },
+  "fixedWindowsIndex": {
+    "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
+    "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486"
+  },
+  "motionSummary": {
+    "pathCount": 435,
+    "uniquePayloadCount": 176,
+    "parsedPathCount": 435,
+    "parseErrorPathCount": 0,
+    "parseErrorUniquePayloadCount": 0,
+    "motionDirectoryPathCount": 411,
+    "bodyMotionPathCount": 282,
+    "accessoryMotionPathCount": 129,
+    "modelAnimationMetadataPathCount": 24,
+    "transformMotionPathCount": 411,
+    "uniqueTransformMotionPayloadCount": 175,
+    "nuanmbVersionPathCounts": {
+      "2.0": 414,
+      "2.1": 21
+    },
+    "nuanmbVersionUniquePayloadCounts": {
+      "2.0": 169,
+      "2.1": 7
+    },
+    "fighterCount": 16,
+    "convertedToGgdCount": 0,
+    "skeletonPlaybackValidatedCount": 0,
+    "runtimeSelectableCount": 0
+  },
+  "fighters": [
+    {
+      "nativeFighterId": "chrom",
+      "nameZh": "庫洛姆",
+      "originalName": "Chrom",
+      "nuanmbPaths": 9,
+      "bodyMotionPaths": 9,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 9,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "daisy",
+      "nameZh": "黛西",
+      "originalName": "Daisy",
+      "nuanmbPaths": 13,
+      "bodyMotionPaths": 13,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 13,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "ganon",
+      "nameZh": "加儂多夫",
+      "originalName": "Ganondorf",
+      "nuanmbPaths": 10,
+      "bodyMotionPaths": 10,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 10,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "kirby",
+      "nameZh": "卡比",
+      "originalName": "Kirby",
+      "nuanmbPaths": 25,
+      "bodyMotionPaths": 3,
+      "accessoryMotionPaths": 22,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 24,
+      "motionTargets": [
+        "body",
+        "daisybody",
+        "richterbody",
+        "samusdbody",
+        "sonicbody"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "link",
+      "nameZh": "林克",
+      "originalName": "Link",
+      "nuanmbPaths": 85,
+      "bodyMotionPaths": 61,
+      "accessoryMotionPaths": 24,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 22,
+      "motionTargets": [
+        "body",
+        "parasail"
+      ],
+      "motionCostumes": [
+        "c00",
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "lucas",
+      "nameZh": "路卡斯",
+      "originalName": "Lucas",
+      "nuanmbPaths": 7,
+      "bodyMotionPaths": 7,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 7,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "lucina",
+      "nameZh": "露琪娜",
+      "originalName": "Lucina",
+      "nuanmbPaths": 105,
+      "bodyMotionPaths": 41,
+      "accessoryMotionPaths": 48,
+      "modelMetadataPaths": 16,
+      "uniqueTransformPayloads": 19,
+      "motionTargets": [
+        "body",
+        "bow",
+        "bowarrow"
+      ],
+      "motionCostumes": [
+        "c00",
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "mario",
+      "nameZh": "瑪利歐",
+      "originalName": "Mario",
+      "nuanmbPaths": 64,
+      "bodyMotionPaths": 40,
+      "accessoryMotionPaths": 16,
+      "modelMetadataPaths": 8,
+      "uniqueTransformPayloads": 7,
+      "motionTargets": [
+        "body",
+        "captoss"
+      ],
+      "motionCostumes": [
+        "c00",
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "peach",
+      "nameZh": "碧姬公主",
+      "originalName": "Peach",
+      "nuanmbPaths": 1,
+      "bodyMotionPaths": 1,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 1,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "pitb",
+      "nameZh": "黑暗彼特",
+      "originalName": "Dark Pit",
+      "nuanmbPaths": 14,
+      "bodyMotionPaths": 14,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 14,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "richter",
+      "nameZh": "里希達・貝爾蒙多",
+      "originalName": "Richter Belmont",
+      "nuanmbPaths": 5,
+      "bodyMotionPaths": 2,
+      "accessoryMotionPaths": 3,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 5,
+      "motionTargets": [
+        "axe",
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "samusd",
+      "nameZh": "黑暗薩姆斯",
+      "originalName": "Dark Samus",
+      "nuanmbPaths": 60,
+      "bodyMotionPaths": 60,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 21,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00",
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "shizue",
+      "nameZh": "西施惠",
+      "originalName": "Isabelle",
+      "nuanmbPaths": 4,
+      "bodyMotionPaths": 4,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 4,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "simon",
+      "nameZh": "西蒙・貝爾蒙多",
+      "originalName": "Simon Belmont",
+      "nuanmbPaths": 20,
+      "bodyMotionPaths": 4,
+      "accessoryMotionPaths": 16,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 6,
+      "motionTargets": [
+        "body",
+        "whip"
+      ],
+      "motionCostumes": [
+        "c00",
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "sonic",
+      "nameZh": "索尼克",
+      "originalName": "Sonic",
+      "nuanmbPaths": 10,
+      "bodyMotionPaths": 10,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 10,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    },
+    {
+      "nativeFighterId": "toonlink",
+      "nameZh": "卡通林克",
+      "originalName": "Toon Link",
+      "nuanmbPaths": 3,
+      "bodyMotionPaths": 3,
+      "accessoryMotionPaths": 0,
+      "modelMetadataPaths": 0,
+      "uniqueTransformPayloads": 3,
+      "motionTargets": [
+        "body"
+      ],
+      "motionCostumes": [
+        "c00"
+      ],
+      "bodyCandidateCount": 8
+    }
+  ],
+  "sourceArchive": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ns-ultimate14/original/Ultimate14.7z",
+    "bytes": 23576561,
+    "sha256": "8f882c140973c2771ff4be3d18998b0d3f992b896463543ce142065855941079"
+  },
+  "localSourceVerification": {
+    "files": 1071,
+    "bytes": 112082424,
+    "shaMismatches": 0,
+    "aliasCountVerifiedAgainstFixedInventory": 435
+  },
+  "bodyCandidates": {
+    "sourceId": "gitlab-ssbu-models",
+    "nativePathPattern": "fighter/{nativeFighterId}/model/body/{c00-c07}/*.blend",
+    "fighterCount": 16,
+    "filesPerFighter": 8,
+    "totalFiles": 128,
+    "existenceAndSizeChecked": true,
+    "payloadHashesRecomputed": false,
+    "skeletonPairingValidated": false,
+    "conversionAcceptanceEstablished": false,
+    "limitation": "A separate-source body candidate set; this audit checked paths and sizes only, not 128 new SHA verifications or model readiness."
+  },
+  "otherNativeGroups": {
+    "parameterOrMotionListOnly": [
+      "common",
+      "mariod",
+      "samus"
+    ],
+    "audioOnly": [
+      "luigi"
+    ],
+    "notAddedToSixteenMotionFighters": true
+  },
+  "decodedAudioRevision": {
+    "sourceId": "parallel-ns-ultimate14-audio-decoded-v1",
+    "indexSha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e",
+    "counts": {
+      "decodedWavFiles": 19,
+      "uniqueNativeBanks": 7,
+      "physicalBankAliases": 56,
+      "physicalNativeEntries": 152,
+      "seconds": 28.99874628579769,
+      "bytes": 2403472,
+      "countAsNewPerformance": false
+    },
+    "languageSpeakerEventsReviewed": false
+  },
+  "nsandns2": {
+    "windowsRoot": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2",
+    "computerName": "LV99",
+    "scanGeneratedAt": "2026-09-11T19:06:37.1477340+00:00",
+    "scanArchive": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
+      "bytes": 266062,
+      "sha256": "2e541e26cb2b5bb2bdc5923398c16332b9313da01476a8a0c0f72f4f76a8ffab"
+    },
+    "scanArchiveMemberCount": 5,
+    "scanArchiveMembersMatchLocal": true,
+    "originalScanPayloadBytesRead": 0,
+    "records": [
+      {
+        "windowsAbsolutePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super Smash Bros Ultimate[01006A800016E000][US][v0].nsp",
+        "bytes": 14638743603,
+        "payloadSha256": null,
+        "status": "inventory-only",
+        "headerVerified": false,
+        "memberInventoryVerified": false,
+        "extracted": false,
+        "converted": false,
+        "fileNameLabelsUnverified": {
+          "titleId": "01006A800016E000",
+          "region": "US",
+          "version": "v0"
+        }
+      },
+      {
+        "windowsAbsolutePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_full_6200.zip",
+        "bytes": 38366835,
+        "payloadSha256": null,
+        "status": "inventory-only",
+        "headerVerified": false,
+        "memberInventoryVerified": false,
+        "extracted": false,
+        "converted": false,
+        "fileNameLabelsUnverified": null
+      },
+      {
+        "windowsAbsolutePath": "E:\\Game\\單機遊戲\\模擬器\\NSandNS2\\Super_Smash_Bros_Ultimate_Switch_NSP_XCI_Archive_latest_790500.zip",
+        "bytes": 38366835,
+        "payloadSha256": null,
+        "status": "inventory-only",
+        "headerVerified": false,
+        "memberInventoryVerified": false,
+        "extracted": false,
+        "converted": false,
+        "fileNameLabelsUnverified": null
+      }
+    ],
+    "mountSnapshot": {
+      "gameVolumePresent": false,
+      "mountedRelevantSmbVolumes": [
+        "//ggd-read@lv99/common on /Volumes/common (smbfs, nodev, nosuid, mounted by Takuro)",
+        "//ggd-read@lv99/common on /private/tmp/ggd-common-ro (smbfs, nodev, nosuid, read-only, nobrowse, mounted by Takuro)"
+      ]
+    },
+    "limitation": "Historical metadata only; NSP title/version/DLC, archive members and payload hashes remain unverified."
+  },
+  "readiness": {
+    "newAcquisitionCount": 0,
+    "fullCharacterModelsInUltimate14": 0,
+    "runtimeSelectable": false,
+    "deployed": false,
+    "marioExperimentNote": "A separate five-body-motion local conversion experiment does not establish a complete original moveset or 16-character completion."
+  },
+  "localDetailReport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/ultimate16-nsandns2-audit-20260914-v1/reconciliation.json",
+    "sha256": "92b7dfc1e614afd73787dee3159cf907f87f2c879e662f744223f451b58a5bd7"
+  },
+  "workflowGitPath": "tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1",
+  "largeEvidencePolicy": "Archives, all-file hashes and full reconciliation remain local. This is a compact view of existing fixed indexes."
+}
