@@ -274,6 +274,19 @@ def build(git_link_root=ROOT):
         or not kof3d_inventory.get('kofXiv',{}).get('selectedExtraction',{}).get('verification',{}).get('allFilesSha256Verified')
         or kof3d_inventory.get('kofXv',{}).get('hardPolicyProbe',{}).get('result')!='hard-policy-failed-draw-calls'):
         raise ValueError('KOF 3D source/conversion inventory is absent, stale or overclaims readiness')
+    ssbu_ultimate_roster_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/inventory.json'
+    ssbu_ultimate_roster_doc_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/README.md'
+    ssbu_ultimate_roster=read(ssbu_ultimate_roster_path)
+    ssbu_summary=ssbu_ultimate_roster.get('summary',{})
+    if (ssbu_ultimate_roster.get('schema')!='ggd-ssbu-ultimate-local-roster@1'
+        or ssbu_summary.get('fighterOrFormIdCount')!=92
+        or ssbu_summary.get('fighterOrFormWithBodyCandidateCount')!=89
+        or ssbu_summary.get('primaryBodyOrAvatarCandidateCount')!=698
+        or ssbu_summary.get('acceptedStaticComponentCount')!=14
+        or ssbu_summary.get('acceptedMotionComponentCount')!=4
+         or ssbu_summary.get('ultimate14DecodedWavFiles')!=19
+         or ssbu_summary.get('windowsNsandns2PayloadBytesRead')!=0):
+         raise ValueError('SSBU Ultimate local roster is absent, stale or overclaims source access/readiness')
     workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
     workflow_restoration=read(workflow_restoration_path)
     popp_vfx_receipt_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json'
@@ -423,6 +436,14 @@ def build(git_link_root=ROOT):
             ashGuardResult=kof3d_inventory['kofXv']['hardPolicyProbe']['result'],
             runtimeSelectable=False,
             productionDeploymentVerified=False),
+        ssbuUltimateLocalRoster=dict(
+            gitPath=str(ssbu_ultimate_roster_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(ssbu_ultimate_roster_path.read_bytes()).hexdigest(),
+            documentGitPath=str(ssbu_ultimate_roster_doc_path.relative_to(ROOT)),
+            documentSha256=hashlib.sha256(ssbu_ultimate_roster_doc_path.read_bytes()).hexdigest(),
+            status='Worldblender local fighter/form sources indexed; Ultimate14 partial MOD indexed; NSandNS2 payload unavailable',
+            summary=ssbu_summary,
+            nsandns2Blocker=ssbu_ultimate_roster['nsandns2']['blocker']),
         assetWorkflowRestorationManifest=dict(
             gitPath=str(workflow_restoration_path.relative_to(ROOT)),
             sha256=hashlib.sha256(workflow_restoration_path.read_bytes()).hexdigest(),
@@ -660,6 +681,14 @@ def main():
                 },
                 result['ultimate14NativeMotionIndex'],
                 result['kof3dSourceInventory'],
+                {
+                    'gitPath': result['ssbuUltimateLocalRoster']['gitPath'],
+                    'sha256': result['ssbuUltimateLocalRoster']['sha256'],
+                },
+                {
+                    'gitPath': result['ssbuUltimateLocalRoster']['documentGitPath'],
+                    'sha256': result['ssbuUltimateLocalRoster']['documentSha256'],
+                },
                 result['assetWorkflowRestorationManifest'],
                 {
                     'gitPath': result['unused300MbaAssetIndex']['gitPath'],

@@ -6468,6 +6468,44 @@
     "runtimeSelectable": false,
     "productionDeploymentVerified": false
   },
+  "ssbuUltimateLocalRoster": {
+    "gitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+    "sha256": "324027a053067991cb5bc64e4c2adda842f805ba8e4b62d8d8c0acd686ce79c2",
+    "documentGitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/README.md",
+    "documentSha256": "4b9e995204a0ae17d9007e7e23a92bc286a3542f81859139becaf3c33a7572fb",
+    "status": "Worldblender local fighter/form sources indexed; Ultimate14 partial MOD indexed; NSandNS2 payload unavailable",
+    "summary": {
+      "worldblenderManifestFiles": 28681,
+      "worldblenderManifestBytes": 16148574001,
+      "worldblenderBlendFiles": 1793,
+      "worldblenderPngFiles": 26885,
+      "worldblenderDdsFiles": 2,
+      "worldblenderArchiveFiles": 1,
+      "worldblenderLocalFilesExist": 28681,
+      "worldblenderLocalSizeMatched": 28681,
+      "worldblenderMissingFiles": 0,
+      "worldblenderSizeMismatchFiles": 0,
+      "fighterTopLevelDirectoryCount": 94,
+      "fighterOrFormIdCount": 92,
+      "fighterOrFormWithBodyCandidateCount": 89,
+      "fighterOrFormWithoutBodyCandidateCount": 3,
+      "primaryBodyOrAvatarCandidateCount": 698,
+      "acceptedStaticComponentCount": 14,
+      "acceptedMotionComponentCount": 4,
+      "runtimeSelectableCount": 0,
+      "ultimate14MotionFighterCount": 16,
+      "ultimate14MotionAliasCount": 435,
+      "ultimate14UniqueTransformPayloadCount": 175,
+      "ultimate14EffectFiles": 3,
+      "ultimate14AudioBankAliases": 56,
+      "ultimate14DecodedWavFiles": 19,
+      "ultimate14DecodedUniqueBanks": 7,
+      "ultimate14DecodedPhysicalEntries": 152,
+      "windowsNsandns2ContainerRecords": 3,
+      "windowsNsandns2PayloadBytesRead": 0
+    },
+    "nsandns2Blocker": "The Windows share is not mounted in this run. Only metadata was available: payload bytes read 0, header/member inventory 0, title/update/DLC composition unverified, extracted 0 and converted 0."
+  },
   "assetWorkflowRestorationManifest": {
     "gitPath": "materials/hero-model-library/priority-evidence/asset-workflow-restoration/manifest.json",
     "sha256": "9f92e29719045fd1ebeed21f4ccc96bc9a22ca63bf555b4ffff3b43f657a34c9",
@@ -7583,8 +7621,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "dai-shinteo-v2-sword-handheld-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -7679,8 +7717,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "dai-shinteo-v2-sword-back-256-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -7808,8 +7846,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -7937,8 +7975,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8071,8 +8109,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -8203,8 +8241,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8336,8 +8374,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8468,8 +8506,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8599,8 +8637,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-zero-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8754,8 +8792,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-mario-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -8899,8 +8937,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-mewtwo-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9044,8 +9082,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-ryu-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9227,8 +9265,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-pickel-steve-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9409,8 +9447,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-pickel-alex-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -9618,8 +9656,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-ptrainer-male-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9827,8 +9865,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-ptrainer-female-c01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -9944,8 +9982,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-kirby-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -10061,8 +10099,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-mario-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10184,8 +10222,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-link-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10302,8 +10340,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-sonic-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10444,8 +10482,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-chrom-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10586,8 +10624,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-ganondorf-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10729,8 +10767,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-lucina-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -10872,8 +10910,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-daisy-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11019,8 +11057,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-peach-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11168,8 +11206,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-toonlink-c00-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11275,8 +11313,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-sonic-c00-static-skinned-v2",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11400,8 +11438,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "zero-lancer-p1-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11525,8 +11563,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "zero-lancer-p2-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11647,8 +11685,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -11775,8 +11813,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-mario-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -11900,9 +11938,267 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-sonic-c00-ultimate14-motion-v1",
+        "runtimeBudgetPass": true,
+        "runtimeBudgetVerdict": "warn",
+        "blockingAxes": [],
+        "heroAdoptionEligible": true,
+        "requiresDecimatedCandidate": false
+      }
+    },
+    {
+      "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "sourceIds": [
+        "gitlab-ssbu-models",
+        "parallel-ns-ultimate14"
+      ],
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "庫洛姆",
+      "originalName": "Chrom",
+      "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch MOD",
+      "nativeId": "fighter/chrom/body/c00 + fighter/chrom/motion/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "animation"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "bytes": 1942664,
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-chrom"
+      ],
+      "nativeAnimationCount": 9,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": "community-mod-native-not-original-game",
+      "animationNames": [
+        "a04fallspecial",
+        "a04fallspecialb",
+        "a04fallspecialf",
+        "c05attackairn",
+        "d02specialairhi1",
+        "d02specialairhi2",
+        "d02specialhi1",
+        "d02specialhi2",
+        "d02specialhi3"
+      ],
+      "animationChannelCountPerClip": 369,
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 123,
+      "textureCount": 7,
+      "sourceAnimationCount": 9,
+      "unconvertedAnimationCount": 0,
+      "readiness": "accepted-independent-native-motion-9-clips-incomplete-action-set",
+      "auditEvidence": "Matching chrom rig plus 9 pinned Ultimate14 Transform motions; byte-identical dual final GLB, Khronos 0/0, GGD hard errors 0 and 27 WebGL samples completed.",
+      "limitations": [
+        "The 9 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+        "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+        "Visibility and material tracks were not imported into this body-motion GLB.",
+        "No hero binding, backend registration, runtime switching or deployment was performed.",
+        "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+        "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/delivery.json",
+        "bytes": 2300,
+        "sha256": "11001b08a6af7d33ea5730da8f2e83a95114dfc58a0527b2d0d7ffd1c06039ae"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/acceptance.json",
+        "bytes": 495,
+        "sha256": "624496502a025c7fe720d176ec34fdf2d908a4d5e47d0526d31177c37216f843"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/validation.json",
+        "bytes": 11758,
+        "sha256": "c1587e9d5088a3db4cdc4d0558f2b0219d304211668d278b46781b13532e415c"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/visual-review.json",
+        "bytes": 696,
+        "sha256": "9f5d7631157cd7b22d68cd317b34d0ce2c3d1b23be52dea635302a8434e9a8f5"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/webgl-proof.json",
+        "bytes": 18469,
+        "sha256": "c751e2419dfeb208825dd8d78d52c1dcb112bc370a6a73908586620ecc0491a9"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/source-rebuild.json",
+        "bytes": 2507,
+        "sha256": "6b724dd4741f8f86ad09285b899e4945818fea8c105572cf71fcdcedf20a8f51"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.files.json",
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/s3-backup-receipt.json",
+        "bytes": 1460,
+        "sha256": "40f08fd3a6145f3d12fddf670d2a7cb6e84dc5dbeb9dd84f7100af364c647913"
+      },
+      "backupStatus": "full-get-and-all-member-sha256-verified",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "currentPolicyAudit": {
+        "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
+        "recordId": "ssbu-chrom-c00-ultimate14-motion-v1",
+        "runtimeBudgetPass": true,
+        "runtimeBudgetVerdict": "warn",
+        "blockingAxes": [],
+        "heroAdoptionEligible": true,
+        "requiresDecimatedCandidate": false
+      }
+    },
+    {
+      "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "sourceIds": [
+        "gitlab-ssbu-models",
+        "parallel-ns-ultimate14"
+      ],
+      "sourceClass": "community-mod",
+      "selectionClass": "community-mod",
+      "nameZh": "露琪娜",
+      "originalName": "Lucina",
+      "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch MOD",
+      "nativeId": "fighter/lucina/body/c00 + fighter/lucina/motion/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "animation"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "bytes": 2731060,
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "gitPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-lucina"
+      ],
+      "nativeAnimationCount": 13,
+      "proceduralAnimationCount": 0,
+      "animationProvenance": "community-mod-native-not-original-game",
+      "animationNames": [
+        "c00attack100",
+        "c00attack100start",
+        "c00attack11",
+        "c00attack12",
+        "c00attack13",
+        "c00attackend",
+        "c02attackhi3",
+        "d01specialairs1",
+        "d01specialairs2lw",
+        "d01specialairs3s",
+        "d01specials1",
+        "d01specials2lw",
+        "d01specials3s"
+      ],
+      "animationChannelCountPerClip": 468,
+      "triangles": 7927,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 156,
+      "textureCount": 5,
+      "sourceAnimationCount": 13,
+      "unconvertedAnimationCount": 0,
+      "readiness": "accepted-independent-native-motion-13-clips-incomplete-action-set",
+      "auditEvidence": "Matching lucina rig plus 13 pinned Ultimate14 Transform motions; byte-identical dual final GLB, Khronos 0/0, GGD hard errors 0 and 39 WebGL samples completed.",
+      "limitations": [
+        "The 13 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+        "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+        "Visibility and material tracks were not imported into this body-motion GLB.",
+        "No hero binding, backend registration, runtime switching or deployment was performed.",
+        "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+        "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/delivery.json",
+        "bytes": 2309,
+        "sha256": "eb277b339aeff7a8bdbd7c680798501ed0ba6f29cd5723541c42bd0ca9aa88fc"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/acceptance.json",
+        "bytes": 496,
+        "sha256": "d7acb9d51dd31a5b3ddcb8e116e0c5adf4974a04964405cfd92c79a05d152734"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/validation.json",
+        "bytes": 14333,
+        "sha256": "6099e2a31aba414ae29335f29d402e55e590ae370fbf059ce11de250a5a8613b"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/visual-review.json",
+        "bytes": 698,
+        "sha256": "eff7b173e3c3d7f67fb61e242470687b12612dcab6c89c7de5bdaee255318d87"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/webgl-proof.json",
+        "bytes": 26445,
+        "sha256": "63c9dd0295fc80676a031142ddf04d1c27e8ac5a7fc1c3941f8970496dd2cd7d"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/source-rebuild.json",
+        "bytes": 2512,
+        "sha256": "144a00123af96a01f45bc5a48d9bc0b2e49b1da854f06f723738eb704503a67a"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.tar.gz",
+      "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.files.json",
+      "s3BackupEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/s3-backup-receipt.json",
+        "bytes": 1465,
+        "sha256": "6fc42ec9d895a7c720e0786440a744177da36c69da0f4af77c715469b5b2a9fd"
+      },
+      "backupStatus": "full-get-and-all-member-sha256-verified",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "currentPolicyAudit": {
+        "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
+        "recordId": "ssbu-lucina-c00-ultimate14-motion-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
         "blockingAxes": [],
@@ -12037,8 +12333,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "ssbu-ryu-c00-procedural-six-state-v1",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12161,8 +12457,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "historical-astralym-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12326,8 +12622,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "historical-astralym-decimated-c45f111d",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "warn",
@@ -12456,8 +12752,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "historical-jetragon-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -12611,8 +12907,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "historical-kita-kita-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -12766,8 +13062,8 @@
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
       "currentPolicyAudit": {
         "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-        "bytes": 62197,
-        "sha256": "c3d97777ca3f203c58aac10021791968f252823eb0913ac88cf9f1fdd66ca7e9",
+        "bytes": 65351,
+        "sha256": "f82c31dca9623a8dfab254677a2df743132ce905c2b342b299138a1eba74ea4f",
         "recordId": "historical-lord-nightmares-7bc2fa3f8",
         "runtimeBudgetPass": true,
         "runtimeBudgetVerdict": "ok",
@@ -12786,7 +13082,7 @@
       }
     }
   ],
-  "modelComponentCount": 41,
+  "modelComponentCount": 43,
   "historicalModelSourceArtifacts": [
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
@@ -12910,7 +13206,7 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "0e4c0f12dd19931f1fce12098f291027b84fbcc986763d74d68d7e93ce3ab4f6"
+    "sha256": "92bf7ad34e70debf5236577d187faf60956495a0d934c9b11003424bc7adc951"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -12925,6 +13221,6 @@
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+    "sha256": "13bb2ff8f730b43e880d3dd6dc00215525c8b880a74177f0444edb4135e5cfd8"
   }
 }

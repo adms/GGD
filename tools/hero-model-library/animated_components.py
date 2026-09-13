@@ -50,7 +50,7 @@ def validate(candidate, source, repo):
             "Noncanonical animated component Git path")
 
     validation = json.loads(verify_pin(candidate["validationEvidence"], repo).read_text())
-    expected_schemas = ({"ggd-ssbu-mario-ultimate14-motion-validation@1", "ggd-ssbu-ultimate14-motion-validation@1"}
+    expected_schemas = ({"ggd-ssbu-mario-ultimate14-motion-validation@1", "ggd-ssbu-ultimate14-motion-validation@1", "ggd-ssbu-ultimate14-matching-motion-validation@1"}
                         if provenance == NATIVE_PROVENANCE else {"ggd-procedural-six-state-validation@1"})
     require(validation.get("schema") in expected_schemas, "Unexpected animated component validation schema")
     require((validation.get("glb", {}).get("sha256"), validation.get("glb", {}).get("bytes")) ==

@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3092685,
-      "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+      "bytes": 3105536,
+      "sha256": "13bb2ff8f730b43e880d3dd6dc00215525c8b880a74177f0444edb4135e5cfd8"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 38,
-    "runtimeBudgetPass": 38,
+    "audited": 40,
+    "runtimeBudgetPass": 40,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 25,
+    "heroAdoptionEligible": 27,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -810,6 +810,55 @@
       }
     },
     {
+      "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "bytes": 1942664,
+      "metrics": {
+        "triangles": 7890,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 369,
+        "skins": 1,
+        "joints": 123,
+        "clips": 9,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
       "id": "ssbu-daisy-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "resourceRole": "independent-static-skinned-model-component",
@@ -1020,6 +1069,55 @@
         "skins": 1,
         "joints": 156,
         "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "bytes": 2731060,
+      "metrics": {
+        "triangles": 7927,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 468,
+        "skins": 1,
+        "joints": 156,
+        "clips": 13,
         "embeddedImages": 5
       },
       "runtimeBudget": {
