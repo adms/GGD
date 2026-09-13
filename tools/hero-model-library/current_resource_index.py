@@ -38,6 +38,38 @@ def verify_component_git_contents(components, repo=ROOT):
         raise
 
 
+def component_git_evidence(components):
+    """Return unique direct evidence blobs declared by model components.
+
+    Component records keep their model GLB at the top level and supporting
+    Git receipts in named dictionaries such as ``validationEvidence`` and
+    ``visualEvidence``.  Verify those receipts separately so a local-only
+    evidence file cannot make the generated catalog look portable.
+    """
+    evidence_by_path = {}
+    for component in components:
+        for value in component.values():
+            if not isinstance(value, dict):
+                continue
+            path = value.get('gitPath')
+            digest = value.get('sha256')
+            if not isinstance(path, str) or not isinstance(digest, str):
+                continue
+            previous = evidence_by_path.get(path)
+            if previous is not None:
+                previous_bytes = previous.get('bytes')
+                current_bytes = value.get('bytes')
+                if previous['sha256'] != digest or (
+                    previous_bytes is not None
+                    and current_bytes is not None
+                    and previous_bytes != current_bytes
+                ):
+                    raise ValueError('Conflicting component evidence declaration: ' + path)
+                continue
+            evidence_by_path[path] = value
+    return list(evidence_by_path.values())
+
+
 def build():
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
@@ -134,6 +166,7 @@ def main():
         verify_component_git_contents(
             result['modelComponents'] + result['historicalModelSourceArtifacts']
         )
+        verify_git_contents(component_git_evidence(result['modelComponents']))
         verify_git_contents(
             result['sourceManifests']
             + [

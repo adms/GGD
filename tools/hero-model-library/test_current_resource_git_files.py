@@ -4,7 +4,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
-from current_resource_index import verify_git_contents
+from current_resource_index import component_git_evidence, verify_git_contents
 
 
 class CurrentResourceGitFilesTest(unittest.TestCase):
@@ -38,6 +38,29 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         changed = dict(self.entry, sha256='0' * 64)
         with self.assertRaisesRegex(ValueError, 'differs from the index'):
             verify_git_contents([changed], self.repo)
+
+    def test_component_evidence_is_deduplicated_and_verified(self):
+        component = {
+            'id': 'example-component',
+            'gitPath': 'content/example.glb',
+            'sha256': '1' * 64,
+            'validationEvidence': self.entry,
+            'visualEvidence': dict(self.entry),
+        }
+        evidence = component_git_evidence([component])
+        self.assertEqual(evidence, [self.entry])
+        with self.assertRaisesRegex(ValueError, 'absent from the Git index'):
+            verify_git_contents(evidence, self.repo)
+        subprocess.run(['git', 'add', self.entry['gitPath']], cwd=self.repo, check=True)
+        verify_git_contents(evidence, self.repo)
+
+    def test_conflicting_component_evidence_is_rejected(self):
+        components = [
+            {'validationEvidence': self.entry},
+            {'visualEvidence': dict(self.entry, sha256='0' * 64)},
+        ]
+        with self.assertRaisesRegex(ValueError, 'Conflicting component evidence'):
+            component_git_evidence(components)
 
 
 if __name__ == '__main__':
