@@ -2,6 +2,7 @@ import json
 import unittest
 from pathlib import Path
 
+from current_resource_index import verify_component_git_contents
 from historical_components import source_historical_artifacts
 
 
@@ -25,6 +26,9 @@ class HistoricalSourceArtifactsTest(unittest.TestCase):
             self.assertFalse(row["runtimeDropdownRegistered"])
             self.assertNotEqual(row["sha256"], row["normalizedReplacementSha256"])
             self.assertTrue((ROOT / row["gitPath"]).is_file())
+        # A local file is not delivery evidence.  The exact historical bytes
+        # must also exist in the Git index at the catalogued path.
+        verify_component_git_contents(rows, ROOT)
 
 
 if __name__ == "__main__":

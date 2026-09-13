@@ -102,7 +102,13 @@ def main():
     args = parser.parse_args()
     result = build()
     if args.check_git:
-        verify_component_git_contents(result['modelComponents'])
+        # Historical pre-normalization GLBs are separate from selectable model
+        # components, but their catalog paths still claim that exact Git blobs
+        # exist.  Verify both collections so an untracked local file cannot make
+        # current-resources.json look complete.
+        verify_component_git_contents(
+            result['modelComponents'] + result['historicalModelSourceArtifacts']
+        )
     path = ROOT/'materials/asset-library/current-resources.json'
     encoded = json.dumps(result, ensure_ascii=False, indent=2)+'\n'
     if args.check:

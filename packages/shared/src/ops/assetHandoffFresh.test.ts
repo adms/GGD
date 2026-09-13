@@ -72,4 +72,33 @@ describe("素材缺口交接單 (docs/素材缺口交接單.md)", () => {
     expect((byId.get("acquired-mario") as any).model.nativeAnimationCount).toBe(5);
     expect((byId.get("acquired-mario") as any).model.proceduralAnimationCount).toBe(0);
   });
+
+  it("四顆歷史 GLB 的精確位元組在 Git，材質正規化前版本可放在歷史歸檔路徑", () => {
+    const doc = JSON.parse(readFileSync(join(REPO, "docs/_review/material/hero-intake/ship34.json"), "utf8"));
+    const byId = new Map(doc.heroes.map((hero: any) => [hero.id, hero]));
+
+    for (const heroId of ["acquired-jetragon", "acquired-astralym"]) {
+      const model: any = (byId.get(heroId) as any)?.model;
+      expect(model?.filesInRepo, heroId).toBe(2);
+      expect(model?.filesArchivedInRepo ?? 0, heroId).toBe(0);
+    }
+
+    const relocated: Record<string, string> = {
+      "acquired-kita-kita": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+      "acquired-lord-nightmares": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+    };
+    for (const [heroId, digest] of Object.entries(relocated)) {
+      const model: any = (byId.get(heroId) as any)?.model;
+      expect(model?.filesInRepo, heroId).toBe(2);
+      expect(model?.filesAtDeclaredGitPath, heroId).toBe(1);
+      expect(model?.filesArchivedInRepo, heroId).toBe(1);
+      expect(model?.archivedFiles, heroId).toEqual([
+        expect.objectContaining({
+          sha256: digest,
+          gitPath: `materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/${digest}.glb`,
+        }),
+      ]);
+      expect(model?.gap, heroId).toContain("精確 GLB 位元組在歷史歸檔路徑");
+    }
+  });
 });

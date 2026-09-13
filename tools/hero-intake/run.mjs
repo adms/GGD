@@ -125,6 +125,7 @@ const componentIndex = (() => {
   const path = resolve(ROOT, COMPONENT_INDEX);
   const d = readJson(path);
   if (!Array.isArray(d?.modelComponents)) die(`--component-index 讀不到 modelComponents：${COMPONENT_INDEX}`);
+  if (!Array.isArray(d?.historicalModelSourceArtifacts)) die(`--component-index 讀不到 historicalModelSourceArtifacts：${COMPONENT_INDEX}`);
   const byId = new Map();
   const byIdentity = new Map();
   for (const c of d.modelComponents) {
@@ -137,14 +138,78 @@ const componentIndex = (() => {
       byIdentity.set(identity, [...(byIdentity.get(identity) ?? []), c]);
     }
   }
-  return { path, byId, byIdentity };
+  const historicalBySha = new Map();
+  for (const artifact of d.historicalModelSourceArtifacts) {
+    const digest = String(artifact?.sha256 ?? "");
+    if (!digest) die(`--component-index 的歷史模型來源缺 SHA-256：${COMPONENT_INDEX}`);
+    historicalBySha.set(digest, [...(historicalBySha.get(digest) ?? []), artifact]);
+  }
+  return { path, byId, byIdentity, historicalBySha, historicalArtifacts: d.historicalModelSourceArtifacts };
 })();
 
 const trackedHere = (() => {
-  const r = spawnSync("git", ["ls-files", "content/assets/models"], { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-  if (r.status !== 0) die(`git ls-files content/assets/models 失敗：${String(r.stderr ?? "").trim()}`);
+  const r = spawnSync("git", ["ls-files", "--", "content/assets/models", "content/models", "materials/hero-model-library/source-artifacts"], { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (r.status !== 0) die(`git ls-files 模型成品與歷史歸檔失敗：${String(r.stderr ?? "").trim()}`);
   return new Set(String(r.stdout ?? "").split("\n").filter(Boolean));
 })();
+
+const indexedPinCache = new Map();
+/** 驗證 Git index 裡的實際 blob；未追蹤或只存在工作樹的檔案不算交付。 */
+function indexedPin(pin) {
+  const gitPath = String(pin?.gitPath ?? "");
+  const expectedSha256 = String(pin?.sha256 ?? "");
+  const expectedBytes = Number(pin?.bytes ?? -1);
+  const key = `${gitPath}:${expectedSha256}:${expectedBytes}`;
+  if (indexedPinCache.has(key)) return indexedPinCache.get(key);
+  let result = { verified: false, gitPath, bytes: null, sha256: null, problem: "Git 路徑未追蹤" };
+  if (gitPath && trackedHere.has(gitPath)) {
+    const shown = spawnSync("git", ["show", `:${gitPath}`], { cwd: ROOT, maxBuffer: 64 * 1024 * 1024 });
+    if (shown.status === 0) {
+      const bytes = Buffer.from(shown.stdout ?? []);
+      const actualSha256 = sha256(bytes);
+      const verified = bytes.length === expectedBytes && actualSha256 === expectedSha256;
+      result = {
+        verified, gitPath, bytes: bytes.length, sha256: actualSha256,
+        problem: verified ? null : "Git index blob 的位元組數或 SHA-256 不符",
+      };
+    } else {
+      result = { ...result, problem: "Git index 讀不到該路徑" };
+    }
+  }
+  indexedPinCache.set(key, result);
+  return result;
+}
+
+/** 交付表的原路徑已被材質正規化取代時，只接受中央索引明列且 Git blob 實際相同的歷史歸檔。 */
+function archivedDeliveryFile(file) {
+  const candidates = componentIndex.historicalBySha.get(String(file?.sha256 ?? "")) ?? [];
+  const matches = candidates.filter((artifact) =>
+    artifact.resourceRole === "exact-historical-model-source-artifact"
+    && Number(artifact.bytes) === Number(file?.bytes)
+    && indexedPin(artifact).verified
+  );
+  if (matches.length > 1) die(`交付檔 ${file.gitPath} 有多個同 SHA-256 的歷史 Git 歸檔，無法唯一判定`);
+  if (matches.length === 0) return null;
+  const artifact = matches[0];
+  return {
+    expectedGitPath: file.gitPath,
+    gitPath: artifact.gitPath,
+    sha256: artifact.sha256,
+    bytes: artifact.bytes,
+    sourceArtifactId: artifact.id,
+  };
+}
+
+/**
+ * GLB 的交付身分是內容雜湊，所以必須逐位元組吻合。model@1 JSON 會在後續材質
+ * 正規化時合法改寫 glbPath；它只要原路徑仍是 Git 追蹤檔，實際可用性另由
+ * resolveModelKey() 檢查。
+ */
+function deliveryFileAtDeclaredPath(file) {
+  const gitPath = String(file?.gitPath ?? "");
+  if (!gitPath || !trackedHere.has(gitPath)) return false;
+  return gitPath.endsWith(".glb") ? indexedPin(file).verified : true;
+}
 
 /**
  * 交付表的 `identityIds` 與中央元件的 `identityIds` 做完全相等 join。
@@ -385,9 +450,13 @@ function checkModel(champ, id, d = null) {
         severity: bad ? "blocker" : "warning",
       };
     }
-    const here = files.filter((f) => f.gitPath && existsSync(join(ROOT, f.gitPath)));
-    const declaredOff = files.filter((f) => f.gitPath?.startsWith("content/") && offDisk.has(f.gitPath.slice("content/".length)));
-    const landed = here.length + declaredOff.length;
+    const here = files.filter(deliveryFileAtDeclaredPath);
+    const declaredOff = files.filter((f) => !here.includes(f) && f.gitPath?.startsWith("content/") && offDisk.has(f.gitPath.slice("content/".length)));
+    const archivedFiles = files
+      .filter((f) => !here.includes(f) && !declaredOff.includes(f))
+      .map(archivedDeliveryFile)
+      .filter(Boolean);
+    const landed = here.length + declaredOff.length + archivedFiles.length;
     // ⭐ 反方向再問一次：那些檔**在來源 repo** 存在嗎？⛔ 「表上寫了」⛔ 不等於「位元組在」。
     // ⚠️ 而「來源那棵工作樹沒有」與「來源**任何分支都沒有**」又是兩件事（跟本地那三分法同型）——
     //    ⛔ 只 stat 檔案會把「在別的分支」誤判成「位元組沒交出來」。
@@ -401,9 +470,12 @@ function checkModel(champ, id, d = null) {
     return {
       ok: false, modelKey: d.defaultModelKey ?? null, clipMap: d.selectedClips ?? null,
       deliveryStatus: status, files: files.length, filesInRepo: landed,
+      filesAtDeclaredGitPath: here.length, filesArchivedInRepo: archivedFiles.length, archivedFiles,
       filesAtSource: atSource, filesAtSourceWorktree: atSourceWorktree, filesOnlyInSourceHistory: inHistory, filesGone: gone,
       gap: landed >= files.length
-        ? `模型已交付且 ${files.length} 個檔都在 —— ⛔ 只差 champion 文件還沒進 content`
+        ? archivedFiles.length
+          ? `模型已交付且 ${files.length} 個交付檔都有 Git 證據（${here.length} 個在原交付路徑＋${archivedFiles.length} 個精確 GLB 位元組在歷史歸檔路徑） —— ⛔ 只差 champion 文件還沒進 content`
+          : `模型已交付且 ${files.length} 個檔都在 —— ⛔ 只差 champion 文件還沒進 content`
         : sourceShort
           ? `⛔ 交付表說「${statusText || status}」，但 ${gone}/${files.length} 個檔**來源 repo 的樹上與歷史裡都沒有** —— 位元組還沒交出來`
           : inHistory > 0
@@ -592,6 +664,8 @@ const deliveryDouble = [...deliveryClaimed.entries()].filter(([, ids]) => ids.le
 const digest = sha256(JSON.stringify(rows.map((r) => [
   r.id, r.ready, r.deliveryIdentityIds, r.model.ok, r.model.deliveryStatus ?? "", r.model.componentStatus ?? "",
   r.model.filesInRepo ?? -1, r.model.files ?? -1, r.model.filesAtSource ?? -1,
+  r.model.filesAtDeclaredGitPath ?? -1, r.model.filesArchivedInRepo ?? -1,
+  (r.model.archivedFiles ?? []).map((f) => `${f.expectedGitPath}:${f.gitPath}:${f.sha256}`).join("|"),
   r.model.filesOnlyInSourceHistory ?? -1, r.model.filesGone ?? -1,
   r.model.componentCount ?? 0, r.model.componentFilesInRepo ?? 0, r.model.nativeAnimationCount ?? 0,
   (r.model.components ?? []).map((c) => `${c.id}:${c.sha256}:${c.verified}:${c.nativeAnimationCount}`).join("|"),
@@ -609,6 +683,7 @@ const doc = {
   componentIndex: {
     path: relative(ROOT, componentIndex.path),
     modelComponents: componentIndex.byId.size,
+    historicalModelSourceArtifacts: componentIndex.historicalArtifacts.length,
     referencedComponents: new Set(rows.flatMap((r) => (r.model.components ?? []).map((c) => c.id))).size,
   },
   delivery: DELIVERY ? { path: DELIVERY, root: DELIVERY_ROOT, rows: deliveryRows.size, claimed: deliveryClaimed.size, unclaimed: deliveryUnclaimed, doubleClaimed: deliveryDouble } : null,
