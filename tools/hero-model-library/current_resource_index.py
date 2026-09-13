@@ -173,6 +173,25 @@ def build(git_link_root=ROOT):
         entry=unused_300_mba[key]
         if hashlib.sha256((ROOT/entry['gitPath']).read_bytes()).hexdigest()!=entry['sha256']:
             raise ValueError('Refresh 300/MBA unused asset inventory: '+entry['gitPath'])
+    community_unused_path=base/'source-inventories/community-unused-assets-v1/inventory.json'
+    community_unused_doc_path=base/'source-inventories/community-unused-assets-v1/README.md'
+    community_unused_receipt_path=base/'source-inventories/community-unused-assets-v1/local-verification.json'
+    community_unused=read(community_unused_path)
+    community_unused_receipt=read(community_unused_receipt_path)
+    if (community_unused.get('schema')!='ggd.community-unused-assets-inventory@1'
+        or community_unused.get('scope',{}).get('newDownloadPerformed') is not False
+        or community_unused.get('scope',{}).get('newConversionPerformed') is not False
+        or community_unused.get('scope',{}).get('runtimeRegistrationPerformed') is not False
+        or community_unused.get('scope',{}).get('productionDeploymentPerformed') is not False
+        or community_unused.get('summary',{}).get('sourceRecords',0)<=0
+        or community_unused.get('summary',{}).get('sourcePipelineCounts',{}).get('productionDeployed')!=0):
+        raise ValueError('Community unused asset inventory is absent or overclaims readiness')
+    if (community_unused_receipt.get('schema')!='ggd.community-unused-assets-local-verification@1'
+        or community_unused_receipt.get('summary',{}).get('componentMismatchedFiles')!=0
+        or community_unused_receipt.get('summary',{}).get('componentMissingFiles')!=0):
+        raise ValueError('Community unused component verification is absent or invalid')
+    if community_unused['externalAuthorities']['unused300Mba']['sha256']!=hashlib.sha256(unused_300_mba_path.read_bytes()).hexdigest():
+        raise ValueError('Community inventory 300/MBA authority pointer is stale')
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
     windows_game_inventory=read(windows_game_inventory_path)
     fate_unlimited_codes_platform_path=base/'priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json'
@@ -352,6 +371,20 @@ def build(git_link_root=ROOT):
             newDownloads=False,
             runtimeSelectable=False,
             productionDeploymentVerified=False),
+        communityUnusedAssetIndex=dict(
+            gitPath=str(community_unused_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(community_unused_path.read_bytes()).hexdigest(),
+            documentGitPath=str(community_unused_doc_path.relative_to(ROOT)),
+            documentSha256=hashlib.sha256(community_unused_doc_path.read_bytes()).hexdigest(),
+            localVerificationGitPath=str(community_unused_receipt_path.relative_to(ROOT)),
+            localVerificationSha256=hashlib.sha256(community_unused_receipt_path.read_bytes()).hexdigest(),
+            sourceRecords=community_unused['summary']['sourceRecords'],
+            componentRecords=community_unused['summary']['componentRecords'],
+            unusedForRuntime=community_unused['summary']['sourcePipelineCounts']['unusedForRuntime'],
+            runtimeSelectable=community_unused['summary']['sourcePipelineCounts']['runtimeSelectable'],
+            productionDeployed=community_unused['summary']['sourcePipelineCounts']['productionDeployed'],
+            authoritativeFileRows=community_unused['summary']['authoritativeFileRows'],
+            note='Per-file rows remain in public-source-files.json; registered, selectable and deployed are separate facts.'),
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
@@ -540,6 +573,18 @@ def main():
                 {
                     'gitPath': result['unused300MbaAssetIndex']['animationClipsGitPath'],
                     'sha256': result['unused300MbaAssetIndex']['animationClipsSha256'],
+                },
+                {
+                    'gitPath': result['communityUnusedAssetIndex']['gitPath'],
+                    'sha256': result['communityUnusedAssetIndex']['sha256'],
+                },
+                {
+                    'gitPath': result['communityUnusedAssetIndex']['documentGitPath'],
+                    'sha256': result['communityUnusedAssetIndex']['documentSha256'],
+                },
+                {
+                    'gitPath': result['communityUnusedAssetIndex']['localVerificationGitPath'],
+                    'sha256': result['communityUnusedAssetIndex']['localVerificationSha256'],
                 },
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],

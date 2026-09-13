@@ -6496,6 +6496,21 @@
     "runtimeSelectable": false,
     "productionDeploymentVerified": false
   },
+  "communityUnusedAssetIndex": {
+    "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json",
+    "sha256": "07818defa859f60b973efa3a59cd6860b838b74fd39eff2c8ab96eb6d003663e",
+    "documentGitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/README.md",
+    "documentSha256": "bc288244917256f3632308e0321f7af98ad437ebc051ed479f456a44736b85ea",
+    "localVerificationGitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
+    "localVerificationSha256": "e87dc841ee1401cc241e3b2bc78b06b2c399a8d95bdc9eecf088490bbf6e728c",
+    "sourceRecords": 59,
+    "componentRecords": 36,
+    "unusedForRuntime": 58,
+    "runtimeSelectable": 1,
+    "productionDeployed": 0,
+    "authoritativeFileRows": 66728,
+    "note": "Per-file rows remain in public-source-files.json; registered, selectable and deployed are separate facts."
+  },
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",
     "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
