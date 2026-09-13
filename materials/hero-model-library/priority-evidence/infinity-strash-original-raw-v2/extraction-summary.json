@@ -55,12 +55,13 @@
     "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
     "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
     "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-    "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-    "No component is registered as a model option, backend-selectable or deployed."
+    "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+    "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+    "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
   ],
   "conversionEvidence": {
     "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
-    "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+    "sha256": "adbd5cc591de11381891aa0fe6aa9b2686756b29791d2fcddfad8a7639e36c0e",
     "meshGltfCount": 29,
     "texturePngCount": 97,
     "nativePsaAnimationCount": 12

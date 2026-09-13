@@ -1,0 +1,53 @@
+{
+  "schema": "ggd.infinity-strash-babylon-static-load@1",
+  "modelSha256": "736b67dc8c9ce4dfa6952f9a59462ef7c2189f1b26eda39724c2de4e6ccbab13",
+  "babylonVersion": "7.54.3",
+  "meshes": [
+    {
+      "name": "vearn-en801-pre-transformation-combined_primitive0",
+      "vertices": 10369,
+      "positionCoordinates": 31107
+    },
+    {
+      "name": "vearn-en801-pre-transformation-combined_primitive1",
+      "vertices": 72,
+      "positionCoordinates": 216
+    },
+    {
+      "name": "vearn-en801-pre-transformation-combined_primitive2",
+      "vertices": 133,
+      "positionCoordinates": 399
+    },
+    {
+      "name": "vearn-en801-pre-transformation-combined_primitive3",
+      "vertices": 2510,
+      "positionCoordinates": 7530
+    },
+    {
+      "name": "vearn-en801-pre-transformation-combined_primitive4",
+      "vertices": 1311,
+      "positionCoordinates": 3933
+    },
+    {
+      "name": "vearn-en801-pre-transformation-combined_primitive5",
+      "vertices": 89,
+      "positionCoordinates": 267
+    }
+  ],
+  "skeletonBoneCounts": [
+    292
+  ],
+  "animationGroups": [
+    "GGD_native_idle",
+    "GGD_native_run",
+    "GGD_native_attack",
+    "GGD_native_death",
+    "GGD_native_special01",
+    "GGD_native_kaizer_phoenix"
+  ],
+  "finiteRestPosePositions": true,
+  "materialsSkippedForCpuValidation": true,
+  "webglVisualReview": "pending-test-mechanism-recovery",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

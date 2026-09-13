@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T10:02:20.241793+00:00",
+  "generatedAt": "2026-09-13T11:38:39.427422+00:00",
   "repo": "/private/tmp/ggd-pr1152-merge-audit",
-  "revision": "a984f81632987f3b54a886c2e039e8a94d5f18a5",
+  "revision": "f243d5272bbff444de869a3c6d3f5e2c14e81aee",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5567,8 +5567,8 @@
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "bytes": 9952,
-      "sha256": "bc6c8f9a8a471076123720febd94a2e70815e435043994545cf9ead443c5b4ae"
+      "bytes": 11784,
+      "sha256": "9f61256604564b32bfa967b2d6e0e51c7bbb48c289a7850866bc1d7ae9cc7c78"
     },
     {
       "path": "content/champions/godie-nsjs.json",
@@ -5682,8 +5682,8 @@
     },
     {
       "path": "content/champions/godie-ubal.json",
-      "bytes": 8460,
-      "sha256": "8fb852d2141add1072cf45eca41d2167b65776e06c6db135d3d28db7fb7e8c8a"
+      "bytes": 9602,
+      "sha256": "eb90d876732f99014ea5db8e20a1c22ffce7b2cd4057e8cd08badc1c7bae6c17"
     },
     {
       "path": "content/champions/godie-ucrl.json",
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "45d8d111d6e9eb4e5a6057eee22d768826f26309cff50f6b6e98e34bb7684e04",
-      "bytes": 8659766
+      "sha256": "faa5435dc00e49ff04da2bc8461f1a7cbb7d70429667699d419d64df4536d02d",
+      "bytes": 8670830
     },
     {
       "path": "package.json",
@@ -14728,7 +14728,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "d9f0448ff8c00975c20203d0ec57a8618ed2558bfc13e7ddf461f756805ccd6c"
+    "sha256": "9b15cfbecd5e729e40f004724cc8e485b80d683c07c02f9e7bcdacb084ebd388"
   },
   "heroes": [
     {
@@ -28400,8 +28400,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-nbbc.json",
-        "sha256": "bc6c8f9a8a471076123720febd94a2e70815e435043994545cf9ead443c5b4ae",
-        "bytes": 9952
+        "sha256": "9f61256604564b32bfa967b2d6e0e51c7bbb48c289a7850866bc1d7ae9cc7c78",
+        "bytes": 11784
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",
@@ -31169,8 +31169,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-ubal.json",
-        "sha256": "8fb852d2141add1072cf45eca41d2167b65776e06c6db135d3d28db7fb7e8c8a",
-        "bytes": 8460
+        "sha256": "eb90d876732f99014ea5db8e20a1c22ffce7b2cd4057e8cd08badc1c7bae6c17",
+        "bytes": 9602
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",

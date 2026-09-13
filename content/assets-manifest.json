@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2848,
-    "totalBytes": 1063557674
+    "entries": 2853,
+    "totalBytes": 1073845466
   },
   "entries": [
     {
@@ -22369,6 +22369,17 @@
       ]
     },
     {
+      "path": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+      "bytes": 2000480,
+      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b"
+      ]
+    },
+    {
       "path": "assets/models/community/2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf.glb",
       "bytes": 856548,
       "sha256": "2b52ec923450fa53fdef2cde4bae03ef56f99881222ab60333b733d21af5abbf",
@@ -23381,6 +23392,17 @@
       ]
     },
     {
+      "path": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+      "bytes": 3011048,
+      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990"
+      ]
+    },
+    {
       "path": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
       "bytes": 1279552,
       "sha256": "c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06",
@@ -23972,7 +23994,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.78d209fa79b12a8039e407aa0ce6b08f048962f5cf8c34e1"
+        "version.body.78d209fa79b12a8039e407aa0ce6b08f048962f5cf8c34e1",
+        "version.body.e4719d30e3ce41754cc3f6ecde045caade836529ea6c1e3f"
       ]
     },
     {
@@ -23995,7 +24018,9 @@
       "refs": [
         "bundle",
         "version.body.0edd91f8aa5d1479ee2a4d08e37ee5ce1e187ca03637e477",
-        "version.body.354364bf35caacfd883adc74a39dcfe9871048c9353aa745"
+        "version.body.354364bf35caacfd883adc74a39dcfe9871048c9353aa745",
+        "version.body.a4910d30bc08f391094d52fe51dcbfa96ef6279776874fd7",
+        "version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a"
       ]
     },
     {
@@ -24029,7 +24054,9 @@
       "refs": [
         "bundle",
         "version.body.0d143acac04986ba45298355c926aeed946b2e6e18464def",
-        "version.body.a83288f32461b18b3df4a5d72b4f5c854cb5f8eecbb68c54"
+        "version.body.99c137bf0513caf89bf712bbd959e6867e8ec67b41360a8a",
+        "version.body.a83288f32461b18b3df4a5d72b4f5c854cb5f8eecbb68c54",
+        "version.body.e5f1ccacdc408d8fbd0e3958a8ac0e871fe6c828a991c558"
       ]
     },
     {
@@ -24052,6 +24079,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.58e636bc24dc82f29b5d6d0bf706ba3cfd4c61b1e8df71e1",
         "version.body.7162c132cb0869e1d61bad2096b5b6663ca4abb3a199cab1"
       ]
     },
@@ -24063,7 +24091,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851"
+        "version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851",
+        "version.body.f91fa769b197ce0120c73d5fa5184710f67af9b05f1b1ecd"
       ]
     },
     {
@@ -24074,7 +24103,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.8fcea24630606de677f4da973d2a0dfbe13f291e251bf67c"
+        "version.body.8fcea24630606de677f4da973d2a0dfbe13f291e251bf67c",
+        "version.body.f38507364ae56fa7b5ba239b55646c939bbc652bff94b21e"
       ]
     },
     {
@@ -24097,7 +24127,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.197ac8f6e6186e2cbbfeb3caffa02c12308cf6e5e68ce637"
+        "version.body.197ac8f6e6186e2cbbfeb3caffa02c12308cf6e5e68ce637",
+        "version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f"
       ]
     },
     {
@@ -24108,6 +24139,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.60820e7ce0d81eebe5d8e5d8b4d790e4447e6f9ecc898f90",
         "version.body.ec16c3f75d1efcfb26491865acff04969b23d921d79c6c16"
       ]
     },
@@ -24119,7 +24151,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.0611eb17f77555e72b8653cc1140f5c790362d2c9e5917f2"
+        "version.body.0611eb17f77555e72b8653cc1140f5c790362d2c9e5917f2",
+        "version.body.86516ac998518eb930a1c738986b8b1519983eb5ad82df73"
       ]
     },
     {
@@ -24130,7 +24163,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.66334ed54e1b51fc1a11ba23e1257fbaa5a53e9eae4b4461"
+        "version.body.66334ed54e1b51fc1a11ba23e1257fbaa5a53e9eae4b4461",
+        "version.body.c88ba26c97973dd9b226b267f1cbcaec6a18bc8758a9f54f"
       ]
     },
     {
@@ -24153,7 +24187,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.4a3ccde827e51ceec18863fe4df482ac8cf26121d88340cc"
+        "version.body.4a3ccde827e51ceec18863fe4df482ac8cf26121d88340cc",
+        "version.body.d96f57bc2cfb6145296ae50b67be51f41a818720bc3336a6"
       ]
     },
     {
@@ -24175,6 +24210,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.4e9e98d88d13f8bdb149f5d4c67befa786f11eacdfbd1b3a",
         "version.body.8e3b862f912c0039c21df494b5d93e2ed0576928d083497d"
       ]
     },
@@ -24209,7 +24245,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.4c8815e5e713f3a259028ea9d1489de9fc5866c161d06e85"
+        "version.body.4c8815e5e713f3a259028ea9d1489de9fc5866c161d06e85",
+        "version.body.94f8cbedbfe252d18277d8b57b4e580362de4b262490af53"
       ]
     },
     {
@@ -24220,7 +24257,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.77364283e3f5f4af3dad688ca1040b74af62ddf1eb6dd8ad"
+        "version.body.77364283e3f5f4af3dad688ca1040b74af62ddf1eb6dd8ad",
+        "version.body.a43aeca84d4fa764aa989d0a5c2300c86ac4807b7336dd88"
       ]
     },
     {
@@ -24231,7 +24269,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.680764d3292e9832f69adc64d54518ae2a089d9030f9a353"
+        "version.body.680764d3292e9832f69adc64d54518ae2a089d9030f9a353",
+        "version.body.d0dc70e5443939df78aefa8d675b42099b02d517a3ae1b6e"
       ]
     },
     {
@@ -24255,7 +24294,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.821dec405756f44c8448d28aaba5b74534c9f8e39a152ae8"
+        "version.body.821dec405756f44c8448d28aaba5b74534c9f8e39a152ae8",
+        "version.body.b69a76d67bde479201fb1082753b71c102634a883af5cbb2"
       ]
     },
     {
@@ -24266,7 +24306,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.5445d5f3ed9074fc13ccefe062c8d2d41ff8ab9213d17705"
+        "version.body.5445d5f3ed9074fc13ccefe062c8d2d41ff8ab9213d17705",
+        "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af"
       ]
     },
     {
@@ -24312,7 +24353,19 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.43575e087476c8726f894f8dd25c266707c2350db41d0235",
         "version.body.7578397be1d47e0299949187887fe94c6197e9a0e7162217"
+      ]
+    },
+    {
+      "path": "assets/models/community/versions/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+      "bytes": 2000480,
+      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020"
       ]
     },
     {
@@ -24323,6 +24376,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.120933e256d86989a72c3104a9c413a5ea6bac6ac82a4141",
         "version.body.ac0107fcbea7d603323adc116c0824e82a83c26d2b9a8d11"
       ]
     },
@@ -24346,7 +24400,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.0ea1f09bce7c4380aed09c7eb57d45bd11d89894c827328c"
+        "version.body.0ea1f09bce7c4380aed09c7eb57d45bd11d89894c827328c",
+        "version.body.c5f7c4c80e1920406ade7e578458ffd8d9721f3313de4ab8"
       ]
     },
     {
@@ -24357,6 +24412,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.6240633d06d78d57bd168d8a6775e42915f3477448b0fbd5",
         "version.body.b2b7f6b11e2836248a4e98e76fd58d7c6745bb1e9cab1596"
       ]
     },
@@ -24368,6 +24424,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b",
         "version.body.9c7c450b965c55663a424d63a5b951053ab3d93453f41473"
       ]
     },
@@ -24403,7 +24460,9 @@
       "refs": [
         "bundle",
         "version.body.0d1754c369476a31d32a478469cd6b54cf15bce1b32d6a2b",
-        "version.body.1c285b4d672c8f7a369c2752163c93483ff1bbebc110c1ab"
+        "version.body.1c285b4d672c8f7a369c2752163c93483ff1bbebc110c1ab",
+        "version.body.c55acb04a86281e81f22da8dfc65e01ef5ac8607d751f690",
+        "version.body.ee9ef73ec42a1ec58b34147794f5e1d820b44f22090a7519"
       ]
     },
     {
@@ -24414,6 +24473,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.6144e87f910f8aa85aecb3a5bcf9fdef606f24c5184a27fe",
         "version.body.b30102050d398bf404b515acf00e50c110109e1a376fe039"
       ]
     },
@@ -24437,7 +24497,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.d9d8dbfa8ead890dff3d5009b07231e2aee65455e619a061"
+        "version.body.d9d8dbfa8ead890dff3d5009b07231e2aee65455e619a061",
+        "version.body.de07eb4d2080d69ca2438240aa358f37615fab1d4738d7b4"
       ]
     },
     {
@@ -24448,6 +24509,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.7164669136e4906c9c2c897034171f6c2bf14990b24c604f",
         "version.body.cae2a428424425a308163d968767d64e519b055a44291a47"
       ]
     },
@@ -24459,6 +24521,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d",
         "version.body.7746382d498189e79235a1a5aeac79a232dcd1bfa70bc353"
       ]
     },
@@ -24470,7 +24533,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.e91a81a53fce84531990758ebfbea7b6654342793792d3e6"
+        "version.body.e91a81a53fce84531990758ebfbea7b6654342793792d3e6",
+        "version.body.f25043a9b56b77ea13ea6399525dd26148e32ef5bbb4b81f"
       ]
     },
     {
@@ -24515,7 +24579,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.1ca70b87d4973b5e24f7f10f4b411a32276844d3281739c8"
+        "version.body.1ca70b87d4973b5e24f7f10f4b411a32276844d3281739c8",
+        "version.body.5acbcbb1ec33508f1648011f74264f8b52f8293e99b57e89"
       ]
     },
     {
@@ -24526,6 +24591,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.59f82e72371db5474efebde944b5c7e5fb15a88fdc46b021",
         "version.body.d6d95727a4aa2700a44cbed333c5157cc87d44b63c1c3dad"
       ]
     },
@@ -24549,7 +24615,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.cd91aee43adf5b4a8872ed6719cf93e087f0520b02eb5476"
+        "version.body.cd91aee43adf5b4a8872ed6719cf93e087f0520b02eb5476",
+        "version.body.e6681d3f0f03281b561966208f0990b29f16b4c65b0e42c4"
       ]
     },
     {
@@ -24571,6 +24638,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.83f01042a132f529913ae4590a0b506ca5837604bcf41e47",
         "version.body.c716a48fb10e7e7fcc236fee38a571f261b8f8067bf3b1ef"
       ]
     },
@@ -24582,6 +24650,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.02657a0c68f1e22529eab7f9bfd8bdf7c18cfd4725b8e3a8",
         "version.body.87700bcf92deec74403a96e45fbcba6aa3b1ab6f5474d2ba"
       ]
     },
@@ -24593,6 +24662,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.8e9a3c68ca92cb24f5e23b5f7462ef354e20aac42ec810e7",
         "version.body.ce88a4faae9d7332bc729d8de4eb17b33a36755b017578e3"
       ]
     },
@@ -24604,6 +24674,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.2343b24bd3c6c12ff41437575b7a8c56f14dfb75e45c7b52",
         "version.body.6473199638276bd81e2a9631f9a86bdf041389937f3cd850"
       ]
     },
@@ -24626,6 +24697,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
         "version.body.62bf4fc6be4e5be8c9f9d050d3cca3dacee6b3449fbabe1a"
       ]
     },
@@ -24649,7 +24721,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.2eb3c103151b3afbad614e875e2d0648da7994e10d86287c"
+        "version.body.2eb3c103151b3afbad614e875e2d0648da7994e10d86287c",
+        "version.body.dfd31286d6f3a4246db1798a23e801adcf9030217ade2e81"
       ]
     },
     {
@@ -24660,7 +24733,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.6e0ddd230684614143aaecc4d88410e6575fed615101e489"
+        "version.body.6e0ddd230684614143aaecc4d88410e6575fed615101e489",
+        "version.body.85a1ee3e47b81bc31ab3b0f498624692ae16e6200cc2882a"
       ]
     },
     {
@@ -24715,6 +24789,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.5717cbb93bdda101452dbeb038bad9e482806acd06bfebf5",
         "version.body.c0264fef8242538c5cc011d340882b0154a9588653f4c3a7"
       ]
     },
@@ -24748,7 +24823,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.d16c6b2b4461997a39de68a2a792a4865cbdc454ca0e15cc"
+        "version.body.d16c6b2b4461997a39de68a2a792a4865cbdc454ca0e15cc",
+        "version.body.f8311299c86c82ff2d915d0b144092596f21827e4d7bb33a"
       ]
     },
     {
@@ -24794,6 +24870,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.330e2eb071303107c419c55110bd4386458e6620cd40b169",
         "version.body.b063e512a3346de9ea34bb8e79528e84e7d46ea3266e2bcb"
       ]
     },
@@ -24838,7 +24915,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.6789fae462831b1bc3569f6b152a6fcb95059d7f4850466b"
+        "version.body.6789fae462831b1bc3569f6b152a6fcb95059d7f4850466b",
+        "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816"
       ]
     },
     {
@@ -24860,7 +24938,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.08942a1021b73b3b2b8cbb2e4fcb0614e873c85740b3d117"
+        "version.body.08942a1021b73b3b2b8cbb2e4fcb0614e873c85740b3d117",
+        "version.body.c14a09c6193f8382e82c0858f02452a52073020b943826de"
       ]
     },
     {
@@ -24882,6 +24961,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.27ca9ab535eab2e0a5004f08937ea938a8221a7eb3bef181",
         "version.body.6669e62fc12a89c589d1333582b62657a535f59ba18a7d47"
       ]
     },
@@ -24904,7 +24984,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.77aa08f7b5debb706f1d44556974924d1cb04d4efff10468"
+        "version.body.77aa08f7b5debb706f1d44556974924d1cb04d4efff10468",
+        "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd"
       ]
     },
     {
@@ -24938,6 +25019,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.7b795f169f6491619c9410c3a158fc23b48dcee19fb59f55",
         "version.body.f54b62db70ae62f7747226b019deee0128335ba4a55f4b5f"
       ]
     },
@@ -24960,7 +25042,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.2b07186d8f75a563d460c1caa2cc33ff08e69884b0380fa7"
+        "version.body.2b07186d8f75a563d460c1caa2cc33ff08e69884b0380fa7",
+        "version.body.8ef72ce0e4abf5a3e0a038766326ecad025dd8098077c811"
       ]
     },
     {
@@ -24993,7 +25076,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.61eee78779266fe60d8dcda510345093f25a3ed5c378720c"
+        "version.body.61eee78779266fe60d8dcda510345093f25a3ed5c378720c",
+        "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda"
       ]
     },
     {
@@ -25015,7 +25099,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.3a3c88a115192d672c15843a6401c45ab6c00c5942924b2a"
+        "version.body.3a3c88a115192d672c15843a6401c45ab6c00c5942924b2a",
+        "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a"
       ]
     },
     {
@@ -25026,6 +25111,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.42d19a2676eb2f2573ec6aa46659193ed4554f548f68c046",
         "version.body.d03b9fdc5017d06d28da0a234adbd4dc3ff54003658c339b"
       ]
     },
@@ -25072,7 +25158,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb"
+        "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+        "version.body.f41861e9ba552a2fb6b8702cf7c0b171a67b5fd32508e345"
       ]
     },
     {
@@ -25083,7 +25170,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.5eb9ddbdb654ce21bdf7e33d8a804ab054f153c99bf9a60b"
+        "version.body.5eb9ddbdb654ce21bdf7e33d8a804ab054f153c99bf9a60b",
+        "version.body.8969f24e8d72db2e53db22dcdd9622313e6d1dfa75a39a2b"
       ]
     },
     {
@@ -25106,6 +25194,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
         "version.body.e0c3fd1d3fd7eb9beebb3726c459123029d78e3c6dd822d5"
       ]
     },
@@ -25129,6 +25218,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
         "version.body.ab0df952c44c09dbe6e02451edb7d5a52eb3dee573801f80"
       ]
     },
@@ -25151,7 +25241,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.d6a7e6b8aa942eeafc8da287ef880022ff45b855f391595f"
+        "version.body.d6a7e6b8aa942eeafc8da287ef880022ff45b855f391595f",
+        "version.body.e8b5fa2dc3853b72420fe1e2ce90152980d369903a011140"
       ]
     },
     {
@@ -25162,6 +25253,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.85b59f48d84ac3e3954a1d01191659095ff41d2ba1eb4ffd",
         "version.body.95425b904b5861bd4ed610e991b31030a6cc9977a6cbc415"
       ]
     },
@@ -25173,6 +25265,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
         "version.body.f409923dd4ac6974cd02dcbeff46acc9c198181fcdaf3422"
       ]
     },
@@ -25184,6 +25277,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.1a27f5b34036e0d626f666116c6b43133f8eebef20c711f1",
         "version.body.4d7bf1d4a136c363ec2b470c6db1ae20a1c8b9b7e7cd776c"
       ]
     },
@@ -25195,6 +25289,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4",
         "version.body.e934a767de2b7cd47af4cdff17b3e5fe30d2e848cde241f4"
       ]
     },
@@ -25241,6 +25336,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.b47a423ca2a25a83e403c00fbbd131cc669368665eb63d61",
         "version.body.b522f2df1f9872a8f48405de807430229230bf934fe4d345"
       ]
     },
@@ -25252,7 +25348,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.91fc5f0da24c195fa2dad1b910c09a28dcc1fede867c7805"
+        "version.body.91fc5f0da24c195fa2dad1b910c09a28dcc1fede867c7805",
+        "version.body.e7d0349be264bd9a51eae80334b0cd9c1b73375ffa98f5ac"
       ]
     },
     {
@@ -25289,7 +25386,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.241a15a5e1646054d2ed001a09138861c94d03bd59f8d1d6"
+        "version.body.241a15a5e1646054d2ed001a09138861c94d03bd59f8d1d6",
+        "version.body.889963a0992be9908ae8b739ff529da6223519deee3d5aa4"
       ]
     },
     {
@@ -25300,7 +25398,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.5898afbe835a9e285c1276ecbd011e196c98844e0ee55a29"
+        "version.body.5898afbe835a9e285c1276ecbd011e196c98844e0ee55a29",
+        "version.body.6437a62a3a82014f440bb1a8361fc704fc87836129f9fdb1"
       ]
     },
     {
@@ -25311,6 +25410,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.3f9cdcb4f0a29ad12e19d5506a02f38ff10e862948a1f534",
         "version.body.6cc43e44fc7e8242581e8288b664572b851c1fba1f77e2a8"
       ]
     },
@@ -25369,6 +25469,8 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.0769bfa2e9a324fc61839ff31ec306790621053f5628238f",
+        "version.body.69e09156dc9e456409f4c887b5a5f75f9d7b743f436c3c07",
         "version.body.6c08a217c2fc3a73824909cbc8092f67bc1a62d9877c9b77",
         "version.body.ae5341bfec8023d30088aab1def284eed0c886a5848bc387"
       ]
@@ -25427,6 +25529,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
         "version.body.d2cb9fb11dd900c39c141bd5a9391fd9e34e336ec19ea4ab"
       ]
     },
@@ -25438,7 +25541,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.961440071b6d5db54abd60f5b393191c31b0405163ded52f"
+        "version.body.961440071b6d5db54abd60f5b393191c31b0405163ded52f",
+        "version.body.d15fb416b6164035ea35d7702f572e6c76fff6dae22b14f5"
       ]
     },
     {
@@ -25449,7 +25553,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.9b545a0ff890ef77c626ce682339493288669ae2fd848a32"
+        "version.body.9b545a0ff890ef77c626ce682339493288669ae2fd848a32",
+        "version.body.fbca128c845b5c438b833713193b95d469cdcca31abba0d4"
       ]
     },
     {
@@ -25460,7 +25565,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.13ed4511521d3822338a2e8bfd1d2f4ceb3fa8b14b5dff91"
+        "version.body.13ed4511521d3822338a2e8bfd1d2f4ceb3fa8b14b5dff91",
+        "version.body.dd03856cb24d978c654cacbcf0a1895df06c0a026dae6b2a"
       ]
     },
     {
@@ -25471,7 +25577,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f"
+        "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+        "version.body.90e1d0ec0bf4829a0d3ea279eead5fc5f8bf5627eaddea95"
       ]
     },
     {
@@ -25482,6 +25589,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.0274c8c96c88e174248a6f8261a01398b6f1b55d7aa2d0b6",
         "version.body.e06af034a28cc0b3611d61f3278dfb7f1453b017e055645c"
       ]
     },
@@ -25515,6 +25623,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.71c301c8921460768d1bcf29863ce903bc588aa0cc5efdf8",
         "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3"
       ]
     },
@@ -25560,7 +25669,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.b1601b8f09f29d061dc213b11c973da4f408216fc5b8c32e"
+        "version.body.b1601b8f09f29d061dc213b11c973da4f408216fc5b8c32e",
+        "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db"
       ]
     },
     {
@@ -25593,7 +25703,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.46d7520a552f2585d3cdd91baf291fb58f2e9b5966fcb295"
+        "version.body.46d7520a552f2585d3cdd91baf291fb58f2e9b5966fcb295",
+        "version.body.656e3f92200ed4f935ce9a93cba9a1d7995ee51bdd61d0c1"
       ]
     },
     {
@@ -25638,6 +25749,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.6bc5b102e7e229b28612694c4c838637da5a87c9da9d1f62",
         "version.body.cfb2ec1ac9e11405b02d605fb7e84a91102062cbc4f41b48"
       ]
     },
@@ -25649,6 +25761,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.75b0f70143afadc8a37a785e0706d60ad24c8b41159ff03c",
         "version.body.c54708dd70ec45403b14799482a047406f9261c35662b4c7"
       ]
     },
@@ -25660,6 +25773,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.1e3c7caed18f4e9f6cad2da54bdcefcdc5e2749dce334744",
         "version.body.5178befc9ffa5c89c311f13d6916bf88a944065d2f0214e6"
       ]
     },
@@ -25671,7 +25785,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.8c74009a34302d2b681b0ec3a97d7d1084a178fe24da6a57"
+        "version.body.8c74009a34302d2b681b0ec3a97d7d1084a178fe24da6a57",
+        "version.body.bd1c798db5d38234790653550b4a035af6ec5e13a5e784d6"
       ]
     },
     {
@@ -25704,6 +25819,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
         "version.body.fd4f76adddc93ce19df5c6ca906f6f177cd527fb848687e3"
       ]
     },
@@ -25726,7 +25842,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.9fc14ff0a9255a76fa80c060406619ccefb816490d5762e8"
+        "version.body.9fc14ff0a9255a76fa80c060406619ccefb816490d5762e8",
+        "version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931"
       ]
     },
     {
@@ -25737,7 +25854,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.9e6e074251ce5a123abe1923b89800d395c97015007a83f4"
+        "version.body.9e6e074251ce5a123abe1923b89800d395c97015007a83f4",
+        "version.body.fa4d88f2a0f6e6ec59eb106438c3c1647a08f38dcb07a16f"
       ]
     },
     {
@@ -25773,6 +25891,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.9c4d9c3355065e64f198441f13c422a3d012983f90c8939e",
         "version.body.e0c5151596e41ff57fdb138ea399bf55d672922b1a3bc57d"
       ]
     },
@@ -25795,6 +25914,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.ae9b304d0fccdf328681e449ae98f9989d07665dca98db12",
         "version.body.b37070253255f468d97382e61bd2e187c5b88ef42f9072eb"
       ]
     },
@@ -25806,7 +25926,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.02af533688b5a6e3e273afa84e0cfe8e2b3bd1454b9f448c"
+        "version.body.02af533688b5a6e3e273afa84e0cfe8e2b3bd1454b9f448c",
+        "version.body.e09a5f5694bac4755857a324e2aca325164f40d65b387bf4"
       ]
     },
     {
@@ -25840,6 +25961,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
         "version.body.c8e413cef2dd43a380237f6dd055565443ddcf8278e4483c"
       ]
     },
@@ -25862,7 +25984,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.91ed5c47100dac10d44137ddd322c4fa3fe29f6eac346791"
+        "version.body.91ed5c47100dac10d44137ddd322c4fa3fe29f6eac346791",
+        "version.body.d0cb941e2c944f613c2b3186641bbff462bb6cf87761c86a"
       ]
     },
     {
@@ -25873,6 +25996,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.60920f9d196cefcbf6c0f67bf9a9931afd5094981cf9a933",
         "version.body.c4036c2ac7c92c6b4c6fba19ceb782a81eb63ec1a69d479d"
       ]
     },
@@ -25895,7 +26019,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.ba41578f2975cafb4a99321369aaba6e46e64d25fe9abf43"
+        "version.body.ba41578f2975cafb4a99321369aaba6e46e64d25fe9abf43",
+        "version.body.dccfb5eb5165a5a2a8582fdbea05fb63cc7b55b0e85c8899"
       ]
     },
     {
@@ -25906,6 +26031,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276",
         "version.body.e7974a836ab2987ad896de2489ff779c4fc5c0f778fa4371"
       ]
     },
@@ -25917,7 +26043,19 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.d5117873dd7c2b981b21a1d1641f93ffded7feb485b4bb7f"
+        "version.body.d5117873dd7c2b981b21a1d1641f93ffded7feb485b4bb7f",
+        "version.body.d96fb8c8e76139503a1b32cbbd7ea13f09c3ef20b3961f34"
+      ]
+    },
+    {
+      "path": "assets/models/community/versions/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+      "bytes": 3011048,
+      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.37369175767e587335582605d4ed6d271221101d0311c82c"
       ]
     },
     {
@@ -25939,7 +26077,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.9bac8f3598209b37f020581bcd6139d506936a63ae1068c0"
+        "version.body.9bac8f3598209b37f020581bcd6139d506936a63ae1068c0",
+        "version.body.bd2331fe597877fb1cc1eccabb74caa5c1ec33080af02fa4"
       ]
     },
     {
@@ -25950,6 +26089,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.7bfd1e424d3da7a7f0c346589222b64b1ecb9c9ff1eaf260",
         "version.body.a6090dacea2b30b85a82ef2e533d85f2df9efb5710d8f92a"
       ]
     },
@@ -25973,7 +26113,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.799894656f162f2c3a59eaf222696fce5bb8381b5a4fd08f"
+        "version.body.799894656f162f2c3a59eaf222696fce5bb8381b5a4fd08f",
+        "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483"
       ]
     },
     {
@@ -25984,7 +26125,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.6da25c8170febbc247d72e4dfa775aed7430777c3984f896"
+        "version.body.6da25c8170febbc247d72e4dfa775aed7430777c3984f896",
+        "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801"
       ]
     },
     {
@@ -26029,7 +26171,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.3bcda47dcb1560b48322242c607a1927f1d0eddfbfc36d64"
+        "version.body.3bcda47dcb1560b48322242c607a1927f1d0eddfbfc36d64",
+        "version.body.584c8cd6112253d1b1f936db2cb3958aa58ad895f7859da8"
       ]
     },
     {
@@ -26052,6 +26195,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.3bd13bc6bdffbd53fb0310fdabd9b97ddd8561f4616ef21a",
         "version.body.7bf10233f8e26c4cd2bec4248f9c8dea0672f7af335e57b9"
       ]
     },
@@ -26074,7 +26218,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.84de20dba609752ac3d0d1c6f1242d8752408655ec183580"
+        "version.body.84de20dba609752ac3d0d1c6f1242d8752408655ec183580",
+        "version.body.f23a2b06a901277dc9eceed7d3fbebe1d5db784bab74640d"
       ]
     },
     {
@@ -26085,6 +26230,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.25f498ed0c7fb2f75164d585c89eb24a73fd7b9e52dbb5ad",
         "version.body.9f7b9c7966eca5b7c066ffe2d95a1660edf91a9f7d1bcd02"
       ]
     },
@@ -26096,7 +26242,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.339146ce17e5d0bdfcf9253458ff343acd92864bd726e5e1"
+        "version.body.339146ce17e5d0bdfcf9253458ff343acd92864bd726e5e1",
+        "version.body.99efcd308140f52bf02376b66f04713065a5939f4fdc5bf9"
       ]
     },
     {
@@ -26107,6 +26254,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.1649f8ff86bc5a488300749459fc50380dd84250aa391721",
         "version.body.a8ced1f9b0848bd41b9a17b3c11852efae047cd9d91f0f1d"
       ]
     },
@@ -26142,7 +26290,9 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
         "version.body.80c676912c0c63a47519b75f49821316bb6d80cc335f3801",
+        "version.body.8c7d9c17a45eacbf0463ad09896708d85b8a8602f16344c5",
         "version.body.e2db418dc4431b5e5ccdcc50ca8ecc33946efeb840296340"
       ]
     },
@@ -26155,7 +26305,9 @@
       "refs": [
         "bundle",
         "version.body.4c38024e12d3e418927bdda5bd1b9afd86821ff5b0fb6f15",
-        "version.body.ad825a6b54ef2c646574e8120e4535e57aa8f1ad766f169c"
+        "version.body.ad825a6b54ef2c646574e8120e4535e57aa8f1ad766f169c",
+        "version.body.bb364ead68ef7a7c87bc50e825fd738fd86b72d50b998961",
+        "version.body.f89f3e6d586e2e9052126517d3ef6935bb42634a94255856"
       ]
     },
     {
@@ -26166,7 +26318,9 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.5b21f2de8e071ad37b4fb11baa13bf10dd2a4dfd94356b4a",
         "version.body.8ba54d16addcb3e950f19c36cdfcaca6787fb8aa7ffb1103",
+        "version.body.a53e1d01b4bf47aa8794bb3ca64cefd57ff8c5b63116fd94",
         "version.body.ecc9abd74c958bee63f23c24281582dfda9019f15483caf6"
       ]
     },
@@ -26178,6 +26332,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.10009b090c7d3728ebd4464f2941b23927408d67e5b11334",
         "version.body.f1d5943378389229bc6c6f660d8c8742fff86e2b71608576"
       ]
     },
@@ -26223,7 +26378,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a"
+        "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+        "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54"
       ]
     },
     {
@@ -26302,6 +26458,7 @@
       "refs": [
         "bundle",
         "version.body.619fced60e8e80ba5e8dc0e16780642db6f18a1d5fd54cf5",
+        "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
         "version.body.bda54bedcd01cc108b31736112105fd4fcd4b214e9c3ed65"
       ]
     },
@@ -26393,7 +26550,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.2a62bf437a4de27aeb05ddc5233dbfbe2937c332e302b435"
+        "version.body.2a62bf437a4de27aeb05ddc5233dbfbe2937c332e302b435",
+        "version.body.ab9d5c54fb910d8a7ba267b1078f811979824d9df1b14184"
       ]
     },
     {
@@ -26427,7 +26585,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.7919e337bb1ff2951b09593af79b1d3f780724ddf3a24332"
+        "version.body.7919e337bb1ff2951b09593af79b1d3f780724ddf3a24332",
+        "version.body.e9ad359ba08df5be99538a43207527153580435ced64a2cd"
       ]
     },
     {
@@ -26461,7 +26620,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.41a8ce3fd84240b6384dc791b7508380839119c4f26d0a31"
+        "version.body.41a8ce3fd84240b6384dc791b7508380839119c4f26d0a31",
+        "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802"
       ]
     },
     {
@@ -26472,6 +26632,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.a2517c2e9cc3e09d66f8a4186195f4fc2b61cd7ed7766586",
         "version.body.c45722d6d33e89b28e067f43ca08260e163e5cc7cee9da80"
       ]
     },
@@ -26483,6 +26644,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
         "version.body.96f230f15717574b6fee492b178849f764930d46f8f01f18"
       ]
     },
@@ -26518,6 +26680,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.cefec22fb50f901f84f6dfa34b597f8d841c3656f69213d5",
         "version.body.e11ddabb9ba00211f9056f1004a0163792566920f5c43a0a"
       ]
     },
@@ -26540,6 +26703,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
         "version.body.75ba2633b331165aa31ed04fb63b7dfe082e4d95e73a1bb3"
       ]
     },
@@ -26562,6 +26726,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.43e6ed5f2cd3eda153f310f13967f27c67bcd5f0579c9c89",
         "version.body.587a970891bb54dac6c4e7103fe361631acf9025b5fc8797"
       ]
     },
@@ -26573,7 +26738,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.19f6cdd7b7f61b10828748abc37befb14a3bec2e2426056b"
+        "version.body.19f6cdd7b7f61b10828748abc37befb14a3bec2e2426056b",
+        "version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec"
       ]
     },
     {
@@ -26584,7 +26750,8 @@
       "kind": "models",
       "refs": [
         "bundle",
-        "version.body.016519986db42a2d57b33fabb49f22f86212d71830a710fe"
+        "version.body.016519986db42a2d57b33fabb49f22f86212d71830a710fe",
+        "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3"
       ]
     },
     {
@@ -26595,6 +26762,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
         "version.body.4387bdae07e49eadb81dff74dfa2da89962fbf353972d5a4"
       ]
     },
@@ -26630,6 +26798,7 @@
       "kind": "models",
       "refs": [
         "bundle",
+        "version.body.2d3806f7cccee53c5a2e13d310cd187e75cb5062a1dca667",
         "version.body.c24e6b5693f156249e5a615ef24e26acc7b727dd5041225b"
       ]
     },
@@ -28377,6 +28546,17 @@
       "refs": [
         "bundle",
         "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16"
+      ]
+    },
+    {
+      "path": "assets/models/imported/versions/e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2.glb",
+      "bytes": 264736,
+      "sha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.14352709df09b4c59702f49915dd4a4f9f4bec26b8705603"
       ]
     },
     {

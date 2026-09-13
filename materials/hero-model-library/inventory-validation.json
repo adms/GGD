@@ -1,12 +1,12 @@
 {
-  "time": "2026-09-13T18:02:18+08:00",
-  "inputs_sha256": "3196ba9d8349c145902995dfd5c550a904e26b57c1c65d6524074b984dd58fd3",
+  "time": "2026-09-13T19:38:37+08:00",
+  "inputs_sha256": "bdec670047e05ec008596a51cd9de3d81c085d59f77c6d7f746655760d534cb6",
   "rows": 157,
   "missing_works": [],
-  "source_options": 150,
+  "source_options": 152,
   "s3_release": "7b6ec0c8c5bd75fc173c5f2d",
   "live_selectable": 130,
   "pending": 2,
   "productionContentVersion": "cv_a5039179a7ff",
-  "sha256": "cf7e9c85eecc4bbb35418cd240a696564c8f9d5d0afa160c3ff89e011000c242"
+  "sha256": "ce7131f3ff075697bb3d8f178e887828894712bc471ecec4071565c615c1d436"
 }

@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "imported.sd2",
+  "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -377,5 +377,44 @@
     "位移",
     "變身"
   ],
-  "pitch": "用魔法劍技快速接近敵人，在技能與近戰間交錯，變身後打一波完整爆發。"
+  "pitch": "用魔法劍技快速接近敵人，在技能與近戰間交錯，變身後打一波完整爆發。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.14352709df09b4c59702f49915dd4a4f9f4bec26b8705603",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.sd2",
+      "modelSha256": "e98111ed72f73ad18066d04bad97d88310f0d2aa1c4cefba47f3b313e59edb74",
+      "binarySha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
+      "registeredAt": "2026-09-13T11:29:17.616Z",
+      "source": {
+        "kind": "previous",
+        "character": "傳說的龍騎士 - 勇者小呆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.sd2.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+      "sourceModelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+      "modelSha256": "6517526e64c3eb647a7693f768efacfe5f1f58e8b0e2ff273ffd7a8958b56f37",
+      "binarySha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "registeredAt": "2026-09-13T11:29:17.630Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

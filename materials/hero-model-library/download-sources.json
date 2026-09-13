@@ -53440,7 +53440,7 @@
       "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
       "accessStatus": "local-installed-game-readonly-share",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
+      "readiness": "dai-and-pre-transformation-vearn-runtime-models-accepted-and-local-dropdown-registered",
       "purchaseDecision": "no-purchase-user-owned-install",
       "defaultEligible": false,
       "resourceRole": "canonical-game-reserve",
@@ -53495,7 +53495,7 @@
             "godie-n01c"
           ],
           "packageCount": 3838,
-          "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
+          "formState": "PN010-02-textured-native-animation-runtime-accepted-and-local-dropdown-registered"
         },
         {
           "nativeId": "EN801",
@@ -53505,7 +53505,7 @@
             "godie-ubal"
           ],
           "packageCount": 902,
-          "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
+          "formState": "pre-transformation-old-vearn-runtime-accepted-and-local-dropdown-registered-post-transformation-not-located"
         },
         {
           "nativeId": "EN653",
@@ -53518,18 +53518,26 @@
       ],
       "backendIntegration": {
         "required": true,
-        "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
-        "selectionVerified": false,
-        "release": null
+        "state": "dai-and-pre-transformation-vearn-local-dropdown-registered-production-pending",
+        "selectionVerified": true,
+        "release": {
+          "runtimeSourceIds": [
+            "runtime:infinity-strash-dai-pn010-02-native-v1",
+            "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1"
+          ],
+          "gitEvidence": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/acceptance-summary.json",
+          "productionDeployed": false
+        }
       },
-      "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
+      "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
       "limitations": [
         "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
         "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
         "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
         "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-        "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-        "No component is registered as a model option, backend-selectable or deployed."
+        "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+        "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+        "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
       ],
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -53588,7 +53596,7 @@
       ],
       "conversionEvidence": {
         "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
-        "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+        "sha256": "adbd5cc591de11381891aa0fe6aa9b2686756b29791d2fcddfad8a7639e36c0e",
         "meshGltfCount": 29,
         "texturePngCount": 97,
         "nativePsaAnimationCount": 12

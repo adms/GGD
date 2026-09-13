@@ -230,6 +230,59 @@
         "作者命名的開司社群模型；原包未附獨立散布授權聲明，保留來源原文與權利狀態。",
         "技術模型驗收及後台登記與正式站部署分開記錄。"
       ]
+    },
+    {
+      "candidateId": "infinity-strash-dai-pn010-02-native-v1",
+      "heroId": "godie-nbbc",
+      "name": "小呆／達伊",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
+      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+        "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-vearn-en801-pre-transformation-native-v1",
+      "heroId": "godie-ubal",
+      "name": "巴恩大魔王",
+      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
+      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+        "GGD hurt/death 共用原生死亡序列。",
+        "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
+      ]
     }
   ]
 }

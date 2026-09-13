@@ -1,0 +1,53 @@
+{
+  "schema": "ggd.infinity-strash-babylon-static-load@1",
+  "modelSha256": "2b7e08ef6e5c2a8a21c49ae8dbb2ac770916040bc8699339d0c48d98fd4cabe2",
+  "babylonVersion": "7.54.3",
+  "meshes": [
+    {
+      "name": "dai-pn010-02-combined_primitive0",
+      "vertices": 8390,
+      "positionCoordinates": 25170
+    },
+    {
+      "name": "dai-pn010-02-combined_primitive1",
+      "vertices": 665,
+      "positionCoordinates": 1995
+    },
+    {
+      "name": "dai-pn010-02-combined_primitive2",
+      "vertices": 72,
+      "positionCoordinates": 216
+    },
+    {
+      "name": "dai-pn010-02-combined_primitive3",
+      "vertices": 21,
+      "positionCoordinates": 63
+    },
+    {
+      "name": "dai-pn010-02-combined_primitive4",
+      "vertices": 2571,
+      "positionCoordinates": 7713
+    },
+    {
+      "name": "dai-pn010-02-combined_primitive5",
+      "vertices": 1943,
+      "positionCoordinates": 5829
+    }
+  ],
+  "skeletonBoneCounts": [
+    429
+  ],
+  "animationGroups": [
+    "GGD_native_idle",
+    "GGD_native_run",
+    "GGD_native_attack",
+    "GGD_native_down",
+    "GGD_native_special01",
+    "GGD_native_special02"
+  ],
+  "finiteRestPosePositions": true,
+  "materialsSkippedForCpuValidation": true,
+  "webglVisualReview": "pending-test-mechanism-recovery",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

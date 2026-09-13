@@ -21,7 +21,7 @@ def sha256(path: Path) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("kind", choices=("mesh", "animation", "texture"))
+    parser.add_argument("kind", choices=("mesh", "mesh-psk", "animation", "texture"))
     parser.add_argument("--umodel", type=Path, required=True)
     parser.add_argument("--asset-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -46,6 +46,10 @@ def main() -> int:
             command.extend(["-gltf", "-noanim"])
             if not args.with_textures:
                 command.append("-notex")
+        elif args.kind == "mesh-psk":
+            command.append("-noanim")
+            if not args.with_textures:
+                command.append("-notex")
         elif args.kind == "texture":
             command.append("-png")
         command.append(str(asset))
@@ -59,7 +63,7 @@ def main() -> int:
             for path, signature in after.items()
             if path.name != log_name and before.get(path) != signature
         )
-        expected_suffix = {"mesh": ".gltf", "animation": ".psa", "texture": ".png"}[args.kind]
+        expected_suffix = {"mesh": ".gltf", "mesh-psk": ".psk", "animation": ".psa", "texture": ".png"}[args.kind]
         outcome = "exported" if any(path.lower().endswith(expected_suffix) for path in produced) else "no-exportable-output"
         commands.append({
             "asset": relative,

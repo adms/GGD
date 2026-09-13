@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法師",
-  "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
+  "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -294,6 +294,27 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457883-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
+      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+      "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+      "modelSha256": "3e567a65de18d2807adf9ff94bff2eefb0558c3a86e94c5370ee307dee7b6924",
+      "binarySha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "registeredAt": "2026-09-13T11:29:19.327Z",
+      "source": {
+        "kind": "exact",
+        "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

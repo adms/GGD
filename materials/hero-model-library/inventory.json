@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T18:02:18+08:00",
-  "inputsSha256": "3196ba9d8349c145902995dfd5c550a904e26b57c1c65d6524074b984dd58fd3",
+  "generatedAt": "2026-09-13T19:38:37+08:00",
+  "inputsSha256": "bdec670047e05ec008596a51cd9de3d81c085d59f77c6d7f746655760d534cb6",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -42180,7 +42180,7 @@
           "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
+          "readiness": "dai-and-pre-transformation-vearn-runtime-models-accepted-and-local-dropdown-registered",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-reserve",
@@ -42235,7 +42235,7 @@
                 "godie-n01c"
               ],
               "packageCount": 3838,
-              "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
+              "formState": "PN010-02-textured-native-animation-runtime-accepted-and-local-dropdown-registered"
             },
             {
               "nativeId": "EN801",
@@ -42245,7 +42245,7 @@
                 "godie-ubal"
               ],
               "packageCount": 902,
-              "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
+              "formState": "pre-transformation-old-vearn-runtime-accepted-and-local-dropdown-registered-post-transformation-not-located"
             },
             {
               "nativeId": "EN653",
@@ -42258,18 +42258,26 @@
           ],
           "backendIntegration": {
             "required": true,
-            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
-            "selectionVerified": false,
-            "release": null
+            "state": "dai-and-pre-transformation-vearn-local-dropdown-registered-production-pending",
+            "selectionVerified": true,
+            "release": {
+              "runtimeSourceIds": [
+                "runtime:infinity-strash-dai-pn010-02-native-v1",
+                "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1"
+              ],
+              "gitEvidence": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/acceptance-summary.json",
+              "productionDeployed": false
+            }
           },
-          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
+          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
           "limitations": [
             "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
             "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-            "No component is registered as a model option, backend-selectable or deployed."
+            "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+            "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+            "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -42328,7 +42336,7 @@
           ],
           "conversionEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
-            "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+            "sha256": "adbd5cc591de11381891aa0fe6aa9b2686756b29791d2fcddfad8a7639e36c0e",
             "meshGltfCount": 29,
             "texturePngCount": 97,
             "nativePsaAnimationCount": 12
@@ -44196,37 +44204,53 @@
       "section": "既有角色／形態",
       "status": "正式機白名單可選",
       "default": {
-        "key": "imported.sd2",
-        "id": "imported.sd2",
-        "name": "sd2（模型檔名）",
-        "work": "原 W3X 地圖模型；原始角色作品未由該模型文件證實",
-        "tier": "w3x",
-        "kind": "previous",
+        "key": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+        "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
+        "name": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "tier": "original",
+        "library": "Infinity Strash Steam 原作擷取",
+        "selectionClass": "canonical-game",
+        "kind": "exact",
         "ready": true,
-        "old": true,
+        "old": false,
         "defaultEligible": true,
-        "selectionClass": "w3x",
         "asset": {
-          "modelKey": "imported.sd2",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+          "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "limitations": [
+            "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+            "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+            "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
+          ]
         }
       },
       "automaticDefault": {
-        "key": "imported.sd2",
-        "id": "imported.sd2",
-        "name": "sd2（模型檔名）",
-        "work": "原 W3X 地圖模型；原始角色作品未由該模型文件證實",
-        "tier": "w3x",
-        "kind": "previous",
+        "key": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+        "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
+        "name": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "tier": "original",
+        "library": "Infinity Strash Steam 原作擷取",
+        "selectionClass": "canonical-game",
+        "kind": "exact",
         "ready": true,
-        "old": true,
+        "old": false,
         "defaultEligible": true,
-        "selectionClass": "w3x",
         "asset": {
-          "modelKey": "imported.sd2",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+          "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "limitations": [
+            "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+            "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+            "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
+          ]
         }
       },
       "defaultSelectionMode": "automatic",
@@ -44242,6 +44266,31 @@
       },
       "options": [
         {
+          "key": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+          "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
+          "name": "小呆／達伊（PN010/02）",
+          "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+          "tier": "original",
+          "library": "Infinity Strash Steam 原作擷取",
+          "selectionClass": "canonical-game",
+          "kind": "exact",
+          "ready": true,
+          "old": false,
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+            "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+            "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+            "s3Uri": null,
+            "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+            "limitations": [
+              "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+              "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+              "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
+            ]
+          }
+        },
+        {
           "key": "imported.sd2",
           "id": "imported.sd2",
           "name": "sd2（模型檔名）",
@@ -44250,6 +44299,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "w3x",
           "asset": {
@@ -44261,8 +44311,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "imported.sd2",
-        "mode": "auto"
+        "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -44593,7 +44643,7 @@
           "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
+          "readiness": "dai-and-pre-transformation-vearn-runtime-models-accepted-and-local-dropdown-registered",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-reserve",
@@ -44648,7 +44698,7 @@
                 "godie-n01c"
               ],
               "packageCount": 3838,
-              "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
+              "formState": "PN010-02-textured-native-animation-runtime-accepted-and-local-dropdown-registered"
             },
             {
               "nativeId": "EN801",
@@ -44658,7 +44708,7 @@
                 "godie-ubal"
               ],
               "packageCount": 902,
-              "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
+              "formState": "pre-transformation-old-vearn-runtime-accepted-and-local-dropdown-registered-post-transformation-not-located"
             },
             {
               "nativeId": "EN653",
@@ -44671,18 +44721,26 @@
           ],
           "backendIntegration": {
             "required": true,
-            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
-            "selectionVerified": false,
-            "release": null
+            "state": "dai-and-pre-transformation-vearn-local-dropdown-registered-production-pending",
+            "selectionVerified": true,
+            "release": {
+              "runtimeSourceIds": [
+                "runtime:infinity-strash-dai-pn010-02-native-v1",
+                "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1"
+              ],
+              "gitEvidence": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/acceptance-summary.json",
+              "productionDeployed": false
+            }
           },
-          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
+          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
           "limitations": [
             "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
             "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-            "No component is registered as a model option, backend-selectable or deployed."
+            "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+            "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+            "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -44741,7 +44799,7 @@
           ],
           "conversionEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
-            "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+            "sha256": "adbd5cc591de11381891aa0fe6aa9b2686756b29791d2fcddfad8a7639e36c0e",
             "meshGltfCount": 29,
             "texturePngCount": 97,
             "nativePsaAnimationCount": 12
@@ -49210,39 +49268,55 @@
       "section": "既有角色／形態",
       "status": "正式機白名單可選",
       "default": {
-        "key": "champ.skin.barbarian",
-        "id": "champ.skin.barbarian",
-        "name": "方塊野蠻人",
-        "work": "GGD 模型預設",
+        "key": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+        "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+        "name": "巴恩大魔王（EN801，變身前／老巴恩）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
         "tier": "original",
-        "kind": "previous",
+        "library": "Infinity Strash Steam 原作擷取",
+        "selectionClass": "canonical-game",
+        "kind": "exact",
         "ready": true,
-        "old": true,
-        "library": "GGD",
+        "old": false,
         "defaultEligible": true,
-        "selectionClass": "original",
         "asset": {
-          "modelKey": "champ.skin.barbarian",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+          "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "limitations": [
+            "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+            "GGD hurt/death 共用原生死亡序列。",
+            "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+            "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
+          ]
         }
       },
       "automaticDefault": {
-        "key": "champ.skin.barbarian",
-        "id": "champ.skin.barbarian",
-        "name": "方塊野蠻人",
-        "work": "GGD 模型預設",
+        "key": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+        "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+        "name": "巴恩大魔王（EN801，變身前／老巴恩）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
         "tier": "original",
-        "kind": "previous",
+        "library": "Infinity Strash Steam 原作擷取",
+        "selectionClass": "canonical-game",
+        "kind": "exact",
         "ready": true,
-        "old": true,
-        "library": "GGD",
+        "old": false,
         "defaultEligible": true,
-        "selectionClass": "original",
         "asset": {
-          "modelKey": "champ.skin.barbarian",
-          "location": "existing-project-model",
-          "s3Uri": null
+          "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+          "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "limitations": [
+            "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+            "GGD hurt/death 共用原生死亡序列。",
+            "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+            "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
+          ]
         }
       },
       "defaultSelectionMode": "automatic",
@@ -49257,6 +49331,32 @@
         "old": true
       },
       "options": [
+        {
+          "key": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+          "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+          "name": "巴恩大魔王（EN801，變身前／老巴恩）",
+          "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+          "tier": "original",
+          "library": "Infinity Strash Steam 原作擷取",
+          "selectionClass": "canonical-game",
+          "kind": "exact",
+          "ready": true,
+          "old": false,
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+            "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+            "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+            "s3Uri": null,
+            "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+            "limitations": [
+              "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+              "GGD hurt/death 共用原生死亡序列。",
+              "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+              "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
+            ]
+          }
+        },
         {
           "key": "ou99.457883",
           "id": "ou99:457883",
@@ -49324,8 +49424,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
-        "mode": "auto"
+        "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-025",
@@ -49346,7 +49446,7 @@
           "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
+          "readiness": "dai-and-pre-transformation-vearn-runtime-models-accepted-and-local-dropdown-registered",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-reserve",
@@ -49401,7 +49501,7 @@
                 "godie-n01c"
               ],
               "packageCount": 3838,
-              "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
+              "formState": "PN010-02-textured-native-animation-runtime-accepted-and-local-dropdown-registered"
             },
             {
               "nativeId": "EN801",
@@ -49411,7 +49511,7 @@
                 "godie-ubal"
               ],
               "packageCount": 902,
-              "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
+              "formState": "pre-transformation-old-vearn-runtime-accepted-and-local-dropdown-registered-post-transformation-not-located"
             },
             {
               "nativeId": "EN653",
@@ -49424,18 +49524,26 @@
           ],
           "backendIntegration": {
             "required": true,
-            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
-            "selectionVerified": false,
-            "release": null
+            "state": "dai-and-pre-transformation-vearn-local-dropdown-registered-production-pending",
+            "selectionVerified": true,
+            "release": {
+              "runtimeSourceIds": [
+                "runtime:infinity-strash-dai-pn010-02-native-v1",
+                "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1"
+              ],
+              "gitEvidence": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/acceptance-summary.json",
+              "productionDeployed": false
+            }
           },
-          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
+          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
           "limitations": [
             "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
             "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-            "No component is registered as a model option, backend-selectable or deployed."
+            "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+            "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+            "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -49494,7 +49602,7 @@
           ],
           "conversionEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
-            "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+            "sha256": "adbd5cc591de11381891aa0fe6aa9b2686756b29791d2fcddfad8a7639e36c0e",
             "meshGltfCount": 29,
             "texturePngCount": 97,
             "nativePsaAnimationCount": 12
@@ -113255,17 +113363,25 @@
           "steam-infinity-strash-primary-paks-build-local-20240328",
           "steam-infinity-strash-popp-priority-audio-build-local-20240328"
         ],
-        "retainedWorkflowSources": [],
-        "purchaseHoldFor": [],
+        "retainedWorkflowSources": [
+          {
+            "heroId": "godie-ubal",
+            "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+            "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+          }
+        ],
+        "purchaseHoldFor": [
+          "godie-ubal"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-ubal"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-026",
@@ -113304,17 +113420,25 @@
           "steam-infinity-strash-primary-paks-build-local-20240328",
           "steam-infinity-strash-popp-priority-audio-build-local-20240328"
         ],
-        "retainedWorkflowSources": [],
-        "purchaseHoldFor": [],
+        "retainedWorkflowSources": [
+          {
+            "heroId": "godie-ubal",
+            "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+            "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+          }
+        ],
+        "purchaseHoldFor": [
+          "godie-ubal"
+        ],
         "purchaseHoldWithoutHeroId": false,
-        "purchaseHold": false,
+        "purchaseHold": true,
         "partialPurchaseHold": false,
         "available300": [],
         "approvedDerivatives": [],
         "needsDownloadFor": [
           "godie-ubal"
         ],
-        "downloadPriority": "owner-highest"
+        "downloadPriority": "defer-acquired-public"
       },
       {
         "id": "owner-model-027",
@@ -167804,7 +167928,7 @@
         "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
+        "readiness": "dai-and-pre-transformation-vearn-runtime-models-accepted-and-local-dropdown-registered",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": false,
         "resourceRole": "canonical-game-reserve",
@@ -167859,7 +167983,7 @@
               "godie-n01c"
             ],
             "packageCount": 3838,
-            "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
+            "formState": "PN010-02-textured-native-animation-runtime-accepted-and-local-dropdown-registered"
           },
           {
             "nativeId": "EN801",
@@ -167869,7 +167993,7 @@
               "godie-ubal"
             ],
             "packageCount": 902,
-            "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
+            "formState": "pre-transformation-old-vearn-runtime-accepted-and-local-dropdown-registered-post-transformation-not-located"
           },
           {
             "nativeId": "EN653",
@@ -167882,18 +168006,26 @@
         ],
         "backendIntegration": {
           "required": true,
-          "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
-          "selectionVerified": false,
-          "release": null
+          "state": "dai-and-pre-transformation-vearn-local-dropdown-registered-production-pending",
+          "selectionVerified": true,
+          "release": {
+            "runtimeSourceIds": [
+              "runtime:infinity-strash-dai-pn010-02-native-v1",
+              "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1"
+            ],
+            "gitEvidence": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/acceptance-summary.json",
+            "productionDeployed": false
+          }
         },
-        "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
+        "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
         "limitations": [
           "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
           "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
           "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
           "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-          "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-          "No component is registered as a model option, backend-selectable or deployed."
+          "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+          "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+          "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
         ],
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -167952,7 +168084,7 @@
         ],
         "conversionEvidence": {
           "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
-          "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+          "sha256": "adbd5cc591de11381891aa0fe6aa9b2686756b29791d2fcddfad8a7639e36c0e",
           "meshGltfCount": 29,
           "texturePngCount": 97,
           "nativePsaAnimationCount": 12

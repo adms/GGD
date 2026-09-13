@@ -21,12 +21,17 @@ PUBLIC_FILES = REPO / "materials/hero-model-library/public-source-files.json"
 EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/extraction-summary.json"
 S3_EVIDENCE = EVIDENCE.with_name("s3-backup-receipt.json")
 MAC_EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export"
+RUNTIME_EVIDENCE = MAC_EVIDENCE / "runtime-candidates-v1/acceptance-summary.json"
 BACKUP_STAGES = {
     "umodelTool": ("umodel-tool", "infinity-strash-umodel-macos-v1"),
     "meshComponents": ("mesh-components", "infinity-strash-priority-mesh-components-v1"),
     "textures": ("textures", "infinity-strash-priority-textures-v1"),
     "nativeAnimations": ("native-animations", "infinity-strash-priority-native-animations-v1"),
     "preparedComponents": ("prepared-components", "infinity-strash-prepared-components-v1"),
+    "meshPsk": ("mesh-psk", "infinity-strash-priority-mesh-psk-v1"),
+    "nativeAnimationsV2": ("native-animations-v2", "infinity-strash-priority-native-animations-v2"),
+    "blenderAddon": ("blender-addon", "blender-io-scene-psk-psa-9c1c8ba6"),
+    "finalRuntime": ("final-runtime", "infinity-strash-final-runtime-delivery-v1"),
 }
 
 
@@ -200,6 +205,20 @@ def main() -> int:
     for role, (directory, source_id) in BACKUP_STAGES.items():
         conversion_backups.append({"role": role, **validate_scoped_backup(backup_root / directory, source_id)})
 
+    runtime_acceptance = json.loads(RUNTIME_EVIDENCE.read_text())
+    if runtime_acceptance.get("schema") != "ggd.infinity-strash-runtime-acceptance@1":
+        raise ValueError("unexpected Infinity Strash runtime acceptance schema")
+    registration = runtime_acceptance.get("registration", {})
+    if registration.get("localContentRegistered") is not True or registration.get("productionDeployed") is not False:
+        raise ValueError("runtime acceptance must prove local registration without claiming deployment")
+    runtime_candidates = {row["candidateId"]: row for row in runtime_acceptance["candidates"]}
+    expected_runtime = {
+        "dai-pn010-02": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "vearn-en801-pre-transformation": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+    }
+    if {key: row["runtime"]["sha256"] for key, row in runtime_candidates.items()} != expected_runtime:
+        raise ValueError("runtime candidate identities or SHA-256 values differ")
+
     prepared_root = conversion_root / "prepared-components-v1"
     vearn_receipt_path = prepared_root / "vearn-en801-pre-transformation-body/receipt.json"
     vearn_receipt = json.loads(vearn_receipt_path.read_text())
@@ -236,8 +255,8 @@ def main() -> int:
             "animationManifestSha256": sha256(animation_root / "export-manifest.json"),
         },
         "identities": [
-            {"nativeId": "PN010", "nameZh": "小呆／達伊", "bodyVariantsReviewed": 8, "state": "native-components-converted-pending-textured-multipart-animation-assembly"},
-            {"nativeId": "EN801", "nameZh": "巴恩大魔王", "form": "pre-transformation-old-vearn", "state": "native-components-converted-pending-textured-multipart-animation-assembly"},
+            {"nativeId": "PN010", "nameZh": "小呆／達伊", "bodyVariantsReviewed": 8, "state": "original-runtime-model-accepted-and-local-dropdown-registered"},
+            {"nativeId": "EN801", "nameZh": "巴恩大魔王", "form": "pre-transformation-old-vearn", "state": "original-runtime-model-accepted-and-local-dropdown-registered"},
             {"nativeId": "EN653", "nameZh": "密斯特巴恩", "state": "native-components-converted-and-kept-separate-pending-review"},
         ],
         "daiVariantReceipts": dai_variants,
@@ -249,9 +268,10 @@ def main() -> int:
             {"gitPath": str((MAC_EVIDENCE / "vearn-en801-isometric.png").relative_to(REPO)), "sha256": sha256(MAC_EVIDENCE / "vearn-en801-isometric.png")},
         ],
         "legacyBackups": conversion_backups,
-        "readiness": "converted-components-pending-final-ggd-assembly-and-validation",
+        "runtimeAcceptance": {"gitPath": str(RUNTIME_EVIDENCE.relative_to(REPO)), "sha256": sha256(RUNTIME_EVIDENCE)},
+        "readiness": "two-original-runtime-models-accepted-and-local-dropdown-registered",
         "postTransformationVearnLocated": False,
-        "runtimeDropdownRegistered": False,
+        "runtimeDropdownRegistered": True,
         "deploymentVerified": False,
     }
     conversion_summary_path = MAC_EVIDENCE / "conversion-summary.json"
@@ -267,7 +287,7 @@ def main() -> int:
         "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
+        "readiness": "dai-and-pre-transformation-vearn-runtime-models-accepted-and-local-dropdown-registered",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": False,
         "resourceRole": "canonical-game-reserve",
@@ -300,12 +320,12 @@ def main() -> int:
             {
                 "nativeId": "PN010", "nameZh": "小呆／達伊", "originalName": "Dai",
                 "heroIds": ["godie-nbbc", "godie-n01c"], "packageCount": 3838,
-                "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection",
+                "formState": "PN010-02-textured-native-animation-runtime-accepted-and-local-dropdown-registered",
             },
             {
                 "nativeId": "EN801", "nameZh": "巴恩大魔王", "originalName": "Vearn",
                 "heroIds": ["godie-ubal"], "packageCount": 902,
-                "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located",
+                "formState": "pre-transformation-old-vearn-runtime-accepted-and-local-dropdown-registered-post-transformation-not-located",
             },
             {
                 "nativeId": "EN653", "nameZh": "密斯特巴恩", "originalName": "MystVearn",
@@ -315,9 +335,13 @@ def main() -> int:
         ],
         "backendIntegration": {
             "required": True,
-            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
-            "selectionVerified": False,
-            "release": None,
+            "state": "dai-and-pre-transformation-vearn-local-dropdown-registered-production-pending",
+            "selectionVerified": True,
+            "release": {
+                "runtimeSourceIds": ["runtime:infinity-strash-dai-pn010-02-native-v1", "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1"],
+                "gitEvidence": str(RUNTIME_EVIDENCE.relative_to(REPO)),
+                "productionDeployed": False,
+            },
         },
         "conversionEvidence": {
             "gitPath": str(conversion_summary_path.relative_to(REPO)),
@@ -330,15 +354,18 @@ def main() -> int:
             "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages "
             "and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and "
             "zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports "
-            "skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests."
+            "skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 "
+            "and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL "
+            "review and are registered in this checkout; production remains unverified."
         ),
         "limitations": [
             "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
             "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
-            "No component is registered as a model option, backend-selectable or deployed.",
+            "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
+            "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
+            "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton.",
         ],
     }
 

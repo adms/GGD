@@ -35,12 +35,49 @@ python3 export.py mesh \
   --asset strash/Content/Strash/Chara/Player/PN010/02/SK_PN010_02_Body.uasset
 ```
 
-`mesh` produces glTF plus its binary buffer. `animation` preserves UModel's PSA
-export. `texture` exports selected texture packages to lossless PNG files.
+`mesh` produces glTF plus its binary buffer. `mesh-psk` preserves UModel's PSK
+skeletal-mesh coordinate system for matching PSA animation import. `animation`
+preserves UModel's PSA export. `texture` exports selected texture packages to
+lossless PNG files.
 Every run writes command logs and a per-file SHA-256 manifest. These are
 conversion-stage outputs only; multipart merge, textures, visual review, GGD
 contract validation, registration, backend switching and deployment remain
 separate gates.
+
+## Resumable modular pipeline
+
+The accepted path is PSK mesh plus PSA animation imported through the same
+Blender add-on coordinate system. Mixing UModel glTF skeletons with PSA caused
+valid-looking files whose posed meshes exploded at runtime, so the pipeline
+does not combine those two representations.
+
+`pipeline.py` composes the independent assembly, normalization, runtime mapping,
+Babylon review, catalog, registration, asset/content manifest generation and
+central-index modules. Existing output is skipped only after its receipt and
+SHA-256 still match. A failed run resumes at the failed module without deleting
+or overwriting earlier stages. The index stage uses the repository generators;
+it does not hand-edit generated `_index.json`, bundle or inventory files.
+
+```bash
+python3 pipeline.py \
+  --config pipeline-config.json \
+  --workspace "/path/to/ABxVFX_EDIT" \
+  --plan
+
+# Run only validation through index regeneration for one character.
+python3 pipeline.py \
+  --config pipeline-config.json \
+  --workspace "/path/to/ABxVFX_EDIT" \
+  --from-stage normalize --through indexes \
+  --candidate dai-pn010-02
+```
+
+Blender 5.2.1 LTS and the pinned `io_scene_psk_psa` checkout are recorded by
+the assembly receipt. The Babylon module can read `uploaded-model.json` and
+renders three frames for each of the six GGD state mappings, including explicit
+state reuse. Its fixed front camera uses +Z and Y-up; the earlier ArcRotate
+camera sampled the wrong viewing axis and is retained only in local failed-run
+evidence.
 
 `prepare_component.py` validates one exported glTF with Assimp, converts it to
 an intermediate GLB, and makes deterministic untextured front/back/isometric
