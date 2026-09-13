@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "e2f84eab74a00d6b69ba297654941f6c2c1b58f43526e97c32439ba1cd17d26b"
+      "sha256": "44e4578ec3c2d63ece2c18412a8ee09972d342f96c5b976911df5f82d1495b3c"
     }
   },
   "summary": {
@@ -5174,6 +5174,7 @@
         "palworldHeroIntegrationReceipt",
         "palworldResourceDocument",
         "palworldResourceIndex",
+        "palworldVfxSfxInventory",
         "playstationPlatformSourceInventory",
         "poppVfxDependencySupport",
         "postRegistrationReview",
