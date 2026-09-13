@@ -205,7 +205,10 @@ def source_historical_components(downloads, repo):
             visual_path = verify_pin(candidate['visualEvidence'], repo)
             visual = json.loads(visual_path.read_text())
             if visual.get('schema') == 'ggd-historical-astralym-visual-comparison@1':
-                require(visual.get('candidate', {}).get('sha256') == candidate['sha256'], 'Astralym visual candidate mismatch')
+                # ⭐ 同上：15 組三視角 A/B 是**對減面產物渲的** ⇒ 對封存那一份比。
+                #   ⚠️ 它⛔ 沒有對貼圖修補後的位元組重跑 —— 修補紀錄的 visualNote 明寫，⛔ 不假裝這份視覺證據涵蓋修補。
+                rendered = source_artifact['sha256'] if source_artifact is not None else candidate['sha256']
+                require(visual.get('candidate', {}).get('sha256') == rendered, 'Astralym visual candidate mismatch')
                 require(visual.get('allChangedPixelPctAtChannelDeltaGt10Under5') is True and
                         visual.get('allLitClassificationXorPctAtLuma128Under5') is True and
                         visual.get('humanReview', {}).get('result') == 'accepted', 'Astralym visual acceptance failed')
