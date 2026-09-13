@@ -49,7 +49,7 @@ class InventoryHandoff(unittest.TestCase):
         self.assertEqual(source_release_rank({'sourceGameReleasedAt':'2026-02-31'}),0)
 
     def test_not_alias_cannot_attach_a_source_to_a_different_character(self):
-        from query import public_match_scope, source_matches
+        from query import public_identity_scope, public_match_scope, source_matches
         vearn_source = {
             'id': 'vearn-research',
             'heroIds': ['godie-ubal'],
@@ -59,6 +59,26 @@ class InventoryHandoff(unittest.TestCase):
         self.assertTrue(source_matches(vearn_source, '巴恩'))
         self.assertFalse(source_matches(vearn_source, '巴蘭'))
         self.assertEqual(public_match_scope([vearn_source], '巴蘭'), (set(), set()))
+        self.assertEqual(public_identity_scope([vearn_source], '巴蘭'), set())
+
+    def test_character_query_prioritizes_identity_over_work_title(self):
+        script = REPO / 'tools/hero-model-library/query.py'
+        cases = {
+            '達伊': ({'godie-nbbc'}, {'b2-popp'}),
+            '波普': ({'b2-popp'}, set()),
+            '巴恩': ({'godie-ubal'}, set()),
+            '巴蘭': (set(), {'godie-ubal'}),
+        }
+        for query, (included, excluded) in cases.items():
+            with self.subTest(query=query):
+                process = subprocess.run(
+                    [sys.executable, str(script), query, '--json'], text=True,
+                    capture_output=True)
+                self.assertIn(process.returncode, (0, 1))
+                result = json.loads(process.stdout)
+                ids = {row['id'] for row in result['heroes']}
+                self.assertTrue(included <= ids)
+                self.assertTrue(excluded.isdisjoint(ids))
 
     def test_candidate_query_exposes_current_conversion_evidence(self):
         script = REPO / 'tools/hero-model-library/query.py'

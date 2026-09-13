@@ -38,6 +38,42 @@ def source_matches(source, query):
     return query in json.dumps(source, ensure_ascii=False).casefold()
 
 
+def identity_matches(record, query, fields):
+    """Match explicit identity fields without borrowing a work title or notes."""
+    return query in json.dumps([record.get(field) for field in fields], ensure_ascii=False).casefold()
+
+
+def public_identity_scope(sources, query):
+    """Resolve hero IDs from character, component, or audio-group identities only."""
+    hero_ids = set()
+    candidate_fields = [
+        'candidateId', 'id', 'name', 'nameZh', 'label', 'character',
+        'nativeCharacter', 'nativeCharacterId', 'originalName', 'sourceLabel',
+        'aliases', 'heroIds', 'unitId', 'identityIds',
+    ]
+    source_fields = [
+        'id', 'target', 'name', 'nameZh', 'character', 'originalName',
+        'aliases', 'heroIds',
+    ]
+    group_fields = ['id', 'name', 'character', 'originalName', 'aliases', 'heroIds']
+    for source in sources:
+        excluded = {str(alias).casefold() for alias in source.get('notAliases', [])}
+        if query in excluded:
+            continue
+        scoped = source.get('characters', []) + source.get('modelCandidates', []) + source.get('componentCandidates', [])
+        candidates = [candidate for candidate in scoped if identity_matches(candidate, query, candidate_fields)]
+        groups = [group for group in source.get('audioGroups', []) if identity_matches(group, query, group_fields)]
+        if candidates:
+            for candidate in candidates:
+                hero_ids.update(candidate.get('heroIds', []))
+        elif groups:
+            for group in groups:
+                hero_ids.update(group.get('heroIds', []))
+        elif identity_matches(source, query, source_fields):
+            hero_ids.update(source.get('heroIds', []))
+    return hero_ids
+
+
 def public_match_scope(sources, query):
     hero_ids, entry_ids = set(), set()
     for source in sources:
@@ -161,9 +197,11 @@ def main():
                     print('  '+source['url']+' | '+source['verification'])
         return 0 if records or deliveries or leads else 1
     exact = [h for h in data['heroes'] if h['id'].casefold() == query]
-    direct = [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['name'],h['work'],h['options']],ensure_ascii=False).casefold()]
-    hero_ids, _ = public_match_scope(acquired_sources(data['downloadPlan']),query)
-    records = exact or direct or [h for h in data['heroes'] if h['id'] in hero_ids]
+    identity = [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['runtimeHeroId'],h['name']],ensure_ascii=False).casefold()]
+    hero_ids = public_identity_scope(acquired_sources(data['downloadPlan']), query)
+    sourced = [h for h in data['heroes'] if h['id'] in hero_ids or h['runtimeHeroId'] in hero_ids]
+    broad = [h for h in data['heroes'] if not query or query in json.dumps([h['id'],h['runtimeHeroId'],h['name'],h['work'],h['options']],ensure_ascii=False).casefold()]
+    records = exact or identity or sourced or broad
     if args.json:
         print(json.dumps({'release':data['release'],'productionSnapshot':data['productionSnapshot'],'heroes':records},ensure_ascii=False,indent=2))
         return 0 if records else 1

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T08:41:45+08:00",
-  "inputsSha256": "7c6a76b155f1ffde58678c946103bcf06f74a39d1c0f22de32b554884c8695a5",
+  "generatedAt": "2026-09-13T08:48:13+08:00",
+  "inputsSha256": "ad9db33689f246f3bb3105e862cbc6d02d7747e5bd271ba3f872051baafafa5b",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -61505,6 +61505,9 @@
                 "No rendered model, action playback, backend option, default selection, or deployment is proven by this index."
               ]
             }
+          ],
+          "aliases": [
+            "波普"
           ]
         }
       ],
@@ -147018,6 +147021,9 @@
               "No rendered model, action playback, backend option, default selection, or deployment is proven by this index."
             ]
           }
+        ],
+        "aliases": [
+          "波普"
         ]
       },
       {
