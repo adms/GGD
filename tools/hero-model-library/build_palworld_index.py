@@ -158,7 +158,7 @@ def build(workspace, git_link_root=ROOT):
             'Creature cries are sound effects, not Japanese or English spoken dialogue.',
             'PalDB settings are community snapshots, not original game DataTables or GGD abilities.',
         'Khronos structural validation does not prove material fidelity or GGD runtime acceptance.',
-        'The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym now has a separately validated 7,996-triangle historical candidate registered as a non-default option; production deployment remains unverified.',
+        'The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym has a separately validated 7,996-triangle historical five-motion candidate and a 7,896-triangle 256px full-58-motion candidate registered as non-default options; production deployment remains unverified.',
         'Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.',
         'Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified.'])
     components = model_components(result, ROOT, git_link_root)
@@ -226,7 +226,7 @@ def render(data):
         lines += ['', 'S3 音訊來源備份：`' + c['audioBackup']['s3Uri'] + '`。', '']
     lines += ['## 設定與待完成項目', '',
         '[角色與技能設定 JSON](character-settings.json) 保留 5 份資料頁、34 條技能與空渦龍／搗蛋貓各 5 階夥伴技能。枯星龍一般資料沒有學習技能列；兩個首領形態各 8 條，分別保存。', '',
-        '三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。因此三名在 GGD authoring 層已是完整英雄。空渦龍與搗蛋貓的現行模型符合正式採用幾何政策；枯星龍另有由 23,928 面歷史五動作原件產生的 7,996 面候選，材質／骨架／蒙皮／方向／五段原生動作／Khronos／現行 budget 及三視角 A/B 均驗證完成，已登記為非預設選項。三份 256px 獨立元件另行保留；另一份枯星龍元件版只有 Idle／Walk，不冒稱它等同五動作候選。原作影音保真仍未完成：未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；18 段叫聲與 18 個現行动作語意候選仍待使用者逐項審查。正式站尚未驗證部署。', '',
+        '三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。因此三名在 GGD authoring 層已是完整英雄。空渦龍與搗蛋貓的現行模型符合正式採用幾何政策；枯星龍有 7,996 面五動作歷史候選，以及由完整 23,928 面來源重建的 7,896 面、256px、58 動作候選。後者逐動作 accessor 取樣、骨架、蒙皮、方向、Khronos、現行 budget 及五段三視角 A/B 驗證通過，兩者都已登記為非預設選項。另一份枯星龍元件只有 Idle／Walk，仍獨立保留。原作影音保真仍未完成：未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；18 段叫聲與 18 個現行动作語意候選仍待使用者逐項審查。正式站尚未驗證部署。', '',
         '維護：更新來源與補充身份索引後，執行 `python3 tools/hero-model-library/build_palworld_index.py --workspace ..`；加 `--check` 檢查文件是否與來源一致。', '']
     return '\n'.join(lines)
 

@@ -23,7 +23,7 @@ python3 tools/hero-model-library/query_voice.py gamevault-palworld-jetragon-crie
 
 空渦龍 29 條與搗蛋貓 33 條的 256px 成品元件以非預設 Hero Forge 選項登記。六態動作對照沒有重新猜測：產生器要求每一條被引用的原生 clip，其目標 node、path、interpolation 及 input/output accessor 取樣位元必須與既有已驗證模型完全一致。現有預設不變。
 
-枯星龍的 256px 獨立元件只有 `Idle` 與 `Walk`，所以保留「待六態」而不填入偽造的攻擊、施法、受傷或死亡對照；可用的 7,996 面五動作候選仍在原有非預設選項。
+枯星龍的舊 256px 獨立元件只有 `Idle` 與 `Walk`，所以仍獨立保留而不填入偽造對照。`astralym-full58-decimation-v1/` 另由完整來源重建 7,896 面、256px、58 條原生動作候選；逐動作 accessor 位元、骨架、Khronos、現行 budget 與五段三視角 A/B 驗收通過後，以第三個非預設選項登記。來源沒有原生 `Death`，仍明列 `Damage` 加升天淡出的授權替代演出。
 
 ```sh
 node --import tsx tools/hero-model-library/source-workflows/palworld/validate_full_motion_options.mts --write

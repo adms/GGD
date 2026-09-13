@@ -11,10 +11,10 @@
     "currentFormalModelAdoptionBlockedCount": 0,
     "releaseReadyHeroCount": 0,
     "productionDeploymentVerifiedCount": 0,
-    "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and adds a separately validated 7,996-triangle non-default candidate. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates."
+    "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and has separately validated 7,996-triangle five-motion and 7,896-triangle full-58-motion non-default candidates. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates."
   },
   "sourceSha256": "sha256:cf94dce8dd1dd5d3c31453b5882a0644e52b96eabdc1e2497bc2f14b9662071c",
-  "catalogSha256": "sha256:036a92f54fec71862b766f4d1262300a79b21a778b8c529c700413f8c77b9ce3",
+  "catalogSha256": "sha256:36b5428f10488fbdd3e14db83ff15ced8a32dca18030979a5411c2172b160280",
   "modelAdoptionPolicy": {
     "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
     "bytes": 292,
@@ -37,8 +37,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "sha256:5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c",
-      "bytes": 5478
+      "sha256": "sha256:048f098786e8ae9e431f015d1b5c054af32058d0b1eb6e0f9206c2ac0888e3d4",
+      "bytes": 5545
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -185,8 +185,8 @@
       "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
       "package": {
         "status": "passed",
-        "digest": "sha256:a25ebc542500b7afccf7f4216453dec43d965360e64963fff9c8a38b800661a4",
-        "zipSha256": "sha256:d37d2459aeafd772c026eb6a39889e486e49959169c3a596e4492656bfce0c47",
+        "digest": "sha256:95db5259da03110150d1fcf476a24e11f6008d7c356c511e513bb6f3451c5f66",
+        "zipSha256": "sha256:b505d53787a2ec6a4c175487ae75fe0f7bf02c3a35c316ea4c3a2c51598555b7",
         "zipBytes": 6288568,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -215,7 +215,8 @@
       "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
       "modelOptions": [
         "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
-        "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
+        "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+        "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
       ],
       "contentSchema": {
         "modelSchema": "model@1",
@@ -238,7 +239,8 @@
         "status": "eligible-registered-alternative",
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
-          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+          "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
         ],
         "defaultModelPolicyEligible": false,
         "registeredOptionPreserved": true,
@@ -278,6 +280,23 @@
             "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
             "bytes": 3793672
           }
+        },
+        {
+          "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+          "isDefault": false,
+          "triangles": 7896,
+          "status": "eligible",
+          "currentPolicyEligible": true,
+          "modelDocument": {
+            "gitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+            "sha256": "ffe2ef5c49f792b0d4ad663999c55f049455f55c5debebeab6072fef348dfa0c",
+            "bytes": 456
+          },
+          "modelGlb": {
+            "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+            "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+            "bytes": 17043436
+          }
         }
       ],
       "modelDocument": {
@@ -302,8 +321,8 @@
       "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
       "package": {
         "status": "passed",
-        "digest": "sha256:b4d6540363632818f89c3956aafc4d718eec6be96823d011b306b7a1b1011dc9",
-        "zipSha256": "sha256:622ef8575d44f7ad1df378fb645936228bf668346fc53f199e9e0088e1e5df77",
+        "digest": "sha256:61beccc5bbec63ca2be3ebac28397913de9aaad973b53a54ed0a6db02bb95583",
+        "zipSha256": "sha256:dfc4711761a1f4797c23b3acb7a1dca510f1a8f9a65935ea29fe26df7fca7c9d",
         "zipBytes": 6855714,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -420,8 +439,8 @@
       "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
       "package": {
         "status": "passed",
-        "digest": "sha256:51003a95e892545f9285623d09c6da0f222e2eae038b2cd9a361ab343285b95c",
-        "zipSha256": "sha256:9e177c2288eaa001b7ac4c807b40e8a2470c0656b5eb015910129af9242bc65a",
+        "digest": "sha256:f19d6b5b57da6eada0877a1fb04974b930fa94055b242fc232c9f81c4801ec2b",
+        "zipSha256": "sha256:e1047e939e6bf228a3b9d34c23c50fe03029d3963384be2b290fc31cdf42c82b",
         "zipBytes": 4401433,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -445,7 +464,7 @@
     "Original Palworld skill VFX and skill-specific sound effects are not acquired or bound.",
     "Creature cries remain unassigned pending owner listening approval.",
     "Current model semantic motion mappings exist for package validation, but owner motion review remains pending and does not authorize new skill-event bindings.",
-    "Astralym's 23,928-triangle default remains unchanged; its separately validated 7,996-triangle candidate is registered as a non-default option.",
+    "Astralym's 23,928-triangle default remains unchanged; its separately validated 7,996-triangle five-motion and 7,896-triangle full-58-motion candidates are registered as non-default options.",
     "Non-default preserved model components remain independent until each has a complete model document, six-state mapping and review."
   ]
 }

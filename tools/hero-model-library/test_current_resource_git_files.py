@@ -114,6 +114,16 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
                 'sha256': component['sha256'],
             },
             'modelDocument': {'gitPath': 'content/models/community.body.pal.json'},
+            'modelOptionEvidence': [{
+                'modelKey': 'community.body.pal',
+                'isDefault': True,
+                'modelGlb': {
+                    'gitPath': component['gitPath'],
+                    'bytes': component['bytes'],
+                    'sha256': component['sha256'],
+                },
+                'modelDocument': {'gitPath': 'content/models/community.body.pal.json'},
+            }],
             'productionDeploymentVerified': False,
         }]}
         [current] = apply_hero_integration_overlay([dict(component)], receipt, 'receipt.json')

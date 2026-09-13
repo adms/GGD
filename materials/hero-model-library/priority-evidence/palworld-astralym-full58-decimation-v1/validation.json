@@ -1,0 +1,868 @@
+{
+  "schema": "ggd-palworld-astralym-full58-validation@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+    "bytes": 25503732,
+    "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf"
+  },
+  "candidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+    "bytes": 17043436,
+    "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+  },
+  "currentLimits": {
+    "upload": {
+      "fileBytes": 33554432,
+      "jsonBytes": 4194304,
+      "jsonValues": 500000,
+      "depth": 64,
+      "nodes": 1024,
+      "clips": 256,
+      "accessors": 32768,
+      "accessorValues": 8000000,
+      "channels": 32768,
+      "clipChannels": 2048,
+      "clipSeconds": 300
+    },
+    "hero": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    },
+    "adoption": {
+      "decimateWhenTrianglesAbove": 10000,
+      "decimatedTargetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5,
+      "preserveOriginalLocally": true,
+      "archiveOriginalToS3Legacy": true,
+      "gitOnlyAfterAcceptance": true
+    }
+  },
+  "measured": {
+    "triangles": 7896,
+    "drawPrimitives": 3,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 62378,
+        "sha256": "c596a5e433ef91b27d4ec177c634f63463da7d3570160e69e42a6a5a4b13be23"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 25351,
+        "sha256": "56696dd8919589909780ce64c2aaec458b3a0ee123d3fa47605fd39847d5ee61"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 78518,
+        "sha256": "d4ddc40e029cd5a7c88d0a8ad97051f41e1c03c757ae771a56937b3d3b581aeb"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 133473,
+        "sha256": "b0a46fd6b4db3019b617c68c44eacfeaf7b71f22d2f217a8e90bd56428151b39"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 26347,
+        "sha256": "f02e1de656e566e256eb3f2e3c53f632f76a610f98dba5289fba82d1dcbcd3a6"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 26347,
+        "sha256": "f02e1de656e566e256eb3f2e3c53f632f76a610f98dba5289fba82d1dcbcd3a6"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 36205,
+        "sha256": "4cfac4c3164332607f66aad30d545bde4e6ec6b13e977476be3853bf630a5b90"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 36205,
+        "sha256": "4cfac4c3164332607f66aad30d545bde4e6ec6b13e977476be3853bf630a5b90"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 9359,
+        "sha256": "f56edce12e3c2cd55ef43255310107b4e2fe975c65b07ae8457c3dcd1873ff66"
+      }
+    ],
+    "skins": 1,
+    "skinnedPrimitives": 3,
+    "jointCounts": [
+      145
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "Damage",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 1,
+        "name": "FarSkill_Action",
+        "duration": 0.4166666567325592,
+        "channels": 435
+      },
+      {
+        "index": 2,
+        "name": "FarSkill_ActionLoop",
+        "duration": 0.8333333134651184,
+        "channels": 435
+      },
+      {
+        "index": 3,
+        "name": "FarSkill_End",
+        "duration": 1.4583333730697632,
+        "channels": 435
+      },
+      {
+        "index": 4,
+        "name": "FarSkill_Start",
+        "duration": 1.4583333730697632,
+        "channels": 435
+      },
+      {
+        "index": 5,
+        "name": "FarSkill_StartLoop",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 6,
+        "name": "HaloBeam_End",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 7,
+        "name": "HaloBeam_End_Ring",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 8,
+        "name": "HaloBeam_Loop",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 9,
+        "name": "HaloBeam_Loop_Ring",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 10,
+        "name": "HaloBeam_Start",
+        "duration": 2.0833332538604736,
+        "channels": 435
+      },
+      {
+        "index": 11,
+        "name": "HaloBeam_Start_Ring",
+        "duration": 2.0833332538604736,
+        "channels": 435
+      },
+      {
+        "index": 12,
+        "name": "HaloCutter",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 13,
+        "name": "HaloCutter_End_Ring",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 14,
+        "name": "HaloCutter_Loop_Ring",
+        "duration": 0.8333333134651184,
+        "channels": 435
+      },
+      {
+        "index": 15,
+        "name": "HaloCutter_Start_Ring",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 16,
+        "name": "Idle",
+        "duration": 7.666666507720947,
+        "channels": 435
+      },
+      {
+        "index": 17,
+        "name": "Idle_Ring",
+        "duration": 7.666666507720947,
+        "channels": 435
+      },
+      {
+        "index": 18,
+        "name": "LaserGliding_End",
+        "duration": 4.375,
+        "channels": 435
+      },
+      {
+        "index": 19,
+        "name": "LaserGliding_End_Ring",
+        "duration": 4.375,
+        "channels": 435
+      },
+      {
+        "index": 20,
+        "name": "LaserGliding_Loop",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 21,
+        "name": "LaserGliding_Loop_Ring",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 22,
+        "name": "LaserGliding_Start",
+        "duration": 3.5416667461395264,
+        "channels": 435
+      },
+      {
+        "index": 23,
+        "name": "LaserGliding_Start_Ring",
+        "duration": 3.5416667461395264,
+        "channels": 435
+      },
+      {
+        "index": 24,
+        "name": "PaldiumCannon_Attack",
+        "duration": 0.4166666567325592,
+        "channels": 435
+      },
+      {
+        "index": 25,
+        "name": "PaldiumCannon_Attack_Loop",
+        "duration": 0.8333333134651184,
+        "channels": 435
+      },
+      {
+        "index": 26,
+        "name": "PaldiumCannon_Attack_Loop_Ring",
+        "duration": 0.8333333134651184,
+        "channels": 435
+      },
+      {
+        "index": 27,
+        "name": "PaldiumCannon_Attack_Ring",
+        "duration": 0.4166666567325592,
+        "channels": 435
+      },
+      {
+        "index": 28,
+        "name": "PaldiumCannon_End",
+        "duration": 4.375,
+        "channels": 435
+      },
+      {
+        "index": 29,
+        "name": "PaldiumCannon_End_Ring",
+        "duration": 4.375,
+        "channels": 435
+      },
+      {
+        "index": 30,
+        "name": "PaldiumCannon_Start",
+        "duration": 2.75,
+        "channels": 435
+      },
+      {
+        "index": 31,
+        "name": "PaldiumCannon_Start_Loop",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 32,
+        "name": "PaldiumCannon_Start_Loop_Ring",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 33,
+        "name": "PaldiumCannon_Start_Ring",
+        "duration": 2.75,
+        "channels": 435
+      },
+      {
+        "index": 34,
+        "name": "PaldiumExplosion_Cancel",
+        "duration": 3.75,
+        "channels": 435
+      },
+      {
+        "index": 35,
+        "name": "PaldiumExplosion_Cancel_Ring",
+        "duration": 3.75,
+        "channels": 435
+      },
+      {
+        "index": 36,
+        "name": "PaldiumExplosion_End",
+        "duration": 3.75,
+        "channels": 435
+      },
+      {
+        "index": 37,
+        "name": "PaldiumExplosion_End_Ring",
+        "duration": 3.75,
+        "channels": 435
+      },
+      {
+        "index": 38,
+        "name": "PaldiumExplosion_Loop",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 39,
+        "name": "PaldiumExplosion_Loop_Ring",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 40,
+        "name": "PaldiumExplosion_Start",
+        "duration": 3.125,
+        "channels": 435
+      },
+      {
+        "index": 41,
+        "name": "PaldiumExplosion_Start_Ring",
+        "duration": 3.125,
+        "channels": 435
+      },
+      {
+        "index": 42,
+        "name": "PaldiumRain_End",
+        "duration": 1.25,
+        "channels": 435
+      },
+      {
+        "index": 43,
+        "name": "PaldiumRain_Loop",
+        "duration": 3.125,
+        "channels": 435
+      },
+      {
+        "index": 44,
+        "name": "PaldiumRain_Start",
+        "duration": 2.9166667461395264,
+        "channels": 435
+      },
+      {
+        "index": 45,
+        "name": "PaldiumShot_End",
+        "duration": 1.4583333730697632,
+        "channels": 435
+      },
+      {
+        "index": 46,
+        "name": "PaldiumShot_End_Ring",
+        "duration": 1.4583333730697632,
+        "channels": 435
+      },
+      {
+        "index": 47,
+        "name": "PaldiumShot_Loop",
+        "duration": 0.8333333134651184,
+        "channels": 435
+      },
+      {
+        "index": 48,
+        "name": "PaldiumShot_Loop_Ring",
+        "duration": 0.8333333134651184,
+        "channels": 435
+      },
+      {
+        "index": 49,
+        "name": "PaldiumShot_Start",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 50,
+        "name": "PaldiumShot_Start_Ring",
+        "duration": 1.875,
+        "channels": 435
+      },
+      {
+        "index": 51,
+        "name": "Supernova_End",
+        "duration": 4.375,
+        "channels": 435
+      },
+      {
+        "index": 52,
+        "name": "Supernova_End_Ring",
+        "duration": 4.375,
+        "channels": 435
+      },
+      {
+        "index": 53,
+        "name": "Supernova_Loop",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 54,
+        "name": "Supernova_Loop_Ring",
+        "duration": 1.6666666269302368,
+        "channels": 435
+      },
+      {
+        "index": 55,
+        "name": "Supernova_Start",
+        "duration": 2.5,
+        "channels": 435
+      },
+      {
+        "index": 56,
+        "name": "Supernova_Start_Ring",
+        "duration": 2.5,
+        "channels": 435
+      },
+      {
+        "index": 57,
+        "name": "Walk",
+        "duration": 4.333333492279053,
+        "channels": 435
+      }
+    ],
+    "maxClipChannels": 435
+  },
+  "preservation": {
+    "nodeHierarchyTransformsAndScenesExact": true,
+    "skinJointsAndInverseBindMatricesExact": true,
+    "materialNamesAndOpggProvenanceBindingsExact": true,
+    "materialJsonCanonicalizedByPinnedGltfTransform": true,
+    "renderingSemanticsAcceptedByRepresentativeAB": true,
+    "nativeAnimationCount": 58,
+    "nativeAnimationAccessorSamplesExact": true,
+    "generatedAnimations": 0,
+    "retargetedAnimations": 0,
+    "animations": [
+      {
+        "name": "Damage",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "FarSkill_Action",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "FarSkill_ActionLoop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "FarSkill_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "FarSkill_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "FarSkill_StartLoop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloBeam_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloBeam_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloBeam_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloBeam_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloBeam_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloBeam_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloCutter",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloCutter_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloCutter_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "HaloCutter_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Idle",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Idle_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "LaserGliding_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "LaserGliding_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "LaserGliding_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "LaserGliding_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "LaserGliding_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "LaserGliding_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Attack",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Attack_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Attack_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Attack_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Start_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Start_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumCannon_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_Cancel",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_Cancel_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumExplosion_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumRain_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumRain_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumRain_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumShot_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumShot_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumShot_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumShot_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumShot_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "PaldiumShot_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Supernova_End",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Supernova_End_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Supernova_Loop",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Supernova_Loop_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Supernova_Start",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Supernova_Start_Ring",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      },
+      {
+        "name": "Walk",
+        "channels": 435,
+        "samplerCount": 435,
+        "inputAndOutputAccessorSamplesExact": true
+      }
+    ]
+  },
+  "khronos": {
+    "errors": 0,
+    "warnings": 2,
+    "infos": 1,
+    "hints": 0,
+    "truncated": false
+  },
+  "budget": {
+    "errors": [],
+    "warnings": [
+      "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+    ]
+  },
+  "visual": {
+    "path": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+    "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1",
+    "maxChangedPixelPct": 4.933906,
+    "maxLitXorPct": 2.285469,
+    "humanReview": {
+      "reviewer": "Codex visual inspection",
+      "result": "accepted",
+      "scope": "All five source/candidate rows in front and isometric contact sheets, plus back contact sheet; silhouette, thin appendages, eye/emissive materials and pose identity remain intact. Expected low-poly faceting is visible. Source-game shader parity is not claimed."
+    }
+  },
+  "readiness": "validated-independent-full-motion-component-pending-registration",
+  "semanticUse": {
+    "existingReviewedClipMap": {
+      "idle": "Idle",
+      "run": "Walk",
+      "attack": "FarSkill_Action",
+      "cast": "HaloBeam_Loop",
+      "hurt": "Damage",
+      "death": "Damage"
+    },
+    "deathFallback": "No native Death clip. Damage plus the owner-authorized ascend/fade presentation remains a declared fallback."
+  },
+  "productionDeploymentVerified": false
+}

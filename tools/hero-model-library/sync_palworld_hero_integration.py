@@ -207,7 +207,7 @@ def build(report_path: Path, manifest_path: Path) -> dict:
             ),
             "releaseReadyHeroCount": 0,
             "productionDeploymentVerifiedCount": 0,
-            "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and adds a separately validated 7,996-triangle non-default candidate. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates.",
+            "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and has separately validated 7,996-triangle five-motion and 7,896-triangle full-58-motion non-default candidates. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates.",
         },
         "sourceSha256": report["sourceSha256"],
         "catalogSha256": report["catalogSha256"],
@@ -230,7 +230,7 @@ def build(report_path: Path, manifest_path: Path) -> dict:
             "Original Palworld skill VFX and skill-specific sound effects are not acquired or bound.",
             "Creature cries remain unassigned pending owner listening approval.",
             "Current model semantic motion mappings exist for package validation, but owner motion review remains pending and does not authorize new skill-event bindings.",
-            "Astralym's 23,928-triangle default remains unchanged; its separately validated 7,996-triangle candidate is registered as a non-default option.",
+            "Astralym's 23,928-triangle default remains unchanged; its separately validated 7,996-triangle five-motion and 7,896-triangle full-58-motion candidates are registered as non-default options.",
             "Non-default preserved model components remain independent until each has a complete model document, six-state mapping and review.",
         ],
     }

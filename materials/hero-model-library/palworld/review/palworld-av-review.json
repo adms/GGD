@@ -1,16 +1,16 @@
 {
   "schema": "ggd.palworld-av-review@1",
-  "sourceFingerprint": "99ed797ae684333b0bc28682d84def4b7e4ae1507e886b5fa6a13dd5b490db74",
+  "sourceFingerprint": "d5fc63ca034c36adfb2b72242c9efa8412a5e71c3026cd658e64810934162de3",
   "sourceInputs": [
     {
       "path": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-      "bytes": 197283,
-      "sha256": "8ef2456bb8e14599775a2c4d24e7aac840383a503934fa7ccb88b4a90f04e44a"
+      "bytes": 215564,
+      "sha256": "2a899f379554b12df5dfdc74d5f679420a1663f619212267ff89fa75c9a7fff9"
     },
     {
       "path": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "bytes": 20130,
-      "sha256": "4f26cf91dc890a40687e5174e7a1bfa57069b38451bfc585a23284902e2ec592"
+      "bytes": 21165,
+      "sha256": "c68a02dbd7c86c18945b56671e295ec27b3c54321cf621ae15bebe6bbb7c70fb"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -473,13 +473,13 @@
         }
       ],
       "animatedSourceComponent": {
-        "id": "opgg-palworld-astralym-2026081102.body.derived--model-decoded-v2-glb",
+        "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
         "file": {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
-          "bytes": 17242184,
-          "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797"
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+          "bytes": 17043436,
+          "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
         },
-        "gitPath": null,
+        "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
         "clipCount": 58,
         "runtimeSelectable": false,
         "sourceSkillMotionGroups": [
@@ -833,7 +833,8 @@
           "status": "eligible-registered-alternative",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+            "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
           ],
           "defaultModelPolicyEligible": false,
           "registeredOptionPreserved": true,

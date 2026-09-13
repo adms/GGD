@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "6d6be7c5a238",
+  "hash": "ece4844724a2",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -847,6 +847,12 @@
       "path": "models/community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9.json",
       "hash": "aee371027451",
       "size": 455
+    },
+    {
+      "id": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+      "path": "models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+      "hash": "08a724a6b09c",
+      "size": 456
     },
     {
       "id": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",

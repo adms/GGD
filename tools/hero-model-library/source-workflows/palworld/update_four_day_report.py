@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 REPORT = ROOT / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 REGISTRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/registration.json"
+ASTRALYM_FULL58 = ROOT / "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/registration.json"
 INTEGRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json"
 DROPDOWN = ROOT / "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json"
 HISTORICAL = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json"
@@ -19,12 +20,14 @@ VALHALLA_37 = ROOT / "materials/hero-model-library/priority-evidence/valhalla-37
 
 def render() -> str:
     registration = json.loads(REGISTRATION.read_text())
+    astralym_full58 = json.loads(ASTRALYM_FULL58.read_text())
     integration = json.loads(INTEGRATION.read_text())
     dropdown = json.loads(DROPDOWN.read_text())
     historical = json.loads(HISTORICAL.read_text())
     lol_runtime = json.loads(LOL_RUNTIME.read_text())
     valhalla = json.loads(VALHALLA_37.read_text())
     by_hero = {row["heroId"]: row for row in integration["integrations"]}
+    complete_motion_entries = registration["summary"]["newNativeMotionEntriesExposed"] + astralym_full58["measured"]["clipCount"]
     summary = dropdown["summary"]
     lol_names = {
         "lol-karthus": "Karthus", "lol-leesin": "LeeSin", "lol-lux": "Lux",
@@ -59,7 +62,7 @@ def render() -> str:
         ),
         "| 帕魯三名 |": (
             "| 帕魯三名 | 3/3 Hero Forge 六技能槽套件通過，3/3 本機下拉可選；"
-            f"空渦龍與搗蛋貓新增 {registration['summary']['newNativeMotionEntriesExposed']} 條原生動作的完整庫非預設選項 | "
+            f"空渦龍、枯星龍與搗蛋貓共 {complete_motion_entries} 條原生動作條目的完整庫非預設選項 | "
             "原作技能 VFX、技能 SFX、叫聲與動作語意核准皆未完成；正式站 0/3 |"
         ),
         "| 空渦龍 | PASSIVE/Q/W/E/R/EX": (
@@ -69,8 +72,12 @@ def render() -> str:
         ),
         "| 枯星龍 | PASSIVE/Q/W/E/R/EX": (
             f"| 枯星龍 | PASSIVE/Q/W/E/R/EX 六槽編譯與來源套件驗證通過 | "
-            f"{len(by_hero['acquired-astralym']['modelOptions'])} 個選項：既有 23,928 面與 7,996 面非預設選項 | "
-            "7,996 面候選合格；另一顆 Idle/Walk 元件只有 2 條動作，不偽造六態選項 | 原作 VFX/SFX 未完成 | 未驗證 |"
+            f"{len(by_hero['acquired-astralym']['modelOptions'])} 個選項：23,928 面既有預設、7,996 面五動作版、7,896 面完整58動作版 | "
+            "兩顆減面候選合格；Idle/Walk 元件仍獨立保留 | 原作 VFX/SFX 未完成 | 未驗證 |"
+        ),
+        "| 帕魯完整動作庫候選 |": (
+            f"| 帕魯完整動作庫候選 | 空渦龍 29＋枯星龍 58＋搗蛋貓 33，共 {complete_motion_entries} 條 | "
+            "原生（枯星龍其中 1 條為固定姿勢） | 已註冊非預設模型選項；技能事件綁定待審查 |"
         ),
         "| 搗蛋貓 | PASSIVE/Q/W/E/R/EX": (
             f"| 搗蛋貓 | PASSIVE/Q/W/E/R/EX 六槽編譯與來源套件驗證通過 | "
@@ -127,14 +134,14 @@ def render() -> str:
             output.append(line)
     if not all(found.values()):
         raise ValueError("Four-day report markers changed: " + repr([key for key, value in found.items() if not value]))
-    motion_row = f"| 帕魯完整動作庫候選 | 空渦龍 29＋搗蛋貓 33，共 {registration['summary']['newNativeMotionEntriesExposed']} 條 | 原生 | 已註冊非預設模型選項；技能事件綁定待審查 |"
-    if motion_row not in output:
-        position = next(index for index, line in enumerate(output) if line.startswith("| 帕魯三名審查佇列 |"))
-        output.insert(position, motion_row)
     evidence = "- 帕魯完整動作選項：`materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/registration.json`"
     if evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("- 帕魯影音審查：")) + 1
         output.insert(position, evidence)
+    full58_evidence = "- 枯星龍 7,896 面完整58動作候選：`materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/registration.json`"
+    if full58_evidence not in output:
+        position = next(index for index, line in enumerate(output) if line.startswith("- 帕魯完整動作選項：")) + 1
+        output.insert(position, full58_evidence)
     historical_evidence = "- 四顆歷史模型當前位元組與候選關係：`materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json`"
     if historical_evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("- 四顆歷史模型：")) + 1
@@ -159,7 +166,8 @@ def main() -> None:
         REPORT.write_text(expected)
     elif REPORT.read_text() != expected:
         raise ValueError("Palworld four-day report section is stale; run with --write")
-    print(json.dumps({"report": REPORT.relative_to(ROOT).as_posix(), "registeredFullMotionOptions": 2, "written": args.write}, ensure_ascii=False))
+    print(json.dumps({"report": REPORT.relative_to(ROOT).as_posix(), "registeredFullMotionOptions": 3,
+                      "nativeMotionEntries": 120, "written": args.write}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

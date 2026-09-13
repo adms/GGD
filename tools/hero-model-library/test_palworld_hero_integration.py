@@ -57,7 +57,10 @@ class PalworldHeroIntegrationTest(unittest.TestCase):
         self.assertEqual("eligible-registered-alternative", by_hero["acquired-astralym"]["formalModelAdoption"]["status"])
         self.assertEqual(23928, by_hero["acquired-astralym"]["formalModelAdoption"]["defaultModelTriangles"])
         self.assertEqual(
-            ["community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"],
+            [
+                "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+                "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+            ],
             by_hero["acquired-astralym"]["formalModelAdoption"]["policyEligibleModelKeys"],
         )
         self.assertEqual("eligible-default", by_hero["acquired-cattiva"]["formalModelAdoption"]["status"])
@@ -83,6 +86,7 @@ class PalworldHeroIntegrationTest(unittest.TestCase):
         self.assertEqual(
             {
                 "opgg-palworld-jetragon.material-bound-256-v1",
+                "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
                 "palworld-cattiva-opgg-materials-256-v1",
             },
             set(registered_components),
@@ -108,6 +112,19 @@ class PalworldHeroIntegrationTest(unittest.TestCase):
                 for value in row["semanticMap"].values()
             ))
             self.assertFalse(row["productionDeploymentVerified"])
+
+    def test_astralym_full58_registration_is_reproducible(self):
+        registration = load(
+            "register_astralym_full58",
+            "tools/hero-model-library/source-workflows/palworld/astralym-full58-decimation-v1/register_candidate.py",
+        )
+        receipt = registration.build(False)
+        self.assertEqual(58, receipt["measured"]["clipCount"])
+        self.assertEqual(7896, receipt["measured"]["triangles"])
+        self.assertEqual(256, receipt["measured"]["maxTextureEdge"])
+        self.assertEqual(435, receipt["measured"]["maxClipChannels"])
+        self.assertFalse(receipt["isDefault"])
+        self.assertFalse(receipt["productionDeploymentVerified"])
 
     def test_design_backlog_recognizes_verified_hero_forge_recipes(self):
         data = self.backlog.build()
