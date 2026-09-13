@@ -25,14 +25,18 @@ def sha(path):
 
 
 def model_components(data, repo=ROOT, git_link_root=None):
-    """Expose verified component copies without inventing hero/runtime registration."""
+    """Expose verified component copies and join checked Hero Forge options."""
     git_link_root = repo if git_link_root is None else git_link_root
     result = []
     for character in data['characters']:
+        integration = character.get('heroIntegration') or {}
+        registered = {
+            (row['modelGlb']['gitPath'], row['modelGlb']['sha256'], row['modelGlb']['bytes']): row
+            for row in integration.get('modelOptionEvidence', [])
+        }
         for candidate in character['modelCandidates']:
             if not candidate.get('componentReady'):
                 continue
-            assert candidate.get('runtimeSelectable') is False
             assert candidate.get('defaultEligible') is False
             relative = candidate['gitPath']
             expected = 'content/assets/models/community/' + candidate['sha256'] + '.glb'
@@ -40,9 +44,24 @@ def model_components(data, repo=ROOT, git_link_root=None):
             path = repo / relative
             assert path.is_file() and path.stat().st_size == candidate['bytes']
             assert sha(path) == candidate['sha256'], 'Changed component: ' + relative
-            result.append(dict(candidate, characterIdentity=character['backlogIdentity'],
+            row = registered.get((relative, candidate['sha256'], candidate['bytes']))
+            assert candidate.get('runtimeSelectable', False) is bool(row)
+            component = dict(candidate, characterIdentity=character['backlogIdentity'],
                 characterName=character['name'], gitAbsolutePath=str((git_link_root / relative).resolve()),
-                ggdHeroImplemented=False, runtimeDropdownRegistered=False))
+                ggdHeroImplemented=bool(row), runtimeDropdownRegistered=bool(row),
+                runtimeSelectable=bool(row))
+            if row:
+                component.update(
+                    heroIds=[integration['heroId']], relatedHeroIds=[integration['heroId']],
+                    runtimeModelKey=row['modelKey'],
+                    modelDocumentGitPath=row['modelDocument']['gitPath'],
+                    readiness='registered-non-default-hero-forge-option; production deployment unverified',
+                    registrationEvidence={
+                        'receiptGitPath': 'materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json',
+                        'heroId': integration['heroId'], 'modelKey': row['modelKey'],
+                        'isDefault': row['isDefault'], 'productionDeploymentVerified': False,
+                    })
+            result.append(component)
     return result
 
 
@@ -102,6 +121,17 @@ def build(workspace, git_link_root=ROOT):
         assert integration['localHeroForgeModelSelectable'] is True
         assert integration['sourceFidelity']['sourceFaithfulAudiovisualComplete'] is False
         assert integration['productionDeploymentVerified'] is False
+        registered_models = {
+            (row['modelGlb']['gitPath'], row['modelGlb']['sha256'], row['modelGlb']['bytes']): row
+            for row in integration.get('modelOptionEvidence', [])
+        }
+        for model in models:
+            row = registered_models.get((model.get('gitPath'), model['sha256'], model['bytes']))
+            if row:
+                model.update(runtimeSelectable=True, runtimeDropdownRegistered=True,
+                    heroIds=[integration['heroId']], runtimeModelKey=row['modelKey'],
+                    modelDocumentGitPath=row['modelDocument']['gitPath'],
+                    readiness='registered-non-default-hero-forge-option; production deployment unverified')
         characters.append(dict(id=key, name=name, englishName=english, sourceCode=code,
             backlogIdentity=identity['id'], modelCandidates=models, modelSources=model_sources,
             audioSourceId=audio_id, audioFiles=audio_files, audioBackup=audio_source['backup'],
@@ -161,8 +191,11 @@ def render(data):
         limitations = c.get('limitations', [])
         if isinstance(limitations, str):
             limitations = [limitations]
+        state = ('已登記為非預設 Hero Forge 候選；正式站部署未驗證'
+                 if c.get('runtimeDropdownRegistered') else
+                 '已有獨立 Hero Forge 成品；本元件本身仍待六態與候選選項驗收')
         lines.append(f"| {c['characterName']} | [{c['id']}](<{c['gitAbsolutePath']}>) | {c.get('animationClipCount', c.get('nativeAnimationCount', 0))} | "
-            + '；'.join(str(x).replace('|', '／') for x in limitations + ['已有獨立 Hero Forge 成品；本元件本身仍待六態與候選選項驗收']) + ' |')
+            + '；'.join(str(x).replace('|', '／') for x in limitations + [state]) + ' |')
     lines += ['',
         '## 本機直接取用', '', '音訊事件包含 Normal、Joy、Anger、Sorrow、Pain、Death；MP3 與 WAV 編碼副本不重複計為新叫聲。', '']
     for c in data['characters']:
@@ -173,7 +206,9 @@ def render(data):
         lines += ['', '| 保留版本 | 動作條目 | 處理狀態 | 本機檔案 |', '|---|---|---|---|']
         for m in c['modelCandidates']:
             stage = m['readiness'].lower()
-            if m.get('componentReady'):
+            if m.get('componentReady') and m.get('runtimeDropdownRegistered'):
+                label = '材質與限制檢查通過；已登記非預設候選'
+            elif m.get('componentReady'):
                 label = '材質與限制檢查通過；待英雄綁定'
             elif 'diagnostic' in stage:
                 label = '診斷中間檔保留；採用後續修正版'

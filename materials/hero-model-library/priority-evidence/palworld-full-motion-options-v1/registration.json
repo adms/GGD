@@ -1,0 +1,181 @@
+{
+  "schema": "ggd-palworld-full-motion-option-registration@1",
+  "scope": "Two already admitted 256px full-motion GLBs become non-default local Hero Forge model options. Existing defaults and semantic mappings are preserved.",
+  "inputs": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-materials/integration.json",
+      "sha256": "1773a96c4ab10d07c0a221d34be1dd0f55c22d9f8906acc2aed0cdc8cb2b60cd"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/validation.json",
+      "sha256": "2a931b8fc8691197e3948aedf3ef486401fd0c3c20e1a566267b4d73d8ca4074"
+    },
+    {
+      "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
+      "sha256": "5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c"
+    }
+  ],
+  "currentContractLimits": {
+    "adoption": {
+      "decimateWhenTrianglesAbove": 10000,
+      "decimatedTargetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5,
+      "preserveOriginalLocally": true,
+      "archiveOriginalToS3Legacy": true,
+      "gitOnlyAfterAcceptance": true
+    },
+    "runtimeBudget": {
+      "tris": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "texEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channels": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "registrations": [
+    {
+      "componentId": "opgg-palworld-jetragon.material-bound-256-v1",
+      "heroId": "acquired-jetragon",
+      "nameZh": "空渦龍",
+      "sourceModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+      "isDefault": false,
+      "modelDocument": {
+        "gitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
+        "bytes": 455,
+        "sha256": "ae20eb8288f99324f8b978611b6c0413fea4d6cf4ad3c99a635776a69f4171ef"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+        "bytes": 4297580,
+        "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+      },
+      "measured": {
+        "triangles": 8468,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "maxClipChannels": 225,
+        "clipCount": 29
+      },
+      "sourceArchive": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-materials-20260911/f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5.tar.gz",
+        "archiveMember": "models/jetragon-materials-256.glb",
+        "readbackEvidence": "conversion-jetragon-opgg-material-bound-v1"
+      },
+      "semanticMap": {
+        "idle": {
+          "clip": "Idle",
+          "byteIdenticalAccessorSamples": true
+        },
+        "run": {
+          "clip": "Run",
+          "byteIdenticalAccessorSamples": true
+        },
+        "attack": {
+          "clip": "FarSkill_Action",
+          "byteIdenticalAccessorSamples": true
+        },
+        "cast": {
+          "clip": "JumpBeam_Loop",
+          "byteIdenticalAccessorSamples": true
+        },
+        "hurt": {
+          "clip": "Damage",
+          "byteIdenticalAccessorSamples": true
+        },
+        "death": {
+          "clip": "Damage",
+          "byteIdenticalAccessorSamples": true
+        }
+      },
+      "nativeMotionLibraryPreserved": true,
+      "deathFallback": "native Damage clip reused; owner-approved hurt-plus-fade policy remains a separate runtime presentation concern",
+      "productionDeploymentVerified": false
+    },
+    {
+      "componentId": "palworld-cattiva-opgg-materials-256-v1",
+      "heroId": "acquired-cattiva",
+      "nameZh": "搗蛋貓",
+      "sourceModelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+      "modelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+      "isDefault": false,
+      "modelDocument": {
+        "gitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
+        "bytes": 456,
+        "sha256": "fbd88023ac63b21c01d7189168d59e50b873f527bfae92d41c7614421bcb72d3"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+        "bytes": 2148052,
+        "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+      },
+      "measured": {
+        "triangles": 5798,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "maxClipChannels": 129,
+        "clipCount": 33
+      },
+      "sourceArchive": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-256-20260911-v1/61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c.tar.gz",
+        "archiveMember": "palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+        "readbackEvidence": "conversion-palworld-cattiva-opgg-materials-256-20260911-v1"
+      },
+      "semanticMap": {
+        "idle": {
+          "clip": "Idle",
+          "byteIdenticalAccessorSamples": true
+        },
+        "run": {
+          "clip": "Run",
+          "byteIdenticalAccessorSamples": true
+        },
+        "attack": {
+          "clip": "NekoPunch_Loop",
+          "byteIdenticalAccessorSamples": true
+        },
+        "cast": {
+          "clip": "FarSkill_Action",
+          "byteIdenticalAccessorSamples": true
+        },
+        "hurt": {
+          "clip": "Damage",
+          "byteIdenticalAccessorSamples": true
+        },
+        "death": {
+          "clip": "Damage",
+          "byteIdenticalAccessorSamples": true
+        }
+      },
+      "nativeMotionLibraryPreserved": true,
+      "deathFallback": "native Damage clip reused; owner-approved hurt-plus-fade policy remains a separate runtime presentation concern",
+      "productionDeploymentVerified": false
+    }
+  ],
+  "blocked": [
+    {
+      "componentId": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "heroId": "acquired-astralym",
+      "reason": "Only native Idle and Walk are present; a six-state hero model document would require inventing or duplicating unreviewed combat semantics.",
+      "productionDeploymentVerified": false
+    }
+  ],
+  "summary": {
+    "registered": 2,
+    "blocked": 1,
+    "newNativeMotionEntriesExposed": 62,
+    "defaultsChanged": 0,
+    "productionDeploymentVerified": false
+  }
+}

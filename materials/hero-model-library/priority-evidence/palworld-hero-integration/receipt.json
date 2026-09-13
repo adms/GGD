@@ -14,7 +14,7 @@
     "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and adds a separately validated 7,996-triangle non-default candidate. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates."
   },
   "sourceSha256": "sha256:cf94dce8dd1dd5d3c31453b5882a0644e52b96eabdc1e2497bc2f14b9662071c",
-  "catalogSha256": "sha256:f9dd41ab5fc023d39204418901b3a3611f8d435d9387e202fedc705bda51e7c9",
+  "catalogSha256": "sha256:036a92f54fec71862b766f4d1262300a79b21a778b8c529c700413f8c77b9ce3",
   "modelAdoptionPolicy": {
     "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
     "bytes": 292,
@@ -37,8 +37,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "sha256:724473673ee76d78a5c484f042c9e3c8da9a036d2f189c650a40d1f1b1db7ca6",
-      "bytes": 5344
+      "sha256": "sha256:5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c",
+      "bytes": 5478
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -78,7 +78,8 @@
       "defaultModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
       "modelOptions": [
         "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
-        "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+        "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+        "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
       ],
       "contentSchema": {
         "modelSchema": "model@1",
@@ -102,7 +103,8 @@
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
           "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
-          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+          "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63"
         ],
         "defaultModelPolicyEligible": true,
         "registeredOptionPreserved": true,
@@ -142,6 +144,23 @@
             "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
             "bytes": 3224424
           }
+        },
+        {
+          "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+          "isDefault": false,
+          "triangles": 8468,
+          "status": "eligible",
+          "currentPolicyEligible": true,
+          "modelDocument": {
+            "gitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
+            "sha256": "ae20eb8288f99324f8b978611b6c0413fea4d6cf4ad3c99a635776a69f4171ef",
+            "bytes": 455
+          },
+          "modelGlb": {
+            "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+            "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
+            "bytes": 4297580
+          }
         }
       ],
       "modelDocument": {
@@ -166,8 +185,8 @@
       "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
       "package": {
         "status": "passed",
-        "digest": "sha256:cd7fba0cf733ae9d069c3e228245b82b4b976a9888c36c2598ffee8547f9446b",
-        "zipSha256": "sha256:fcf6e827e4c10737bdce4f738f0a5e0897c6e9f70ff922873345c08c070dc918",
+        "digest": "sha256:a25ebc542500b7afccf7f4216453dec43d965360e64963fff9c8a38b800661a4",
+        "zipSha256": "sha256:d37d2459aeafd772c026eb6a39889e486e49959169c3a596e4492656bfce0c47",
         "zipBytes": 6288568,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -283,8 +302,8 @@
       "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
       "package": {
         "status": "passed",
-        "digest": "sha256:e59c2226574aa61568381b8e25a8407e7db1ed22a5521bf402ef2b274ac84e41",
-        "zipSha256": "sha256:bbdf65d06cacf1b7cfb0bf809374814511cbde8c0c9e8f671fa0fb91181c3253",
+        "digest": "sha256:b4d6540363632818f89c3956aafc4d718eec6be96823d011b306b7a1b1011dc9",
+        "zipSha256": "sha256:622ef8575d44f7ad1df378fb645936228bf668346fc53f199e9e0088e1e5df77",
         "zipBytes": 6855714,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -312,7 +331,8 @@
       "localHeroForgeModelSelectable": true,
       "defaultModelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
       "modelOptions": [
-        "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+        "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+        "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
       ],
       "contentSchema": {
         "modelSchema": "model@1",
@@ -335,7 +355,8 @@
         "status": "eligible-default",
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
-          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+          "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef"
         ],
         "defaultModelPolicyEligible": true,
         "registeredOptionPreserved": true,
@@ -357,6 +378,23 @@
             "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
             "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
             "bytes": 1428876
+          }
+        },
+        {
+          "modelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+          "isDefault": false,
+          "triangles": 5798,
+          "status": "eligible",
+          "currentPolicyEligible": true,
+          "modelDocument": {
+            "gitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
+            "sha256": "fbd88023ac63b21c01d7189168d59e50b873f527bfae92d41c7614421bcb72d3",
+            "bytes": 456
+          },
+          "modelGlb": {
+            "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+            "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
+            "bytes": 2148052
           }
         }
       ],
@@ -382,8 +420,8 @@
       "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
       "package": {
         "status": "passed",
-        "digest": "sha256:dda9491d0dda7622790e2b1519680920a91f1515b62e3a4fd4ef3905efe365d9",
-        "zipSha256": "sha256:6a116c3b276baa87d3ffb52527349fdc56386e78851d5191a0d8045d72f8736f",
+        "digest": "sha256:51003a95e892545f9285623d09c6da0f222e2eae038b2cd9a361ab343285b95c",
+        "zipSha256": "sha256:9e177c2288eaa001b7ac4c807b40e8a2470c0656b5eb015910129af9242bc65a",
         "zipBytes": 4401433,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"

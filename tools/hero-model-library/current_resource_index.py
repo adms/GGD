@@ -126,28 +126,32 @@ def apply_option_registration_overlay(components, receipt):
 
 
 def apply_hero_integration_overlay(components, receipt, receipt_git_path):
-    """Expose verified Hero Forge integration on the matching current GLB."""
-    by_glb = {
-        (row['modelGlb']['gitPath'], row['modelGlb']['sha256'], row['modelGlb']['bytes']): row
-        for row in receipt.get('integrations', [])
-        if row.get('backendDropdownRegistered') is True
-    }
-    for component in components:
-        row = by_glb.get((component.get('gitPath'), component.get('sha256'), component.get('bytes')))
-        if not row:
+    """Expose verified Hero Forge integration on every registered model option."""
+    by_glb = {}
+    for integration in receipt.get('integrations', []):
+        if integration.get('backendDropdownRegistered') is not True:
             continue
+        for option in integration.get('modelOptionEvidence', []):
+            model_glb = option['modelGlb']
+            by_glb[(model_glb['gitPath'], model_glb['sha256'], model_glb['bytes'])] = (integration, option)
+    for component in components:
+        match = by_glb.get((component.get('gitPath'), component.get('sha256'), component.get('bytes')))
+        if not match:
+            continue
+        row, option = match
         component.update(
             runtimeSelectable=True,
             runtimeDropdownRegistered=True,
             heroIds=[row['heroId']],
             relatedHeroIds=[row['heroId']],
-            runtimeModelKey=row['defaultModelKey'],
-            modelDocumentGitPath=row['modelDocument']['gitPath'],
+            runtimeModelKey=option['modelKey'],
+            modelDocumentGitPath=option['modelDocument']['gitPath'],
             readiness='hero-forge-six-slot-package-and-dropdown-verified; production deployment unverified',
             registrationEvidence={
                 'receiptGitPath': receipt_git_path,
                 'heroId': row['heroId'],
-                'modelKey': row['defaultModelKey'],
+                'modelKey': option['modelKey'],
+                'isDefault': option['isDefault'],
                 'backendDropdownScope': row['backendDropdownScope'],
                 'authoringState': row['authoringState'],
                 'productionDeploymentVerified': row['productionDeploymentVerified'],
