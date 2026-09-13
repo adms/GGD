@@ -105,6 +105,36 @@
         "Registration, backend dropdown presence and moving-match validation are false."
       ],
       "playableReviewEligible": false
+    },
+    {
+      "id": "mario-linkstik-to-ssbu-c00-six-state-v1",
+      "motionKind": "retargeted",
+      "sourceHero": "GGD 已核准 Mario 代理預設",
+      "sourceModel": "imported.linkstik",
+      "targetHero": "Mario／瑪利歐（acquired-mario）",
+      "targetModel": "ssbu-mario-c00-ultimate14-motion-v1",
+      "clips": [
+        "Stand - 1",
+        "Walk",
+        "Attack - 1",
+        "Stand Hit",
+        "Death"
+      ],
+      "skeletonCompatibility": "unverified: no imported.linkstik-to-SSBU Mario 98-joint map or target-side retargeted GLB evidence exists",
+      "validationEvidence": [
+        "content/models/imported.linkstik.json",
+        "content/assets/models/imported/linkstik.glb",
+        "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/validation.json",
+        "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+        "materials/hero-model-library/priority-evidence/current-component-policy-audit.json"
+      ],
+      "blockers": [
+        "No verified imported.linkstik-to-SSBU Mario 98-joint skeleton mapping exists.",
+        "No retargeted Mario GLB with target-side idle, run, attack, cast, hurt and death playback evidence exists.",
+        "The target's five d01special* clips do not establish idle, hurt, death or a complete GGD semantic action set.",
+        "Registration, runtime dropdown selection and deployment remain unchanged."
+      ],
+      "playableReviewEligible": false
     }
   ]
 }

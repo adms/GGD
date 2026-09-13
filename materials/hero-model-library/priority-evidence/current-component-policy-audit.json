@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 2856491,
-      "sha256": "d8fe0536903236308ef8e82f42f1cb0d940b49c57d9f3e138dcd273f7cddc7ca"
+      "bytes": 2862806,
+      "sha256": "b4f5af9f9fe41f5810cfeb402f0416784718e4679e705d872323a0170053c38c"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 25,
-    "runtimeBudgetPass": 25,
+    "audited": 26,
+    "runtimeBudgetPass": 26,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 12,
+    "heroAdoptionEligible": 13,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -213,6 +213,55 @@
         "decimatedCandidateTargetMax": 8000,
         "requiresDecimatedCandidate": true,
         "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-astralym-decimated-f77cf1ee",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+      "bytes": 3795720,
+      "metrics": {
+        "triangles": 7996,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 435,
+        "skins": 1,
+        "joints": 145,
+        "clips": 5,
+        "embeddedImages": 8
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
       },
       "catalogSemantics": {
         "componentReady": true,

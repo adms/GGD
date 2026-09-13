@@ -380,6 +380,37 @@
     "conversionAcceptanceEstablished": false,
     "limitation": "A separate-source body candidate set; this audit checked paths and sizes only, not 128 new SHA verifications or model readiness."
   },
+  "sourceStageCounts": {
+    "ultimate14CommunityMod": {
+      "verifiedContainerFiles": 1,
+      "verifiedExtractedFiles": 1071,
+      "identifiableFighterGroups": 16,
+      "fullCharacterBodyModels": 0,
+      "nuanmbPaths": 435,
+      "uniqueTransformMotionPayloads": 175,
+      "convertedAndAcceptedCharacters": 0,
+      "backendSelectableCharacters": 0
+    },
+    "worldblenderBodyCandidates": {
+      "identifiableFighterGroups": 16,
+      "bodyCandidateFiles": 128,
+      "freshPayloadHashes": 0,
+      "skeletonValidatedModels": 0,
+      "convertedAndAcceptedModels": 0,
+      "backendSelectableModels": 0
+    },
+    "nsandns2GameContainers": {
+      "inventoryOnlyContainerFiles": 3,
+      "payloadBytesRead": 0,
+      "identifiableFightersFromPayload": 0,
+      "modelFilesIdentified": 0,
+      "motionFilesIdentified": 0,
+      "extractedFiles": 0,
+      "convertedFiles": 0,
+      "acceptedFiles": 0,
+      "backendSelectableModels": 0
+    }
+  },
   "otherNativeGroups": {
     "parameterOrMotionListOnly": [
       "common",

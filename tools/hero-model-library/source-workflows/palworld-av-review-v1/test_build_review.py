@@ -17,12 +17,32 @@ class PalworldReviewBuildTest(unittest.TestCase):
         cls.contract = MODULE.build_contract()
 
     def test_candidates_default_to_unreviewed_and_unselectable(self):
+        self.assertEqual(self.contract["summary"]["ggdHeroAuthoringCompleteCount"], 3)
+        self.assertEqual(self.contract["summary"]["localHeroForgeModelSelectableHeroCount"], 3)
+        self.assertEqual(self.contract["summary"]["sourceFaithfulAudiovisualCompleteHeroCount"], 0)
+        self.assertEqual(self.contract["summary"]["productionDeploymentVerifiedHeroCount"], 0)
         self.assertEqual(self.contract["summary"]["audioCandidateCount"], 18)
         self.assertEqual(self.contract["summary"]["motionSemanticCandidateCount"], 18)
         candidates = self.contract["audioCandidates"] + self.contract["motionCandidates"]
         self.assertTrue(all(row["reviewStatus"] == "unreviewed" for row in candidates))
         self.assertTrue(all(row["runtimeSelectable"] is False for row in candidates))
         self.assertEqual(self.contract["summary"]["approvedCandidateCount"], 0)
+        for character in self.contract["characters"]:
+            self.assertTrue(character["ggdHeroAuthoringComplete"])
+            self.assertTrue(character["currentOptimizedModel"]["registeredInLocalHeroForgeDropdown"])
+            self.assertTrue(character["currentOptimizedModel"]["localHeroForgeModelSelectable"])
+            self.assertFalse(character["sourceFaithfulAudiovisualComplete"])
+            self.assertFalse(character["productionDeploymentVerified"])
+            self.assertFalse(character["reviewCandidatesHaveRuntimeAuthority"])
+        by_hero = {row["heroId"]: row for row in self.contract["characters"]}
+        self.assertEqual(
+            "eligible-registered-alternative",
+            by_hero["acquired-astralym"]["currentOptimizedModel"]["formalModelAdoption"]["status"],
+        )
+        self.assertEqual(
+            ["community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"],
+            by_hero["acquired-astralym"]["currentOptimizedModel"]["formalModelAdoption"]["policyEligibleModelKeys"],
+        )
 
     def test_cries_are_not_language_or_skill_events(self):
         for row in self.contract["audioCandidates"]:

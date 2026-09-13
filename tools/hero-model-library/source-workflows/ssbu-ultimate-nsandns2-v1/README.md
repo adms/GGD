@@ -8,7 +8,7 @@ Git checkout 內的最小驗證只需 Python 3 標準函式庫，不需本機原
 python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/publish_evidence.py --check
 ```
 
-它核對兩個固定索引 SHA、16 名的各類路徑數、target／costume、NSP／ZIP 大小與 metadata-only 狀態，以及 README 與精簡 JSON 的一致性。
+它核對兩個固定索引 SHA、16 名的各類路徑數、target／costume、NSP／ZIP 大小與 metadata-only 狀態，以及 README 與精簡 JSON 的一致性。`reconciliation.json → sourceStageCounts` 是中央機器讀入口，分開記錄 Ultimate14 MOD、Worldblender body 候選與 NSandNS2 遊戲容器；NSandNS2 payload 未讀取時，角色、模型、動作、轉換、驗收與後台選項必須維持 0。
 
 完整本機重新核對要顯式提供素材 workspace，輸出只能是 Git checkout 外的一個**新目錄**：
 

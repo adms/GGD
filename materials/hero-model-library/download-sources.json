@@ -51473,6 +51473,121 @@
           "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
         },
         {
+          "id": "historical-astralym-decimated-f77cf1ee",
+          "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+          "sourceClass": "integration-recovery",
+          "nameZh": "枯星龍",
+          "originalName": "Astralym",
+          "workZh": "幻獸帕魯 Palworld",
+          "sourceGame": "Palworld",
+          "platform": "PC（原始遊戲 build 未由歷史 GLB 固定）",
+          "variant": "歷史 GGD 256px 五動作 emissive-lock 減面版",
+          "identityIds": [
+            "community:palworld-astralym"
+          ],
+          "originSourceIds": [
+            "opgg-palworld-astralym-2026081102"
+          ],
+          "historicalAcceptanceId": "acquired-astralym",
+          "historicalModelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+          "parentComponentId": "historical-astralym-7bc2fa3f8",
+          "resourceRole": "independent-historical-model-body-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "native-animation"
+          ],
+          "bytes": 3795720,
+          "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+          "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "runtimeDropdownRegistered": false,
+          "fullHeroModel": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "nativeAnimationCount": 5,
+          "proceduralAnimationCount": 0,
+          "triangles": 7996,
+          "drawPrimitives": 3,
+          "skinCount": 1,
+          "jointCounts": [
+            145
+          ],
+          "textureCount": 8,
+          "selectedClips": {
+            "idle": "Idle",
+            "run": "Walk",
+            "attack": "FarSkill_Action",
+            "cast": "HaloBeam_Loop",
+            "hurt": "Damage",
+            "death": "Damage"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "clip": "Damage",
+              "reason": "Source contains no native Death clip; explicitly authorized hurt plus runtime ascend/fade fallback, not generated animation"
+            },
+            {
+              "state": "run",
+              "clip": "Walk",
+              "reason": "Source provides native Walk; no Run clip"
+            }
+          ],
+          "recoveredFromGitCommit": "7bc2fa3f8",
+          "readiness": "validated-decimated-historical-body-candidate-pending-generated-option-overlay",
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
+            "bytes": 15161,
+            "sha256": "63d392db90b7b48aeca6cb2f15c049602a66353aafa8d1927b9812d8d7efce38"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/visual-comparison.json",
+            "bytes": 6493,
+            "sha256": "ed8ac520031c8b2fe4db5e7cb299bb2946cb52e270f0ab0361904c2bed2aa2f5"
+          },
+          "warnings": [
+            "Khronos retains the same 10 source warnings; validation has zero errors and is not truncated.",
+            "Each native clip has 435 channels, above the 300 warning and below the 500 limit."
+          ],
+          "limitations": [
+            "Expected low-poly faceting is visible after 23,928 to 7,996 triangle reduction; five-clip A/B remains under the 5% visual threshold.",
+            "Damage is reused for hurt and the authorized ascend/fade death presentation; no native Death clip is claimed.",
+            "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+          "backupLocations": [
+            "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz"
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz",
+          "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.files.json",
+          "s3ArchiveMember": "historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+          "s3Use": "legacy conversion/intermediate backup; runtime continues to use the Git-pinned GLB",
+          "backupReceipt": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/s3-backup-receipt.json",
+            "bytes": 1459,
+            "sha256": "64a04f236664551c6e71b44bd869498c882fe9925c536ee0a493965594751d5c"
+          },
+          "backupManifest": {
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/s3-backup-manifest.json",
+            "bytes": 16962,
+            "sha256": "32330c59a21958eaed8b07cea4979e4257fd595ed5ea7652af8b10e8c64d5eb4"
+          },
+          "backupVerification": {
+            "archiveSha256": "ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442",
+            "archiveBytes": 61996744,
+            "fileCount": 91,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true,
+            "localUnchanged": true
+          }
+        },
+        {
           "id": "historical-jetragon-7bc2fa3f8",
           "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
           "sourceClass": "integration-recovery",

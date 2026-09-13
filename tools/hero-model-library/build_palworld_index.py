@@ -96,6 +96,10 @@ def build(workspace):
         integration = integrations[identity['id']]
         assert integration['heroId'] in identity.get('mappedHeroIds', [])
         assert integration['backendDropdownRegistered'] is True
+        assert integration['ggdHeroAuthoringComplete'] is True
+        assert integration['heroForgePackageVerified'] is True
+        assert integration['localHeroForgeModelSelectable'] is True
+        assert integration['sourceFidelity']['sourceFaithfulAudiovisualComplete'] is False
         assert integration['productionDeploymentVerified'] is False
         characters.append(dict(id=key, name=name, englishName=english, sourceCode=code,
             backlogIdentity=identity['id'], modelCandidates=models, modelSources=model_sources,
@@ -104,7 +108,13 @@ def build(workspace):
             skillSpecificSfxAcquired=False, ggdHeroImplemented=True,
             heroId=integration['heroId'], heroIntegration=integration,
             backendDropdownRegistered=True, productionDeploymentVerified=False,
-            runtimeSelectable=False, status='authoring-complete-package-verified-production-pending'))
+            ggdHeroAuthoringComplete=True, localHeroForgeModelSelectable=True,
+            sourceFaithfulAudiovisualComplete=False,
+            formalModelAdoption=integration['formalModelAdoption'],
+            productionRuntimeSelectableVerified=False,
+            status=('ggd-authoring-complete-source-av-review-pending-production-unverified'
+                if integration['formalModelAdoption']['currentPolicyEligible']
+                else 'ggd-authoring-complete-formal-model-adoption-blocked-source-av-review-pending-production-unverified')))
     result = dict(schema='ggd-palworld-three-resource-index@1',
         inputs=[dict(gitPath=str(path.relative_to(ROOT)), sha256=sha(path)) for path in paths],
         characterCount=len(characters), modelSourceCount=sum(len(c['modelSources']) for c in characters),
@@ -117,6 +127,8 @@ def build(workspace):
             'Creature cries are sound effects, not Japanese or English spoken dialogue.',
             'PalDB settings are community snapshots, not original game DataTables or GGD abilities.',
         'Khronos structural validation does not prove material fidelity or GGD runtime acceptance.',
+        'The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym now has a separately validated 7,996-triangle historical candidate registered as a non-default option; production deployment remains unverified.',
+        'Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.',
         'Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified.'])
     components = model_components(result)
     result['gitModelComponentCount'] = len(components)
@@ -127,7 +139,7 @@ def build(workspace):
 def render(data):
     lines = ['# ' + TITLE, '',
         '固定入口；模型、動作、叫聲與角色／技能設定可由同名 JSON 查詢。三位均已列入 [已取得模型待設計英雄](../已取得模型待設計英雄.md)。', '',
-        '來源與半成品已保留本機並備份 S3 `legacy/`。三名的 Hero Forge 六技能配方、六態模型綁定、精確來源套件與 acquired-model 後台下拉選項已通過本機驗證；正式站合併與部署仍待 Main 驗證，不以本機套件通過冒稱已部署。', '',
+        '來源與半成品已保留本機並備份 S3 `legacy/`。三名均已是完整的 GGD Hero Forge authoring：六技能配方、六態模型文件、精確來源套件與 acquired-model 後台下拉選項已通過本機驗證。「尚未成為完整英雄」是過期標示；仍未完成的是原作獨立 VFX、招式專屬 SFX、叫聲與動作逐項審查，以及正式站部署驗證。', '',
         '| 角色 | 模型來源 | 動作 | 叫聲 | 設定資料 |',
         '|---|---|---|---|---|']
     for c in data['characters']:
@@ -178,7 +190,7 @@ def render(data):
         lines += ['', 'S3 音訊來源備份：`' + c['audioBackup']['s3Uri'] + '`。', '']
     lines += ['## 設定與待完成項目', '',
         '[角色與技能設定 JSON](character-settings.json) 保留 5 份資料頁、34 條技能與空渦龍／搗蛋貓各 5 階夥伴技能。枯星龍一般資料沒有學習技能列；兩個首領形態各 8 條，分別保存。', '',
-        '三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。三份 256px 獨立元件另行保留；枯星龍該元件版只有 Idle／Walk，不冒稱它已可替換現行成品。未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；叫聲仍待使用者逐項聽審。正式站尚未驗證部署。', '',
+        '三份 Hero Forge 成品已有六技能配方、六態映射、model@1 與後台 acquired-model 選項，現行 34 名批次的本機編譯、套件與精確來源檢查全數通過。因此三名在 GGD authoring 層已是完整英雄。空渦龍與搗蛋貓的現行模型符合正式採用幾何政策；枯星龍另有由 23,928 面歷史五動作原件產生的 7,996 面候選，材質／骨架／蒙皮／方向／五段原生動作／Khronos／現行 budget 及三視角 A/B 均驗證完成，已登記為非預設選項。三份 256px 獨立元件另行保留；另一份枯星龍元件版只有 Idle／Walk，不冒稱它等同五動作候選。原作影音保真仍未完成：未取得獨立招式特效、招式專屬音效、原始 Unreal／Wwise 資料庫或人類語句；18 段叫聲與 18 個現行动作語意候選仍待使用者逐項審查。正式站尚未驗證部署。', '',
         '維護：更新來源與補充身份索引後，執行 `python3 tools/hero-model-library/build_palworld_index.py --workspace ..`；加 `--check` 檢查文件是否與來源一致。', '']
     return '\n'.join(lines)
 

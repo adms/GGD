@@ -13,22 +13,33 @@ const CHECK = process.argv.includes("--check");
 const VALIDATION = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json");
 const POLICY = path.join(ROOT, "materials/hero-model-library/priority-evidence/current-component-policy-audit.json");
 const RECEIPT = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json");
+const ASTRALYM_DECIMATION_VALIDATION = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json");
 
 const OPTIONS = [
   {
     componentId: "historical-jetragon-7bc2fa3f8",
+    validationComponentId: "historical-jetragon-7bc2fa3f8",
     heroId: "acquired-jetragon",
     modelKey: "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
     label: "空渦龍／7bc2fa3f8 歷史復原版",
   },
   {
+    componentId: "historical-astralym-decimated-f77cf1ee",
+    validationComponentId: "historical-astralym-7bc2fa3f8",
+    heroId: "acquired-astralym",
+    modelKey: "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+    label: "枯星龍／7bc2fa3f8 發光紋理保護減面版",
+  },
+  {
     componentId: "historical-kita-kita-7bc2fa3f8",
+    validationComponentId: "historical-kita-kita-7bc2fa3f8",
     heroId: "acquired-kita-kita",
     modelKey: "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9",
     label: "吉他吉他老伯／7bc2fa3f8 歷史復原版",
   },
   {
     componentId: "historical-lord-nightmares-7bc2fa3f8",
+    validationComponentId: "historical-lord-nightmares-7bc2fa3f8",
     heroId: "acquired-lord-nightmares",
     modelKey: "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd",
     label: "惡夢之王／7bc2fa3f8 歷史復原版",
@@ -51,7 +62,7 @@ async function build() {
   const docs = new Map<string, string>();
   const registrations = [];
   for (const option of OPTIONS) {
-    const source: any = validationById.get(option.componentId);
+    const source: any = validationById.get(option.validationComponentId);
     const current: any = policyById.get(option.componentId);
     if (!source || !current) throw new Error(`missing historical evidence: ${option.componentId}`);
     if (source.historicalAcceptanceId !== option.heroId) throw new Error(`hero identity mismatch: ${option.componentId}`);
@@ -109,18 +120,13 @@ async function build() {
   }
   const receipt = {
     schema: "ggd-historical-model-option-registration@1",
-    scope: "Three current-policy-eligible recovered GLBs registered as non-default Hero Forge model options. This is local authoring evidence, not Main merge or production deployment proof.",
+    scope: "Four current-policy-eligible recovered or validated-decimated GLBs registered as non-default Hero Forge model options. This is local authoring evidence, not Main merge or production deployment proof.",
     generatedFrom: [
-      pin(VALIDATION), pin(POLICY), pin(path.join(ROOT, "packages/shared/src/content/heroForge/communityAcquired.ts")), pin(fileURLToPath(import.meta.url)),
+      pin(VALIDATION), pin(ASTRALYM_DECIMATION_VALIDATION), pin(POLICY), pin(path.join(ROOT, "packages/shared/src/content/heroForge/communityAcquired.ts")), pin(fileURLToPath(import.meta.url)),
     ],
-    blocked: [{
-      componentId: "historical-astralym-7bc2fa3f8",
-      heroId: "acquired-astralym",
-      reason: "source exceeds 10,000 triangles; a separately validated candidate at or below 8,000 triangles is required",
-      runtimeDropdownRegistered: false,
-    }],
+    blocked: [],
     registrations,
-    summary: { registered: registrations.length, blockedPendingDecimation: 1, productionDeploymentVerified: false },
+    summary: { registered: registrations.length, blockedPendingDecimation: 0, productionDeploymentVerified: false },
   };
   return { docs, receipt: encoded(receipt) };
 }
@@ -131,7 +137,7 @@ async function main(): Promise<void> {
   if (CHECK) {
     const stale = outputs.filter(([file, expected]) => !fs.existsSync(file) || fs.readFileSync(file, "utf8") !== expected);
     if (stale.length) throw new Error(`stale historical option registration: ${stale.map(([file]) => rel(file)).join(", ")}`);
-    process.stdout.write(`historical model options current (${OPTIONS.length} registered, 1 blocked)\n`);
+    process.stdout.write(`historical model options current (${OPTIONS.length} registered, 0 blocked)\n`);
     return;
   }
   for (const [file, value] of outputs) {

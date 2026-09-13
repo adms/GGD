@@ -18,6 +18,13 @@ The exact source PAK is recorded in
 The bounded extract is retained at
 `GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/`.
 
+The recursive non-script package dependency closure is retained separately at
+`GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/`.
+It starts from the exact 17 direct roots and their audited 229 first-level
+reference occurrences (138 unique references), maps virtual Unreal mounts to
+the verified PAK index, and repeats extraction plus package-import parsing until
+no new package reference appears. This proves acquisition only.
+
 Recreate that bounded extract in a new directory with the existing Rust
 extractor (built from the tracked `infinity-strash-priority-raw-v2` source):
 
@@ -36,12 +43,52 @@ python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-event
   --output ../GGD-Asset-Library/intake/<new-stage-id>
 ```
 
+Recreate the recursive closure in another empty directory:
+
+```bash
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/extract_dependency_closure.py \
+  --receipt materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json \
+  --pak-source-manifest ../GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/source-manifest.json \
+  --pak ../GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak \
+  --repak ../GGD-Asset-Library/tools/repak-src-v0.2.3/target/release/repak \
+  --extractor /private/tmp/popp-vfx-extractor-build/release/ggd-infinity-strash-prefix-extractor \
+  --output ../GGD-Asset-Library/intake/<new-closure-stage-id>
+```
+
+The generated `source-manifest.json` contains the PAK identity, extractor and
+Repak hashes, round selection manifests, every acquired file hash, dependency
+edges, unresolved references, and parse failures.
+`nonScriptPackageDependencyClosureComplete` means only that every recursively
+discovered non-script package reference was found and parsed at the package
+table level.
+
+The complete closure intake is archived by `backup_intake.py` under the only
+authorized `legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/`
+S3 prefix. `build.py` requires the committed full-download and per-member
+SHA-256 readback receipt. That receipt proves preservation only and never
+changes `vfxConverted`, visual acceptance, runtime selection or deployment.
+
 Rebuild and verify:
 
 ```bash
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py \
+  --raw-vfx ../GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content \
+  --output materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/closure-conversion-probe.json
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/build.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/extract_dependency_closure.py \
+  --receipt materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json \
+  --pak-source-manifest ../GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/source-manifest.json \
+  --pak ../GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak \
+  --repak ../GGD-Asset-Library/tools/repak-src-v0.2.3/target/release/repak \
+  --extractor /private/tmp/popp-vfx-extractor-build/release/ggd-infinity-strash-prefix-extractor \
+  --output ../GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1 \
+  --check
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py --check
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py \
+  --raw-vfx ../GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content \
+  --output materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/closure-conversion-probe.json \
+  --check
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/build.py --check
 python3 -m unittest tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/test_build.py
 ```

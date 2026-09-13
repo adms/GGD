@@ -18,6 +18,7 @@ BUILD = module("build")
 EXTRACT = module("extract")
 SERVER = module("serve_review")
 PROBE = module("probe_conversion")
+CLOSURE = module("extract_dependency_closure")
 
 
 class PoppVfxEventAuditTests(unittest.TestCase):
@@ -47,6 +48,12 @@ class PoppVfxEventAuditTests(unittest.TestCase):
         self.assertEqual(receipt["summary"]["vfxReferences"], 17)
         self.assertEqual(receipt["summary"]["vfxDirectPairsAcquired"], 17)
         self.assertEqual(receipt["summary"]["vfxConverted"], 0)
+        self.assertEqual(receipt["summary"]["vfxFirstLevelDependencyReferenceOccurrences"], 229)
+        self.assertEqual(receipt["summary"]["vfxFirstLevelUniqueDependencyReferences"], 138)
+        self.assertEqual(receipt["summary"]["vfxClosurePackageReferencesDiscovered"], 309)
+        self.assertEqual(receipt["summary"]["vfxClosurePackageReferencesAcquired"], 309)
+        self.assertEqual(receipt["summary"]["vfxClosurePackageReferencesMissing"], 0)
+        self.assertTrue(receipt["summary"]["vfxNonScriptPackageDependencyClosureComplete"])
         self.assertEqual(receipt["summary"]["eventReferences"], 41)
         self.assertEqual(receipt["summary"]["eventPairsAcquired"], 41)
         self.assertEqual(receipt["summary"]["runtimeBindingsCreated"], 0)
@@ -59,6 +66,22 @@ class PoppVfxEventAuditTests(unittest.TestCase):
         self.assertEqual(probe["noExportableOutputCount"], 17)
         self.assertTrue(all(row["returnCode"] == 0 and not row["producedFiles"] for row in probe["rows"]))
         self.assertIn("does not prove", probe["claim"])
+
+    def test_closure_probe_still_does_not_claim_conversion(self):
+        probe = json.loads((BUILD.OUTPUT / "closure-conversion-probe.json").read_text())
+        self.assertEqual(probe["packageCount"], 17)
+        self.assertEqual(probe["noExportableOutputCount"], 17)
+        receipt = json.loads((BUILD.OUTPUT / "receipt.json").read_text())
+        self.assertEqual(receipt["summary"]["vfxConverted"], 0)
+        self.assertTrue(all(row["conversion"]["status"] == "dependency-closure-acquired-conversion-blocked" for row in receipt["vfx"]))
+
+    def test_virtual_mount_mapping_covers_game_engine_and_niagara(self):
+        self.assertEqual(CLOSURE.mount_reference("strash/Content/A/B.uasset"), "/Game/A/B")
+        self.assertEqual(CLOSURE.mount_reference("Engine/Content/A/B.uasset"), "/Engine/A/B")
+        self.assertEqual(
+            CLOSURE.mount_reference("Engine/Plugins/FX/Niagara/Content/VectorFields/TilingCurl32.uasset"),
+            "/Niagara/VectorFields/TilingCurl32",
+        )
 
     def test_unknown_audio_id_is_not_in_allowlist(self):
         allowlist = SERVER.load_allowlist(BUILD.OUTPUT / "event-audio-review-queue.json")

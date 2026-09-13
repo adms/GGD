@@ -3,6 +3,9 @@
 > 這是原始套件與候選音訊的查核收據。`runtimeSelectable=false`，沒有自動綁定技能。
 
 - VFX 引用：17；直接套件對已取得：17；GGD 轉換完成：0。
+- VFX 第一層依賴：229 次引用／138 個唯一 package。
+- VFX 非腳本 package 遞迴閉包：發現 309；取得 309；缺失 0；閉包完整：true。
+- VFX 閉包 S3 legacy 歸檔：s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.tar.gz；完整下載讀回與逐成員 SHA-256：通過。
 - 事件引用：41；原始套件對已取得：41。
 - 可播放逐項審查候選：36；使用者已核准：0。
 - 41 筆 PN020 直接事件以外另有 19 筆相依引用；其中 10 筆通用魔法音效事件尚未抽出與對媒體。
@@ -12,23 +15,23 @@
 
 | 引用 | 種類 | 直接套件 | 相依數 | 轉換狀態 |
 |---|---|---:|---:|---|
-| `/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core` | niagara-system | 2 | 19 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit` | niagara-system | 2 | 26 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00` | niagara-system | 2 | 15 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00` | niagara-system | 2 | 19 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00` | niagara-system | 2 | 32 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00` | niagara-system | 2 | 2 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00` | niagara-system | 2 | 2 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2` | niagara-system | 2 | 16 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle` | niagara-system | 2 | 9 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core` | niagara-system | 2 | 13 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core` | niagara-system | 2 | 4 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00` | niagara-system | 2 | 32 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing` | niagara-system | 2 | 26 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle` | niagara-system | 2 | 14 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/Post/Curve/CV_Black00` | curve-float-support-component | 2 | 0 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/Post/Curve/CV_Black01` | curve-float-support-component | 2 | 0 | raw-direct-package-ready-conversion-blocked |
-| `/Game/Strash/VFX/Post/MPC_VFXPost` | material-parameter-collection-support-component | 2 | 0 | raw-direct-package-ready-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core` | niagara-system | 2 | 19 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit` | niagara-system | 2 | 26 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00` | niagara-system | 2 | 15 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00` | niagara-system | 2 | 19 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00` | niagara-system | 2 | 32 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00` | niagara-system | 2 | 2 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00` | niagara-system | 2 | 2 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2` | niagara-system | 2 | 16 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle` | niagara-system | 2 | 9 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core` | niagara-system | 2 | 13 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core` | niagara-system | 2 | 4 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00` | niagara-system | 2 | 32 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing` | niagara-system | 2 | 26 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle` | niagara-system | 2 | 14 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/Post/Curve/CV_Black00` | curve-float-support-component | 2 | 0 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/Post/Curve/CV_Black01` | curve-float-support-component | 2 | 0 | dependency-closure-acquired-conversion-blocked |
+| `/Game/Strash/VFX/Post/MPC_VFXPost` | material-parameter-collection-support-component | 2 | 0 | dependency-closure-acquired-conversion-blocked |
 
 ## 事件與音訊
 
@@ -78,7 +81,7 @@
 
 ## 仍缺
 
-- 14 個 NiagaraSystem 尚無可重現的 GGD 轉換器、完整相依閉包與原作播放視覺驗收。
+- 14 個 NiagaraSystem 的非腳本 package 依賴閉包已取得，但尚無可重現的 GGD 轉換器與原作播放視覺驗收。
 - 2 個 CurveFloat 與 1 個 MaterialParameterCollection 是支援元件，不能單獨冒稱完整特效。
 - 事件到 GGD 技能時點尚未完成；全部音效／語音候選需逐項聽審後才能綁定。
 - 依賴索引另含 10 個通用魔法音效事件；它們不在指定的 41 個 PN020 直接事件內，本批未將名稱當成已取得音檔。

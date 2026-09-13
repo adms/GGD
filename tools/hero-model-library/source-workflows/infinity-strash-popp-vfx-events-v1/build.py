@@ -20,11 +20,14 @@ LIBRARY = REPO.parent / "GGD-Asset-Library"
 DEPENDENCY_INDEX = REPO / "materials/hero-model-library/infinity-strash/dependency-index.json"
 RAW_VFX = LIBRARY / "intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content"
 VFX_SOURCE_MANIFEST = LIBRARY / "intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/source-manifest.json"
+VFX_CLOSURE_MANIFEST = LIBRARY / "intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/source-manifest.json"
 RAW_EVENTS = LIBRARY / "intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content"
 AUDIO_INDEX = LIBRARY / "intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/extraction-index.json"
 PAK_MANIFEST = LIBRARY / "intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/source-manifest.json"
 OUTPUT = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1"
 CONVERSION_PROBE = OUTPUT / "conversion-probe.json"
+CLOSURE_CONVERSION_PROBE = OUTPUT / "closure-conversion-probe.json"
+CLOSURE_S3_BACKUP_RECEIPT = OUTPUT / "dependency-closure-s3-backup-receipt.json"
 
 
 def sha256(path: Path) -> str:
@@ -145,10 +148,13 @@ def validate_vfx_source_manifest(source_manifest: dict, raw_vfx: Path, reference
             raise ValueError(f"direct VFX source manifest hash drift: {path}")
 
 
-def build_vfx_rows(references: list[str], raw_vfx: Path, conversion_probe: dict) -> list[dict]:
+def build_vfx_rows(references: list[str], raw_vfx: Path, conversion_probe: dict, closure_conversion_probe: dict) -> list[dict]:
     probe_by_reference = {row["reference"]: row for row in conversion_probe["rows"]}
+    closure_probe_by_reference = {row["reference"]: row for row in closure_conversion_probe["rows"]}
     if set(probe_by_reference) != set(references):
         raise ValueError("conversion probe reference set differs from the 17 retained VFX references")
+    if set(closure_probe_by_reference) != set(references):
+        raise ValueError("closure conversion probe reference set differs from the 17 retained VFX references")
     rows = []
     for reference in references:
         uasset, uexp = unreal_pair(raw_vfx, reference)
@@ -174,13 +180,14 @@ def build_vfx_rows(references: list[str], raw_vfx: Path, conversion_probe: dict)
                 "dependencyCount": len(dependencies),
                 "dependencyPairsPresentInBoundedExtract": dependency_pairs_present,
                 "conversion": {
-                    "status": "raw-direct-package-ready-conversion-blocked",
+                    "status": "dependency-closure-acquired-conversion-blocked",
                     "runtimeSelectable": False,
                     "visualAcceptance": False,
                     "preservedUmodelProbe": probe_by_reference[reference],
+                    "preservedClosureUmodelProbe": closure_probe_by_reference[reference],
                     "blockers": [
-                        "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-                        "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+                        "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+                        "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
                         "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback.",
                     ],
                 },
@@ -300,6 +307,9 @@ def render_markdown(receipt: dict) -> str:
         "> 這是原始套件與候選音訊的查核收據。`runtimeSelectable=false`，沒有自動綁定技能。",
         "",
         f"- VFX 引用：{counts['vfxReferences']}；直接套件對已取得：{counts['vfxDirectPairsAcquired']}；GGD 轉換完成：{counts['vfxConverted']}。",
+        f"- VFX 第一層依賴：{counts['vfxFirstLevelDependencyReferenceOccurrences']} 次引用／{counts['vfxFirstLevelUniqueDependencyReferences']} 個唯一 package。",
+        f"- VFX 非腳本 package 遞迴閉包：發現 {counts['vfxClosurePackageReferencesDiscovered']}；取得 {counts['vfxClosurePackageReferencesAcquired']}；缺失 {counts['vfxClosurePackageReferencesMissing']}；閉包完整：{str(counts['vfxNonScriptPackageDependencyClosureComplete']).lower()}。",
+        f"- VFX 閉包 S3 legacy 歸檔：{receipt['sourceAvailability']['dependencyClosureS3Backup']['s3Uri']}；完整下載讀回與逐成員 SHA-256：通過。",
         f"- 事件引用：{counts['eventReferences']}；原始套件對已取得：{counts['eventPairsAcquired']}。",
         f"- 可播放逐項審查候選：{counts['audioReviewCandidates']}；使用者已核准：0。",
         f"- 41 筆 PN020 直接事件以外另有 {counts['otherExternalReferences']} 筆相依引用；其中 {counts['supportingGenericSfxReferences']} 筆通用魔法音效事件尚未抽出與對媒體。",
@@ -319,7 +329,7 @@ def render_markdown(receipt: dict) -> str:
         "",
         "## 仍缺",
         "",
-        "- 14 個 NiagaraSystem 尚無可重現的 GGD 轉換器、完整相依閉包與原作播放視覺驗收。",
+        "- 14 個 NiagaraSystem 的非腳本 package 依賴閉包已取得，但尚無可重現的 GGD 轉換器與原作播放視覺驗收。",
         "- 2 個 CurveFloat 與 1 個 MaterialParameterCollection 是支援元件，不能單獨冒稱完整特效。",
         "- 事件到 GGD 技能時點尚未完成；全部音效／語音候選需逐項聽審後才能綁定。",
         "- 依賴索引另含 10 個通用魔法音效事件；它們不在指定的 41 個 PN020 直接事件內，本批未將名稱當成已取得音檔。",
@@ -351,18 +361,24 @@ def main() -> int:
     parser.add_argument("--dependency-index", type=Path, default=DEPENDENCY_INDEX)
     parser.add_argument("--raw-vfx", type=Path, default=RAW_VFX)
     parser.add_argument("--vfx-source-manifest", type=Path, default=VFX_SOURCE_MANIFEST)
+    parser.add_argument("--vfx-closure-manifest", type=Path, default=VFX_CLOSURE_MANIFEST)
     parser.add_argument("--raw-events", type=Path, default=RAW_EVENTS)
     parser.add_argument("--audio-index", type=Path, default=AUDIO_INDEX)
     parser.add_argument("--pak-manifest", type=Path, default=PAK_MANIFEST)
     parser.add_argument("--output", type=Path, default=OUTPUT)
     parser.add_argument("--conversion-probe", type=Path, default=CONVERSION_PROBE)
+    parser.add_argument("--closure-conversion-probe", type=Path, default=CLOSURE_CONVERSION_PROBE)
+    parser.add_argument("--closure-s3-backup-receipt", type=Path, default=CLOSURE_S3_BACKUP_RECEIPT)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     dependency_index = json.loads(args.dependency_index.read_text())
     audio_index = json.loads(args.audio_index.read_text())
     vfx_source_manifest = json.loads(args.vfx_source_manifest.read_text())
+    vfx_closure_manifest = json.loads(args.vfx_closure_manifest.read_text())
     pak_manifest = json.loads(args.pak_manifest.read_text())
     conversion_probe = json.loads(args.conversion_probe.read_text())
+    closure_conversion_probe = json.loads(args.closure_conversion_probe.read_text())
+    closure_s3_backup = json.loads(args.closure_s3_backup_receipt.read_text())
     dependencies = dependency_index["externalPackageDependencies"]
     vfx_references = [reference for reference in dependencies if reference.startswith("/Game/Strash/VFX/")]
     event_references = [
@@ -376,9 +392,31 @@ def main() -> int:
     pak0 = next(row for row in pak_manifest["files"] if Path(row["path"]).name == "pakchunk0-WindowsClient.pak")
     if vfx_source_manifest["sourcePak"]["sha256"] != pak0["sha256"] or vfx_source_manifest["sourcePak"]["bytes"] != pak0["bytes"]:
         raise ValueError("direct VFX source manifest does not point to the verified pakchunk0 mirror")
+    if vfx_closure_manifest["sourcePak"]["sha256"] != pak0["sha256"] or vfx_closure_manifest["sourcePak"]["bytes"] != pak0["bytes"]:
+        raise ValueError("VFX dependency closure manifest does not point to the verified pakchunk0 mirror")
+    if vfx_closure_manifest["roots"]["referenceCount"] != 17:
+        raise ValueError("VFX dependency closure does not retain the exact 17 direct roots")
+    if vfx_closure_manifest["firstLevel"]["referenceOccurrences"] != 229 or vfx_closure_manifest["firstLevel"]["uniqueReferences"] != 138:
+        raise ValueError("VFX dependency closure first-level counts differ from the audited direct packages")
+    for row in vfx_closure_manifest["files"]:
+        path = Path(row["absolutePath"])
+        if not path.is_file() or path.stat().st_size != row["bytes"] or sha256(path) != row["sha256"]:
+            raise ValueError(f"VFX dependency closure hash drift: {path}")
     if conversion_probe["packageCount"] != 17 or conversion_probe["noExportableOutputCount"] != 17:
         raise ValueError("preserved UModel probe does not establish 17/17 no-exportable-output results")
-    vfx_rows = build_vfx_rows(vfx_references, args.raw_vfx, conversion_probe)
+    if closure_conversion_probe["packageCount"] != 17 or closure_conversion_probe["noExportableOutputCount"] != 17:
+        raise ValueError("closure-backed UModel probe does not establish 17/17 no-exportable-output results")
+    closure_root = str(args.vfx_closure_manifest.resolve().parent)
+    if (closure_s3_backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or closure_s3_backup.get("source") != closure_root
+            or not closure_s3_backup.get("fullGetVerified")
+            or not closure_s3_backup.get("allMemberSha256Verified")
+            or not closure_s3_backup.get("localUnchanged")
+            or not str(closure_s3_backup.get("s3Uri", "")).startswith(
+                "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/"
+            )):
+        raise ValueError("VFX dependency closure S3 backup receipt is absent, unverified or outside the authorized prefix")
+    vfx_rows = build_vfx_rows(vfx_references, args.raw_vfx, conversion_probe, closure_conversion_probe)
     event_rows, candidates = build_event_rows(event_references, args.raw_events, audio_index)
     receipt = {
         "schema": "ggd.infinity-strash-popp-vfx-events@1",
@@ -389,17 +427,36 @@ def main() -> int:
             "preservedLocalPakMirror": proof(args.pak_manifest),
             "directVfxExtractRoot": str(args.raw_vfx.resolve()),
             "directVfxSourceManifest": proof(args.vfx_source_manifest),
+            "dependencyClosureRoot": closure_root,
+            "dependencyClosureS3Backup": {
+                **proof(args.closure_s3_backup_receipt),
+                "s3Uri": closure_s3_backup["s3Uri"],
+                "manifestUri": closure_s3_backup["manifestUri"],
+                "archiveSha256": closure_s3_backup["archiveSha256"],
+                "archiveBytes": closure_s3_backup["archiveBytes"],
+                "fileCount": closure_s3_backup["fileCount"],
+                "fullGetVerified": True,
+                "allMemberSha256Verified": True,
+            },
             "eventExtractRoot": str(args.raw_events.resolve()),
         },
         "inputs": {
             "dependencyIndex": proof(args.dependency_index),
             "audioExtractionIndex": proof(args.audio_index),
             "conversionProbe": proof(args.conversion_probe),
+            "vfxDependencyClosureManifest": proof(args.vfx_closure_manifest),
+            "closureConversionProbe": proof(args.closure_conversion_probe),
         },
         "summary": {
             "vfxReferences": len(vfx_rows),
             "vfxDirectPairsAcquired": sum(row["directPackageState"].startswith("acquired") for row in vfx_rows),
             "vfxConverted": 0,
+            "vfxFirstLevelDependencyReferenceOccurrences": vfx_closure_manifest["firstLevel"]["referenceOccurrences"],
+            "vfxFirstLevelUniqueDependencyReferences": vfx_closure_manifest["firstLevel"]["uniqueReferences"],
+            "vfxClosurePackageReferencesDiscovered": vfx_closure_manifest["summary"]["referencesDiscovered"],
+            "vfxClosurePackageReferencesAcquired": vfx_closure_manifest["summary"]["referencesAcquired"],
+            "vfxClosurePackageReferencesMissing": vfx_closure_manifest["summary"]["referencesMissing"],
+            "vfxNonScriptPackageDependencyClosureComplete": vfx_closure_manifest["states"]["nonScriptPackageDependencyClosureComplete"],
             "eventReferences": len(event_rows),
             "eventPairsAcquired": sum(row["packageState"].startswith("acquired") for row in event_rows),
             "audioReviewCandidates": len(candidates),
@@ -431,6 +488,7 @@ def main() -> int:
         "README.md": render_markdown(receipt),
         "event-audio-review-queue.json": json.dumps(queue, ensure_ascii=False, indent=2) + "\n",
         "event-audio-review.html": render_html(queue),
+        "dependency-closure-receipt.json": json.dumps(vfx_closure_manifest, ensure_ascii=False, indent=2) + "\n",
     }
     if args.check:
         drift = [name for name, content in outputs.items() if not (args.output / name).is_file() or (args.output / name).read_text() != content]

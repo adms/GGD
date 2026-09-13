@@ -135,6 +135,10 @@ def build_contract() -> dict:
         hero_id = config["heroId"]
         integration = integrations[hero_id]
         assert integration["productionDeploymentVerified"] is False
+        assert integration["ggdHeroAuthoringComplete"] is True
+        assert integration["heroForgePackageVerified"] is True
+        assert integration["localHeroForgeModelSelectable"] is True
+        assert integration["sourceFidelity"]["sourceFaithfulAudiovisualComplete"] is False
         assert character["standaloneVfxAcquired"] is False
         assert character["skillSpecificSfxAcquired"] is False
 
@@ -252,6 +256,10 @@ def build_contract() -> dict:
                 "modelGlb": file_evidence(model_glb_path),
                 "semanticStates": model_doc["clipMap"],
                 "uniqueNativeClipCount": len(current_animations),
+                "registeredInLocalHeroForgeDropdown": True,
+                "localHeroForgeModelSelectable": True,
+                "productionRuntimeSelectableVerified": False,
+                "formalModelAdoption": integration["formalModelAdoption"],
             },
             "sourceBlockers": [
                 "No original Palworld Unreal package or DataTable was acquired for this character.",
@@ -259,7 +267,10 @@ def build_contract() -> dict:
                 "No standalone original skill VFX asset was acquired or converted.",
                 "GameVault cries have emotion labels only; they do not prove a skill event, language, or human speaker.",
             ],
-            "runtimeSelectable": False,
+            "ggdHeroAuthoringComplete": True,
+            "sourceFaithfulAudiovisualComplete": False,
+            "reviewCandidatesHaveRuntimeAuthority": False,
+            "productionDeploymentVerified": False,
         })
 
     assert len(characters) == 3
@@ -283,6 +294,10 @@ def build_contract() -> dict:
         "sourceInputs": [file_evidence(INDEX), file_evidence(RECEIPT), file_evidence(RECIPES)],
         "summary": {
             "characterCount": 3,
+            "ggdHeroAuthoringCompleteCount": 3,
+            "localHeroForgeModelSelectableHeroCount": 3,
+            "sourceFaithfulAudiovisualCompleteHeroCount": 0,
+            "productionDeploymentVerifiedHeroCount": 0,
             "audioCandidateCount": 18,
             "motionSemanticCandidateCount": 18,
             "sourceSkillRecordCount": source_skill_count,
@@ -292,10 +307,13 @@ def build_contract() -> dict:
             "skillSpecificSfxCandidateCount": 0,
         },
         "policy": {
+            "completeHeroMeaning": "The three complete local GGD Hero Forge authoring packages are separate from original Palworld audiovisual fidelity and production deployment.",
+            "currentHeroForgeModelsAlreadyRegistered": True,
             "ownerApprovalRequiredBeforeBinding": True,
             "creatureCriesAreNotSpokenLanguage": True,
             "sourceLabelsDoNotProveSkillEvents": True,
             "reviewDoesNotChangeCurrentRuntimeBindings": True,
+            "reviewCandidatesHaveNoRuntimeAuthority": True,
         },
         "characters": characters,
         "audioCandidates": audio_candidates,

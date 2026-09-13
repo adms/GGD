@@ -16,10 +16,11 @@ class PoppReviewTest(unittest.TestCase):
     def setUpClass(cls):
         cls.contract = MODULE.build_contract()
 
-    def test_three_independent_weapon_options_are_verified_and_unselected(self):
+    def test_three_independent_weapon_options_are_verified_and_owner_selection_is_applied(self):
         review = self.contract["weaponReview"]
         self.assertEqual([row["staff"] for row in review["candidates"]], ["Magikaru", "Mahouno", "Kagayaki"])
-        self.assertIsNone(review["selectedCandidateId"])
+        self.assertEqual(review["selectedCandidateId"], "infinity-strash-popp-pn020-02-kagayaki-native-v1")
+        self.assertEqual(review["status"], "owner-selection-applied")
         self.assertFalse(review["automaticDefaultChangeAllowed"])
         self.assertTrue(all(row["backendDropdownOptionPresentOnFeatureBranch"] for row in review["candidates"]))
         self.assertEqual(len({row["glb"]["sha256"] for row in review["candidates"]}), 3)
@@ -31,7 +32,9 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(death["candidate"]["motionProvenance"], "native PN020 down loop")
         self.assertFalse(death["candidate"]["borrowedMotion"])
         self.assertTrue(death["candidate"]["reviewRequired"])
-        self.assertFalse(death["candidate"]["runtimeImplemented"])
+        self.assertTrue(death["candidate"]["runtimeImplemented"])
+        self.assertEqual(death["status"], "owner-approved-existing-runtime-bound")
+        self.assertEqual(self.contract["remainingOpenIntegrationGapCount"], 4)
         events = next(row for row in gaps if row["id"] == "animation-events-and-sfx-binding")
         self.assertEqual(events["status"], "pending-user-listening-review")
         audio = self.contract["audioReviewEvidence"]
@@ -41,13 +44,13 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(self.contract["sourceDependencyEvidence"]["vfxReferenceCount"], 17)
         self.assertTrue(self.contract["sourceDependencyEvidence"]["rawPackageNamesAreNotAssetAcquisition"])
 
-    def test_html_has_visible_state_controls_and_null_safe_receipt(self):
+    def test_html_has_visible_state_controls_and_applied_owner_receipt(self):
         page = MODULE.build_html(self.contract)
         self.assertIn("reviewContactSheet", page)
         self.assertIn("實際 WebGL：0%／50%／100%", page)
         self.assertNotIn("<iframe", page)
         self.assertIn("popp-native-down-rise-fade-v1", page)
-        self.assertIn("weaponCandidateId:null", page)
+        self.assertIn("weaponCandidateId:D.weaponReview.selectedCandidateId", page)
         self.assertIn("下載裁決 JSON", page)
 
     def test_every_candidate_has_a_pinned_visible_contact_sheet(self):

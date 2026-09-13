@@ -10,7 +10,7 @@
 
 **第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 固定入口：[current-resources.json](current-resources.json)，合併本次模型與舊成品來源；[git-release.json](git-release.json) 保留既有不可變模型／動作與 VFX 元件。原始與半成品仍在 S3 `legacy/`，不供程序自動取用。
 
-**模型、貼圖、mesh、動畫通道及 VFX 的數值門檻只讀 [模型動作特效上架限制.md](模型動作特效上架限制.md)。** 該文件由 `tools/model-budget/generate_policy_doc.ts` 從正式程式常數與設定生成；修改來源後執行 `pnpm modelpolicy:build`，用 `pnpm modelpolicy:check` 防止漂移。本 README 的個別素材量測與歷史案例都不是上架門檻。
+**模型、貼圖、mesh、動畫通道、VFX、粒子及音訊的數值門檻只讀 [模型動作特效上架限制.md](模型動作特效上架限制.md)。** 該文件由 `tools/model-budget/generate_policy_doc.ts` 從正式程式常數與設定生成；修改來源後執行 `pnpm modelpolicy:build`，用 `pnpm modelpolicy:check` 防止漂移。本 README 的個別素材量測與歷史案例都不是上架門檻。
 
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
 
@@ -36,12 +36,12 @@
 | 整合另一工作流付費取得的模型 | 同一 `download-sources.json` 的 `paidSources`；查詢回傳 `paidCandidates`，與免費來源一起保留整合 |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
-| 查模型、貼圖、mesh、動畫通道與 VFX 上架限制 | [模型動作特效上架限制.md](模型動作特效上架限制.md)；由 `generate_policy_doc.ts` 產生，不在 README 抄寫數字 |
+| 查模型、貼圖、mesh、動畫通道、VFX、粒子與音訊上架限制 | [模型動作特效上架限制.md](模型動作特效上架限制.md)；由 `generate_policy_doc.ts` 產生，不在 README 抄寫數字 |
 | 看優先 15 名按現行門檻重算的通過／阻擋狀態 | [優先 15 名模型現行政策稽核](../hero-model-library/priority-model-policy-audit.md)；由 `audit_priority_release.ts` 直接量測目前 GLB |
 | 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測 25 個現有 GLB |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |
 | 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |
-| 查 Ultimate「16 名」與 NSandNS2 容器位置 | [16 個動作角色群與來源核對](../hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/README.md)；128 份 body 候選只核對存在與大小，NSP／ZIP 維持 metadata-only |
+| 查 Ultimate「16 名」與 NSandNS2 容器位置 | [16 個動作角色群與來源核對](../hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/README.md)；機器讀 `reconciliation.json → sourceStageCounts`；128 份 body 候選只核對存在與大小，NSP／ZIP 維持 metadata-only |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
 | 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
 | 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |

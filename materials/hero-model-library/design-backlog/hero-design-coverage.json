@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T18:22:10.904368+00:00",
+  "generatedAt": "2026-09-13T19:03:37.161324+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next",
-  "revision": "009833bd8a6ac6dffb791811c0e5326a1de8f448",
+  "revision": "4dbafce0cf6d059cfe22a6429d4ed6e0eaeb7fe9",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5132,8 +5132,8 @@
     },
     {
       "path": "content/champions/b2-popp.json",
-      "bytes": 18704,
-      "sha256": "8d6ce2a18cb02c1718c7f53ad5f271c0ba03c3c68ce454901f26335ec6eaf456"
+      "bytes": 18701,
+      "sha256": "01fa1ccb62c222f45a0ca91103eb612064e3d225a2fd2586abaa72a67c57102d"
     },
     {
       "path": "content/champions/b2-rem.json",
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "8231d1b08861eea6c1687a7e99ad606717ae941cc64949331584ac39546ebfaf",
-      "bytes": 8902157
+      "sha256": "f367f2ff5390fc337af1a41577e3d227685974a71b3fdef028ce7b0cd07b344c",
+      "bytes": 8909612
     },
     {
       "path": "package.json",
@@ -6146,9 +6146,14 @@
       "sha256": "422ec646e41d1942174270368e2e63fdd4de161f6ff021b5a8671d95e2dee675"
     },
     {
+      "path": "packages/shared/src/content/audioAssetPolicy.ts",
+      "bytes": 411,
+      "sha256": "128ed2eac02326e1e3a128e2107f39b9f48f9f88aa89c6b936f03f9561a0c0b5"
+    },
+    {
       "path": "packages/shared/src/content/audioAssets.test.ts",
-      "bytes": 18701,
-      "sha256": "85321ad89a88a6d89efe8fa9ebef315e4ec928a3936b7a914e754ef240fdbecd"
+      "bytes": 19022,
+      "sha256": "348412458ef5bd77154f6b95b701d62c43c6fafcb1e9b4d70166830d7916d5eb"
     },
     {
       "path": "packages/shared/src/content/audioMap.test.ts",
@@ -6937,8 +6942,8 @@
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "bytes": 5284,
-      "sha256": "59cd0036897bd9d9347f5855811c52ab3f357fa2c84d4b4a43a0ff333ef844e9"
+      "bytes": 5344,
+      "sha256": "3aa9717751f182ce77ae6c38b5264db2a77c1394ca49535c32fae4f0e050f0db"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -7482,8 +7487,8 @@
     },
     {
       "path": "packages/shared/src/content/index.ts",
-      "bytes": 6470,
-      "sha256": "b069fc4ac007deb439f48fdc9467c918b3f55668659e38b2c8823b43e55a7808"
+      "bytes": 6506,
+      "sha256": "59e4e390df3341643caf0cecd0a7131bd602212f89126a87819b8190a97a6a38"
     },
     {
       "path": "packages/shared/src/content/invulnerableBinding.test.ts",
@@ -8137,8 +8142,8 @@
     },
     {
       "path": "packages/shared/src/content/schema/audioMixDoc.ts",
-      "bytes": 9500,
-      "sha256": "4e929138c51b91ee2b25d0e511b0690a389fec7ba836cc2fd01cc7fc2e5f085e"
+      "bytes": 9636,
+      "sha256": "ff7deeff8ea87450456ddbc16462f24dfded2ab9f16fcf9218bb897e19178eb3"
     },
     {
       "path": "packages/shared/src/content/schema/augment.ts",
@@ -8242,8 +8247,8 @@
     },
     {
       "path": "packages/shared/src/content/schema/config/audioMap.ts",
-      "bytes": 11565,
-      "sha256": "94595afd75857113323c0a47753c7ff3d03fb4544f010dc1ea8050022ec2013f"
+      "bytes": 11824,
+      "sha256": "abdd7ccea2259ba4649b1ed544ec1782489ae9022245d7dccda379aec8f0f550"
     },
     {
       "path": "packages/shared/src/content/schema/config/augmentFilter.ts",
@@ -14733,7 +14738,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "e687746f0f0e7683d9f1a9a19f5a14702b9bf903f84464d1e23e187222f2efd9"
+    "sha256": "aead74dc4a48f5b7320e0d1bfed1c2f7ebf05cdb36c3640659319a81b74cfc6e"
   },
   "heroes": [
     {
@@ -17946,8 +17951,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/b2-popp.json",
-        "sha256": "8d6ce2a18cb02c1718c7f53ad5f271c0ba03c3c68ce454901f26335ec6eaf456",
-        "bytes": 18704
+        "sha256": "01fa1ccb62c222f45a0ca91103eb612064e3d225a2fd2586abaa72a67c57102d",
+        "bytes": 18701
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",

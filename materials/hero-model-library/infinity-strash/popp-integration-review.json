@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "c9e0b6f989092a3e40906670b6783913fe2c29076d3d9579036ea08163d37c49",
+  "sourceFingerprint": "83a37dc80aaf7b2c70cc8d2e1488a82505d1395f1832bec441bc19bfb5f81a84",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -14,19 +14,20 @@
     },
     {
       "gitPath": "content/champions/b2-popp.json",
-      "bytes": 18704,
-      "sha256": "8d6ce2a18cb02c1718c7f53ad5f271c0ba03c3c68ce454901f26335ec6eaf456"
+      "bytes": 18701,
+      "sha256": "01fa1ccb62c222f45a0ca91103eb612064e3d225a2fd2586abaa72a67c57102d"
     }
   ],
   "currentSelection": {
-    "modelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
-    "selectionMode": "automatic",
-    "changedByThisReviewBuild": false
+    "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+    "selectionMode": "manual",
+    "changedByThisReviewBuild": false,
+    "ownerDecisionApplied": true
   },
   "weaponReview": {
-    "status": "awaiting-user-selection",
-    "selectionRequired": true,
-    "selectedCandidateId": null,
+    "status": "owner-selection-applied",
+    "selectionRequired": false,
+    "selectedCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
     "automaticDefaultChangeAllowed": false,
     "candidates": [
       {
@@ -360,8 +361,8 @@
   "fiveOpenIntegrationGaps": [
     {
       "id": "distinct-death-presentation",
-      "status": "review-candidate-ready-runtime-not-bound",
-      "evidence": "All three PN020 model docs map hurt and death to GGD_native_down; no distinct death AnimSequence was found in the extracted package set.",
+      "status": "owner-approved-existing-runtime-bound",
+      "evidence": "Owner approved the native PN020 down plus the existing global ChampionView corpse dissolve. The selected model maps hurt/death to GGD_native_down; ChampionView already lies for 3 seconds, rises 3.2 world units while fading for 1.4 seconds, then hides.",
       "candidate": {
         "id": "popp-native-down-rise-fade-v1",
         "motion": "GGD_native_down",
@@ -376,7 +377,12 @@
           "runtimeWorldSpaceCalibrationRequiredAfterApproval": true
         },
         "reviewRequired": true,
-        "runtimeImplemented": false
+        "runtimeImplemented": true,
+        "decisionReceipt": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+          "bytes": 3123,
+          "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+        }
       }
     },
     {
@@ -400,5 +406,11 @@
       "evidence": "GGD ability definitions exist, while native Special01/Special02 remain unreferenced and original animation timing, hit timing and complete combat playback are not accepted."
     }
   ],
-  "releaseState": "feature-branch-options-present-review-pending-production-unverified"
+  "remainingOpenIntegrationGapCount": 4,
+  "decisionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+    "bytes": 3123,
+    "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+  },
+  "releaseState": "feature-branch-owner-selection-applied-production-unverified"
 }

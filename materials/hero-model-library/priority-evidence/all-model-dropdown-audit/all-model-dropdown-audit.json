@@ -9,32 +9,32 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "f71e7756f00a23bde87de0da9514a628c08eed1b8fa618b86dbd6667e69a2c24",
-      "fileCount": 1005
+      "sha256": "d580bcfa2cdede8d8f49c95bd4687245d56c81c21fc63c16581a007e7b5e59be",
+      "fileCount": 1009
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "91652a4f143203914d71c205bd40fcae54c21df7b5c49bd8e8a83b238b46a01c",
+      "sha256": "edeaa7cadc8982fcc55a327c03230088e68de7947aa13f13efbb39def9a06cef",
       "fileCount": 154
     },
     "heroForgeOptions": {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "2ecd26a076e18cc0773f0b6e70e871c4d7adf7e5bc2cf37fd0623536171ed457"
+      "sha256": "3aa9717751f182ce77ae6c38b5264db2a77c1394ca49535c32fae4f0e050f0db"
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "90c67bca149b00bc7328688e0a9ab209f6a64ee195cc276bf55cc42743e7ac49"
+      "sha256": "18ec900c4b420900bc11ffdcc33ac4caa5b52179bbfad7b6904ae57fe3e8853a"
     }
   },
   "summary": {
-    "modelAt1Documents": 1000,
+    "modelAt1Documents": 1004,
     "championDocuments": 153,
     "championPrimaryAndVersionSelectableModelKeys": 510,
     "championModelVersionRows": 563,
     "sourceModelsRepresentedByFrozenVersions": 198,
     "heroForgeHeroesWithOptions": 34,
-    "heroForgeSelectableModelKeys": 38,
-    "allActualSelectableModelKeys": 540,
+    "heroForgeSelectableModelKeys": 42,
+    "allActualSelectableModelKeys": 544,
     "centralSourceRows": 156,
     "centralUniqueModelKeys": 149,
     "centralRowsWithQualificationEvidence": 141,
@@ -42,14 +42,14 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 28,
-    "readyUnregisteredCharacterOrMotionComponents": 26,
+    "readyUnregisteredIndependentComponents": 25,
+    "readyUnregisteredCharacterOrMotionComponents": 23,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1000,
+    "modelDocumentsWithoutResourceRole": 1004,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -282,78 +282,6 @@
       "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
       "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
       "nativeAnimationCount": 5,
-      "animationClipCount": null,
-      "blockers": [
-        "no-ggd-hero-id-or-target-binding",
-        "no-runtime-model-at-1-document",
-        "component-is-not-runtime-selectable"
-      ],
-      "limitations": [
-        "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
-        "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
-        "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
-      ]
-    },
-    {
-      "id": "historical-jetragon-7bc2fa3f8",
-      "character": "空渦龍",
-      "resourceRole": "independent-historical-model-body-component",
-      "componentReady": true,
-      "runtimeSelectable": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-      "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
-      "nativeAnimationCount": 5,
-      "animationClipCount": null,
-      "blockers": [
-        "no-ggd-hero-id-or-target-binding",
-        "no-runtime-model-at-1-document",
-        "component-is-not-runtime-selectable"
-      ],
-      "limitations": [
-        "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
-        "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
-        "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
-      ]
-    },
-    {
-      "id": "historical-kita-kita-7bc2fa3f8",
-      "character": "吉他吉他老伯",
-      "resourceRole": "independent-historical-model-body-component",
-      "componentReady": true,
-      "runtimeSelectable": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
-      "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
-      "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
-      "nativeAnimationCount": 6,
-      "animationClipCount": null,
-      "blockers": [
-        "no-ggd-hero-id-or-target-binding",
-        "no-runtime-model-at-1-document",
-        "component-is-not-runtime-selectable"
-      ],
-      "limitations": [
-        "Recovered exact historical bytes are retained alongside the newer current model and do not replace it.",
-        "No GGD hero ID is invented; this component is not a complete hero, runtime dropdown option, default selection or deployed asset.",
-        "Static three-view visual integrity was accepted; full native clip playback, source-game shader parity and gameplay behaviour remain unverified."
-      ]
-    },
-    {
-      "id": "historical-lord-nightmares-7bc2fa3f8",
-      "character": "金色魔王／惡夢之王",
-      "resourceRole": "independent-historical-model-body-component",
-      "componentReady": true,
-      "runtimeSelectable": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
-      "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
-      "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
-      "nativeAnimationCount": 6,
       "animationClipCount": null,
       "blockers": [
         "no-ggd-hero-id-or-target-binding",
@@ -4919,6 +4847,7 @@
       ],
       "currentResourceTopLevelKeys": [
         "assetWorkflowRestorationManifest",
+        "historicalModelOptionRegistration",
         "historicalModelRestorationReceipt",
         "historicalModelSourceArtifactCount",
         "historicalModelSourceArtifacts",
@@ -4945,7 +4874,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1000
+      "modelAt1DocumentsWithoutResourceRole": 1004
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

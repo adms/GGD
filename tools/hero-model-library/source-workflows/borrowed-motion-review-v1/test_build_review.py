@@ -33,12 +33,21 @@ class BorrowedMotionReviewTest(unittest.TestCase):
             self.assertEqual(len(evidence["sha256"]), 64)
 
     def test_blocked_retarget_is_not_misrepresented_as_playable(self):
-        self.assertEqual(self.contract["summary"]["blockedLeadCount"], 1)
-        lead = self.contract["blockedLeads"][0]
-        self.assertEqual(lead["motionKind"], "retargeted")
-        self.assertFalse(lead["playableReviewEligible"])
-        self.assertFalse(lead["decisionAvailable"])
-        self.assertIn("unsupported extensions", " ".join(lead["blockers"]))
+        self.assertEqual(self.contract["summary"]["blockedLeadCount"], 2)
+        leads = {lead["id"]: lead for lead in self.contract["blockedLeads"]}
+
+        lina = leads["lina-rays-300-retarget-idle-run-v2"]
+        self.assertEqual(lina["motionKind"], "retargeted")
+        self.assertFalse(lina["playableReviewEligible"])
+        self.assertFalse(lina["decisionAvailable"])
+        self.assertIn("unsupported extensions", " ".join(lina["blockers"]))
+
+        mario = leads["mario-linkstik-to-ssbu-c00-six-state-v1"]
+        self.assertEqual(mario["motionKind"], "retargeted")
+        self.assertFalse(mario["playableReviewEligible"])
+        self.assertFalse(mario["decisionAvailable"])
+        self.assertIn("98-joint skeleton mapping", " ".join(mario["blockers"]))
+        self.assertIn("d01special", " ".join(mario["blockers"]))
 
     def test_html_reuses_existing_audition_and_exports_no_runtime_authority(self):
         page = MODULE.build_html(self.contract)

@@ -142,30 +142,55 @@ def source_historical_components(downloads, repo):
                         'Historical normalization changed non-material data')
             evidence_path = verify_pin(candidate['validationEvidence'], repo)
             evidence = json.loads(evidence_path.read_text())
-            require(evidence.get('schema') == 'ggd-historical-model-recovery-validation@1', 'Unexpected historical validation schema')
-            require(evidence.get('historicalCommit') == candidate.get('recoveredFromGitCommit'), 'Historical recovery commit mismatch')
-            require(evidence.get('allRecoveredBytesMatchHistoricalGit') is True, 'Historical byte recovery not verified')
-            require(evidence.get('allKhronosErrorsZero') is True and evidence.get('allCurrentGgdBudgetErrorsZero') is True,
-                    'Historical component contract validation failed')
-            rows = [row for row in evidence.get('records', []) if row.get('id') == candidate['id']]
-            require(len(rows) == 1, 'Missing historical validation record: ' + candidate['id'])
-            row = rows[0]
-            require((row.get('sha256'), row.get('bytes')) == (historical_sha, historical_bytes), 'Historical source validation output mismatch')
-            require(row.get('historicalModelKey') == candidate.get('historicalModelKey'), 'Historical model key mismatch')
-            require(row.get('identityIds') == candidate.get('identityIds'), 'Historical identity mismatch')
-            require(row.get('byteIdenticalToHistoricalGitBlob') is True, 'Historical Git blob match missing')
-            require(row.get('ggdInspection', {}).get('clipCount') == candidate['nativeAnimationCount'], 'Historical clip count mismatch')
-            require(row.get('currentReplacement', {}).get('glbSha256') == candidate.get('currentReplacementSha256'), 'Current replacement pin mismatch')
+            if evidence.get('schema') == 'ggd-historical-astralym-decimation-validation@1':
+                require(candidate.get('parentComponentId') == 'historical-astralym-7bc2fa3f8', 'Astralym decimation parent mismatch')
+                require(evidence.get('candidateId') == candidate['id'] and evidence.get('heroId') == candidate['historicalAcceptanceId'],
+                        'Astralym decimation identity mismatch')
+                require((evidence.get('candidate', {}).get('git', {}).get('sha256'), evidence.get('candidate', {}).get('git', {}).get('bytes')) ==
+                        (candidate['sha256'], candidate['bytes']), 'Astralym decimation output mismatch')
+                require(evidence.get('originalRetained', {}).get('git', {}).get('sha256') == PRESERVED_RECOVERED_COMPONENTS[candidate['parentComponentId']][0],
+                        'Astralym original retention mismatch')
+                require(evidence.get('formalHeroAdoptionEligible') is True and evidence.get('ggdModelBudget', {}).get('errors') == [],
+                        'Astralym decimation current contract failed')
+                require(evidence.get('rig', {}).get('ok') is True and evidence.get('animationProvenance', {}).get('nativeClipCount') == candidate['nativeAnimationCount'],
+                        'Astralym decimation rig/native clips failed')
+                require(evidence.get('preservation', {}).get('skinJointsAndInverseBindMatricesExact') is True and
+                        evidence.get('preservation', {}).get('animationChannelsAndKeyValuesExact') is True,
+                        'Astralym decimation skin or animation values changed')
+            else:
+                require(evidence.get('schema') == 'ggd-historical-model-recovery-validation@1', 'Unexpected historical validation schema')
+                require(evidence.get('historicalCommit') == candidate.get('recoveredFromGitCommit'), 'Historical recovery commit mismatch')
+                require(evidence.get('allRecoveredBytesMatchHistoricalGit') is True, 'Historical byte recovery not verified')
+                require(evidence.get('allKhronosErrorsZero') is True and evidence.get('allCurrentGgdBudgetErrorsZero') is True,
+                        'Historical component contract validation failed')
+                rows = [row for row in evidence.get('records', []) if row.get('id') == candidate['id']]
+                require(len(rows) == 1, 'Missing historical validation record: ' + candidate['id'])
+                row = rows[0]
+                require((row.get('sha256'), row.get('bytes')) == (historical_sha, historical_bytes), 'Historical source validation output mismatch')
+                require(row.get('historicalModelKey') == candidate.get('historicalModelKey'), 'Historical model key mismatch')
+                require(row.get('identityIds') == candidate.get('identityIds'), 'Historical identity mismatch')
+                require(row.get('byteIdenticalToHistoricalGitBlob') is True, 'Historical Git blob match missing')
+                require(row.get('ggdInspection', {}).get('clipCount') == candidate['nativeAnimationCount'], 'Historical clip count mismatch')
+                require(row.get('currentReplacement', {}).get('glbSha256') == candidate.get('currentReplacementSha256'), 'Current replacement pin mismatch')
             visual_path = verify_pin(candidate['visualEvidence'], repo)
             visual = json.loads(visual_path.read_text())
-            require(visual.get('schema') == 'ggd-historical-model-visual-acceptance@1', 'Unexpected historical visual acceptance schema')
-            visual_rows = [item for item in visual.get('records', []) if item.get('id') == candidate['id']]
-            require(len(visual_rows) == 1 and visual_rows[0].get('accepted') is True,
-                    'Missing historical component visual acceptance: ' + candidate['id'])
-            require(visual_rows[0].get('scope') == 'independent-historical-model-body-component-static-visual-integrity',
-                    'Historical visual acceptance scope mismatch')
-            for pin in visual_rows[0].get('reviewViews', []) + [visual_rows[0]['webglProof']]:
-                verify_pin(pin, repo)
+            if visual.get('schema') == 'ggd-historical-astralym-visual-comparison@1':
+                require(visual.get('candidate', {}).get('sha256') == candidate['sha256'], 'Astralym visual candidate mismatch')
+                require(visual.get('allChangedPixelPctAtChannelDeltaGt10Under5') is True and
+                        visual.get('allLitClassificationXorPctAtLuma128Under5') is True and
+                        visual.get('humanReview', {}).get('result') == 'accepted', 'Astralym visual acceptance failed')
+                for pin in visual.get('contactSheets', []):
+                    verify_pin({'gitPath': str(Path(candidate['visualEvidence']['gitPath']).parent / pin['path']),
+                                'bytes': pin['bytes'], 'sha256': pin['sha256']}, repo)
+            else:
+                require(visual.get('schema') == 'ggd-historical-model-visual-acceptance@1', 'Unexpected historical visual acceptance schema')
+                visual_rows = [item for item in visual.get('records', []) if item.get('id') == candidate['id']]
+                require(len(visual_rows) == 1 and visual_rows[0].get('accepted') is True,
+                        'Missing historical component visual acceptance: ' + candidate['id'])
+                require(visual_rows[0].get('scope') == 'independent-historical-model-body-component-static-visual-integrity',
+                        'Historical visual acceptance scope mismatch')
+                for pin in visual_rows[0].get('reviewViews', []) + [visual_rows[0]['webglProof']]:
+                    verify_pin(pin, repo)
             result.append(dict(candidate, gitAbsolutePath=str(model_path), currentPolicyAudit=current_policy_for(candidate, repo)))
     recovered = {row['id']: row for row in result}
     for component_id, (digest, identity_id) in PRESERVED_RECOVERED_COMPONENTS.items():

@@ -3,7 +3,7 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "d8fe0536903236308ef8e82f42f1cb0d940b49c57d9f3e138dcd273f7cddc7ca"
+      "sha256": "b4f5af9f9fe41f5810cfeb402f0416784718e4679e705d872323a0170053c38c"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -19,7 +19,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "sha256": "7f1a0b2787f8c8bacbe611026229a93e8e2cfac9121aa55a397aaecc4ac7412c"
+      "sha256": "da6f6410867dcace47605c1f691666d507c34c0822fb9ed3e42054bfe3c0c8ef"
     }
   ],
   "characterCount": 3,
@@ -784,11 +784,81 @@
         "heroId": "acquired-jetragon",
         "name": "空渦龍",
         "authoringState": "six-slot-package-verified",
+        "ggdHeroAuthoringComplete": true,
+        "heroForgePackageVerified": true,
+        "authoringSourceKind": "Hero Forge recipe",
+        "staticChampionDocumentPresent": false,
         "backendDropdownRegistered": true,
         "backendDropdownScope": "Hero Forge acquired-model selector",
+        "localHeroForgeModelSelectable": true,
         "defaultModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
         "modelOptions": [
-          "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb"
+          "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+        ],
+        "contentSchema": {
+          "modelSchema": "model@1",
+          "heroBody": true,
+          "clipMapStates": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "sixCompiledSkillSlots": true,
+          "exactSourcePackageValidationPassed": true
+        },
+        "formalModelAdoption": {
+          "defaultModelTriangles": 8468,
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMaxWhenTriggered": 8000,
+          "status": "eligible-default",
+          "currentPolicyEligible": true,
+          "policyEligibleModelKeys": [
+            "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+            "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+          ],
+          "defaultModelPolicyEligible": true,
+          "registeredOptionPreserved": true,
+          "note": "The default registered dropdown option satisfies the current geometry policy."
+        },
+        "modelOptionEvidence": [
+          {
+            "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+            "isDefault": true,
+            "triangles": 8468,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json",
+              "sha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+              "bytes": 455
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+              "sha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+              "bytes": 3221852
+            }
+          },
+          {
+            "modelKey": "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+            "isDefault": false,
+            "triangles": 8468,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
+              "sha256": "0cad8166f0b691c52606f6891ab7caaf56b9de497e0fd88709c7ba523409473a",
+              "bytes": 455
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+              "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+              "bytes": 3224424
+            }
+          }
         ],
         "modelDocument": {
           "gitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json",
@@ -812,18 +882,42 @@
         "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
         "package": {
           "status": "passed",
-          "digest": "sha256:c88a275574d2687ffc786c9e40bf3d5e6973b7c7bea8dee424ef12c0a07b8b21",
-          "zipSha256": "sha256:6c9a6d7c0c84759def48a88d067ece40d85d2dd8b7a1a2b9218e0c457def3996",
-          "zipBytes": 6288798,
+          "digest": "sha256:9d0e00cae6333ff94c8779ea6b5428af99aaecf69ca7264c55fddfa0e5dc2076",
+          "zipSha256": "sha256:75bfb0ea55f3fbcc9475a4dfb61f0bf03fbc2392dff2c40e9f95a53cd7482a25",
+          "zipBytes": 6288568,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "sourceFidelity": {
+          "originalSkillVfxComplete": false,
+          "originalSkillSfxComplete": false,
+          "creatureCryListeningApproved": false,
+          "motionSemanticListeningApproved": false,
+          "sourceFaithfulAudiovisualComplete": false
         },
         "productionDeploymentVerified": false
       },
       "backendDropdownRegistered": true,
       "productionDeploymentVerified": false,
-      "runtimeSelectable": false,
-      "status": "authoring-complete-package-verified-production-pending"
+      "ggdHeroAuthoringComplete": true,
+      "localHeroForgeModelSelectable": true,
+      "sourceFaithfulAudiovisualComplete": false,
+      "formalModelAdoption": {
+        "defaultModelTriangles": 8468,
+        "triggerTrianglesAbove": 10000,
+        "targetTrianglesMaxWhenTriggered": 8000,
+        "status": "eligible-default",
+        "currentPolicyEligible": true,
+        "policyEligibleModelKeys": [
+          "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+          "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"
+        ],
+        "defaultModelPolicyEligible": true,
+        "registeredOptionPreserved": true,
+        "note": "The default registered dropdown option satisfies the current geometry policy."
+      },
+      "productionRuntimeSelectableVerified": false,
+      "status": "ggd-authoring-complete-source-av-review-pending-production-unverified"
     },
     {
       "id": "astralym",
@@ -2150,11 +2244,80 @@
         "heroId": "acquired-astralym",
         "name": "枯星龍",
         "authoringState": "six-slot-package-verified",
+        "ggdHeroAuthoringComplete": true,
+        "heroForgePackageVerified": true,
+        "authoringSourceKind": "Hero Forge recipe",
+        "staticChampionDocumentPresent": false,
         "backendDropdownRegistered": true,
         "backendDropdownScope": "Hero Forge acquired-model selector",
+        "localHeroForgeModelSelectable": true,
         "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
         "modelOptions": [
-          "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59"
+          "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+          "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+        ],
+        "contentSchema": {
+          "modelSchema": "model@1",
+          "heroBody": true,
+          "clipMapStates": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "sixCompiledSkillSlots": true,
+          "exactSourcePackageValidationPassed": true
+        },
+        "formalModelAdoption": {
+          "defaultModelTriangles": 23928,
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMaxWhenTriggered": 8000,
+          "status": "eligible-registered-alternative",
+          "currentPolicyEligible": true,
+          "policyEligibleModelKeys": [
+            "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+          ],
+          "defaultModelPolicyEligible": false,
+          "registeredOptionPreserved": true,
+          "note": "The default remains unchanged. Formal adoption is eligible because at least one registered dropdown option satisfies the current geometry policy."
+        },
+        "modelOptionEvidence": [
+          {
+            "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+            "isDefault": true,
+            "triangles": 23928,
+            "status": "needs-decimation",
+            "currentPolicyEligible": false,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json",
+              "sha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+              "sha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+              "bytes": 3876004
+            }
+          },
+          {
+            "modelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+            "isDefault": false,
+            "triangles": 7996,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
+              "sha256": "1911ab362958f48a9425dac6ea38082b2f2c93e96e3ce1dad24ba4ff7eea9c12",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+              "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+              "bytes": 3795720
+            }
+          }
         ],
         "modelDocument": {
           "gitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json",
@@ -2178,18 +2341,41 @@
         "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
         "package": {
           "status": "passed",
-          "digest": "sha256:0dacef00fe2b783364b08fd11502bf51e6444217ce6f867ba73551b705537bbe",
-          "zipSha256": "sha256:898cd82710c4f7ef061b6dd161b652fe9c1dc628bfa947a08d7f8c06c8c7b657",
-          "zipBytes": 6855944,
+          "digest": "sha256:729903bd2d7be5716a89272d792f9c17721cc5fce000b8164090626523e127bd",
+          "zipSha256": "sha256:2cf9186d61e0f19d39ebe2d802df45fdad706219adf18c935976097b5c3c4772",
+          "zipBytes": 6855714,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "sourceFidelity": {
+          "originalSkillVfxComplete": false,
+          "originalSkillSfxComplete": false,
+          "creatureCryListeningApproved": false,
+          "motionSemanticListeningApproved": false,
+          "sourceFaithfulAudiovisualComplete": false
         },
         "productionDeploymentVerified": false
       },
       "backendDropdownRegistered": true,
       "productionDeploymentVerified": false,
-      "runtimeSelectable": false,
-      "status": "authoring-complete-package-verified-production-pending"
+      "ggdHeroAuthoringComplete": true,
+      "localHeroForgeModelSelectable": true,
+      "sourceFaithfulAudiovisualComplete": false,
+      "formalModelAdoption": {
+        "defaultModelTriangles": 23928,
+        "triggerTrianglesAbove": 10000,
+        "targetTrianglesMaxWhenTriggered": 8000,
+        "status": "eligible-registered-alternative",
+        "currentPolicyEligible": true,
+        "policyEligibleModelKeys": [
+          "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+        ],
+        "defaultModelPolicyEligible": false,
+        "registeredOptionPreserved": true,
+        "note": "The default remains unchanged. Formal adoption is eligible because at least one registered dropdown option satisfies the current geometry policy."
+      },
+      "productionRuntimeSelectableVerified": false,
+      "status": "ggd-authoring-complete-source-av-review-pending-production-unverified"
     },
     {
       "id": "cattiva",
@@ -3252,11 +3438,62 @@
         "heroId": "acquired-cattiva",
         "name": "搗蛋貓",
         "authoringState": "six-slot-package-verified",
+        "ggdHeroAuthoringComplete": true,
+        "heroForgePackageVerified": true,
+        "authoringSourceKind": "Hero Forge recipe",
+        "staticChampionDocumentPresent": false,
         "backendDropdownRegistered": true,
         "backendDropdownScope": "Hero Forge acquired-model selector",
+        "localHeroForgeModelSelectable": true,
         "defaultModelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
         "modelOptions": [
           "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+        ],
+        "contentSchema": {
+          "modelSchema": "model@1",
+          "heroBody": true,
+          "clipMapStates": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "sixCompiledSkillSlots": true,
+          "exactSourcePackageValidationPassed": true
+        },
+        "formalModelAdoption": {
+          "defaultModelTriangles": 5798,
+          "triggerTrianglesAbove": 10000,
+          "targetTrianglesMaxWhenTriggered": 8000,
+          "status": "eligible-default",
+          "currentPolicyEligible": true,
+          "policyEligibleModelKeys": [
+            "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+          ],
+          "defaultModelPolicyEligible": true,
+          "registeredOptionPreserved": true,
+          "note": "The default registered dropdown option satisfies the current geometry policy."
+        },
+        "modelOptionEvidence": [
+          {
+            "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+            "isDefault": true,
+            "triangles": 5798,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json",
+              "sha256": "5ac8923fbc5bbba918889850823582e49bb9a07e21334b3e186bc00575160caa",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+              "sha256": "3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14",
+              "bytes": 1428876
+            }
+          }
         ],
         "modelDocument": {
           "gitPath": "content/models/community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da.json",
@@ -3280,18 +3517,41 @@
         "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
         "package": {
           "status": "passed",
-          "digest": "sha256:f13b3010acefa2e0c95880caa4173dc671c52c8481d7d7c77c52c4348da5cac8",
-          "zipSha256": "sha256:9edf9282d4ac21985e0c8aa61655298389b7d6a50d9fa6bcc67f96c3d9c7c77d",
-          "zipBytes": 4401663,
+          "digest": "sha256:631f447522ef4e5ba8d954969ddd39b9094c8f360634345d99231110ad672620",
+          "zipSha256": "sha256:50fdc9fec3b4b5d19385e61b949b2be5dc7cfc8afed171bdc5f3448b352dda83",
+          "zipBytes": 4401433,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
+        },
+        "sourceFidelity": {
+          "originalSkillVfxComplete": false,
+          "originalSkillSfxComplete": false,
+          "creatureCryListeningApproved": false,
+          "motionSemanticListeningApproved": false,
+          "sourceFaithfulAudiovisualComplete": false
         },
         "productionDeploymentVerified": false
       },
       "backendDropdownRegistered": true,
       "productionDeploymentVerified": false,
-      "runtimeSelectable": false,
-      "status": "authoring-complete-package-verified-production-pending"
+      "ggdHeroAuthoringComplete": true,
+      "localHeroForgeModelSelectable": true,
+      "sourceFaithfulAudiovisualComplete": false,
+      "formalModelAdoption": {
+        "defaultModelTriangles": 5798,
+        "triggerTrianglesAbove": 10000,
+        "targetTrianglesMaxWhenTriggered": 8000,
+        "status": "eligible-default",
+        "currentPolicyEligible": true,
+        "policyEligibleModelKeys": [
+          "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+        ],
+        "defaultModelPolicyEligible": true,
+        "registeredOptionPreserved": true,
+        "note": "The default registered dropdown option satisfies the current geometry policy."
+      },
+      "productionRuntimeSelectableVerified": false,
+      "status": "ggd-authoring-complete-source-av-review-pending-production-unverified"
     }
   ],
   "limitations": [
@@ -3299,6 +3559,8 @@
     "Creature cries are sound effects, not Japanese or English spoken dialogue.",
     "PalDB settings are community snapshots, not original game DataTables or GGD abilities.",
     "Khronos structural validation does not prove material fidelity or GGD runtime acceptance.",
+    "The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym now has a separately validated 7,996-triangle historical candidate registered as a non-default option; production deployment remains unverified.",
+    "Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.",
     "Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified."
   ],
   "gitModelComponentCount": 3,

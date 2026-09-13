@@ -27,9 +27,40 @@ class PalworldHeroIntegrationTest(unittest.TestCase):
         receipt = json.loads(self.sync.RECEIPT.read_text())
         self.sync.check_receipt(receipt)
         self.assertEqual(
+            "ggd-authoring-packages-verified-model-options-policy-eligible-source-av-review-pending-production-unverified",
+            receipt["status"],
+        )
+        self.assertEqual(3, receipt["completionBoundary"]["ggdHeroAuthoringCompleteCount"])
+        self.assertEqual(0, receipt["completionBoundary"]["sourceFaithfulAudiovisualCompleteCount"])
+        self.assertEqual(3, receipt["completionBoundary"]["currentFormalModelAdoptionEligibleCount"])
+        self.assertEqual(0, receipt["completionBoundary"]["currentFormalModelAdoptionBlockedCount"])
+        self.assertEqual(0, receipt["completionBoundary"]["releaseReadyHeroCount"])
+        self.assertEqual(0, receipt["completionBoundary"]["productionDeploymentVerifiedCount"])
+        self.assertEqual(
             {"acquired-jetragon", "acquired-astralym", "acquired-cattiva"},
             {row["heroId"] for row in receipt["integrations"]},
         )
+        for row in receipt["integrations"]:
+            self.assertTrue(row["ggdHeroAuthoringComplete"])
+            self.assertTrue(row["heroForgePackageVerified"])
+            self.assertTrue(row["localHeroForgeModelSelectable"])
+            self.assertFalse(row["staticChampionDocumentPresent"])
+            self.assertEqual(
+                ["idle", "run", "attack", "cast", "hurt", "death"],
+                row["contentSchema"]["clipMapStates"],
+            )
+            self.assertFalse(row["sourceFidelity"]["sourceFaithfulAudiovisualComplete"])
+            self.assertFalse(row["sourceFidelity"]["creatureCryListeningApproved"])
+            self.assertFalse(row["productionDeploymentVerified"])
+        by_hero = {row["heroId"]: row for row in receipt["integrations"]}
+        self.assertEqual("eligible-default", by_hero["acquired-jetragon"]["formalModelAdoption"]["status"])
+        self.assertEqual("eligible-registered-alternative", by_hero["acquired-astralym"]["formalModelAdoption"]["status"])
+        self.assertEqual(23928, by_hero["acquired-astralym"]["formalModelAdoption"]["defaultModelTriangles"])
+        self.assertEqual(
+            ["community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"],
+            by_hero["acquired-astralym"]["formalModelAdoption"]["policyEligibleModelKeys"],
+        )
+        self.assertEqual("eligible-default", by_hero["acquired-cattiva"]["formalModelAdoption"]["status"])
 
     def test_palworld_index_separates_complete_authoring_from_deployment(self):
         data = self.palworld.build(ROOT.parent)
@@ -37,6 +68,10 @@ class PalworldHeroIntegrationTest(unittest.TestCase):
         for row in data["characters"]:
             self.assertTrue(row["ggdHeroImplemented"])
             self.assertTrue(row["backendDropdownRegistered"])
+            self.assertTrue(row["ggdHeroAuthoringComplete"])
+            self.assertTrue(row["localHeroForgeModelSelectable"])
+            self.assertFalse(row["sourceFaithfulAudiovisualComplete"])
+            self.assertFalse(row["productionRuntimeSelectableVerified"])
             self.assertFalse(row["productionDeploymentVerified"])
             self.assertEqual(6, len(row["heroIntegration"]["slots"]))
             # Independent reserve components do not become selectable merely

@@ -23,7 +23,18 @@ The stages are:
    motion on the depth axis so all 15 review frames stay visible.
 6. `integrate.py` requires two byte-identical GLB rebuilds and creates the Git
    component/evidence records without inventing a GGD hero ID.
+7. `register_model_option.py` validates the present Hero Forge selection,
+   component policy, five native clips, Khronos result and all 15 local visual
+   samples. It emits a deterministic blocked-registration receipt until an
+   approved six-state semantic mapping or a verified target-side retarget exists.
 
 The accepted output remains an independent five-motion component. It has no
 semantic skill mapping, backend dropdown registration, runtime switch proof, or
 deployment proof.
+
+Rebuild or verify the registration preflight with:
+
+```bash
+python3 tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/register_model_option.py --write
+python3 tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/register_model_option.py --check
+```

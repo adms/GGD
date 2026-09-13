@@ -4,7 +4,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
-from current_resource_index import component_git_evidence, verify_git_contents
+from current_resource_index import apply_hero_integration_overlay, apply_option_registration_overlay, component_git_evidence, verify_git_contents
 
 
 class CurrentResourceGitFilesTest(unittest.TestCase):
@@ -61,6 +61,66 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         ]
         with self.assertRaisesRegex(ValueError, 'Conflicting component evidence'):
             component_git_evidence(components)
+
+    def test_registration_receipt_overlays_the_newer_dropdown_state(self):
+        component = {
+            'id': 'historical-example',
+            'gitPath': 'content/example.glb',
+            'bytes': 123,
+            'sha256': '1' * 64,
+            'runtimeSelectable': False,
+            'runtimeDropdownRegistered': False,
+            'heroIds': [],
+        }
+        receipt = {'registrations': [{
+            'componentId': 'historical-example',
+            'heroId': 'acquired-example',
+            'modelKey': 'community.body.example',
+            'label': 'Example option',
+            'modelGlb': {
+                'gitPath': component['gitPath'],
+                'bytes': component['bytes'],
+                'sha256': component['sha256'],
+            },
+            'modelDocument': {'gitPath': 'content/models/community.body.example.json'},
+            'productionDeploymentVerified': False,
+        }], 'blocked': []}
+        [current] = apply_option_registration_overlay([dict(component)], receipt)
+        self.assertTrue(current['runtimeSelectable'])
+        self.assertTrue(current['runtimeDropdownRegistered'])
+        self.assertEqual(current['heroIds'], ['acquired-example'])
+        self.assertEqual(current['runtimeModelKey'], 'community.body.example')
+        self.assertFalse(current['registrationEvidence']['productionDeploymentVerified'])
+
+    def test_hero_integration_receipt_joins_by_exact_glb_identity(self):
+        component = {
+            'id': 'palworld-example',
+            'gitPath': 'content/pal.glb',
+            'bytes': 456,
+            'sha256': '2' * 64,
+            'runtimeSelectable': False,
+            'runtimeDropdownRegistered': False,
+            'heroIds': [],
+        }
+        receipt = {'integrations': [{
+            'heroId': 'acquired-pal',
+            'backendDropdownRegistered': True,
+            'backendDropdownScope': 'Hero Forge acquired-model selector',
+            'authoringState': 'six-slot-package-verified',
+            'defaultModelKey': 'community.body.pal',
+            'modelGlb': {
+                'gitPath': component['gitPath'],
+                'bytes': component['bytes'],
+                'sha256': component['sha256'],
+            },
+            'modelDocument': {'gitPath': 'content/models/community.body.pal.json'},
+            'productionDeploymentVerified': False,
+        }]}
+        [current] = apply_hero_integration_overlay([dict(component)], receipt, 'receipt.json')
+        self.assertTrue(current['runtimeSelectable'])
+        self.assertTrue(current['runtimeDropdownRegistered'])
+        self.assertEqual(current['heroIds'], ['acquired-pal'])
+        self.assertEqual(current['modelDocumentGitPath'], 'content/models/community.body.pal.json')
 
 
 if __name__ == '__main__':

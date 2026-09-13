@@ -25,6 +25,14 @@
 
 重新 SHA 驗證 Ultimate14 原包及清單內 1,071 檔／112,082,424 bytes，0 不一致；435 aliases 全數吻合固定動作索引。
 
+這三個來源層不能合併計數。NSandNS2 容器 payload 尚未讀取，所以目前從遊戲容器本身可辨識的角色、模型與動作都是 0；16 名只來自另一份 Ultimate14 MOD。
+
+| 來源層 | 容器／候選檔 | 可辨識角色群 | 模型 | 動作 | 已轉換驗收 | 後台可選 |
+|---|---:|---:|---:|---:|---:|---:|
+| Ultimate14 社群 MOD | 1 個已驗證原包／1071 個解包檔 | 16 | 0 個完整角色本體 | 435 路徑／175 種變換內容 | 0 名 | 0 名 |
+| Worldblender body 候選 | 128 | 16 | 128 個只核對大小的 `.blend` | 0 個本次驗收 | 0 個 | 0 個 |
+| NSandNS2 遊戲容器 | 3 | 0 | 0 | 0 | 0 | 0 |
+
 另一來源 Worldblender 的這 16 名，每人已有 c00–c07 body Blender 候選，共 128 份。本次只核對存在與大小，未重新計算這 128 份的 SHA、配對骨架或驗收模型。Ultimate14 本身不含完整角色本體。
 
 Kirby 的 daisybody／richterbody／samusdbody／sonicbody 是複製能力 target；common、mariod、samus 是參數／motion_list，Luigi 僅音訊，均不增加 16 名。已有獨立 19 WAV 解碼版，保留 56 個配色 bank 關係／152 個容器條目；說話者、語言與事件尚未聽審。

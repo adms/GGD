@@ -9,6 +9,14 @@ from source_links import acquired_sources
 
 REPO = Path(__file__).resolve().parents[2]
 
+
+def current_component_overlay():
+    path = REPO / 'materials/asset-library/current-resources.json'
+    if not path.is_file():
+        return {}
+    data = json.loads(path.read_text())
+    return {row['id']: row for row in data.get('modelComponents', []) if row.get('id')}
+
 def candidate_matches(candidate, query):
     # Shared provenance paragraphs can mention siblings (e.g. a Dissidia pack's
     # Cloud filename). Only this candidate's identity and own paths scope a hit.
@@ -109,6 +117,7 @@ def candidate_conversion_evidence(source, candidate):
 def candidate_records(sources, query):
     """Native characters remain queryable without borrowing a package sibling's hero ID."""
     result=[]
+    current_components = current_component_overlay()
     for source in sources:
         whole_source=query==source['id'].casefold()
         for candidate in source.get('modelCandidates',[]) + source.get('componentCandidates',[]):
@@ -121,6 +130,16 @@ def candidate_records(sources, query):
                     record['conversionAttempts'] = attempts
                 if current:
                     record['currentConversionAttempt'] = current
+                current_component = current_components.get(record.get('id'))
+                if current_component:
+                    for field in (
+                        'runtimeSelectable', 'runtimeDropdownRegistered', 'heroIds',
+                        'relatedHeroIds', 'runtimeModelKey', 'modelDocumentGitPath',
+                        'readiness', 'registrationEvidence', 'registrationBlocker',
+                    ):
+                        if field in current_component:
+                            record[field] = current_component[field]
+                    record['currentResourceIndexOverlayApplied'] = True
                 result.append(record)
     return result
 

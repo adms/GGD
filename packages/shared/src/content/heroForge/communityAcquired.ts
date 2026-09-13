@@ -30,7 +30,7 @@ export const ACQUIRED_MODEL_OPTIONS: Readonly<Record<string, readonly string[]>>
   "acquired-naruto": ["community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257"],
   "acquired-asuna": ["community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3"],
   "acquired-jetragon": ["community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb", "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c"],
-  "acquired-astralym": ["community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59"],
+  "acquired-astralym": ["community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59", "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"],
   "acquired-cattiva": ["community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"],
   "acquired-xiaodangjia": ["ou99.498407"],
   "acquired-inuyasha": ["ou99.452782"],

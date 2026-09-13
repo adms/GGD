@@ -1,6 +1,6 @@
 {
   "schema": "ggd-historical-model-option-registration@1",
-  "scope": "Three current-policy-eligible recovered GLBs registered as non-default Hero Forge model options. This is local authoring evidence, not Main merge or production deployment proof.",
+  "scope": "Four current-policy-eligible recovered or validated-decimated GLBs registered as non-default Hero Forge model options. This is local authoring evidence, not Main merge or production deployment proof.",
   "generatedFrom": [
     {
       "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
@@ -8,32 +8,31 @@
       "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
     },
     {
+      "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
+      "bytes": 15161,
+      "sha256": "63d392db90b7b48aeca6cb2f15c049602a66353aafa8d1927b9812d8d7efce38"
+    },
+    {
       "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-      "bytes": 41794,
-      "sha256": "b09a2817b9cb4aabdbfd581276799446210af7dbc930899ff9d2bab6f86500fa"
+      "bytes": 43391,
+      "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e"
     },
     {
       "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "bytes": 5277,
-      "sha256": "7ebd2c8e1e0a924ea22f9884213b3d2d205b24c19a96dc8ad41e15d1a70b7d43"
+      "bytes": 5344,
+      "sha256": "3aa9717751f182ce77ae6c38b5264db2a77c1394ca49535c32fae4f0e050f0db"
     },
     {
       "gitPath": "tools/hero-model-library/register_historical_model_options.mts",
-      "bytes": 7323,
-      "sha256": "ea312fec16643ce2ea4e6154f428455834978676a9fcc2bddad7bd87c65ee77d"
+      "bytes": 7811,
+      "sha256": "b8c7c5e26523f78d619f7e1d94cbcd1330d26bd06c3c220005998f4df43a1c02"
     }
   ],
-  "blocked": [
-    {
-      "componentId": "historical-astralym-7bc2fa3f8",
-      "heroId": "acquired-astralym",
-      "reason": "source exceeds 10,000 triangles; a separately validated candidate at or below 8,000 triangles is required",
-      "runtimeDropdownRegistered": false
-    }
-  ],
+  "blocked": [],
   "registrations": [
     {
       "componentId": "historical-jetragon-7bc2fa3f8",
+      "validationComponentId": "historical-jetragon-7bc2fa3f8",
       "heroId": "acquired-jetragon",
       "modelKey": "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
       "label": "空渦龍／7bc2fa3f8 歷史復原版",
@@ -67,7 +66,43 @@
       "productionDeploymentVerified": false
     },
     {
+      "componentId": "historical-astralym-decimated-f77cf1ee",
+      "validationComponentId": "historical-astralym-7bc2fa3f8",
+      "heroId": "acquired-astralym",
+      "modelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+      "label": "枯星龍／7bc2fa3f8 發光紋理保護減面版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
+        "bytes": 456,
+        "sha256": "1911ab362958f48a9425dac6ea38082b2f2c93e96e3ce1dad24ba4ff7eea9c12"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+        "bytes": 3795720,
+        "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
+      },
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "FarSkill_Action",
+        "cast": "HaloBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "nativeClipCount": 5,
+      "metrics": {
+        "triangles": 7996,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 435,
+        "skins": 1
+      },
+      "deathPresentation": "native-hurt-clip-plus-authorized-runtime-fade",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
       "componentId": "historical-kita-kita-7bc2fa3f8",
+      "validationComponentId": "historical-kita-kita-7bc2fa3f8",
       "heroId": "acquired-kita-kita",
       "modelKey": "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9",
       "label": "吉他吉他老伯／7bc2fa3f8 歷史復原版",
@@ -102,6 +137,7 @@
     },
     {
       "componentId": "historical-lord-nightmares-7bc2fa3f8",
+      "validationComponentId": "historical-lord-nightmares-7bc2fa3f8",
       "heroId": "acquired-lord-nightmares",
       "modelKey": "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd",
       "label": "惡夢之王／7bc2fa3f8 歷史復原版",
@@ -136,8 +172,8 @@
     }
   ],
   "summary": {
-    "registered": 3,
-    "blockedPendingDecimation": 1,
+    "registered": 4,
+    "blockedPendingDecimation": 0,
     "productionDeploymentVerified": false
   }
 }

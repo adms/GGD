@@ -1,10 +1,10 @@
 {
   "schema": "ggd.borrowed-motion-review@1",
-  "sourceFingerprint": "ee4f4a6dcc33658f80efcba2ab377c814c1d2fdfe75efb0e5490136c9e1bbfdc",
+  "sourceFingerprint": "a2872f97b8b4a552d6019305c4e86eab2981b3617c396905143e8ad46ae68844",
   "sourceInput": {
     "gitPath": "materials/hero-model-library/motion-review/borrowed-motion-candidates.json",
-    "bytes": 4839,
-    "sha256": "3520bfd3ab17f3a9362d3ff9bd2bc250b6b346401485cc7475b0e36826c8da82"
+    "bytes": 6454,
+    "sha256": "d2284f201885aea2abd091c2a5a25c745e40590266335a5ee1210c6daf64ac1f"
   },
   "policy": {
     "reviewDraftSchema": "ggd.borrowed-motion-review-decisions@1",
@@ -35,7 +35,7 @@
   },
   "summary": {
     "playableCandidateCount": 1,
-    "blockedLeadCount": 1,
+    "blockedLeadCount": 2,
     "approvedCount": 0,
     "rejectedCount": 0,
     "pendingDecisionCount": 1,
@@ -154,6 +154,57 @@
         "The current GLB is rejected by the real importer because it declares unsupported extensions.",
         "Only idle and run exist; attack, cast, hurt and death are absent.",
         "Registration, backend dropdown presence and moving-match validation are false."
+      ],
+      "playableReviewEligible": false,
+      "decisionAvailable": false
+    },
+    {
+      "id": "mario-linkstik-to-ssbu-c00-six-state-v1",
+      "motionKind": "retargeted",
+      "sourceHero": "GGD 已核准 Mario 代理預設",
+      "sourceModel": "imported.linkstik",
+      "targetHero": "Mario／瑪利歐（acquired-mario）",
+      "targetModel": "ssbu-mario-c00-ultimate14-motion-v1",
+      "clips": [
+        "Stand - 1",
+        "Walk",
+        "Attack - 1",
+        "Stand Hit",
+        "Death"
+      ],
+      "skeletonCompatibility": "unverified: no imported.linkstik-to-SSBU Mario 98-joint map or target-side retargeted GLB evidence exists",
+      "validationEvidence": [
+        {
+          "gitPath": "content/models/imported.linkstik.json",
+          "bytes": 1092,
+          "sha256": "a8f947d600ab4c3b776fb6cde4f05f25401d462b273645bd5512fd2912ba07eb"
+        },
+        {
+          "gitPath": "content/assets/models/imported/linkstik.glb",
+          "bytes": 207624,
+          "sha256": "26b7c032048bcfbdd4eaa2c3c22a65de050086e89be7836ce672eb370e94f2dd"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/validation.json",
+          "bytes": 6944,
+          "sha256": "36e43da65674b03cf0a89459bc50b9e6b91c851aed052701154db268b60ced37"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/visual-review.json",
+          "bytes": 7592,
+          "sha256": "57a9bdebf5c54ab02917235b2e486e6f4af61b1fa0eea077f45c53ba605a3ef0"
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
+          "bytes": 43391,
+          "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e"
+        }
+      ],
+      "blockers": [
+        "No verified imported.linkstik-to-SSBU Mario 98-joint skeleton mapping exists.",
+        "No retargeted Mario GLB with target-side idle, run, attack, cast, hurt and death playback evidence exists.",
+        "The target's five d01special* clips do not establish idle, hurt, death or a complete GGD semantic action set.",
+        "Registration, runtime dropdown selection and deployment remain unchanged."
       ],
       "playableReviewEligible": false,
       "decisionAvailable": false

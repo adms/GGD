@@ -15,6 +15,19 @@
       "bytes": 18324,
       "sha256": "7fbec4a051960f896f2e99194bb9a372d69cdcaa5bb1d5d9a997ac6cd546facf"
     },
+    "dependencyClosureRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1",
+    "dependencyClosureS3Backup": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-closure-s3-backup-receipt.json",
+      "bytes": 1561,
+      "sha256": "54f3a203abceef2d4ebacd388103a44b3ddcc7220907e0a05abc5516417082ec",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.files.json",
+      "archiveSha256": "fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5",
+      "archiveBytes": 19748525,
+      "fileCount": 700,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true
+    },
     "eventExtractRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content"
   },
   "inputs": {
@@ -32,12 +45,28 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/conversion-probe.json",
       "bytes": 5393,
       "sha256": "7fdcdc7e5822498d55e48f4053e14f526eecc62246b13f9fe976d764a224553a"
+    },
+    "vfxDependencyClosureManifest": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/source-manifest.json",
+      "bytes": 692023,
+      "sha256": "212e6d01cae541addb44bbeec98513ab5d6d777c3687f46ebe1e1bb5413fc534"
+    },
+    "closureConversionProbe": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/closure-conversion-probe.json",
+      "bytes": 5396,
+      "sha256": "130a09138b2a6675467102f909ef37952c75bdcf154fd699dea818cda7c0052b"
     }
   },
   "summary": {
     "vfxReferences": 17,
     "vfxDirectPairsAcquired": 17,
     "vfxConverted": 0,
+    "vfxFirstLevelDependencyReferenceOccurrences": 229,
+    "vfxFirstLevelUniqueDependencyReferences": 138,
+    "vfxClosurePackageReferencesDiscovered": 309,
+    "vfxClosurePackageReferencesAcquired": 309,
+    "vfxClosurePackageReferencesMissing": 0,
+    "vfxNonScriptPackageDependencyClosureComplete": true,
     "eventReferences": 41,
     "eventPairsAcquired": 41,
     "audioReviewCandidates": 36,
@@ -100,7 +129,7 @@
       "dependencyCount": 19,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -111,9 +140,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -180,7 +217,7 @@
       "dependencyCount": 26,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -191,9 +228,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -249,7 +294,7 @@
       "dependencyCount": 15,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -260,9 +305,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -322,7 +375,7 @@
       "dependencyCount": 19,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -333,9 +386,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -408,7 +469,7 @@
       "dependencyCount": 32,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -419,9 +480,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -460,7 +529,7 @@
       "dependencyCount": 2,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -471,9 +540,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -512,7 +589,7 @@
       "dependencyCount": 2,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -523,9 +600,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -582,7 +667,7 @@
       "dependencyCount": 16,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -593,9 +678,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -644,7 +737,7 @@
       "dependencyCount": 9,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -655,9 +748,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -711,7 +812,7 @@
       "dependencyCount": 13,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -722,9 +823,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -767,7 +876,7 @@
       "dependencyCount": 4,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -778,9 +887,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -852,7 +969,7 @@
       "dependencyCount": 32,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -863,9 +980,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -933,7 +1058,7 @@
       "dependencyCount": 26,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -944,9 +1069,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -999,7 +1132,7 @@
       "dependencyCount": 14,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -1010,9 +1143,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -1042,7 +1183,7 @@
       "dependencyCount": 0,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -1053,9 +1194,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/Curve/CV_Black00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -1085,7 +1234,7 @@
       "dependencyCount": 0,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -1096,9 +1245,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/Curve/CV_Black01",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }
@@ -1128,7 +1285,7 @@
       "dependencyCount": 0,
       "dependencyPairsPresentInBoundedExtract": 0,
       "conversion": {
-        "status": "raw-direct-package-ready-conversion-blocked",
+        "status": "dependency-closure-acquired-conversion-blocked",
         "runtimeSelectable": false,
         "visualAcceptance": false,
         "preservedUmodelProbe": {
@@ -1139,9 +1296,17 @@
           "producedFiles": [],
           "result": "no-exportable-output"
         },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/MPC_VFXPost",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
         "blockers": [
-          "The preserved patched UModel probe identifies the cooked classes but produced zero converted files for this package.",
-          "The bounded extract contains only the 17 direct package pairs; referenced materials, textures, meshes, vector fields, and their transitive dependencies are not a complete conversion closure.",
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
           "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
         ]
       }

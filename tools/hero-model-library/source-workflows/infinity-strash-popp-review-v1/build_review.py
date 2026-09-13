@@ -16,6 +16,7 @@ LIBRARY = ROOT / "materials/hero-model-library"
 OUTPUT_JSON = LIBRARY / "infinity-strash/popp-integration-review.json"
 OUTPUT_HTML = ROOT / "apps/client/public/popp-integration-review.html"
 OUTPUT_ASSET_DIR = ROOT / "apps/client/public/review-assets/popp-pn020"
+DECISION_RECEIPT = LIBRARY / "priority-evidence/infinity-strash-popp-review-decision/receipt.json"
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -118,9 +119,19 @@ def build_contract() -> dict:
         })
 
     assert len(candidates) == 3
-    assert champion.get("modelSelectionMode") != "manual" or champion["modelKey"] not in {
-        row["registeredModelKey"] for row in candidates
-    }, "A prior manual choice must be preserved and reported explicitly"
+    applied_decision = None
+    if DECISION_RECEIPT.exists():
+        applied_decision = read_json(DECISION_RECEIPT)
+        assert applied_decision["schema"] == "ggd.popp-integration-review-decision-receipt@1"
+        selected_id = applied_decision["ownerDecision"]["weaponCandidateId"]
+        selected = next(row for row in candidates if row["candidateId"] == selected_id)
+        assert champion["modelKey"] == selected["registeredModelKey"]
+        assert champion.get("modelSelectionMode") == "manual"
+        assert applied_decision["selectionAfter"]["modelKey"] == champion["modelKey"]
+    else:
+        assert champion.get("modelSelectionMode") != "manual" or champion["modelKey"] not in {
+            row["registeredModelKey"] for row in candidates
+        }, "A prior manual choice must be preserved and reported explicitly"
 
     voice_index = read_json(voice_index_path)
     audio_groups = [
@@ -174,8 +185,13 @@ def build_contract() -> dict:
     gaps = [
         {
             "id": "distinct-death-presentation",
-            "status": "review-candidate-ready-runtime-not-bound",
-            "evidence": "All three PN020 model docs map hurt and death to GGD_native_down; no distinct death AnimSequence was found in the extracted package set.",
+            "status": "owner-approved-existing-runtime-bound" if applied_decision else "review-candidate-ready-runtime-not-bound",
+            "evidence": (
+                "Owner approved the native PN020 down plus the existing global ChampionView corpse dissolve. "
+                "The selected model maps hurt/death to GGD_native_down; ChampionView already lies for 3 seconds, rises 3.2 world units while fading for 1.4 seconds, then hides."
+                if applied_decision else
+                "All three PN020 model docs map hurt and death to GGD_native_down; no distinct death AnimSequence was found in the extracted package set."
+            ),
             "candidate": {
                 "id": "popp-native-down-rise-fade-v1",
                 "motion": "GGD_native_down",
@@ -190,7 +206,8 @@ def build_contract() -> dict:
                     "runtimeWorldSpaceCalibrationRequiredAfterApproval": True,
                 },
                 "reviewRequired": True,
-                "runtimeImplemented": False,
+                "runtimeImplemented": bool(applied_decision),
+                "decisionReceipt": file_evidence(DECISION_RECEIPT) if applied_decision else None,
             },
         },
         {
@@ -243,18 +260,21 @@ def build_contract() -> dict:
             "modelKey": champion["modelKey"],
             "selectionMode": champion.get("modelSelectionMode", "automatic"),
             "changedByThisReviewBuild": False,
+            "ownerDecisionApplied": bool(applied_decision),
         },
         "weaponReview": {
-            "status": "awaiting-user-selection",
-            "selectionRequired": True,
-            "selectedCandidateId": None,
+            "status": "owner-selection-applied" if applied_decision else "awaiting-user-selection",
+            "selectionRequired": not bool(applied_decision),
+            "selectedCandidateId": applied_decision["ownerDecision"]["weaponCandidateId"] if applied_decision else None,
             "automaticDefaultChangeAllowed": False,
             "candidates": candidates,
         },
         "audioReviewEvidence": audio_evidence,
         "sourceDependencyEvidence": dependency_evidence,
         "fiveOpenIntegrationGaps": gaps,
-        "releaseState": "feature-branch-options-present-review-pending-production-unverified",
+        "remainingOpenIntegrationGapCount": sum(row["status"] != "owner-approved-existing-runtime-bound" for row in gaps),
+        "decisionReceipt": file_evidence(DECISION_RECEIPT) if applied_decision else None,
+        "releaseState": "feature-branch-owner-selection-applied-production-unverified" if applied_decision else "feature-branch-options-present-review-pending-production-unverified",
     }
 
 
@@ -279,21 +299,21 @@ h1{{font-size:19px;margin:0}} .meta,.note{{color:var(--dim)}} main{{max-width:12
 button:hover,.pick:hover{{border-color:var(--accent)}} button.active{{border-color:var(--accent);background:#16435b}} code{{font-size:11px;word-break:break-all}} ol li{{margin:8px 0}} .status{{color:var(--warn)}}
 #deathStage{{overflow:hidden;border-radius:8px;background:#071019;padding:10px}} #deathFrame.rise{{animation:riseFade 2.2s ease-in forwards}} @keyframes riseFade{{0%,35%{{opacity:1;transform:translateY(0)}}100%{{opacity:.08;transform:translateY(-80px)}}}}
 textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1px solid var(--line);border-radius:7px;padding:8px}}
-</style></head><body><header><h1>何布／波普 PN020 武器與死亡演出審查</h1><div class="meta">資料指紋 <code>{contract['sourceFingerprint']}</code> · 目前不會改預設模型</div></header>
-<main><div class="warn">三支法杖都已是功能分支的獨立後台選項。此頁只記錄你的選擇；沒有裁決前，<b>selectedCandidateId 仍為 null</b>，不會自動切換。</div>
+</style></head><body><header><h1>何布／波普 PN020 武器與死亡演出審查</h1><div class="meta">資料指紋 <code>{contract['sourceFingerprint']}</code> · 正式站部署仍待 Main</div></header>
+<main><div class="warn">三支法杖都是功能分支的獨立後台選項。<b>{'已套用你的 Kagayaki 手動選擇；其他兩支仍保留為選項。' if contract['weaponReview']['selectedCandidateId'] else '尚未套用裁決，不會自動切換。'}</b></div>
 <h2>一、選一支預設法杖</h2><div id="weapons" class="grid"></div><div class="buttons"><button id="clearWeapon">清除法杖選擇</button></div>
-<h2>二、死亡演出候選</h2><div class="card"><p>原作解包範圍沒有獨立 death，現在 hurt/death 都播放原生 <code>GGD_native_down</code>。下方第二個按鈕是「down＋整體升天淡出」的<b>審查合成預覽</b>；尚未寫入遊戲執行邏輯。</p>
+<h2>二、死亡演出候選</h2><div class="card"><p>原作解包範圍沒有獨立 death，hurt/death 都播放原生 <code>GGD_native_down</code>。你核准的「down＋整體升天淡出」已由既有 ChampionView 死亡流程提供：倒地 3 秒，再升高並淡出 1.4 秒。</p>
 <div class="buttons"><button id="nativeDeath">播放原生 down</button><button id="fadeDeath">預覽 down＋升天淡出</button></div>
 <div id="deathStage"><div id="deathFrame" class="review-frame" data-state="hurt" role="img" aria-label="死亡演出三幀預覽"></div></div>
 <div class="frame-status"><b>可見證據圖</b><span>實際 Babylon WebGL：0%／50%／100%</span></div>
 <label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1"> 核准 down＋升天淡出候選</label>
 <label class="pick"><input type="radio" name="death" value="reject"> 不核准，繼續找同作品動作</label></div>
-<h2>三、尚待完成的五項</h2><ol id="gaps"></ol>
+<h2>三、五項整合狀態（剩餘 {contract['remainingOpenIntegrationGapCount']} 項）</h2><ol id="gaps"></ol>
 <h2>四、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
 <textarea id="reviewNote" placeholder="選擇理由、要修的顏色或動作問題"></textarea><div class="buttons"><button id="export">下載裁決 JSON</button></div></main>
 <script id="contract" type="application/json">{encoded}</script><script>
 const D=JSON.parse(document.getElementById('contract').textContent), key='ggd-popp-review:'+D.sourceFingerprint;
-const state=Object.assign({{weaponCandidateId:null,deathCandidateId:null,note:''}},JSON.parse(localStorage.getItem(key)||'{{}}'));
+const state=Object.assign({{weaponCandidateId:D.weaponReview.selectedCandidateId,deathCandidateId:D.weaponReview.selectedCandidateId?'popp-native-down-rise-fade-v1':null,note:''}},JSON.parse(localStorage.getItem(key)||'{{}}'));
 const save=()=>{{state.note=document.getElementById('reviewNote').value;localStorage.setItem(key,JSON.stringify(state));renderChosen()}};
 const wrap=document.getElementById('weapons');
 for(const c of D.weaponReview.candidates){{const sheet=c.validation.reviewContactSheet;const card=document.createElement('section');card.className='card';card.dataset.id=c.candidateId;card.innerHTML=`<h3>${{c.staff}}</h3><p>${{c.nativeCharacterId}}</p><div class="review-frame" data-state="idle" role="img" aria-label="${{c.staff}} idle 三幀預覽" style="background-image:url('/${{sheet.publicPath}}')"></div><div class="frame-status"><b>可見證據圖</b><span>實際 WebGL：0%／50%／100%</span></div><div class="buttons">${{sheet.states.map(x=>`<button data-clip="${{x}}" class="${{x==='idle'?'active':''}}">${{x}}</button>`).join('')}}</div><label class="pick"><input type="radio" name="weapon" value="${{c.candidateId}}"> 選為預設法杖</label><p class="meta"><code>${{c.glb.sha256}}</code><br>${{c.nativeAnimationCount}} 段原生動作 · 後台選項已存在 · 正式站未驗</p>`;card.querySelectorAll('[data-clip]').forEach(b=>b.onclick=()=>{{const frame=card.querySelector('.review-frame');frame.dataset.state=b.dataset.clip;frame.setAttribute('aria-label',c.staff+' '+b.dataset.clip+' 三幀預覽');card.querySelectorAll('[data-clip]').forEach(x=>x.classList.toggle('active',x===b))}});wrap.append(card)}}

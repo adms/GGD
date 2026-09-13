@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T02:09:15+08:00",
-  "inputsSha256": "5d326544587aecd6cdf114d8dfca64e43380b8a48269d74334a545066b480405",
+  "generatedAt": "2026-09-14T03:01:34+08:00",
+  "inputsSha256": "be8901690b17a02f8624e46997ddc7e81dcb8766676987887c73ecbd4cc39d1e",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -69853,29 +69853,33 @@
       "section": "第二批 37 名",
       "status": "正式機白名單可選",
       "default": {
-        "key": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
-        "id": "derivative:popp",
-        "name": "何布（獨立副本／李小狼）",
-        "work": "TSUBASA 翼／翼年代記",
-        "tier": "300heroes",
-        "library": "300heroes",
-        "kind": "style-proxy",
+        "key": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+        "id": "runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1",
+        "name": "何布／波普（PN020/02，Kagayaki）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "tier": "original",
+        "library": "Infinity Strash Steam 原作擷取",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)",
+        "kind": "exact",
         "ready": true,
         "old": false,
         "defaultEligible": true,
-        "selectionClass": "manual",
         "asset": {
-          "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
-          "glbPath": "assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
-          "sha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
-          "localRuntimeRoot": null,
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3f497f30c3e42510ebbb1237/92482855c87ac724/content/assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
-          "s3ManifestUri": null,
-          "s3ReadbackVerified": null,
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3f497f30c3e42510ebbb1237/92482855c87ac724/content/assets/models/community/c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29.glb",
+          "modelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+          "glbPath": "assets/models/community/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+          "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+          "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+          "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+          "s3ReadbackVerified": true,
+          "gitPath": "content/assets/models/community/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
           "limitations": [
-            "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
-            "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            "原作 PN020 身體、貼圖、331 骨及 Kagayaki 法杖；CB_PN020_02 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+            "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+            "原作 Kagayaki Diffuse／Bundle Mask／Shadow 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Diffuse，原作 toon、遮罩及陰影 shader 仍待還原。",
+            "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
           ]
         }
       },
@@ -69906,7 +69910,7 @@
           ]
         }
       },
-      "defaultSelectionMode": "automatic",
+      "defaultSelectionMode": "manual",
       "current": {
         "key": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
         "id": "derivative:popp",
@@ -70087,8 +70091,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
-        "mode": "automatic"
+        "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+        "mode": "manual"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -169063,6 +169067,121 @@
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
             "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+          },
+          {
+            "id": "historical-astralym-decimated-f77cf1ee",
+            "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+            "sourceClass": "integration-recovery",
+            "nameZh": "枯星龍",
+            "originalName": "Astralym",
+            "workZh": "幻獸帕魯 Palworld",
+            "sourceGame": "Palworld",
+            "platform": "PC（原始遊戲 build 未由歷史 GLB 固定）",
+            "variant": "歷史 GGD 256px 五動作 emissive-lock 減面版",
+            "identityIds": [
+              "community:palworld-astralym"
+            ],
+            "originSourceIds": [
+              "opgg-palworld-astralym-2026081102"
+            ],
+            "historicalAcceptanceId": "acquired-astralym",
+            "historicalModelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+            "parentComponentId": "historical-astralym-7bc2fa3f8",
+            "resourceRole": "independent-historical-model-body-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture",
+              "native-animation"
+            ],
+            "bytes": 3795720,
+            "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+            "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "componentReady": true,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "runtimeDropdownRegistered": false,
+            "fullHeroModel": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "nativeAnimationCount": 5,
+            "proceduralAnimationCount": 0,
+            "triangles": 7996,
+            "drawPrimitives": 3,
+            "skinCount": 1,
+            "jointCounts": [
+              145
+            ],
+            "textureCount": 8,
+            "selectedClips": {
+              "idle": "Idle",
+              "run": "Walk",
+              "attack": "FarSkill_Action",
+              "cast": "HaloBeam_Loop",
+              "hurt": "Damage",
+              "death": "Damage"
+            },
+            "fallbacks": [
+              {
+                "state": "death",
+                "clip": "Damage",
+                "reason": "Source contains no native Death clip; explicitly authorized hurt plus runtime ascend/fade fallback, not generated animation"
+              },
+              {
+                "state": "run",
+                "clip": "Walk",
+                "reason": "Source provides native Walk; no Run clip"
+              }
+            ],
+            "recoveredFromGitCommit": "7bc2fa3f8",
+            "readiness": "validated-decimated-historical-body-candidate-pending-generated-option-overlay",
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
+              "bytes": 15161,
+              "sha256": "63d392db90b7b48aeca6cb2f15c049602a66353aafa8d1927b9812d8d7efce38"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/visual-comparison.json",
+              "bytes": 6493,
+              "sha256": "ed8ac520031c8b2fe4db5e7cb299bb2946cb52e270f0ab0361904c2bed2aa2f5"
+            },
+            "warnings": [
+              "Khronos retains the same 10 source warnings; validation has zero errors and is not truncated.",
+              "Each native clip has 435 channels, above the 300 warning and below the 500 limit."
+            ],
+            "limitations": [
+              "Expected low-poly faceting is visible after 23,928 to 7,996 triangle reduction; five-clip A/B remains under the 5% visual threshold.",
+              "Damage is reused for hurt and the authorized ascend/fade death presentation; no native Death clip is claimed.",
+              "This is a non-default option on the feature branch; Main merge, backend switching and production deployment remain separately verified states."
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "backupLocations": [
+              "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz"
+            ],
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz",
+            "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.files.json",
+            "s3ArchiveMember": "historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "s3Use": "legacy conversion/intermediate backup; runtime continues to use the Git-pinned GLB",
+            "backupReceipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/s3-backup-receipt.json",
+              "bytes": 1459,
+              "sha256": "64a04f236664551c6e71b44bd869498c882fe9925c536ee0a493965594751d5c"
+            },
+            "backupManifest": {
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/s3-backup-manifest.json",
+              "bytes": 16962,
+              "sha256": "32330c59a21958eaed8b07cea4979e4257fd595ed5ea7652af8b10e8c64d5eb4"
+            },
+            "backupVerification": {
+              "archiveSha256": "ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442",
+              "archiveBytes": 61996744,
+              "fileCount": 91,
+              "fullGetVerified": true,
+              "allMemberSha256Verified": true,
+              "localUnchanged": true
+            }
           },
           {
             "id": "historical-jetragon-7bc2fa3f8",

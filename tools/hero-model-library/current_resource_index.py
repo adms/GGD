@@ -70,6 +70,76 @@ def component_git_evidence(components):
     return list(evidence_by_path.values())
 
 
+def apply_option_registration_overlay(components, receipt):
+    """Join generated option receipts back onto their source components.
+
+    Source acquisition records deliberately begin as non-selectable.  Once the
+    checked registration generator emits a receipt, the central current index
+    must expose that newer fact instead of repeating the pre-registration state.
+    The immutable source record remains intact in download-sources.json.
+    """
+    by_id = {row['componentId']: row for row in receipt.get('registrations', [])}
+    blocked = {row['componentId']: row for row in receipt.get('blocked', [])}
+    for component in components:
+        registration = by_id.get(component.get('id'))
+        if registration:
+            model_glb = registration['modelGlb']
+            if (component.get('gitPath'), component.get('sha256'), component.get('bytes')) != (
+                model_glb['gitPath'], model_glb['sha256'], model_glb['bytes']
+            ):
+                raise ValueError('Historical option/component GLB mismatch: ' + component['id'])
+            component.update(
+                runtimeSelectable=True,
+                runtimeDropdownRegistered=True,
+                heroIds=[registration['heroId']],
+                relatedHeroIds=[registration['heroId']],
+                runtimeModelKey=registration['modelKey'],
+                modelDocumentGitPath=registration['modelDocument']['gitPath'],
+                readiness='registered-non-default-feature-branch-option; production deployment unverified',
+                registrationEvidence={
+                    'receiptGitPath': 'materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json',
+                    'heroId': registration['heroId'],
+                    'modelKey': registration['modelKey'],
+                    'label': registration['label'],
+                    'productionDeploymentVerified': registration['productionDeploymentVerified'],
+                },
+            )
+        elif component.get('id') in blocked:
+            component['registrationBlocker'] = blocked[component['id']]['reason']
+    return components
+
+
+def apply_hero_integration_overlay(components, receipt, receipt_git_path):
+    """Expose verified Hero Forge integration on the matching current GLB."""
+    by_glb = {
+        (row['modelGlb']['gitPath'], row['modelGlb']['sha256'], row['modelGlb']['bytes']): row
+        for row in receipt.get('integrations', [])
+        if row.get('backendDropdownRegistered') is True
+    }
+    for component in components:
+        row = by_glb.get((component.get('gitPath'), component.get('sha256'), component.get('bytes')))
+        if not row:
+            continue
+        component.update(
+            runtimeSelectable=True,
+            runtimeDropdownRegistered=True,
+            heroIds=[row['heroId']],
+            relatedHeroIds=[row['heroId']],
+            runtimeModelKey=row['defaultModelKey'],
+            modelDocumentGitPath=row['modelDocument']['gitPath'],
+            readiness='hero-forge-six-slot-package-and-dropdown-verified; production deployment unverified',
+            registrationEvidence={
+                'receiptGitPath': receipt_git_path,
+                'heroId': row['heroId'],
+                'modelKey': row['defaultModelKey'],
+                'backendDropdownScope': row['backendDropdownScope'],
+                'authoringState': row['authoringState'],
+                'productionDeploymentVerified': row['productionDeploymentVerified'],
+            },
+        )
+    return components
+
+
 def build():
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
@@ -130,8 +200,13 @@ def build():
     components=model_components(component_data,ROOT)
     palworld_hero_receipt_path=base/'priority-evidence/palworld-hero-integration/receipt.json'
     palworld_hero_receipt=read(palworld_hero_receipt_path)
-    if palworld_hero_receipt.get('status')!='authoring-complete-production-pending':
+    if palworld_hero_receipt.get('status')!='ggd-authoring-packages-verified-model-options-policy-eligible-source-av-review-pending-production-unverified':
         raise ValueError('Palworld hero integration receipt is not current')
+    apply_hero_integration_overlay(
+        components,
+        palworld_hero_receipt,
+        str(palworld_hero_receipt_path.relative_to(ROOT)),
+    )
     component_source_path=base/'download-sources.json'
     component_sources=read(component_source_path)
     ultimate14_source=next(source for source in component_sources['publicSources'] if source['id']=='parallel-ns-ultimate14')
@@ -147,6 +222,7 @@ def build():
     historical_option_registration=read(historical_option_registration_path)
     if historical_option_registration.get('schema')!='ggd-historical-model-option-registration@1':
         raise ValueError('Historical model option registration is not current')
+    apply_option_registration_overlay(components, historical_option_registration)
     result.update(modelComponents=components,modelComponentCount=len(components),
         historicalModelSourceArtifacts=historical_artifacts,
         historicalModelSourceArtifactCount=len(historical_artifacts),

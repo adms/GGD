@@ -1,0 +1,153 @@
+{
+  "schema": "ggd.infinity-strash-popp-vfx-converter-probe@1",
+  "tool": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v1-texture-export-fix/umodel",
+    "bytes": 1280976,
+    "sha256": "4fc7f059613f40fe380d196bd06a3703e423e1fff1dd5158fc4bb16e61c98bd1"
+  },
+  "input": {
+    "dependencyIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/infinity-strash/dependency-index.json",
+    "rawVfxRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content"
+  },
+  "packageCount": 17,
+  "noExportableOutputCount": 17,
+  "rows": [
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Post/Curve/CV_Black00",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Post/Curve/CV_Black01",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Post/MPC_VFXPost",
+      "returnCode": 0,
+      "reportedExportedObjects": 0,
+      "reportedExportableObjects": 0,
+      "producedFiles": [],
+      "result": "no-exportable-output"
+    }
+  ],
+  "claim": "This probe establishes only that this exact preserved UModel binary produced no converted files. It does not prove that Unreal Engine or a future converter cannot reconstruct the effects."
+}

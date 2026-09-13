@@ -321,7 +321,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-popp",
-  "modelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
+  "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
   "name": "何布",
   "origin": "法師",
   "passiveAbility": "b2-popp.passive",
@@ -531,5 +531,5 @@
       "automaticEligible": true
     }
   ],
-  "modelSelectionMode": "automatic"
+  "modelSelectionMode": "manual"
 }

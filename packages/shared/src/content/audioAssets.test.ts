@@ -22,6 +22,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, readFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
+import { GENERATED_COMBAT_FX_AUDIO_POLICY } from "./audioAssetPolicy";
 import { zConfigAudioMapDoc, type ConfigAudioMapDoc } from "./schema/config";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -394,10 +395,14 @@ describe("staged audio files", () => {
       expect(isMp3(buf), `${name}.mp3 MP3/ID3 header`).toBe(true);
       const fmt = readMp3Fmt(buf);
       expect(fmt, `${name}.mp3 MPEG1 Layer III frame`).not.toBeNull();
-      expect(fmt!.sampleRate, `${name}.mp3 44.1k`).toBe(44100);
-      expect(fmt!.channels, `${name}.mp3 mono`).toBe(1);
+      expect(fmt!.sampleRate, `${name}.mp3 ${GENERATED_COMBAT_FX_AUDIO_POLICY.sampleRateHz}Hz`).toBe(
+        GENERATED_COMBAT_FX_AUDIO_POLICY.sampleRateHz,
+      );
+      expect(fmt!.channels, `${name}.mp3 mono`).toBe(GENERATED_COMBAT_FX_AUDIO_POLICY.channels);
       // task #158 loading ceiling — a CEILING, not a target
-      expect(fmt!.bitrateKbps, `${name}.mp3 <=128kbps`).toBeLessThanOrEqual(128);
+      expect(fmt!.bitrateKbps, `${name}.mp3 <=${GENERATED_COMBAT_FX_AUDIO_POLICY.bitrateKbpsMax}kbps`).toBeLessThanOrEqual(
+        GENERATED_COMBAT_FX_AUDIO_POLICY.bitrateKbpsMax,
+      );
     }
   });
 });
