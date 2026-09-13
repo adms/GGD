@@ -38,6 +38,18 @@ class StrashReleaseAuditTest(unittest.TestCase):
         self.assertEqual(excluded["EN680"], "Baran")
         self.assertEqual(excluded["EN681"], "Baran form")
 
+    def test_raw_vfx_and_audio_stay_honestly_separated(self):
+        report = MODULE.build(MODULE.DEFAULT_REPO)
+        materials = report["sourceMaterials"]
+        self.assertEqual(materials["rawPackages"]["verifiedFilesThisRun"], 4740)
+        self.assertEqual(materials["vfx"]["PN010"]["rawPackageFiles"], 182)
+        self.assertEqual(materials["vfx"]["EN801"]["rawPackageFiles"], 169)
+        self.assertEqual(materials["vfx"]["PN010"]["ggdVfxConverted"], 0)
+        self.assertEqual(materials["audio"]["identities"]["PN010"]["decodedMedia"], 359)
+        self.assertEqual(materials["audio"]["identities"]["EN801"]["decodedMedia"], 140)
+        self.assertFalse(materials["audio"]["listeningReviewComplete"])
+        self.assertEqual(materials["audio"]["runtimeBindingsCreated"], 0)
+
     def test_output_is_deterministic(self):
         first = MODULE.build(MODULE.DEFAULT_REPO)
         second = MODULE.build(MODULE.DEFAULT_REPO)

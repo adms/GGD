@@ -420,5 +420,124 @@
     "liveSmbMountCheckedSeparately": true,
     "liveSmbMountAvailableAtAuditTime": false,
     "note": "This report verifies the checked-in candidates and preserved local evidence. It does not claim a fresh SMB read or production deployment."
+  },
+  "sourceMaterials": {
+    "rawPackages": {
+      "index": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json",
+        "bytes": 3241838,
+        "sha256": "5f944696172d33b0e3c97880ceb96a2085de91d1cb42a44402142ca1989ddb24"
+      },
+      "sourcePak": {
+        "path": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+        "bytes": 8332792957,
+        "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee"
+      },
+      "selectedFiles": 5530,
+      "selectedBytes": 546039697,
+      "priorityIdentities": {
+        "PN010": {
+          "indexedFiles": 3838,
+          "bytes": 414919210,
+          "categoryCounts": {
+            "animation-or-cinematic": 1940,
+            "audio-event-or-audio-package": 624,
+            "character-model-or-configuration": 670,
+            "related-package": 359,
+            "texture-or-material": 63,
+            "vfx": 182
+          },
+          "allLocalFileSha256VerifiedThisRun": true
+        },
+        "EN801": {
+          "indexedFiles": 902,
+          "bytes": 76493514,
+          "categoryCounts": {
+            "animation-or-cinematic": 242,
+            "audio-event-or-audio-package": 192,
+            "character-model-or-configuration": 262,
+            "related-package": 14,
+            "texture-or-material": 23,
+            "vfx": 169
+          },
+          "allLocalFileSha256VerifiedThisRun": true
+        }
+      },
+      "verifiedFilesThisRun": 4740,
+      "verifiedBytesThisRun": 491412724,
+      "perFileSha256RetainedInIndex": true
+    },
+    "vfx": {
+      "PN010": {
+        "rawPackageFiles": 182,
+        "ggdVfxConverted": 0,
+        "skillBindingsCreated": 0
+      },
+      "EN801": {
+        "rawPackageFiles": 169,
+        "ggdVfxConverted": 0,
+        "skillBindingsCreated": 0
+      },
+      "note": "Raw Niagara/material/texture package membership is acquisition evidence only; no Dai/Vearn GGD VFX or skill binding is claimed."
+    },
+    "audio": {
+      "sourceManifest": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/source-manifest.json",
+        "bytes": 2946,
+        "sha256": "d25cbf2dec7a39e819dd6f9342ac09e8ce6181e2bd1ad976a7b2ec180271c9de"
+      },
+      "fileIndex": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/audio-file-index.json",
+        "bytes": 1092492,
+        "sha256": "1748c73508796803728ac54a35acc19e7ee7ec3ba9c6827da29c486fbc646284"
+      },
+      "identities": {
+        "PN010": {
+          "eventPackages": 226,
+          "referencedMedia": 366,
+          "decodedMedia": 359,
+          "payloadMissing": 7,
+          "decodedBytes": 53331874,
+          "durationSeconds": 486.884807,
+          "byKind": {
+            "sound-effect": 78,
+            "unclassified": 1,
+            "voice": 280
+          },
+          "byReportedLocale": {
+            "English_US": 140,
+            "Japanese": 137,
+            "nonlocalized": 78,
+            "unreviewed": 4
+          },
+          "speakerLanguageAndEventListeningReviewComplete": false,
+          "runtimeBindingsCreated": 0
+        },
+        "EN801": {
+          "eventPackages": 73,
+          "referencedMedia": 140,
+          "decodedMedia": 140,
+          "payloadMissing": 0,
+          "decodedBytes": 48269098,
+          "durationSeconds": 442.446625,
+          "byKind": {
+            "sound-effect": 92,
+            "voice": 48
+          },
+          "byReportedLocale": {
+            "English_US": 24,
+            "Japanese": 24,
+            "nonlocalized": 92
+          },
+          "speakerLanguageAndEventListeningReviewComplete": false,
+          "runtimeBindingsCreated": 0
+        }
+      },
+      "verifiedSourceAndDecodedFilesThisRun": 998,
+      "verifiedSourceAndDecodedBytesThisRun": 115154617,
+      "allIndexedSourceAndDecodedSha256VerifiedThisRun": true,
+      "listeningReviewComplete": false,
+      "runtimeBindingsCreated": 0
+    }
   }
 }

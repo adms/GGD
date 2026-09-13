@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import collections
 import hashlib
 import json
 import struct
@@ -19,6 +20,17 @@ DEFAULT_OUTPUT = (
     / "materials/hero-model-library/priority-evidence"
     / "infinity-strash-dai-vearn-release-audit-v1/report.json"
 )
+ASSET_LIBRARY = DEFAULT_REPO.parent / "GGD-Asset-Library"
+RAW_EXTRACTION_INDEX = (
+    ASSET_LIBRARY
+    / "intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json"
+)
+AUDIO_ROOT = (
+    ASSET_LIBRARY
+    / "intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1"
+)
+AUDIO_SOURCE_MANIFEST = AUDIO_ROOT / "source-manifest.json"
+AUDIO_FILE_INDEX = AUDIO_ROOT / "audio-file-index.json"
 
 TARGETS = (
     {
@@ -62,6 +74,112 @@ def source(path: Path, repo: Path) -> dict[str, Any]:
         "path": path.relative_to(repo).as_posix(),
         "bytes": path.stat().st_size,
         "sha256": digest(path),
+    }
+
+
+def external_source(path: Path) -> dict[str, Any]:
+    return {
+        "absolutePath": str(path),
+        "bytes": path.stat().st_size,
+        "sha256": digest(path),
+    }
+
+
+def verify_external_file(path: Path, row: dict[str, Any]) -> int:
+    if not path.is_file():
+        raise ValueError(f"missing indexed source file: {path}")
+    if path.stat().st_size != row["bytes"] or digest(path) != row["sha256"]:
+        raise ValueError(f"indexed source receipt mismatch: {path}")
+    return row["bytes"]
+
+
+def build_source_material_audit() -> dict[str, Any]:
+    raw = read_json(RAW_EXTRACTION_INDEX)
+    if raw["selection"]["selectedEntries"] != len(raw["files"]):
+        raise ValueError("Infinity Strash raw extraction count drifted")
+
+    by_identity: dict[str, dict[str, Any]] = {}
+    verified_raw_bytes = 0
+    for identity in ("PN010", "EN801"):
+        rows = [row for row in raw["files"] if row["identityId"] == identity]
+        categories = collections.Counter(row["category"] for row in rows)
+        for row in rows:
+            verified_raw_bytes += verify_external_file(Path(row["absolutePath"]), row)
+        by_identity[identity] = {
+            "indexedFiles": len(rows),
+            "bytes": sum(row["bytes"] for row in rows),
+            "categoryCounts": dict(sorted(categories.items())),
+            "allLocalFileSha256VerifiedThisRun": True,
+        }
+
+    audio_manifest = read_json(AUDIO_SOURCE_MANIFEST)
+    audio_index = read_json(AUDIO_FILE_INDEX)
+    audio_rows: dict[str, dict[str, Any]] = {}
+    verified_audio_files = 0
+    verified_audio_bytes = 0
+    for identity in ("PN010", "EN801"):
+        rows = [row for row in audio_index["files"] if identity in row.get("nativeIds", [])]
+        for row in rows:
+            decoded = AUDIO_ROOT / row["path"]
+            verified_audio_bytes += verify_external_file(decoded, row)
+            verified_audio_files += 1
+            source_path = Path(row["sourcePath"])
+            source_row = {"bytes": source_path.stat().st_size, "sha256": row["sourceSha256"]}
+            verified_audio_bytes += verify_external_file(source_path, source_row)
+            verified_audio_files += 1
+        expected = audio_manifest["countsByNativeId"][identity]
+        if len(rows) != expected["decodedMedia"]:
+            raise ValueError(f"decoded audio count drifted for {identity}")
+        audio_rows[identity] = {
+            "eventPackages": expected["events"],
+            "referencedMedia": expected["referencedMedia"],
+            "decodedMedia": len(rows),
+            "payloadMissing": expected["payloadMissing"],
+            "decodedBytes": sum(row["bytes"] for row in rows),
+            "durationSeconds": round(sum(row["durationSeconds"] for row in rows), 6),
+            "byKind": dict(sorted(collections.Counter(row["sourceCategory"] for row in rows).items())),
+            "byReportedLocale": dict(sorted(collections.Counter(row["reportedLocale"] for row in rows).items())),
+            "speakerLanguageAndEventListeningReviewComplete": all(
+                row.get("speakerVerified") and row.get("languageReviewed") and row.get("transcriptReviewed")
+                for row in rows
+            ),
+            "runtimeBindingsCreated": 0,
+        }
+
+    return {
+        "rawPackages": {
+            "index": external_source(RAW_EXTRACTION_INDEX),
+            "sourcePak": raw["sourcePak"],
+            "selectedFiles": len(raw["files"]),
+            "selectedBytes": raw["totalBytes"],
+            "priorityIdentities": by_identity,
+            "verifiedFilesThisRun": sum(row["indexedFiles"] for row in by_identity.values()),
+            "verifiedBytesThisRun": verified_raw_bytes,
+            "perFileSha256RetainedInIndex": True,
+        },
+        "vfx": {
+            "PN010": {
+                "rawPackageFiles": by_identity["PN010"]["categoryCounts"].get("vfx", 0),
+                "ggdVfxConverted": 0,
+                "skillBindingsCreated": 0,
+            },
+            "EN801": {
+                "rawPackageFiles": by_identity["EN801"]["categoryCounts"].get("vfx", 0),
+                "ggdVfxConverted": 0,
+                "skillBindingsCreated": 0,
+            },
+            "note": "Raw Niagara/material/texture package membership is acquisition evidence only; no Dai/Vearn GGD VFX or skill binding is claimed.",
+        },
+        "audio": {
+            "sourceManifest": external_source(AUDIO_SOURCE_MANIFEST),
+            "fileIndex": external_source(AUDIO_FILE_INDEX),
+            "identities": audio_rows,
+            "verifiedSourceAndDecodedFilesThisRun": verified_audio_files,
+            "verifiedSourceAndDecodedBytesThisRun": verified_audio_bytes,
+            "allIndexedSourceAndDecodedSha256VerifiedThisRun": True,
+            "listeningReviewComplete": False,
+            "runtimeBindingsCreated": 0,
+        },
     }
 
 
@@ -332,6 +450,7 @@ def build(repo: Path) -> dict[str, Any]:
             "liveSmbMountAvailableAtAuditTime": False,
             "note": "This report verifies the checked-in candidates and preserved local evidence. It does not claim a fresh SMB read or production deployment.",
         },
+        "sourceMaterials": build_source_material_audit(),
     }
 
 
@@ -363,6 +482,17 @@ def render_markdown(report: dict[str, Any]) -> str:
             "- 巴恩變身後／年輕真身：兩個主 PAK 索引沒有第二個 EN801 身體，目前候選實檔為 0；須另取允許共用的來源。",
             "- EN653 是密斯特巴恩；EN680／EN681 是巴蘭與其形態，均不可當作變身後巴恩。",
             "- BowlRoll 鯖缶359 v0.87 只有老巴恩，且原作者禁止商用與再散布，所以只作私有儲備，不可轉成共用後台選項。",
+            (
+                f"- 達伊／老巴恩原始 package 逐檔驗證：{report['sourceMaterials']['rawPackages']['verifiedFilesThisRun']:,} 檔；"
+                f"PN010／EN801 VFX package 分別為 {report['sourceMaterials']['vfx']['PN010']['rawPackageFiles']}／"
+                f"{report['sourceMaterials']['vfx']['EN801']['rawPackageFiles']}，GGD VFX 與技能綁定仍為 0。"
+            ),
+            (
+                f"- 可播放音訊已解碼且母檔／WAV 逐檔驗 SHA：達伊 "
+                f"{report['sourceMaterials']['audio']['identities']['PN010']['decodedMedia']} 檔、老巴恩 "
+                f"{report['sourceMaterials']['audio']['identities']['EN801']['decodedMedia']} 檔；"
+                "說話者、語言與技能事件仍待逐項聽審，runtime 綁定為 0。"
+            ),
             "- 本輪未驗證 Main 合併或正式站部署。",
             "",
             "## 重建",
