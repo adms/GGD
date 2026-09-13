@@ -6709,6 +6709,201 @@
     "audioOrVoiceBindingChanged": false,
     "productionDeploymentVerified": false
   },
+  "infinityStrashDaiVearnAv": {
+    "schema": "ggd.infinity-strash-dai-vearn-av-summary@1",
+    "sourceIds": [
+      "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "steam-infinity-strash-priority-original-assets-build-local-20240328"
+    ],
+    "status": "exact-identity-audio-decoded-and-queued; raw-VFX-indexed; listening/visual-acceptance/runtime-binding/deployment-pending",
+    "summaryGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/summary.json",
+    "summarySha256": "a8a43159759e0af0c13c3831e889d0d6c4d3b98db6bb66b3c3175d5df10a931e",
+    "audioReviewQueueGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.json",
+    "audioReviewQueueSha256": "17b1982d2339b8a7de11b3b9ced8259ed3880b517a274099e0b77d57b6d3517c",
+    "audioQueueParts": [
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-001.json",
+        "bytes": 124475,
+        "sha256": "66a8dc8fc4ca2f24ba103b5cac469f20f5fe483c9c87642d0313386de5164ebd",
+        "rowCount": 70
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-002.json",
+        "bytes": 119464,
+        "sha256": "413d92fb8c0aa4d36fdfcde68a575b2fae5bf2010efb4c6024e5bab42dd1184f",
+        "rowCount": 70
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-003.json",
+        "bytes": 127151,
+        "sha256": "4044d29ecab03a062a2fbaf6f88aff08bd8474f048fe614c1b12e979a84e58ce",
+        "rowCount": 70
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-004.json",
+        "bytes": 126822,
+        "sha256": "8d427fad58ef54fbda39234416dc6d9f4bdd8b209d21ebc703dc367f23381aec",
+        "rowCount": 70
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-005.json",
+        "bytes": 126090,
+        "sha256": "a62f8e0d8fd09111f5674861390d7c2a01a53cf27921388612164e5166a13f83",
+        "rowCount": 70
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-006.json",
+        "bytes": 125015,
+        "sha256": "457ce5c2dbfae8caed084a1d64ea423c43cebced1747ef57817698511e6188a3",
+        "rowCount": 70
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-007.json",
+        "bytes": 113757,
+        "sha256": "d2662d10fbebb13c5d93d44fffd61f75c73dbd1db80dd9a1952a84a456590ccd",
+        "rowCount": 65
+      }
+    ],
+    "vfxSourceIndexGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.json",
+    "vfxSourceIndexSha256": "a37b3e66d6d281fabb3a82f75d7f4adb49a92d1dc5ee8000762e6d72349a5231",
+    "vfxIndexParts": [
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.part-001.json",
+        "bytes": 71117,
+        "sha256": "dfbf1bd38f8a28f202489eab66a596e893eb2b75fdf7966b46d79a01a1b1e7ab",
+        "rowCount": 40
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.part-002.json",
+        "bytes": 72667,
+        "sha256": "883658fbc2cac2444d935920588120c40c43071132d100586bf7fdebda5d7ab3",
+        "rowCount": 40
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.part-003.json",
+        "bytes": 70167,
+        "sha256": "69ceec0ab967822642e5abaada06f1d7ed1c1cd333f968616926eaeb8b2b671a",
+        "rowCount": 40
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.part-004.json",
+        "bytes": 70630,
+        "sha256": "5f86af669a9b25871c00a697bd587a29b28054f92eec2ad1bcf8749d111e0ef2",
+        "rowCount": 40
+      },
+      {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.part-005.json",
+        "bytes": 26615,
+        "sha256": "93c37546dfc326c409e14825aedb159dfe97ef2947ece54013f48ff40b8d99f4",
+        "rowCount": 15
+      }
+    ],
+    "reviewPageGitPath": "apps/client/public/infinity-strash-dai-vearn-av-review.html",
+    "reviewPageSha256": "7d5548b486dd6cf2f1040668e71b43edfa6feae76ee55150cc5c022a381682c2",
+    "summary": {
+      "schema": "ggd.infinity-strash-dai-vearn-av-summary@1",
+      "sourceIds": [
+        "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+        "steam-infinity-strash-priority-original-assets-build-local-20240328"
+      ],
+      "scope": {
+        "identities": {
+          "PN010": {
+            "heroIds": [
+              "godie-nbbc",
+              "godie-n01c"
+            ],
+            "nameZh": "小呆／達伊",
+            "originalName": "Dai",
+            "form": "PN010 source family; PN010/02 and PN010/05 model candidates are registered separately"
+          },
+          "EN801": {
+            "heroIds": [
+              "godie-ubal"
+            ],
+            "nameZh": "巴恩大魔王（老年／變身前）",
+            "originalName": "Vearn",
+            "form": "pre-transformation elderly Vearn only"
+          }
+        },
+        "excludedIdentities": {
+          "EN653": "MystVearn is a separate character",
+          "EN680": "Baran is a separate character",
+          "EN681": "Baran form is a separate character"
+        },
+        "youngOrPostTransformationVearnPayloadCount": 0
+      },
+      "stages": {
+        "acquisition": "complete-for-indexed-local-source-and-s3-preserved-parent-deliveries",
+        "extraction": "complete-for-indexed-PN010-and-EN801-raw-packages-and-Wwise-media",
+        "conversion": "decoded-WAV-complete-for-safe-exact-identity-media; GGD-VFX-conversion-not-started",
+        "acceptance": "automated-audio-container-validation-only; listening-and-VFX-visual-acceptance-pending",
+        "registration": "review-queue-and-central-index-pointer-only; runtime-bindings-zero",
+        "deployment": "unverified-and-not-claimed"
+      },
+      "audio": {
+        "byIdentity": {
+          "PN010": {
+            "candidateCount": 355,
+            "voice": 278,
+            "soundEffect": 76,
+            "unclassified": 1,
+            "durationSeconds": 484.730578,
+            "decodedBytes": 53124892,
+            "reportedLocales": {
+              "English_US": 139,
+              "Japanese": 136,
+              "nonlocalized": 76,
+              "unreviewed": 4
+            },
+            "sharedOrMixedMediaExcluded": 4,
+            "runtimeBindingsCreated": 0
+          },
+          "EN801": {
+            "candidateCount": 130,
+            "voice": 48,
+            "soundEffect": 82,
+            "unclassified": 0,
+            "durationSeconds": 410.429458,
+            "decodedBytes": 45195010,
+            "reportedLocales": {
+              "English_US": 24,
+              "Japanese": 24,
+              "nonlocalized": 82
+            },
+            "sharedOrMixedMediaExcluded": 10,
+            "runtimeBindingsCreated": 0
+          }
+        },
+        "missingPayloadRelations": 7
+      },
+      "vfx": {
+        "byIdentity": {
+          "PN010": {
+            "rawPackageGroups": 91,
+            "rawFiles": 182,
+            "rawBytes": 25304532,
+            "ggdVfxConverted": 0,
+            "visuallyAccepted": 0,
+            "skillBindingsCreated": 0
+          },
+          "EN801": {
+            "rawPackageGroups": 84,
+            "rawFiles": 169,
+            "rawBytes": 29833178,
+            "ggdVfxConverted": 0,
+            "visuallyAccepted": 0,
+            "skillBindingsCreated": 0
+          }
+        }
+      },
+      "reviewPage": "apps/client/public/infinity-strash-dai-vearn-av-review.html",
+      "runtimeBindingsCreated": 0,
+      "productionDeploymentVerified": false
+    },
+    "runtimeBindingsCreated": 0,
+    "productionDeploymentVerified": false
+  },
   "fateAssetInventory": {
     "schema": "ggd.fate-asset-current-resource-entry@1",
     "gitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/inventory.json",

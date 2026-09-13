@@ -297,6 +297,24 @@ def build(git_link_root=ROOT):
         or infinity_strash_weapon_review.get('runtimeMutationAllowed') is not False
         or infinity_strash_weapon_review.get('audioOrVoiceBindingChanged') is not False):
         raise ValueError('Infinity Strash weapon review is absent, stale or overclaims selection/runtime binding')
+    infinity_strash_av_summary_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/summary.json'
+    infinity_strash_av_audio_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.json'
+    infinity_strash_av_vfx_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.json'
+    infinity_strash_av_page_path=ROOT/'apps/client/public/infinity-strash-dai-vearn-av-review.html'
+    infinity_strash_av_summary=read(infinity_strash_av_summary_path)
+    infinity_strash_av_audio=read(infinity_strash_av_audio_path)
+    infinity_strash_av_vfx=read(infinity_strash_av_vfx_path)
+    if (infinity_strash_av_summary.get('schema')!='ggd.infinity-strash-dai-vearn-av-summary@1'
+        or infinity_strash_av_summary.get('scope',{}).get('youngOrPostTransformationVearnPayloadCount')!=0
+        or set(infinity_strash_av_summary.get('scope',{}).get('excludedIdentities',{}))!={'EN653','EN680','EN681'}
+        or infinity_strash_av_audio.get('schema')!='ggd.infinity-strash-dai-vearn-audio-review@1'
+        or infinity_strash_av_audio.get('summary',{}).get('candidateCount')!=485
+        or infinity_strash_av_audio.get('summary',{}).get('runtimeBindingsCreated')!=0
+        or infinity_strash_av_vfx.get('schema')!='ggd.infinity-strash-dai-vearn-vfx-source-index@1'
+        or infinity_strash_av_vfx.get('summary',{}).get('packageGroups')!=175
+        or infinity_strash_av_vfx.get('summary',{}).get('ggdVfxConverted')!=0
+        or infinity_strash_av_vfx.get('summary',{}).get('skillBindingsCreated')!=0):
+        raise ValueError('Infinity Strash Dai/Vearn AV evidence is absent, stale or overclaims readiness')
     fate_asset_path=base/'source-inventories/fate-assets-v2/inventory.json'
     fate_asset_document_path=base/'source-inventories/fate-assets-v2/README.md'
     fate_asset_policy_path=base/'source-inventories/fate-assets-v2/current-policy.json'
@@ -602,6 +620,23 @@ def build(git_link_root=ROOT):
             daiIndependentPropCount=len(infinity_strash_weapon_review['dai']['independentProps']),
             runtimeMutationAllowed=False,
             audioOrVoiceBindingChanged=False,
+            productionDeploymentVerified=False),
+        infinityStrashDaiVearnAv=dict(
+            schema=infinity_strash_av_summary['schema'],
+            sourceIds=infinity_strash_av_summary['sourceIds'],
+            status='exact-identity-audio-decoded-and-queued; raw-VFX-indexed; listening/visual-acceptance/runtime-binding/deployment-pending',
+            summaryGitPath=str(infinity_strash_av_summary_path.relative_to(ROOT)),
+            summarySha256=hashlib.sha256(infinity_strash_av_summary_path.read_bytes()).hexdigest(),
+            audioReviewQueueGitPath=str(infinity_strash_av_audio_path.relative_to(ROOT)),
+            audioReviewQueueSha256=hashlib.sha256(infinity_strash_av_audio_path.read_bytes()).hexdigest(),
+            audioQueueParts=infinity_strash_av_audio['parts'],
+            vfxSourceIndexGitPath=str(infinity_strash_av_vfx_path.relative_to(ROOT)),
+            vfxSourceIndexSha256=hashlib.sha256(infinity_strash_av_vfx_path.read_bytes()).hexdigest(),
+            vfxIndexParts=infinity_strash_av_vfx['parts'],
+            reviewPageGitPath=str(infinity_strash_av_page_path.relative_to(ROOT)),
+            reviewPageSha256=hashlib.sha256(infinity_strash_av_page_path.read_bytes()).hexdigest(),
+            summary=infinity_strash_av_summary,
+            runtimeBindingsCreated=0,
             productionDeploymentVerified=False),
         fateAssetInventory=dict(
             **fate_asset_entry,
@@ -918,6 +953,30 @@ def main():
                 {
                     'gitPath': result['infinityStrashWeaponReview']['reviewPageGitPath'],
                     'sha256': result['infinityStrashWeaponReview']['reviewPageSha256'],
+                },
+                {
+                    'gitPath': result['infinityStrashDaiVearnAv']['summaryGitPath'],
+                    'sha256': result['infinityStrashDaiVearnAv']['summarySha256'],
+                },
+                {
+                    'gitPath': result['infinityStrashDaiVearnAv']['audioReviewQueueGitPath'],
+                    'sha256': result['infinityStrashDaiVearnAv']['audioReviewQueueSha256'],
+                },
+                *[
+                    {'gitPath': row['gitPath'], 'sha256': row['sha256'], 'bytes': row['bytes']}
+                    for row in result['infinityStrashDaiVearnAv']['audioQueueParts']
+                ],
+                {
+                    'gitPath': result['infinityStrashDaiVearnAv']['vfxSourceIndexGitPath'],
+                    'sha256': result['infinityStrashDaiVearnAv']['vfxSourceIndexSha256'],
+                },
+                *[
+                    {'gitPath': row['gitPath'], 'sha256': row['sha256'], 'bytes': row['bytes']}
+                    for row in result['infinityStrashDaiVearnAv']['vfxIndexParts']
+                ],
+                {
+                    'gitPath': result['infinityStrashDaiVearnAv']['reviewPageGitPath'],
+                    'sha256': result['infinityStrashDaiVearnAv']['reviewPageSha256'],
                 },
                 {
                     'gitPath': result['fateAssetInventory']['gitPath'],
