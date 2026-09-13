@@ -1,0 +1,2365 @@
+{
+ "schema": "ggd-hero-intake@1",
+ "batch": "ship34",
+ "generatedBy": "tools/hero-intake/run.mjs",
+ "ownerAsk": "owner 2026-09-11「一批34個英雄上架中…用自動化流程（script）執行語音配對與圖示生成」「同時檢查模型對應是否有缺漏」「全部放到一頁檢核頁面…只留最後我的審查通過與否」",
+ "invocation": "node tools/hero-intake/run.mjs --batch ship34 --from docs/_review/material/hero-intake/ship34.list.json --delivery \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/docs/_reports/community-acquired-heroes/model-delivery-summary.json\" --no-gen-icons",
+ "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+ "delivery": {
+  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes",
+  "rows": 34,
+  "claimed": 34,
+  "unclaimed": [],
+  "doubleClaimed": []
+ },
+ "counts": {
+  "heroes": 34,
+  "ready": 26,
+  "blocked": 8,
+  "modelGaps": 8,
+  "iconGaps": 0,
+  "voiceGaps": 0,
+  "modelPending": 26,
+  "iconPending": 34,
+  "voicePending": 34
+ },
+ "digest": "0727f84e3ac206a5f51505466287c5e95c30d396fa47fa4f1c34ea43cd0f3987",
+ "heroes": [
+  {
+   "id": "acquired-jetragon",
+   "name": "空渦龍",
+   "inContent": false,
+   "deliveryKey": "jetragon",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+    "clipMap": {
+     "idle": "Idle",
+     "run": "Run",
+     "attack": "FarSkill_Action",
+     "cast": "JumpBeam_Loop",
+     "hurt": "Damage",
+     "death": "Damage"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 1,
+    "filesAtSourceWorktree": 1,
+    "filesOnlyInSourceHistory": 1,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "gamevault-palworld-jetragon-cries:jetragon-cries",
+      "groupName": "空渦龍 Jetragon 非語言叫聲",
+      "library": "公開來源",
+      "work": "Palworld",
+      "language": "unreviewed",
+      "fileCount": 6,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-astralym",
+   "name": "枯星龍",
+   "inContent": false,
+   "deliveryKey": "astralym",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+    "clipMap": {
+     "idle": "Idle",
+     "run": "Walk",
+     "attack": "FarSkill_Action",
+     "cast": "HaloBeam_Loop",
+     "hurt": "Damage",
+     "death": "Damage"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 1,
+    "filesAtSourceWorktree": 1,
+    "filesOnlyInSourceHistory": 1,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "gamevault-palworld-astralym-audio:astralym-cries",
+      "groupName": "枯星龍 Astralym 非語言叫聲",
+      "library": "公開來源",
+      "work": "Palworld",
+      "language": "unreviewed",
+      "fileCount": 6,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-cattiva",
+   "name": "搗蛋貓",
+   "inContent": false,
+   "deliveryKey": "cattiva",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+    "clipMap": {
+     "idle": "Idle",
+     "run": "Run",
+     "attack": "NekoPunch_Loop",
+     "cast": "FarSkill_Action",
+     "hurt": "Damage",
+     "death": "Damage"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "palworld-cattiva-gamevault:cattiva-cries",
+      "groupName": "搗蛋貓 Cattiva 非語言叫聲",
+      "library": "公開來源",
+      "work": "Palworld",
+      "language": "unreviewed",
+      "fileCount": 6,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-dio",
+   "name": "DIO",
+   "inContent": false,
+   "deliveryKey": "dio",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:270",
+      "groupName": "迪奥·布兰度",
+      "library": "300英雄",
+      "work": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+      "language": "unreviewed",
+      "fileCount": 474,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "⚠️ 交付表說這一位是「300heroes:270」，而索引裡那個編號叫「迪奥·布兰度」—— **編號對上、名字對不上**，要人看一眼",
+      "confidence": "identity-name-mismatch"
+     },
+     {
+      "groupId": "parallel-ps-jumpforce-local-final3:jumpforce-dio",
+      "groupName": "DIO",
+      "library": "公開來源",
+      "work": "JUMP FORCE",
+      "language": "unreviewed",
+      "fileCount": 243,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 2 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 2 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-morgiana",
+   "name": "摩尔迦娜",
+   "inContent": false,
+   "deliveryKey": "morgiana",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:62",
+      "groupName": "摩尔迦娜",
+      "library": "300英雄",
+      "work": "MAGI 魔奇少年",
+      "language": "unreviewed",
+      "fileCount": 282,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「300heroes:62」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-zero",
+   "name": "Zero",
+   "inContent": false,
+   "deliveryKey": "zero",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "gamebanana-zero-lancer-493444:zero-lancer-voice",
+      "groupName": "Diarmuid Ua Duibhne / Zero Lancer",
+      "library": "公開來源",
+      "work": "Fate/unlimited codes",
+      "language": "unreviewed",
+      "fileCount": 13,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-emilia",
+   "name": "愛蜜莉雅",
+   "inContent": false,
+   "deliveryKey": "emilia",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:238",
+      "groupName": "爱蜜莉雅",
+      "library": "300英雄",
+      "work": "Re:從零開始的異世界生活",
+      "language": "unreviewed",
+      "fileCount": 190,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「300heroes:238」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-ram",
+   "name": "拉姆",
+   "inContent": false,
+   "deliveryKey": "ram",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-beatrice",
+   "name": "碧翠絲",
+   "inContent": false,
+   "deliveryKey": "beatrice",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-mario",
+   "name": "Mario",
+   "inContent": false,
+   "deliveryKey": "mario",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Dr_Mario",
+      "groupName": "SSBM / Characters_Dr_Mario",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Melee",
+      "language": "unreviewed",
+      "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     },
+     {
+      "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Mario",
+      "groupName": "SSBM / Characters_Mario",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Melee",
+      "language": "unreviewed",
+      "fileCount": 32,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 2 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 2 個候選來源"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-mewtwo",
+   "name": "Mewtwo",
+   "inContent": false,
+   "deliveryKey": "mewtwo",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Mewtwo",
+      "groupName": "SSBM / Characters_Mewtwo",
+      "library": "公開來源",
+      "work": "Super Smash Bros. Melee",
+      "language": "unreviewed",
+      "fileCount": 36,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-pokemon-trainer",
+   "name": "Pokémon Trainer",
+   "inContent": false,
+   "deliveryKey": "ptrainer",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-ryu",
+   "name": "Ryu",
+   "inContent": false,
+   "deliveryKey": "ryu",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-minecraft",
+   "name": "Steve／Alex",
+   "inContent": false,
+   "deliveryKey": "steve-alex",
+   "model": {
+    "ok": false,
+    "modelKey": null,
+    "clipMap": null,
+    "deliveryStatus": "rig-source-present-actions-missing",
+    "files": 0,
+    "filesInRepo": 0,
+    "gap": "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做",
+    "severity": "blocker"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [
+    "交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「rig-source-present-actions-missing」：只有骨架來源，⛔ 動作還沒做"
+   ],
+   "warnings": [
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": false
+  },
+  {
+   "id": "acquired-kita-kita",
+   "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+   "inContent": false,
+   "deliveryKey": "oyaji",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+    "clipMap": {
+     "idle": "wait",
+     "run": "F-Move",
+     "attack": "attack_01",
+     "cast": "sp01_01",
+     "hurt": "Damage-1",
+     "death": "D-Down"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 1,
+    "filesAtSourceWorktree": 1,
+    "filesOnlyInSourceHistory": 1,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "mba:Chara14",
+      "groupName": "キタキタおやじ",
+      "library": "MBA Complete Form 1.60",
+      "work": "待核",
+      "language": "unreviewed",
+      "fileCount": 4,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "⚠️ 交付表說這一位是「mba:Chara14」，而索引裡那個編號叫「キタキタおやじ」—— **編號對上、名字對不上**，要人看一眼",
+      "confidence": "identity-name-mismatch"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-wargreymon",
+   "name": "戰鬥暴龍獸",
+   "inContent": false,
+   "deliveryKey": "wargreymon",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_1",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:159",
+      "groupName": "龙教练",
+      "library": "300英雄",
+      "work": "數碼寶貝大冒險",
+      "language": "unreviewed",
+      "fileCount": 214,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "⚠️ 交付表說這一位是「300heroes:159」，而索引裡那個編號叫「龙教练」—— **編號對上、名字對不上**，要人看一眼",
+      "confidence": "identity-name-mismatch"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-saya",
+   "name": "沙耶",
+   "inContent": false,
+   "deliveryKey": "saya",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_02",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:29",
+      "groupName": "沙耶",
+      "library": "300英雄",
+      "work": "沙耶之歌",
+      "language": "unreviewed",
+      "fileCount": 194,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「300heroes:29」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     },
+     {
+      "groupId": "300heroes:162",
+      "groupName": "美树沙耶加",
+      "library": "300英雄",
+      "work": "魔法少女小圓",
+      "language": "unreviewed",
+      "fileCount": 232,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "名字命中（⚠️ 只是候選）",
+      "confidence": "candidate"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 2 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 2 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-naruto",
+   "name": "漩渦鳴人",
+   "inContent": false,
+   "deliveryKey": "naruto",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_04",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:70",
+      "groupName": "青丘国主",
+      "library": "300英雄",
+      "work": "火影忍者 NARUTO",
+      "language": "unreviewed",
+      "fileCount": 287,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "⚠️ 交付表說這一位是「300heroes:70」，而索引裡那個編號叫「青丘国主」—— **編號對上、名字對不上**，要人看一眼",
+      "confidence": "identity-name-mismatch"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-lord-nightmares",
+   "name": "金色魔王／惡夢之王",
+   "inContent": false,
+   "deliveryKey": "lord-of-nightmares",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+    "clipMap": {
+     "idle": "wait",
+     "run": "F-Move",
+     "attack": "maryokudan_01",
+     "cast": "sp01_01",
+     "hurt": "Damage-1",
+     "death": "D-Down"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 1,
+    "filesAtSourceWorktree": 1,
+    "filesOnlyInSourceHistory": 1,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "mba:Chara13",
+      "groupName": "金色の魔王",
+      "library": "MBA Complete Form 1.60",
+      "work": "待核",
+      "language": "unreviewed",
+      "fileCount": 10,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「mba:Chara13」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），⚠️ 但 1/2 個檔在來源 repo **被後來的合併刪掉了**（位元組還在 git 歷史裡，撈得回來）",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-rim",
+   "name": "莉姆（Rim；粉紅魔龍）",
+   "inContent": false,
+   "deliveryKey": "rim",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_a",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:289",
+      "groupName": "莉姆",
+      "library": "300英雄",
+      "work": "迷宮黑心企業／異世界迷宮黑心企業",
+      "language": "unreviewed",
+      "fileCount": 326,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「300heroes:289」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-xiaodangjia",
+   "name": "小當家",
+   "inContent": false,
+   "deliveryKey": "cooking-master",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.498407",
+    "glbPath": "assets/models/ou99/ou99_498407.glb",
+    "bytes": 561132,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-inuyasha",
+   "name": "犬夜叉",
+   "inContent": false,
+   "deliveryKey": "inuyasha",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.452782",
+    "glbPath": "assets/models/ou99/ou99_452782.glb",
+    "bytes": 1191816,
+    "clipMap": {
+     "idle": "Stand - 1",
+     "run": "Walk",
+     "attack": "Attack - 1",
+     "cast": "Spell One",
+     "hurt": "Stand - 1",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-asuna",
+   "name": "亞絲娜／結城明日奈",
+   "inContent": false,
+   "deliveryKey": "asuna",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+    "clipMap": {
+     "idle": "stand",
+     "run": "walk fast",
+     "attack": "attack 1",
+     "cast": "spell one",
+     "hurt": "stand",
+     "death": "death"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:76",
+      "groupName": "狂暴补师",
+      "library": "300英雄",
+      "work": "刀劍神域 Sword Art Online",
+      "language": "unreviewed",
+      "fileCount": 522,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "⚠️ 交付表說這一位是「300heroes:76」，而索引裡那個編號叫「狂暴补师」—— **編號對上、名字對不上**，要人看一眼",
+      "confidence": "identity-name-mismatch"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-alice",
+   "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+   "inContent": false,
+   "deliveryKey": "alice",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:249",
+      "groupName": "爱丽丝",
+      "library": "300英雄",
+      "work": "刀劍神域 Sword Art Online",
+      "language": "unreviewed",
+      "fileCount": 235,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "⚠️ 交付表說這一位是「300heroes:249」，而索引裡那個編號叫「爱丽丝」—— **編號對上、名字對不上**，要人看一眼",
+      "confidence": "identity-name-mismatch"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源（⚠️ 其中 1 個編號對上但名字對不上）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-leafa",
+   "name": "莉法",
+   "inContent": false,
+   "deliveryKey": "leafa",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01_a",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:260",
+      "groupName": "莉法",
+      "library": "300英雄",
+      "work": "刀劍神域 Sword Art Online",
+      "language": "unreviewed",
+      "fileCount": 167,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「300heroes:260」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "acquired-kuroyukihime",
+   "name": "黑雪姬",
+   "inContent": false,
+   "deliveryKey": "kuroyukihime",
+   "model": {
+    "ok": false,
+    "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+    "clipMap": {
+     "idle": "bat_idle",
+     "run": "single_run",
+     "attack": "single_attack_attcom_1",
+     "cast": "single_skill_01",
+     "hurt": "bat_idle",
+     "death": "dead"
+    },
+    "deliveryStatus": "converted-shared-contract-and-motion-verified",
+    "files": 2,
+    "filesInRepo": 0,
+    "filesAtSource": 2,
+    "filesAtSourceWorktree": 2,
+    "filesOnlyInSourceHistory": 0,
+    "filesGone": 0,
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "severity": "warning"
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [
+     {
+      "groupId": "300heroes:164",
+      "groupName": "黑雪姬",
+      "library": "300英雄",
+      "work": "加速世界",
+      "language": "unreviewed",
+      "fileCount": 187,
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "why": "交付表的 identityId「300heroes:164」命中索引編號，名字也對得上",
+      "confidence": "identity"
+     }
+    ],
+    "gap": "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在，但 2/2 個檔還沒進這個 repo",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-hlgr",
+   "name": "鋼彈",
+   "inContent": false,
+   "deliveryKey": "hlgr",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.472273",
+    "glbPath": "assets/models/ou99/ou99_472273.glb",
+    "bytes": 1953984,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack 1",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-eevi",
+   "name": "劍心拔刀齋",
+   "inContent": false,
+   "deliveryKey": "eevi",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.470351",
+    "glbPath": "assets/models/ou99/ou99_470351.glb",
+    "bytes": 1011568,
+    "clipMap": {
+     "idle": "Stand 3",
+     "run": "Walk",
+     "attack": "Attack 1",
+     "cast": "Attack 1",
+     "hurt": "Stand 3",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-e00q",
+   "name": "黑化Saber英靈亞瑟王",
+   "inContent": false,
+   "deliveryKey": "e00q",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.466278",
+    "glbPath": "assets/models/ou99/ou99_466278.glb",
+    "bytes": 1363744,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack 2",
+     "cast": "Spell 2",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-usyl",
+   "name": "異形殺戮之牙",
+   "inContent": false,
+   "deliveryKey": "usyl",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.312479",
+    "glbPath": "assets/models/ou99/ou99_312479.glb",
+    "bytes": 494380,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-nbst",
+   "name": "瘋狂假面變態正義",
+   "inContent": false,
+   "deliveryKey": "nbst",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.455144",
+    "glbPath": "assets/models/ou99/ou99_455144.glb",
+    "bytes": 555332,
+    "clipMap": {
+     "idle": "stand",
+     "run": "walk",
+     "attack": "attack",
+     "cast": "spell two alternate",
+     "hurt": "stand",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-nman",
+   "name": "胖虎地獄歌神",
+   "inContent": false,
+   "deliveryKey": "nman",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.496746",
+    "glbPath": "assets/models/ou99/ou99_496746.glb",
+    "bytes": 785220,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack 1",
+     "cast": "Spell",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-e00t",
+   "name": "貞子七夜怪談",
+   "inContent": false,
+   "deliveryKey": "e00t",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.480489",
+    "glbPath": "assets/models/ou99/ou99_480489.glb",
+    "bytes": 445832,
+    "clipMap": {
+     "idle": "Stand",
+     "run": "Walk",
+     "attack": "Attack 2",
+     "cast": "Attack 2",
+     "hurt": "Stand",
+     "death": "Death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  },
+  {
+   "id": "godie-h021",
+   "name": "阿強一號破銅爛鐵",
+   "inContent": false,
+   "deliveryKey": "h021",
+   "model": {
+    "ok": false,
+    "modelKey": "ou99.485012",
+    "glbPath": "assets/models/ou99/ou99_485012.glb",
+    "bytes": 1043944,
+    "clipMap": {
+     "idle": "stand",
+     "run": "walk",
+     "attack": "Attack - 1",
+     "cast": "Spell",
+     "hurt": "stand",
+     "death": "death"
+    },
+    "missingClips": [],
+    "gap": "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "severity": "warning",
+    "deliveryStatus": "existing-finished-files-copied-byte-identical",
+    "files": 0,
+    "filesInRepo": 0
+   },
+   "icon": {
+    "ok": false,
+    "gap": "等 champion 文件進 content 才產得了圖示",
+    "severity": "warning",
+    "asset": null
+   },
+   "voice": {
+    "ok": false,
+    "pack": false,
+    "sharedFrom": null,
+    "categories": 0,
+    "required": 9,
+    "haveRequired": 0,
+    "missing": [
+     "skill-name.q",
+     "skill-name.w",
+     "skill-name.e",
+     "skill-name.r",
+     "skill-name.ex",
+     "hurt",
+     "hurt-heavy",
+     "kill-1",
+     "defeat"
+    ],
+    "select": 0,
+    "candidates": [],
+    "gap": "還沒有語音包（英雄也還沒進 content）",
+    "severity": "warning"
+   },
+   "blockers": [],
+   "warnings": [
+    "模型已經在這個 repo（沿用既有成品（逐位元組相同））—— ⛔ 只差 champion 文件還沒進 content",
+    "等 champion 文件進 content 才產得了圖示",
+    "還沒有語音包（英雄也還沒進 content）"
+   ],
+   "ready": true
+  }
+ ]
+}
