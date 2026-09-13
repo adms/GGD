@@ -6514,7 +6514,7 @@
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",
     "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
-    "status": "reconstruction-support-assets-exported; Niagara and GGD VFX conversion pending",
+    "status": "12 source-texture GGD VFX candidates built; Niagara timing/mesh layers/visual acceptance and skill binding pending",
     "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json",
     "receiptSha256": "f479b0558c69cb037e700b85c921abf8f36a509d33f51ae64a542891e3eabe5b",
     "backupReceiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-export-s3-backup-receipt.json",
@@ -6528,6 +6528,530 @@
     "reconstructionReceiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates-receipt.json",
     "reconstructionReceiptSha256": "a90e7a1d177559d0c2b7154df680ef4c195b63813934330cb7ca8c3108714ae5",
     "reconstructionReviewGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html",
+    "runtimeCandidates": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json",
+      "sha256": "a2caf04a35d7a04126870cd122853a51d55eb34cf5c61ac3898037c5c7e4ff27",
+      "documentGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/README.md",
+      "candidates": [
+        {
+          "candidateId": "popp-vfx-candidate-01",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+          "family": "ice",
+          "phase": "core",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/113-857e1ca47e7d/Strash/VFX/Texture/Alpha/Mask/T_IceMask_kh_01.tga",
+            "bytes": 54748,
+            "sha256": "d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75",
+            "representativePath": "exported/113-857e1ca47e7d/Strash/VFX/Texture/Alpha/Mask/T_IceMask_kh_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 256,
+            "sourceHeight": 256,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png",
+            "bytes": 28540,
+            "sha256": "7a27baed885c49b6efd022cb028ecbf3553ae06a9dfdbdefd051be6f6e45b39d"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-hyadaruko-core.candidate.json",
+            "bytes": 1202,
+            "sha256": "0d09e747ecb033007ce3938b218b6f8ae6019721355ad667ff247351411c53f8"
+          },
+          "vfxId": "fx.strash.popp.nps-hyadaruko-core.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-02",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+          "family": "ice",
+          "phase": "hit",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/113-857e1ca47e7d/Strash/VFX/Texture/Alpha/Mask/T_IceMask_kh_01.tga",
+            "bytes": 54748,
+            "sha256": "d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75",
+            "representativePath": "exported/113-857e1ca47e7d/Strash/VFX/Texture/Alpha/Mask/T_IceMask_kh_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 256,
+            "sourceHeight": 256,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png",
+            "bytes": 28540,
+            "sha256": "7a27baed885c49b6efd022cb028ecbf3553ae06a9dfdbdefd051be6f6e45b39d"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-hyadaruko-hit.candidate.json",
+            "bytes": 1200,
+            "sha256": "c533bc20126a34301716132e809505ddc9f098f50a167c47795bd37817a23aac"
+          },
+          "vfxId": "fx.strash.popp.nps-hyadaruko-hit.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-03",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+          "family": "explosion",
+          "phase": "projectile",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/025-f547f9949cc9/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00.tga",
+            "bytes": 63720,
+            "sha256": "debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34",
+            "representativePath": "exported/025-f547f9949cc9/Strash/VFX/Texture/Alpha/Mask/T_ef_Bullet_Simple_Tk_00.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 128,
+            "sourceHeight": 256,
+            "width": 128,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png",
+            "bytes": 9757,
+            "sha256": "118da4bd3d539208e275458391860a04b7c9cb8f1d97a5c1fc332183f53db40c"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-io-bullet-00.candidate.json",
+            "bytes": 1258,
+            "sha256": "4332807fef4ca260f2c9c3cae80df58f5129fe596d6f1ef6f82ad65025900f5e"
+          },
+          "vfxId": "fx.strash.popp.nps-io-bullet-00.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-04",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+          "family": "explosion",
+          "phase": "impact",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/094-3db76914adec/Strash/VFX/Texture/Alpha/Flash/T_ef_Impact_at_01.tga",
+            "bytes": 144936,
+            "sha256": "04b77c0f47df2b449de6afaeba667a7e96fda4c66556a907e1db15e92d47b591",
+            "representativePath": "exported/094-3db76914adec/Strash/VFX/Texture/Alpha/Flash/T_ef_Impact_at_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 512,
+            "sourceHeight": 512,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero; lanczos-fit-max-edge-256"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/04b77c0f47df2b449de6afaeba667a7e96fda4c66556a907e1db15e92d47b591.png",
+            "bytes": 41217,
+            "sha256": "c42c9c88db39b5249f50816cc48e151b3c6883a099bc8b0233f463c853e1a39e"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-io-explosive-00.candidate.json",
+            "bytes": 1202,
+            "sha256": "8433f0974038530ce20b967b20cd9b72a2aa5749e375be0ac78069a7ac5f30e0"
+          },
+          "vfxId": "fx.strash.popp.nps-io-explosive-00.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-05",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+          "family": "explosion",
+          "phase": "impact",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/125-66babdbde8bb/Strash/VFX/Texture/Alpha/Speed/T_ef_mask_hf_01.tga",
+            "bytes": 69834,
+            "sha256": "1373eaa81028e020ed40568c22704bae246b8ccf846d2436e3a904dfe7811b9e",
+            "representativePath": "exported/125-66babdbde8bb/Strash/VFX/Texture/Alpha/Speed/T_ef_mask_hf_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 256,
+            "sourceHeight": 256,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/1373eaa81028e020ed40568c22704bae246b8ccf846d2436e3a904dfe7811b9e.png",
+            "bytes": 20525,
+            "sha256": "b724daf1be1d9a498ca50fc9d56538de6fa9be1b40bfe2f8927e2dc510333a99"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-iora-explosive-00.candidate.json",
+            "bytes": 1204,
+            "sha256": "60ecb03f53bacc01b21838c52c9f41a86623cf2df44ffbcf262211dd5389f540"
+          },
+          "vfxId": "fx.strash.popp.nps-iora-explosive-00.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-06",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+          "family": "fire",
+          "phase": "firetrail",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/073-1c9bf5da66ed/Strash/VFX/Old/Textures_N/T_ef_mask_F_kh_01.tga",
+            "bytes": 345053,
+            "sha256": "f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a",
+            "representativePath": "exported/073-1c9bf5da66ed/Strash/VFX/Old/Textures_N/T_ef_mask_F_kh_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGBA",
+            "sourceWidth": 256,
+            "sourceHeight": 512,
+            "width": 128,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "preserve-source-rgba; outer-1px-rgba-zero; lanczos-fit-max-edge-256"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png",
+            "bytes": 43928,
+            "sha256": "fbb12248f2cf224fa8d7bcf84d0d070e4b6ca221d6d69aad6db1971556e98e43"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-mera-firetrail-00.candidate.json",
+            "bytes": 1266,
+            "sha256": "8c8f3e7f6287f44b2319356d94b47293c6d572cb6c107c6b2b1b763771aa1037"
+          },
+          "vfxId": "fx.strash.popp.nps-mera-firetrail-00.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-07",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+          "family": "fire",
+          "phase": "firetrail",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/073-1c9bf5da66ed/Strash/VFX/Old/Textures_N/T_ef_mask_F_kh_01.tga",
+            "bytes": 345053,
+            "sha256": "f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a",
+            "representativePath": "exported/073-1c9bf5da66ed/Strash/VFX/Old/Textures_N/T_ef_mask_F_kh_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGBA",
+            "sourceWidth": 256,
+            "sourceHeight": 512,
+            "width": 128,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "preserve-source-rgba; outer-1px-rgba-zero; lanczos-fit-max-edge-256"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png",
+            "bytes": 43928,
+            "sha256": "fbb12248f2cf224fa8d7bcf84d0d070e4b6ca221d6d69aad6db1971556e98e43"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-merami-firetrail-00.candidate.json",
+            "bytes": 1268,
+            "sha256": "39fe590fb3281e871a71f0be8c4153497587990a76da55e37ed07a267841273a"
+          },
+          "vfxId": "fx.strash.popp.nps-merami-firetrail-00.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-08",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+          "family": "fire",
+          "phase": "landing",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/134-9f8066cb1cc7/Strash/VFX/Texture/Alpha/Mask/T_ef_MaskSpark_Tk_00.tga",
+            "bytes": 8170,
+            "sha256": "74f8ffb643443d366e1d2a90fd0046c2166b047cf641375f3dc99b5b37c5e900",
+            "representativePath": "exported/134-9f8066cb1cc7/Strash/VFX/Texture/Alpha/Mask/T_ef_MaskSpark_Tk_00.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 64,
+            "sourceHeight": 64,
+            "width": 64,
+            "height": 64,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/74f8ffb643443d366e1d2a90fd0046c2166b047cf641375f3dc99b5b37c5e900.png",
+            "bytes": 1438,
+            "sha256": "ef1e24382fb17adc25696668bbda009758f0867a1c08e7ea309b84fea509c052"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-merami-landing-2.candidate.json",
+            "bytes": 1247,
+            "sha256": "75a7f419951d00e650779dc8f3ff5b96ce6409c091b26571d6f295a4ddf60633"
+          },
+          "vfxId": "fx.strash.popp.nps-merami-landing-2.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-09",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+          "family": "fire",
+          "phase": "muzzle",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/024-4d63ac3f750f/Strash/VFX/Texture/Alpha/Mask/T_ef_SmokeMask_tk_01.tga",
+            "bytes": 119602,
+            "sha256": "aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b",
+            "representativePath": "exported/024-4d63ac3f750f/Strash/VFX/Texture/Alpha/Mask/T_ef_SmokeMask_tk_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 256,
+            "sourceHeight": 256,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png",
+            "bytes": 24418,
+            "sha256": "a5b30a3e48c19b3675fcd5e92da3771e665cb366f6e6aef37355cee19073620b"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-merami-muzzle.candidate.json",
+            "bytes": 1262,
+            "sha256": "28eb1ef0da8a2f9d688bb12b1ddf360a1c45b15d44ee898305c2a3e2e459775a"
+          },
+          "vfxId": "fx.strash.popp.nps-merami-muzzle.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-10",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+          "family": "fire",
+          "phase": "core",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/024-4d63ac3f750f/Strash/VFX/Texture/Alpha/Mask/T_ef_SmokeMask_tk_01.tga",
+            "bytes": 119602,
+            "sha256": "aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b",
+            "representativePath": "exported/024-4d63ac3f750f/Strash/VFX/Texture/Alpha/Mask/T_ef_SmokeMask_tk_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 256,
+            "sourceHeight": 256,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png",
+            "bytes": 24418,
+            "sha256": "a5b30a3e48c19b3675fcd5e92da3771e665cb366f6e6aef37355cee19073620b"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-merami-core.candidate.json",
+            "bytes": 1202,
+            "sha256": "065073f538cdb7310daae2cc3f6a386fedf323146782bee2252985abf9eb43b8"
+          },
+          "vfxId": "fx.strash.popp.nps-merami-core.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-11",
+          "rootReference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+          "family": "lightning",
+          "phase": "charge",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/156-52f2dd6f4910/Strash/VFX/Texture/Alpha/Thunder/T_Thunder_kh_01.tga",
+            "bytes": 13846,
+            "sha256": "10ca29dd3933579d618ac28b75390f404dbf222141dfad0753ee631ee2d3647c",
+            "representativePath": "exported/156-52f2dd6f4910/Strash/VFX/Texture/Alpha/Thunder/T_Thunder_kh_01.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 256,
+            "sourceHeight": 256,
+            "width": 256,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/10ca29dd3933579d618ac28b75390f404dbf222141dfad0753ee631ee2d3647c.png",
+            "bytes": 9794,
+            "sha256": "9902dac224e1dd5da1cb283b9520aaf886658cccee50eeefa317f48dd8b076cc"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-raidein-charge-core.candidate.json",
+            "bytes": 1198,
+            "sha256": "6b7a43ccb5196db2619db79ec3a00edb9d742a8cd669656c3c1a06b159e498e8"
+          },
+          "vfxId": "fx.strash.popp.nps-raidein-charge-core.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        },
+        {
+          "candidateId": "popp-vfx-candidate-12",
+          "rootReference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+          "family": "explosion",
+          "phase": "impact",
+          "sourceTexture": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/exported/070-699b6dfa1895/Strash/VFX/Texture/Alpha/Mask/T_ef_Sen_hf_00.tga",
+            "bytes": 6752,
+            "sha256": "c7551665603cf40d05a26f8c05b1b9cdad463d712683b2a0312b42d60cad00b3",
+            "representativePath": "exported/070-699b6dfa1895/Strash/VFX/Texture/Alpha/Mask/T_ef_Sen_hf_00.tga"
+          },
+          "textureConversion": {
+            "sourceMode": "RGB",
+            "sourceWidth": 16,
+            "sourceHeight": 256,
+            "width": 16,
+            "height": 256,
+            "maxEdgeLimit": 256,
+            "transform": "rgb-maximum-to-alpha-preserve-rgb; outer-1px-rgba-zero"
+          },
+          "runtimeTexture": {
+            "gitPath": "content/assets/textures/particles/strash/popp/c7551665603cf40d05a26f8c05b1b9cdad463d712683b2a0312b42d60cad00b3.png",
+            "bytes": 1639,
+            "sha256": "044710f2da438c97bbf5f1b635f979e0364f42104d04d88cf6204b289d05c8b9"
+          },
+          "vfxDocument": {
+            "gitPath": "content/vfx/fx.strash.popp.nps-ionazun-explosive-00.candidate.json",
+            "bytes": 1207,
+            "sha256": "c96830f09e11aff18423dee8ef10e4a50498fd4492f2339965b8e147ae982892"
+          },
+          "vfxId": "fx.strash.popp.nps-ionazun-explosive-00.candidate",
+          "states": {
+            "ggdVfxDocumentBuilt": true,
+            "sourceTextureConverted": true,
+            "niagaraTimingRecovered": false,
+            "meshLayersReconstructed": false,
+            "skillBound": false,
+            "visuallyAccepted": false,
+            "runtimeSelectable": false,
+            "productionDeployed": false
+          }
+        }
+      ],
+      "excluded": [
+        {
+          "candidateId": "popp-vfx-candidate-13",
+          "rootReference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+          "reason": "identity-boundary: PN030 character-special roots are not attributed to PN020 Popp"
+        },
+        {
+          "candidateId": "popp-vfx-candidate-14",
+          "rootReference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+          "reason": "identity-boundary: PN030 character-special roots are not attributed to PN020 Popp"
+        }
+      ],
+      "reviewPage": "apps/client/public/asset-review.html"
+    },
     "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1",
     "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-dependency-export-v1/07e30bbeb2b3f12da5f4a1ecb54b7a49a72f2432c9c5224fb801537270556fcb.tar.gz",
     "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-dependency-export-v1/07e30bbeb2b3f12da5f4a1ecb54b7a49a72f2432c9c5224fb801537270556fcb.files.json",
@@ -6560,7 +7084,9 @@
       "niagaraSystemCandidates": 14,
       "supportRoots": 3,
       "candidateRecipes": 14,
-      "ggdVfxConverted": 0,
+      "ggdVfxConvertedCandidates": 12,
+      "identityExcludedRoots": 2,
+      "visuallyAccepted": 0,
       "runtimeBindingsCreated": 0
     },
     "fullGetVerified": true,
@@ -12247,7 +12773,7 @@
   "historicalModelLineageAudit": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json",
     "bytes": 17948,
-    "sha256": "041cab0ac80cf316ff34dbadce5c9564b2ce47dffeaf2a5b1598b2fc0a06675d",
+    "sha256": "e3970b6289c3b4477813e5a1787a8397d2e887842e4821982ac3c7578a24283e",
     "exactHistoricalGlbsByteIdentical": 4,
     "standardizedLineageOptionsRegistered": 4,
     "defaultsChanged": 0,
