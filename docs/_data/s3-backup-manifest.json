@@ -3,10 +3,10 @@
   "note": "⭐ S3 **備份站點**的收據（GH#1231）。owner 2026-09-11 逐字：「S3 是備份不是互斥 所有產生器 抽取器 成品也都要在 S3 上一份 作為備份站點」。⛔ 不要手改：跑 `bash scripts/backup-s3.sh`。⭐ 位元組在 S3、**雜湊在 git** —— 這一份就是那個雜湊。",
   "bucket": "ggd-390630837668-ap-east-2-an",
   "gitTree": {
-    "commit": "d5418a56a57b396cbd5e4346449302a101118d4f",
-    "key": "backup/git-tree/d5418a56a57b396cbd5e4346449302a101118d4f.tar.gz",
-    "sha256": "4a159ec20ade64490407ec0e8c13d5e18c6eb7c6754875f653bab07710c6048f",
-    "bytes": 1299700721
+    "commit": "802e8e02c974b2d20c11653f2c57ef6bef45d43f",
+    "key": "backup/git-tree/802e8e02c974b2d20c11653f2c57ef6bef45d43f.tar.gz",
+    "sha256": "3e227e4285a530a5432e3a6127a9cfbb1f01bbd3419488c357a267a752a75152",
+    "bytes": 1299702029
   },
   "intermediates": [
     {
