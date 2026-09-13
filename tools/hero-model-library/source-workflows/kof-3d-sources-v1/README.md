@@ -15,6 +15,23 @@ python3 -m unittest \
   tools/hero-model-library/source-workflows/kof-3d-sources-v1/test_build_inventory.py
 ```
 
+Freeze a fresh converter probe before rebuilding. The guard receipt must come
+from the checked-out `tools/model-budget/guard.ts`; an `over` exit is expected
+for the current Ash candidates and is preserved as evidence:
+
+```sh
+pnpm modelbudget:guard /absolute/kof-xv-ash-material-v2-budget-v2 \
+  --role champion --json > /tmp/kof-ash-guard.json
+python3 tools/hero-model-library/source-workflows/kof-3d-sources-v1/probe_conversion.py \
+  --repo . --workspace .. --guard-receipt /tmp/kof-ash-guard.json
+python3 tools/hero-model-library/source-workflows/kof-3d-sources-v1/convert_xiv_textures.py \
+  --repo . --workspace ..
+```
+
+The texture step converts only root-level 1P `COL` DDS files. It runs two
+independent `sips` conversions per input and rejects byte differences. These 14
+PNGs are review candidates; native model/material binding is still blocked.
+
 The generated report re-hashes every extracted KOF XIV file listed in the
 existing frozen `files.jsonl.gz`, re-hashes every KOF XV model artifact that has
 an expected SHA-256, and parses the complete QuickBMS WAD listing into native
@@ -51,6 +68,7 @@ python3 tools/hero-model-library/build_palworld_index.py --workspace .. \
   --git-link-root ../GGD-pr1152-next
 python3 tools/hero-model-library/current_resource_index.py \
   --git-link-root ../GGD-pr1152-next
+python3 tools/hero-model-library/source-workflows/kof-3d-sources-v1/update_four_day_report.py --write
 ```
 
 `--git-link-root` only controls clickable absolute Git links in generated

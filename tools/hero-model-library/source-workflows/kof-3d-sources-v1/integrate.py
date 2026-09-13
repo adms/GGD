@@ -118,6 +118,38 @@ def upsert(data: dict[str, Any], source: dict[str, Any]) -> bool:
     return True
 
 
+def integrate_xiv_source(data: dict[str, Any], textures: dict[str, Any], probe: dict[str, Any]) -> bool:
+    rows = [row for row in data.get("publicSources", []) if row.get("id") == BUILD.KOF_XIV_SOURCE_ID]
+    if len(rows) != 1:
+        raise ValueError(f"expected one KOF XIV source, found {len(rows)}")
+    row = rows[0]
+    before = json.dumps(row, ensure_ascii=False, sort_keys=True)
+    row["readiness"] = "textures-decoded-review-candidates-model-motion-vfx-blocked"
+    row["conversion"] = {
+        "probeSourceId": probe["sourceId"],
+        "nativeRepresentativeFiles": len(probe["kofXiv"]["nativeFiles"]),
+        "assimpAcceptedFiles": probe["kofXiv"]["assimpAcceptedFiles"],
+        "modelAndSkeleton": probe["kofXiv"]["conversionState"]["modelAndSkeleton"],
+        "nativeAnimation": probe["kofXiv"]["conversionState"]["nativeAnimation"],
+        "vfx": probe["kofXiv"]["conversionState"]["vfx"],
+        "textureCandidates": textures["summary"],
+        "runtimeReady": False,
+        "backendSelectionVerified": False,
+    }
+    row["componentCandidates"] = [{
+        "id": f"kof-xiv-{item['nativeCharacterId'].lower()}-{Path(item['outputAbsolutePath']).stem.lower()}-texture-v1",
+        "nativeCharacterId": item["nativeCharacterId"],
+        "assetKind": "texture",
+        "absoluteLocalPath": item["outputAbsolutePath"],
+        "bytes": item["outputBytes"],
+        "sha256": item["outputSha256"],
+        "width": item["width"], "height": item["height"], "channels": item["channels"],
+        "readiness": item["state"], "runtimeReady": False, "backendSelectionVerified": False,
+    } for item in textures["files"]]
+    row["conversionBackup"] = textures.get("backup")
+    return before != json.dumps(row, ensure_ascii=False, sort_keys=True)
+
+
 def backlog_candidate(candidate: dict[str, Any], source: dict[str, Any], workspace: Path) -> dict[str, Any]:
     path = workspace / source["localPath"] / candidate["model"]
     raw = path.read_bytes()
@@ -205,19 +237,22 @@ def main() -> None:
     ash = BUILD.build_ash_budget_candidates(workspace)
     source = source_record(ash)
     source_changed = upsert(data, source)
+    texture_path = repo / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json"
+    probe_path = repo / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json"
+    xiv_changed = integrate_xiv_source(data, json.loads(texture_path.read_text(encoding="utf-8")), json.loads(probe_path.read_text(encoding="utf-8")))
     backlog_path = repo / "materials/hero-model-library/已取得模型待設計英雄.json"
     backlog = json.loads(backlog_path.read_text(encoding="utf-8"))
     backlog_changed = integrate_backlog(backlog, source, workspace)
-    changed = source_changed or backlog_changed
+    changed = source_changed or xiv_changed or backlog_changed
     if args.check:
         if changed:
             raise SystemExit("KOF Ash budget central indexes are stale")
     else:
-        if source_changed:
+        if source_changed or xiv_changed:
             path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         if backlog_changed:
             backlog_path.write_text(json.dumps(backlog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"sourceId": ash["sourceId"], "sourceChanged": source_changed,
+    print(json.dumps({"sourceId": ash["sourceId"], "sourceChanged": source_changed, "xivChanged": xiv_changed,
         "backlogChanged": backlog_changed, "changed": changed, "check": args.check}, ensure_ascii=False))
 
 

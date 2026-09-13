@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""Upsert the generated KOF conversion paragraph in the four-day report."""
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+
+REPO = Path(__file__).resolve().parents[4]
+REPORT = REPO / "materials/hero-model-library/近四日新增模型動作特效清單.md"
+INDEX = REPO / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+START = "- KOF 3D 來源批次："
+ANCHOR = "\n- SSBU c00 第二批黑底修復版："
+
+
+def render() -> str:
+    data = json.loads(INDEX.read_text(encoding="utf-8"))
+    xiv = data["kofXiv"]
+    left, right = data["kofXv"]["newBudgetCandidates"]["candidates"]
+    textures = xiv["textureCandidates"]["summary"]
+    backup = xiv["textureCandidates"]["backup"]
+    return (
+        f"- KOF 3D 來源批次：KOF XIV MAI、IOR、KYO 已抽取並逐檔 SHA 驗證 "
+        f"{xiv['selectedExtraction']['verification']['checkedFiles']:,} 檔／{xiv['selectedExtraction']['verification']['checkedBytes']:,} bytes；"
+        "18 個代表 OBAC／OMIR／OSEC／OTRA 容器已固定檔頭、bytes、SHA，Assimp 6.0 實讀 0/18；Blender 5.2.1 background probe 在列舉 importer 前即崩潰，"
+        "所以模型、骨架、原生動作與 VFX 仍是已解包／轉換阻塞。"
+        f"已額外解碼 {textures['files']} 張 1P COL DDS 為最大 {textures['maxEdge']}px PNG（{textures['bytes']:,} bytes），"
+        f"完整 S3 GET／逐 member SHA 通過：`{backup['s3Uri']}`；"
+        "但尚未材質綁定與視覺驗收。KOF XV Ash 左／右髮候選為 "
+        f"{left['metrics']['triangles']:,}／{right['metrics']['triangles']:,} 面、{left['metrics']['maxSkinJoints']} joints、"
+        f"最大 {left['metrics']['maxTextureDimension']}px；現行 hard policy 實跑均因 {left['metrics']['drawCalls']} draw "
+        "超過 6 而失敗，且 0 原生 gameplay clips，未進 runtime Git、後台選項或部署。"
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--write", action="store_true")
+    args = parser.parse_args()
+    original = REPORT.read_text(encoding="utf-8")
+    line = render()
+    if START in original:
+        start = original.index(START)
+        end = original.find("\n- ", start + len(START))
+        end = len(original) if end < 0 else end
+        expected = original[:start] + line + original[end:]
+    else:
+        anchor = original.index(ANCHOR)
+        expected = original[:anchor] + "\n" + line + original[anchor:]
+    if args.write:
+        REPORT.write_text(expected, encoding="utf-8")
+    elif original != expected:
+        raise SystemExit("four-day report KOF paragraph is stale; run with --write")
+    print(json.dumps({"report": str(REPORT.relative_to(REPO)), "written": args.write}, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

@@ -17,6 +17,14 @@ SPEC.loader.exec_module(MODULE)
 
 
 class InventoryParsingTest(unittest.TestCase):
+    def test_guard_output_parser_ignores_pnpm_preamble(self) -> None:
+        probe_spec = importlib.util.spec_from_file_location("kof3d_probe", HERE / "probe_conversion.py")
+        probe = importlib.util.module_from_spec(probe_spec)
+        assert probe_spec.loader is not None
+        probe_spec.loader.exec_module(probe)
+        value = probe.parse_guard_output("pnpm preamble\n{\"tool\":\"model-budget/guard\",\"results\":[]}")
+        self.assertEqual("model-budget/guard", value["tool"])
+
     def test_wad_listing_parses_hex_offsets_and_native_directories(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "list.log"

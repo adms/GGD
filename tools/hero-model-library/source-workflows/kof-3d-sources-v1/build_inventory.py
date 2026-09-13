@@ -357,7 +357,9 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
     windows_zip = workspace / "GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip"
     wad_listing = workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1/quickbms-list.log"
     xiv_selected_root = workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1"
-    for required in (downloads_path, windows_zip, wad_listing, xiv_selected_root / "files.jsonl.gz"):
+    conversion_probe_path = repo / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json"
+    texture_candidates_path = repo / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json"
+    for required in (downloads_path, windows_zip, wad_listing, xiv_selected_root / "files.jsonl.gz", conversion_probe_path, texture_candidates_path):
         if not required.exists():
             raise FileNotFoundError(required)
 
@@ -374,6 +376,8 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
     source_groups = classify_public_sources(downloads, workspace)
     extracted_verification = verify_xiv_extracted_files(xiv_selected_root)
     ash_budget = build_ash_budget_candidates(workspace)
+    conversion_probe = json_load(conversion_probe_path)
+    texture_candidates = json_load(texture_candidates_path)
 
     all_artifacts = [artifact for rows in source_groups.values() for source in rows for artifact in source["modelArtifacts"]]
     claimed_artifacts = [artifact for artifact in all_artifacts if artifact["expectedSha256"]]
@@ -390,9 +394,11 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
             "statusSemantics": "source-path listing, extraction, conversion, runtime selection and production deployment are separate states",
         },
         "inputs": {
-            "downloadSources": {"absolutePath": str(downloads_path.resolve()), "bytes": downloads_path.stat().st_size, "sha256": sha256(downloads_path)},
+            "downloadSources": {"path": str(downloads_path.relative_to(repo)), "bytes": downloads_path.stat().st_size, "sha256": sha256(downloads_path)},
             "windowsInventory": {"absolutePath": str(windows_zip.resolve()), "bytes": windows_zip.stat().st_size, "sha256": sha256(windows_zip), "receipt": win["scan-receipt.json"][0]},
             "kofXivWadListing": {"absolutePath": str(wad_listing.resolve()), "bytes": wad_listing.stat().st_size, "sha256": sha256(wad_listing)},
+            "conversionProbe": {"path": str(conversion_probe_path.relative_to(repo)), "bytes": conversion_probe_path.stat().st_size, "sha256": sha256(conversion_probe_path)},
+            "textureCandidates": {"path": str(texture_candidates_path.relative_to(repo)), "bytes": texture_candidates_path.stat().st_size, "sha256": sha256(texture_candidates_path)},
         },
         "kofXiv": {
             "steamInventoryRows": kof_steam_games,
@@ -417,6 +423,8 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
                 "verification": extracted_verification,
             },
             "registeredSources": source_groups["xiv"],
+            "conversionProbe": conversion_probe["kofXiv"],
+            "textureCandidates": texture_candidates,
             "conversionState": {
                 "model": "native OBAC/OMIR/OSEC extracted for MAI, IOR and KYO; proprietary mesh/material conversion unresolved",
                 "animation": "native OTRA extracted; proprietary animation conversion unresolved",
@@ -431,6 +439,7 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
             "standardGlbArtifactsLocal": len(standard_models),
             "standardGlbArtifactsRuntimeReady": sum(bool(row["runtimeReady"]) for row in standard_models),
             "newBudgetCandidates": ash_budget,
+            "hardPolicyProbe": conversion_probe["kofXvAsh"],
             "conversionState": {
                 "ash": "four full-resolution local GLB variants exist across source and material-repair revisions; two new <=8000-triangle/256-texture derivatives are S3-backed but remain blocked by 18 draw calls and visual review, with zero gameplay animation clips",
                 "mai": "native FBX plus textures and Source Filmmaker head/body parts acquired; the Assimp preflight was rejected for unresolved material URIs and excessive geometry",
@@ -492,7 +501,8 @@ def render_markdown(data: dict[str, Any]) -> str:
         f"- `assets.wad` 列檔：{xiv['wadPathIndex']['listedFiles']:,} 筆，{xiv['wadPathIndex']['listedBytes']:,} bytes，{xiv['wadPathIndex']['nativeDirectoryCount']} 個 `Chara/<ID>` 原生目錄。",
         f"- 已取得並逐檔重驗：MAI（不知火舞）、IOR（八神庵）、KYO（草薙京），{xiv['selectedExtraction']['verification']['checkedFiles']:,} 檔，{xiv['selectedExtraction']['verification']['checkedBytes']:,} bytes。",
         f"- 逐檔 SHA-256：{'PASS' if xiv['selectedExtraction']['verification']['allFilesSha256Verified'] else 'FAIL'}。",
-        "- 模型／骨架／動作／特效：OBAC、OMIR、OSEC、OTRA、EFF 等專有格式已抽出，仍缺可驗證的轉換器。",
+        f"- 模型／骨架／動作：18 個代表容器已固定檔頭、bytes、SHA 並以 Assimp {xiv['conversionProbe']['assimpAcceptedFiles']}/18 實際讀取；OBAC、OMIR、OSEC、OTRA 仍無可用 reader。Blender 5.2.1 background probe 在列舉 importer 前即崩潰（exit {xiv['conversionProbe']['blenderBackgroundProbe']['exitCode']}），所以沒有把 Blender 安裝當成已可轉換。",
+        f"- 貼圖：已將 1P 根目錄的 {xiv['textureCandidates']['summary']['files']} 張 COL DDS 轉為可重建的 256px PNG（{xiv['textureCandidates']['summary']['bytes']:,} bytes），S3 完整讀回與逐檔 SHA：{'PASS' if xiv['textureCandidates'].get('backup', {}).get('fullGetVerified') and xiv['textureCandidates'].get('backup', {}).get('allMemberSha256Verified') else 'FAIL'}；它們是待材質映射與視覺驗收的獨立候選，不是模型成品。",
         "- 音訊：474 個 OGG 已在既有交付中解碼驗證；逐段說話者、語言和事件綁定待聽審。",
         "- 完整 WAD 當前沒有保留於 Mac 或已驗證 S3；其餘原生 ID 只有列檔資料，不計取得。",
         "",
@@ -512,7 +522,7 @@ def render_markdown(data: dict[str, Any]) -> str:
         f"- 中央索引已登記 {len(xv['registeredSources'])} 個來源版本，角色為 Ash Crimson、八神庵和不知火舞。",
         f"- 本機找到 {xv['standardGlbArtifactsLocal']} 個索引指定的 GLB 實檔；後台已驗證可選為 {xv['standardGlbArtifactsRuntimeReady']} 個。",
         "- Ash 四個全解析度 GLB 為左／右髮與材質修訂版，零原生遊戲動作，仍待 runtime 與視覺驗收。",
-        f"- 新增兩個 Ash 預算候選：{xv['newBudgetCandidates']['candidates'][0]['metrics']['triangles']:,}／{xv['newBudgetCandidates']['candidates'][1]['metrics']['triangles']:,} 面，貼圖上限 256，258 joints；仍為 18 draw calls，超過 3，所以只是「已轉換的待解決候選」。",
+        f"- 新增兩個 Ash 預算候選：{xv['newBudgetCandidates']['candidates'][0]['metrics']['triangles']:,}／{xv['newBudgetCandidates']['candidates'][1]['metrics']['triangles']:,} 面，貼圖上限 256，258 joints；現行 guard 實跑均為 `over`：18 draw calls 超過警戒 3／硬上限 6，所以只是「已轉換的待解決候選」。",
         f"- 兩個候選的 S3 完整讀回：{'PASS' if xv['newBudgetCandidates']['s3BackupReceipt']['fullGetVerified'] and xv['newBudgetCandidates']['s3BackupReceipt']['allMemberSha256Verified'] else 'FAIL'}。",
         "- 8,575 面的首次超標輸出、7,869/7,868 面候選與 atlas 失敗 manifest 均已獨立備份到 S3 `legacy/conversion-stages/`，三筆都通過完整讀回與逐檔 SHA-256。",
         "- 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。",

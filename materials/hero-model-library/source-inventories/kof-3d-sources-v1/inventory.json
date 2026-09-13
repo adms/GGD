@@ -15,9 +15,9 @@
   },
   "inputs": {
     "downloadSources": {
-      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/download-sources.json",
-      "bytes": 3067097,
-      "sha256": "3174444d8cc13fbca8f20c40fdaa41f5e00997d380e3950f8e9440a02264b85d"
+      "path": "materials/hero-model-library/download-sources.json",
+      "bytes": 3071301,
+      "sha256": "082f58e332f43d578563000a7e56979b92d5b82d5fd90d09bf4fac70bdedcda4"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -48,6 +48,16 @@
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-wad-inspection-v1/quickbms-list.log",
       "bytes": 3073359,
       "sha256": "193ee8cb49ca7f7bea7ecafa9c6bca531c220725dcb2ac40f9671ff0b632ed97"
+    },
+    "conversionProbe": {
+      "path": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json",
+      "bytes": 17614,
+      "sha256": "03204b7212c86ec0bce17d644c0774063a5eace3f2dfb2b1b032fe7ee02af424"
+    },
+    "textureCandidates": {
+      "path": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json",
+      "bytes": 14257,
+      "sha256": "f03b31f79423d05ed85624e4f27981d4d716647dea2d017281fd7a2c2e80b100"
     }
   },
   "kofXiv": {
@@ -3343,7 +3353,7 @@
           "configuration"
         ],
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "native-assets-extracted-pending-proprietary-format-conversion",
+        "readiness": "textures-decoded-review-candidates-model-motion-vfx-blocked",
         "publicationStatus": "s3-readback-verified",
         "absoluteLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
         "existsLocal": true,
@@ -3364,6 +3374,560 @@
         }
       }
     ],
+    "conversionProbe": {
+      "nativeFiles": [
+        {
+          "nativeCharacterId": "MAI",
+          "kind": "obac",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI.obac",
+          "bytes": 7962449,
+          "sha256": "1f484d0a2f939e4f424741d67763b5b7822aa20d68f489c99cf21427c62d8234",
+          "first32BytesHex": "534642fc0000156c01008ed5af3f0d8d9e404062563f35aac83fe3219d40ba0c",
+          "expectedMagicHex": "534642fc",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "kind": "omir",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI.omir",
+          "bytes": 5130,
+          "sha256": "16f644ef2f0c60428fbfcf466b5862fd312b2b80d35d3968bb78db9455d9024d",
+          "first32BytesHex": "4f4d01000000d300000008000000726f6f74426f6e65080000006e756c6c426f",
+          "expectedMagicHex": "4f4d",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "kind": "osec",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI.osec",
+          "bytes": 6010,
+          "sha256": "044ba8c4168e7f476f4f2dc9867356f84585cc5ca37e82b929f9cd8aca854f60",
+          "first32BytesHex": "4f530a00000000000000d300000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "4f53",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI.otra",
+          "bytes": 14465192,
+          "sha256": "cd81f2332e274c40a80d8916a17062176b78df229539ec09d43d2b18a2f8766a",
+          "first32BytesHex": "534d70000000690000008201000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/CMN.otra",
+          "bytes": 4321307,
+          "sha256": "07a5cfdef2db0d0fceb344b1d3d5ae902feccb23fa5c15292fb8d1bd364b6f53",
+          "first32BytesHex": "534d7000000033000000ad00000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_FCE.otra",
+          "bytes": 709029,
+          "sha256": "115ffd8a99f3740cc873b0650da73c4feed21d4aad802062c7bbf42d6408fa90",
+          "first32BytesHex": "534d70000000270000008601000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "kind": "obac",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR.obac",
+          "bytes": 9968764,
+          "sha256": "80712042046bccb469c3b3312968985483a39ccfc374bb8e7180179dba2d8bc3",
+          "first32BytesHex": "534642fc000095e501009ab6de3ece66a64003ad21bf1d03e33e3637a640cf49",
+          "expectedMagicHex": "534642fc",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "kind": "omir",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR.omir",
+          "bytes": 5480,
+          "sha256": "778307675f350ff57aa3ee14afcdac5d5a2214bf62d4225235ac1965f6e74ea0",
+          "first32BytesHex": "4f4d01000000dc00000008000000726f6f74426f6e65080000006e756c6c426f",
+          "expectedMagicHex": "4f4d",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "kind": "osec",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR.osec",
+          "bytes": 6732,
+          "sha256": "23e68cd3a735b0759e0a42097b7dc6673833f2c8749278a0b802c5b66b9ec3f2",
+          "first32BytesHex": "4f530b00000000000000dc00000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "4f53",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR.otra",
+          "bytes": 14712299,
+          "sha256": "4f98e48ec6300808d2b5f4f0367ade8851aecdc8f6ac6457d830c4251321d43b",
+          "first32BytesHex": "534d70000000730000005101000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/CMN.otra",
+          "bytes": 4321307,
+          "sha256": "07a5cfdef2db0d0fceb344b1d3d5ae902feccb23fa5c15292fb8d1bd364b6f53",
+          "first32BytesHex": "534d7000000033000000ad00000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR_FCE.otra",
+          "bytes": 652669,
+          "sha256": "788c06ffa8d53c0d6756a6afb33821902a8ce65923c8f695f38281a3f9e63d95",
+          "first32BytesHex": "534d70000000270000002401000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "kind": "obac",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.obac",
+          "bytes": 7191320,
+          "sha256": "368782bd79355f725b7fdbf8e41c4fc97702df78bf61a676fc549550959702f2",
+          "first32BytesHex": "534642fc0000392a0100fbebfa3d0f0be03f8e6040bfaf76a439bdfddf3f9b22",
+          "expectedMagicHex": "534642fc",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "kind": "omir",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.omir",
+          "bytes": 5687,
+          "sha256": "4d2ed3e0ed7e1bc62fd0ecd846c23923367c8efee50e858cc41e9ffdabfb2cd0",
+          "first32BytesHex": "4f4d01000000e300000008000000726f6f74426f6e65080000006e756c6c426f",
+          "expectedMagicHex": "4f4d",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "kind": "osec",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.osec",
+          "bytes": 6655,
+          "sha256": "28e368a518c0f004622bf9b4971157a14fc1acd4c03d8b4e2c0dab9ad5b48006",
+          "first32BytesHex": "4f530b00000000000000e300000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "4f53",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO.otra",
+          "bytes": 16303919,
+          "sha256": "e8fa18cbe5b98d03700eef2d0f17cc73d5dd9e104e29f0ee4dfc6c8ce45ef787",
+          "first32BytesHex": "534d70000000780000005e01000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/CMN.otra",
+          "bytes": 4321307,
+          "sha256": "07a5cfdef2db0d0fceb344b1d3d5ae902feccb23fa5c15292fb8d1bd364b6f53",
+          "first32BytesHex": "534d7000000033000000ad00000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "kind": "otra",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO_FCE.otra",
+          "bytes": 677294,
+          "sha256": "bbb0affc24b9815a79b9a6d5d25b77ded8bdbcd1ccc1fbb160c356a304643c78",
+          "first32BytesHex": "534d70000000270000001e01000008000000726f6f74426f6e65080000006e75",
+          "expectedMagicHex": "534d70",
+          "magicVerified": true,
+          "assimp": {
+            "exitCode": 3,
+            "readerAccepted": false,
+            "reason": "no-suitable-reader"
+          }
+        }
+      ],
+      "allMagicVerified": true,
+      "assimpAcceptedFiles": 0,
+      "blenderBackgroundProbe": {
+        "exitCode": -11,
+        "initialized": false,
+        "result": "background-process-crashed-before-importer-probe",
+        "archWarningObserved": true
+      },
+      "conversionState": {
+        "modelAndSkeleton": "blocked-proprietary-obac-omir-osec-no-reader",
+        "nativeAnimation": "blocked-proprietary-otra-no-reader",
+        "vfx": "blocked-proprietary-eff-obac-runtime-reconstruction"
+      },
+      "nextStep": "Resolve the Blender 5.2.1 background-process crash on this host and add or pin an audited OBAC/OMIR/OSEC/OTRA parser; then export a reversible intermediate with bone names, weights, bind matrices, material slots and clip timing before GLB conversion."
+    },
+    "textureCandidates": {
+      "schema": "ggd.kof-xiv-texture-candidates@1",
+      "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "conversionId": "kof-xiv-priority-textures-20260914-v1",
+      "selection": "Only root-level 1P COL textures; effects, alternate colours, normal/specular/emissive maps remain preserved but unconverted.",
+      "tool": "macOS sips (determinism checked by two independent conversions per input)",
+      "outputRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1",
+      "files": [
+        {
+          "nativeCharacterId": "MAI",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_COL_CLOTH1_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "98795452f1de2b22ae2ab063513df3659cb78e84393c12be055b23fe8eeafa22",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/MAI/MAI_COL_CLOTH1_1P.png",
+          "outputBytes": 108817,
+          "outputSha256": "c956e1b8bf6df628060ed81297444586136a2f7fbf805af89242c6531bda8d11",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_COL_CLOTH2_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "dc6e92e500014e9c624c40ff7316388dd8a809ab25ef0ee38037b4df70c2ac1c",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/MAI/MAI_COL_CLOTH2_1P.png",
+          "outputBytes": 113128,
+          "outputSha256": "676909d5ce6cff681bfcf6e4553a25a439a9265089a6525df00f84c570ce5402",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_COL_PARTS_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "a8e0fe8a2399b1f6db26fcfa20b66a93d65ed550f10752612de2280f466afa8e",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/MAI/MAI_COL_PARTS_1P.png",
+          "outputBytes": 92057,
+          "outputSha256": "54c108f21ed3d13f64c841a127e8c234676a4acbc91940943b2da58069d55e1b",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_COL_SKIN_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "c709a6d1fd6d48fad06165a0c41e43d79b3e6d0571a48918944ba349cfeecb5b",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 95
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/MAI/MAI_COL_SKIN_1P.png",
+          "outputBytes": 372856,
+          "outputSha256": "a880b9fa3a0e502eb3fd40ad48d1876ad6bad9a76b707f78349a7676ad6a0af6",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_COL_SPHERE_1P.dds",
+          "sourceBytes": 349700,
+          "sourceSha256": "b2992f1a7f7ddb18e97bd6c050f680e4d939db81bfb59a99a977d1f83ab98c39",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/MAI/MAI_COL_SPHERE_1P.png",
+          "outputBytes": 35960,
+          "outputSha256": "45e69f57ee51926bab5fbd7193f9b2fa1e1acc847391abef61e8cbc654b69930",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "MAI",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/MAI_COL_WEAPON_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "406c0c3a1572cc814284c19f8f8be4dad0bde33e5eabbd4961af1a3d2999f34c",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/MAI/MAI_COL_WEAPON_1P.png",
+          "outputBytes": 98172,
+          "outputSha256": "47de237b18d87c2fc76e2e12939e0c709fd4102b614a36c4e65b2ebb5a370c20",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR_COL_BOTTOM_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "3402835c87425f928dc6ed85f004e441616859a2d44c989179fd4681c138b136",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/IOR/IOR_COL_BOTTOM_1P.png",
+          "outputBytes": 138870,
+          "outputSha256": "4994ece4eb18c5af6e4ed17c2821e69c761d1fd611d550474777f261cab6deb3",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR_COL_COAT01_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "889d6396fc8f4fa3a8aeabf8181c3bce50d5bdf8ca705207ab2b2be8d9bb58ea",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/IOR/IOR_COL_COAT01_1P.png",
+          "outputBytes": 149041,
+          "outputSha256": "65e288f2c50e20ec84e8866e8fdce46db5bc4d61eebc83f4d62311a53eeb64fa",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR_COL_COAT02_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "320b14334d9430f41f0dbfbfe33ff1c34ab55bd2b41d1048c224dcf8a030b324",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/IOR/IOR_COL_COAT02_1P.png",
+          "outputBytes": 146330,
+          "outputSha256": "24c970513c42d5d89192bff04f4d26dad0d380bfe339500cce0072a98f957618",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR_COL_INNER_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "12c84edc6c8accf24625174b6f86eee364ced1d85ef1867444f62ebf02979441",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/IOR/IOR_COL_INNER_1P.png",
+          "outputBytes": 105583,
+          "outputSha256": "5ed9773a54d2c0efd17b6ccfad3215663bc4f1de501a7100a16b519efd3667a9",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "IOR",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/IOR_COL_PARTS_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "a7014a10ab98bd51383a1e04943cbec9551a0569543fb0f2de85ee4920c00d88",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/IOR/IOR_COL_PARTS_1P.png",
+          "outputBytes": 111611,
+          "outputSha256": "277b4a7e606dc048049623244c96da41b1a2271024d6abf310984d11d104da44",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO_COL_JACKET_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "20124814ba0626f79aceff6a7b0de7cdadbdbcbb35b0199892a856bd377a558e",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/KYO/KYO_COL_JACKET_1P.png",
+          "outputBytes": 120435,
+          "outputSha256": "a40414385b9a47b03b8d05acc72b6dcf4169294bd06e7fe4893a6c168fbbebcf",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO_COL_JEANS_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "9048a09d6ab47e8f3fd3a033a3a0fcd3c8a577bb3ae93e051dd8ee131174e3e7",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/KYO/KYO_COL_JEANS_1P.png",
+          "outputBytes": 166073,
+          "outputSha256": "b65989041dc67af92b7fbb1a14a25c91ab470c5aa2fd954e362dab96e3cf1177",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        },
+        {
+          "nativeCharacterId": "KYO",
+          "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/KYO_COL_PARTS_1P.dds",
+          "sourceBytes": 1398276,
+          "sourceSha256": "ba1b2eb32082a85230f85bf5e3f9538598d6fea67bf3635ca82c3eb68ecfb84d",
+          "sourceFormat": {
+            "fourCC": "DX10",
+            "dxgiFormat": 98
+          },
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-textures-20260914-v1/KYO/KYO_COL_PARTS_1P.png",
+          "outputBytes": 119285,
+          "outputSha256": "748bc27e53201ff7207373b17dba1af21975f2d61771b25ed499b92dc44feada",
+          "width": 256,
+          "height": 256,
+          "channels": 4,
+          "state": "decoded-review-candidate-not-material-bound"
+        }
+      ],
+      "summary": {
+        "files": 14,
+        "bytes": 1878218,
+        "maxEdge": 256
+      },
+      "readiness": "decoded-review-candidates; model/material mapping and visual validation blocked by native model converter",
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-textures-20260914-v1/d50a3c41a90b18f5d5385f353abd3e63c98fcaff4b08254d785cefa3809b31c8.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-textures-20260914-v1/d50a3c41a90b18f5d5385f353abd3e63c98fcaff4b08254d785cefa3809b31c8.files.json",
+        "archiveSha256": "d50a3c41a90b18f5d5385f353abd3e63c98fcaff4b08254d785cefa3809b31c8",
+        "archiveBytes": 1883066,
+        "fileCount": 15,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
     "conversionState": {
       "model": "native OBAC/OMIR/OSEC extracted for MAI, IOR and KYO; proprietary mesh/material conversion unresolved",
       "animation": "native OTRA extracted; proprietary animation conversion unresolved",
@@ -5073,6 +5637,139 @@
         "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
         "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
       ]
+    },
+    "hardPolicyProbe": {
+      "guardExitCode": 1,
+      "guard": {
+        "tool": "model-budget/guard",
+        "role": "champion",
+        "results": [
+          {
+            "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
+            "role": "champion",
+            "roleSource": "flag",
+            "worst": "over",
+            "adoption": {
+              "status": "eligible",
+              "triggerTrianglesAbove": 10000,
+              "targetTrianglesMax": 8000,
+              "visualLitPixelDeltaPctMax": 5
+            },
+            "metrics": {
+              "triangles": 7869,
+              "meshes": 18,
+              "maxTextureEdge": 256,
+              "channelsPerFrame": 0,
+              "vramBytes": 5242875
+            },
+            "axes": [
+              {
+                "key": "triangles",
+                "label": "每實例三角面",
+                "value": 7869,
+                "warn": 16000,
+                "limit": 28000,
+                "verdict": "ok"
+              },
+              {
+                "key": "drawCalls",
+                "label": "每模型 mesh / draw call",
+                "value": 18,
+                "warn": 3,
+                "limit": 6,
+                "verdict": "over"
+              },
+              {
+                "key": "maxTextureEdge",
+                "label": "貼圖最長邊 (px)",
+                "value": 256,
+                "warn": 256,
+                "limit": 256,
+                "verdict": "ok"
+              },
+              {
+                "key": "animChannels",
+                "label": "每幀動畫通道",
+                "value": 0,
+                "warn": 300,
+                "limit": 500,
+                "verdict": "ok"
+              }
+            ]
+          },
+          {
+            "file": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
+            "role": "champion",
+            "roleSource": "flag",
+            "worst": "over",
+            "adoption": {
+              "status": "eligible",
+              "triggerTrianglesAbove": 10000,
+              "targetTrianglesMax": 8000,
+              "visualLitPixelDeltaPctMax": 5
+            },
+            "metrics": {
+              "triangles": 7868,
+              "meshes": 18,
+              "maxTextureEdge": 256,
+              "channelsPerFrame": 0,
+              "vramBytes": 5242875
+            },
+            "axes": [
+              {
+                "key": "triangles",
+                "label": "每實例三角面",
+                "value": 7868,
+                "warn": 16000,
+                "limit": 28000,
+                "verdict": "ok"
+              },
+              {
+                "key": "drawCalls",
+                "label": "每模型 mesh / draw call",
+                "value": 18,
+                "warn": 3,
+                "limit": 6,
+                "verdict": "over"
+              },
+              {
+                "key": "maxTextureEdge",
+                "label": "貼圖最長邊 (px)",
+                "value": 256,
+                "warn": 256,
+                "limit": 256,
+                "verdict": "ok"
+              },
+              {
+                "key": "animChannels",
+                "label": "每幀動畫通道",
+                "value": 0,
+                "warn": 300,
+                "limit": 500,
+                "verdict": "ok"
+              }
+            ]
+          }
+        ]
+      },
+      "policyFiles": [
+        {
+          "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+          "sha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf"
+        },
+        {
+          "path": "packages/shared/src/content/modelUpload/budget.ts",
+          "sha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+        },
+        {
+          "path": "tools/model-budget/guard.ts",
+          "sha256": "f805a0a2e73e5892c0a61a1e613eb89c9f16fc1187aa7e84f50468e5a12d6a51"
+        }
+      ],
+      "result": "hard-policy-failed-draw-calls",
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "nativeGameplayAnimationClips": 0
     },
     "conversionState": {
       "ash": "four full-resolution local GLB variants exist across source and material-repair revisions; two new <=8000-triangle/256-texture derivatives are S3-backed but remain blocked by 18 draw calls and visual review, with zero gameplay animation clips",

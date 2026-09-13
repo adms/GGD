@@ -16,6 +16,19 @@ SPEC.loader.exec_module(MODULE)
 
 
 class IntegrateTest(unittest.TestCase):
+    def test_integrate_xiv_source_is_idempotent(self) -> None:
+        data = {"publicSources": [{"id": MODULE.BUILD.KOF_XIV_SOURCE_ID}]}
+        textures = {"summary": {"files": 1, "bytes": 2, "maxEdge": 256}, "files": [{
+            "nativeCharacterId": "MAI", "outputAbsolutePath": "/tmp/MAI_COL.png", "outputBytes": 2,
+            "outputSha256": "a" * 64, "width": 256, "height": 128, "channels": 4,
+            "state": "decoded-review-candidate-not-material-bound",
+        }], "backup": {"s3Uri": "s3://example"}}
+        probe = {"sourceId": "probe", "kofXiv": {"nativeFiles": [{}], "assimpAcceptedFiles": 0,
+            "conversionState": {"modelAndSkeleton": "blocked", "nativeAnimation": "blocked", "vfx": "blocked"}}}
+        self.assertTrue(MODULE.integrate_xiv_source(data, textures, probe))
+        self.assertFalse(MODULE.integrate_xiv_source(data, textures, probe))
+        self.assertEqual(1, len(data["publicSources"][0]["componentCandidates"]))
+
     def test_upsert_is_idempotent_and_preserves_other_sources(self) -> None:
         source = {"id": "kof-source", "value": 1}
         data = {"publicSources": [{"id": "other", "value": 7}]}

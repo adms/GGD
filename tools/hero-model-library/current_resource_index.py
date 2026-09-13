@@ -227,6 +227,12 @@ def build(git_link_root=ROOT):
         raise ValueError('PlayStation platform inventory is absent, stale or overclaims payload/readiness')
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
+    kof3d_inventory_path=base/'source-inventories/kof-3d-sources-v1/inventory.json'
+    kof3d_inventory=read(kof3d_inventory_path)
+    if (kof3d_inventory.get('schema')!='ggd.kof-3d-source-inventory@1'
+        or not kof3d_inventory.get('kofXiv',{}).get('selectedExtraction',{}).get('verification',{}).get('allFilesSha256Verified')
+        or kof3d_inventory.get('kofXv',{}).get('hardPolicyProbe',{}).get('result')!='hard-policy-failed-draw-calls'):
+        raise ValueError('KOF 3D source/conversion inventory is absent, stale or overclaims readiness')
     workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
     workflow_restoration=read(workflow_restoration_path)
     popp_vfx_receipt_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json'
@@ -361,6 +367,16 @@ def build(git_link_root=ROOT):
             sha256=hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest(),
             status='parsed-native-mod-motion-reserve-pending-conversion-and-skeleton-playback',
             summary=ultimate14_motion['summary']),
+        kof3dSourceInventory=dict(
+            gitPath=str(kof3d_inventory_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(kof3d_inventory_path.read_bytes()).hexdigest(),
+            sourceId=kof3d_inventory['sourceId'],
+            kofXivCharacters=kof3d_inventory['kofXiv']['selectedExtraction']['nativeCharacterIds'],
+            textureCandidates=kof3d_inventory['kofXiv']['textureCandidates']['summary'],
+            textureBackup=kof3d_inventory['kofXiv']['textureCandidates']['backup'],
+            ashGuardResult=kof3d_inventory['kofXv']['hardPolicyProbe']['result'],
+            runtimeSelectable=False,
+            productionDeploymentVerified=False),
         assetWorkflowRestorationManifest=dict(
             gitPath=str(workflow_restoration_path.relative_to(ROOT)),
             sha256=hashlib.sha256(workflow_restoration_path.read_bytes()).hexdigest(),
@@ -588,6 +604,7 @@ def main():
                     'sha256': result['playstationPlatformSourceInventory']['cloudPolicyAuditSha256'],
                 },
                 result['ultimate14NativeMotionIndex'],
+                result['kof3dSourceInventory'],
                 result['assetWorkflowRestorationManifest'],
                 {
                     'gitPath': result['unused300MbaAssetIndex']['gitPath'],
