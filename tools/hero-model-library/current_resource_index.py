@@ -250,6 +250,20 @@ def build(git_link_root=ROOT):
     for path,key in ((jumpforce_path,'sha256'),(jumpforce_document_path,'documentSha256'),(jumpforce_review_path,'listeningReviewQueueSha256')):
         if jumpforce_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
             raise ValueError('JUMP FORCE current-resource pointer is stale: '+str(path))
+    asset_review_queue_path=base/'review/asset-review-portal-v1/review-queue.json'
+    asset_review_schema_path=base/'review/asset-review-portal-v1/review-decision.schema.json'
+    asset_review_page_path=ROOT/'apps/client/public/asset-review-portal.html'
+    asset_review_queue=read(asset_review_queue_path)
+    if (asset_review_queue.get('schema')!='ggd.asset-review-portal@1'
+        or asset_review_queue.get('summary',{}).get('audioCandidateCount',0)<=0
+        or asset_review_queue.get('summary',{}).get('motionCandidateCount',0)<=0
+        or asset_review_queue.get('summary',{}).get('pendingDecisionCount')!=(
+            asset_review_queue.get('summary',{}).get('audioCandidateCount',0)
+            + asset_review_queue.get('summary',{}).get('motionCandidateCount',0))
+        or asset_review_queue.get('summary',{}).get('approvedDecisionCount')!=0
+        or asset_review_queue.get('summary',{}).get('runtimeBindingsChanged')!=0
+        or asset_review_queue.get('policy',{}).get('runtimeMutationAllowed') is not False):
+        raise ValueError('Unified asset review portal is absent, stale or overclaims approval/runtime binding')
     fate_asset_path=base/'source-inventories/fate-assets-v2/inventory.json'
     fate_asset_document_path=base/'source-inventories/fate-assets-v2/README.md'
     fate_asset_policy_path=base/'source-inventories/fate-assets-v2/current-policy.json'
@@ -480,6 +494,19 @@ def build(git_link_root=ROOT):
             **jumpforce_entry,
             entryGitPath=str(jumpforce_entry_path.relative_to(ROOT)),
             entrySha256=hashlib.sha256(jumpforce_entry_path.read_bytes()).hexdigest()),
+        assetReviewPortal=dict(
+            schema=asset_review_queue['schema'],
+            sourceFingerprint=asset_review_queue['sourceFingerprint'],
+            queueGitPath=str(asset_review_queue_path.relative_to(ROOT)),
+            queueSha256=hashlib.sha256(asset_review_queue_path.read_bytes()).hexdigest(),
+            decisionSchemaGitPath=str(asset_review_schema_path.relative_to(ROOT)),
+            decisionSchemaSha256=hashlib.sha256(asset_review_schema_path.read_bytes()).hexdigest(),
+            reviewPageGitPath=str(asset_review_page_path.relative_to(ROOT)),
+            reviewPageSha256=hashlib.sha256(asset_review_page_path.read_bytes()).hexdigest(),
+            summary=asset_review_queue['summary'],
+            defaultDecision='pending',
+            runtimeMutationAllowed=False,
+            productionDeploymentVerified=False),
         fateAssetInventory=dict(
             **fate_asset_entry,
             entryGitPath=str(fate_asset_entry_path.relative_to(ROOT)),
@@ -733,6 +760,18 @@ def main():
                 {
                     'gitPath': result['jumpForceAssetInventory']['entryGitPath'],
                     'sha256': result['jumpForceAssetInventory']['entrySha256'],
+                },
+                {
+                    'gitPath': result['assetReviewPortal']['queueGitPath'],
+                    'sha256': result['assetReviewPortal']['queueSha256'],
+                },
+                {
+                    'gitPath': result['assetReviewPortal']['decisionSchemaGitPath'],
+                    'sha256': result['assetReviewPortal']['decisionSchemaSha256'],
+                },
+                {
+                    'gitPath': result['assetReviewPortal']['reviewPageGitPath'],
+                    'sha256': result['assetReviewPortal']['reviewPageSha256'],
                 },
                 {
                     'gitPath': result['fateAssetInventory']['gitPath'],

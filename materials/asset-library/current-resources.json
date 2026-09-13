@@ -6641,6 +6641,34 @@
     "entryGitPath": "materials/hero-model-library/source-inventories/jumpforce-assets-v2/current-resource-entry.json",
     "entrySha256": "dccdb064a0e8a50753b50182798dc44699b0121726d9ca8ec589d16dbfb55c0a"
   },
+  "assetReviewPortal": {
+    "schema": "ggd.asset-review-portal@1",
+    "sourceFingerprint": "b0e2c0dc4f02b279dfb3271f4179f3edada482156d6d901a22b6dccf0ca56ab5",
+    "queueGitPath": "materials/hero-model-library/review/asset-review-portal-v1/review-queue.json",
+    "queueSha256": "b48d17ebd108492c451dc51c59b4f3e5e942948b0d934b59b153210ddfe0c42c",
+    "decisionSchemaGitPath": "materials/hero-model-library/review/asset-review-portal-v1/review-decision.schema.json",
+    "decisionSchemaSha256": "66f0c356f0c1089f557c3466fc22bf432d46dc6cb26e396c3d9c54d882ba57a8",
+    "reviewPageGitPath": "apps/client/public/asset-review-portal.html",
+    "reviewPageSha256": "d0d4ab9e35a7e6abd77351aa32d170445174b260104d41d6e13b56b4c07d24a0",
+    "summary": {
+      "audioCandidateCount": 143,
+      "poppEventAudioCandidateCount": 36,
+      "palworldCreatureCryCandidateCount": 18,
+      "jumpForceGroupSampleCount": 89,
+      "motionCandidateCount": 19,
+      "palworldMotionCandidateCount": 18,
+      "borrowedOrDeathSubstitutionCandidateCount": 1,
+      "blockedMotionLeadCount": 2,
+      "pendingDecisionCount": 162,
+      "approvedDecisionCount": 0,
+      "rejectedDecisionCount": 0,
+      "runtimeBindingsChanged": 0,
+      "productionDeployedAssets": 0
+    },
+    "defaultDecision": "pending",
+    "runtimeMutationAllowed": false,
+    "productionDeploymentVerified": false
+  },
   "fateAssetInventory": {
     "schema": "ggd.fate-asset-current-resource-entry@1",
     "gitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/inventory.json",
