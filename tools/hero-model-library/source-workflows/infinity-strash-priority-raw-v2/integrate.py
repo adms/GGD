@@ -86,6 +86,12 @@ def main() -> int:
             "model-package", "texture-material-package", "skeleton-package", "animation-cinematic-package",
             "vfx-package", "audio-event-package", "character-configuration",
         ],
+        "notAliases": ["Baran", "巴蘭", "バラン"],
+        "identityRecords": [
+            {"name": "小呆／達伊", "nameZh": "小呆／達伊", "originalName": "Dai", "nativeCharacterId": "PN010", "aliases": ["小呆", "達伊", "Dai"], "heroIds": ["godie-nbbc", "godie-n01c"]},
+            {"name": "巴恩大魔王", "nameZh": "巴恩大魔王", "originalName": "Vearn", "nativeCharacterId": "EN801", "aliases": ["巴恩", "Vearn"], "heroIds": ["godie-ubal"]},
+            {"name": "密斯特巴恩", "nameZh": "密斯特巴恩", "originalName": "MystVearn", "nativeCharacterId": "EN653", "aliases": ["密斯特巴恩", "MystVearn"], "heroIds": []},
+        ],
         "publicationStatus": "local-only-awaiting-s3-upload",
         "files": [index["sourcePak"]],
         "rawPackageIndex": {
@@ -142,6 +148,9 @@ def main() -> int:
         if len(matches) != 1:
             raise ValueError("source ID is duplicated across central collections")
         existing = matches[0]
+        if "identityRecords" not in existing:
+            existing["identityRecords"] = source["identityRecords"]
+            existing["notAliases"] = source["notAliases"]
         mutable = {"publicationStatus", "pendingBackup", "backup", "verification"}
         if {k: v for k, v in existing.items() if k not in mutable} != {k: v for k, v in source.items() if k not in mutable}:
             raise ValueError("existing source differs; refusing to overwrite another workflow")

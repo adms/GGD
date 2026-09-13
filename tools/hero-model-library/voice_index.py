@@ -501,6 +501,7 @@ def main():
                           'sourcePath','sourceSha256','sourceBankSha256','sourceEncoding',
                           'sourceLabelCategory','sourceGroupId','sourceOriginalBank','upstreamSourceId',
                           'reportedLocale','sourceManifestLocale','label','event','eventName','eventReview',
+                          'eventPaths','nativeIds',
                           'language','languageReviewed','speakerReviewed','speakerVerified',
                           'transcriptReviewed','countAsNewPerformance','deterministicReplay']:
                 if field in decoded:files[-1][field]=decoded[field]

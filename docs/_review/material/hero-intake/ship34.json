@@ -7,9 +7,9 @@
  "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
-  "modelComponents": 26,
+  "modelComponents": 27,
   "historicalModelSourceArtifacts": 2,
-  "referencedComponents": 11
+  "referencedComponents": 12
  },
  "delivery": {
   "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-acquired-heroes/docs/_reports/community-acquired-heroes/model-delivery-summary.json",
@@ -30,10 +30,10 @@
   "iconPending": 34,
   "voicePending": 34,
   "independentComponentPending": 8,
-  "independentComponents": 11,
+  "independentComponents": 12,
   "modelCompletelyMissing": 0
  },
- "digest": "ebc11ff10a2f477ac42d5a7d8425cfc6392185b7bbac92bead7fc0bee16bffdd",
+ "digest": "1f1f91be7c941aa15b8416ad0c0930d4974a09e8e7d0e80801c11be1b761bce0",
  "heroes": [
   {
    "id": "acquired-jetragon",
@@ -1260,6 +1260,39 @@
     ],
     "components": [
      {
+      "id": "ssbu-ryu-c00-procedural-six-state-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "nativeId": "fighter/ryu/body/c00",
+      "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
+      "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+      "bytes": 1069196,
+      "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+      "verified": true,
+      "problems": [],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "animationProvenance": "ggd-procedural-fallback",
+      "animationNames": [
+       "GGD_procedural_idle",
+       "GGD_procedural_run",
+       "GGD_procedural_attack",
+       "GGD_procedural_cast",
+       "GGD_procedural_hurt",
+       "GGD_procedural_death"
+      ],
+      "validationEvidence": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/validation.json",
+      "visualEvidence": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/visual-review.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+      "limitations": [
+       "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
+       "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
+       "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+       "No source VFX, SFX or voice was created or inferred by this motion conversion.",
+       "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+      ]
+     },
+     {
       "id": "ssbu-ryu-c00-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "sourceGame": "Super Smash Bros. Ultimate",
@@ -1287,13 +1320,20 @@
       ]
      }
     ],
-    "componentCount": 1,
-    "componentFilesInRepo": 1,
+    "componentCount": 2,
+    "componentFilesInRepo": 2,
     "allVerified": true,
     "nativeAnimationCount": 0,
-    "proceduralAnimationCount": 0,
-    "animationNames": [],
-    "gap": "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
+    "proceduralAnimationCount": 6,
+    "animationNames": [
+     "GGD_procedural_attack",
+     "GGD_procedural_cast",
+     "GGD_procedural_death",
+     "GGD_procedural_hurt",
+     "GGD_procedural_idle",
+     "GGD_procedural_run"
+    ],
+    "gap": "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架",
     "severity": "blocker"
    },
    "icon": {
@@ -1326,7 +1366,7 @@
     "severity": "warning"
    },
    "blockers": [
-    "中央素材庫已有 1 個已驗收獨立模型元件，1/1 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
+    "中央素材庫已有 2 個已驗收獨立模型元件，2/2 個 Git 實檔與 SHA-256 相符；原生動作 0 段。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架"
    ],
    "warnings": [
     "等 champion 文件進 content 才產得了圖示",

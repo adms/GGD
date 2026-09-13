@@ -64,8 +64,8 @@ class InventoryHandoff(unittest.TestCase):
     def test_character_query_prioritizes_identity_over_work_title(self):
         script = REPO / 'tools/hero-model-library/query.py'
         cases = {
-            '達伊': ({'godie-nbbc'}, {'b2-popp'}),
-            '波普': ({'b2-popp'}, set()),
+            '達伊': ({'godie-nbbc'}, {'b2-popp', 'godie-ubal'}),
+            '波普': ({'b2-popp'}, {'godie-nbbc', 'godie-ubal'}),
             '巴恩': ({'godie-ubal'}, set()),
             '巴蘭': (set(), {'godie-ubal'}),
         }

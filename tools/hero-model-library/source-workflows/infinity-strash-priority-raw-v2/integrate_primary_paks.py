@@ -116,6 +116,12 @@ def main() -> int:
         "selectionClass": "canonical-game",
         "discoveryChannel": "local-readonly-smb",
         "assetKinds": ["complete-game-container", "model", "texture", "skeleton", "animation", "vfx", "audio", "configuration"],
+        "notAliases": ["Baran", "巴蘭", "バラン"],
+        "identityRecords": [
+            {"name": "小呆／達伊", "nameZh": "小呆／達伊", "originalName": "Dai", "nativeCharacterId": "PN010", "aliases": ["小呆", "達伊", "Dai"], "heroIds": ["godie-nbbc", "godie-n01c"]},
+            {"name": "何布／波普", "nameZh": "何布／波普", "originalName": "Popp", "nativeCharacterId": "PN020", "aliases": ["何布", "波普", "Popp"], "heroIds": ["b2-popp"]},
+            {"name": "巴恩大魔王", "nameZh": "巴恩大魔王", "originalName": "Vearn", "nativeCharacterId": "EN801", "aliases": ["巴恩", "Vearn"], "heroIds": ["godie-ubal"]},
+        ],
         "publicationStatus": "local-only-awaiting-s3-upload",
         "files": rows,
         "filesManifest": {"path": "source-manifest.json", "sha256": sha256(manifest_path)},
@@ -146,9 +152,13 @@ def main() -> int:
     if matches:
         if len(matches) != 1:
             raise ValueError("source ID is duplicated across central collections")
+        if "identityRecords" not in matches[0]:
+            matches[0]["identityRecords"] = source["identityRecords"]
+            matches[0]["notAliases"] = source["notAliases"]
         mutable = {"publicationStatus", "pendingBackup", "backup", "verification"}
         if {k: v for k, v in matches[0].items() if k not in mutable} != {k: v for k, v in source.items() if k not in mutable}:
             raise ValueError("existing source differs; refusing to overwrite another workflow")
+        DOWNLOADS.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n")
         status = "already-integrated"
     else:
         document["publicSources"].append(source)

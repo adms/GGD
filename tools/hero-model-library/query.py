@@ -60,7 +60,8 @@ def public_identity_scope(sources, query):
         excluded = {str(alias).casefold() for alias in source.get('notAliases', [])}
         if query in excluded:
             continue
-        scoped = source.get('characters', []) + source.get('modelCandidates', []) + source.get('componentCandidates', [])
+        scoped = (source.get('identityRecords', []) + source.get('characters', [])
+                  + source.get('modelCandidates', []) + source.get('componentCandidates', []))
         candidates = [candidate for candidate in scoped if identity_matches(candidate, query, candidate_fields)]
         groups = [group for group in source.get('audioGroups', []) if identity_matches(group, query, group_fields)]
         if candidates:
@@ -77,7 +78,8 @@ def public_identity_scope(sources, query):
 def public_match_scope(sources, query):
     hero_ids, entry_ids = set(), set()
     for source in sources:
-        scoped = source.get('characters',[]) + source.get('modelCandidates',[]) + source.get('componentCandidates',[])
+        scoped = (source.get('identityRecords',[]) + source.get('characters',[])
+                  + source.get('modelCandidates',[]) + source.get('componentCandidates',[]))
         characters = [c for c in scoped if candidate_matches(c,query)]
         matches = characters or ([source] if source_matches(source, query) else [])
         for match in matches:

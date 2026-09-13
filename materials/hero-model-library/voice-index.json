@@ -44142,6 +44142,691 @@
       "categoryCounts": {
         "unclassified": 150
       }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-english_us-voice",
+      "name": "密斯特巴恩／英文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 37,
+      "bytes": 4525304,
+      "knownDurationSeconds": 47.12162500000001,
+      "durationMeasuredFiles": 37,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "English_US",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 37
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-english_us-voice",
+      "name": "小呆／達伊／英文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 139,
+      "bytes": 15990406,
+      "knownDurationSeconds": 166.5030208333333,
+      "durationMeasuredFiles": 139,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "English_US",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 139
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-english_us-voice",
+      "name": "何布／波普／英文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 125,
+      "bytes": 14755786,
+      "knownDurationSeconds": 153.64881250000008,
+      "durationMeasuredFiles": 125,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "English_US",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 125
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-english_us-voice",
+      "name": "巴恩大魔王／英文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 24,
+      "bytes": 3913212,
+      "knownDurationSeconds": 40.751625000000004,
+      "durationMeasuredFiles": 24,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "English_US",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 24
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-english_us-voice",
+      "name": "小呆／達伊／何布／波普／英文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp",
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 49222,
+      "knownDurationSeconds": 0.5122708333333333,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "English_US",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 1
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-japanese-voice",
+      "name": "小呆／達伊／日文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 136,
+      "bytes": 14746748,
+      "knownDurationSeconds": 153.54962500000002,
+      "durationMeasuredFiles": 136,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 136
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-japanese-voice",
+      "name": "密斯特巴恩／日文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 37,
+      "bytes": 4783934,
+      "knownDurationSeconds": 49.815687499999996,
+      "durationMeasuredFiles": 37,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 37
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-japanese-voice",
+      "name": "何布／波普／日文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 123,
+      "bytes": 14099498,
+      "knownDurationSeconds": 146.81339583333337,
+      "durationMeasuredFiles": 123,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 123
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-japanese-voice",
+      "name": "巴恩大魔王／日文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 24,
+      "bytes": 3868706,
+      "knownDurationSeconds": 40.28802083333333,
+      "durationMeasuredFiles": 24,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 24
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-japanese-voice",
+      "name": "小呆／達伊／何布／波普／日文標籤／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp",
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 57330,
+      "knownDurationSeconds": 0.5967291666666666,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 1,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 1
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-unreviewed-voice",
+      "name": "何布／波普／語系待核／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2,
+      "bytes": 492736,
+      "knownDurationSeconds": 5.13175,
+      "durationMeasuredFiles": 2,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 2
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-unclassified",
+      "name": "小呆／達伊／語系待核／unclassified",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 43706,
+      "knownDurationSeconds": 0.4548125,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-unreviewed-voice",
+      "name": "小呆／達伊／語系待核／voice",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 3,
+      "bytes": 707616,
+      "knownDurationSeconds": 7.369624999999999,
+      "durationMeasuredFiles": 3,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 3
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-unreviewed-unclassified",
+      "name": "何布／波普／語系待核／unclassified",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 47152,
+      "knownDurationSeconds": 0.49070833333333336,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-nonlocalized-sound-effect",
+      "name": "小呆／達伊／非語系音效／sound-effect",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 76,
+      "bytes": 21636416,
+      "knownDurationSeconds": 156.85349433106575,
+      "durationMeasuredFiles": 76,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 76
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-nonlocalized-sound-effect",
+      "name": "密斯特巴恩／非語系音效／sound-effect",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 45,
+      "bytes": 14294228,
+      "knownDurationSeconds": 117.4355,
+      "durationMeasuredFiles": 45,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 45
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en801-nonlocalized-sound-effect",
+      "name": "巴恩大魔王／非語系音效／sound-effect",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 82,
+      "bytes": 37413092,
+      "knownDurationSeconds": 329.38981249999995,
+      "durationMeasuredFiles": 82,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 82
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn020-nonlocalized-sound-effect",
+      "name": "何布／波普／非語系音效／sound-effect",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 60,
+      "bytes": 13007030,
+      "knownDurationSeconds": 101.0604375,
+      "durationMeasuredFiles": 60,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 60
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:en653-en801-nonlocalized-sound-effect",
+      "name": "密斯特巴恩／巴恩大魔王／非語系音效／sound-effect",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 10,
+      "bytes": 3074088,
+      "knownDurationSeconds": 32.01716666666667,
+      "durationMeasuredFiles": 10,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 10
+      }
+    },
+    {
+      "id": "steam-infinity-strash-popp-priority-audio-build-local-20240328:pn010-pn020-nonlocalized-sound-effect",
+      "name": "小呆／達伊／何布／波普／非語系音效／sound-effect",
+      "library": "公開來源",
+      "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+      "heroIds": [
+        "b2-popp",
+        "godie-n01c",
+        "godie-nbbc"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2,
+      "bytes": 100430,
+      "knownDurationSeconds": 1.0452291666666667,
+      "durationMeasuredFiles": 2,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-infinity-strash-popp-priority-audio-build-local-20240328"
+      ],
+      "sourceUrl": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "work": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "reportedLanguage": "Japanese and English_US directory labels; per-clip listening not verified",
+      "languageEvidence": "Wwise Localized directory and event package paths",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 2
+      }
     }
   ],
   "backups": {
@@ -44915,16 +45600,30 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:steam-infinity-strash-popp-priority-audio-build-local-20240328": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
+      "bytes": 340132357,
+      "sha256": "a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167",
+      "archiveFormat": "zip",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
+      "localRoot": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "33d89906d5ad87ebafa0ff160f9a06bd65363d8733a63f99db3f2710198ed58a"
+      "sha256": "82acc3768b92929070b6213529d5ac76c64507aaf1a989c749700dd5b8ea603c"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
-      "sha256": "7d4f2594a99e6f0ee2211bcb1b756565a544a4a03d57cca44828c696a28bddd7"
+      "sha256": "720b7978b006e3c73769241c2267f89cf4f1aab35a159449dc187d46a4ccc7c8"
     },
     {
       "path": "materials/hero-model-library/manifest.json",
@@ -45353,6 +46052,14 @@
     {
       "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-file-index.json",
       "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/audio-file-index.json",
+      "sha256": "1748c73508796803728ac54a35acc19e7ee7ec3ba9c6827da29c486fbc646284"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/audio-file-index.json",
+      "sha256": "1748c73508796803728ac54a35acc19e7ee7ec3ba9c6827da29c486fbc646284"
     },
     {
       "path": "materials/hero-model-library/lol-prefetch-resolution.json",
@@ -96047,13 +96754,13 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 1033,
-    "audioFiles": 291270,
-    "bytes": 141754361483,
-    "sourceFileRelationshipRows": 291270,
-    "uniqueLocalPaths": 290822,
-    "uniqueSha256Payloads": 258410,
-    "uniqueLocalPathBytes": 141181432767,
+    "groups": 1053,
+    "audioFiles": 292199,
+    "bytes": 141921968123,
+    "sourceFileRelationshipRows": 292199,
+    "uniqueLocalPaths": 291751,
+    "uniqueSha256Payloads": 259330,
+    "uniqueLocalPathBytes": 141349039407,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
@@ -96064,6 +96771,6 @@
     "nativeEventBoundRelationshipRows": 968,
     "nativeEventMappedEvents": 232
   },
-  "sourceFileManifestSha256": "be7a8e19bf77a974e15bb59041891fb998cf1cf9a5bb201c6b905993b641fb7b",
-  "uncompressedFileManifestSha256": "2e28ea4fc0a0910c0dd53997da6535f5be055cd370b2ce00434967383f3ca742"
+  "sourceFileManifestSha256": "8d310de8ddea62d94cce74210f8d2686661e421d9ac623a16ab797c2bb82e6ac",
+  "uncompressedFileManifestSha256": "68fa855abc4f7f87616e753332b2b568c09c75bb263b0fcd38b89a4a03a2e6f3"
 }
