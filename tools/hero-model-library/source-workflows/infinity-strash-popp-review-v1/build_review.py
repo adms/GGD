@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import html
 import json
+import shutil
 from pathlib import Path
 
 
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[4]
 LIBRARY = ROOT / "materials/hero-model-library"
 OUTPUT_JSON = LIBRARY / "infinity-strash/popp-integration-review.json"
 OUTPUT_HTML = ROOT / "apps/client/public/popp-integration-review.html"
+OUTPUT_ASSET_DIR = ROOT / "apps/client/public/review-assets/popp-pn020"
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -26,6 +28,12 @@ ACCEPTANCE = {
     "Magikaru": LIBRARY / "priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
     "Mahouno": LIBRARY / "priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/acceptance-summary.json",
     "Kagayaki": LIBRARY / "priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/acceptance-summary.json",
+}
+
+CONTACT_SHEETS = {
+    "Magikaru": LIBRARY / "priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/contact-sheet.png",
+    "Mahouno": LIBRARY / "priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/contact-sheet.png",
+    "Kagayaki": LIBRARY / "priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/contact-sheet.png",
 }
 
 
@@ -64,6 +72,7 @@ def build_contract() -> dict:
         git_glb = ROOT / "content" / model_doc["glbPath"]
         acceptance_path = ACCEPTANCE[staff]
         acceptance = read_json(acceptance_path)
+        contact_sheet_path = CONTACT_SHEETS[staff]
         version = versions[model_doc["id"]]
 
         assert sha256(runtime_root / "body.glb") == source["sha256"]
@@ -95,6 +104,13 @@ def build_contract() -> dict:
                 "webglImages": acceptance["automatedValidation"]["webglImages"],
                 "manualVisualReview": acceptance["manualVisualReview"]["status"],
                 "acceptanceEvidence": file_evidence(acceptance_path),
+                "reviewContactSheet": {
+                    **file_evidence(contact_sheet_path),
+                    "publicPath": f"review-assets/popp-pn020/{staff.lower()}-contact-sheet.png",
+                    "states": ["idle", "run", "attack", "cast", "hurt", "death"],
+                    "samplesPerState": [0, 50, 100],
+                    "source": "actual Babylon WebGL glTF playback",
+                },
             },
             "backendDropdownOptionPresentOnFeatureBranch": True,
             "productionDeployed": acceptance["registration"]["productionDeployed"],
@@ -203,6 +219,10 @@ def build_contract() -> dict:
         "heroId": HERO_ID,
         "activeModelKeyBeforeReview": champion["modelKey"],
         "weaponCandidateHashes": [(row["candidateId"], row["glb"]["sha256"]) for row in candidates],
+        "reviewContactSheetHashes": [
+            (row["candidateId"], row["validation"]["reviewContactSheet"]["sha256"])
+            for row in candidates
+        ],
         "gapStates": [(row["id"], row["status"]) for row in gaps],
         "poppAudioGroupsSha256": audio_evidence["selectedGroupsSha256"],
         "dependencyIndexSha256": dependency_evidence["source"]["sha256"],
@@ -250,17 +270,22 @@ header{{position:sticky;top:0;z-index:5;padding:14px 18px;background:#08131eee;b
 h1{{font-size:19px;margin:0}} .meta,.note{{color:var(--dim)}} main{{max-width:1200px;margin:auto;padding:18px}} h2{{margin-top:26px}}
 .warn{{border:1px solid #8d692e;background:#2c2414;padding:10px 12px;border-radius:8px;color:#ffe2a6}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}} .card{{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:12px}}
-.card.chosen{{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}} iframe{{width:100%;height:330px;border:1px solid var(--line);border-radius:8px;background:#05080c}}
+.card.chosen{{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}}
+.review-frame{{width:100%;aspect-ratio:808/268;border:1px solid var(--line);border-radius:8px;background-color:#1e2530;background-repeat:no-repeat;background-size:100% 600%;box-shadow:inset 0 0 0 1px #ffffff08}}
+.review-frame[data-state="idle"]{{background-position:0 0}} .review-frame[data-state="run"]{{background-position:0 20%}} .review-frame[data-state="attack"]{{background-position:0 40%}}
+.review-frame[data-state="cast"]{{background-position:0 60%}} .review-frame[data-state="hurt"]{{background-position:0 80%}} .review-frame[data-state="death"]{{background-position:0 100%}}
+.frame-status{{display:flex;justify-content:space-between;gap:8px;margin:6px 0;color:var(--dim);font-size:12px}} .frame-status b{{color:var(--ok)}}
 .buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}} button,.pick{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 10px;border-radius:7px;cursor:pointer}}
-button:hover,.pick:hover{{border-color:var(--accent)}} code{{font-size:11px;word-break:break-all}} ol li{{margin:8px 0}} .status{{color:var(--warn)}}
-#deathFrame.rise{{animation:riseFade 2.2s ease-in forwards}} @keyframes riseFade{{0%,35%{{opacity:1;transform:translateY(0)}}100%{{opacity:.08;transform:translateY(-80px)}}}}
+button:hover,.pick:hover{{border-color:var(--accent)}} button.active{{border-color:var(--accent);background:#16435b}} code{{font-size:11px;word-break:break-all}} ol li{{margin:8px 0}} .status{{color:var(--warn)}}
+#deathStage{{overflow:hidden;border-radius:8px;background:#071019;padding:10px}} #deathFrame.rise{{animation:riseFade 2.2s ease-in forwards}} @keyframes riseFade{{0%,35%{{opacity:1;transform:translateY(0)}}100%{{opacity:.08;transform:translateY(-80px)}}}}
 textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1px solid var(--line);border-radius:7px;padding:8px}}
 </style></head><body><header><h1>何布／波普 PN020 武器與死亡演出審查</h1><div class="meta">資料指紋 <code>{contract['sourceFingerprint']}</code> · 目前不會改預設模型</div></header>
 <main><div class="warn">三支法杖都已是功能分支的獨立後台選項。此頁只記錄你的選擇；沒有裁決前，<b>selectedCandidateId 仍為 null</b>，不會自動切換。</div>
 <h2>一、選一支預設法杖</h2><div id="weapons" class="grid"></div><div class="buttons"><button id="clearWeapon">清除法杖選擇</button></div>
 <h2>二、死亡演出候選</h2><div class="card"><p>原作解包範圍沒有獨立 death，現在 hurt/death 都播放原生 <code>GGD_native_down</code>。下方第二個按鈕是「down＋整體升天淡出」的<b>審查合成預覽</b>；尚未寫入遊戲執行邏輯。</p>
 <div class="buttons"><button id="nativeDeath">播放原生 down</button><button id="fadeDeath">預覽 down＋升天淡出</button></div>
-<iframe id="deathFrame" title="死亡演出預覽"></iframe>
+<div id="deathStage"><div id="deathFrame" class="review-frame" data-state="hurt" role="img" aria-label="死亡演出三幀預覽"></div></div>
+<div class="frame-status"><b>可見證據圖</b><span>實際 Babylon WebGL：0%／50%／100%</span></div>
 <label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1"> 核准 down＋升天淡出候選</label>
 <label class="pick"><input type="radio" name="death" value="reject"> 不核准，繼續找同作品動作</label></div>
 <h2>三、尚待完成的五項</h2><ol id="gaps"></ol>
@@ -269,15 +294,14 @@ textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1
 <script id="contract" type="application/json">{encoded}</script><script>
 const D=JSON.parse(document.getElementById('contract').textContent), key='ggd-popp-review:'+D.sourceFingerprint;
 const state=Object.assign({{weaponCandidateId:null,deathCandidateId:null,note:''}},JSON.parse(localStorage.getItem(key)||'{{}}'));
-const audition=(model,clip)=>'/champion-model-audition.html?hud=0&cam=select&model='+encodeURIComponent(model)+'&clip='+encodeURIComponent(clip);
 const save=()=>{{state.note=document.getElementById('reviewNote').value;localStorage.setItem(key,JSON.stringify(state));renderChosen()}};
 const wrap=document.getElementById('weapons');
-for(const c of D.weaponReview.candidates){{const card=document.createElement('section');card.className='card';card.dataset.id=c.candidateId;card.innerHTML=`<h3>${{c.staff}}</h3><p>${{c.nativeCharacterId}}</p><iframe title="${{c.staff}} 動作預覽" src="${{audition(c.sourceModelKey,'idle')}}"></iframe><div class="buttons">${{['idle','run','attack','cast','hurt','death'].map(x=>`<button data-clip="${{x}}">${{x}}</button>`).join('')}}</div><label class="pick"><input type="radio" name="weapon" value="${{c.candidateId}}"> 選為預設法杖</label><p class="meta"><code>${{c.glb.sha256}}</code><br>${{c.nativeAnimationCount}} 段原生動作 · 後台選項已存在 · 正式站未驗</p>`;card.querySelectorAll('[data-clip]').forEach(b=>b.onclick=()=>card.querySelector('iframe').src=audition(c.sourceModelKey,b.dataset.clip));wrap.append(card)}}
+for(const c of D.weaponReview.candidates){{const sheet=c.validation.reviewContactSheet;const card=document.createElement('section');card.className='card';card.dataset.id=c.candidateId;card.innerHTML=`<h3>${{c.staff}}</h3><p>${{c.nativeCharacterId}}</p><div class="review-frame" data-state="idle" role="img" aria-label="${{c.staff}} idle 三幀預覽" style="background-image:url('/${{sheet.publicPath}}')"></div><div class="frame-status"><b>可見證據圖</b><span>實際 WebGL：0%／50%／100%</span></div><div class="buttons">${{sheet.states.map(x=>`<button data-clip="${{x}}" class="${{x==='idle'?'active':''}}">${{x}}</button>`).join('')}}</div><label class="pick"><input type="radio" name="weapon" value="${{c.candidateId}}"> 選為預設法杖</label><p class="meta"><code>${{c.glb.sha256}}</code><br>${{c.nativeAnimationCount}} 段原生動作 · 後台選項已存在 · 正式站未驗</p>`;card.querySelectorAll('[data-clip]').forEach(b=>b.onclick=()=>{{const frame=card.querySelector('.review-frame');frame.dataset.state=b.dataset.clip;frame.setAttribute('aria-label',c.staff+' '+b.dataset.clip+' 三幀預覽');card.querySelectorAll('[data-clip]').forEach(x=>x.classList.toggle('active',x===b))}});wrap.append(card)}}
 function renderChosen(){{document.querySelectorAll('#weapons .card').forEach(x=>x.classList.toggle('chosen',x.dataset.id===state.weaponCandidateId));document.querySelectorAll('input[name=weapon]').forEach(x=>x.checked=x.value===state.weaponCandidateId);document.querySelectorAll('input[name=death]').forEach(x=>x.checked=x.value===state.deathCandidateId)}}
 document.querySelectorAll('input[name=weapon]').forEach(x=>x.onchange=()=>{{state.weaponCandidateId=x.value;save()}});document.querySelectorAll('input[name=death]').forEach(x=>x.onchange=()=>{{state.deathCandidateId=x.value;save()}});
 document.getElementById('clearWeapon').onclick=()=>{{state.weaponCandidateId=null;save()}};
 document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>`<li><b>${{g.id}}</b> · <span class="status">${{g.status}}</span><br><span class="note">${{g.evidence}}</span></li>`).join('');
-const death=document.getElementById('deathFrame'), base=D.weaponReview.candidates[0].sourceModelKey;function native(){{death.classList.remove('rise');void death.offsetWidth;death.src=audition(base,'hurt')}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();setTimeout(()=>death.classList.add('rise'),250)}};native();
+const death=document.getElementById('deathFrame'), base=D.weaponReview.candidates[0].validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
 document.getElementById('reviewNote').value=state.note;document.getElementById('reviewNote').oninput=save;renderChosen();
 document.getElementById('export').onclick=()=>{{save();const out={{schema:'ggd.popp-integration-review-decision@1',sourceFingerprint:D.sourceFingerprint,heroId:D.heroId,weaponCandidateId:state.weaponCandidateId,deathCandidateId:state.deathCandidateId,note:state.note}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)+'\\n'],{{type:'application/json'}}));a.download='popp-integration-review-decision.json';a.click();URL.revokeObjectURL(a.href)}};
 </script></body></html>\n'''
@@ -295,14 +319,21 @@ def main() -> None:
         for path, expected in ((OUTPUT_JSON, json_payload), (OUTPUT_HTML, html_payload)):
             if not path.is_file() or path.read_text(encoding="utf-8") != expected:
                 failures.append(path.relative_to(ROOT).as_posix())
+        for staff, source in CONTACT_SHEETS.items():
+            target = OUTPUT_ASSET_DIR / f"{staff.lower()}-contact-sheet.png"
+            if not target.is_file() or target.read_bytes() != source.read_bytes():
+                failures.append(target.relative_to(ROOT).as_posix())
         if failures:
             raise SystemExit("Generated Popp review outputs are stale: " + ", ".join(failures))
         print(json.dumps({"checked": len(failures) == 0, "sourceFingerprint": contract["sourceFingerprint"]}))
         return
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_HTML.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_ASSET_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_JSON.write_text(json_payload, encoding="utf-8")
     OUTPUT_HTML.write_text(html_payload, encoding="utf-8")
+    for staff, source in CONTACT_SHEETS.items():
+        shutil.copyfile(source, OUTPUT_ASSET_DIR / f"{staff.lower()}-contact-sheet.png")
     print(json.dumps({"json": str(OUTPUT_JSON), "html": str(OUTPUT_HTML), "sourceFingerprint": contract["sourceFingerprint"]}))
 
 

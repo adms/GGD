@@ -8,6 +8,6 @@ python3 tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1
 python3 -m unittest tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/test_build_review.py
 ```
 
-Start the client dev server and open `/popp-integration-review.html`. The page uses the existing real `champion-model-audition.html` renderer for idle/run/attack/cast/hurt/death playback. Its rise/fade death button is explicitly a compositing review preview: it does not claim the runtime behavior is implemented.
+Start the client dev server and open `/popp-integration-review.html`. The page displays the already accepted Babylon WebGL 0%/50%/100% evidence row for each idle/run/attack/cast/hurt/death state. This image-backed presentation remains visible when an embedded browser cannot display a nested live WebGL canvas, and each public review image is copied byte-for-byte from the Git-pinned acceptance evidence by the generator. Its rise/fade death button is explicitly a compositing review preview: it does not claim the runtime behavior is implemented.
 
 No candidate is selected by generation. The page keeps a local draft and exports `ggd.popp-integration-review-decision@1`; only an explicit non-null user decision may be used by a later integration step. It does not bind SFX, change the current model, claim production deployment, or treat the source down loop as a distinct native death animation.

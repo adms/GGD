@@ -41,12 +41,22 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(self.contract["sourceDependencyEvidence"]["vfxReferenceCount"], 17)
         self.assertTrue(self.contract["sourceDependencyEvidence"]["rawPackageNamesAreNotAssetAcquisition"])
 
-    def test_html_has_live_motion_controls_and_null_safe_receipt(self):
+    def test_html_has_visible_state_controls_and_null_safe_receipt(self):
         page = MODULE.build_html(self.contract)
-        self.assertIn("champion-model-audition.html", page)
+        self.assertIn("reviewContactSheet", page)
+        self.assertIn("實際 WebGL：0%／50%／100%", page)
+        self.assertNotIn("<iframe", page)
         self.assertIn("popp-native-down-rise-fade-v1", page)
         self.assertIn("weaponCandidateId:null", page)
         self.assertIn("下載裁決 JSON", page)
+
+    def test_every_candidate_has_a_pinned_visible_contact_sheet(self):
+        for row in self.contract["weaponReview"]["candidates"]:
+            sheet = row["validation"]["reviewContactSheet"]
+            source = MODULE.ROOT / sheet["gitPath"]
+            self.assertEqual(MODULE.sha256(source), sheet["sha256"])
+            self.assertEqual(sheet["states"], ["idle", "run", "attack", "cast", "hurt", "death"])
+            self.assertEqual(sheet["samplesPerState"], [0, 50, 100])
 
 
 if __name__ == "__main__":

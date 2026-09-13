@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "db24e4452c85e240bdcef3540cc33b94f30f95d4796f1a495ac42540b415b05f",
+  "sourceFingerprint": "c9e0b6f989092a3e40906670b6783913fe2c29076d3d9579036ea08163d37c49",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -66,6 +66,26 @@
             "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json",
             "bytes": 7162,
             "sha256": "45fceada138dbd02ecb611f1606986f15e1766e7aa02e4daf5c69b0ef2adb2d3"
+          },
+          "reviewContactSheet": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/contact-sheet.png",
+            "bytes": 227754,
+            "sha256": "c847992be100c89bc527c671501c1df9f8c9f9628d693e11e47e2647a972a51a",
+            "publicPath": "review-assets/popp-pn020/magikaru-contact-sheet.png",
+            "states": [
+              "idle",
+              "run",
+              "attack",
+              "cast",
+              "hurt",
+              "death"
+            ],
+            "samplesPerState": [
+              0,
+              50,
+              100
+            ],
+            "source": "actual Babylon WebGL glTF playback"
           }
         },
         "backendDropdownOptionPresentOnFeatureBranch": true,
@@ -109,6 +129,26 @@
             "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/acceptance-summary.json",
             "bytes": 7019,
             "sha256": "6ec38407febffdcb26f08704a092a468293316167f97ef71f5a455fe73d0fda3"
+          },
+          "reviewContactSheet": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/contact-sheet.png",
+            "bytes": 233582,
+            "sha256": "94324c82781931d4c295da2fd7ffdd3bbaa8c3936e93ebb9321f59f3745abab9",
+            "publicPath": "review-assets/popp-pn020/mahouno-contact-sheet.png",
+            "states": [
+              "idle",
+              "run",
+              "attack",
+              "cast",
+              "hurt",
+              "death"
+            ],
+            "samplesPerState": [
+              0,
+              50,
+              100
+            ],
+            "source": "actual Babylon WebGL glTF playback"
           }
         },
         "backendDropdownOptionPresentOnFeatureBranch": true,
@@ -152,6 +192,26 @@
             "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/acceptance-summary.json",
             "bytes": 7031,
             "sha256": "c6cb9f5d52771d14223ab433313be9b0ee83606ae2a3b0d1cda0caf1c8f82e21"
+          },
+          "reviewContactSheet": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/contact-sheet.png",
+            "bytes": 235516,
+            "sha256": "220f08caa997f580f1bd63ed7194fe54033bd47c3f7253fd4ec23e30ac8f1e1d",
+            "publicPath": "review-assets/popp-pn020/kagayaki-contact-sheet.png",
+            "states": [
+              "idle",
+              "run",
+              "attack",
+              "cast",
+              "hurt",
+              "death"
+            ],
+            "samplesPerState": [
+              0,
+              50,
+              100
+            ],
+            "source": "actual Babylon WebGL glTF playback"
           }
         },
         "backendDropdownOptionPresentOnFeatureBranch": true,
