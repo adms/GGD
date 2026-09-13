@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T05:55:04+08:00",
-  "inputsSha256": "4c65062a96c2473a96dbb23243ae633d53969ffa52dc86ebefc0bda646339ea8",
+  "generatedAt": "2026-09-14T06:04:09+08:00",
+  "inputsSha256": "f404a761b5ccdfb7c2eab4a0689ab7d49ee2028d875c93e7b252348ff7ff21b3",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -185735,6 +185735,120 @@
           "allMemberSha256Verified": true,
           "usage": "manual-only legacy conversion backup; not runtime-ready"
         }
+      },
+      {
+        "id": "zenhax-jstars-pak-stpk-comparison-v1",
+        "target": "J-Stars 原生角色 000／013／014／018 PAK-STPK 對照研究樣本",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://zenhax.com/viewtopic.php@t=13160.html",
+        "downloadUrl": "https://www.mediafire.com/file/zy163k5xwr1aaz0/j-stars_samples.7z/file",
+        "uploader": "josou_kitsune",
+        "format": "7z／12 × $CMP PAK + 12 × RAM-dumped STPK",
+        "checkedAt": "2026-09-14",
+        "accessStatus": "public-direct-download",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "native-stpk-split-pending-standardization",
+        "purchaseDecision": "free-research-sample-acquired-continue-owner-rom-extraction",
+        "defaultEligible": false,
+        "resourceRole": "native-container-research-supplement",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260914/zenhax-jstars-pak-stpk-comparison-v1",
+        "reuseTerms": "Public research post and archive retained; redistribution/runtime use terms were not explicitly established.",
+        "usage": "research and conversion intake only; no automatic runtime selection",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-standardization-and-character-mapping",
+          "heroIds": [],
+          "selectionVerified": false
+        },
+        "sourceGame": "J-Stars Victory VS+",
+        "platform": "PS3 research sample; owner PSV copies tracked separately",
+        "characterIdentities": [
+          {
+            "nativeCharacterId": "000",
+            "name": "Monkey D. Luffy",
+            "nameOriginal": "モンキー・D・ルフィ",
+            "status": "archive-directory-and-internal-member-names-observed-not-visually-confirmed"
+          },
+          {
+            "nativeCharacterId": "013",
+            "name": "Toriko",
+            "nameOriginal": "トリコ",
+            "status": "archive-directory-and-internal-member-names-observed-not-visually-confirmed"
+          },
+          {
+            "nativeCharacterId": "014",
+            "name": "Zebra",
+            "nameOriginal": "ゼブラ",
+            "status": "archive-directory-and-internal-member-names-observed-not-visually-confirmed"
+          },
+          {
+            "nativeCharacterId": "018",
+            "name": "Killua Zoldyck",
+            "nameOriginal": "キルア＝ゾルディック",
+            "status": "archive-directory-and-internal-member-names-observed-not-visually-confirmed"
+          }
+        ],
+        "assetKinds": [
+          "native-container",
+          "model-source-member",
+          "texture-source-member",
+          "resource-reference"
+        ],
+        "verification": "Original archive and 24 extracted PAK/STPK inputs have per-file SHA-256. Twelve STPK tables passed bounds checks and their 66 non-empty members were split and hashed. Outputs remain PS3 SRD/SRDI/SRDV source members; no GLB, decoded texture, verified skeleton, native motion, VFX or audio was produced.",
+        "files": [
+          {
+            "path": "original/j-stars_samples.7z",
+            "bytes": 19468471,
+            "sha256": "dbbd40c26bce9b5fc0500d877a918bca1654c52d1ebca8c88b9977bc5b2b331c"
+          }
+        ],
+        "nativeCharacterCount": 4,
+        "nativeContainerPairCount": 12,
+        "modelCount": 0,
+        "characterIdentityVerified": false,
+        "analysis": {
+          "gitPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+          "sha256": "271a8eea3bd5615c4538d9e96a121bcd22fa0b9ad234f76a378f3d192d24cf65",
+          "localConversionPath": "GGD-Asset-Library/conversions/jstars-stpk-research-v1",
+          "stpkContainersSplit": 12,
+          "standardizedModel": false,
+          "visualValidation": false,
+          "backendRegistered": false,
+          "runtimeSelectable": false
+        },
+        "gitBackupReceipts": [
+          {
+            "role": "source-intake",
+            "gitPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/source-s3-backup-receipt.json",
+            "sha256": "d05470679eb3913c22a062d4587288afdb7a56dcd15553dacee1945b630b4b5a",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/zenhax-jstars-pak-stpk-comparison-v1/4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/zenhax-jstars-pak-stpk-comparison-v1/4a8504e3bd0b27e41be1165aff958572ddb0d0bfa0b6c846db3429e148020453.files.json"
+          },
+          {
+            "role": "split-conversion",
+            "gitPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/conversion-s3-backup-receipt.json",
+            "sha256": "88b2bdc35f8f1b5976ae9a95d637e2980576266ec72222eacc6c3c8267eac01c",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-stpk-research-v1/1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/jstars-stpk-research-v1/1a5163543ea329041fc6efb133303b542b7b3e77b1f2cfa980f7cf7828a22f38.files.json"
+          }
+        ],
+        "missing": [
+          "$CH0 decode",
+          "PS3 geometry conversion",
+          "PS3 texture unswizzle",
+          "skeleton and skin validation",
+          "native animations",
+          "VFX",
+          "audio",
+          "visual validation",
+          "GGD character mapping and dropdown registration"
+        ],
+        "publicationStatus": "local-intake-s3-backup-registration-pending",
+        "backup": {
+          "status": "not-uploaded",
+          "readbackVerified": false
+        }
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -186021,21 +186135,34 @@
         "heroIds": [],
         "ownerEntryIds": [],
         "url": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
-        "checkedAt": "2026-09-10T11:14:03.850446+00:00",
+        "checkedAt": "2026-09-14",
         "accessStatus": "public-catalog",
-        "acquisitionStatus": "remaining-packages-in-progress",
+        "acquisitionStatus": "downloaded-verified-in-five-batches",
         "defaultEligible": false,
         "resourceRole": "audio-supplement",
         "assetKinds": [
           "audio"
         ],
-        "verification": "58 原始包共 424,652,930 bytes；Asta／Dai／Kenshiro 三包已歸檔，其餘 55 包由平行工作流持續下載。後續交付驗證並完成 S3 備份後逐批入共用索引，尚未發布者不計入本批檔數。作者逐包 SHA、大小與下載頁見 console-audio-source-catalogs.json。",
+        "verification": "58 original packages are present as 3+10+10+32+3 distinct archive members across five immutable source batches. Every batch has an S3 readback receipt and per-member SHA-256 in public-source-files.json; the newer four batches also carry explicit full-member readback flags. This reconciles package acquisition only; speaker, language, event binding and per-clip listening review remain pending.",
         "catalogPath": "materials/hero-model-library/console-audio-source-catalogs.json",
         "backendIntegration": {
           "required": true,
-          "state": "not-acquired",
+          "state": "audio-listening-review-and-event-binding-pending",
           "heroIds": [],
           "selectionVerified": false
+        },
+        "readiness": "complete-original-package-catalog-acquired-listening-review-pending",
+        "packageCount": 58,
+        "deliverySourceIds": [
+          "parallel-ps-jumpforce-audio",
+          "parallel-ps-jumpforce-local-10",
+          "parallel-ps-jumpforce-local-second10",
+          "parallel-ps-jumpforce-local-next32",
+          "parallel-ps-jumpforce-local-final3"
+        ],
+        "reconciliationEvidence": {
+          "gitPath": "materials/hero-model-library/source-inventories/jumpforce-public-audio-catalog-reconciliation.json",
+          "sha256": "aa3760bfef2d942ab1d2375083940ed75b186e63e796fc4831c80d407a48e92b"
         }
       },
       {

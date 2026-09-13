@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "190142cf08ac9afecefbe3ff356aa4e91952acf50b9374d7390cd73f8c3f896e"
+      "sha256": "a0694d1a029253edb9f9ebbecf8f35ce0ad7c62d7835293d7b007742fd90a5ea"
     }
   },
   "summary": {
@@ -5161,6 +5161,7 @@
         "schema",
         "sourceManifests",
         "ultimate14NativeMotionIndex",
+        "unused300MbaAssetIndex",
         "voiceIndex",
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
