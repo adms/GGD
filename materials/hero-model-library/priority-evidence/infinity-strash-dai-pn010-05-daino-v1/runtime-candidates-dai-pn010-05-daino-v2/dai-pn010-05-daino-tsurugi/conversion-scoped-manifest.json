@@ -1,0 +1,765 @@
+{
+  "schema": "ggd-deterministic-scoped-stage@1",
+  "sourceId": "infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1",
+  "absoluteLocalArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/source.tar.gz",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "bytes": 29617453,
+  "sha256": "c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6",
+  "fileCount": 147,
+  "uncompressedFileBytes": 65464677,
+  "files": [
+    {
+      "path": "collection-manifest.json",
+      "bytes": 33107,
+      "sha256": "c25041a2e3573f1a1653b2122e16feeaf1c39634e4756edc24ff2c37871058cd"
+    },
+    {
+      "path": "git-review-evidence/acceptance-summary.json",
+      "bytes": 7394,
+      "sha256": "ebc0a21a55802834c775b880bf1fa6a424f311c35eb593444926f46498ebd2bb"
+    },
+    {
+      "path": "git-review-evidence/assembly-receipt.json",
+      "bytes": 18910,
+      "sha256": "e0a64539aaf8f3805a7ef4014d56d15f798efd620dce18091b982644a6400835"
+    },
+    {
+      "path": "git-review-evidence/babylon-nullengine.json",
+      "bytes": 1413,
+      "sha256": "91f443c4a7209d330b49cf0b53151ede69d85dfc7fcf37819cb7009d1d3b0263"
+    },
+    {
+      "path": "git-review-evidence/contact-sheet.png",
+      "bytes": 264725,
+      "sha256": "55f4c4d90f54dbc655dd469aee764c6d6ebac4f9f8c3ac73649e9e0d7b4b465e"
+    },
+    {
+      "path": "git-review-evidence/khronos-input.json",
+      "bytes": 710913,
+      "sha256": "12a9469ceefc27a7e0cbc2a5a08f66aad6cdd5dd15129b0f05c221ff7a613120"
+    },
+    {
+      "path": "git-review-evidence/normalization-receipt.json",
+      "bytes": 15797,
+      "sha256": "a9fe2e46de1f40058863a6c860d57c55dc262a3074f75b2a75a6b8429dcd33a5"
+    },
+    {
+      "path": "git-review-evidence/runtime-preparation.json",
+      "bytes": 19057,
+      "sha256": "c328c5112b2ecf08238dacbfa58bea4930c5b953dea871d8f79da60bdfb21adc"
+    },
+    {
+      "path": "git-review-evidence/runtime-webgl-proof.json",
+      "bytes": 10514,
+      "sha256": "bc19bc43e041c91a7edb02188a2501ebdf81b095ebd8c2e4309f68a680925780"
+    },
+    {
+      "path": "git-review-evidence/runtime-webgl-run.json",
+      "bytes": 758,
+      "sha256": "2171c427151d13a09b2f336450889f0a1461c7354862eb03b99c4eb630ee64a7"
+    },
+    {
+      "path": "source-config/CB_PN010_05.uasset",
+      "bytes": 21725,
+      "sha256": "1174e04bd5df7506fc16e88b3481106dc26041eb29301467c8de96d11aa6fbcb"
+    },
+    {
+      "path": "stages/assembly-v2/dai-pn010-05-daino-tsurugi.blend",
+      "bytes": 2503161,
+      "sha256": "e15fc123658bec8f64e343c0e4bb4d4b41d6f11a796f16d44e08d17bbb90ca3e"
+    },
+    {
+      "path": "stages/assembly-v2/dai-pn010-05-daino-tsurugi.glb",
+      "bytes": 4174500,
+      "sha256": "c57b5ddb0dff5f5559c8ea7add18847320c47e846d138a36a6a9312bfd452bc4"
+    },
+    {
+      "path": "stages/assembly-v2/daino-tsurugi-sword-sheath-atlas.png",
+      "bytes": 256138,
+      "sha256": "4eba8b4f08b5c7eb366bb8b05c8a35073b1addb8f7cca1831819f5fcfdef7bc9"
+    },
+    {
+      "path": "stages/assembly-v2/receipt.json",
+      "bytes": 18910,
+      "sha256": "e0a64539aaf8f3805a7ef4014d56d15f798efd620dce18091b982644a6400835"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/05/SK_PN010_05_Body.bin",
+      "bytes": 3242400,
+      "sha256": "2d6857b66cf8d6a19ef45a0d7e073520a12c49dd1c230c1daf3d533258ad6b5a"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/05/SK_PN010_05_Body.gltf",
+      "bytes": 126521,
+      "sha256": "b4a99ee8a6979d530c01d9430591f1db1478224ad2b1f2afc4d2b362bbe3ee2a"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_Base.tga",
+      "bytes": 123058,
+      "sha256": "bec57c8432e5e4b4d007387463ce06a7d77b277138e6cb8fcaf2e672172ed20c"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_Bundle.tga",
+      "bytes": 1908558,
+      "sha256": "4f4ce2305ee0dacd6040b14c11f266f8d125d63d34370a36629e25216f459821"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_N.tga",
+      "bytes": 149497,
+      "sha256": "58f37e070353513c1e27efad6115e1b258872ec33cb3837a196feeac109c490f"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_Shade.tga",
+      "bytes": 443604,
+      "sha256": "c315e4f4b4893f337070a6a026c2169e33c6dd94fb75ffbef554dc6de83c8cd8"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.bin",
+      "bytes": 483664,
+      "sha256": "94093c13556ca4c20add032b909d8c2c3f68fe4f2745aee4e17eaeefe354f80e"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.gltf",
+      "bytes": 92436,
+      "sha256": "860d47fbbab7d1b1607823cdd94ce98e147a92d18573c348ddc017c7486b84eb"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Base.tga",
+      "bytes": 44983,
+      "sha256": "9bc8e7ecbc692cfd0d328d22cb9b8c46568d5f22be55b1fd9d9988f3f4d57b77"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Bundle.tga",
+      "bytes": 217903,
+      "sha256": "7447df037fc1a8171dc30dff859f12a2ab0b519f87271aa80ac02cb96d1503bc"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal.tga",
+      "bytes": 158472,
+      "sha256": "6bcd002f1b89585b53bb98cb6f1fca4ce278f6b57a347911f61396c26e6075be"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal2.tga",
+      "bytes": 26233,
+      "sha256": "ea1697f250a2e29e1641fee67e2a595df46f35dfe9f7bd47097aa6618a42a6fd"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Filter.tga",
+      "bytes": 26343,
+      "sha256": "78ac8d7165cf85ef08dc8c6a08ca726a22dcd09bc6ec6b16cf56b782b3448c22"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Shade.tga",
+      "bytes": 78933,
+      "sha256": "f1b5a711af7e58b57d43ca9eb0533f88e21452ccecc3685803b45c31337ea3dc"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.bin",
+      "bytes": 396648,
+      "sha256": "705c9ac4b9c7690a26566c8ac570b6ad67aba24eaf75e2a674fe551a1d7ba9fb"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.gltf",
+      "bytes": 87454,
+      "sha256": "ebdd106c28d2b27ea0023f4ca43b6deba2f40f7944901c2c7755b5d442dd221c"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Hair/01/T_PN010_01_Hair_Bundle.tga",
+      "bytes": 2070161,
+      "sha256": "dd210fa53ac23178d91f76779a61dfaf947af510d49cf03a05875acc7c1f7db8"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Hair/01/T_PN010_01_Hair_N.tga",
+      "bytes": 1014589,
+      "sha256": "48bc5f3a631bfdbe26a1163f24f5f7416530d76338632dafa7863cf93b42f41f"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Hair/T_PN010_00_Hair_Base.tga",
+      "bytes": 50,
+      "sha256": "819e54a6bad59d88c0b1fed602bd66425e9a5ddb3534c204e9438144fab7b87b"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Hair/T_PN010_00_Hair_Shade.tga",
+      "bytes": 146,
+      "sha256": "816d67810a79888a9c939278b10aed7b99945d8ac2ad1cb5c7e6a137bc9b8d19"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Base.tga",
+      "bytes": 533352,
+      "sha256": "eb5a57ce5fe206e2159a1f1ce6ea2b4d0d502d06fe2aefd32197d4e741e8c8de"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Bundle.tga",
+      "bytes": 2573176,
+      "sha256": "1e9d80716c33c665b10076c24e047577bf9b52472d88e23dbd19c72d3222eb58"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Shade.tga",
+      "bytes": 565279,
+      "sha256": "cf21d74f9c8af24ed98b3c8ed3ca06d9fddc09acb31ecca85a9e3098542afc57"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/Papunica/T_PN010_00_Weapon_Papunica_Base.tga",
+      "bytes": 60266,
+      "sha256": "74fdf53519d6fcf64c621994744b570bdf6cb0a3e5214391d3eaec47866bb8f5"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/Papunica/T_PN010_00_Weapon_Papunica_Bundle.tga",
+      "bytes": 574987,
+      "sha256": "50801882777d19969e52db619c193ecc9da54acffeba8de89264a3c4d83036bb"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/Papunica/T_PN010_00_Weapon_Papunica_Shade.tga",
+      "bytes": 389766,
+      "sha256": "7752429b1bd5065052f2715f03c575c48da22d1d57c6490b61f8d7dc6e40a97e"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/Papunica2/T_PN010_00_Weapon_Papunica2_Base.tga",
+      "bytes": 79901,
+      "sha256": "9e760461b3a87f0c0dd21d2717b7e0b797e4aa7ea2cb4cff8694088dc3e89a3f"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/Papunica2/T_PN010_00_Weapon_Papunica2_Bundle.tga",
+      "bytes": 346351,
+      "sha256": "c5bdf11f3ddd144f156ed1f0e6a68ba0a7ae181ce6ce07344fb144a7c5a2f4e6"
+    },
+    {
+      "path": "stages/body/material-context-v1/Strash/Chara/Player/PN010/Weapon/Papunica2/T_PN010_00_Weapon_Papunica2_Shade.tga",
+      "bytes": 433960,
+      "sha256": "4081a13d5721d56215070d25304bd6582a99d49ea2994fb003b41b9b16bc5e82"
+    },
+    {
+      "path": "stages/body/material-context-v1/export-manifest.json",
+      "bytes": 12264,
+      "sha256": "0307db9b8c02f3c37979ef6f19196625919fc41bc65e08dc41bd502633cb32b8"
+    },
+    {
+      "path": "stages/body/material-context-v1/strash__Content__Strash__Chara__Player__PN010__05__SK_PN010_05_Body.uasset.log",
+      "bytes": 16091,
+      "sha256": "f8e152c7c80f534964fcdd7fd7c42ca7574417e1fd48f056837bac2e63ed082e"
+    },
+    {
+      "path": "stages/body/material-context-v1/strash__Content__Strash__Chara__Player__PN010__Face__SK_PN010_00_Face.uasset.log",
+      "bytes": 13862,
+      "sha256": "1aadbbdef53acc8a50a31afc10728825215d454229e391bd677fb5fb868956ae"
+    },
+    {
+      "path": "stages/body/material-context-v1/strash__Content__Strash__Chara__Player__PN010__Hair__01__SK_PN010_01_Hair.uasset.log",
+      "bytes": 5776,
+      "sha256": "5a8f2347d2e3d0269c9704e31b39465a30ff9183eefe46f386af38ff69d05f8b"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/Strash/Chara/Player/PN010/05/SK_PN010_05_Body.props.txt",
+      "bytes": 2237,
+      "sha256": "3108a2967fa059c3e6c2030945f8af0c9ff5d9da7b8a1a98b89eeaa5a044fd11"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/Strash/Chara/Player/PN010/05/SK_PN010_05_Body.psk",
+      "bytes": 2610504,
+      "sha256": "a5b09620acedfd7b94fd15b8f588feb59ba5d46d23ed6a39cba15d863f3662c8"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.props.txt",
+      "bytes": 17924,
+      "sha256": "e97c8543a344f77520716dcbb5a191fd5fcd2b0094cbac622e3f1c353480dc78"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.psk",
+      "bytes": 425664,
+      "sha256": "fb0d970bdb8412ecfa83b11c4286bff54fa817a1f6b214f0f571cc436a445b4d"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.props.txt",
+      "bytes": 2789,
+      "sha256": "07938be8398bd308e8ee24361cc9435c9237eb9d8d391a62d3685c227004883d"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.psk",
+      "bytes": 383680,
+      "sha256": "ba96bcbf03ab9244d266b18255cad2858c53c861b3240cd9896bc65ed985674a"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/export-manifest.json",
+      "bytes": 5794,
+      "sha256": "067a568cab8faa201513b7fba192dd05a2397f4bf0df86d176f8b235207aa11d"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/strash__Content__Strash__Chara__Player__PN010__05__SK_PN010_05_Body.uasset.log",
+      "bytes": 3767,
+      "sha256": "202562889253d4fa148aed91f4becf70bc204cc38d0d5e8bcf0ecdd632088694"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/strash__Content__Strash__Chara__Player__PN010__Face__SK_PN010_00_Face.uasset.log",
+      "bytes": 8369,
+      "sha256": "4222cf2a832b04e570409d633c288d509c481126b41918cc846feb57036d656f"
+    },
+    {
+      "path": "stages/body/mesh-psk-v1/strash__Content__Strash__Chara__Player__PN010__Hair__01__SK_PN010_01_Hair.uasset.log",
+      "bytes": 1924,
+      "sha256": "4e6032f2d9eac50bcf68997c7240506c2c583d634331f310ee6a66082b80c199"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_Base.png",
+      "bytes": 65949,
+      "sha256": "85cbf64a5e874942cfcad69f134a8b069da87118ee18dd6e20dca3bf3439c1e5"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_N.png",
+      "bytes": 72080,
+      "sha256": "d35c99d2e9ac130ea61927239cd971f8638262087b150200a497c6e2f561c661"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Base.png",
+      "bytes": 25555,
+      "sha256": "75d15716657961525b89885ab40dc8483d188b796c7641d9aa952664c1b10c42"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal.png",
+      "bytes": 85363,
+      "sha256": "22b572f0d91b2f44e43776e7caa5ec6bd395c4540750ea9fcac170e4faebc0b1"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal2.png",
+      "bytes": 15524,
+      "sha256": "a5b893d9efedc44a0ab2c124ededcdab42bb438f332ceae834f42e138b03bb8b"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/Hair/01/T_PN010_01_Hair_N.png",
+      "bytes": 380769,
+      "sha256": "e9bb3a41895c6eee777d146e728f894a3a6e368d312f21b4dec25fba16dcedde"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/Hair/T_PN010_00_Hair_Base.png",
+      "bytes": 79,
+      "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+    },
+    {
+      "path": "stages/body/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Base.png",
+      "bytes": 226641,
+      "sha256": "8a5099de30c42a4bd37aa94bb8cd644938e70c1b10a5f4009c51ec53ee3e91f7"
+    },
+    {
+      "path": "stages/body/textures-v1/export-manifest.json",
+      "bytes": 12423,
+      "sha256": "1efa0aa13e816529ccd291e2e0d4165ebb0a88d7351851b4b8968e19bcbec042"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__05__T_PN010_05_Body_Base.uasset.log",
+      "bytes": 1187,
+      "sha256": "b1890b563f5e887842446e62ff5c8a5ff9958130c17c6655284dbb2289f8b728"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__05__T_PN010_05_Body_N.uasset.log",
+      "bytes": 1172,
+      "sha256": "fe55bbf19361daf267df05499652d47e602147acc2c7b2a608255163d53cf0ce"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__Face__T_PN010_00_Face_Base.uasset.log",
+      "bytes": 1193,
+      "sha256": "765f58e6689236878c83f4e6748a262da078a4d588b92b53cfccdb58cd51a869"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__Face__T_PN010_00_Face_CelDecal.uasset.log",
+      "bytes": 1213,
+      "sha256": "9f6fc373cc522701ab7737008a9353ecb8446c9fc6dff9b006de714114385191"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__Face__T_PN010_00_Face_CelDecal2.uasset.log",
+      "bytes": 1218,
+      "sha256": "64a661d5bbaaadec1d92a98d5a04e0449fbc7b76e5e68dc29dcf0937038278cf"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__Hair__01__T_PN010_01_Hair_N.uasset.log",
+      "bytes": 1187,
+      "sha256": "41079f3aed7c42f8f3400f3637a719629f77a768876a7b20edd9091ea9cc0b95"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__Hair__T_PN010_00_Hair_Base.uasset.log",
+      "bytes": 1193,
+      "sha256": "90b528a01cb0af079edaf889bfbc6072a4f376fb5b16a9507b39130c3fe1e162"
+    },
+    {
+      "path": "stages/body/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Sheath_Base.uasset.log",
+      "bytes": 1333,
+      "sha256": "c30a5e046194c7699edbe6bae368d301676e0951f89a4866a80ed50d2aab1e3e"
+    },
+    {
+      "path": "stages/failed-attempts/seven-draw-assembly-v1/dai-pn010-05-daino-tsurugi.blend",
+      "bytes": 2478583,
+      "sha256": "da7bce8f9f6d4aeca24dba7597c1c7454b1c70e97f93067e689e98e2d3eccac1"
+    },
+    {
+      "path": "stages/failed-attempts/seven-draw-assembly-v1/dai-pn010-05-daino-tsurugi.glb",
+      "bytes": 4137392,
+      "sha256": "d35c5962f712318da14865a746e1752dbf20b84661a2c2d8105855aa4e26edfe"
+    },
+    {
+      "path": "stages/failed-attempts/seven-draw-assembly-v1/receipt.json",
+      "bytes": 18479,
+      "sha256": "2203f13cb35abe49cf90fe14088927642acfcc7ea8021f50e7c13a742eb4d61b"
+    },
+    {
+      "path": "stages/failed-attempts/seven-draw-normalized-v1/dai-pn010-05-daino-tsurugi-ggd-normalized.glb",
+      "bytes": 3438336,
+      "sha256": "ea80db2740aadf9a59cd4cccaae9c47c3948345eb8e9358f41b017dd8c00bc71"
+    },
+    {
+      "path": "stages/failed-attempts/seven-draw-normalized-v1/ggd-upload.json",
+      "bytes": 17379,
+      "sha256": "ef4cc1ae69a47aff30afeb917fe2a9f5f20cb62ad4f5e90848e09bcf8bfdc448"
+    },
+    {
+      "path": "stages/failed-attempts/seven-draw-normalized-v1/khronos-input.json",
+      "bytes": 711642,
+      "sha256": "eb7b2da1c37051312837895f1e44cb4910a2136908bf8b79fd11fd119ebba305"
+    },
+    {
+      "path": "stages/normalized-v2/babylon-nullengine.json",
+      "bytes": 1413,
+      "sha256": "91f443c4a7209d330b49cf0b53151ede69d85dfc7fcf37819cb7009d1d3b0263"
+    },
+    {
+      "path": "stages/normalized-v2/dai-pn010-05-daino-tsurugi-ggd-normalized.glb",
+      "bytes": 3432736,
+      "sha256": "906a40d897224209e49fc687bf093f2d53f8c3f3d41af2e0ddecb51cffe479ec"
+    },
+    {
+      "path": "stages/normalized-v2/ggd-upload.json",
+      "bytes": 15797,
+      "sha256": "a9fe2e46de1f40058863a6c860d57c55dc262a3074f75b2a75a6b8429dcd33a5"
+    },
+    {
+      "path": "stages/normalized-v2/khronos-input.json",
+      "bytes": 710913,
+      "sha256": "12a9469ceefc27a7e0cbc2a5a08f66aad6cdd5dd15129b0f05c221ff7a613120"
+    },
+    {
+      "path": "stages/runtime-v2/body.glb",
+      "bytes": 2206692,
+      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d"
+    },
+    {
+      "path": "stages/runtime-v2/model.json",
+      "bytes": 484,
+      "sha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef"
+    },
+    {
+      "path": "stages/runtime-v2/receipt.json",
+      "bytes": 19057,
+      "sha256": "c328c5112b2ecf08238dacbfa58bea4930c5b953dea871d8f79da60bdfb21adc"
+    },
+    {
+      "path": "stages/runtime-v2/uploaded-model.json",
+      "bytes": 381,
+      "sha256": "12316fcd7582b65fe4c7c84a398f4d29e4d97263468566b09769b10b56c265c3"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.bin",
+      "bytes": 285944,
+      "sha256": "3d756f0d388a022bc80ccfb130a00ddc46d85a4d8c6cecb947242761362408c6"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.gltf",
+      "bytes": 12429,
+      "sha256": "ce71f83acb1f1b72f42f2125122332b5573b924261adcc07439cab57cd0fba1f"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Base.tga",
+      "bytes": 53338,
+      "sha256": "7b21a95579792b4edba72d77207520ea5e65293b2c4f9a47971e5f8f447765fb"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Bundle.tga",
+      "bytes": 1864174,
+      "sha256": "672c8a69755fb3b570397f2ae9b62482da90cbd6d79b7699ecba7ae36d5cd00e"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Shade.tga",
+      "bytes": 53698,
+      "sha256": "d648e14e3975eb17e10e138ee2b2e05e5516c2d1d7ca5553d869f5e7b819be2f"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/export-manifest.json",
+      "bytes": 3584,
+      "sha256": "199cfc3c12865977d91b1a2d46fbf77d5e88d6141cea79b54551c8f1b1bb0429"
+    },
+    {
+      "path": "stages/weapon/material-context-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__SK_PN010_Weapon_DainoTsurugi.uasset.log",
+      "bytes": 6669,
+      "sha256": "3b09dc3e694920b3f5060e55ec023c0c1ce6e72343efde6bb530e60861573a87"
+    },
+    {
+      "path": "stages/weapon/mesh-psk-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.props.txt",
+      "bytes": 1658,
+      "sha256": "310d68696136ba075886e10b64cc2287d5339d69a2ae327b7e8520bdc012d38b"
+    },
+    {
+      "path": "stages/weapon/mesh-psk-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.psk",
+      "bytes": 198108,
+      "sha256": "24d9e016d99b00378f7e3c736a7bfd492fb791beebcf5c1ed490c8694fccd371"
+    },
+    {
+      "path": "stages/weapon/mesh-psk-v1/export-manifest.json",
+      "bytes": 2638,
+      "sha256": "f20dc4ffb4dfaaf0e4b94eaa3c012b007e3abbcad946dad6554029cb02363a21"
+    },
+    {
+      "path": "stages/weapon/mesh-psk-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__SK_PN010_Weapon_DainoTsurugi.uasset.log",
+      "bytes": 2475,
+      "sha256": "9d42e79451e06d7fd13a60add2c1df097b060119483e5c5a41b9e08c43961bce"
+    },
+    {
+      "path": "stages/weapon/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Base.png",
+      "bytes": 22680,
+      "sha256": "f6dc1f89b347c4864c1a9e68e3e5785cebd32abedfddb88258dc48b4d982cc7f"
+    },
+    {
+      "path": "stages/weapon/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Bundle.png",
+      "bytes": 732080,
+      "sha256": "f02b8e838df958fcc5a8c49b3652732ba2c4728135a61cd37d48982c2a393055"
+    },
+    {
+      "path": "stages/weapon/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Shade.png",
+      "bytes": 23077,
+      "sha256": "a485c78f57b5e25105ac9aa1d4e253c159fd3ee226c3dc7682340b74f3f7e856"
+    },
+    {
+      "path": "stages/weapon/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Base.png",
+      "bytes": 226641,
+      "sha256": "8a5099de30c42a4bd37aa94bb8cd644938e70c1b10a5f4009c51ec53ee3e91f7"
+    },
+    {
+      "path": "stages/weapon/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Bundle.png",
+      "bytes": 937377,
+      "sha256": "5bde3db8aa40a146a1885941a559ba65b73b069e9cbaf2c1547c09659d1e2061"
+    },
+    {
+      "path": "stages/weapon/textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Shade.png",
+      "bytes": 226262,
+      "sha256": "0436f64d31963616776f4f1bb91b90cf6e72d60025c89766f5844cf24c1b6398"
+    },
+    {
+      "path": "stages/weapon/textures-v1/export-manifest.json",
+      "bytes": 10600,
+      "sha256": "9b9a363dfd79ba45143912d861f1ebb240c88207efe24a8cd8fc8d4bce4565bf"
+    },
+    {
+      "path": "stages/weapon/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Base.uasset.log",
+      "bytes": 1316,
+      "sha256": "c45898bf18246e8b71ab7912c1e6144fc20caa22dfc84635801846e47c18c329"
+    },
+    {
+      "path": "stages/weapon/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Bundle.uasset.log",
+      "bytes": 1326,
+      "sha256": "568e9c1979cf959369d55a0ebe0b97bd480be5781e787e4d05190620eb85b511"
+    },
+    {
+      "path": "stages/weapon/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Shade.uasset.log",
+      "bytes": 1321,
+      "sha256": "b9da4fbbc1e8b91432b95d479177d8d1426134c2ee241ae5c230425b7f5a1bec"
+    },
+    {
+      "path": "stages/weapon/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Sheath_Base.uasset.log",
+      "bytes": 1351,
+      "sha256": "e31e1c0fc8ea247280e5b1b74184499795f94e5232091f37c5163f23717053aa"
+    },
+    {
+      "path": "stages/weapon/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Sheath_Bundle.uasset.log",
+      "bytes": 1361,
+      "sha256": "84cee15c41d171d92239d16262ee0300892ffeb7cab8d975c03609d28340b5d6"
+    },
+    {
+      "path": "stages/weapon/textures-v1/strash__Content__Strash__Chara__Player__PN010__Weapon__DainoTsurugi__T_PN010_Weapon_DainoTsurugi_Sheath_Shade.uasset.log",
+      "bytes": 1356,
+      "sha256": "a1e0110db624a9e76905df49f6d449f88278b4277367425ba31bb278119fcc8e"
+    },
+    {
+      "path": "stages/webgl-review-v2/bundle.js",
+      "bytes": 11561631,
+      "sha256": "faaa20b67b77b535b39af1637cc40f3103c62b8b805118fce52f11a204d674f1"
+    },
+    {
+      "path": "stages/webgl-review-v2/chrome.log",
+      "bytes": 4723,
+      "sha256": "4dd60d48adbd2bee12915e9d190dce2fffa46e48e6cd96a0eb7b10bd78518f75"
+    },
+    {
+      "path": "stages/webgl-review-v2/contact-sheet.png",
+      "bytes": 264725,
+      "sha256": "55f4c4d90f54dbc655dd469aee764c6d6ebac4f9f8c3ac73649e9e0d7b4b465e"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-attack-0.png",
+      "bytes": 212057,
+      "sha256": "f861e47d84e8b021da6e8d0c998e511395d70772abbf2ecec61d7ab016d85f7f"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-attack-100.png",
+      "bytes": 212190,
+      "sha256": "8d297ee758e480810a1d854552260c9e5a0588174635904810f09d2c9225ecde"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-attack-50.png",
+      "bytes": 184827,
+      "sha256": "10dad8f51f5d712a46d962d8cbf86420f157ac872804538421fbd11744dc8972"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-cast-0.png",
+      "bytes": 200386,
+      "sha256": "7cde35b47898bb7a8575d47a9526fcdee1c5b83f7ac2bfd1a0e72be339f6a148"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-cast-100.png",
+      "bytes": 200403,
+      "sha256": "44a1cd40bb588c3513d6682f4393861a57308c22715cdc28e34c2d321dbab989"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-cast-50.png",
+      "bytes": 246771,
+      "sha256": "de952588e59870b0d69dffc05448751e20e32028301c49635c27742fc9d0b247"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-death-0.png",
+      "bytes": 88574,
+      "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-death-100.png",
+      "bytes": 88574,
+      "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-death-50.png",
+      "bytes": 88574,
+      "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-hurt-0.png",
+      "bytes": 88574,
+      "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-hurt-100.png",
+      "bytes": 88574,
+      "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-hurt-50.png",
+      "bytes": 88574,
+      "sha256": "de8388dcdf6cd4044c62f8811021a5ef858ec6fcc314e89b67a77b1b8605277a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-idle-0.png",
+      "bytes": 191789,
+      "sha256": "8535e0c08c99e9ff4f672c71d0d9e431f6607410d579db2b31b1271fa7a9984a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-idle-100.png",
+      "bytes": 191789,
+      "sha256": "8535e0c08c99e9ff4f672c71d0d9e431f6607410d579db2b31b1271fa7a9984a"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-idle-50.png",
+      "bytes": 191905,
+      "sha256": "847bf56ccf2ac1f403e61743d476c8dc41addd33bf41f71502b1356965fcafdc"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-run-0.png",
+      "bytes": 188046,
+      "sha256": "52789437f83b450169e1cec8c407c32f833ff4484635fbcd50d17e892464168e"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-run-100.png",
+      "bytes": 187996,
+      "sha256": "224918d90ec82cc3155063bf8725a55f6b9bcdf81087224c42005aee9259e2da"
+    },
+    {
+      "path": "stages/webgl-review-v2/ggd-state-run-50.png",
+      "bytes": 194099,
+      "sha256": "8194482b8501d60c5ba8396f514f6ae6579bbd0287713b53d6f9890b671d219d"
+    },
+    {
+      "path": "stages/webgl-review-v2/proof.json",
+      "bytes": 10514,
+      "sha256": "bc19bc43e041c91a7edb02188a2501ebdf81b095ebd8c2e4309f68a680925780"
+    },
+    {
+      "path": "stages/webgl-review-v2/run.json",
+      "bytes": 758,
+      "sha256": "2171c427151d13a09b2f336450889f0a1461c7354862eb03b99c4eb630ee64a7"
+    },
+    {
+      "path": "tools/assemble_candidate_blender.py",
+      "bytes": 49891,
+      "sha256": "d3b8055c1c2627c1f59d5486ef51517a86eacde143947c60fbd4432f1db7eee9"
+    },
+    {
+      "path": "tools/collect_dai_pn010_05_delivery.py",
+      "bytes": 8253,
+      "sha256": "c2ee08544a01061c962fcae06945d0159ffb0ea530e03dc94b9cbb714319285a"
+    },
+    {
+      "path": "tools/export.py",
+      "bytes": 4513,
+      "sha256": "3f7c3a1a1218c2168265b52fa0a63a52f89ddb5b01bc929ce18c2d1c0649dc0e"
+    },
+    {
+      "path": "tools/freeze_runtime_review.py",
+      "bytes": 7189,
+      "sha256": "c9002dda5354b3b07c53580c1c89288f64e694fa0dc1e7bf8d380362c6285506"
+    },
+    {
+      "path": "tools/normalize_validate_candidate.mts",
+      "bytes": 5579,
+      "sha256": "9be7756c59a87666a24fdb2d7a9e37ae428d15a586793a899261784954ab5f60"
+    },
+    {
+      "path": "tools/pipeline-config.json",
+      "bytes": 9675,
+      "sha256": "03ff80966c9d0d88d78df8eea09ff34257a960e527a99b308131797d1fc3300e"
+    },
+    {
+      "path": "tools/pipeline.py",
+      "bytes": 9991,
+      "sha256": "ebff94db935fa95b5a2d1018f2b647b7a2e6a70f0c1c2d9926eed77ffa225468"
+    },
+    {
+      "path": "tools/prepare_runtime_candidate.mts",
+      "bytes": 9169,
+      "sha256": "f1362accfb05448a901574f43972d8e0bde9ba9e056d566216490e97b6ecea2a"
+    },
+    {
+      "path": "tools/render_babylon.mjs",
+      "bytes": 5325,
+      "sha256": "0ff58abef0acba02ceb4b46ba6df34ca92005111ece1b4c1219885f284f6fd0a"
+    },
+    {
+      "path": "tools/render_babylon.py",
+      "bytes": 5216,
+      "sha256": "e24eb2ed7aec152ee27d7138fae29b92832b80db51e5888e665f52d2c799fbf1"
+    },
+    {
+      "path": "tools/ueviewer-infinity-strash.patch",
+      "bytes": 2639,
+      "sha256": "1ecc9d04150281054182c816b349a0eb136815fa3f0df57928d678375b396e98"
+    }
+  ],
+  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.tar.gz",
+  "localPreserved": true,
+  "snapshotScope": "PN010/05 body, Hair/01, Dai no Tsurugi, source character config, all extraction/conversion/runtime/WebGL stages, rejected seven-draw attempt, Git review evidence and pinned workflow tools; original full cooked source remains in its separate raw-v2 archive",
+  "deterministicParameters": {
+    "tarFormat": "PAX",
+    "memberOrder": "lexicographic POSIX path",
+    "mode": "0644",
+    "uid": 0,
+    "gid": 0,
+    "mtime": 0,
+    "uname": "",
+    "gname": "",
+    "gzipMtime": 0,
+    "gzipFilename": "",
+    "gzipCompressLevel": 1
+  }
+}

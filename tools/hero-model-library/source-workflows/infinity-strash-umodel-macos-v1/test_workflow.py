@@ -24,6 +24,10 @@ EN653_SPEC = importlib.util.spec_from_file_location("prepare_en653_component", H
 EN653 = importlib.util.module_from_spec(EN653_SPEC)
 assert EN653_SPEC.loader is not None
 EN653_SPEC.loader.exec_module(EN653)
+DAI_COLLECT_SPEC = importlib.util.spec_from_file_location("collect_dai_pn010_05_delivery", HERE / "collect_dai_pn010_05_delivery.py")
+DAI_COLLECT = importlib.util.module_from_spec(DAI_COLLECT_SPEC)
+assert DAI_COLLECT_SPEC.loader is not None
+DAI_COLLECT_SPEC.loader.exec_module(DAI_COLLECT)
 
 
 class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
@@ -77,6 +81,18 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
             (review / "ggd-state-17.png").unlink()
             self.assertFalse(PIPELINE.validate_review(review))
 
+    def test_pipeline_quarantines_incomplete_stage_without_overwrite(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "normalized" / "candidate"
+            root.mkdir(parents=True)
+            (root / "partial.txt").write_text("preserve me")
+            first = PIPELINE.quarantine_incomplete(root, "normalize", False)
+            self.assertEqual(first.name, "candidate-normalize-attempt-1")
+            self.assertEqual((first / "partial.txt").read_text(), "preserve me")
+            root.mkdir()
+            second = PIPELINE.quarantine_incomplete(root, "normalize", False)
+            self.assertEqual(second.name, "candidate-normalize-attempt-2")
+
     def test_popp_recipe_pins_independent_export_roots_and_native_mapping(self):
         config = json.loads((HERE / "pipeline-config.json").read_text(encoding="utf-8"))
         popp = next(row for row in config["candidates"] if row["id"] == "popp-pn020-00")
@@ -101,6 +117,37 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
         self.assertIn("AS_PN020_00_B_Special03_01.psa", assembly)
         self.assertIn("'popp-pn020-00'", runtime)
         self.assertIn("cast: 'GGD_native_special03'", runtime)
+
+    def test_dai_pn010_05_recipe_keeps_source_selected_daino_variant_independent(self):
+        config = json.loads((HERE / "pipeline-config.json").read_text(encoding="utf-8"))
+        dai = next(row for row in config["candidates"] if row["id"] == "dai-pn010-05-daino-tsurugi")
+        self.assertEqual(dai["heroId"], "godie-nbbc")
+        self.assertEqual(dai["catalogCandidateId"], "infinity-strash-dai-pn010-05-daino-tsurugi-native-v1")
+        self.assertEqual(
+            {
+                "meshRoot", "materialContextRoot", "textureRoot", "psaRoot",
+                "attachmentMeshRoot", "attachmentMaterialContextRoot",
+                "attachmentTextureRoot", "attachmentSourceRoot",
+            },
+            {key for key in dai if key.endswith("Root")},
+        )
+        assembly = (HERE / "assemble_candidate_blender.py").read_text(encoding="utf-8")
+        pipeline = (HERE / "pipeline.py").read_text(encoding="utf-8")
+        runtime = (HERE / "prepare_runtime_candidate.mts").read_text(encoding="utf-8")
+        self.assertIn("SK_PN010_05_Body.gltf", assembly)
+        self.assertIn("SK_PN010_01_Hair.gltf", assembly)
+        self.assertIn("SK_PN010_Weapon_DainoTsurugi.gltf", assembly)
+        self.assertIn('"sourceConfig": "strash/Content/Strash/Chara/Player/PN010/Data/CB_PN010_05.uasset"', assembly)
+        self.assertIn('"filterSourceMaterials": True', assembly)
+        self.assertIn('"mergeWithRole": "sheath"', assembly)
+        self.assertIn("create_horizontal_texture_atlas", assembly)
+        self.assertIn("remap_material_uv_horizontal", assembly)
+        self.assertIn('{"part": "body", "contains": "papunica", "exclude": True}', assembly)
+        self.assertIn('{"part": "body", "containsAll": ["daino", "sheath"], "colorRole": "sheath"}', assembly)
+        self.assertIn('"socket": "Weapon1_R"', assembly)
+        self.assertIn('"attachmentMaterialContextRoot": "--attachment-material-context-root"', pipeline)
+        self.assertIn("'dai-pn010-05-daino-tsurugi'", runtime)
+        self.assertIn("PN010/05 body, PN010 Hair/01 and Dai no Tsurugi", runtime)
 
     def test_popp_magikaru_delivery_is_append_only_delta_with_failed_attempts(self):
         profile = COLLECT.PROFILES["magikaru-v2"]
@@ -176,6 +223,14 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
             },
             set(EN653_COLLECT.TOOL_NAMES),
         )
+
+    def test_dai_pn010_05_delivery_pins_failed_attempt_final_stages_and_tools(self):
+        stages = dict(DAI_COLLECT.STAGES)
+        self.assertEqual(stages["failed-attempts/seven-draw-normalized-v1"], "normalized-animated-candidates-psk-blender-dai-pn010-05-daino-v1/dai-pn010-05-daino-tsurugi")
+        self.assertEqual(stages["runtime-v2"], "runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi")
+        self.assertIn("pipeline.py", DAI_COLLECT.TOOL_NAMES)
+        self.assertIn("assemble_candidate_blender.py", DAI_COLLECT.TOOL_NAMES)
+        self.assertIn("collect_dai_pn010_05_delivery.py", DAI_COLLECT.TOOL_NAMES)
 
 if __name__ == "__main__":
     unittest.main()

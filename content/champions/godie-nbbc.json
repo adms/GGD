@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+  "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -412,6 +412,26 @@
         "selectionClass": "canonical-game",
         "sourceGame": "Infinity Strash Steam 原作擷取",
         "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+      "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+      "modelSha256": "0713cb62a180e45373831f8da1401cedb6a549be11c41086f2fa1e8eb3f20b2e",
+      "binarySha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "registeredAt": "2026-09-13T14:33:42.246Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/05，達伊之劍）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
       },
       "automaticEligible": true
     }

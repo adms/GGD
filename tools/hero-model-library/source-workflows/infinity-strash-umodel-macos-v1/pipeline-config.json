@@ -17,6 +17,23 @@
       "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v1/dai-pn010-02"
     },
     {
+      "id": "dai-pn010-05-daino-tsurugi",
+      "catalogCandidateId": "infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+      "heroId": "godie-nbbc",
+      "meshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-mesh-psk-v1",
+      "materialContextRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-material-context-v1",
+      "textureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1",
+      "psaRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2",
+      "attachmentMeshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-mesh-psk-v1",
+      "attachmentMaterialContextRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-material-context-v1",
+      "attachmentTextureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-textures-v1",
+      "attachmentSourceRoot": "{asset}/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw",
+      "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi"
+    },
+    {
       "id": "vearn-en801-pre-transformation",
       "catalogCandidateId": "infinity-strash-vearn-en801-pre-transformation-native-v1",
       "heroId": "godie-ubal",
@@ -75,16 +92,64 @@
     }
   ],
   "indexCommands": [
-    ["pnpm", "assets:manifest"],
-    ["pnpm", "content:build:indexes-only"],
-    ["python3", "tools/hero-model-library/inventory.py"],
-    ["node", "--import", "tsx", "tools/hero-model-library/design-backlog/analyze_abilities.mts", "{asset}/intake/design-backlog/ability-analysis.json"],
-    ["python3", "tools/hero-model-library/design-backlog/audit_design.py", "--analysis", "{asset}/intake/design-backlog/ability-analysis.json", "--output", "{asset}/intake/design-backlog/hero-design-coverage-full.json", "--compact", "{repo}/materials/hero-model-library/design-backlog/hero-design-coverage.json"],
-    ["python3", "tools/hero-model-library/build_model_design_backlog.py"],
-    ["python3", "tools/hero-model-library/build_model_design_backlog.py", "--check"],
-    ["python3", "tools/hero-model-library/build_palworld_index.py", "--workspace", "{workspace}"],
-    ["python3", "tools/hero-model-library/build_palworld_index.py", "--workspace", "{workspace}", "--check"],
-    ["python3", "tools/hero-model-library/current_resource_index.py"],
-    ["python3", "tools/hero-model-library/source_links.py"]
+    [
+      "pnpm",
+      "assets:manifest"
+    ],
+    [
+      "pnpm",
+      "content:build:indexes-only"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/inventory.py"
+    ],
+    [
+      "node",
+      "--import",
+      "tsx",
+      "tools/hero-model-library/design-backlog/analyze_abilities.mts",
+      "{asset}/intake/design-backlog/ability-analysis.json"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/design-backlog/audit_design.py",
+      "--analysis",
+      "{asset}/intake/design-backlog/ability-analysis.json",
+      "--output",
+      "{asset}/intake/design-backlog/hero-design-coverage-full.json",
+      "--compact",
+      "{repo}/materials/hero-model-library/design-backlog/hero-design-coverage.json"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/build_model_design_backlog.py"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/build_model_design_backlog.py",
+      "--check"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/build_palworld_index.py",
+      "--workspace",
+      "{workspace}"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/build_palworld_index.py",
+      "--workspace",
+      "{workspace}",
+      "--check"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/current_resource_index.py"
+    ],
+    [
+      "python3",
+      "tools/hero-model-library/source_links.py"
+    ]
   ]
 }

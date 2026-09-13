@@ -329,6 +329,47 @@
       "fullCharacterPackage": false
     },
     {
+      "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+      "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+      "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "bytes": 2206692,
+      "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+      "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
+        "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
+        "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
+        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.files.json",
+        "sha256": "c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6",
+        "bytes": 29617453,
+        "fileCount": 147,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/s3-conversion-receipt.json"
+      }
+    },
+    {
       "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
       "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
       "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
@@ -674,6 +715,22 @@
             "character": "小呆／達伊（PN010/02）",
             "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
             "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+          "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/05，達伊之劍）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+            "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+            "sourcePlatform": "Windows (Steam)"
           }
         }
       ],

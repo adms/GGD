@@ -37,6 +37,23 @@ def run(command: list[str], cwd: Path, plan: bool) -> None:
         subprocess.run(command, cwd=cwd, check=True)
 
 
+def quarantine_incomplete(path: Path, stage: str, plan: bool) -> Path | None:
+    """Preserve an incomplete stage directory so an append-only retry can run."""
+    if not path.exists() and not path.is_symlink():
+        return None
+    failed_root = path.parent / "failed-attempts"
+    attempt = 1
+    destination = failed_root / f"{path.name}-{stage}-attempt-{attempt}"
+    while destination.exists() or destination.is_symlink():
+        attempt += 1
+        destination = failed_root / f"{path.name}-{stage}-attempt-{attempt}"
+    print(json.dumps({"quarantine": stage, "source": str(path), "destination": str(destination)}, ensure_ascii=False))
+    if not plan:
+        failed_root.mkdir(parents=True, exist_ok=True)
+        path.rename(destination)
+    return destination
+
+
 def validate_receipt_file(receipt: Path, field: str) -> bool:
     if not receipt.is_file():
         return False
@@ -95,27 +112,36 @@ def main() -> int:
                 if validate_receipt_file(receipt, "output"):
                     print(json.dumps({"skip": stage, "candidate": candidate, "reason": "receipt-and-sha-verified"}))
                     continue
+                quarantine_incomplete(assembly, stage, args.plan)
                 assembly.parent.mkdir(parents=True, exist_ok=True)
                 command = [blender, "--background", "--python", str(script_root / "assemble_candidate_blender.py"), "--", candidate,
                      "--mesh-root", str(expand(row.get("meshRoot", config["meshRoot"]), roots)), "--mesh-format", "psk",
                      "--material-context-root", str(expand(row.get("materialContextRoot", config["materialContextRoot"]), roots)),
                      "--texture-root", str(expand(row.get("textureRoot", config["textureRoot"]), roots)), "--psa-root", str(expand(row.get("psaRoot", config["psaRoot"]), roots)),
                      "--addon-root", str(expand(config["addonRoot"], roots)), "--output", str(assembly)]
-                for name in ("attachmentMeshRoot", "attachmentTextureRoot", "attachmentSourceRoot"):
+                attachment_root_flags = {
+                    "attachmentMeshRoot": "--attachment-mesh-root",
+                    "attachmentMaterialContextRoot": "--attachment-material-context-root",
+                    "attachmentTextureRoot": "--attachment-texture-root",
+                    "attachmentSourceRoot": "--attachment-source-root",
+                }
+                for name, flag in attachment_root_flags.items():
                     if name in row:
-                        command.extend(["--" + name.replace("Root", "-root").replace("attachment", "attachment-").lower(), str(expand(row[name], roots))])
+                        command.extend([flag, str(expand(row[name], roots))])
                 run(command, repo, args.plan)
             elif stage == "normalize":
                 receipt = normalized / "ggd-upload.json"
                 if validate_receipt_file(receipt, "output"):
                     print(json.dumps({"skip": stage, "candidate": candidate, "reason": "receipt-and-sha-verified"}))
                     continue
+                quarantine_incomplete(normalized, stage, args.plan)
                 normalized.parent.mkdir(parents=True, exist_ok=True)
                 run(["node", "--import", "tsx", str(script_root / "normalize_validate_candidate.mts"), str(repo), str(assembly / f"{candidate}.glb"), str(normalized)], repo, args.plan)
             elif stage == "runtime":
                 if validate_runtime(runtime):
                     print(json.dumps({"skip": stage, "candidate": candidate, "reason": "receipt-and-sha-verified"}))
                     continue
+                quarantine_incomplete(runtime, stage, args.plan)
                 runtime.parent.mkdir(parents=True, exist_ok=True)
                 sources = list(normalized.glob("*-ggd-normalized.glb"))
                 source = sources[0] if sources else normalized / f"{candidate}-ggd-normalized.glb"
@@ -124,6 +150,7 @@ def main() -> int:
                 if validate_review(review):
                     print(json.dumps({"skip": stage, "candidate": candidate, "reason": "18-images-and-receipt-verified"}))
                     continue
+                quarantine_incomplete(review, stage, args.plan)
                 review.parent.mkdir(parents=True, exist_ok=True)
                 run(["python3", str(script_root / "render_babylon.py"), str(runtime / "body.glb"), str(review), "--model", str(runtime / "uploaded-model.json")], repo, args.plan)
 

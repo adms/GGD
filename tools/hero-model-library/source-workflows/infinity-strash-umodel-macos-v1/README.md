@@ -54,8 +54,9 @@ does not combine those two representations.
 `pipeline.py` composes the independent assembly, normalization, runtime mapping,
 Babylon review, catalog, registration, asset/content manifest generation and
 central-index modules. Existing output is skipped only after its receipt and
-SHA-256 still match. A failed run resumes at the failed module without deleting
-or overwriting earlier stages. The index stage uses the repository generators;
+SHA-256 still match. Before retrying an incomplete stage, the pipeline moves its
+partial directory into a numbered sibling `failed-attempts/` path, preserving
+the evidence without overwriting earlier stages. The index stage uses the repository generators;
 it does not hand-edit generated `_index.json`, bundle or inventory files.
 
 Candidate rows may override `meshRoot`, `materialContextRoot`, `textureRoot` and
@@ -65,6 +66,19 @@ assembles body/face/hair, preserves seven native sequences and prepares five
 distinct runtime clips. GGD hurt/death intentionally share PN020's native down
 loop because the extracted package set contains no distinct Popp death
 AnimSequence.
+
+`dai-pn010-05-daino-tsurugi` is a separate original-game option. Source record
+`CB_PN010_05` selects the PN010/05 body, Hair/01 and Dai no Tsurugi at
+`Weapon1_R`. The recipe keeps the body's Dai no Tsurugi sheath, removes dormant
+Papunica switch faces from this option, filters the separately exported sword's
+outline/dummy/aura sections, and rigid-skins the remaining sword geometry to the
+source socket. Its sword and sheath base colours share a generated horizontal
+atlas and one joined skinned primitive so the result stays within GGD's six-draw
+limit without relaxing the contract. The existing PN010/02 option remains available.
+`collect_dai_pn010_05_delivery.py` verifies and collects the component exports,
+the rejected seven-draw attempt, accepted assembly/normalization/runtime stages,
+18-image WebGL review, source character configuration and pinned workflow tools
+for an immutable local/S3 `legacy/` delivery.
 
 ```bash
 python3 pipeline.py \

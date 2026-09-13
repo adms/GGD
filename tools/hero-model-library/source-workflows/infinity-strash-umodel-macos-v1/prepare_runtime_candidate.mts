@@ -31,6 +31,21 @@ const specifications: Record<string, {mapping: Record<string, string>; roleNotes
     },
     limitations: ['GGD hurt and death both reuse the acquired one-frame native down pose.', 'Native Special01 stays in the preserved conversion/archive set but is not referenced by the six-state runtime document.', 'Weapon switching, animation events, original toon shader parity, gameplay acceptance and deployment remain pending.'],
   },
+  'dai-pn010-05-daino-tsurugi': {
+    mapping: {idle: 'GGD_native_idle', run: 'GGD_native_run', attack: 'GGD_native_attack', cast: 'GGD_native_special02', hurt: 'GGD_native_down', death: 'GGD_native_down'},
+    roleNotes: {
+      idle: 'Infinity Strash native N_Idle loop', run: 'Infinity Strash native forward run', attack: 'Infinity Strash native attack',
+      cast: 'Infinity Strash native Special02; provisional GGD cast mapping', hurt: 'Native down pose reused as hurt', death: 'Native down pose reused as death; no distinct Dai death sequence acquired',
+    },
+    limitations: [
+      'This independent original-game option uses the PN010/05 body, PN010 Hair/01 and Dai no Tsurugi selected by CB_PN010_05.',
+      'The source body sheath is retained; the separately exported sword is rigid-skinned to the source-configured Weapon1_R socket.',
+      'Dormant Papunica and weapon-case switch faces are excluded from this option only; their source files remain preserved.',
+      'GGD hurt and death both reuse the acquired one-frame native down pose.',
+      'Native Special01 stays in the preserved conversion/archive set but is not referenced by the six-state runtime document.',
+      'Animation events, original effects, toon shader parity, gameplay acceptance and deployment remain pending.',
+    ],
+  },
   'vearn-en801-pre-transformation': {
     mapping: {idle: 'GGD_native_idle', run: 'GGD_native_run', attack: 'GGD_native_attack', cast: 'GGD_native_special01', hurt: 'GGD_native_death', death: 'GGD_native_death'},
     roleNotes: {

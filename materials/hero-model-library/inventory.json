@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T21:55:18+08:00",
-  "inputsSha256": "28a1663f116090051eab0c02056ffefb0cb7835a4cba57d7f6b3054db4d11309",
+  "generatedAt": "2026-09-13T22:37:20+08:00",
+  "inputsSha256": "fd5d60e2fb57d1d143e850279b640a300d1db62f37e56ecf9f5ee245905a0545",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -44624,6 +44624,37 @@
           }
         },
         {
+          "key": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+          "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+          "name": "小呆／達伊（PN010/05，達伊之劍）",
+          "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+          "tier": "original",
+          "library": "Infinity Strash Steam 原作擷取",
+          "selectionClass": "canonical-game",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "sourcePlatform": "Windows (Steam)",
+          "kind": "exact",
+          "ready": true,
+          "old": false,
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+            "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+            "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+            "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.tar.gz",
+            "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.files.json",
+            "s3ReadbackVerified": true,
+            "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+            "limitations": [
+              "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
+              "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
+              "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
+              "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。"
+            ]
+          }
+        },
+        {
           "key": "imported.sd2",
           "id": "imported.sd2",
           "name": "sd2（模型檔名）",
@@ -44644,7 +44675,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+        "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
         "mode": "automatic"
       },
       "downloadSources": [],

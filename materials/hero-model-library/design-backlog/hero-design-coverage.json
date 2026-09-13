@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T14:09:23.993730+00:00",
+  "generatedAt": "2026-09-13T14:37:22.255637+00:00",
   "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next",
-  "revision": "8f1297cddb14b6ea209417f3ba742a889153e382",
+  "revision": "f0b1cfdf6bf3a22af15759afc52c4cc41a4e520d",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5567,8 +5567,8 @@
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "bytes": 11784,
-      "sha256": "9f61256604564b32bfa967b2d6e0e51c7bbb48c289a7850866bc1d7ae9cc7c78"
+      "bytes": 12890,
+      "sha256": "842623dc374a64f44f3134e3f16ca6ca12874b9990f8f1b20f4abad7c204deed"
     },
     {
       "path": "content/champions/godie-nsjs.json",
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "0161378041965f1f21469d967ff376b58649e2702e5ac85aac44fe1538410ac0",
-      "bytes": 8809059
+      "sha256": "c2bcbe26fa01cf0732bbd2b717ad20b55e2451c5ed9ff6d8a14c71185047c3c4",
+      "bytes": 8811730
     },
     {
       "path": "package.json",
@@ -14727,8 +14727,8 @@
     }
   ],
   "sourceReport": {
-    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/en653-20260913-v1/post-v2-registration-v1/hero-design-coverage-full.json",
-    "sha256": "95793b7175cb262ac3fb063f91e8bab08c386a47d68c65fc6868ead72467f6f0"
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
+    "sha256": "700c9f9b967f5d4788eb00defc909993e235522d36ea117ce798f9d4f1eeec9f"
   },
   "heroes": [
     {
@@ -28400,8 +28400,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-nbbc.json",
-        "sha256": "9f61256604564b32bfa967b2d6e0e51c7bbb48c289a7850866bc1d7ae9cc7c78",
-        "bytes": 11784
+        "sha256": "842623dc374a64f44f3134e3f16ca6ca12874b9990f8f1b20f4abad7c204deed",
+        "bytes": 12890
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",

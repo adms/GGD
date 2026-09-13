@@ -1,0 +1,423 @@
+{
+  "schema": "ggd.infinity-strash-blender-assembly@1",
+  "candidate": "dai-pn010-05-daino-tsurugi",
+  "meshFormat": "psk",
+  "createdAt": "2026-09-13T14:32:35.035213+00:00",
+  "blender": "5.2.1 LTS",
+  "inputs": [
+    {
+      "role": "body",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-mesh-psk-v1/Strash/Chara/Player/PN010/05/SK_PN010_05_Body.psk",
+      "sha256": "a5b09620acedfd7b94fd15b8f588feb59ba5d46d23ed6a39cba15d863f3662c8"
+    },
+    {
+      "role": "body",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_Base.png",
+      "sha256": "85cbf64a5e874942cfcad69f134a8b069da87118ee18dd6e20dca3bf3439c1e5"
+    },
+    {
+      "role": "body-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-material-context-v1/Strash/Chara/Player/PN010/05/SK_PN010_05_Body.gltf",
+      "sha256": "b4a99ee8a6979d530c01d9430591f1db1478224ad2b1f2afc4d2b362bbe3ee2a"
+    },
+    {
+      "role": "bodyNormal",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/05/T_PN010_05_Body_N.png",
+      "sha256": "d35c99d2e9ac130ea61927239cd971f8638262087b150200a497c6e2f561c661"
+    },
+    {
+      "role": "face",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-mesh-psk-v1/Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.psk",
+      "sha256": "fb0d970bdb8412ecfa83b11c4286bff54fa817a1f6b214f0f571cc436a445b4d"
+    },
+    {
+      "role": "face",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Base.png",
+      "sha256": "75d15716657961525b89885ab40dc8483d188b796c7641d9aa952664c1b10c42"
+    },
+    {
+      "role": "face-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-material-context-v1/Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.gltf",
+      "sha256": "860d47fbbab7d1b1607823cdd94ce98e147a92d18573c348ddc017c7486b84eb"
+    },
+    {
+      "role": "faceDecal1",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal.png",
+      "sha256": "22b572f0d91b2f44e43776e7caa5ec6bd395c4540750ea9fcac170e4faebc0b1"
+    },
+    {
+      "role": "faceDecal2",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal2.png",
+      "sha256": "a5b893d9efedc44a0ab2c124ededcdab42bb438f332ceae834f42e138b03bb8b"
+    },
+    {
+      "role": "hair",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-mesh-psk-v1/Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.psk",
+      "sha256": "ba96bcbf03ab9244d266b18255cad2858c53c861b3240cd9896bc65ed985674a"
+    },
+    {
+      "role": "hair",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/Hair/T_PN010_00_Hair_Base.png",
+      "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+    },
+    {
+      "role": "hair-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-material-context-v1/Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.gltf",
+      "sha256": "ebdd106c28d2b27ea0023f4ca43b6deba2f40f7944901c2c7755b5d442dd221c"
+    },
+    {
+      "role": "hairNormal",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/Hair/01/T_PN010_01_Hair_N.png",
+      "sha256": "e9bb3a41895c6eee777d146e728f894a3a6e368d312f21b4dec25fba16dcedde"
+    },
+    {
+      "role": "native-animation-attack",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Atk01.psa",
+      "sha256": "b048e19c4691bef44601afe95a826a28fdd8ff0a9af5a0fa69d5b2f8201aba9a"
+    },
+    {
+      "role": "native-animation-down",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Down01_Lp.psa",
+      "sha256": "203761d8a0376f0b0e589698942ea88bfb4063fa37d554ba6df0d03d02667083"
+    },
+    {
+      "role": "native-animation-idle",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_N_Idle01_Lp.psa",
+      "sha256": "1db8544f1cc7712cdd3df77a631b58ba32b28000719f549c62b09e80796a0c5e"
+    },
+    {
+      "role": "native-animation-run",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Run01_F_Lp.psa",
+      "sha256": "b6029956cf20db3ccc13558fd80230578d8cfd1396c6b89188b0189b02c86869"
+    },
+    {
+      "role": "native-animation-special01",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Special01.psa",
+      "sha256": "411ded426b4f47925a03b27a3c426c22e4ed7340c469824d44d9907fa52b9093"
+    },
+    {
+      "role": "native-animation-special02",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Special02.psa",
+      "sha256": "6c405dd6ccf8bb2ca56ce06c9673b482b63d40b18beac83624baf1aaf84e3a45"
+    },
+    {
+      "role": "sheath",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-05-textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Base.png",
+      "sha256": "8a5099de30c42a4bd37aa94bb8cd644938e70c1b10a5f4009c51ec53ee3e91f7"
+    },
+    {
+      "role": "weapon-daino-tsurugi",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-mesh-psk-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.psk",
+      "sha256": "24d9e016d99b00378f7e3c736a7bfd492fb791beebcf5c1ed490c8694fccd371"
+    },
+    {
+      "role": "weapon-daino-tsurugi-material-context",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-material-context-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.gltf",
+      "sha256": "ce71f83acb1f1b72f42f2125122332b5573b924261adcc07439cab57cd0fba1f"
+    },
+    {
+      "role": "weapon-daino-tsurugi-source-config",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/Chara/Player/PN010/Data/CB_PN010_05.uasset",
+      "sha256": "1174e04bd5df7506fc16e88b3481106dc26041eb29301467c8de96d11aa6fbcb"
+    },
+    {
+      "role": "weapon-daino-tsurugi-texture",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/dai-pn010-weapon-daino-tsurugi-textures-v1/Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Base.png",
+      "sha256": "f6dc1f89b347c4864c1a9e68e3e5785cebd32abedfddb88258dc48b4d982cc7f"
+    }
+  ],
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/dai-pn010-05-daino-tsurugi.glb",
+    "bytes": 4174500,
+    "sha256": "c57b5ddb0dff5f5559c8ea7add18847320c47e846d138a36a6a9312bfd452bc4"
+  },
+  "blend": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/dai-pn010-05-daino-tsurugi.blend",
+    "bytes": 2503161,
+    "sha256": "e15fc123658bec8f64e343c0e4bb4d4b41d6f11a796f16d44e08d17bbb90ca3e"
+  },
+  "parts": [
+    {
+      "role": "body",
+      "sourceObject": "dai-pn010-05-daino-tsurugi-body",
+      "vertices": 6400,
+      "polygons": 8874
+    },
+    {
+      "role": "face",
+      "sourceObject": "dai-pn010-05-daino-tsurugi-face",
+      "vertices": 1850,
+      "polygons": 3346
+    },
+    {
+      "role": "hair",
+      "sourceObject": "dai-pn010-05-daino-tsurugi-hair",
+      "vertices": 1862,
+      "polygons": 3430
+    }
+  ],
+  "attachments": [
+    {
+      "role": "weapon-daino-tsurugi",
+      "sourceObject": "dai-pn010-05-daino-tsurugi-weapon-daino-tsurugi",
+      "socket": "Weapon1_R",
+      "transform": "source-component-zero-relative-rigid-skin",
+      "vertices": 1189,
+      "polygons": 1232,
+      "sourceMaterialSlots": 5,
+      "outputMaterialRoles": [
+        "GGD_sheath"
+      ],
+      "sourceConfig": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/raw/strash/Content/Strash/Chara/Player/PN010/Data/CB_PN010_05.uasset",
+      "sourceConfigSha256": "1174e04bd5df7506fc16e88b3481106dc26041eb29301467c8de96d11aa6fbcb",
+      "sourceConfigTokenOffsets": {
+        "SK_PN010_05_Body": 302,
+        "SK_PN010_01_Hair": 2629,
+        "SK_PN010_Weapon_DainoTsurugi": 2775,
+        "RightAttachWeaponAttachSocketName": 9972,
+        "Weapon1_R": 11973
+      },
+      "mergedWithMaterialRole": "sheath",
+      "atlas": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/daino-tsurugi-sword-sheath-atlas.png",
+        "bytes": 256138,
+        "sha256": "4eba8b4f08b5c7eb366bb8b05c8a35073b1addb8f7cca1831819f5fcfdef7bc9"
+      }
+    }
+  ],
+  "combined": {
+    "object": "dai-pn010-05-daino-tsurugi-combined",
+    "vertices": 11301,
+    "polygons": 16882,
+    "materialRoles": [
+      "GGD_body",
+      "GGD_sheath",
+      "GGD_faceDecal1",
+      "GGD_faceDecal2",
+      "GGD_face",
+      "GGD_hair"
+    ]
+  },
+  "bones": 429,
+  "animations": [
+    {
+      "role": "idle",
+      "clip": "GGD_native_idle",
+      "sourceSequence": "AS_PN010_00_N_Idle01_Lp",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_N_Idle01_Lp.psa",
+      "sourceSha256": "1db8544f1cc7712cdd3df77a631b58ba32b28000719f549c62b09e80796a0c5e",
+      "frameRange": [
+        0.0,
+        60.0
+      ],
+      "removedRestPoseChannels": 11,
+      "retainedChannels": 477
+    },
+    {
+      "role": "run",
+      "clip": "GGD_native_run",
+      "sourceSequence": "AS_PN010_00_B_Run01_F_Lp",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Run01_F_Lp.psa",
+      "sourceSha256": "b6029956cf20db3ccc13558fd80230578d8cfd1396c6b89188b0189b02c86869",
+      "frameRange": [
+        0.0,
+        14.0
+      ],
+      "removedRestPoseChannels": 24,
+      "retainedChannels": 834
+    },
+    {
+      "role": "attack",
+      "clip": "GGD_native_attack",
+      "sourceSequence": "AS_PN010_00_B_Atk01",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Atk01.psa",
+      "sourceSha256": "b048e19c4691bef44601afe95a826a28fdd8ff0a9af5a0fa69d5b2f8201aba9a",
+      "frameRange": [
+        0.0,
+        30.0
+      ],
+      "removedRestPoseChannels": 20,
+      "retainedChannels": 838
+    },
+    {
+      "role": "down",
+      "clip": "GGD_native_down",
+      "sourceSequence": "AS_PN010_00_B_Down01_Lp",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Down01_Lp.psa",
+      "sourceSha256": "203761d8a0376f0b0e589698942ea88bfb4063fa37d554ba6df0d03d02667083",
+      "frameRange": [
+        0.0,
+        1.0
+      ],
+      "removedRestPoseChannels": 22,
+      "retainedChannels": 836
+    },
+    {
+      "role": "special01",
+      "clip": "GGD_native_special01",
+      "sourceSequence": "AS_PN010_00_B_Special01",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Special01.psa",
+      "sourceSha256": "411ded426b4f47925a03b27a3c426c22e4ed7340c469824d44d9907fa52b9093",
+      "frameRange": [
+        0.0,
+        60.0
+      ],
+      "removedRestPoseChannels": 12,
+      "retainedChannels": 476
+    },
+    {
+      "role": "special02",
+      "clip": "GGD_native_special02",
+      "sourceSequence": "AS_PN010_00_B_Special02",
+      "sourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/priority-native-animations-v2/Strash/Chara/Player/PN010/Animations/AS_PN010_00_B_Special02.psa",
+      "sourceSha256": "6c405dd6ccf8bb2ca56ce06c9673b482b63d40b18beac83624baf1aaf84e3a45",
+      "frameRange": [
+        0.0,
+        100.0
+      ],
+      "removedRestPoseChannels": 15,
+      "retainedChannels": 753
+    }
+  ],
+  "nativeAnimationCount": 6,
+  "proceduralAnimationCount": 0,
+  "embeddedAnimationNames": [
+    "GGD_native_idle",
+    "GGD_native_run",
+    "GGD_native_attack",
+    "GGD_native_down",
+    "GGD_native_special01",
+    "GGD_native_special02"
+  ],
+  "animationOptimization": {
+    "strategy": "preserve-bind-pose-baseline",
+    "preservedOriginalNodeBaselines": true,
+    "secondaryModeEnabled": false,
+    "secondaryBonePattern": "Cape|Hair|Skirt|Robe|Ribbon|Cloth|Face|Eye|Mouth|Cheek|Brow|Lip|Decal|Attach|Weapon|Sheath",
+    "tolerances": {
+      "translation": 0.003,
+      "rotation": 0.0003,
+      "scale": 0.0003
+    },
+    "clipToleranceOverrides": {},
+    "maximumRemovedComponentDelta": {
+      "translation": 0.002966642379760742,
+      "rotation": 0.00026914477348327637,
+      "scale": 4.76837158203125e-07
+    },
+    "shiftedSecondaryNodePaths": [],
+    "clips": [
+      {
+        "clip": "GGD_native_idle",
+        "channelsBefore": 1287,
+        "channelsAfter": 199,
+        "removed": 1088
+      },
+      {
+        "clip": "GGD_native_run",
+        "channelsBefore": 1287,
+        "channelsAfter": 266,
+        "removed": 1021
+      },
+      {
+        "clip": "GGD_native_attack",
+        "channelsBefore": 1287,
+        "channelsAfter": 239,
+        "removed": 1048
+      },
+      {
+        "clip": "GGD_native_down",
+        "channelsBefore": 1287,
+        "channelsAfter": 214,
+        "removed": 1073
+      },
+      {
+        "clip": "GGD_native_special01",
+        "channelsBefore": 1287,
+        "channelsAfter": 193,
+        "removed": 1094
+      },
+      {
+        "clip": "GGD_native_special02",
+        "channelsBefore": 1287,
+        "channelsAfter": 151,
+        "removed": 1136
+      }
+    ]
+  },
+  "filteredMaterials": [
+    {
+      "part": "body",
+      "material": "MI_PN010_00_Outline_Weapon_Papunica"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_05_Outline"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_05_Outline"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_05_Outline"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_00_Weapon_Papunica2"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_00_Weapon_Case"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_00_Outline_Weapon_Papunica2"
+    },
+    {
+      "part": "body",
+      "material": "MI_Outline_PN010_Weapon_DainoTsurugi_Sheath"
+    },
+    {
+      "part": "body",
+      "material": "MI_PN010_05_Outline_Skin"
+    },
+    {
+      "part": "body",
+      "material": "dummy_material_14"
+    },
+    {
+      "part": "body",
+      "material": "MI_CharaAura_PN010"
+    },
+    {
+      "part": "face",
+      "material": "MI_PN010_00_Outline_Face"
+    },
+    {
+      "part": "hair",
+      "material": "MI_PN010_00_Outline_Hair"
+    },
+    {
+      "part": "weapon-daino-tsurugi",
+      "material": "dummy_material_1"
+    },
+    {
+      "part": "weapon-daino-tsurugi",
+      "material": "MI_PN010_Weapon_DainoTsurugi_outline"
+    },
+    {
+      "part": "weapon-daino-tsurugi",
+      "material": "MI_CharaAura_PN010"
+    }
+  ],
+  "readiness": "textured-multipart-native-animation-rigid-attachment-candidate",
+  "limitations": [
+    "toon-shader-parity-pending",
+    "animation-event-semantic-review-pending",
+    "alternate-weapon-switching-pending",
+    "GGD-validation-pending",
+    "runtime-registration-pending",
+    "deployment-pending"
+  ]
+}

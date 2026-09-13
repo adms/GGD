@@ -1,0 +1,53 @@
+{
+  "schema": "ggd.infinity-strash-babylon-static-load@1",
+  "modelSha256": "906a40d897224209e49fc687bf093f2d53f8c3f3d41af2e0ddecb51cffe479ec",
+  "babylonVersion": "7.54.3",
+  "meshes": [
+    {
+      "name": "dai-pn010-05-daino-tsurugi-combined_primitive0",
+      "vertices": 5953,
+      "positionCoordinates": 17859
+    },
+    {
+      "name": "dai-pn010-05-daino-tsurugi-combined_primitive1",
+      "vertices": 3386,
+      "positionCoordinates": 10158
+    },
+    {
+      "name": "dai-pn010-05-daino-tsurugi-combined_primitive2",
+      "vertices": 72,
+      "positionCoordinates": 216
+    },
+    {
+      "name": "dai-pn010-05-daino-tsurugi-combined_primitive3",
+      "vertices": 21,
+      "positionCoordinates": 63
+    },
+    {
+      "name": "dai-pn010-05-daino-tsurugi-combined_primitive4",
+      "vertices": 2571,
+      "positionCoordinates": 7713
+    },
+    {
+      "name": "dai-pn010-05-daino-tsurugi-combined_primitive5",
+      "vertices": 2268,
+      "positionCoordinates": 6804
+    }
+  ],
+  "skeletonBoneCounts": [
+    429
+  ],
+  "animationGroups": [
+    "GGD_native_idle",
+    "GGD_native_run",
+    "GGD_native_attack",
+    "GGD_native_down",
+    "GGD_native_special01",
+    "GGD_native_special02"
+  ],
+  "finiteRestPosePositions": true,
+  "materialsSkippedForCpuValidation": true,
+  "webglVisualReview": "pending-test-mechanism-recovery",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

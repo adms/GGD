@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2861,
-    "totalBytes": 1092692586
+    "entries": 2863,
+    "totalBytes": 1097105970
   },
   "entries": [
     {
@@ -22270,6 +22270,17 @@
       ]
     },
     {
+      "path": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "bytes": 2206692,
+      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785"
+      ]
+    },
+    {
       "path": "assets/models/community/20fc46c2468b3d9d79677763ac34cebbff9f3fd9d4672454691308a743054175.glb",
       "bytes": 951004,
       "sha256": "20fc46c2468b3d9d79677763ac34cebbff9f3fd9d4672454691308a743054175",
@@ -24328,6 +24339,17 @@
         "version.body.909b7478ac8e5fee361d3e314ead3f544197d2ea23ccfa8f",
         "version.body.92c9d26b37ace95bb72963bc73b2b0e44218c7806d097ed6",
         "version.body.cf0570347305b3e13535d2b411bc17a0f9964f818c308554"
+      ]
+    },
+    {
+      "path": "assets/models/community/versions/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
+      "bytes": 2206692,
+      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb"
       ]
     },
     {

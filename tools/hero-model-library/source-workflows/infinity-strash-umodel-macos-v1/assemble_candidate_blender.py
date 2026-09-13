@@ -13,6 +13,7 @@ import json
 import re
 import struct
 import sys
+from array import array
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -140,6 +141,53 @@ CANDIDATES["popp-pn020-02-kagayaki"] = {
             "sourceConfig": "Strash/Chara/Player/PN020/Data/CB_PN020_02.uasset",
             "sourceConfigTokens": [
                 "SK_PN020_Weapon_Kagayaki",
+                "RightAttachWeaponAttachSocketName",
+                "Weapon1_R",
+            ],
+        },
+    ],
+}
+
+# PN010/05 is the source-authored Dai costume that selects Dai no Tsurugi.
+# Its cooked body also carries dormant Papunica switch geometry, so the recipe
+# removes only those faces for this independent candidate and keeps the sheath.
+CANDIDATES["dai-pn010-05-daino-tsurugi"] = {
+    "parts": [
+        ("body", "Strash/Chara/Player/PN010/05/SK_PN010_05_Body.gltf"),
+        ("face", "Strash/Chara/Player/PN010/Face/SK_PN010_00_Face.gltf"),
+        ("hair", "Strash/Chara/Player/PN010/Hair/01/SK_PN010_01_Hair.gltf"),
+    ],
+    "textures": {
+        "body": "Strash/Chara/Player/PN010/05/T_PN010_05_Body_Base.png",
+        "bodyNormal": "Strash/Chara/Player/PN010/05/T_PN010_05_Body_N.png",
+        "face": "Strash/Chara/Player/PN010/Face/T_PN010_00_Face_Base.png",
+        "faceDecal1": "Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal.png",
+        "faceDecal2": "Strash/Chara/Player/PN010/Face/T_PN010_00_Face_CelDecal2.png",
+        "hair": "Strash/Chara/Player/PN010/Hair/T_PN010_00_Hair_Base.png",
+        "hairNormal": "Strash/Chara/Player/PN010/Hair/01/T_PN010_01_Hair_N.png",
+        "sheath": "Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Sheath_Base.png",
+    },
+    "materialRules": [
+        {"part": "body", "contains": "papunica", "exclude": True},
+        {"part": "body", "contains": "weapon_case", "exclude": True},
+        {"part": "body", "containsAll": ["daino", "sheath"], "colorRole": "sheath"},
+    ],
+    "animations": list(CANDIDATES["dai-pn010-02"]["animations"]),
+    "attachments": [
+        {
+            "role": "weapon-daino-tsurugi",
+            "mesh": "Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.gltf",
+            "materialContext": "Strash/Chara/Player/PN010/Weapon/DainoTsurugi/SK_PN010_Weapon_DainoTsurugi.gltf",
+            "filterSourceMaterials": True,
+            "mergeWithRole": "sheath",
+            "atlasOutput": "daino-tsurugi-sword-sheath-atlas.png",
+            "socket": "Weapon1_R",
+            "texture": "Strash/Chara/Player/PN010/Weapon/DainoTsurugi/T_PN010_Weapon_DainoTsurugi_Base.png",
+            "sourceConfig": "strash/Content/Strash/Chara/Player/PN010/Data/CB_PN010_05.uasset",
+            "sourceConfigTokens": [
+                "SK_PN010_05_Body",
+                "SK_PN010_01_Hair",
+                "SK_PN010_Weapon_DainoTsurugi",
                 "RightAttachWeaponAttachSocketName",
                 "Weapon1_R",
             ],
@@ -353,11 +401,23 @@ def optimize_glb_animation_channels(path: Path, preserve_node_baseline: bool = F
     }
 
 
-def material_role(part: str, name: str) -> tuple[str, str | None, bool] | None:
+def material_role(part: str, name: str, spec: dict | None = None) -> tuple[str, str | None, bool] | None:
     lowered = name.lower()
     compact = lowered.replace("_", "")
     if "outline" in lowered or "charaaura" in lowered or lowered.startswith("dummy_material"):
         return None
+    for rule in (spec or {}).get("materialRules", []):
+        if rule.get("part") not in (None, part):
+            continue
+        contains = rule.get("contains")
+        contains_all = rule.get("containsAll", [])
+        if contains is not None and contains.lower() not in lowered:
+            continue
+        if any(token.lower() not in lowered for token in contains_all):
+            continue
+        if rule.get("exclude"):
+            return None
+        return rule["colorRole"], rule.get("normalRole"), bool(rule.get("alpha"))
     if part == "body":
         if "weapon" in lowered or "_case" in lowered:
             return "weapon", None, False
@@ -373,12 +433,12 @@ def material_role(part: str, name: str) -> tuple[str, str | None, bool] | None:
     return "face", "faceNormal", False
 
 
-def remove_filtered_faces(mesh_object: bpy.types.Object, part: str, material_names: list[str] | None = None) -> list[str]:
+def remove_filtered_faces(mesh_object: bpy.types.Object, part: str, material_names: list[str] | None = None, spec: dict | None = None) -> list[str]:
     rejected = []
     bad_indices = set()
     for index, slot in enumerate(mesh_object.material_slots):
         name = material_names[index] if material_names is not None else (slot.material.name if slot.material else "")
-        if material_role(part, name) is None:
+        if material_role(part, name, spec) is None:
             bad_indices.add(index)
             rejected.append(name)
     if bad_indices:
@@ -417,6 +477,46 @@ def configure_material(material: bpy.types.Material, color_path: Path, normal_pa
         normal = nodes.new("ShaderNodeNormalMap")
         material.node_tree.links.new(normal_texture.outputs["Color"], normal.inputs["Color"])
         material.node_tree.links.new(normal.outputs["Normal"], shader.inputs["Normal"])
+
+
+def create_horizontal_texture_atlas(left_path: Path, right_path: Path, output_path: Path) -> Path:
+    """Place two equal-size source textures side-by-side without external tools."""
+    left = bpy.data.images.load(str(left_path), check_existing=True)
+    right = bpy.data.images.load(str(right_path), check_existing=True)
+    if tuple(left.size) != tuple(right.size):
+        raise RuntimeError(f"atlas texture sizes differ: {tuple(left.size)} != {tuple(right.size)}")
+    width, height = left.size
+    channel_count = width * height * 4
+    left_pixels = array("f", [0.0]) * channel_count
+    right_pixels = array("f", [0.0]) * channel_count
+    left.pixels.foreach_get(left_pixels)
+    right.pixels.foreach_get(right_pixels)
+    atlas_pixels = array("f", [0.0]) * (channel_count * 2)
+    row_width = width * 4
+    atlas_row_width = row_width * 2
+    for row in range(height):
+        source_start = row * row_width
+        destination_start = row * atlas_row_width
+        atlas_pixels[destination_start:destination_start + row_width] = left_pixels[source_start:source_start + row_width]
+        atlas_pixels[destination_start + row_width:destination_start + atlas_row_width] = right_pixels[source_start:source_start + row_width]
+    atlas = bpy.data.images.new("GGD_daino_sword_sheath_atlas", width=width * 2, height=height, alpha=True)
+    atlas.pixels.foreach_set(atlas_pixels)
+    atlas.filepath_raw = str(output_path)
+    atlas.file_format = "PNG"
+    atlas.save()
+    return output_path
+
+
+def remap_material_uv_horizontal(mesh_object: bpy.types.Object, material: bpy.types.Material, offset: float) -> None:
+    uv_layer = mesh_object.data.uv_layers.active
+    if uv_layer is None:
+        raise RuntimeError("texture-atlas merge requires an active UV layer: " + mesh_object.name)
+    for polygon in mesh_object.data.polygons:
+        if mesh_object.data.materials[polygon.material_index] != material:
+            continue
+        for loop_index in polygon.loop_indices:
+            uv = uv_layer.data[loop_index].uv
+            uv.x = uv.x * 0.5 + offset
 
 
 def dedupe_material_slots(mesh_object: bpy.types.Object) -> list[bpy.types.Material]:
@@ -543,6 +643,7 @@ def main() -> int:
     parser.add_argument("--texture-root", type=Path, required=True)
     parser.add_argument("--psa-root", type=Path, required=True)
     parser.add_argument("--attachment-mesh-root", type=Path)
+    parser.add_argument("--attachment-material-context-root", type=Path)
     parser.add_argument("--attachment-texture-root", type=Path)
     parser.add_argument("--attachment-source-root", type=Path)
     parser.add_argument("--addon-root", type=Path, required=True)
@@ -608,12 +709,12 @@ def main() -> int:
             if len(source_material_names) != len(mesh.material_slots):
                 raise RuntimeError(f"PSK/glTF material slot count differs for {part}: {len(mesh.material_slots)} != {len(source_material_names)}")
             inputs.append({"role": part + "-material-context", "path": str(context_path), "sha256": sha256(context_path)})
-        filtered.extend({"part": part, "material": name} for name in remove_filtered_faces(mesh, part, source_material_names))
+        filtered.extend({"part": part, "material": name} for name in remove_filtered_faces(mesh, part, source_material_names, spec))
         for slot_index, slot in enumerate(mesh.material_slots):
             if slot.material is None:
                 continue
             source_material_name = source_material_names[slot_index] if source_material_names is not None else slot.material.name
-            roles = material_role(part, source_material_name)
+            roles = material_role(part, source_material_name, spec)
             if roles is None:
                 continue
             color_role, normal_role, alpha = roles
@@ -657,6 +758,7 @@ def main() -> int:
         if not args.attachment_mesh_root or not args.attachment_texture_root or not args.attachment_source_root:
             raise SystemExit("attachment recipes require mesh, texture, and source roots")
         attachment_mesh_root = args.attachment_mesh_root.resolve()
+        attachment_material_context_root = args.attachment_material_context_root.resolve() if args.attachment_material_context_root else None
         attachment_texture_root = args.attachment_texture_root.resolve()
         attachment_source_root = args.attachment_source_root.resolve()
         for attachment in attachment_specs:
@@ -684,11 +786,41 @@ def main() -> int:
             for extra in extras:
                 bpy.data.objects.remove(extra, do_unlink=True)
             source_material_slots = len(weapon_mesh.material_slots)
-            weapon_material = bpy.data.materials.new(name="GGD_" + attachment["role"])
-            configure_material(weapon_material, texture_path, None, False)
+            source_material_names = None
+            if attachment.get("filterSourceMaterials"):
+                if attachment_material_context_root is None:
+                    raise RuntimeError("filtered attachment requires --attachment-material-context-root")
+                context_path = (attachment_material_context_root / attachment["materialContext"]).resolve()
+                if not context_path.is_relative_to(attachment_material_context_root) or not context_path.is_file():
+                    raise RuntimeError("missing attachment glTF material context: " + str(context_path))
+                context_document = json.loads(context_path.read_text())
+                source_material_names = [material.get("name", "") for material in context_document.get("materials", [])]
+                if len(source_material_names) != len(weapon_mesh.material_slots):
+                    raise RuntimeError(
+                        f"attachment PSK/glTF material slot count differs: {len(weapon_mesh.material_slots)} != {len(source_material_names)}"
+                    )
+                rejected = remove_filtered_faces(weapon_mesh, attachment["role"], source_material_names, spec)
+                filtered.extend({"part": attachment["role"], "material": name} for name in rejected)
+                inputs.append({"role": attachment["role"] + "-material-context", "path": str(context_path), "sha256": sha256(context_path)})
+            merge_role = attachment.get("mergeWithRole")
+            atlas_path = None
+            if merge_role:
+                weapon_material = role_materials.get((merge_role, None, False))
+                if weapon_material is None:
+                    raise RuntimeError("attachment merge role has no canonical material: " + merge_role)
+                left_path = (texture_root / spec["textures"][merge_role]).resolve()
+                atlas_path = output / attachment["atlasOutput"]
+                create_horizontal_texture_atlas(left_path, texture_path, atlas_path)
+                configure_material(weapon_material, atlas_path, None, False)
+                remap_material_uv_horizontal(combined, weapon_material, 0.0)
+            else:
+                weapon_material = bpy.data.materials.new(name="GGD_" + attachment["role"])
+                configure_material(weapon_material, texture_path, None, False)
             for slot in weapon_mesh.material_slots:
                 slot.material = weapon_material
             dedupe_material_slots(weapon_mesh)
+            if merge_role:
+                remap_material_uv_horizontal(weapon_mesh, weapon_material, 0.5)
             attach_rigid_mesh_to_bone(
                 weapon_mesh, weapon_armature, primary_armature, attachment["socket"]
             )
@@ -706,12 +838,22 @@ def main() -> int:
                 "sourceConfig": str(source_config_path),
                 "sourceConfigSha256": sha256(source_config_path),
                 "sourceConfigTokenOffsets": source_config_token_offsets,
+                "mergedWithMaterialRole": merge_role,
+                "atlas": ({"path": str(atlas_path), "bytes": atlas_path.stat().st_size, "sha256": sha256(atlas_path)} if atlas_path else None),
             })
             inputs.extend([
                 {"role": attachment["role"], "path": str(path), "sha256": sha256(path)},
                 {"role": attachment["role"] + "-texture", "path": str(texture_path), "sha256": sha256(texture_path)},
                 {"role": attachment["role"] + "-source-config", "path": str(source_config_path), "sha256": sha256(source_config_path)},
             ])
+            if merge_role:
+                bpy.ops.object.select_all(action="DESELECT")
+                combined.select_set(True)
+                weapon_mesh.select_set(True)
+                bpy.context.view_layer.objects.active = combined
+                bpy.ops.object.join()
+                unique_materials = dedupe_material_slots(combined)
+                meshes = [combined]
 
     bpy.ops.object.select_all(action="DESELECT")
     primary_armature.select_set(True)
