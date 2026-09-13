@@ -56,6 +56,34 @@
       "sha256": "53a6da96d82f092be58e6c922878f379f62805d45a865e81c38474cedf8e6ec3"
     }
   },
+  "approvalEvidence": {
+    "reviewer": "owner",
+    "reviewedAt": "2026-09-14",
+    "verifiedPerClipSpeakerLanguageEventAndGainRows": 311
+  },
+  "playbackReceipt": {
+    "recordsPath": "materials/hero-model-library/lol-project-seven/runtime-registration.json",
+    "recordsProperty": "records",
+    "runtimePathProperty": "runtimePath",
+    "runtimeSha256Property": "runtimeSha256",
+    "runtimeBytesProperty": "runtimeBytes",
+    "verifiedPlayableRecords": 311
+  },
+  "pendingAmbiguousSkillCandidates": [
+    {
+      "nativeId": "Xerath",
+      "target": "ability-Q",
+      "files": 4,
+      "reviewKeys": [
+        "Xerath:skin0:2053253391",
+        "Xerath:skin0:76986339",
+        "Xerath:skin0:820216149",
+        "Xerath:skin0:837144372"
+      ],
+      "reason": "same source WEM maps to an ability event and another native event category",
+      "runtimeRegistered": false
+    }
+  ],
   "summary": {
     "approvedSourceWavsVerified": 311,
     "runtimeMp3sVerified": 311,
@@ -86,13 +114,17 @@
       "runtimeMp3s": 52,
       "runtimeGitBlobs": 52,
       "manifestRows": 52,
+      "runtimeBytes": 3495570,
       "byNativeTarget": {
         "ability-E": 7,
         "ability-R": 9,
         "ability-W": 7,
         "attack": 20,
         "death": 9
-      }
+      },
+      "missingApprovedSkillTargets": [
+        "ability-Q"
+      ]
     },
     {
       "heroId": "lol-leesin",
@@ -100,6 +132,7 @@
       "runtimeMp3s": 64,
       "runtimeGitBlobs": 64,
       "manifestRows": 64,
+      "runtimeBytes": 1644114,
       "byNativeTarget": {
         "ability-E": 8,
         "ability-Q": 8,
@@ -107,7 +140,8 @@
         "ability-W": 8,
         "attack": 28,
         "death": 7
-      }
+      },
+      "missingApprovedSkillTargets": []
     },
     {
       "heroId": "lol-lux",
@@ -115,6 +149,7 @@
       "runtimeMp3s": 48,
       "runtimeGitBlobs": 48,
       "manifestRows": 48,
+      "runtimeBytes": 1443631,
       "byNativeTarget": {
         "ability-E": 6,
         "ability-Q": 7,
@@ -122,7 +157,8 @@
         "ability-W": 6,
         "attack": 19,
         "death": 4
-      }
+      },
+      "missingApprovedSkillTargets": []
     },
     {
       "heroId": "lol-missfortune",
@@ -130,13 +166,17 @@
       "runtimeMp3s": 21,
       "runtimeGitBlobs": 21,
       "manifestRows": 21,
+      "runtimeBytes": 790441,
       "byNativeTarget": {
         "ability-Q": 4,
         "ability-R": 3,
         "ability-W": 4,
         "attack": 6,
         "death": 4
-      }
+      },
+      "missingApprovedSkillTargets": [
+        "ability-E"
+      ]
     },
     {
       "heroId": "lol-warwick",
@@ -144,6 +184,7 @@
       "runtimeMp3s": 59,
       "runtimeGitBlobs": 59,
       "manifestRows": 59,
+      "runtimeBytes": 2538752,
       "byNativeTarget": {
         "ability-E": 4,
         "ability-Q": 3,
@@ -151,7 +192,8 @@
         "ability-W": 7,
         "attack": 31,
         "death": 3
-      }
+      },
+      "missingApprovedSkillTargets": []
     },
     {
       "heroId": "lol-xerath",
@@ -159,13 +201,17 @@
       "runtimeMp3s": 26,
       "runtimeGitBlobs": 26,
       "manifestRows": 26,
+      "runtimeBytes": 1301822,
       "byNativeTarget": {
         "ability-E": 4,
         "ability-R": 4,
         "ability-W": 4,
         "attack": 10,
         "death": 4
-      }
+      },
+      "missingApprovedSkillTargets": [
+        "ability-Q"
+      ]
     },
     {
       "heroId": "lol-yasuo",
@@ -173,6 +219,7 @@
       "runtimeMp3s": 41,
       "runtimeGitBlobs": 41,
       "manifestRows": 41,
+      "runtimeBytes": 1061734,
       "byNativeTarget": {
         "ability-E": 4,
         "ability-Q": 8,
@@ -180,11 +227,13 @@
         "ability-W": 3,
         "attack": 19,
         "death": 4
-      }
+      },
+      "missingApprovedSkillTargets": []
     }
   ],
   "checks": {
     "approvedKeySetEqualsRegistrationKeySet": true,
+    "ownerDecisionEvidence": true,
     "sourceWavBytesAndSha256": true,
     "runtimeMp3BytesAndSha256": true,
     "runtimeMp3GitIndexBytes": true,
@@ -205,6 +254,7 @@
   "boundaries": [
     "The 311 records are the complete fixed battle-review subset, not all 4,927 source WAVs.",
     "The remaining 443 event-bound WAVs are pending and are not mapped by implication.",
+    "Ambiguous WEM relationships stay pending even when one native relationship names a skill slot.",
     "No transcript is asserted by this receipt.",
     "Git and branch runtime verification does not prove Main merge or production deployment."
   ]

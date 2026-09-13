@@ -31,6 +31,7 @@ EXPECTED_HEROES = {
     "lol-xerath": 26,
     "lol-yasuo": 41,
 }
+EXPECTED_REVIEW_DATE = "2026-09-14"
 
 
 def read_json(path: Path) -> dict:
@@ -88,6 +89,22 @@ def probe(path: Path) -> tuple[dict, float]:
     return actual, duration
 
 
+def owner_decision_matches(decision: dict, registration: dict) -> bool:
+    return (
+        decision.get("status") == "verified"
+        and decision.get("reviewer") == "owner"
+        and decision.get("reviewedAt") == EXPECTED_REVIEW_DATE
+        and decision.get("speaker") == registration["nativeId"]
+        and decision.get("speakerVerified") is True
+        and decision.get("language") == "ja"
+        and decision.get("perClipLanguageVerified") is True
+        and decision.get("ggdRuntimeTarget") == registration["candidateRuntimeTarget"]
+        and decision.get("ggdSkillSemanticBindingVerified") is True
+        and decision.get("gainDecision") == "keep-source-gain"
+        and decision.get("runtimeApproved") is True
+    )
+
+
 def create(asset_workspace: Path) -> dict:
     decisions = read_json(DECISIONS)
     queue = read_json(QUEUE)
@@ -97,6 +114,18 @@ def create(asset_workspace: Path) -> dict:
     manifest = read_json(MANIFEST)
     voice_index = read_json(VOICE_INDEX)
     records = registration["records"]
+
+    pending_ambiguous_skill_candidates: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for row in queue["records"]:
+        slots = row.get("abilitySlotCandidates", [])
+        categories = set(row.get("nativeEventCategories", []))
+        if (
+            row.get("candidateRuntimeTarget") is None
+            and len(slots) == 1
+            and "ability-cast" in categories
+            and len(categories) > 1
+        ):
+            pending_ambiguous_skill_candidates[(row["nativeId"], f"ability-{slots[0]}")].append(row["key"])
 
     approved_keys = {
         key for key, row in decisions["decisions"].items()
@@ -112,8 +141,12 @@ def create(asset_workspace: Path) -> dict:
     targets = Counter()
     category_counts: dict[str, Counter] = defaultdict(Counter)
     runtime_bytes = 0
+    runtime_bytes_by_hero: Counter[str] = Counter()
     audio_contract = None
     for row in records:
+        decision = decisions["decisions"][row["reviewKey"]]
+        if not owner_decision_matches(decision, row):
+            raise ValueError(f"Owner decision evidence drift: {row['reviewKey']}")
         source = (asset_workspace / row["sourcePath"]).resolve()
         if not source.is_relative_to(asset_workspace) or not source.is_file():
             raise ValueError(f"Missing approved source WAV: {source}")
@@ -155,6 +188,7 @@ def create(asset_workspace: Path) -> dict:
         targets[row["candidateRuntimeTarget"]] += 1
         category_counts[row["runtimeHeroId"]][row["candidateRuntimeTarget"]] += 1
         runtime_bytes += row["runtimeBytes"]
+        runtime_bytes_by_hero[row["runtimeHeroId"]] += row["runtimeBytes"]
 
     if dict(sorted(counts.items())) != EXPECTED_HEROES:
         raise ValueError(f"Per-hero approved counts drift: {dict(counts)}")
@@ -178,7 +212,12 @@ def create(asset_workspace: Path) -> dict:
             "runtimeMp3s": count,
             "runtimeGitBlobs": count,
             "manifestRows": count,
+            "runtimeBytes": runtime_bytes_by_hero[hero],
             "byNativeTarget": dict(sorted(category_counts[hero].items())),
+            "missingApprovedSkillTargets": [
+                target for target in ("ability-Q", "ability-W", "ability-E", "ability-R")
+                if target not in category_counts[hero]
+            ],
         })
     return {
         "schema": "ggd-lol-seven-approved-runtime-audit@1",
@@ -198,6 +237,30 @@ def create(asset_workspace: Path) -> dict:
             "centralVoiceFiles": pin(VOICE_FILES),
             "localSourceVerification": pin(LOCAL_VERIFICATION),
         },
+        "approvalEvidence": {
+            "reviewer": "owner",
+            "reviewedAt": EXPECTED_REVIEW_DATE,
+            "verifiedPerClipSpeakerLanguageEventAndGainRows": len(records),
+        },
+        "playbackReceipt": {
+            "recordsPath": REGISTRATION.relative_to(ROOT).as_posix(),
+            "recordsProperty": "records",
+            "runtimePathProperty": "runtimePath",
+            "runtimeSha256Property": "runtimeSha256",
+            "runtimeBytesProperty": "runtimeBytes",
+            "verifiedPlayableRecords": len(records),
+        },
+        "pendingAmbiguousSkillCandidates": [
+            {
+                "nativeId": native_id,
+                "target": target,
+                "files": len(keys),
+                "reviewKeys": sorted(keys),
+                "reason": "same source WEM maps to an ability event and another native event category",
+                "runtimeRegistered": False,
+            }
+            for (native_id, target), keys in sorted(pending_ambiguous_skill_candidates.items())
+        ],
         "summary": {
             "approvedSourceWavsVerified": len(records),
             "runtimeMp3sVerified": len(records),
@@ -213,6 +276,7 @@ def create(asset_workspace: Path) -> dict:
         "perHero": per_hero,
         "checks": {
             "approvedKeySetEqualsRegistrationKeySet": True,
+            "ownerDecisionEvidence": True,
             "sourceWavBytesAndSha256": True,
             "runtimeMp3BytesAndSha256": True,
             "runtimeMp3GitIndexBytes": True,
@@ -233,6 +297,7 @@ def create(asset_workspace: Path) -> dict:
         "boundaries": [
             "The 311 records are the complete fixed battle-review subset, not all 4,927 source WAVs.",
             "The remaining 443 event-bound WAVs are pending and are not mapped by implication.",
+            "Ambiguous WEM relationships stay pending even when one native relationship names a skill slot.",
             "No transcript is asserted by this receipt.",
             "Git and branch runtime verification does not prove Main merge or production deployment.",
         ],
