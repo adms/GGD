@@ -4,8 +4,8 @@
   "generatedFrom": {
     "config": {
       "path": "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/platform-config.json",
-      "bytes": 1416,
-      "sha256": "3c859b1433d7e9684e36957db0caa642158da499245f40bacab352d4bb23f783"
+      "bytes": 1631,
+      "sha256": "6ae3dee982076e98019bfdb9fb7a53816067b63bb289d1f175dd67b7d428d21f"
     },
     "windowsInventory": {
       "path": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
@@ -49,6 +49,52 @@
       "payloadBytesRead": 0,
       "payloadSha256": null,
       "contentInspected": false,
+      "nativeCharacterIds": [],
+      "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+      "assetReadiness": {
+        "model": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "texture": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "skeleton": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "motion": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "vfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "sfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "voice": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        }
+      },
       "acquisitionStatus": "inventory-metadata-only",
       "extractionStatus": "not-started",
       "conversionStatus": "not-started",
@@ -73,6 +119,52 @@
       "payloadBytesRead": 0,
       "payloadSha256": null,
       "contentInspected": false,
+      "nativeCharacterIds": [],
+      "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+      "assetReadiness": {
+        "model": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "texture": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "skeleton": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "motion": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "vfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "sfx": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        },
+        "voice": {
+          "acquisitionStatus": "inventory-metadata-only",
+          "extractionStatus": "not-started",
+          "conversionStatus": "not-started",
+          "validationStatus": "not-started"
+        }
+      },
       "acquisitionStatus": "inventory-metadata-only",
       "extractionStatus": "not-started",
       "conversionStatus": "not-started",
@@ -105,6 +197,12 @@
           "bytes": 38696,
           "sha256": "c81042c51f53287239dd3c12b03d7066a575703249a2a80313e9ff9944324b08"
         },
+        "fileManifestVerification": {
+          "manifestFileCount": 186,
+          "manifestBytes": 69246564,
+          "audioManifestFileCount": 180,
+          "allMemberSha256Verified": true
+        },
         "acquisitionStatus": "acquired-local-files-indexed",
         "extractionStatus": "extracted-and-decoded",
         "conversionStatus": "pcm-audio-produced",
@@ -134,6 +232,12 @@
           "bytes": 47647,
           "sha256": "163ad87d626932fbbaa7ccd5d741f8a5c195aa1dad5cdf86eb17bb43b5794c3c"
         },
+        "fileManifestVerification": {
+          "manifestFileCount": 229,
+          "manifestBytes": 91927257,
+          "audioManifestFileCount": 222,
+          "allMemberSha256Verified": true
+        },
         "acquisitionStatus": "acquired-local-files-indexed",
         "extractionStatus": "extracted-and-decoded",
         "conversionStatus": "pcm-audio-produced",
@@ -162,6 +266,12 @@
           "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/files.sha256.json",
           "bytes": 53475,
           "sha256": "e6a36af7f3c1d4948b7e685a7c41f632d4a061077cc29d8c422ad59ed8cc77a2"
+        },
+        "fileManifestVerification": {
+          "manifestFileCount": 258,
+          "manifestBytes": 84224299,
+          "audioManifestFileCount": 251,
+          "allMemberSha256Verified": true
         },
         "acquisitionStatus": "acquired-local-files-indexed",
         "extractionStatus": "extracted-and-decoded",
@@ -334,6 +444,37 @@
       "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
     }
   ],
+  "nonFucPspNativeFormatReference": {
+    "sourceId": "github-neztypezero-psp-gmo-loader-f346daec",
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/gmoloader",
+    "sourcePlatform": "Sony PSP",
+    "sourceGame": "unknown",
+    "sourceGameHint": "Dissidia Final Fantasy naming is present; exact title/version is unverified.",
+    "relationshipToFuc": "format-and-parser-reference-only-not-fuc-game-payload",
+    "nativeGmoFiles": 21,
+    "nativeMotionBlocks": 258,
+    "nativeGimPayloads": 116,
+    "fucNativePackages": 0,
+    "sourceManifest": {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/gmoloader/source-manifest.json",
+      "bytes": 2221,
+      "sha256": "3fdf3f27ef84827fb0d97c81ee4b23dba889b0aa51c6668f96e520292286bde2"
+    },
+    "summaryEvidence": {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/gmoloader/analysis/native-index-summary.json",
+      "bytes": 205,
+      "sha256": "1a225f1192640064bd1d97ebc48171d50ae8127b80d4f9a4a75a968549fa2323"
+    },
+    "validationEvidence": {
+      "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/gmoloader/validation.json",
+      "bytes": 838,
+      "sha256": "9c4046bacd0c0f99b9388edde6ef6d4f00446bbbff332c7cfe50cfef8eb8bbfe"
+    },
+    "usableForToolValidation": true,
+    "usableAsFucCharacterAsset": false,
+    "runtimeSelectable": false,
+    "productionDeploymentVerified": false
+  },
   "relatedCommunityReserve": {
     "sourceId": "github-flemmli97-fateubw-07e9d79b",
     "sourceGame": "Fate/Unlimited Block Works",
@@ -403,8 +544,14 @@
     "originalGameNativeAnimationsConverted": 0,
     "originalGameNativeVfxConverted": 0,
     "originalGameNativeAudioConverted": 0,
+    "originalGameModelPolicyCandidates": 0,
+    "originalGameModelPolicyPass": 0,
     "ps2PublicAudioSourcesAcquired": 3,
     "ps2PublicAudioFiles": 653,
+    "ps2PublicManifestFilesVerified": 673,
+    "ps2PublicManifestBytesVerified": 245398120,
+    "nonFucPspReferenceGmoFiles": 21,
+    "nonFucPspReferenceMotionBlocks": 258,
     "supplementalPublicSources": 10,
     "fateUbwServants": 14,
     "fateUbwConvertedNativeClips": 127,

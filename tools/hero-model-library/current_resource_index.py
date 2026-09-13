@@ -223,6 +223,9 @@ def build(git_link_root=ROOT):
     if (fate_unlimited_codes_platform.get('schema')!='ggd-fuc-platform-source-index@1'
         or fate_unlimited_codes_platform.get('summary',{}).get('originalGameInventoryRows')!=2
         or fate_unlimited_codes_platform.get('summary',{}).get('originalGamePayloadBytesRead')!=0
+        or fate_unlimited_codes_platform.get('summary',{}).get('originalGameModelPolicyCandidates')!=0
+        or fate_unlimited_codes_platform.get('summary',{}).get('nonFucPspReferenceGmoFiles')!=21
+        or fate_unlimited_codes_platform.get('summary',{}).get('nonFucPspReferenceMotionBlocks')!=258
         or fate_unlimited_codes_platform.get('summary',{}).get('fateUbwServants')!=14
         or fate_unlimited_codes_platform.get('summary',{}).get('fateUbwConvertedNativeClips')!=127):
         raise ValueError('Fate/unlimited codes platform index is absent, stale or overclaims original payload access')

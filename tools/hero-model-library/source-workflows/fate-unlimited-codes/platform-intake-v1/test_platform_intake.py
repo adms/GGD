@@ -33,8 +33,26 @@ class PlatformSourceIndexTests(unittest.TestCase):
         self.assertEqual({"ZIP", "ISO"}, {row["container"] for row in versions})
         self.assertTrue(all(row["acquisitionStatus"] == "inventory-metadata-only" for row in versions))
         self.assertTrue(all(row["payloadSha256"] is None for row in versions))
+        self.assertTrue(all(row["nativeCharacterIds"] == [] for row in versions))
+        self.assertTrue(all(
+            set(row["assetReadiness"]) == {"model", "texture", "skeleton", "motion", "vfx", "sfx", "voice"}
+            for row in versions
+        ))
         self.assertEqual(0, report["summary"]["originalGamePayloadBytesRead"])
+        self.assertEqual(0, report["summary"]["originalGameModelPolicyCandidates"])
         self.assertEqual(3, report["summary"]["ps2PublicAudioSourcesAcquired"])
+        self.assertEqual(653, report["summary"]["ps2PublicAudioFiles"])
+        self.assertEqual(673, report["summary"]["ps2PublicManifestFilesVerified"])
+        self.assertGreater(report["summary"]["ps2PublicManifestBytesVerified"], 0)
+        self.assertTrue(all(
+            row["fileManifestVerification"]["allMemberSha256Verified"]
+            for row in report["otherPlatformSources"]["ps2PublicAudio"]
+        ))
+        reference = report["nonFucPspNativeFormatReference"]
+        self.assertEqual(21, reference["nativeGmoFiles"])
+        self.assertEqual(258, reference["nativeMotionBlocks"])
+        self.assertEqual(0, reference["fucNativePackages"])
+        self.assertFalse(reference["usableAsFucCharacterAsset"])
         self.assertEqual(14, report["relatedCommunityReserve"]["servants"])
         self.assertEqual(127, report["relatedCommunityReserve"]["convertedNativeClips"])
         self.assertEqual(False, report["relatedCommunityReserve"]["runtimeSelectable"])

@@ -6245,7 +6245,7 @@
   "windowsGameSourceDocument": "materials/hero-model-library/source-inventories/windows-game-library.md",
   "fateUnlimitedCodesPlatformIndex": {
     "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
-    "sha256": "e121923137789389486878e91106383158eaddaac8de1ee5a7f10026978e0c11",
+    "sha256": "89ebc73d2ae566d4f5c1cdd43e350012d1d3130b7f3d5c27d0674f08ebbdf5f8",
     "status": "psp-inventory-metadata-only; PS2 public audio and FateUBW community reserve indexed separately",
     "summary": {
       "originalGameInventoryRows": 2,
@@ -6256,8 +6256,14 @@
       "originalGameNativeAnimationsConverted": 0,
       "originalGameNativeVfxConverted": 0,
       "originalGameNativeAudioConverted": 0,
+      "originalGameModelPolicyCandidates": 0,
+      "originalGameModelPolicyPass": 0,
       "ps2PublicAudioSourcesAcquired": 3,
       "ps2PublicAudioFiles": 653,
+      "ps2PublicManifestFilesVerified": 673,
+      "ps2PublicManifestBytesVerified": 245398120,
+      "nonFucPspReferenceGmoFiles": 21,
+      "nonFucPspReferenceMotionBlocks": 258,
       "supplementalPublicSources": 10,
       "fateUbwServants": 14,
       "fateUbwConvertedNativeClips": 127,
@@ -6267,7 +6273,7 @@
   },
   "fateUnlimitedCodesPlatformDocument": {
     "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md",
-    "sha256": "8dfd6076c707c2957f569eb2c24c7fd04491d8ac2b67f78e78178a1d2bb6316c"
+    "sha256": "5b00d1f50383e2493795eab2676a123c399e8a39596cc46ffc9ea9321967aa2b"
   },
   "legacySmashSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/inventory.json",

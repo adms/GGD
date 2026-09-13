@@ -18,4 +18,4 @@ python3 tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-
 
 工具只接受 ZIP／ISO，只讀來源，先拒絕絕對路徑、`..`、大小寫衝突與加密 ZIP，再解到不存在的目錄並逐檔計算 SHA-256。若發現 FPK，再用 `../first-batch/extract_fate_fpk.py` 建目錄或解包；這個 FPK／PRS 解析器目前只有合成測試，必須在真實 FUC 樣本上重新驗證。GMO／GIM 與音訊容器要依實際檔頭選轉換器，不能按副檔名直接宣稱可用。
 
-PS2 Archer／Shirou／Saber 音訊已有本機實檔與索引，但只是公開擷取音訊，不代表 PS2 原作光碟已取得。FateUBW Minecraft 的 14 名英靈／127 個已轉換原生時長片段是另一個社群來源，保留獨立 source ID；它們目前是轉換儲備，未因這份索引而變成後台可切換或正式站已部署。
+PS2 Archer／Shirou／Saber 音訊已有本機實檔與索引；重建來源索引時會讀取三份 `files.sha256.json` 所列的每個檔案，核對大小與 SHA-256，並確認 WAV 筆數與音訊索引一致。這些只是公開擷取音訊，不代表 PS2 原作光碟已取得。現有 PSP-GMO-Loader 的 21 個 GMO／258 個 Motion 區塊來自遊戲未核的格式範例，檔名指向 Dissidia 系列；收據中的 FUC 原生包數為 0，因此只能用於解析器測試。FateUBW Minecraft 的 14 名英靈／127 個已轉換原生時長片段是另一個社群來源，保留獨立 source ID；它們目前是轉換儲備，未因這份索引而變成後台可切換或正式站已部署。

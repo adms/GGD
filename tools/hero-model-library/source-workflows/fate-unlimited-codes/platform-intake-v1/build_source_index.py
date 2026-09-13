@@ -44,6 +44,35 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+def verify_file_manifest(root: Path, manifest: dict[str, Any], source_id: str) -> dict[str, Any]:
+    """Read every declared file and verify its size and SHA-256."""
+    require(manifest.get("schema") == "ggd.source-files.intake@1",
+            "Unexpected file-manifest schema: " + source_id)
+    rows = manifest.get("files")
+    require(isinstance(rows, list) and rows, "Empty file manifest: " + source_id)
+    verified_bytes = 0
+    audio_files = 0
+    for row in rows:
+        declared = row.get("path")
+        require(isinstance(declared, str) and declared, "Invalid manifest path: " + source_id)
+        relative = Path(declared)
+        require(not relative.is_absolute() and ".." not in relative.parts,
+                "Unsafe manifest path: " + source_id + ":" + declared)
+        path = root / relative
+        require(path.is_file(), "Manifest file absent: " + str(path))
+        require(path.stat().st_size == row.get("bytes"), "Manifest byte count changed: " + str(path))
+        require(sha256(path) == row.get("sha256"), "Manifest SHA-256 changed: " + str(path))
+        verified_bytes += path.stat().st_size
+        if path.suffix.casefold() == ".wav":
+            audio_files += 1
+    return {
+        "manifestFileCount": len(rows),
+        "manifestBytes": verified_bytes,
+        "audioManifestFileCount": audio_files,
+        "allMemberSha256Verified": True,
+    }
+
+
 def resolve_asset_path(asset_root: Path, declared: str) -> Path:
     """Re-root recorded GGD-Asset-Library paths when the workspace moves."""
     path = Path(declared)
@@ -93,6 +122,15 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
         payload_path = spec.get("payloadLocalPath")
         payload = resolve_asset_path(asset_root, payload_path) if payload_path else None
         payload_present = bool(payload and payload.is_file())
+        asset_readiness = {
+            kind: {
+                "acquisitionStatus": "payload-present-uninspected" if payload_present else "inventory-metadata-only",
+                "extractionStatus": "not-started",
+                "conversionStatus": "not-started",
+                "validationStatus": "not-started",
+            }
+            for kind in ("model", "texture", "skeleton", "motion", "vfx", "sfx", "voice")
+        }
         platform_versions.append({
             "sourceId": spec["sourceId"],
             "inventoryId": spec["inventoryId"],
@@ -109,6 +147,9 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
             "payloadBytesRead": payload.stat().st_size if payload_present else 0,
             "payloadSha256": sha256(payload) if payload_present else None,
             "contentInspected": False,
+            "nativeCharacterIds": [],
+            "identityStatus": "payload-uninspected-native-character-ids-not-invented",
+            "assetReadiness": asset_readiness,
             "acquisitionStatus": "payload-present-uninspected" if payload_present else "inventory-metadata-only",
             "extractionStatus": "not-started",
             "conversionStatus": "not-started",
@@ -132,7 +173,11 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
         require(local_root.is_dir(), "PS2 source root absent: " + str(local_root))
         require(audio_index_path.is_file() and files_manifest_path.is_file(), "PS2 source index absent: " + source_id)
         audio_index = read_json(audio_index_path)
+        files_manifest = read_json(files_manifest_path)
         require(audio_index.get("sourceId") == source_id, "PS2 audio source ID mismatch: " + source_id)
+        manifest_verification = verify_file_manifest(local_root, files_manifest, source_id)
+        require(manifest_verification["audioManifestFileCount"] == audio_index["fileCount"],
+                "PS2 audio index and file manifest disagree: " + source_id)
         ps2_audio_sources.append({
             "sourceId": source_id,
             "releasePlatform": "Sony PlayStation 2",
@@ -144,6 +189,7 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
             "audioSeconds": audio_index["totalSeconds"],
             "audioIndex": file_evidence(audio_index_path, repo.parent),
             "fileManifest": file_evidence(files_manifest_path, repo.parent),
+            "fileManifestVerification": manifest_verification,
             "acquisitionStatus": "acquired-local-files-indexed",
             "extractionStatus": "extracted-and-decoded",
             "conversionStatus": "pcm-audio-produced",
@@ -194,6 +240,43 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
         "candidateIds": [row["candidateId"] for row in native["candidates"]],
     }
 
+    native_reference_spec = config["nativeFormatReference"]
+    native_reference_root = resolve_asset_path(asset_root, native_reference_spec["localPath"])
+    native_reference_manifest_path = native_reference_root / "source-manifest.json"
+    native_reference_summary_path = native_reference_root / "analysis/native-index-summary.json"
+    native_reference_validation_path = native_reference_root / "validation.json"
+    require(native_reference_root.is_dir(), "PSP GMO format reference root absent")
+    native_reference_manifest = read_json(native_reference_manifest_path)
+    native_reference_summary = read_json(native_reference_summary_path)
+    native_reference_validation = read_json(native_reference_validation_path)
+    require(native_reference_manifest.get("sourceId") == native_reference_spec["sourceId"],
+            "PSP GMO format reference source ID changed")
+    require(native_reference_manifest.get("sourceGame") == "unknown",
+            "PSP GMO format reference game identity changed; review before assigning")
+    require(native_reference_summary.get("fucNativePackages") == 0,
+            "PSP GMO reference unexpectedly claims FUC packages")
+    require(native_reference_validation.get("fucNativePackages") == 0,
+            "PSP GMO validation unexpectedly claims FUC packages")
+    native_format_reference = {
+        "sourceId": native_reference_spec["sourceId"],
+        "localRoot": str(native_reference_root),
+        "sourcePlatform": "Sony PSP",
+        "sourceGame": "unknown",
+        "sourceGameHint": "Dissidia Final Fantasy naming is present; exact title/version is unverified.",
+        "relationshipToFuc": "format-and-parser-reference-only-not-fuc-game-payload",
+        "nativeGmoFiles": native_reference_summary["nativeModels"],
+        "nativeMotionBlocks": native_reference_summary["nativeMotionRecords"],
+        "nativeGimPayloads": native_reference_summary["embeddedImagePayloads"],
+        "fucNativePackages": 0,
+        "sourceManifest": file_evidence(native_reference_manifest_path, repo.parent),
+        "summaryEvidence": file_evidence(native_reference_summary_path, repo.parent),
+        "validationEvidence": file_evidence(native_reference_validation_path, repo.parent),
+        "usableForToolValidation": True,
+        "usableAsFucCharacterAsset": False,
+        "runtimeSelectable": False,
+        "productionDeploymentVerified": False,
+    }
+
     missing = list(config["missingOriginalReleases"])
     missing.append({
         "sourceId": "fuc-psp-native-assets-from-lv99",
@@ -226,6 +309,7 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
             "missingOriginalReleases": config["missingOriginalReleases"],
         },
         "supplementalPublicSources": fuc_public_sources,
+        "nonFucPspNativeFormatReference": native_format_reference,
         "relatedCommunityReserve": related_community,
         "gaps": missing,
         "summary": {
@@ -237,8 +321,16 @@ def build(repo: Path = REPO, asset_root: Path = DEFAULT_ASSET_ROOT) -> dict[str,
             "originalGameNativeAnimationsConverted": 0,
             "originalGameNativeVfxConverted": 0,
             "originalGameNativeAudioConverted": 0,
+            "originalGameModelPolicyCandidates": 0,
+            "originalGameModelPolicyPass": 0,
             "ps2PublicAudioSourcesAcquired": len(ps2_audio_sources),
             "ps2PublicAudioFiles": sum(row["audioFiles"] for row in ps2_audio_sources),
+            "ps2PublicManifestFilesVerified": sum(
+                row["fileManifestVerification"]["manifestFileCount"] for row in ps2_audio_sources),
+            "ps2PublicManifestBytesVerified": sum(
+                row["fileManifestVerification"]["manifestBytes"] for row in ps2_audio_sources),
+            "nonFucPspReferenceGmoFiles": native_format_reference["nativeGmoFiles"],
+            "nonFucPspReferenceMotionBlocks": native_format_reference["nativeMotionBlocks"],
             "supplementalPublicSources": len(fuc_public_sources),
             "fateUbwServants": 14,
             "fateUbwConvertedNativeClips": 127,
@@ -272,8 +364,14 @@ def render_markdown(index: dict[str, Any]) -> str:
         "## 其他平台與社群來源",
         "",
         f"- PS2 公開音訊來源：{index['summary']['ps2PublicAudioSourcesAcquired']} 組，"
-        f"共 {index['summary']['ps2PublicAudioFiles']} 檔；已有本機索引，角色／事件仍待逐段聽審。",
+        f"共 {index['summary']['ps2PublicAudioFiles']} 個 WAV；已逐檔讀取並核對 "
+        f"{index['summary']['ps2PublicManifestFilesVerified']} 筆／"
+        f"{index['summary']['ps2PublicManifestBytesVerified']} bytes 的大小與 SHA-256，"
+        "角色／事件仍待逐段聽審。",
         "- PS2 原作光碟與 Arcade 原始資料：尚未找到實檔。",
+        f"- PSP GMO 工具參考樣本：{index['summary']['nonFucPspReferenceGmoFiles']} 個 GMO／"
+        f"{index['summary']['nonFucPspReferenceMotionBlocks']} 個動作區塊；來源遊戲未核，"
+        "檔名指向 Dissidia 系列，且驗證收據明列 FUC 原生包為 0，只能測格式工具。",
         f"- FateUBW Minecraft：獨立社群來源，14 名英靈、132 個來源片段、"
         f"127 個已轉換原生時長片段；5 個無時長來源姿勢另列衍生處理，不冒充原作 FUC 素材。",
         "- 所有項目目前都未因本索引而成為後台可切換選項，也未證明正式站部署。",
