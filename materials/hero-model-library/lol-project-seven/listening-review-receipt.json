@@ -4,13 +4,13 @@
   "files": [
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
-      "bytes": 1439248,
-      "sha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60"
+      "bytes": 1609180,
+      "sha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.md",
-      "bytes": 2315,
-      "sha256": "bf2b4ba26b47bf86a476864b97a1d333e31bf8310c8ff5ea45045e80b8006110"
+      "bytes": 2407,
+      "sha256": "4809b73ea787a7d3b5bf467d78d04e99addaa8a72ffb21251c435267dc50a341"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review.html",
@@ -19,13 +19,13 @@
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-decisions.json",
-      "bytes": 129,
-      "sha256": "01e68bdc36793c13caf0663e1f9ae66495bd996f8df6d84154f32e9bbe36fa43"
+      "bytes": 173295,
+      "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/tools/build_listening_review_queue.py",
-      "bytes": 30706,
-      "sha256": "314632ebba6a80e9389a8bd2acb9a877a703793ac177bbb0f0b61b4c4013ec9a"
+      "bytes": 30859,
+      "sha256": "5ef8054d279af6427dc954285c3cdba0fda82ef9662714a17547ea495f7a1ee2"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/tools/test_build_listening_review_queue.py",
@@ -48,13 +48,13 @@
     "uniqueWavFiles": 754,
     "bytes": 725636616,
     "seconds": 2636.8756009070285,
-    "pendingReviews": 754,
+    "pendingReviews": 443,
     "nativeTargetCandidates": 566,
     "battleReviewCandidates": 311,
-    "speakerVerified": 0,
-    "perClipLanguageVerified": 0,
-    "ggdSkillSemanticBindingVerified": 0,
-    "runtimeApproved": 0,
+    "speakerVerified": 311,
+    "perClipLanguageVerified": 311,
+    "ggdSkillSemanticBindingVerified": 311,
+    "runtimeApproved": 311,
     "allLocalWavBytesAndSha256Verified": true,
     "byCharacter": [
       {
@@ -84,8 +84,8 @@
         ],
         "nativeTargetCandidates": 99,
         "battleReviewCandidates": 52,
-        "pendingReviews": 135,
-        "runtimeApproved": 0
+        "pendingReviews": 83,
+        "runtimeApproved": 52
       },
       {
         "nativeId": "LeeSin",
@@ -111,8 +111,8 @@
         "missingAbilitySlotEventCandidates": [],
         "nativeTargetCandidates": 114,
         "battleReviewCandidates": 64,
-        "pendingReviews": 151,
-        "runtimeApproved": 0
+        "pendingReviews": 87,
+        "runtimeApproved": 64
       },
       {
         "nativeId": "Lux",
@@ -137,8 +137,8 @@
         "missingAbilitySlotEventCandidates": [],
         "nativeTargetCandidates": 83,
         "battleReviewCandidates": 48,
-        "pendingReviews": 104,
-        "runtimeApproved": 0
+        "pendingReviews": 56,
+        "runtimeApproved": 48
       },
       {
         "nativeId": "MissFortune",
@@ -164,8 +164,8 @@
         ],
         "nativeTargetCandidates": 35,
         "battleReviewCandidates": 21,
-        "pendingReviews": 35,
-        "runtimeApproved": 0
+        "pendingReviews": 14,
+        "runtimeApproved": 21
       },
       {
         "nativeId": "Warwick",
@@ -192,8 +192,8 @@
         "missingAbilitySlotEventCandidates": [],
         "nativeTargetCandidates": 104,
         "battleReviewCandidates": 59,
-        "pendingReviews": 159,
-        "runtimeApproved": 0
+        "pendingReviews": 100,
+        "runtimeApproved": 59
       },
       {
         "nativeId": "Xerath",
@@ -218,8 +218,8 @@
         "missingAbilitySlotEventCandidates": [],
         "nativeTargetCandidates": 58,
         "battleReviewCandidates": 26,
-        "pendingReviews": 79,
-        "runtimeApproved": 0
+        "pendingReviews": 53,
+        "runtimeApproved": 26
       },
       {
         "nativeId": "Yasuo",
@@ -244,17 +244,17 @@
         "missingAbilitySlotEventCandidates": [],
         "nativeTargetCandidates": 73,
         "battleReviewCandidates": 41,
-        "pendingReviews": 91,
-        "runtimeApproved": 0
+        "pendingReviews": 50,
+        "runtimeApproved": 41
       }
     ]
   },
   "claims": {
     "allLocalWavBytesAndSha256Verified": true,
     "eventBindingsVerified": true,
-    "speakerVerifiedCount": 0,
-    "perClipLanguageVerifiedCount": 0,
-    "runtimeApprovedCount": 0,
+    "speakerVerifiedCount": 311,
+    "perClipLanguageVerifiedCount": 311,
+    "runtimeApprovedCount": 311,
     "runtimeConfigChanged": false,
     "deployed": false
   }

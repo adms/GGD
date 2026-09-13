@@ -213,8 +213,8 @@ def apply_native_event_binding(row, evidence):
     return row
 
 
-def apply_listening_review(row, review):
-    """Expose the review candidate/result without making it runtime selectable."""
+def apply_listening_review(row, review, registration=None):
+    """Expose review state and a separately verified runtime registration."""
     assert (row['sha256'], row['bytes']) == (review['sha256'], review['bytes'])
     assert review['eventBindingsVerified'] is True
     assert review['candidateOnly'] is True
@@ -230,7 +230,13 @@ def apply_listening_review(row, review):
     row['gainDecision'] = review['gainDecision']
     row['ggdSkillSemanticBindingVerified'] = review['ggdSkillSemanticBindingVerified']
     row['runtimeApproved'] = review['runtimeApproved']
-    row['runtimeSelectable'] = False
+    row['runtimeSelectable'] = registration is not None
+    if registration is not None:
+        row['runtimeHeroId'] = registration['runtimeHeroId']
+        row['runtimeCategory'] = registration['runtimeCategory']
+        row['runtimeTakeKey'] = registration['runtimeTakeKey']
+        row['runtimePath'] = registration['runtimePath']
+        row['runtimeSha256'] = registration['runtimeSha256']
     row['listeningReviewComplete'] = review['runtimeApproved']
     return row
 
@@ -286,11 +292,21 @@ def main():
             perClipLanguageVerified=False, ggdSkillSemanticBindingsVerified=False))
     review_queue = read(OUT/'lol-project-seven/listening-review-queue.json')
     review_decisions = read(OUT/'lol-project-seven/listening-review-decisions.json')
+    runtime_registration = read(OUT/'lol-project-seven/runtime-registration.json')
     assert review_queue['schema'] == 'ggd-lol-listening-review-queue@1'
     assert review_queue['sourceId'] == 'lol-project-seven-ja-jp-16.18.8159717'
     assert review_queue['summary']['uniqueWavFiles'] == 754
     assert review_queue['inputs']['decisions']['sha256'] == sha(OUT/'lol-project-seven/listening-review-decisions.json')
     assert review_decisions['sourceId'] == review_queue['sourceId']
+    assert runtime_registration['schema'] == 'ggd-lol-approved-battle-runtime-registration@1'
+    assert runtime_registration['sourceId'] == review_queue['sourceId']
+    assert runtime_registration['approvalAuthority']['sha256'] == sha(OUT/'lol-project-seven/listening-review-decisions.json')
+    assert runtime_registration['queue']['sha256'] == sha(OUT/'lol-project-seven/listening-review-queue.json')
+    runtime_manifest = REPO/runtime_registration['runtimeManifest']['path']
+    assert runtime_registration['runtimeManifest']['registered'] is True
+    assert runtime_manifest.is_file() and sha(runtime_manifest) == runtime_registration['runtimeManifest']['sha256']
+    runtime_registrations = {row['reviewKey']: row for row in runtime_registration['records']}
+    assert len(runtime_registrations) == runtime_registration['summary']['runtimeRegistered']
     listening_reviews = {}
     for review in review_queue['records']:
         evidence = event_bindings[review['path']]
@@ -578,7 +594,13 @@ def main():
             continue
         apply_native_event_binding(row, evidence)
         review = listening_reviews[row['path']]
-        apply_listening_review(row, review)
+        registration = runtime_registrations.get(review['key'])
+        if registration is not None:
+            runtime_file = REPO/registration['runtimePath']
+            assert registration['sourceSha256'] == review['sha256']
+            assert runtime_file.is_file() and runtime_file.stat().st_size == registration['runtimeBytes']
+            assert sha(runtime_file) == registration['runtimeSha256']
+        apply_listening_review(row, review, registration)
         bound_relationship_rows += 1
         bound_groups[row['groupId']] += 1
         if review['candidateRuntimeTarget']:
@@ -625,7 +647,9 @@ def main():
             nativeTargetCandidates=review_queue['summary']['nativeTargetCandidates'],
             battleReviewCandidates=review_queue['summary']['battleReviewCandidates'],
             runtimeApproved=review_queue['summary']['runtimeApproved'],
-            runtimeConfigChanged=False),
+            runtimeRegistered=runtime_registration['summary']['runtimeRegistered'],
+            runtimeConfigChanged=True,
+            productionDeployed=False),
         acquisitionPolicy=downloads['ingestionPolicy'],
             synthesisContract=dict(trainingInputValidated=False,perClipSpeakerReviewRequired=True,
             perClipLanguageAndTranscriptRequired=True,excludeEffectsAndMusic=True,keepOriginals=True,
@@ -662,7 +686,7 @@ def main():
         '音樂、音效與已知含合成播報的來源保留，但 `excludedFromSpeechInput=true`；合成來源依明示證據標記，不把混合音訊庫的每一段都推定為合成。完整備份包含原始格式與轉換檔，主要輸入依不可變交付清單選取，備份完成不會把同一份音訊的 OGG／WAV 重複加入。', '',
         'KOF XV 的 Ash／Mai 優先讀 Float32，以保留原始 Vorbis 超過 1 的峰值；舊 PCM16 共 168 檔仍在 `alternateAudioSources`，`query_voice.py --files --json` 同時回傳 `alternateFiles`。格式修訂維持原 groupId，主要檔數不增加，也不當成新台詞；播放增益需另行決定，原樣本不裁切。', '',
         f'LoL 已核對 {len(prefetch_aliases)} 個 BNK 預載片段，逐位元組前綴與 RIFF 完整長度均對應同角色 WPK 的完整音訊。`prefetchAliases` 指向已計入的主要 WAV、完整 WEM 及原片段；查詢回傳三者本機路徑。原片段與失敗報告保留，不補零、不改 RIFF 標頭，也不另算新音訊。', '',
-        f'LoL 七名逐項聽審入口為 `materials/hero-model-library/lol-project-seven/listening-review.html`：{review_queue["summary"]["uniqueWavFiles"]} 個事件關聯 WAV 中，{review_queue["summary"]["nativeTargetCandidates"]} 個有單一原生用途候選，{review_queue["summary"]["battleReviewCandidates"]} 個屬於 Q／W／E／R、攻擊或死亡；目前逐項核准 {review_queue["summary"]["runtimeApproved"]} 個。候選不等於技能綁定，未逐項核准的片段不啟用 runtime。', '',
+        f'LoL 七名逐項聽審入口為 `materials/hero-model-library/lol-project-seven/listening-review.html`：{review_queue["summary"]["uniqueWavFiles"]} 個事件關聯 WAV 中，{review_queue["summary"]["battleReviewCandidates"]} 個戰鬥候選已逐項核准，並有 {runtime_registration["summary"]["runtimeRegistered"]} 個完成 runtime 註冊；其餘片段仍未核准。此處的核准與註冊不代表 production 已部署。', '',
         *event_binding_lines, *([''] if event_binding_lines else []),
         f'目前索引 **{len(groups)} 個來源角色／共用音訊組、{counts["sourceFileRelationshipRows"]:,} 筆來源與檔案關係、{counts["uniqueLocalPaths"]:,} 個不同本機檔案路徑、{counts["uniqueSha256Payloads"]:,} 份不同 SHA-256 內容**。不同本機路徑的檔案大小合計 {counts["uniqueLocalPathBytes"]:,} bytes。包含 300 英雄、MBA 與下表列出的公開／付費來源音訊；以上均**不是已確認角色語音數**。同一路徑可保留原來源及指定角色子集的多筆關係，不能把新增來源關係當成新增音檔。', '',
         '相容欄位 `summary.audioFiles` 與 `summary.bytes` 仍依逐列來源關係加總；去重取檔請使用 `uniqueLocalPaths`／`uniqueLocalPathBytes`，內容去重數見 `uniqueSha256Payloads`。這些數字只涵蓋主要可播放音訊清單，原始容器、舊備份及診斷 PCM16 仍另外保留。', '',

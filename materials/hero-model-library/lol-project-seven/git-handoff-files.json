@@ -26,13 +26,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 5181,
-      "sha256": "b55a787407b719cd9852020a02f0c4400d7fb32e17fe696eb0caff5ec552ad9a"
+      "bytes": 6012,
+      "sha256": "2fccfbdd89c7c8b323956e8065ab068e20f896a950f2c7e12753a7084ab43331"
     },
     {
       "path": "seven-voice-index.json",
-      "bytes": 19653,
-      "sha256": "ab42b1349341bd0f57e5a99ef12c4522e8c09bb7495870854a2b65b25d843eac"
+      "bytes": 20429,
+      "sha256": "59634ae593408206c7e6eb0c85e05566a5a9ad1c221e5e755a7ad17d9f070d0a"
     },
     {
       "path": "latest-seven-delivery-receipt.json",
@@ -76,28 +76,33 @@
     },
     {
       "path": "listening-review-decisions.json",
-      "bytes": 129,
-      "sha256": "01e68bdc36793c13caf0663e1f9ae66495bd996f8df6d84154f32e9bbe36fa43"
+      "bytes": 173295,
+      "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
     },
     {
       "path": "listening-review-queue.json",
-      "bytes": 1439248,
-      "sha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60"
+      "bytes": 1609180,
+      "sha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf"
     },
     {
       "path": "listening-review-queue.md",
-      "bytes": 2315,
-      "sha256": "bf2b4ba26b47bf86a476864b97a1d333e31bf8310c8ff5ea45045e80b8006110"
+      "bytes": 2407,
+      "sha256": "4809b73ea787a7d3b5bf467d78d04e99addaa8a72ffb21251c435267dc50a341"
     },
     {
       "path": "listening-review-receipt.json",
-      "bytes": 7397,
-      "sha256": "1f89afcf93ad6f208e67136f2ce2ec6daa470204a9e12ad43cf974669362de4d"
+      "bytes": 7418,
+      "sha256": "efd6396776043e921d2d4fe3b77d38ca3f9e226c4af9d9abd7d8078cdc01bcfe"
     },
     {
       "path": "listening-review.html",
       "bytes": 9671,
       "sha256": "a2cec5fff684a63f8a3e84cd96a80803f8eb0a83632093675ebc5942ebb6af9e"
+    },
+    {
+      "path": "runtime-registration.json",
+      "bytes": 333557,
+      "sha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719"
     },
     {
       "path": "tools/acquire_project_ja.py",
@@ -110,14 +115,19 @@
       "sha256": "3d1ae14a4ec9d496b7332f5b8dd52a972370c0e3163c350748f66b69c8a5b558"
     },
     {
+      "path": "tools/apply_approved_battle_runtime.py",
+      "bytes": 12312,
+      "sha256": "e1287f885e9d46c493a3001438d5e0e4bf97c39c3855ed080ea80396cf0025af"
+    },
+    {
       "path": "tools/build_event_bindings.py",
       "bytes": 12286,
       "sha256": "b9170b36db9441463c2d790073c355671a19e2753398479ee7d1316a54e153b6"
     },
     {
       "path": "tools/build_listening_review_queue.py",
-      "bytes": 30706,
-      "sha256": "314632ebba6a80e9389a8bd2acb9a877a703793ac177bbb0f0b61b4c4013ec9a"
+      "bytes": 30859,
+      "sha256": "5ef8054d279af6427dc954285c3cdba0fda82ef9662714a17547ea495f7a1ee2"
     },
     {
       "path": "tools/bundle_event_bindings.py",
@@ -151,8 +161,8 @@
     },
     {
       "path": "tools/make_seven_handoff.py",
-      "bytes": 7855,
-      "sha256": "b759b1b938f7f787718910a7da5f33954d6bcd2333e56f8207a2c33a196c0590"
+      "bytes": 8638,
+      "sha256": "921622f7143be60750b70264ce8706babe12b5bd0119c6b653945ac091a8bca9"
     },
     {
       "path": "tools/recover_project_ja.py",
@@ -183,6 +193,11 @@
       "path": "tools/test_acquire_shared_event_metadata.py",
       "bytes": 2164,
       "sha256": "d4487aa3168f636fb1db90e721fc156952077e86534733de60069849f5469ae0"
+    },
+    {
+      "path": "tools/test_apply_approved_battle_runtime.py",
+      "bytes": 1787,
+      "sha256": "b82ebff9411183e9addfc88d64111891ffa33664defacb4cb2e85c53292de5c6"
     },
     {
       "path": "tools/test_build_event_bindings.py",

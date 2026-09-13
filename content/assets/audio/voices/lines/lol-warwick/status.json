@@ -69,43 +69,563 @@
    },
    "lastError": null
   },
-  "defeat": {
+  "skill-name.q": {
    "takes": [],
-   "text": "（原檔）b49dee/00122-1567358002",
-   "lang": "und",
+   "text": "（原檔）Warwick/skin0/48306622",
+   "lang": "ja",
    "textSource": "original",
-   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00122-1567358002.wav",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00002-48306622.wav",
    "state": "generated",
    "current": {
     "take": 0,
     "engine": "original",
-    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
     "stub": false,
-    "bytes": 51871,
-    "seconds": 3.166961,
+    "bytes": 28047,
+    "seconds": 1.674218,
     "lufs": null,
-    "hash": "d77ca90c1387e57dd06de66e13815f8c6cbbea97f2ab8d816aa5998c2c517c99",
-    "at": 1789058027806
+    "hash": "33b3888e6af8a03cc36c9e4ab34b4f9eed7dda373b5efaefeb3d9c073cc8a77c",
+    "at": 1789321176735
+   },
+   "lastError": null
+  },
+  "skill-name.q.2": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1187643332",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00100-1187643332.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.527347,
+    "lufs": null,
+    "hash": "9194f4596d2b7b01fa4e084736bd20e268e8b2ddf865e18d36f8fb0f7114e2b7",
+    "at": 1789321176785
+   },
+   "lastError": null
+  },
+  "skill-name.q.3": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1770304197",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00134-1770304197.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 30555,
+    "seconds": 1.852313,
+    "lufs": null,
+    "hash": "61f047043972445d9bf9baffee81379b97a2d2c49524993ff14f7fed194bd616",
+    "at": 1789321176836
+   },
+   "lastError": null
+  },
+  "skill-name.w": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/202555551",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00015-202555551.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 43093,
+    "seconds": 2.613311,
+    "lufs": null,
+    "hash": "6ce85bb6d21ed2defd2c37666148f74a19f5969fc57078f01482d0d8030072e7",
+    "at": 1789321176887
+   },
+   "lastError": null
+  },
+  "skill-name.w.2": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/329653675",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00029-329653675.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 40168,
+    "seconds": 2.452902,
+    "lufs": null,
+    "hash": "7d268c946d2589be6e6b2be60222358de38a3164d7d9464eafb956aac56ea456",
+    "at": 1789321176938
+   },
+   "lastError": null
+  },
+  "skill-name.w.3": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/387524154",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00039-387524154.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 18434,
+    "seconds": 1.085397,
+    "lufs": null,
+    "hash": "d43ccbb36e5ad203389766b79989cdef88097694a156bcd0e514e9b02427c4af",
+    "at": 1789321176989
+   },
+   "lastError": null
+  },
+  "skill-name.w.4": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/694601137",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00057-694601137.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 40168,
+    "seconds": 2.431769,
+    "lufs": null,
+    "hash": "4da951e8587fbe32ca9958cd1f6749782660eb2a097b46c632e3c86a6931b97f",
+    "at": 1789321177039
+   },
+   "lastError": null
+  },
+  "skill-name.w.5": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1183654600",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00099-1183654600.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 41839,
+    "seconds": 2.538866,
+    "lufs": null,
+    "hash": "280afaa6f8f6fcc6d3b9dce6b908c0c76e6d4ee0ebf6562d5ae9753a1acc835d",
+    "at": 1789321177090
+   },
+   "lastError": null
+  },
+  "skill-name.w.6": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1466613816",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00116-1466613816.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.168957,
+    "lufs": null,
+    "hash": "1a0d93e489e3ad67c2162fb8eec31a394bb439050cec93b5d4febc20a986d7f4",
+    "at": 1789321177141
+   },
+   "lastError": null
+  },
+  "skill-name.w.7": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1929791825",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00143-1929791825.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 22613,
+    "seconds": 1.33517,
+    "lufs": null,
+    "hash": "4614f52c38c49553b803fa2b5d112ad993e6a7c7acde21a7d56bf51f51f7a3e0",
+    "at": 1789321177192
+   },
+   "lastError": null
+  },
+  "skill-name.e": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/6289847",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00000-6289847.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 61484,
+    "seconds": 3.764444,
+    "lufs": null,
+    "hash": "702f0ae034a357a75e56635ef99cc78f5d449f8a608c4bc2a9c6316077cda8b4",
+    "at": 1789321177243
+   },
+   "lastError": null
+  },
+  "skill-name.e.2": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/397472650",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00041-397472650.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 63155,
+    "seconds": 3.873152,
+    "lufs": null,
+    "hash": "7714b202dbae43c970aa239bbbf77c0f9d07a254e5cc756a9d63ac1c179e054c",
+    "at": 1789321177295
+   },
+   "lastError": null
+  },
+  "skill-name.e.3": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/706282948",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00059-706282948.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 30555,
+    "seconds": 1.832222,
+    "lufs": null,
+    "hash": "352f75ac24014a6e818abac8d0c583e54c558eec4718a90c5a23803d657c8d83",
+    "at": 1789321177348
+   },
+   "lastError": null
+  },
+  "skill-name.e.4": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1442689105",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00113-1442689105.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 31391,
+    "seconds": 1.884422,
+    "lufs": null,
+    "hash": "642bf3fbafe446757ba0b0cd0ca53031ab25f5172d42bda24f996391b158f808",
+    "at": 1789321177414
+   },
+   "lastError": null
+  },
+  "skill-name.r": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/18811405",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00001-18811405.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 38078,
+    "seconds": 2.304807,
+    "lufs": null,
+    "hash": "f51cd9678bd77e42151d983126602a3d76d730cbadf1a768607bd1c27989f99e",
+    "at": 1789321177487
+   },
+   "lastError": null
+  },
+  "skill-name.r.2": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/74851633",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00005-74851633.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 39332,
+    "seconds": 2.387937,
+    "lufs": null,
+    "hash": "2a0e093e13a089be69b39e6e6bffbd82d4f3951f3c6aeeaf38f5c2e61789acdb",
+    "at": 1789321177546
+   },
+   "lastError": null
+  },
+  "skill-name.r.3": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/741151286",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00064-741151286.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 37242,
+    "seconds": 2.26898,
+    "lufs": null,
+    "hash": "cc7e4f12b3e7c9cc9631297659b08d1b86ceac4c41e728485e3657c7a4a15b11",
+    "at": 1789321177600
+   },
+   "lastError": null
+  },
+  "skill-name.r.4": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/780836792",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00069-780836792.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 36406,
+    "seconds": 2.201746,
+    "lufs": null,
+    "hash": "638df4e71693ac5c3671a8e4db813cd8a3e56fec132dec0fc8e2350472c8d78a",
+    "at": 1789321177652
+   },
+   "lastError": null
+  },
+  "skill-name.r.5": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1047184661",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00090-1047184661.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.717755,
+    "lufs": null,
+    "hash": "995edb5b11f292643e5344656d567e222b91d10ce0f69147bcb733bcf94799cb",
+    "at": 1789321177703
+   },
+   "lastError": null
+  },
+  "skill-name.r.6": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1134219275",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00094-1134219275.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 27629,
+    "seconds": 1.64678,
+    "lufs": null,
+    "hash": "40011b46439493e03c780d8291779bb95d5bd161061ed5a4d90f2fe31d55aece",
+    "at": 1789321177755
+   },
+   "lastError": null
+  },
+  "skill-name.r.7": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1144994982",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00095-1144994982.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 23867,
+    "seconds": 1.413764,
+    "lufs": null,
+    "hash": "e1d86aa07060513f2cc0beeb1616ef153ea54f17d66a046a5d37b4958f7efd18",
+    "at": 1789321177805
+   },
+   "lastError": null
+  },
+  "skill-name.r.8": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1166521589",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00096-1166521589.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 27629,
+    "seconds": 1.655986,
+    "lufs": null,
+    "hash": "ed3fbf09e4a37591f91701827f786c167c9fde436ed244f7b6855c23abd95403",
+    "at": 1789321177856
+   },
+   "lastError": null
+  },
+  "skill-name.r.9": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1208055973",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00104-1208055973.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.184853,
+    "lufs": null,
+    "hash": "7c8225bcd4dbd589b716392bd4ca6b5ce0472428097ddf632b743c2db912c917",
+    "at": 1789321177907
+   },
+   "lastError": null
+  },
+  "skill-name.r.10": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1631281956",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00125-1631281956.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 27211,
+    "seconds": 1.6239,
+    "lufs": null,
+    "hash": "fa6a5d742e6cce628580d160b58d3c3628f36ae6f92d4023cf380a52d85df26c",
+    "at": 1789321177957
+   },
+   "lastError": null
+  },
+  "skill-name.r.11": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/2033759481",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00151-2033759481.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 28883,
+    "seconds": 1.734036,
+    "lufs": null,
+    "hash": "1ddf71e33c8fd61d07f4c813f610da810dfda8489f892fb784a43ce00fe5dd87",
+    "at": 1789321178007
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/496509420",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00045-496509420.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 49781,
+    "seconds": 3.050113,
+    "lufs": null,
+    "hash": "edbbe95f50087a887a5984f7191bf578d8b23355af3f2feeea6fa90ccba8b76b",
+    "at": 1789321178058
    },
    "lastError": null
   },
   "defeat.2": {
    "takes": [],
-   "text": "（原檔）b49dee/00022-279358554",
-   "lang": "und",
+   "text": "（原檔）Warwick/skin0/594379327",
+   "lang": "ja",
    "textSource": "original",
-   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00022-279358554.wav",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00050-594379327.wav",
    "state": "generated",
    "current": {
     "take": 0,
     "engine": "original",
-    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
     "stub": false,
-    "bytes": 51453,
-    "seconds": 3.148594,
+    "bytes": 39750,
+    "seconds": 2.406576,
     "lufs": null,
-    "hash": "13e31104a47db04bf248d18eeaa0a25374586e6d9e45cc1906e2f39bcaa7fc60",
-    "at": 1789058027890
+    "hash": "fe5e905b5e2bf21912016b80ea0e78fa92a59eb0adb316d9a8e9b041d985670d",
+    "at": 1789321178108
+   },
+   "lastError": null
+  },
+  "defeat.3": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/2086168704",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00156-2086168704.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.460522,
+    "lufs": null,
+    "hash": "704bc9919795ff9e6258c91cfb4131645db333dda0f6b9dcea4e35515cddc00c",
+    "at": 1789321178159
    },
    "lastError": null
   },
@@ -209,23 +729,623 @@
    },
    "lastError": null
   },
-  "attack-heavy": {
+  "attack-light": {
    "takes": [],
-   "text": "（原檔）b49dee/00104-1208055973",
-   "lang": "und",
+   "text": "（原檔）Warwick/skin0/66035089",
+   "lang": "ja",
    "textSource": "original",
-   "origin": "original:dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00104-1208055973.wav",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00003-66035089.wav",
    "state": "generated",
    "current": {
     "take": 0,
     "engine": "original",
-    "engineVersion": "dir:/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
     "stub": false,
-    "bytes": 20106,
-    "seconds": 1.184853,
+    "bytes": 44765,
+    "seconds": 2.74161,
     "lufs": null,
-    "hash": "7e62febc7871453d211a1b3f8ed86212455d465dd3b04362d234e6be141b5314",
-    "at": 1789058028439
+    "hash": "7ce9001b01cf01ad62efe425ebd9972cb52ba10f4e5668bad6755e47718fc7eb",
+    "at": 1789321178218
+   },
+   "lastError": null
+  },
+  "attack-light.2": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/117718064",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00008-117718064.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 34734,
+    "seconds": 2.104444,
+    "lufs": null,
+    "hash": "756aa7b1a1c875983c775d0457c15e18ef3908ead729f4d3aeea807fd785fed0",
+    "at": 1789321178272
+   },
+   "lastError": null
+  },
+  "attack-light.3": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/139672685",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00009-139672685.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 53542,
+    "seconds": 3.275964,
+    "lufs": null,
+    "hash": "2e79e5076e59601fa2d9ceee2207416f02ad8f616c5d6864edb1571de5a579d7",
+    "at": 1789321178329
+   },
+   "lastError": null
+  },
+  "attack-light.4": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/205990665",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00017-205990665.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 41422,
+    "seconds": 2.524626,
+    "lufs": null,
+    "hash": "e77d05e1e46907d7db16e9e66053dc019f739c8fe41fe872f9077166c5864de1",
+    "at": 1789321178389
+   },
+   "lastError": null
+  },
+  "attack-light.5": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/215085725",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00019-215085725.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 57722,
+    "seconds": 3.548277,
+    "lufs": null,
+    "hash": "d4a78e57063882f0f55221a5abc12bf7afbf9c95f9de76f97554e8187ce83f2b",
+    "at": 1789321178446
+   },
+   "lastError": null
+  },
+  "attack-light.6": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/286299297",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00023-286299297.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 35988,
+    "seconds": 2.180612,
+    "lufs": null,
+    "hash": "88b6bd0e68bd257998c99437703c4990a747be435e0ac610973acae964fe5d3b",
+    "at": 1789321178501
+   },
+   "lastError": null
+  },
+  "attack-light.7": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/349301273",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00031-349301273.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 32226,
+    "seconds": 1.946281,
+    "lufs": null,
+    "hash": "bdf3a4b6ff1ba851dc652a945462adad917dc0f942bd6d00ef20ac8bc3953f1a",
+    "at": 1789321178554
+   },
+   "lastError": null
+  },
+  "attack-light.8": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/364723964",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00034-364723964.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 67753,
+    "seconds": 4.177619,
+    "lufs": null,
+    "hash": "124e5499b13a264d23da12c9fe3ec05e53c3d9d86dad6489cf36d4654b20c58e",
+    "at": 1789321178604
+   },
+   "lastError": null
+  },
+  "attack-light.9": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/365556199",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00036-365556199.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 54796,
+    "seconds": 3.362449,
+    "lufs": null,
+    "hash": "5548336ac2ca869aba114caa95325c01bc84e9a278515ebf6f257e4c6504c946",
+    "at": 1789321178655
+   },
+   "lastError": null
+  },
+  "attack-light.10": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/406272914",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00042-406272914.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 48527,
+    "seconds": 2.970295,
+    "lufs": null,
+    "hash": "58266a605a38e451800a96d58b2afd236961a82f815c1b839786b36d5dfa551e",
+    "at": 1789321178705
+   },
+   "lastError": null
+  },
+  "attack-light.11": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/426706316",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00043-426706316.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 35152,
+    "seconds": 2.139002,
+    "lufs": null,
+    "hash": "f445f63a94748fe188ad992f104729ac452f3c960a053121240e4c46831d8bf7",
+    "at": 1789321178755
+   },
+   "lastError": null
+  },
+  "attack-light.12": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/600844610",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00051-600844610.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 61066,
+    "seconds": 3.761293,
+    "lufs": null,
+    "hash": "997816ed81836113899892639bba003ac3b61c9e04561568cf96ab0c8fde99fc",
+    "at": 1789321178806
+   },
+   "lastError": null
+  },
+  "attack-light.13": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/719291806",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00062-719291806.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 50199,
+    "seconds": 3.066621,
+    "lufs": null,
+    "hash": "8f188723da0a01822ecfbde63f28baf80c8c8a3b79d9686707c2fb5972d4d3cf",
+    "at": 1789321178857
+   },
+   "lastError": null
+  },
+  "attack-light.14": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/721145784",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00063-721145784.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 79456,
+    "seconds": 4.907619,
+    "lufs": null,
+    "hash": "46d90659eab1e958e8d4cb43628bb053b0b6dfdb2a4f11349a631bef10e647e6",
+    "at": 1789321178909
+   },
+   "lastError": null
+  },
+  "attack-light.15": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/748203910",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00065-748203910.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.376961,
+    "lufs": null,
+    "hash": "76d4cff5cfc5a1f7757a4ee7d9859152807d12b0e533f73a3ec837a20b88a3ce",
+    "at": 1789321178960
+   },
+   "lastError": null
+  },
+  "attack-light.16": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/753708895",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00066-753708895.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.371293,
+    "lufs": null,
+    "hash": "ba78149f7535c50374c15ed886daa1bac03af64f3f1be21e549cba018d453583",
+    "at": 1789321179012
+   },
+   "lastError": null
+  },
+  "attack-light.17": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/785830042",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00070-785830042.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 58140,
+    "seconds": 3.553719,
+    "lufs": null,
+    "hash": "e7215a681f2d7136d73d96eecb666d1396a6a1cfccf86a1bb0e3e71cb21026cf",
+    "at": 1789321179064
+   },
+   "lastError": null
+  },
+  "attack-light.18": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/813107904",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00071-813107904.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 65663,
+    "seconds": 4.043946,
+    "lufs": null,
+    "hash": "7daa0bb4ef9dc9925e00b1f544272f71386e084801f93f5c8a0903f17d0030bb",
+    "at": 1789321179117
+   },
+   "lastError": null
+  },
+  "attack-light.19": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/815839978",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00072-815839978.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 61902,
+    "seconds": 3.796281,
+    "lufs": null,
+    "hash": "c3b8b6cb859c0457ff151ee58c09686be2775ff983f19dc14612cd7c2c3b7da4",
+    "at": 1789321179170
+   },
+   "lastError": null
+  },
+  "attack-light.20": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/857901120",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00073-857901120.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 58140,
+    "seconds": 3.562902,
+    "lufs": null,
+    "hash": "aea848ca9be5607cfa768e8ad77bfd6520a627f14b16efe59c667d1b57ddb352",
+    "at": 1789321179222
+   },
+   "lastError": null
+  },
+  "attack-light.21": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/905037593",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00079-905037593.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 45183,
+    "seconds": 2.754671,
+    "lufs": null,
+    "hash": "904b7fe38fe2560ec97fb07d0b3e317e4cf88dbd120a2148d452bdd22676a0fe",
+    "at": 1789321179274
+   },
+   "lastError": null
+  },
+  "attack-light.22": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/907540056",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00081-907540056.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 37242,
+    "seconds": 2.252766,
+    "lufs": null,
+    "hash": "f3797fab09d08694fe10202048621ac85ed4ff46df0f953303da3d9659130f1b",
+    "at": 1789321179325
+   },
+   "lastError": null
+  },
+  "attack-light.23": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/932334396",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00082-932334396.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 57722,
+    "seconds": 3.538413,
+    "lufs": null,
+    "hash": "6bb0917524990f2e386a5908d2eada059b4c1f76dc1d6b9f1a53c2538f57a2e9",
+    "at": 1789321179377
+   },
+   "lastError": null
+  },
+  "attack-light.24": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/975336759",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00087-975336759.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 65663,
+    "seconds": 4.029297,
+    "lufs": null,
+    "hash": "1e3ba4e9c814913b7f2ae23cb214bfaa492773e369851c5216d604c7ebf2f79d",
+    "at": 1789321179428
+   },
+   "lastError": null
+  },
+  "attack-light.25": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1362027543",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00108-1362027543.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 38078,
+    "seconds": 2.323946,
+    "lufs": null,
+    "hash": "49e25b9fe1da2482a8292a4d27711fed7d9090bad886f01ececbf1915300d388",
+    "at": 1789321179493
+   },
+   "lastError": null
+  },
+  "attack-light.26": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1567358002",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00122-1567358002.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 51871,
+    "seconds": 3.166961,
+    "lufs": null,
+    "hash": "489142531ca990e249b49cf615f3d5efafd427741092fcb75b1ae24191265e24",
+    "at": 1789321179565
+   },
+   "lastError": null
+  },
+  "attack-light.27": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1680902863",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00126-1680902863.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 71933,
+    "seconds": 4.437619,
+    "lufs": null,
+    "hash": "e6ffdc95acb69f116ec72fff8bdba30a1f1213ed7ef2fb9879d7a28e202fb9d8",
+    "at": 1789321179630
+   },
+   "lastError": null
+  },
+  "attack-light.28": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1747861030",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00133-1747861030.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 61066,
+    "seconds": 3.7422,
+    "lufs": null,
+    "hash": "32dbc9df8dfbac2fbfe8a454d09d69957c67e032b8ddd56800371a57e941566c",
+    "at": 1789321179692
+   },
+   "lastError": null
+  },
+  "attack-light.29": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/1902769864",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00142-1902769864.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 52288,
+    "seconds": 3.188277,
+    "lufs": null,
+    "hash": "5750c5c5170d34d368838aa9a4f776aaf732764c92df98e53da628faf76c7fa6",
+    "at": 1789321179759
+   },
+   "lastError": null
+  },
+  "attack-light.30": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/2072183311",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00154-2072183311.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 54378,
+    "seconds": 3.319615,
+    "lufs": null,
+    "hash": "673f6425c4f21b3e5404be3bee17abede51b19af6e6543f76cab318f8c91f223",
+    "at": 1789321179823
+   },
+   "lastError": null
+  },
+  "attack-light.31": {
+   "takes": [],
+   "text": "（原檔）Warwick/skin0/2147091372",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:lol-project-seven-ja-jp-16.18.8159717/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Warwick.ja_JP/wav/b49dee2b84c0d6a4/00158-2147091372.wav",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "lol-project-seven-ja-jp-16.18.8159717",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.376621,
+    "lufs": null,
+    "hash": "f3523276d57f8dfdca250ce49833c65045383c03c3f3af077940711cd78c8df3",
+    "at": 1789321179889
    },
    "lastError": null
   },

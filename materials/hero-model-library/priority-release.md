@@ -2,6 +2,8 @@
 
 > **現行門檻重算入口：** [優先 15 名模型現行政策稽核](priority-model-policy-audit.md)。該頁由目前 GLB、正式採用政策與 runtime budget 自動產生；本文件下方各批次敘述保留當時交付事實，不能取代現行上架判定。
 
+**LOL 七角色最新狀態：** 使用者已核准 311 個戰鬥事件候選，311 個 runtime MP3 均已寫入本分支 manifest 與中央語音索引；298 個是新增檔、13 個取代先前未核實候選。其餘 443 個非戰鬥或無單一事件映射片段維持未核准。精確逐檔來源、輸出 SHA、技能缺口與 `productionDeployed=false` 以 [runtime-registration.json](lol-project-seven/runtime-registration.json) 為準。
+
 **Main 優先合併 81 名（37＋37＋7）**：逐角色成品與缺口請讀 [81英雄優先合併清單.md](81英雄優先合併清單.md)，程序讀 [priority-81-handoff.json](priority-81-handoff.json)。所有角色仍列於 [全角色模型盤點.md](全角色模型盤點.md)。
 
 最新批次新增達伊兩件獨立劍元件，並把既有七名 LOL 的 4,927 個 WAV 納入中央語音索引。兩件劍具有各自的完整幾何、貼圖、Git SHA 路徑及驗收收據，尚未配適英雄；來源為 Shinteo 社群 Daz 改作，不是 Infinity Strash 原生模型。中央 `modelComponents` 現有帕魯三件與武器兩件，共五件；不併入完整英雄可切換版本數。七名音訊新增 4,927 筆來源關係，但 448 路徑已有舊來源，所以新增可查詢路徑為 4,479 個。固定逐檔 SHA 和本機路徑可立即供聽審；沒有新增遊戲音訊、原生動作或特效成品。[本批範圍、限制及證據](priority-evidence/seven-audio-dai-20260911/README.md)。
@@ -14,7 +16,7 @@
 
 本分支已合入 Main `e36a5acda352`（保留前次合併及本批來源）。81 名的 **283 個版本引用／245 個不同凍結模型文件**均經實際 `ModelVersions.verify` 和 SHA 驗證；Main 的 60 個版本引用與本分支原 222 個版本引用完整保留，另新增開司 MOD 成品版本。15 個既有手動預設、11 個指定加工副本未改，來源分類及候選均保留。完整性稽核 0 失敗、0 警告：[收據](priority-evidence/kaiji-community/final-integrity.json)。
 
-74 名已有 **1,016 個 Git 戰鬥音訊成品**：308 個來源重用、708 個合成。74 名核心 9 類齊備，原 Main 快照為 73 名擴展 11 類齊備；本分支新增如月列車的山手線關門廣播（嘲諷）及 JR 發車旋律（勝利），目前 74 名擴展 11 類齊備，共 **1,018 個成品**（來源重用 310、合成 708）；不能把來源標籤當成已確認原角聲優。其餘 7 名 LOL 有 **4,927 個日本語 WAV 儲備**，本機可立即讀取，仍待戰鬥類別綁定。精確成品路徑、SHA、合成／原來源及缺口見 [81 名最新合併索引](priority-81-handoff.json)；[原 Main 音訊稽核](priority-evidence/main-81-handoff/audio/per-hero.json) 保留為 1,016 檔基準。
+74 名已有 **1,016 個 Git 戰鬥音訊成品**：308 個來源重用、708 個合成。74 名核心 9 類齊備，原 Main 快照為 73 名擴展 11 類齊備；本分支新增如月列車的山手線關門廣播（嘲諷）及 JR 發車旋律（勝利），目前 74 名擴展 11 類齊備，共 **1,018 個成品**（來源重用 310、合成 708）；不能把來源標籤當成已確認原角聲優。另有 7 名 LOL 的 **4,927 個日本語 WAV 儲備**，其中 311 個已按使用者逐項核准的原生事件用途轉成並註冊為 runtime MP3，其餘 443 個事件關聯片段維持未核准；完整來源庫尚未逐段分類。精確成品路徑、SHA、合成／原來源及缺口見 [81 名最新合併索引](priority-81-handoff.json) 與 [LOL runtime 註冊](lol-project-seven/runtime-registration.json)；[原 Main 音訊稽核](priority-evidence/main-81-handoff/audio/per-hero.json) 保留為 1,016 檔基準。
 
 優先 5＋10 名模型已登記。貓貓、凱茲、岩谷尚文、野原新之助兩版、高速婆婆、辛巴達及開司的八件成品採 GGD 程序化六態動作；其他來源按真實 GLB clips 與 clipMap 記錄，不將六格映射當六段原生動作。羽賀原生顯隱修復保留 13 段原動畫及原件，82 個實際 Babylon 取樣證據見 [原生顯隱驗證](priority-evidence/haga-native-visibility/render-proof.json)。
 

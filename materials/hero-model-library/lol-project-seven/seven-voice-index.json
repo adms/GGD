@@ -17,14 +17,18 @@
   },
   "listeningReview": {
     "queuePath": "listening-review-queue.json",
-    "queueSha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60",
+    "queueSha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf",
     "pagePath": "listening-review.html",
     "decisionsPath": "listening-review-decisions.json",
+    "runtimeRegistrationPath": "runtime-registration.json",
+    "runtimeRegistrationSha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719",
     "uniqueWavFiles": 754,
     "nativeTargetCandidates": 566,
     "battleReviewCandidates": 311,
-    "runtimeApproved": 0,
-    "runtimeConfigChanged": false
+    "runtimeApproved": 311,
+    "runtimeRegistered": 311,
+    "runtimeConfigChanged": true,
+    "productionDeployed": false
   },
   "characters": [
     {
@@ -34,7 +38,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-karthus-ja-jp-16-18-8159717"
       ],
@@ -55,15 +59,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 99,
       "battleReviewCandidateFiles": 52,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 52,
+      "runtimeRegisteredFiles": 52,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     },
     {
@@ -73,7 +78,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-leesin-ja-jp-16-18-8159717"
       ],
@@ -94,15 +99,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 114,
       "battleReviewCandidateFiles": 64,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 64,
+      "runtimeRegisteredFiles": 64,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     },
     {
@@ -112,7 +118,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-lux-ja-jp-16-18-8159717"
       ],
@@ -133,15 +139,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 83,
       "battleReviewCandidateFiles": 48,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 48,
+      "runtimeRegisteredFiles": 48,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     },
     {
@@ -151,7 +158,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-missfortune-ja-jp-16-18-8159717"
       ],
@@ -172,15 +179,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 35,
       "battleReviewCandidateFiles": 21,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 21,
+      "runtimeRegisteredFiles": 21,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     },
     {
@@ -190,7 +198,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-warwick-ja-jp-16-18-8159717"
       ],
@@ -211,15 +219,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 104,
       "battleReviewCandidateFiles": 59,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 59,
+      "runtimeRegisteredFiles": 59,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     },
     {
@@ -229,7 +238,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-xerath-ja-jp-16-18-8159717"
       ],
@@ -250,15 +259,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 26,
+      "runtimeRegisteredFiles": 26,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     },
     {
@@ -268,7 +278,7 @@
       "work": "League of Legends",
       "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
       "reportedLanguage": "ja_JP",
-      "languageEvidence": "Riot official release manifest ja_JP flag; per-clip language listening pending",
+      "languageEvidence": "Riot official release manifest ja_JP flag; approved battle clips additionally have per-clip owner listening decisions",
       "groupIds": [
         "lol-yasuo-ja-jp-16-18-8159717"
       ],
@@ -289,15 +299,16 @@
       "eventBindingCoverage": "partial-by-skin",
       "nativeTargetCandidateFiles": 73,
       "battleReviewCandidateFiles": 41,
-      "listeningReviewApprovedFiles": 0,
-      "listeningReviewComplete": false,
+      "listeningReviewApprovedFiles": 41,
+      "runtimeRegisteredFiles": 41,
+      "listeningReviewComplete": true,
       "modelDefaultChanged": false,
       "languageVerified": false,
       "speakerVerified": false,
       "confirmedVoiceCount": null,
       "transcriptStatus": "not-transcribed",
       "synthesisReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "englishPackageAcquired": false
     }
   ],
@@ -513,7 +524,8 @@
     "nativeEventMappedEvents": 232,
     "nativeTargetCandidateFiles": 566,
     "battleReviewCandidateFiles": 311,
-    "listeningReviewApprovedFiles": 0
+    "listeningReviewApprovedFiles": 311,
+    "runtimeRegisteredFiles": 311
   },
   "scope": {
     "fullRosterEnabled": false,
@@ -530,9 +542,9 @@
   },
   "notes": [
     "Resolve every PCM path from sourceDelivery.files against localRoot.",
-    "This index references complete original native and PCM files; no audio is synthesized or duplicated.",
-    "Native event reports prove only the listed skin and WEM relationships; speaker, per-clip language, transcript and GGD skill binding remain pending.",
-    "Every runtime approval must be recorded per WAV in listening-review-decisions.json; the review page never modifies skill/runtime configuration.",
+    "This index references complete original native and PCM files; approved battle clips additionally have runtime MP3 derivatives.",
+    "Native event reports prove only the listed skin and WEM relationships; per-clip decisions are authoritative only for the reviewed battle subset.",
+    "Approved and runtime registered do not mean production deployed; deployment remains false until verified separately.",
     "Seven Japanese source packages only; older full-roster files remain preserved outside this subset."
   ]
 }

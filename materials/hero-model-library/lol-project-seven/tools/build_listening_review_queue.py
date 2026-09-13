@@ -280,18 +280,20 @@ def build(repo_root: Path, asset_workspace: Path, decisions_path: Path) -> dict:
 
 def markdown(data: dict) -> str:
     summary = data["summary"]
+    approved = summary["runtimeApproved"]
+    pending = summary["pendingReviews"]
     lines = [
         "# LOL 七角色原生事件聽審佇列",
         "",
-        "固定來源為 ja_JP release 的七名指定英雄 base／skin0。原生事件圖與 754 個 WAV 的本機位元組、大小及 SHA-256 已重新驗證；逐段說話者、實際語言、台詞、增益與 GGD 技能語義仍需聽審。",
+        f"固定來源為 ja_JP release 的七名指定英雄 base／skin0。原生事件圖與 754 個 WAV 的本機位元組、大小及 SHA-256 已重新驗證；戰鬥候選已逐項核准 {approved} 檔，其餘 {pending} 檔仍未核准。未製作逐字稿。",
         "",
         "事件類別與 Q／W／E／R 只作候選提示。`Joke` 保留為 `emote`，`Death` 保留為 `death`；產生器不會把事件改標成受傷，也不會把缺少事件證據的片段硬塞進技能槽。",
         "",
         f"- 不同 WAV：{summary['uniqueWavFiles']} 檔",
         f"- 總長：{summary['seconds']:.2f} 秒",
         f"- 本機位元組：{summary['bytes']:,} bytes",
-        f"- 待聽審：{summary['pendingReviews']} 檔",
-        f"- 已核准進 runtime：{summary['runtimeApproved']} 檔",
+        f"- 待聽審／未核准：{pending} 檔",
+        f"- 已核准進 runtime：{approved} 檔",
         "",
         f"- 可由單一原生事件類別建立用途候選：{summary['nativeTargetCandidates']} 檔",
         f"- 戰鬥用途候選（Q/W/E/R、攻擊、死亡）：{summary['battleReviewCandidates']} 檔",
@@ -324,9 +326,9 @@ def markdown(data: dict) -> str:
         "  --asset-workspace \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT\"",
         "```",
         "",
-        "瀏覽器開啟 `http://127.0.0.1:8765/`。伺服器只監聽 loopback，只供應佇列內 WAV；每次核准都驗證目標等於原生事件候選。核准紀錄仍不會修改技能設定或啟用 runtime。",
+        "瀏覽器開啟 `http://127.0.0.1:8765/`。伺服器只監聽 loopback，只供應佇列內 WAV；每次核准都驗證目標等於原生事件候選。審查頁本身只寫決策，runtime 註冊需另跑下列套用工具。",
         "",
-        "產生器只讀既有音訊，不轉碼、不覆寫來源，也不啟用 `content/config/champion-voices.json`。",
+        "此佇列產生器只讀既有音訊，不轉碼、不覆寫來源；核准後由 `tools/apply_approved_battle_runtime.py` 產生 runtime MP3、來源註冊與驗證收據。",
         "",
     ]
     return "\n".join(lines)

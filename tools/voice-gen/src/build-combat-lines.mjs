@@ -54,6 +54,14 @@ const META_COLUMNS = new Set(["championId", "name", "work", "lang", "note"]);
 /** Categories the click pool is synthesised from (index-lines.mjs SELECT_SOURCE_CATEGORIES). */
 const SELECT_SOURCES = ["taunt", "respond.ok", "respond.no", "love", "thanks", "puzzled"];
 
+const takeNumber = (key, cat) => key === cat ? 1 : Number(key.slice(cat.length + 1));
+function originalTakeKeys(id, cat) {
+  const prefix = `${cat}.`;
+  return Object.keys(originals[id] ?? {})
+    .filter((key) => key === cat || (key.startsWith(prefix) && /^\d+$/.test(key.slice(prefix.length))))
+    .sort((a, b) => takeNumber(a, cat) - takeNumber(b, cat));
+}
+
 const problems = [];
 const fail = (msg) => problems.push(msg);
 
@@ -251,7 +259,8 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
     // The pool is capped at three takes, written as cat / cat.2 / cat.3 (random playback).
     const pool = [];
     let skippedOwnerLine = false;
-    for (const key of TAKE_KEYS(cat)) {
+    const originalKeys = originalTakeKeys(id, cat);
+    for (const key of originalKeys) {
       const orig = originalLine(id, key);
       if (orig?.error) { fail(orig.error); continue; }
       if (orig) pool.push({ line: orig, source: "original" });
@@ -274,8 +283,11 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
       if (line) pool.push({ line, source: "derived" });
     }
     if (pool.length === 0) continue;                       // owner-pending: absent, not a stub
-    pool.slice(0, 3).forEach(({ line, source }, i) => {
-      const key = TAKE_KEYS(cat)[i];
+    // Reviewed original event pools may be larger than three.  Keep every
+    // approved original take for originals-only packs; authored/synthesized
+    // packs retain the owner's three-take limit.
+    pool.slice(0, originalsOnly ? pool.length : 3).forEach(({ line, source }, i) => {
+      const key = i === 0 ? cat : `${cat}.${i + 1}`;
       lines[key] = mergeRec(prev.lines?.[key], line, source);
       summary.lines++;
       if (source === "original") {

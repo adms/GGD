@@ -39478,7 +39478,7 @@
       "nativeEventBoundFiles": 135,
       "nativeTargetCandidateFiles": 99,
       "battleReviewCandidateFiles": 52,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 52,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -41156,7 +41156,7 @@
       "nativeEventBoundFiles": 79,
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 26,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -41950,7 +41950,7 @@
       "nativeEventBoundFiles": 135,
       "nativeTargetCandidateFiles": 99,
       "battleReviewCandidateFiles": 52,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 52,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42000,7 +42000,7 @@
       "nativeEventBoundFiles": 151,
       "nativeTargetCandidateFiles": 114,
       "battleReviewCandidateFiles": 64,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 64,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42049,7 +42049,7 @@
       "nativeEventBoundFiles": 104,
       "nativeTargetCandidateFiles": 83,
       "battleReviewCandidateFiles": 48,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 48,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42097,7 +42097,7 @@
       "nativeEventBoundFiles": 35,
       "nativeTargetCandidateFiles": 35,
       "battleReviewCandidateFiles": 21,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 21,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42144,7 +42144,7 @@
       "nativeEventBoundFiles": 159,
       "nativeTargetCandidateFiles": 104,
       "battleReviewCandidateFiles": 59,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 59,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42194,7 +42194,7 @@
       "nativeEventBoundFiles": 79,
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 26,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -42243,7 +42243,7 @@
       "nativeEventBoundFiles": 91,
       "nativeTargetCandidateFiles": 73,
       "battleReviewCandidateFiles": 41,
-      "listeningReviewApprovedFiles": 0,
+      "listeningReviewApprovedFiles": 41,
       "listeningReviewQueue": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
       "listeningReviewPage": "materials/hero-model-library/lol-project-seven/listening-review.html",
       "categoryCounts": {
@@ -45715,11 +45715,15 @@
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
-      "sha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60"
+      "sha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf"
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/listening-review-decisions.json",
-      "sha256": "01e68bdc36793c13caf0663e1f9ae66495bd996f8df6d84154f32e9bbe36fa43"
+      "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
+    },
+    {
+      "path": "materials/hero-model-library/lol-project-seven/runtime-registration.json",
+      "sha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719"
     },
     {
       "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
@@ -96595,7 +96599,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 99,
       "battleReviewCandidateFiles": 52,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 52
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/leesin-base.json",
@@ -96611,7 +96615,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 114,
       "battleReviewCandidateFiles": 64,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 64
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/lux-base.json",
@@ -96627,7 +96631,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 83,
       "battleReviewCandidateFiles": 48,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 48
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/missfortune-base.json",
@@ -96643,7 +96647,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 35,
       "battleReviewCandidateFiles": 21,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 21
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/warwick-base.json",
@@ -96659,7 +96663,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 104,
       "battleReviewCandidateFiles": 59,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 59
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/xerath-base.json",
@@ -96675,7 +96679,7 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 58,
       "battleReviewCandidateFiles": 26,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 26
     },
     {
       "path": "materials/hero-model-library/lol-project-seven/event-bindings/yasuo-base.json",
@@ -96691,19 +96695,21 @@
       "ggdSkillSemanticBindingsVerified": false,
       "nativeTargetCandidateFiles": 73,
       "battleReviewCandidateFiles": 41,
-      "listeningReviewApprovedFiles": 0
+      "listeningReviewApprovedFiles": 41
     }
   ],
   "listeningReview": {
     "queuePath": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
-    "queueSha256": "5c501c2de55e1cb182ba1b10e1bc8c8087df3a147f0b1becfa133e920fe6bf60",
+    "queueSha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf",
     "pagePath": "materials/hero-model-library/lol-project-seven/listening-review.html",
     "decisionsPath": "materials/hero-model-library/lol-project-seven/listening-review-decisions.json",
     "uniqueWavFiles": 754,
     "nativeTargetCandidates": 566,
     "battleReviewCandidates": 311,
-    "runtimeApproved": 0,
-    "runtimeConfigChanged": false
+    "runtimeApproved": 311,
+    "runtimeRegistered": 311,
+    "runtimeConfigChanged": true,
+    "productionDeployed": false
   },
   "acquisitionPolicy": {
     "archiveEveryAcquiredResource": true,
@@ -96861,8 +96867,8 @@
     "listeningReviewUniqueFiles": 754,
     "nativeTargetCandidateFiles": 566,
     "battleReviewCandidateFiles": 311,
-    "listeningReviewApprovedFiles": 0
+    "listeningReviewApprovedFiles": 311
   },
-  "sourceFileManifestSha256": "9ad0948f150bb27277dda7ce1498f9c79e2c89b373472dd1b0a6e32635c10ae6",
-  "uncompressedFileManifestSha256": "1c64e328c5d5a6b30e3d800a72aa53e054450e5486b7286ebcb64e99bc441c7b"
+  "sourceFileManifestSha256": "d59852bd06fba80c22ec5e877eb3c892ca51667d0294f9986096f92afe52b469",
+  "uncompressedFileManifestSha256": "cff2d35e1ea68e0a333f798a047e289258e8657f1d8ea2cf094da1c8b01f73eb"
 }
