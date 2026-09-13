@@ -4,6 +4,26 @@ import json
 from pathlib import Path
 
 
+PRESERVED_RECOVERED_COMPONENTS = {
+    'historical-astralym-7bc2fa3f8': (
+        '618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8',
+        'community:palworld-astralym',
+    ),
+    'historical-jetragon-7bc2fa3f8': (
+        '0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6',
+        'community:palworld-jetragon',
+    ),
+    'historical-kita-kita-7bc2fa3f8': (
+        'be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e',
+        'mba:Chara14',
+    ),
+    'historical-lord-nightmares-7bc2fa3f8': (
+        '98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c',
+        'mba:Chara13',
+    ),
+}
+
+
 def require(condition, message):
     if not condition:
         raise ValueError(message)
@@ -150,4 +170,10 @@ def source_historical_components(downloads, repo):
                 require(contract.is_relative_to(repo) and contract.is_file(), 'Historical contract pin escapes checkout')
                 require(file_pin(contract)['sha256'] == pin['sha256'], 'Stale historical contract pin: ' + pin['path'])
             result.append(dict(candidate, gitAbsolutePath=str(model_path)))
+    recovered = {row['id']: row for row in result}
+    for component_id, (digest, identity_id) in PRESERVED_RECOVERED_COMPONENTS.items():
+        require(component_id in recovered, 'Missing required recovered historical component: ' + component_id)
+        component = recovered[component_id]
+        require(component['sha256'] == digest, 'Changed recovered historical component SHA-256: ' + component_id)
+        require(identity_id in component['identityIds'], 'Changed recovered historical component identity: ' + component_id)
     return result
