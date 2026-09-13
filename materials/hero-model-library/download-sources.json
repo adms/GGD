@@ -55885,6 +55885,120 @@
           "gitReceiptSha256": "185cdbc7fb07c47cf00d007b30cefaaf9526716eadf58563a6d50864d4c74825"
         }
       }
+    },
+    {
+      "id": "bowlroll-sabakan359-vearn-mmd-v087",
+      "target": "巴恩大魔王／大魔王バーン：鯖缶359 MMD ver0.87 公開包",
+      "heroIds": [
+        "godie-ubal"
+      ],
+      "url": "https://bowlroll.net/file/37061",
+      "uploader": "鯖缶359",
+      "originalAuthor": "鯖缶359",
+      "sourceWork": "ドラゴンクエスト ダイの大冒険",
+      "sourceGame": null,
+      "sourceKind": "community-authored-MMD",
+      "platform": "MMD",
+      "version": "0.87",
+      "publishedAt": "2014-05-05",
+      "accessStatus": "public-download-key-accepted-through-normal-site-flow",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "acquired-reserve-license-blocked-from-shared-runtime",
+      "resourceRole": "community-model-reserve",
+      "format": "ZIP containing PMX, BMP, TGA and SPH",
+      "verification": "Original ZIP SHA-256 and byte count verified; traversal-safe extraction produced 18 files including five PMX models. The package contains elderly Vearn variants, staff and Kaiser Phoenix helper only. Author terms block shared runtime conversion and redistribution.",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087",
+      "files": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/original/vearn-mmd-v087.zip",
+          "bytes": 8370775,
+          "sha256": "5948beb33e350ce50da0294e2ce387b6c533cd3e783b2b1759662f00dc0ed0a3"
+        }
+      ],
+      "assetKinds": [
+        "character-model",
+        "embedded-skeleton",
+        "textures",
+        "staff-accessory",
+        "kaiser-phoenix-vfx-helper"
+      ],
+      "modelCount": 5,
+      "modelCandidates": [
+        {
+          "name": "カイザーフェニックス素体.pmx",
+          "format": "PMX",
+          "conversionStatus": "not-started-license-blocked"
+        },
+        {
+          "name": "光魔の杖.pmx",
+          "format": "PMX",
+          "conversionStatus": "not-started-license-blocked"
+        },
+        {
+          "name": "大魔王バーン.pmx",
+          "format": "PMX",
+          "conversionStatus": "not-started-license-blocked"
+        },
+        {
+          "name": "大魔王バーン杖装備.pmx",
+          "format": "PMX",
+          "conversionStatus": "not-started-license-blocked"
+        },
+        {
+          "name": "影バーン.pmx",
+          "format": "PMX",
+          "conversionStatus": "not-started-license-blocked"
+        }
+      ],
+      "identity": {
+        "form": "elderly-pre-transformation",
+        "postTransformationYoungTrueBodyIncluded": false,
+        "nativeInfinityStrashAsset": false
+      },
+      "reuseTerms": "Author readme prohibits commercial use and redistribution, including modified data. Shared Git/runtime integration requires a separate author grant. A secondary Sketchfab uploader's CC label is not treated as overriding the upstream terms.",
+      "publicRedistributionRightsVerified": false,
+      "defaultEligible": false,
+      "purchaseDecision": "free-public-author-distribution-no-purchase",
+      "discoveryChannel": "author-public-community-distribution",
+      "audioAcquisition": {
+        "audioCount": 0,
+        "nativeAudioBankCount": 0,
+        "confirmedVoiceCount": 0,
+        "runtimeReady": false
+      },
+      "backendIntegration": {
+        "required": true,
+        "state": "blocked-pending-author-redistribution-and-commercial-use-grant",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "registered": false,
+        "selectable": false,
+        "selectionVerified": false,
+        "productionDeployed": false
+      },
+      "gaps": [
+        "No young true-body/post-transformation Vearn model.",
+        "No native motion, game VFX, sound effect or voice files.",
+        "No permission for commercial use or redistribution in the shared GGD runtime."
+      ],
+      "evidence": {
+        "acquisitionPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/acquisition.json",
+        "acquisitionSha256": "d115163320a9a57a384e1a248e94365de83b969b9ae22a9053db017a006bfb31",
+        "extractionManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/extraction-files.json",
+        "extractionManifestSha256": "ea805bf66bacda3d75b7d5055b3d0f9e6b9c593baa8eed0b79c41f147b0b01e0"
+      },
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/bowlroll-sabakan359-vearn-mmd-v087/2db6d41ce067b580bf670fe0041e0e96790ca3b94a0ed9d180181f394590fee1.tar.gz",
+        "bytes": 18268671,
+        "sha256": "2db6d41ce067b580bf670fe0041e0e96790ca3b94a0ed9d180181f394590fee1",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "s3ReadbackVerified": true
+      },
+      "publicationStatus": "s3-readback-verified"
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
