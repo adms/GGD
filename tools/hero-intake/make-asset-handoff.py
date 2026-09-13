@@ -45,7 +45,49 @@ for f in (C/'models').glob('*.json'):
 q60 = jl(pathlib.Path(ARG.work)/'quotes60.json')
 pairs = jl(pathlib.Path(ARG.work)/'shared_pairs.json')
 ship34 = jl(R/'docs/_review/material/hero-intake/ship34.json')
+component_index = jl(R/'materials/asset-library/current-resources.json')
 NON = {'sela','thorne'}
+
+# `ship34.json` 是產物；在用它寫交接單前，先確認中央元件索引沒有新增、移除或改變
+# 任何與這批「0 個交付檔＋無 modelKey」角色精確 identityId 相符的元件。
+components_by_identity = collections.defaultdict(list)
+components_by_id = {}
+for c in component_index.get('modelComponents', []):
+    cid = c.get('id')
+    if not cid or cid in components_by_id:
+        print(f"⛔ current-resources.json 的 modelComponents id 缺漏或重複：{cid!r}")
+        raise SystemExit(2)
+    components_by_id[cid] = c
+    for identity in c.get('identityIds', []):
+        components_by_identity[str(identity)].append(c)
+
+for h in ship34.get('heroes', []):
+    m = h.get('model', {})
+    if m.get('files') != 0 or m.get('modelKey'):
+        continue
+    expected = {}
+    for identity in h.get('deliveryIdentityIds', []):
+        for c in components_by_identity.get(str(identity), []):
+            expected[c['id']] = c
+    actual = {c.get('id'): c for c in m.get('components', [])}
+    if set(expected) != set(actual):
+        print(f"⛔ ship34.json 的中央元件關係已過期：{h['id']} 寫 {sorted(actual)}，現況 {sorted(expected)}")
+        print("   ⇒ 用 ship34.json 檔頭的 invocation 重跑 hero-intake，再重產交接單")
+        raise SystemExit(2)
+    for cid, stored in actual.items():
+        current = expected[cid]
+        if stored.get('sha256') != current.get('sha256') or stored.get('gitPath') != current.get('gitPath'):
+            print(f"⛔ ship34.json 的元件證據已過期：{h['id']}／{cid}")
+            print("   ⇒ 用 ship34.json 檔頭的 invocation 重跑 hero-intake，再重產交接單")
+            raise SystemExit(2)
+        asset = R/current.get('gitPath', '')
+        if not asset.is_file():
+            print(f"⛔ 中央元件的 Git 實檔不存在：{h['id']}／{cid}／{current.get('gitPath')}")
+            raise SystemExit(2)
+        payload = asset.read_bytes()
+        if len(payload) != current.get('bytes') or hashlib.sha256(payload).hexdigest() != current.get('sha256'):
+            print(f"⛔ 中央元件的位元組數或 SHA-256 不符：{h['id']}／{cid}／{current.get('gitPath')}")
+            raise SystemExit(2)
 
 rig = [x for x in A if x['rig'][0].startswith('⛔')]
 voice_gap = [x for x in A if x['voice'][0].startswith('⛔') and x['id'] not in NON]
@@ -53,7 +95,8 @@ voice_slot = [x for x in A if x['voice'][0].startswith('⚠️')]
 sfx_none = [x for x in A if x['sfx'][0].startswith('·')]
 sfx_part = [x for x in A if x['sfx'][0].startswith('⚠️')]
 diff_pairs = [p for p in pairs if not p['same']]
-s34_nomodel = [h for h in ship34['heroes'] if h['model'].get('files') == 0 and not h['model'].get('modelKey')]
+s34_components = [h for h in ship34['heroes'] if h['model'].get('componentCount', 0) > 0 and not h['model'].get('modelKey')]
+s34_nomodel = [h for h in ship34['heroes'] if h['model'].get('files') == 0 and not h['model'].get('modelKey') and not h['model'].get('componentCount')]
 s34_novoice = [h for h in ship34['heroes'] if not (h['voice'].get('candidates') or [])]
 
 def row(x, extra=''):
@@ -73,6 +116,12 @@ FACTS = json.dumps({
     "sfxPart": sorted(x["id"] for x in sfx_part),
     "quotes": sorted(r["id"] for r in q60),
     "diffPairs": sorted(p["modelKey"] for p in diff_pairs),
+    "s34Components": sorted([{
+        "id": h["id"],
+        "components": [(c["id"], c.get("sha256"), c.get("verified"), c.get("nativeAnimationCount", 0)) for c in h["model"].get("components", [])],
+        "nativeAnimationCount": h["model"].get("nativeAnimationCount", 0),
+        "proceduralAnimationCount": h["model"].get("proceduralAnimationCount", 0),
+    } for h in s34_components], key=lambda x: x["id"]),
     "s34NoModel": sorted(h["id"] for h in s34_nomodel),
     "s34NoVoice": sorted(h["id"] for h in s34_novoice),
 }, ensure_ascii=False, sort_keys=True)
@@ -290,15 +339,31 @@ w("⭐ 這 3 對要先給 owner 判「刻意還是缺」，⛔ 判完才值得�
 w("")
 
 # ── G 待上架 34 ─────────────────────────────────────────────
-w(f"## G. 🆕 另外 34 名正在上架 —— {len(s34_nomodel)} 支**完全沒有模型**")
+w(f"## G. 🆕 另外 34 名正在上架 —— {len(s34_components)} 支已有已驗收獨立模型元件；{len(s34_nomodel)} 支仍完全沒有模型元件")
 w("")
-w("| 英雄 | id | 交付表怎麼說 |")
-w("|---|---|---|")
-for h in s34_nomodel:
-    w(f"| {h['name']} | `{h['id']}` | {h['model'].get('deliveryStatus','')}（只有骨架來源，動作還沒做）|")
+w("交付表較早寫的 `rig-source-present-actions-missing` 只代表當時沒有可交付的完整英雄模型；以下改以中央入口 `materials/asset-library/current-resources.json → modelComponents` 的較新實檔與驗收證據為準。")
 w("")
-w(f"⭐ 這 {len(s34_nomodel)} 支在交付表裡是 `rig-source-present-actions-missing` —— **骨架來源在、動作還沒做**。")
-w("⇒ 要嘛把動作做出來，要嘛去找一顆**帶動作**的替代模型。")
+w("| 英雄 | id | 已驗收獨立元件 | 原生／來源動作 | 尚缺 |")
+w("|---|---|---|---|---|")
+for h in s34_components:
+    m = h['model']
+    components = '<br>'.join(f"`{c['id']}`" for c in m.get('components', []))
+    native = m.get('nativeAnimationCount', 0)
+    names = '、'.join(m.get('animationNames', []))
+    actions = f"{native} 段" + (f"（{names}）" if names else "")
+    w(f"| {h['name']} | `{h['id']}` | {components} | {actions} | GGD 英雄定義、技能綁定、model@1／標準六動作映射、後台選項與實際切換驗證 |")
+w("")
+w(f"⭐ 這 {len(s34_components)} 支共有 {sum(h['model'].get('componentCount', 0) for h in s34_components)} 個元件；Git 實檔、位元組數與 SHA-256 均由 `hero-intake` 產生器重驗。")
+w("⛔ `fullHeroModel=false`、`heroIds=[]`、`runtimeSelectable=false`：它們是成品庫裡的合格獨立元件，仍不是完整英雄，也還不能在後台切換。")
+w("⇒ 繼續補標準動作集與角色／技能設計，再建立 model@1、角色綁定和後台選項；不能重複下載已有的模型元件。")
+if s34_nomodel:
+    w("")
+    w("仍完全沒有模型元件：")
+    w("")
+    w("| 英雄 | id | 交付表狀態 |")
+    w("|---|---|---|")
+    for h in s34_nomodel:
+        w(f"| {h['name']} | `{h['id']}` | {h['model'].get('deliveryStatus','')} |")
 w(f"⚠️ 同一批另有 {len(s34_novoice)} 支在語音索引裡**找不到任何候選來源**。")
 w("")
 w("---")

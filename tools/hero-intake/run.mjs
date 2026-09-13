@@ -28,7 +28,7 @@
  */
 import { createHash } from "node:crypto";
 import { chmodSync, copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
@@ -46,6 +46,12 @@ const BATCH = opt("--batch", "batch");
 const CHECK = has("--check");
 const GEN_ICONS = !has("--no-gen-icons");
 const VOICE_INDEX = opt("--voice-index", process.env.GGD_VOICE_INDEX ?? null);
+/**
+ * 已驗收但尚未綁到 `content/champions/` 的獨立模型元件，統一從素材庫中央入口讀取。
+ * 這只是補充「目前有哪些實檔」；`fullHeroModel=false` 的元件不能因此變成 modelKey、
+ * 後台選項或可上架英雄。
+ */
+const COMPONENT_INDEX = opt("--component-index", "materials/asset-library/current-resources.json");
 /**
  * ⭐ 還沒進 `content/champions/` 的英雄（待上架）**也要答得出模型那一段** ——
  * 來源是另一個 repo 的交付表（`docs/_reports/community-acquired-heroes/model-delivery-summary.json`：
@@ -114,6 +120,90 @@ const modelDocs = (() => {
   }
   return out;
 })();
+
+const componentIndex = (() => {
+  const path = resolve(ROOT, COMPONENT_INDEX);
+  const d = readJson(path);
+  if (!Array.isArray(d?.modelComponents)) die(`--component-index 讀不到 modelComponents：${COMPONENT_INDEX}`);
+  const byId = new Map();
+  const byIdentity = new Map();
+  for (const c of d.modelComponents) {
+    const id = String(c?.id ?? "");
+    if (!id) die(`--component-index 有一列缺 id：${COMPONENT_INDEX}`);
+    if (byId.has(id)) die(`--component-index 的元件 id 重複：${id}`);
+    byId.set(id, c);
+    for (const raw of c.identityIds ?? []) {
+      const identity = String(raw);
+      byIdentity.set(identity, [...(byIdentity.get(identity) ?? []), c]);
+    }
+  }
+  return { path, byId, byIdentity };
+})();
+
+const trackedHere = (() => {
+  const r = spawnSync("git", ["ls-files", "content/assets/models"], { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (r.status !== 0) die(`git ls-files content/assets/models 失敗：${String(r.stderr ?? "").trim()}`);
+  return new Set(String(r.stdout ?? "").split("\n").filter(Boolean));
+})();
+
+/**
+ * 交付表的 `identityIds` 與中央元件的 `identityIds` 做完全相等 join。
+ * ⛔ 不用名字模糊比對；`zero-megaman` 因此不會誤接 `Zero Lancer`。
+ */
+function acceptedComponentsFor(d) {
+  const identities = [...new Set((d?.identityIds ?? []).map(String).filter(Boolean))];
+  const found = new Map();
+  for (const identity of identities) for (const c of componentIndex.byIdentity.get(identity) ?? []) found.set(String(c.id), c);
+  const components = [...found.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  if (components.length === 0) return null;
+
+  const checked = components.map((c) => {
+    const gitPath = String(c.gitPath ?? "");
+    const abs = gitPath ? join(ROOT, gitPath) : "";
+    const exists = Boolean(abs && existsSync(abs));
+    const bytes = exists ? statSync(abs).size : null;
+    const actualSha256 = exists ? sha256(readFileSync(abs)) : null;
+    const accepted = c.componentReady === true && c.converted === true && c.structuralValidationPassed === true && c.visualValidationPassed === true;
+    const independent = c.fullHeroModel === false && c.runtimeSelectable === false && c.runtimeDropdownRegistered === false && (c.heroIds ?? []).length === 0;
+    const tracked = Boolean(gitPath && trackedHere.has(gitPath));
+    const bytesMatch = exists && Number(c.bytes) === bytes;
+    const sha256Match = exists && String(c.sha256 ?? "") === actualSha256;
+    const verified = accepted && independent && tracked && bytesMatch && sha256Match;
+    const problems = [];
+    if (!accepted) problems.push("未通過完整元件驗收旗標");
+    if (!independent) problems.push("不是未綁定的獨立元件");
+    if (!exists) problems.push("Git 路徑沒有實檔");
+    if (!tracked) problems.push("Git 路徑未追蹤");
+    if (exists && !bytesMatch) problems.push("位元組數不符");
+    if (exists && !sha256Match) problems.push("SHA-256 不符");
+    return {
+      id: String(c.id), sourceId: c.sourceId ?? null, sourceGame: c.sourceGame ?? null,
+      nativeId: c.nativeId ?? null, readiness: c.readiness ?? null,
+      gitPath: gitPath || null, bytes, sha256: c.sha256 ?? null, verified, problems,
+      nativeAnimationCount: Number(c.nativeAnimationCount ?? 0),
+      proceduralAnimationCount: Number(c.proceduralAnimationCount ?? 0),
+      animationProvenance: c.animationProvenance ?? null,
+      animationNames: c.animationNames ?? [],
+      validationEvidence: c.validationEvidence?.gitPath ?? null,
+      visualEvidence: c.visualEvidence?.gitPath ?? null,
+      s3Uri: c.s3Uri ?? null,
+      limitations: c.limitations ?? [],
+    };
+  });
+  const nativeAnimationCount = checked.reduce((n, c) => n + c.nativeAnimationCount, 0);
+  const proceduralAnimationCount = checked.reduce((n, c) => n + c.proceduralAnimationCount, 0);
+  const animationNames = [...new Set(checked.flatMap((c) => c.animationNames))].sort();
+  return {
+    identities,
+    components: checked,
+    componentCount: checked.length,
+    componentFilesInRepo: checked.filter((c) => c.verified).length,
+    allVerified: checked.every((c) => c.verified),
+    nativeAnimationCount,
+    proceduralAnimationCount,
+    animationNames,
+  };
+}
 
 /**
  * ⭐⭐ 一顆 glb 缺席有**三種**意思，⛔ 它們不是同一件事（這一段是踩出來的：第一版把 45 位
@@ -260,6 +350,25 @@ function checkModel(champ, id, d = null) {
     //    ② 有 modelKey ⇒ 檔**本來就在這個 repo**（`existing-finished-files-copied-byte-identical`）⇒ 去查那把 key
     if (files.length === 0) {
       if (!key) {
+        const acquired = acceptedComponentsFor(d);
+        if (acquired) {
+          const actionSummary = acquired.nativeAnimationCount > 0
+            ? `原生／來源動作 ${acquired.nativeAnimationCount} 段${acquired.animationNames.length ? `（${acquired.animationNames.join("、")}）` : ""}`
+            : "原生動作 0 段";
+          const bad = acquired.components.filter((c) => !c.verified);
+          return {
+            ok: false, modelKey: null, clipMap: null,
+            deliveryStatus: status, deliveryStatusText: statusText,
+            componentStatus: "accepted-independent-components-pending-hero-integration",
+            componentStatusText: "已驗收獨立模型元件，⛔ 尚未完成英雄整合",
+            files: 0, filesInRepo: 0,
+            ...acquired,
+            gap: bad.length
+              ? `中央素材庫的獨立模型元件驗證失敗：${bad.map((c) => `${c.id}（${c.problems.join("、")}）`).join("；")}`
+              : `中央素材庫已有 ${acquired.componentCount} 個已驗收獨立模型元件，${acquired.componentFilesInRepo}/${acquired.componentCount} 個 Git 實檔與 SHA-256 相符；${actionSummary}。⛔ 尚無 GGD 英雄定義、技能綁定、model@1／標準六動作映射及後台選項，不能選用或宣稱已上架`,
+            severity: "blocker",
+          };
+        }
         return {
           ok: false, modelKey: null, clipMap: null, deliveryStatus: status, files: 0, filesInRepo: 0,
           gap: `交付表有這一位但**沒有模型**（0 個檔、沒有 modelKey）—— 狀態「${status || "(空)"}」${statusText ? `：${statusText}` : ""}`,
@@ -462,7 +571,12 @@ for (const h of heroes) {
   const iconAsset = icon.ok ? `content/${icon.path}` : null;
   const blockers = [model, icon, voice].filter((x) => x.severity === "blocker").map((x) => x.gap);
   const warnings = [model, icon, voice].filter((x) => x.severity === "warning").map((x) => x.gap);
-  rows.push({ id: h.id, name, inContent: champ !== null, deliveryKey: drow ? String(drow.hero) : null, model, icon: { ...icon, asset: iconAsset }, voice, blockers, warnings, ready: blockers.length === 0 });
+  rows.push({
+    id: h.id, name, inContent: champ !== null,
+    deliveryKey: drow ? String(drow.hero) : null,
+    deliveryIdentityIds: (drow?.identityIds ?? []).map(String),
+    model, icon: { ...icon, asset: iconAsset }, voice, blockers, warnings, ready: blockers.length === 0,
+  });
 }
 
 /**
@@ -476,8 +590,11 @@ const deliveryDouble = [...deliveryClaimed.entries()].filter(([, ids]) => ids.le
 // ⭐ digest 要涵蓋**頁面上看得到的每一件事** —— ⛔ 只放 glbPath/bytes 的話，
 // 「模型交付狀態變了」這種改動不會讓舊裁決過期（而 owner 正是照那一欄按的）。
 const digest = sha256(JSON.stringify(rows.map((r) => [
-  r.id, r.ready, r.model.ok, r.model.deliveryStatus ?? "", r.model.filesInRepo ?? -1, r.model.files ?? -1, r.model.filesAtSource ?? -1,
+  r.id, r.ready, r.deliveryIdentityIds, r.model.ok, r.model.deliveryStatus ?? "", r.model.componentStatus ?? "",
+  r.model.filesInRepo ?? -1, r.model.files ?? -1, r.model.filesAtSource ?? -1,
   r.model.filesOnlyInSourceHistory ?? -1, r.model.filesGone ?? -1,
+  r.model.componentCount ?? 0, r.model.componentFilesInRepo ?? 0, r.model.nativeAnimationCount ?? 0,
+  (r.model.components ?? []).map((c) => `${c.id}:${c.sha256}:${c.verified}:${c.nativeAnimationCount}`).join("|"),
   r.model.glbPath ?? "", r.model.bytes ?? 0, r.icon.path ?? "", r.icon.bytes ?? 0, r.voice.haveRequired, r.voice.categories, (r.voice.candidates ?? []).map((c) => `${c.groupId}:${c.confidence}`).join("|"),
 ])));
 const doc = {
@@ -489,6 +606,11 @@ const doc = {
   // ⛔ 而「材料過期」與「你少打了 --delivery」長得一模一樣。⇒ 把那一行存進材料。
   invocation: `node tools/hero-intake/run.mjs ${argv.filter((a) => a !== "--check").map((a) => (/[\s]/.test(a) ? JSON.stringify(a) : a)).join(" ")}`,
   voiceIndex: index?.path ?? null,
+  componentIndex: {
+    path: relative(ROOT, componentIndex.path),
+    modelComponents: componentIndex.byId.size,
+    referencedComponents: new Set(rows.flatMap((r) => (r.model.components ?? []).map((c) => c.id))).size,
+  },
   delivery: DELIVERY ? { path: DELIVERY, root: DELIVERY_ROOT, rows: deliveryRows.size, claimed: deliveryClaimed.size, unclaimed: deliveryUnclaimed, doubleClaimed: deliveryDouble } : null,
   counts: {
     heroes: rows.length,
@@ -502,6 +624,9 @@ const doc = {
     modelPending: rows.filter((r) => r.model.severity === "warning").length,
     iconPending: rows.filter((r) => r.icon.severity === "warning").length,
     voicePending: rows.filter((r) => r.voice.severity === "warning").length,
+    independentComponentPending: rows.filter((r) => r.model.componentStatus === "accepted-independent-components-pending-hero-integration").length,
+    independentComponents: rows.reduce((n, r) => n + Number(r.model.componentCount ?? 0), 0),
+    modelCompletelyMissing: rows.filter((r) => r.model.files === 0 && !r.model.modelKey && !r.model.componentCount).length,
   },
   digest,
   heroes: rows,

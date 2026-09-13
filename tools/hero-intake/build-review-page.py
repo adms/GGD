@@ -24,6 +24,7 @@ STATUS = {
  "converted-shared-contract-and-motion-verified": ("新轉檔・動作驗過", "ok"),
  "existing-finished-files-copied-byte-identical": ("沿用既有成品", "ok"),
  "rig-source-present-actions-missing": ("只有骨架・動作沒做", "bad"),
+ "accepted-independent-components-pending-hero-integration": ("獨立模型元件已驗收・待英雄整合", "warn"),
 }
 CONF = {"high": ("✓","ok","索引已綁 heroId"),
         "identity": ("✓","ok","交付表編號命中，名字也對得上"),
@@ -34,7 +35,8 @@ BUCKET_ORDER = ["台詞・玩笑","大招","陣亡","攻擊","移動","嘲諷","
 cards = []
 for h in sorted(mat['heroes'], key=lambda x: (x['ready'], x['id'])):
     hid, m, v = h['id'], h['model'], h['voice']
-    st, stcls = STATUS.get(m.get('deliveryStatus',''), (m.get('deliveryStatus') or '—', 'dim'))
+    status_key = m.get('componentStatus') or m.get('deliveryStatus','')
+    st, stcls = STATUS.get(status_key, (status_key or '—', 'dim'))
     shot = HERE/'review34/webp'/f'{hid}.webp'
     if shot.exists():
         origin = mf.get(hid,{}).get('from','')
@@ -42,6 +44,9 @@ for h in sorted(mat['heroes'], key=lambda x: (x['ready'], x['id'])):
                f'<div class="shotnote">實拍自 {e(origin)}・畫面覆蓋 {cov.get(hid,0)*100:.1f}%</div>'
                f'<div class="item" data-item="model"><span class="ilabel">🧍 這顆模型</span>'
                f'<button class="yes" title="採用">✓</button><button class="no" title="不採用">✗</button></div>')
+    elif m.get('componentCount', 0):
+        pic = (f'<div class="noshot">⚠️ 已有 {m["componentCount"]} 個模型元件<br>'
+               f'<span>本頁尚未重拍元件實景；不能據此判為沒有模型</span></div>')
     else:
         pic = '<div class="noshot">⛔ 沒有模型<br><span>連交付表都沒有檔</span></div>'
 
@@ -64,7 +69,8 @@ for h in sorted(mat['heroes'], key=lambda x: (x['ready'], x['id'])):
 
     chips = "".join(f'<span class="chip bad">⛔ {e(b)}</span>' for b in h['blockers'])
     chips += "".join(f'<span class="chip warn">⚠️ {e(w)}</span>' for w in h['warnings'])
-    key = m.get('modelKey') or '—'
+    component_ids = [c.get('id') for c in m.get('components', []) if c.get('id')]
+    key = m.get('modelKey') or ('components:' + '＋'.join(component_ids) if component_ids else '—')
     cards.append(f'''<article class="card" id="c-{e(hid)}" data-id="{e(hid)}" data-ready="{'1' if h['ready'] else '0'}">
  <div class="pic">{pic}</div>
  <div class="body">
@@ -172,7 +178,7 @@ h3{{font-family:"Noto Serif TC",serif;font-size:17px;margin:0 0 3px}}
 .hid{{font:11px ui-monospace,Menlo,monospace;color:var(--dim);font-weight:400}}
 .meta{{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}}
 .badge{{font-size:11.5px;padding:2px 8px;border-radius:99px;background:var(--soft)}}
-.badge.ok{{color:var(--ok)}} .badge.bad{{color:var(--bad)}} .badge.dim{{color:var(--dim)}}
+.badge.ok{{color:var(--ok)}} .badge.bad{{color:var(--bad)}} .badge.warn{{color:var(--warn)}} .badge.dim{{color:var(--dim)}}
 .meta code{{font:10.5px ui-monospace,Menlo,monospace;color:var(--dim)}}
 .voice{{border:1px solid var(--line);border-radius:8px;padding:8px 9px;margin-bottom:8px}}
 .voice.warn{{border-color:var(--warn)}} .voice.dim{{color:var(--dim)}}

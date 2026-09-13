@@ -25,7 +25,7 @@ pnpm hero:intake --batch ship34 --from docs/_review/material/hero-intake/ship34.
 
 | 段 | 綠 | 黃 | 紅 |
 |---|---|---|---|
-| 🧍 模型 | glb 在工作樹，或 `content/assets-offdisk.json` 宣告位元組在 S3；`clipMap` 六格齊 | 少幾格動作／只有別的分支有／⭐ 交付表有模型但英雄還沒進 content（**順序**，⛔ 不是缺漏） | `modelKey` 指不到 model 文件／glb 沒有宣告也沒有任何分支有／⭐ 交付表**沒有模型**（0 個檔又沒有 modelKey） |
+| 🧍 模型 | glb 在工作樹，或 `content/assets-offdisk.json` 宣告位元組在 S3；`clipMap` 六格齊 | 少幾格動作／只有別的分支有／⭐ 交付表有模型但英雄還沒進 content（**順序**，⛔ 不是缺漏） | `modelKey` 指不到 model 文件／glb 沒有宣告也沒有任何分支有／⭐ 交付表沒有完整英雄模型；若中央索引已有獨立元件，仍須補英雄定義、標準動作映射與後台綁定 |
 | 🖼 圖示 | `icon` 那一格的檔在 | —— | 沒有 `icon` 欄位／檔不在（⭐ 這時會叫 `tools/icon-gen/local/batch.py --only <id>` 產一張） |
 | 🎙 語音 | 出貨門檻九格齊（`CATEGORIES.json.shipGate`） | 缺幾格 | 沒有語音包（⭐ 同時列出全庫的候選來源） |
 
@@ -51,6 +51,17 @@ pnpm hero:intake --batch ship34 --from docs/_review/material/hero-intake/ship34.
 |---|---|---|
 | 0 個檔 ＋ **沒有** `defaultModelKey` | 只有骨架來源，**動作還沒做** | ⛔ **擋上架** |
 | 0 個檔 ＋ **有** `defaultModelKey` | 「沿用既有成品」——檔**本來就在這個 repo** | ⭐ 拿那把 key 去查，查得到就只是順序沒到 |
+
+### 中央素材庫已有獨立模型元件時
+
+較早的交付表可能仍是「0 個檔＋沒有 `defaultModelKey`」，但後續轉換已進
+`materials/asset-library/current-resources.json → modelComponents`。產生器會用交付列與元件列的
+`identityIds` **完全相等**配對，逐顆重驗 Git 追蹤、位元組數與 SHA-256；不做名字模糊匹配，
+所以 `zero-megaman` 不會誤接 Fate 的 Zero Lancer。
+
+這類列顯示為 `accepted-independent-components-pending-hero-integration`，仍是 blocker：
+`fullHeroModel=false`、`heroIds=[]`、`runtimeSelectable=false` 的元件不能替代 `content/champions`、
+model@1／六動作映射、技能綁定、後台選項與實際切換驗證。
 
 ⚠️ 第一版把兩種都印成「0/0 個檔還沒進這個 repo」，⭐ 而那句話讀起來像「都到齊了」。
 守衛 `heroIntakeReview.test.ts` ④ 把這條關起來（突變驗過：改成 warning ⇒ 34 位全部變成「可上架」而測試紅）。
