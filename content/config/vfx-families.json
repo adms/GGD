@@ -891,13 +891,13 @@
     },
     "godie-nbbc.r": {
       "family": "mirrorImage",
-      "pitchDeg": 75,
+      "pitchDeg": 35,
       "soundImpact": "wc3.wandofneutralization"
     },
     "godie-nbbc.w": {
       "family": "shockwaveRing",
       "anchor": "chest",
-      "pitchDeg": 75
+      "pitchDeg": 35
     },
     "godie-nsjs.e": {
       "soundLaunch": "wc3.altarofelderswhat1"
