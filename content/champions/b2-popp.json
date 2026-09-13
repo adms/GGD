@@ -429,6 +429,46 @@
         "sourcePlatform": "Windows"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.945c767c7f6997f9436f13dbc013a20a99ad22b5a0c5de4e",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00（原生動作）",
+      "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+      "modelSha256": "2c80366e6d5ffbd81c2801d6e16a111128341486c17a9fc98ab4fef685014f4f",
+      "binarySha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
+      "registeredAt": "2026-09-13T12:06:59.725Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00（原生動作）",
+      "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+      "modelSha256": "78859bbd397c0014c4598ed977b4f8e2ee46ccb206fa7e848e7c8dd8726b7ffc",
+      "binarySha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
+      "registeredAt": "2026-09-13T12:09:41.268Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "automatic"

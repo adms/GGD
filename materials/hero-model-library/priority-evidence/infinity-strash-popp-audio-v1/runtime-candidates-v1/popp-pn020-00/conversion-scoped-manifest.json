@@ -1,0 +1,605 @@
+{
+  "schema": "ggd-deterministic-scoped-stage@1",
+  "sourceId": "infinity-strash-popp-pn020-00-delivery-v1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-pn020-00-delivery-v1",
+  "absoluteLocalArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-delivery-v1/source.tar.gz",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "bytes": 23352148,
+  "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+  "fileCount": 115,
+  "uncompressedFileBytes": 59676942,
+  "files": [
+    {
+      "path": "assembly-v1/popp-pn020-00.blend",
+      "bytes": 4698039,
+      "sha256": "43b3fbf136d62b491a49e57a47e1d5cade2742bda9c38d72270825d54dbd1d0e"
+    },
+    {
+      "path": "assembly-v1/popp-pn020-00.glb",
+      "bytes": 3949088,
+      "sha256": "8bbde401619f5dcbf6e39e9fe36dda650eb7c70981ae10b4a0597d5375f6d330"
+    },
+    {
+      "path": "assembly-v1/receipt.json",
+      "bytes": 14643,
+      "sha256": "1788d32f67433a83cd2166fabbb4ebb87ac9e5ddc93dc4f1b8ae99c6631b8051"
+    },
+    {
+      "path": "collection-manifest.json",
+      "bytes": 60948,
+      "sha256": "4b90771cbc9a53b8f5ffe33b18fff25a7ee624a621b225685af3eb27ce03ed4f"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/Strash/Chara/Player/PN020/00/SK_PN020_00_Body.bin",
+      "bytes": 1985140,
+      "sha256": "063a98c2836cdb86797aa30135f991e3ba3b444913f028a8a34db060882f1044"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/Strash/Chara/Player/PN020/00/SK_PN020_00_Body.gltf",
+      "bytes": 79327,
+      "sha256": "6bb06d56aa32a3b59ca904f90be323a40485540adc547212db381c63e4aaacbb"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.bin",
+      "bytes": 516964,
+      "sha256": "7b93b00599f42bf7878223f396cb96d1bdd6461706478ba5e6371fcdead5d32b"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.gltf",
+      "bytes": 71718,
+      "sha256": "439f1be8072eefc1a6ee6232f266dcd634aa42e0f873612bbcfa157e4ffcfd81"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.bin",
+      "bytes": 296920,
+      "sha256": "16e3fc1cc7c16cd7a10b8bd8f2f094204672b57e75344742eada06953ec329ca"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.gltf",
+      "bytes": 69358,
+      "sha256": "b28510b8b0df7d7683662a7dd8d565ca8d73424bf31e2a156ef6025179e1b1a8"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/export-manifest.json",
+      "bytes": 5907,
+      "sha256": "5a3c63c8b593e659ae27600ea7424d1993ec48ce85798d5d38ae0a69558527a7"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/strash__Content__Strash__Chara__Player__PN020__00__SK_PN020_00_Body.uasset.log",
+      "bytes": 2256,
+      "sha256": "6cf02250e5c9c768ae8a4d676a7d57869afc14edafde1c23707cb9b5e4016e86"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/strash__Content__Strash__Chara__Player__PN020__Face__SK_PN020_00_Face.uasset.log",
+      "bytes": 8239,
+      "sha256": "cc48d068361b3bb1418517adcd1cc0c0a10a08faacf43113033842265c9b557a"
+    },
+    {
+      "path": "failed-attempts/mesh-material-context-v1/strash__Content__Strash__Chara__Player__PN020__Hair__SK_PN020_00_Hair.uasset.log",
+      "bytes": 1859,
+      "sha256": "8a7a500ec004704bbafec6fcf9b034818b6a9b3a5a4fb46f1a7e70d4dfc97e0c"
+    },
+    {
+      "path": "failed-attempts/webgl-review-v1/bundle.js",
+      "bytes": 11484680,
+      "sha256": "9ea4d41b08113031dd009c9d2c59b0b57d0c28f3b4ed4e1b533acb7bf677d80a"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/00/SK_PN020_00_Body.bin",
+      "bytes": 1985140,
+      "sha256": "063a98c2836cdb86797aa30135f991e3ba3b444913f028a8a34db060882f1044"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/00/SK_PN020_00_Body.gltf",
+      "bytes": 79336,
+      "sha256": "517d078192794d119155e045299b8af78344c00f4e1219d23dd9981dc2bbb284"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/00/T_PN020_00_Body_Base.tga",
+      "bytes": 44038,
+      "sha256": "6f77e0e937617d102649f5866f75e2434fd869c63c654f012bfd23b2601d7000"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/00/T_PN020_00_Body_Bundle.tga",
+      "bytes": 1452333,
+      "sha256": "dced94aeb8fc0255068b76b9d802ff24f90ce4a383c0363411392d05f8088b18"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/00/T_PN020_00_Body_N.tga",
+      "bytes": 146829,
+      "sha256": "5d407d2f659268ae307c083f31975356ad2bb302315de7a6d3e780e53cdf6c93"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/00/T_PN020_00_Body_Shade.tga",
+      "bytes": 50003,
+      "sha256": "6f46648a58e5ba7b28ceb8eeffc0cdd945726b135c88a546154f7792e2d4473c"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.bin",
+      "bytes": 516964,
+      "sha256": "7b93b00599f42bf7878223f396cb96d1bdd6461706478ba5e6371fcdead5d32b"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.gltf",
+      "bytes": 71726,
+      "sha256": "be390f1d8d9e93005626f6db729b8b955d8f33fbab9262612876bcddf5eee700"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Face/T_PN020_00_Face_Base.tga",
+      "bytes": 195095,
+      "sha256": "2c6e826cdaebdb96b8d07916fcb6f8eed88294b7855f5fff2384d2eb27137fe5"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Face/T_PN020_00_Face_Bundle.tga",
+      "bytes": 191857,
+      "sha256": "f35d6e206331a5a1905a3a58dc6825b38c6567be6e0a8325862e4f381326bfb7"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Face/T_PN020_00_Face_Filter.tga",
+      "bytes": 19515,
+      "sha256": "37b4e4a783df35ab9f5ef73e73b98fc636f4c697022a783d4f6ca1fb9e92e533"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Face/T_PN020_00_Face_Shade.tga",
+      "bytes": 326531,
+      "sha256": "a0fc93bc3855ff11aebd698684088e2dd0fd2f2fcfc06ba032c46b63be2161a5"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.bin",
+      "bytes": 296920,
+      "sha256": "16e3fc1cc7c16cd7a10b8bd8f2f094204672b57e75344742eada06953ec329ca"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.gltf",
+      "bytes": 69366,
+      "sha256": "ed3fac573e5f8b695ea963d3dfaa6e77d28445abadf0b5d19300c162a8f3b776"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Base.tga",
+      "bytes": 50,
+      "sha256": "819e54a6bad59d88c0b1fed602bd66425e9a5ddb3534c204e9438144fab7b87b"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Bundle.tga",
+      "bytes": 522406,
+      "sha256": "71c0b6793b3b0eb8ffab538aa0354b57dfeb9e88a05a40456b830b6ef8c8024c"
+    },
+    {
+      "path": "mesh-material-context-v2/Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Shade.tga",
+      "bytes": 146,
+      "sha256": "816d67810a79888a9c939278b10aed7b99945d8ac2ad1cb5c7e6a137bc9b8d19"
+    },
+    {
+      "path": "mesh-material-context-v2/export-manifest.json",
+      "bytes": 8694,
+      "sha256": "4c405445e1781adade827d96ac470aa4fd1f0f1170985b1b93d6a29cef2a0d4d"
+    },
+    {
+      "path": "mesh-material-context-v2/strash__Content__Strash__Chara__Player__PN020__00__SK_PN020_00_Body.uasset.log",
+      "bytes": 6371,
+      "sha256": "d9fbfe58962741f20f62812c3a87cdde64b0420af2aa9f7c988da785e5bcd3e5"
+    },
+    {
+      "path": "mesh-material-context-v2/strash__Content__Strash__Chara__Player__PN020__Face__SK_PN020_00_Face.uasset.log",
+      "bytes": 11911,
+      "sha256": "872690ee48a2203ca0cafe43a1746a24bcf256eaec2bbd776504951241eaa305"
+    },
+    {
+      "path": "mesh-material-context-v2/strash__Content__Strash__Chara__Player__PN020__Hair__SK_PN020_00_Hair.uasset.log",
+      "bytes": 4996,
+      "sha256": "1e9032fa434ec677c09a9d2f9b0d1e6c7940d5e1d9392421fa940c444d7ba34b"
+    },
+    {
+      "path": "mesh-psk-v1/Strash/Chara/Player/PN020/00/SK_PN020_00_Body.props.txt",
+      "bytes": 4909,
+      "sha256": "f1bdbc1d28576d235584fde9ddcd67e083cb345eed254baed0da359b7074b2f4"
+    },
+    {
+      "path": "mesh-psk-v1/Strash/Chara/Player/PN020/00/SK_PN020_00_Body.psk",
+      "bytes": 1627796,
+      "sha256": "dd8deb391ce3c4022a0a401ac8559e3933d9e5806e7572257a0411f0e86d090c"
+    },
+    {
+      "path": "mesh-psk-v1/Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.props.txt",
+      "bytes": 10255,
+      "sha256": "6e6c9ff3b1de27de776a4dd4752d0f2492183416a019e77bb6e776acbeacf5f2"
+    },
+    {
+      "path": "mesh-psk-v1/Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.psk",
+      "bytes": 423024,
+      "sha256": "f580fe44754a76a329ec40c7b3b7a8a0dcb5e873847c3e64679d823939deaf3a"
+    },
+    {
+      "path": "mesh-psk-v1/Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.props.txt",
+      "bytes": 2723,
+      "sha256": "ee24d642d0dfc6d9090fb5ef34ca4b7033e4ac3ccb32a93a63df69608b0e4fca"
+    },
+    {
+      "path": "mesh-psk-v1/Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.psk",
+      "bytes": 289408,
+      "sha256": "e56336c73410e23b28079f52914508fc60c86e0b6f58597c9d945fec6f7f6621"
+    },
+    {
+      "path": "mesh-psk-v1/export-manifest.json",
+      "bytes": 5836,
+      "sha256": "291db5e73f0a8c22a8ac055ef438b12cb06dddddde436103f74f98fcb084014c"
+    },
+    {
+      "path": "mesh-psk-v1/strash__Content__Strash__Chara__Player__PN020__00__SK_PN020_00_Body.uasset.log",
+      "bytes": 2179,
+      "sha256": "72a995af8245f0e07d3e1eb01f47c517ff747c51b5859d2789278fbb09835b2f"
+    },
+    {
+      "path": "mesh-psk-v1/strash__Content__Strash__Chara__Player__PN020__Face__SK_PN020_00_Face.uasset.log",
+      "bytes": 8162,
+      "sha256": "b7ad12066a2ee62991845a14d47431e7b6fcc0387dee4c09bdd510c569f46433"
+    },
+    {
+      "path": "mesh-psk-v1/strash__Content__Strash__Chara__Player__PN020__Hair__SK_PN020_00_Hair.uasset.log",
+      "bytes": 1782,
+      "sha256": "f0005dc09305a1aa790ff77c1066738720bfd5267120f91c32daef1c12584771"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Atk01.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Atk01.props.txt",
+      "bytes": 103778,
+      "sha256": "d56af70d57f32389b67bf577a4cdca2562a4d3a0a2e333fd7e57b64f091456f6"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Atk01.psa",
+      "bytes": 474320,
+      "sha256": "36af43e2d869fd5e372d4e56dd5f96c331fd25b036781ea576ae6a8ff3e446ff"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Down01_Lp.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Down01_Lp.props.txt",
+      "bytes": 103404,
+      "sha256": "dbcdd1433ab33d52f509c93231d891700351df7bdbcc1ab91e3d9c315486f194"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Down01_Lp.psa",
+      "bytes": 792080,
+      "sha256": "ba8175df2e91b65a385b56a850d5286776b5cc2ba36d3091926018af51e80882"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Idle01_Lp.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Idle01_Lp.props.txt",
+      "bytes": 104892,
+      "sha256": "f1ebbc7243237c3ddac4433e871105838a25d1b07da27fee29895092493d21b9"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Idle01_Lp.psa",
+      "bytes": 686160,
+      "sha256": "b276e026ab30dcbe639ec6334bd120103ce34eb9415bc5d6fc7070c102fbb4ff"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Run01_F_Lp.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Run01_F_Lp.props.txt",
+      "bytes": 86255,
+      "sha256": "ac0953836a9cb71b0f671bf90a07bfc655927bc101b8b7fbd48a4af29c7cd189"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Run01_F_Lp.psa",
+      "bytes": 241296,
+      "sha256": "02959ae5de595e9f582dcf5bc389772464634bf1ef6a5a1d0adc6bba4acfa190"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special01_01.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special01_01.props.txt",
+      "bytes": 104033,
+      "sha256": "491b2bac3b86625f9d862e61f5907bc48e01a212d29df82cb6f122528ccfc475"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special01_01.psa",
+      "bytes": 1321680,
+      "sha256": "dae5f3d1dd8b0d78a93c9916be441f0752770348f2a936adad1a8c4c2f954bf6"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special02_01.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special02_01.props.txt",
+      "bytes": 104139,
+      "sha256": "689ca8da1b24e5744e3879c58ce47a9e3dcc101d6d5ec9eb27278c8082a1e29d"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special02_01.psa",
+      "bytes": 1427600,
+      "sha256": "b255c5e0f294d88747eb4a2d0f7224b93822103621f36e33033ea48e78c00476"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special03_01.config",
+      "bytes": 4046,
+      "sha256": "36b0d4aa073a0cda23a4e9d5471b237b371d3deeb23d03f8df46759cf7d1ef15"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special03_01.props.txt",
+      "bytes": 104257,
+      "sha256": "1466a99920f3b88daa625c7be442265ecc4566d891d144df132bd8f7b2786d31"
+    },
+    {
+      "path": "native-animations-v1/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special03_01.psa",
+      "bytes": 1639440,
+      "sha256": "c2ef7560b4815cb0d6fefe830572886d4d75ef503f6fc1e5d23302bfd4cf58e3"
+    },
+    {
+      "path": "native-animations-v1/export-manifest.json",
+      "bytes": 15299,
+      "sha256": "a41fc015d6875a4e74bb192ed8c3f2ab1aa12926189ffc5da08765bd66d2461a"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Atk01.uasset.log",
+      "bytes": 1633,
+      "sha256": "34f201010d7fb7294ae5b8206f1a5efc7893b2fdfea59409eebf619211546ab2"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Down01_Lp.uasset.log",
+      "bytes": 1653,
+      "sha256": "eeffe657b2d854d779b6b89a0ecc8c601dd841adac5350037f001f1ca57f1dea"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Idle01_Lp.uasset.log",
+      "bytes": 1654,
+      "sha256": "32cad7f995c48b7fed1f54319331b973df0273a6fc1d9ecbbea5c5a7c9a9c035"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Run01_F_Lp.uasset.log",
+      "bytes": 1711,
+      "sha256": "55df29391164e6cba250c46268a7f96ef873c2b4b72a34def564255a4006446b"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Special01_01.uasset.log",
+      "bytes": 1668,
+      "sha256": "521e21be67cb9364604f5cc547febd656a782c67f69c3e2caaaba305f3c7126f"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Special02_01.uasset.log",
+      "bytes": 1668,
+      "sha256": "48f31ae70cda51c4b9bb1e658ad2349ef4fd8da15daae4d37fea67ff3febd6f2"
+    },
+    {
+      "path": "native-animations-v1/strash__Content__Strash__Chara__Player__PN020__Animations__AS_PN020_00_B_Special03_01.uasset.log",
+      "bytes": 1668,
+      "sha256": "e2551bba4acde731244d1e98f206135178568b25b8a5b28659c33b55b1d4aa58"
+    },
+    {
+      "path": "normalized-v1/babylon-nullengine.json",
+      "bytes": 1003,
+      "sha256": "1db7c71d885ae05e72113e2451a466a91881d98015253d1b4e725f3128bd9d91"
+    },
+    {
+      "path": "normalized-v1/ggd-upload.json",
+      "bytes": 10813,
+      "sha256": "e66b753a86f970079a8ee26e18c7bf466ec3aec69d2479caaefc04c64b440cfb"
+    },
+    {
+      "path": "normalized-v1/khronos-input.json",
+      "bytes": 549410,
+      "sha256": "3303971001beaecd489a33cb8d5acb2bc38d83de24499d96a55d780135c59729"
+    },
+    {
+      "path": "normalized-v1/popp-pn020-00-ggd-normalized.glb",
+      "bytes": 3849576,
+      "sha256": "19ad740d71f320e488f7f6bf406ee9b98afa45eda8154f1a049d3f499d26a2c5"
+    },
+    {
+      "path": "runtime-v1/body.glb",
+      "bytes": 2226392,
+      "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+    },
+    {
+      "path": "runtime-v1/model.json",
+      "bytes": 484,
+      "sha256": "b87d712da5f3c11ed9a382986df6fcb102cb866934426f71af339ec2f08a9b2d"
+    },
+    {
+      "path": "runtime-v1/receipt.json",
+      "bytes": 12982,
+      "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+    },
+    {
+      "path": "runtime-v1/uploaded-model.json",
+      "bytes": 381,
+      "sha256": "59ce34f116aca70b5d5c5c1c055999eef089599eb6cf6a90babff078f56a6279"
+    },
+    {
+      "path": "textures-v1/Strash/Chara/Player/PN020/00/T_PN020_00_Body_Base.png",
+      "bytes": 14144,
+      "sha256": "19f8d206f9146d05b07694eb05f385f2554aaf5c429188e06fcfd9fba1e8c258"
+    },
+    {
+      "path": "textures-v1/Strash/Chara/Player/PN020/00/T_PN020_00_Body_N.png",
+      "bytes": 61612,
+      "sha256": "6d8d427767a515a2e333fc514ab79fa60ce77158ac258dc039299e7cbb11dc2f"
+    },
+    {
+      "path": "textures-v1/Strash/Chara/Player/PN020/Face/T_PN020_00_Face_Base.png",
+      "bytes": 63541,
+      "sha256": "159bbe4c1dbdb45d608e6cac0e38d3dbbfa63ae78cec49b25f227a0f10c60cd6"
+    },
+    {
+      "path": "textures-v1/Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Base.png",
+      "bytes": 79,
+      "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+    },
+    {
+      "path": "textures-v1/export-manifest.json",
+      "bytes": 6484,
+      "sha256": "45dd9a468f9998847f471d20b3634298670a5fc85d4b61ff9a50da7c22f23fc4"
+    },
+    {
+      "path": "textures-v1/strash__Content__Strash__Chara__Player__PN020__00__T_PN020_00_Body_Base.uasset.log",
+      "bytes": 1220,
+      "sha256": "7f86410a073c2f51a3ae0e4e1a27ad45745a309124aa10e21f7f91ca92e45c53"
+    },
+    {
+      "path": "textures-v1/strash__Content__Strash__Chara__Player__PN020__00__T_PN020_00_Body_N.uasset.log",
+      "bytes": 1205,
+      "sha256": "ed84cfb491ed3e28661ed1aeefc36216d38f5db5266729b5be14d57bdc2a3824"
+    },
+    {
+      "path": "textures-v1/strash__Content__Strash__Chara__Player__PN020__Face__T_PN020_00_Face_Base.uasset.log",
+      "bytes": 1226,
+      "sha256": "d3c6b31d8b4be684668423ed8d9d60623f0567a4a9f1cf2b564cc7aeae6543ba"
+    },
+    {
+      "path": "textures-v1/strash__Content__Strash__Chara__Player__PN020__Hair__T_PN020_00_Hair_Base.uasset.log",
+      "bytes": 1226,
+      "sha256": "b1ea31388599740714c2849117c4c083584f1cd44167e9e15db3da5ac8b677e9"
+    },
+    {
+      "path": "webgl-review-v2/bundle.js",
+      "bytes": 11484680,
+      "sha256": "9ea4d41b08113031dd009c9d2c59b0b57d0c28f3b4ed4e1b533acb7bf677d80a"
+    },
+    {
+      "path": "webgl-review-v2/chrome.log",
+      "bytes": 4907,
+      "sha256": "4f3bc0fe8a0ab1b3cdc4a167dab79ed99ed0fa7a1f94fd577dbfd5f12dbeea45"
+    },
+    {
+      "path": "webgl-review-v2/contact-sheet.png",
+      "bytes": 212927,
+      "sha256": "2f966e50d0ea0cdb34767162128e43b93a14f585967c8917aea25337fc735e62"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-attack-0.png",
+      "bytes": 153339,
+      "sha256": "ce7375a71cf565c2d43ac47f482d82c3f8b7a9e0602b9b71e30b252c1b50dc15"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-attack-100.png",
+      "bytes": 153388,
+      "sha256": "3add540a82bbedf2ca7e4e5a01001c4930640542d9288eef401509810af259bd"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-attack-50.png",
+      "bytes": 145484,
+      "sha256": "c4c3c1571072bbe2d9286a26214df580d12348f619f832c3cbb43b69162f576c"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-cast-0.png",
+      "bytes": 145314,
+      "sha256": "873a072cb6b779a7b14a77e38f0e47a4b354fdb4b409ae6d655c60b139b3244a"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-cast-100.png",
+      "bytes": 157630,
+      "sha256": "39f3f8ed2673dcf1cc537e5a5facd60da2fad9b4d8fde781f7b12e73bfd1127b"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-cast-50.png",
+      "bytes": 172502,
+      "sha256": "73db7effedd7d653de67a4936ad3e9aef294731ce82f00bd0857f349d088ff33"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-death-0.png",
+      "bytes": 59855,
+      "sha256": "8a4a2b7e664ada828db346dc8cea66f2bac90e82fed2610a96f0c547905b77e3"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-death-100.png",
+      "bytes": 59855,
+      "sha256": "8a4a2b7e664ada828db346dc8cea66f2bac90e82fed2610a96f0c547905b77e3"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-death-50.png",
+      "bytes": 59855,
+      "sha256": "8a4a2b7e664ada828db346dc8cea66f2bac90e82fed2610a96f0c547905b77e3"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-hurt-0.png",
+      "bytes": 59855,
+      "sha256": "8a4a2b7e664ada828db346dc8cea66f2bac90e82fed2610a96f0c547905b77e3"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-hurt-100.png",
+      "bytes": 59855,
+      "sha256": "8a4a2b7e664ada828db346dc8cea66f2bac90e82fed2610a96f0c547905b77e3"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-hurt-50.png",
+      "bytes": 59855,
+      "sha256": "8a4a2b7e664ada828db346dc8cea66f2bac90e82fed2610a96f0c547905b77e3"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-idle-0.png",
+      "bytes": 153306,
+      "sha256": "3df5215fa944f044360082d2a8dfd35c46803387f84c3c2871fcc313d4427e56"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-idle-100.png",
+      "bytes": 153306,
+      "sha256": "3df5215fa944f044360082d2a8dfd35c46803387f84c3c2871fcc313d4427e56"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-idle-50.png",
+      "bytes": 154067,
+      "sha256": "2bfbacc336e5e596ab628b854c26fa4e687042bc9b375fe155d1a21007450025"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-run-0.png",
+      "bytes": 154788,
+      "sha256": "cb80e470895be19249981242a71fb2771f555e7af0e50f55dd7afaef09d0a769"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-run-100.png",
+      "bytes": 154932,
+      "sha256": "18058b1dc7f401e709fc0d5ffb2fdac77d88f2dd33091952e4ba987d90594ee9"
+    },
+    {
+      "path": "webgl-review-v2/ggd-state-run-50.png",
+      "bytes": 135239,
+      "sha256": "31f47c75b61a452203a14e27b581cb7a5e957519d0388eb8665b45978f6a08e7"
+    },
+    {
+      "path": "webgl-review-v2/proof.json",
+      "bytes": 9554,
+      "sha256": "16360d0af6ef32675ec4032786257b47b0c02a309b6e0bcb2dd3e97fbef5563a"
+    },
+    {
+      "path": "webgl-review-v2/run.json",
+      "bytes": 674,
+      "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8"
+    }
+  ],
+  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+  "localPreserved": true,
+  "snapshotScope": "Popp PN020/00 all conversion stages, failed attempts, runtime GLB, deterministic checks, and WebGL review evidence; original acquisition archive excluded because separately S3 readback verified.",
+  "deterministicParameters": {
+    "tarFormat": "PAX",
+    "memberOrder": "lexicographic POSIX path",
+    "mode": "0644",
+    "uid": 0,
+    "gid": 0,
+    "mtime": 0,
+    "uname": "",
+    "gname": "",
+    "gzipMtime": 0,
+    "gzipFilename": "",
+    "gzipCompressLevel": 1
+  }
+}

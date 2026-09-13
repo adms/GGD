@@ -26,6 +26,14 @@ const specifications: Record<string, {mapping: Record<string, string>; roleNotes
     },
     limitations: ['This is EN801 old Vearn before transformation; no post-transformation Vearn body was located in either primary PAK.', 'GGD hurt reuses the native death sequence.', 'Kaizer Phoenix remains in the preserved conversion/archive set and is excluded from runtime because the source PSA references 100 absent effect/helper bones.', 'Original effect systems, toon shader parity, animation events, gameplay acceptance and deployment remain pending.'],
   },
+  'popp-pn020-00': {
+    mapping: {idle: 'GGD_native_idle', run: 'GGD_native_run', attack: 'GGD_native_attack', cast: 'GGD_native_special03', hurt: 'GGD_native_down', death: 'GGD_native_down'},
+    roleNotes: {
+      idle: 'Infinity Strash native battle idle loop', run: 'Infinity Strash native forward battle run', attack: 'Infinity Strash native attack',
+      cast: 'Infinity Strash native Special03 phase 01; provisional GGD cast mapping', hurt: 'Native down loop reused as hurt', death: 'Native down loop reused as death; no distinct PN020 death AnimSequence was acquired',
+    },
+    limitations: ['GGD hurt and death both reuse the acquired native down loop because PN020 has no distinct death AnimSequence in the extracted package set.', 'Native Special01 and Special02 remain embedded and preserved but are not referenced by the six-state runtime document.', 'The original 8x8 hair base texture relies on game shader parameters; the runtime candidate preserves the exported texture and simplified PBR material, so toon shader and hair-colour parity require visual review.', 'Weapon attachment and switching, animation events, original effects, gameplay acceptance and deployment remain pending.'],
+  },
 };
 const spec = specifications[candidateId];
 if (!spec) throw Error(`unknown candidate: ${candidateId}`);

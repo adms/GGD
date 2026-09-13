@@ -24,6 +24,19 @@
       "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-final-v2/vearn-en801-pre-transformation",
       "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
       "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v1/vearn-en801-pre-transformation"
+    },
+    {
+      "id": "popp-pn020-00",
+      "catalogCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+      "heroId": "b2-popp",
+      "meshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-psk-v1",
+      "materialContextRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-material-context-v2",
+      "textureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-textures-v1",
+      "psaRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-native-animations-v1",
+      "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-popp-v1/popp-pn020-00",
+      "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-v1/popp-pn020-00",
+      "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+      "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00"
     }
   ],
   "indexCommands": [

@@ -58,6 +58,14 @@ SHA-256 still match. A failed run resumes at the failed module without deleting
 or overwriting earlier stages. The index stage uses the repository generators;
 it does not hand-edit generated `_index.json`, bundle or inventory files.
 
+Candidate rows may override `meshRoot`, `materialContextRoot`, `textureRoot` and
+`psaRoot`. This keeps later character exports immutable and separate from the
+first Dai/Vearn batch. The `popp-pn020-00` recipe uses its own four manifests,
+assembles body/face/hair, preserves seven native sequences and prepares five
+distinct runtime clips. GGD hurt/death intentionally share PN020's native down
+loop because the extracted package set contains no distinct Popp death
+AnimSequence.
+
 ```bash
 python3 pipeline.py \
   --config pipeline-config.json \
@@ -70,6 +78,12 @@ python3 pipeline.py \
   --workspace "/path/to/ABxVFX_EDIT" \
   --from-stage normalize --through indexes \
   --candidate dai-pn010-02
+
+# Resume Popp after its independent UModel export manifests exist.
+python3 pipeline.py \
+  --config pipeline-config.json \
+  --workspace "/path/to/ABxVFX_EDIT" \
+  --candidate popp-pn020-00
 ```
 
 Blender 5.2.1 LTS and the pinned `io_scene_psk_psa` checkout are recorded by
@@ -78,6 +92,18 @@ renders three frames for each of the six GGD state mappings, including explicit
 state reuse. Its fixed front camera uses +Z and Y-up; the earlier ArcRotate
 camera sampled the wrong viewing axis and is retained only in local failed-run
 evidence.
+
+`freeze_runtime_review.py --contact-sheet-only` builds a six-state, three-sample
+sheet for human review. A second invocation with `--output` and `--observation`
+verifies every receipt and SHA-256, copies the bounded evidence into Git and
+records feature-branch registration without claiming Main merge or deployment.
+
+`collect_popp_delivery.py` copies the ten immutable PN020/00 conversion stages,
+including the retained failed attempts, into one bounded local delivery tree.
+It writes the original absolute path, size and SHA-256 for every copied file.
+Freeze that tree with `freeze_scoped_stage.py`, then publish it with
+`upload_scoped_tar.py`; the Popp source integration validates and copies the
+full manifest and S3 readback receipt into Git evidence.
 
 `prepare_component.py` validates one exported glTF with Assimp, converts it to
 an intermediate GLB, and makes deterministic untextured front/back/isometric

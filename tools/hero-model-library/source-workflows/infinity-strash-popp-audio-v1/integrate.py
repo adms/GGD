@@ -171,6 +171,112 @@ def main() -> int:
     relation_gzip.write_bytes(gzip.compress(relation_bytes, mtime=0))
     copied.append({"gitPath": relation_gzip.relative_to(REPO).as_posix(), "bytes": relation_gzip.stat().st_size, "sha256": sha256(relation_gzip)})
 
+    runtime_root = workspace / "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00"
+    review_root = workspace / "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00"
+    runtime_receipt_path = runtime_root / "receipt.json"
+    review_receipt_path = review_root / "run.json"
+    acceptance_path = GIT_EVIDENCE.parents[1] / "priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json"
+    runtime_evidence = None
+    registered_version = None
+    if runtime_receipt_path.is_file() and review_receipt_path.is_file():
+        runtime_receipt = json.loads(runtime_receipt_path.read_text(encoding="utf-8"))
+        review_receipt = json.loads(review_receipt_path.read_text(encoding="utf-8"))
+        body_path = runtime_root / "body.glb"
+        output = runtime_receipt.get("output", {})
+        if (
+            runtime_receipt.get("candidateId") != "popp-pn020-00"
+            or not body_path.is_file()
+            or output.get("bytes") != body_path.stat().st_size
+            or output.get("sha256") != sha256(body_path)
+        ):
+            raise ValueError("Popp runtime receipt or body hash differs")
+        if (
+            review_receipt.get("complete") is not True
+            or review_receipt.get("proofExists") is not True
+            or review_receipt.get("errorExists") is not False
+            or review_receipt.get("images") != 18
+            or review_receipt.get("sourceSha256") != output["sha256"]
+        ):
+            raise ValueError("Popp WebGL review is incomplete or refers to another body")
+        source_model_key = output["document"]["id"]
+        hero = json.loads((REPO / "content/champions/b2-popp.json").read_text(encoding="utf-8"))
+        matches = [
+            row for row in hero.get("modelVersions", [])
+            if row.get("sourceModelKey") == source_model_key and row.get("binarySha256") == output["sha256"]
+        ]
+        if not matches:
+            raise ValueError("Popp runtime is not registered on b2-popp")
+        registered_version = next(
+            (row for row in reversed(matches) if row.get("source", {}).get("sourcePlatform") == "Windows (Steam)"),
+            matches[-1],
+        )
+        if not acceptance_path.is_file():
+            raise ValueError("Popp Git acceptance evidence is missing")
+        acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
+        if (
+            acceptance.get("candidateId") != "popp-pn020-00"
+            or acceptance.get("runtime", {}).get("sha256") != output["sha256"]
+            or acceptance.get("registration", {}).get("registeredVersion", {}).get("modelKey") != registered_version["modelKey"]
+            or acceptance.get("registration", {}).get("productionDeployed") is not False
+        ):
+            raise ValueError("Popp Git acceptance evidence differs from runtime or registration")
+        backup_root = workspace / "GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-delivery-v1"
+        backup_manifest_path = backup_root / "scoped-manifest.json"
+        backup_receipt_path = backup_root / "s3-verified-receipt.json"
+        if not backup_manifest_path.is_file() or not backup_receipt_path.is_file():
+            raise ValueError("Popp conversion stages have not been frozen and S3 readback verified")
+        backup_manifest = json.loads(backup_manifest_path.read_text(encoding="utf-8"))
+        backup_receipt = json.loads(backup_receipt_path.read_text(encoding="utf-8"))
+        expected_backup_id = "infinity-strash-popp-pn020-00-delivery-v1"
+        if (
+            backup_manifest.get("sourceId") != expected_backup_id
+            or backup_manifest.get("fileCount") != 115
+            or backup_receipt.get("id") != expected_backup_id
+            or backup_receipt.get("sha256") != backup_manifest.get("sha256")
+            or backup_receipt.get("manifestSha256") != sha256(backup_manifest_path)
+            or backup_receipt.get("fileCount") != backup_manifest.get("fileCount")
+            or backup_receipt.get("readbackVerified") is not True
+            or backup_receipt.get("fullGetVerified") is not True
+            or backup_receipt.get("allArchiveMembersSha256Verified") is not True
+            or backup_receipt.get("profile") != "vibe-coding"
+            or backup_receipt.get("region") != "ap-east-2"
+            or not str(backup_receipt.get("s3Uri", "")).startswith(
+                "s3://ggd-390630837668-ap-east-2-an/legacy/"
+            )
+        ):
+            raise ValueError("Popp conversion S3 receipt differs from the frozen delivery")
+        acceptance_root = acceptance_path.parent
+        git_backup_manifest = acceptance_root / "conversion-scoped-manifest.json"
+        git_backup_receipt = acceptance_root / "s3-conversion-receipt.json"
+        shutil.copyfile(backup_manifest_path, git_backup_manifest)
+        shutil.copyfile(backup_receipt_path, git_backup_receipt)
+        runtime_evidence = {
+            "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "localRoot": runtime_root.relative_to(workspace).as_posix(),
+            "body": {"path": "body.glb", "bytes": body_path.stat().st_size, "sha256": output["sha256"]},
+            "receipt": {"path": str(runtime_receipt_path), "sha256": sha256(runtime_receipt_path)},
+            "webglReview": {"path": str(review_receipt_path), "sha256": sha256(review_receipt_path), "images": 18},
+            "sourceModelKey": source_model_key,
+            "registeredVersionKey": registered_version["modelKey"],
+            "gitAcceptance": {
+                "path": acceptance_path.relative_to(REPO).as_posix(),
+                "sha256": sha256(acceptance_path),
+            },
+            "conversionBackup": {
+                "s3Uri": backup_receipt["s3Uri"],
+                "manifestUri": backup_receipt["manifestUri"],
+                "bytes": backup_receipt["bytes"],
+                "sha256": backup_receipt["sha256"],
+                "fileCount": backup_receipt["fileCount"],
+                "fullGetVerified": True,
+                "allArchiveMembersSha256Verified": True,
+                "gitManifestPath": git_backup_manifest.relative_to(REPO).as_posix(),
+                "gitManifestSha256": sha256(git_backup_manifest),
+                "gitReceiptPath": git_backup_receipt.relative_to(REPO).as_posix(),
+                "gitReceiptSha256": sha256(git_backup_receipt),
+            },
+        }
+
     source = {
         "id": SOURCE_ID,
         "target": "Infinity Strash 原作：波普完整原生 ID 套件＋達伊／波普／巴恩／密斯特巴恩 929 個可播放音訊",
@@ -181,7 +287,10 @@ def main() -> int:
         "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review",
+        "readiness": (
+            "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending"
+            if runtime_evidence else "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review"
+        ),
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": False,
         "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -221,21 +330,36 @@ def main() -> int:
             "selectionClass": "canonical-game",
             "assetKinds": ["model-package", "texture-material-package", "skeleton-package", "animation-cinematic-package", "vfx-package", "voice", "sound-effect"],
             "fileCount": extraction["selection"]["poppDirectMembers"],
-            "modelState": "native-unreal-packages-extracted-pending-game-specific-export",
-            "animationState": "native-unreal-packages-extracted-pending-game-specific-export",
+            "modelState": "converted-webgl-accepted" if runtime_evidence else "native-unreal-packages-extracted-pending-game-specific-export",
+            "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips" if runtime_evidence else "native-unreal-packages-extracted-pending-game-specific-export",
             "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
             "audioState": "decoded-pending-listening-review",
-            "designStatus": "existing-hero-definition-present-pending-model-option",
-            "defaultEligible": False,
-            "backendSelectable": False,
+            "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch" if runtime_evidence else "existing-hero-definition-present-pending-model-option",
+            "defaultEligible": bool(runtime_evidence),
+            "backendSelectable": bool(runtime_evidence),
             "deployed": False,
+            **({"derivedRuntimeCandidateId": runtime_evidence["candidateId"], "runtimeEvidence": runtime_evidence} if runtime_evidence else {}),
         }],
-        "backendIntegration": {"required": True, "state": "pending-game-specific-model-export-listening-and-binding", "selectionVerified": False, "release": None},
+        "backendIntegration": {
+            "required": True,
+            "state": "registered-on-feature-branch-pending-merge-and-deployment" if runtime_evidence else "pending-game-specific-model-export-listening-and-binding",
+            "selectionVerified": bool(runtime_evidence),
+            "release": None,
+        },
         "verification": (
             "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; "
             "929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps."
         ),
-        "limitations": extraction["gaps"],
+        "limitations": (
+            [
+                "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+                "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+                "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+                "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
+                "Feature-branch registration is not Main merge, production backend availability or deployment evidence.",
+            ] if runtime_evidence else extraction["gaps"]
+        ),
+        **({"runtimeEvidence": runtime_evidence} if runtime_evidence else {}),
     }
     document = json.loads(DOWNLOADS.read_text(encoding="utf-8"))
     matches = [row for collection in ("publicSources", "paidSources") for row in document.get(collection, []) if row.get("id") == SOURCE_ID]
@@ -243,7 +367,10 @@ def main() -> int:
         if len(matches) != 1:
             raise ValueError("source ID is duplicated")
         existing = matches[0]
-        mutable = {"publicationStatus", "pendingBackup", "backup", "verification"}
+        mutable = {
+            "publicationStatus", "pendingBackup", "backup", "verification",
+            "readiness", "modelCandidates", "backendIntegration", "limitations", "runtimeEvidence",
+        }
         # The first local integration predated the explicit per-character query
         # scope.  Adding these identity-only fields changes no archived bytes.
         if "identityRecords" not in existing:
@@ -252,6 +379,12 @@ def main() -> int:
             existing["notAliases"] = source["notAliases"]
         if {key: value for key, value in existing.items() if key not in mutable} != {key: value for key, value in source.items() if key not in mutable}:
             raise ValueError("existing source differs; refusing to overwrite another workflow")
+        # Acquisition backup evidence is append-only and may have been added by
+        # the S3 archiver after this source workflow first ran.  Preserve those
+        # fields while advancing only locally revalidated conversion status.
+        for key in {"readiness", "modelCandidates", "backendIntegration", "limitations", "runtimeEvidence"}:
+            if key in source:
+                existing[key] = source[key]
         DOWNLOADS.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         status = "already-integrated"
     else:

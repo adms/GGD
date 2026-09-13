@@ -97,9 +97,9 @@ def main() -> int:
                     continue
                 assembly.parent.mkdir(parents=True, exist_ok=True)
                 run([blender, "--background", "--python", str(script_root / "assemble_candidate_blender.py"), "--", candidate,
-                     "--mesh-root", str(expand(config["meshRoot"], roots)), "--mesh-format", "psk",
-                     "--material-context-root", str(expand(config["materialContextRoot"], roots)),
-                     "--texture-root", str(expand(config["textureRoot"], roots)), "--psa-root", str(expand(config["psaRoot"], roots)),
+                     "--mesh-root", str(expand(row.get("meshRoot", config["meshRoot"]), roots)), "--mesh-format", "psk",
+                     "--material-context-root", str(expand(row.get("materialContextRoot", config["materialContextRoot"]), roots)),
+                     "--texture-root", str(expand(row.get("textureRoot", config["textureRoot"]), roots)), "--psa-root", str(expand(row.get("psaRoot", config["psaRoot"]), roots)),
                      "--addon-root", str(expand(config["addonRoot"], roots)), "--output", str(assembly)], repo, args.plan)
             elif stage == "normalize":
                 receipt = normalized / "ggd-upload.json"

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T19:38:37+08:00",
-  "inputsSha256": "bdec670047e05ec008596a51cd9de3d81c085d59f77c6d7f746655760d534cb6",
+  "generatedAt": "2026-09-13T20:20:39+08:00",
+  "inputsSha256": "4fe396e3d39e309b466d90fd67a086cadf569af62409ae49d937f8bb9ec10eb6",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -42496,7 +42496,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review",
+          "readiness": "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -43990,29 +43990,67 @@
                 "sound-effect"
               ],
               "fileCount": 2280,
-              "modelState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "animationState": "native-unreal-packages-extracted-pending-game-specific-export",
+              "modelState": "converted-webgl-accepted",
+              "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
               "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
               "audioState": "decoded-pending-listening-review",
-              "designStatus": "existing-hero-definition-present-pending-model-option",
-              "defaultEligible": false,
-              "backendSelectable": false,
-              "deployed": false
+              "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
+              "defaultEligible": true,
+              "backendSelectable": true,
+              "deployed": false,
+              "derivedRuntimeCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+              "runtimeEvidence": {
+                "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+                "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+                "body": {
+                  "path": "body.glb",
+                  "bytes": 2226392,
+                  "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+                },
+                "receipt": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+                  "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+                },
+                "webglReview": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+                  "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+                  "images": 18
+                },
+                "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+                "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+                "gitAcceptance": {
+                  "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+                  "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+                },
+                "conversionBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+                  "bytes": 23352148,
+                  "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+                  "fileCount": 115,
+                  "fullGetVerified": true,
+                  "allArchiveMembersSha256Verified": true,
+                  "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+                  "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+                  "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+                  "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+                }
+              }
             }
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-model-export-listening-and-binding",
-            "selectionVerified": false,
+            "state": "registered-on-feature-branch-pending-merge-and-deployment",
+            "selectionVerified": true,
             "release": null
           },
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Nine referenced media packages contain no .ubulk payload and are retained as explicit missing-payload relations.",
-            "Decoded clips passed container and PCM checks but still require speaker, language and event listening review.",
-            "Popp and Vearn Unreal models, textures, skeletons, animations and effects still require the game-specific exporter and visual acceptance.",
-            "EN801 is Vearn; its pre/post-transformation model variants are not yet visually classified.",
-            "EN653 is MystVearn, a separate character. EN680/EN681 are Baran and are not merged into either identity."
+            "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+            "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
+            "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
@@ -44082,7 +44120,44 @@
               ],
               "heroIds": []
             }
-          ]
+          ],
+          "runtimeEvidence": {
+            "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+            "body": {
+              "path": "body.glb",
+              "bytes": 2226392,
+              "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+            },
+            "receipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+              "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+            },
+            "webglReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+              "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+              "images": 18
+            },
+            "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+            "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+            "gitAcceptance": {
+              "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+              "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+            },
+            "conversionBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+              "bytes": 23352148,
+              "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+              "fileCount": 115,
+              "fullGetVerified": true,
+              "allArchiveMembersSha256Verified": true,
+              "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+              "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+              "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+              "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+            }
+          }
         }
       ],
       "paidCandidates": [],
@@ -44959,7 +45034,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review",
+          "readiness": "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -46453,29 +46528,67 @@
                 "sound-effect"
               ],
               "fileCount": 2280,
-              "modelState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "animationState": "native-unreal-packages-extracted-pending-game-specific-export",
+              "modelState": "converted-webgl-accepted",
+              "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
               "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
               "audioState": "decoded-pending-listening-review",
-              "designStatus": "existing-hero-definition-present-pending-model-option",
-              "defaultEligible": false,
-              "backendSelectable": false,
-              "deployed": false
+              "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
+              "defaultEligible": true,
+              "backendSelectable": true,
+              "deployed": false,
+              "derivedRuntimeCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+              "runtimeEvidence": {
+                "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+                "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+                "body": {
+                  "path": "body.glb",
+                  "bytes": 2226392,
+                  "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+                },
+                "receipt": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+                  "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+                },
+                "webglReview": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+                  "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+                  "images": 18
+                },
+                "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+                "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+                "gitAcceptance": {
+                  "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+                  "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+                },
+                "conversionBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+                  "bytes": 23352148,
+                  "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+                  "fileCount": 115,
+                  "fullGetVerified": true,
+                  "allArchiveMembersSha256Verified": true,
+                  "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+                  "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+                  "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+                  "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+                }
+              }
             }
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-model-export-listening-and-binding",
-            "selectionVerified": false,
+            "state": "registered-on-feature-branch-pending-merge-and-deployment",
+            "selectionVerified": true,
             "release": null
           },
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Nine referenced media packages contain no .ubulk payload and are retained as explicit missing-payload relations.",
-            "Decoded clips passed container and PCM checks but still require speaker, language and event listening review.",
-            "Popp and Vearn Unreal models, textures, skeletons, animations and effects still require the game-specific exporter and visual acceptance.",
-            "EN801 is Vearn; its pre/post-transformation model variants are not yet visually classified.",
-            "EN653 is MystVearn, a separate character. EN680/EN681 are Baran and are not merged into either identity."
+            "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+            "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
+            "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
@@ -46545,7 +46658,44 @@
               ],
               "heroIds": []
             }
-          ]
+          ],
+          "runtimeEvidence": {
+            "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+            "body": {
+              "path": "body.glb",
+              "bytes": 2226392,
+              "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+            },
+            "receipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+              "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+            },
+            "webglReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+              "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+              "images": 18
+            },
+            "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+            "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+            "gitAcceptance": {
+              "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+              "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+            },
+            "conversionBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+              "bytes": 23352148,
+              "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+              "fileCount": 115,
+              "fullGetVerified": true,
+              "allArchiveMembersSha256Verified": true,
+              "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+              "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+              "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+              "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+            }
+          }
         }
       ],
       "paidCandidates": [],
@@ -49762,7 +49912,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review",
+          "readiness": "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -51256,29 +51406,67 @@
                 "sound-effect"
               ],
               "fileCount": 2280,
-              "modelState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "animationState": "native-unreal-packages-extracted-pending-game-specific-export",
+              "modelState": "converted-webgl-accepted",
+              "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
               "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
               "audioState": "decoded-pending-listening-review",
-              "designStatus": "existing-hero-definition-present-pending-model-option",
-              "defaultEligible": false,
-              "backendSelectable": false,
-              "deployed": false
+              "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
+              "defaultEligible": true,
+              "backendSelectable": true,
+              "deployed": false,
+              "derivedRuntimeCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+              "runtimeEvidence": {
+                "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+                "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+                "body": {
+                  "path": "body.glb",
+                  "bytes": 2226392,
+                  "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+                },
+                "receipt": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+                  "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+                },
+                "webglReview": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+                  "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+                  "images": 18
+                },
+                "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+                "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+                "gitAcceptance": {
+                  "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+                  "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+                },
+                "conversionBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+                  "bytes": 23352148,
+                  "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+                  "fileCount": 115,
+                  "fullGetVerified": true,
+                  "allArchiveMembersSha256Verified": true,
+                  "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+                  "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+                  "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+                  "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+                }
+              }
             }
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-model-export-listening-and-binding",
-            "selectionVerified": false,
+            "state": "registered-on-feature-branch-pending-merge-and-deployment",
+            "selectionVerified": true,
             "release": null
           },
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Nine referenced media packages contain no .ubulk payload and are retained as explicit missing-payload relations.",
-            "Decoded clips passed container and PCM checks but still require speaker, language and event listening review.",
-            "Popp and Vearn Unreal models, textures, skeletons, animations and effects still require the game-specific exporter and visual acceptance.",
-            "EN801 is Vearn; its pre/post-transformation model variants are not yet visually classified.",
-            "EN653 is MystVearn, a separate character. EN680/EN681 are Baran and are not merged into either identity."
+            "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+            "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
+            "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
@@ -51348,7 +51536,44 @@
               ],
               "heroIds": []
             }
-          ]
+          ],
+          "runtimeEvidence": {
+            "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+            "body": {
+              "path": "body.glb",
+              "bytes": 2226392,
+              "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+            },
+            "receipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+              "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+            },
+            "webglReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+              "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+              "images": 18
+            },
+            "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+            "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+            "gitAcceptance": {
+              "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+              "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+            },
+            "conversionBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+              "bytes": 23352148,
+              "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+              "fileCount": 115,
+              "fullGetVerified": true,
+              "allArchiveMembersSha256Verified": true,
+              "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+              "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+              "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+              "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+            }
+          }
         }
       ],
       "paidCandidates": [],
@@ -67584,6 +67809,34 @@
           }
         },
         {
+          "key": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+          "id": "runtime:infinity-strash-popp-pn020-00-native-v1",
+          "name": "何布／波普（PN020/00）",
+          "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+          "tier": "original",
+          "library": "Infinity Strash Steam 原作擷取",
+          "selectionClass": "canonical-game",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "sourcePlatform": "Windows (Steam)",
+          "kind": "exact",
+          "ready": true,
+          "old": false,
+          "defaultEligible": true,
+          "asset": {
+            "modelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+            "glbPath": "assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
+            "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
+            "s3Uri": null,
+            "gitPath": "content/assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
+            "limitations": [
+              "原作模型、貼圖、骨架與動作；本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
+              "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
+              "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
+              "原作法杖、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
+            ]
+          }
+        },
+        {
           "key": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
           "id": "300heroes:119",
           "name": "李小狼",
@@ -67768,7 +68021,7 @@
           "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review",
+          "readiness": "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -69262,29 +69515,67 @@
                 "sound-effect"
               ],
               "fileCount": 2280,
-              "modelState": "native-unreal-packages-extracted-pending-game-specific-export",
-              "animationState": "native-unreal-packages-extracted-pending-game-specific-export",
+              "modelState": "converted-webgl-accepted",
+              "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
               "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
               "audioState": "decoded-pending-listening-review",
-              "designStatus": "existing-hero-definition-present-pending-model-option",
-              "defaultEligible": false,
-              "backendSelectable": false,
-              "deployed": false
+              "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
+              "defaultEligible": true,
+              "backendSelectable": true,
+              "deployed": false,
+              "derivedRuntimeCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+              "runtimeEvidence": {
+                "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+                "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+                "body": {
+                  "path": "body.glb",
+                  "bytes": 2226392,
+                  "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+                },
+                "receipt": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+                  "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+                },
+                "webglReview": {
+                  "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+                  "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+                  "images": 18
+                },
+                "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+                "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+                "gitAcceptance": {
+                  "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+                  "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+                },
+                "conversionBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+                  "bytes": 23352148,
+                  "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+                  "fileCount": 115,
+                  "fullGetVerified": true,
+                  "allArchiveMembersSha256Verified": true,
+                  "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+                  "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+                  "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+                  "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+                }
+              }
             }
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-model-export-listening-and-binding",
-            "selectionVerified": false,
+            "state": "registered-on-feature-branch-pending-merge-and-deployment",
+            "selectionVerified": true,
             "release": null
           },
           "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
-            "Nine referenced media packages contain no .ubulk payload and are retained as explicit missing-payload relations.",
-            "Decoded clips passed container and PCM checks but still require speaker, language and event listening review.",
-            "Popp and Vearn Unreal models, textures, skeletons, animations and effects still require the game-specific exporter and visual acceptance.",
-            "EN801 is Vearn; its pre/post-transformation model variants are not yet visually classified.",
-            "EN653 is MystVearn, a separate character. EN680/EN681 are Baran and are not merged into either identity."
+            "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+            "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+            "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+            "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
+            "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
@@ -69354,7 +69645,44 @@
               ],
               "heroIds": []
             }
-          ]
+          ],
+          "runtimeEvidence": {
+            "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+            "body": {
+              "path": "body.glb",
+              "bytes": 2226392,
+              "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+            },
+            "receipt": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+              "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+            },
+            "webglReview": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+              "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+              "images": 18
+            },
+            "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+            "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+            "gitAcceptance": {
+              "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+              "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+            },
+            "conversionBackup": {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+              "bytes": 23352148,
+              "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+              "fileCount": 115,
+              "fullGetVerified": true,
+              "allArchiveMembersSha256Verified": true,
+              "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+              "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+              "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+              "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+            }
+          }
         }
       ],
       "paidCandidates": [],
@@ -168496,7 +168824,7 @@
         "format": "Unreal Engine 4.26 packages; Wwise custom Vorbis RIFF masters; decoded PCM WAV",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review",
+        "readiness": "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": false,
         "resourceRole": "canonical-game-model-animation-vfx-audio-reserve",
@@ -169990,29 +170318,67 @@
               "sound-effect"
             ],
             "fileCount": 2280,
-            "modelState": "native-unreal-packages-extracted-pending-game-specific-export",
-            "animationState": "native-unreal-packages-extracted-pending-game-specific-export",
+            "modelState": "converted-webgl-accepted",
+            "animationState": "seven-native-sequences-exported-five-distinct-runtime-clips",
             "vfxState": "native-unreal-packages-extracted-pending-game-specific-export",
             "audioState": "decoded-pending-listening-review",
-            "designStatus": "existing-hero-definition-present-pending-model-option",
-            "defaultEligible": false,
-            "backendSelectable": false,
-            "deployed": false
+            "designStatus": "existing-hero-definition-present-model-option-registered-feature-branch",
+            "defaultEligible": true,
+            "backendSelectable": true,
+            "deployed": false,
+            "derivedRuntimeCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "runtimeEvidence": {
+              "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+              "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+              "body": {
+                "path": "body.glb",
+                "bytes": 2226392,
+                "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+              },
+              "receipt": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+                "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+              },
+              "webglReview": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+                "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+                "images": 18
+              },
+              "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+              "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+              "gitAcceptance": {
+                "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+                "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+              },
+              "conversionBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+                "bytes": 23352148,
+                "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+                "fileCount": 115,
+                "fullGetVerified": true,
+                "allArchiveMembersSha256Verified": true,
+                "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+                "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+                "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+                "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+              }
+            }
           }
         ],
         "backendIntegration": {
           "required": true,
-          "state": "pending-game-specific-model-export-listening-and-binding",
-          "selectionVerified": false,
+          "state": "registered-on-feature-branch-pending-merge-and-deployment",
+          "selectionVerified": true,
           "release": null
         },
         "verification": "The PAK index yielded 2,280 exact PN020 members. AkLocalizedMediaAsset references from 565 PN010/PN020/EN801/EN653 events resolved to 938 media packages; 929 contained Wwise RIFF payloads and decoded to PCM WAV with exact source and output SHA-256. Nine package shells have no .ubulk payload and remain explicit gaps. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": [
-          "Nine referenced media packages contain no .ubulk payload and are retained as explicit missing-payload relations.",
-          "Decoded clips passed container and PCM checks but still require speaker, language and event listening review.",
-          "Popp and Vearn Unreal models, textures, skeletons, animations and effects still require the game-specific exporter and visual acceptance.",
-          "EN801 is Vearn; its pre/post-transformation model variants are not yet visually classified.",
-          "EN653 is MystVearn, a separate character. EN680/EN681 are Baran and are not merged into either identity."
+          "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+          "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+          "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
+          "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
+          "Feature-branch registration is not Main merge, production backend availability or deployment evidence."
         ],
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-popp-priority-audio-build-local-20240328/a62055962311efa39e3750078fb76fdd1c9f4ed4277785c977e241f85d26e167.zip",
@@ -170082,7 +170448,44 @@
             ],
             "heroIds": []
           }
-        ]
+        ],
+        "runtimeEvidence": {
+          "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+          "localRoot": "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
+          "body": {
+            "path": "body.glb",
+            "bytes": 2226392,
+            "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1"
+          },
+          "receipt": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00/receipt.json",
+            "sha256": "8c141462ef0cc44b2e728164ff2bb66a9006405eb32a4fdd1965a8334f5031b0"
+          },
+          "webglReview": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00/run.json",
+            "sha256": "1ded9e309b6afd94e4e7584fb5089e482c0d4ca5759050b7811e82a787a11df8",
+            "images": 18
+          },
+          "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+          "registeredVersionKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+          "gitAcceptance": {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json",
+            "sha256": "78b90f9247d41d6563eeb42b1c2568a8843ee10021070e17d5b1bbaf7b38efc3"
+          },
+          "conversionBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+            "bytes": 23352148,
+            "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+            "fileCount": 115,
+            "fullGetVerified": true,
+            "allArchiveMembersSha256Verified": true,
+            "gitManifestPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/conversion-scoped-manifest.json",
+            "gitManifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+            "gitReceiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/s3-conversion-receipt.json",
+            "gitReceiptSha256": "3c86fc8bb666150a5467b98178f55dcd16b379a353e437c6f1132cfd3a39d987"
+          }
+        }
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

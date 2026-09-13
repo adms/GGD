@@ -64,5 +64,21 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
             (review / "ggd-state-17.png").unlink()
             self.assertFalse(PIPELINE.validate_review(review))
 
+    def test_popp_recipe_pins_independent_export_roots_and_native_mapping(self):
+        config = json.loads((HERE / "pipeline-config.json").read_text(encoding="utf-8"))
+        popp = next(row for row in config["candidates"] if row["id"] == "popp-pn020-00")
+        self.assertEqual(popp["heroId"], "b2-popp")
+        self.assertEqual(popp["catalogCandidateId"], "infinity-strash-popp-pn020-00-native-v1")
+        self.assertEqual(
+            {"meshRoot", "materialContextRoot", "textureRoot", "psaRoot"},
+            {key for key in popp if key.endswith("Root")},
+        )
+        assembly = (HERE / "assemble_candidate_blender.py").read_text(encoding="utf-8")
+        runtime = (HERE / "prepare_runtime_candidate.mts").read_text(encoding="utf-8")
+        self.assertIn("SK_PN020_00_Body.gltf", assembly)
+        self.assertIn("AS_PN020_00_B_Special03_01.psa", assembly)
+        self.assertIn("'popp-pn020-00'", runtime)
+        self.assertIn("cast: 'GGD_native_special03'", runtime)
+
 if __name__ == "__main__":
     unittest.main()

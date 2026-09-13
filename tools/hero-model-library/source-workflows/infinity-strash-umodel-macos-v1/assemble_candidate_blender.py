@@ -71,6 +71,28 @@ CANDIDATES = {
             ("kaizer_phoenix", "Strash/Chara/Monster/EN801/Animations/AS_EN801_00_B_Special01_01_KaizerPhoenix.psa"),
         ],
     },
+    "popp-pn020-00": {
+        "parts": [
+            ("body", "Strash/Chara/Player/PN020/00/SK_PN020_00_Body.gltf"),
+            ("face", "Strash/Chara/Player/PN020/Face/SK_PN020_00_Face.gltf"),
+            ("hair", "Strash/Chara/Player/PN020/Hair/SK_PN020_00_Hair.gltf"),
+        ],
+        "textures": {
+            "body": "Strash/Chara/Player/PN020/00/T_PN020_00_Body_Base.png",
+            "bodyNormal": "Strash/Chara/Player/PN020/00/T_PN020_00_Body_N.png",
+            "face": "Strash/Chara/Player/PN020/Face/T_PN020_00_Face_Base.png",
+            "hair": "Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Base.png",
+        },
+        "animations": [
+            ("idle", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Idle01_Lp.psa"),
+            ("run", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Run01_F_Lp.psa"),
+            ("attack", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Atk01.psa"),
+            ("down", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Down01_Lp.psa"),
+            ("special01", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special01_01.psa"),
+            ("special02", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special02_01.psa"),
+            ("special03", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special03_01.psa"),
+        ],
+    },
 }
 
 
