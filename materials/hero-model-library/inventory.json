@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T17:16:29+08:00",
-  "inputsSha256": "03af51c00ad4480d6678db7155ff7e0d8e582dc9b0feb0baa4c0dd5976626058",
+  "generatedAt": "2026-09-13T18:02:18+08:00",
+  "inputsSha256": "3196ba9d8349c145902995dfd5c550a904e26b57c1c65d6524074b984dd58fd3",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -42180,7 +42180,7 @@
           "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "raw-packages-extracted-pending-game-specific-export",
+          "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-reserve",
@@ -42235,7 +42235,7 @@
                 "godie-n01c"
               ],
               "packageCount": 3838,
-              "formState": "body-variants-present-pending-visual-classification"
+              "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
             },
             {
               "nativeId": "EN801",
@@ -42245,7 +42245,7 @@
                 "godie-ubal"
               ],
               "packageCount": 902,
-              "formState": "pre-and-post-transformation-not-yet-visually-separated"
+              "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
             },
             {
               "nativeId": "EN653",
@@ -42258,17 +42258,18 @@
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-export-conversion-and-visual-review",
+            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
             "selectionVerified": false,
             "release": null
           },
-          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. This is raw package acquisition evidence only. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
           "limitations": [
-            "The public generic UModel build fails while serializing the Dai skeletal mesh; the public game-specific exporter is Windows-only and has not been executed on this Mac.",
-            "EN801 is confirmed as Vearn, but body variants have not been visually classified as pre- or post-transformation.",
+            "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
+            "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "No package is converted, visually accepted, registered as a model option, backend-selectable or deployed."
+            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
+            "No component is registered as a model option, backend-selectable or deployed."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -42324,7 +42325,14 @@
             "Baran",
             "巴蘭",
             "バラン"
-          ]
+          ],
+          "conversionEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
+            "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+            "meshGltfCount": 29,
+            "texturePngCount": 97,
+            "nativePsaAnimationCount": 12
+          }
         },
         {
           "id": "steam-infinity-strash-primary-paks-build-local-20240328",
@@ -44585,7 +44593,7 @@
           "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "raw-packages-extracted-pending-game-specific-export",
+          "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-reserve",
@@ -44640,7 +44648,7 @@
                 "godie-n01c"
               ],
               "packageCount": 3838,
-              "formState": "body-variants-present-pending-visual-classification"
+              "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
             },
             {
               "nativeId": "EN801",
@@ -44650,7 +44658,7 @@
                 "godie-ubal"
               ],
               "packageCount": 902,
-              "formState": "pre-and-post-transformation-not-yet-visually-separated"
+              "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
             },
             {
               "nativeId": "EN653",
@@ -44663,17 +44671,18 @@
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-export-conversion-and-visual-review",
+            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
             "selectionVerified": false,
             "release": null
           },
-          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. This is raw package acquisition evidence only. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
           "limitations": [
-            "The public generic UModel build fails while serializing the Dai skeletal mesh; the public game-specific exporter is Windows-only and has not been executed on this Mac.",
-            "EN801 is confirmed as Vearn, but body variants have not been visually classified as pre- or post-transformation.",
+            "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
+            "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "No package is converted, visually accepted, registered as a model option, backend-selectable or deployed."
+            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
+            "No component is registered as a model option, backend-selectable or deployed."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -44729,7 +44738,14 @@
             "Baran",
             "巴蘭",
             "バラン"
-          ]
+          ],
+          "conversionEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
+            "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+            "meshGltfCount": 29,
+            "texturePngCount": 97,
+            "nativePsaAnimationCount": 12
+          }
         },
         {
           "id": "steam-infinity-strash-primary-paks-build-local-20240328",
@@ -49330,7 +49346,7 @@
           "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
           "accessStatus": "local-installed-game-readonly-share",
           "acquisitionStatus": "downloaded-verified",
-          "readiness": "raw-packages-extracted-pending-game-specific-export",
+          "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
           "purchaseDecision": "no-purchase-user-owned-install",
           "defaultEligible": false,
           "resourceRole": "canonical-game-reserve",
@@ -49385,7 +49401,7 @@
                 "godie-n01c"
               ],
               "packageCount": 3838,
-              "formState": "body-variants-present-pending-visual-classification"
+              "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
             },
             {
               "nativeId": "EN801",
@@ -49395,7 +49411,7 @@
                 "godie-ubal"
               ],
               "packageCount": 902,
-              "formState": "pre-and-post-transformation-not-yet-visually-separated"
+              "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
             },
             {
               "nativeId": "EN653",
@@ -49408,17 +49424,18 @@
           ],
           "backendIntegration": {
             "required": true,
-            "state": "pending-game-specific-export-conversion-and-visual-review",
+            "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
             "selectionVerified": false,
             "release": null
           },
-          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. This is raw package acquisition evidence only. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
           "limitations": [
-            "The public generic UModel build fails while serializing the Dai skeletal mesh; the public game-specific exporter is Windows-only and has not been executed on this Mac.",
-            "EN801 is confirmed as Vearn, but body variants have not been visually classified as pre- or post-transformation.",
+            "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
+            "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-            "No package is converted, visually accepted, registered as a model option, backend-selectable or deployed."
+            "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
+            "No component is registered as a model option, backend-selectable or deployed."
           ],
           "backup": {
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -49474,7 +49491,14 @@
             "Baran",
             "巴蘭",
             "バラン"
-          ]
+          ],
+          "conversionEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
+            "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+            "meshGltfCount": 29,
+            "texturePngCount": 97,
+            "nativePsaAnimationCount": 12
+          }
         },
         {
           "id": "steam-infinity-strash-primary-paks-build-local-20240328",
@@ -167780,7 +167804,7 @@
         "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
-        "readiness": "raw-packages-extracted-pending-game-specific-export",
+        "readiness": "native-model-texture-animation-components-converted-pending-final-assembly",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": false,
         "resourceRole": "canonical-game-reserve",
@@ -167835,7 +167859,7 @@
               "godie-n01c"
             ],
             "packageCount": 3838,
-            "formState": "body-variants-present-pending-visual-classification"
+            "formState": "eight-body-variants-exported-and-geometry-reviewed-pending-final-textured-selection"
           },
           {
             "nativeId": "EN801",
@@ -167845,7 +167869,7 @@
               "godie-ubal"
             ],
             "packageCount": 902,
-            "formState": "pre-and-post-transformation-not-yet-visually-separated"
+            "formState": "pre-transformation-old-vearn-visually-confirmed-post-transformation-not-located"
           },
           {
             "nativeId": "EN653",
@@ -167858,17 +167882,18 @@
         ],
         "backendIntegration": {
           "required": true,
-          "state": "pending-game-specific-export-conversion-and-visual-review",
+          "state": "converted-components-pending-textured-multipart-animation-assembly-and-ggd-validation",
           "selectionVerified": false,
           "release": null
         },
-        "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. This is raw package acquisition evidence only. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests.",
         "limitations": [
-          "The public generic UModel build fails while serializing the Dai skeletal mesh; the public game-specific exporter is Windows-only and has not been executed on this Mac.",
-          "EN801 is confirmed as Vearn, but body variants have not been visually classified as pre- or post-transformation.",
+          "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
+          "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
           "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
           "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
-          "No package is converted, visually accepted, registered as a model option, backend-selectable or deployed."
+          "Converted GLB bodies are untextured skeletal components; multipart assembly, texture binding, animation conversion into the final GLB and GGD contract validation remain open.",
+          "No component is registered as a model option, backend-selectable or deployed."
         ],
         "backup": {
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -167924,7 +167949,14 @@
           "Baran",
           "巴蘭",
           "バラン"
-        ]
+        ],
+        "conversionEvidence": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/conversion-summary.json",
+          "sha256": "e72a49ab4386517078146f9e97d21183ed6219aaea1f3e0aa535d390e7129efc",
+          "meshGltfCount": 29,
+          "texturePngCount": 97,
+          "nativePsaAnimationCount": 12
+        }
       },
       {
         "id": "steam-infinity-strash-primary-paks-build-local-20240328",
