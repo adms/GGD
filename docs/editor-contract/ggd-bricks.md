@@ -23,7 +23,7 @@ capability 指紋：`fb8d3eb8`
 | gaps | 55 |
 | missingAdminForm | 55 |
 | missingEditorForm | 4 |
-| zeroAdoption | 46 |
+| zeroAdoption | 45 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -246,7 +246,7 @@ capability 指紋：`fb8d3eb8`
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `billboard` | 0 | 0 | 0 | ⛔ | ✅ | 0 |
+| `billboard` | 0 | 0 | 0 | ⛔ | ✅ | 12 |
 | `decal` | 0 | 0 | 0 | ⛔ | ✅ | 0 |
 | `ribbon` | 0 | 0 | 0 | ⛔ | ✅ | 0 |
 | `trail` | 0 | 0 | 0 | ⛔ | ✅ | 0 |
