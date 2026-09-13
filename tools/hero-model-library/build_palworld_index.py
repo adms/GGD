@@ -24,8 +24,9 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def model_components(data, repo=ROOT):
+def model_components(data, repo=ROOT, git_link_root=None):
     """Expose verified component copies without inventing hero/runtime registration."""
+    git_link_root = repo if git_link_root is None else git_link_root
     result = []
     for character in data['characters']:
         for candidate in character['modelCandidates']:
@@ -40,12 +41,12 @@ def model_components(data, repo=ROOT):
             assert path.is_file() and path.stat().st_size == candidate['bytes']
             assert sha(path) == candidate['sha256'], 'Changed component: ' + relative
             result.append(dict(candidate, characterIdentity=character['backlogIdentity'],
-                characterName=character['name'], gitAbsolutePath=str(path.resolve()),
+                characterName=character['name'], gitAbsolutePath=str((git_link_root / relative).resolve()),
                 ggdHeroImplemented=False, runtimeDropdownRegistered=False))
     return result
 
 
-def build(workspace):
+def build(workspace, git_link_root=ROOT):
     paths = [BASE / 'download-sources.json', BASE / 'public-source-files.json',
              BASE / 'design-backlog/sources-supplemental.json', BASE / 'palworld/character-settings.json',
              BASE / 'priority-evidence/palworld-hero-integration/receipt.json']
@@ -130,7 +131,7 @@ def build(workspace):
         'The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym now has a separately validated 7,996-triangle historical candidate registered as a non-default option; production deployment remains unverified.',
         'Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.',
         'Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified.'])
-    components = model_components(result)
+    components = model_components(result, ROOT, git_link_root)
     result['gitModelComponentCount'] = len(components)
     result['gitModelComponents'] = components
     return result
@@ -198,9 +199,11 @@ def render(data):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=ROOT.parent)
+    parser.add_argument('--git-link-root', type=Path, default=ROOT,
+        help='Checkout root used only for absolute Git links in generated evidence.')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
-    data = build(args.workspace.resolve())
+    data = build(args.workspace.resolve(), args.git_link_root.resolve())
     products = {BASE / 'palworld' / (TITLE + '.json'): json.dumps(data, ensure_ascii=False, indent=2) + '\n',
                 BASE / 'palworld' / (TITLE + '.md'): render(data)}
     for path, value in products.items():

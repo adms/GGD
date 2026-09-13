@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "bf92a0ee0959e14857c031c6f553ff01e7b86b1e927913a3fd487d2270b1ec08"
+      "sha256": "190142cf08ac9afecefbe3ff356aa4e91952acf50b9374d7390cd73f8c3f896e"
     }
   },
   "summary": {
@@ -5134,6 +5134,8 @@
       ],
       "currentResourceTopLevelKeys": [
         "assetWorkflowRestorationManifest",
+        "fateUnlimitedCodesPlatformDocument",
+        "fateUnlimitedCodesPlatformIndex",
         "fateubwMotionReserve",
         "historicalModelOptionRegistration",
         "historicalModelRestorationReceipt",

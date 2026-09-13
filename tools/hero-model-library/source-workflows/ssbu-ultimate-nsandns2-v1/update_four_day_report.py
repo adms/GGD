@@ -10,6 +10,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[4]
 REPORT = REPO / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 DOWNLOADS = REPO / "materials/hero-model-library/download-sources.json"
+KOF_INDEX = REPO / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
 START = "- Sonic c00 "
 END = "\n- SSBU c00 第二批黑底修復版："
 
@@ -19,7 +20,7 @@ def render() -> str:
     source = next(row for row in data["publicSources"] if row.get("id") == "gitlab-ssbu-models")
     candidate = next(row for row in source["componentCandidates"] if row.get("id") == "ssbu-sonic-c00-static-skinned-v2")
     receipt = candidate["s3BackupEvidence"]["gitPath"]
-    return (
+    sonic = (
         f"- Sonic c00 正式減面版：舊 8,980 面黑底修復版完整保留；新 `{candidate['sha256'][:8]}…` "
         f"為 **{candidate['triangles']:,}** 面、{candidate['drawPrimitives']} draw、{candidate['jointCount']} joints、"
         f"{candidate['textureCount']} 張最大 256px 貼圖。固定 material-weighted 流程保留眼睛、皮膚與材質分配，"
@@ -28,6 +29,25 @@ def render() -> str:
         "所以維持待設計獨立元件，後台選項與部署都是 0。Full S3 轉換階段 28 檔已完整 GET 與逐 member SHA 驗證："
         f"`{candidate['s3Uri']}`；Git 收據：`{receipt}`。"
     )
+    if not KOF_INDEX.is_file():
+        return sonic
+    kof = json.loads(KOF_INDEX.read_text())
+    xiv = kof["kofXiv"]
+    ash = kof["kofXv"]["newBudgetCandidates"]
+    left, right = ash["candidates"]
+    s3 = ash["s3BackupReceipt"]
+    kof_line = (
+        f"- KOF 3D 來源批次：KOF XIV WAD 清單有 {xiv['wadPathIndex']['listedFiles']:,} 檔／"
+        f"{xiv['wadPathIndex']['listedBytes']:,} payload bytes／{xiv['wadPathIndex']['nativeDirectoryCount']} 個原生目錄；"
+        f"MAI、IOR、KYO 已抽取並逐檔 SHA 驗證 {xiv['selectedExtraction']['verification']['checkedFiles']:,} 檔／"
+        f"{xiv['selectedExtraction']['verification']['checkedBytes']:,} bytes，但專有模型、動作與 VFX 轉換器仍未驗證。"
+        f"KOF XV Ash 左／右髮候選已轉為 {left['metrics']['triangles']:,}／{right['metrics']['triangles']:,} 面、"
+        f"{left['metrics']['maxSkinJoints']} joints、{left['metrics']['imageCount']} 張最大 {left['metrics']['maxTextureDimension']}px 貼圖；"
+        f"兩者仍為 {left['metrics']['drawCalls']} draw、0 gameplay clips，且未做視覺 A/B，所以狀態維持轉換候選，"
+        f"未進 runtime Git、未設預設或後台選項。Maximum Impact 系列實檔仍為 0；KOF 2002 UM 分開列為 2D。"
+        f"Ash 六檔轉換階段已做完整 S3 GET／逐 member SHA：`{s3['s3Uri']}`。"
+    )
+    return sonic + "\n" + kof_line
 
 
 def main() -> None:

@@ -12,6 +12,22 @@ def read(path):
     return json.loads(payload.decode('utf-8'))
 
 
+def rebase_git_absolute_paths(value, source_root, link_root):
+    """Keep generated local Git links stable when rebuilding in an isolated worktree."""
+    source_root=source_root.resolve();link_root=link_root.resolve()
+    if isinstance(value,list):
+        for item in value:rebase_git_absolute_paths(item,source_root,link_root)
+    elif isinstance(value,dict):
+        for key,item in value.items():
+            if key=='gitAbsolutePath' and isinstance(item,str):
+                absolute=Path(item).resolve()
+                try:relative=absolute.relative_to(source_root)
+                except ValueError:pass
+                else:value[key]=str(link_root/relative)
+            else:rebase_git_absolute_paths(item,source_root,link_root)
+    return value
+
+
 def verify_git_contents(entries, repo=ROOT):
     """Require each catalogued Git path to exist in the index with its declared digest."""
     for entry in entries:
@@ -140,7 +156,7 @@ def apply_hero_integration_overlay(components, receipt, receipt_git_path):
     return components
 
 
-def build():
+def build(git_link_root=ROOT):
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
     windows_game_inventory=read(windows_game_inventory_path)
@@ -371,15 +387,17 @@ def build():
             productionDeploymentVerified=False),
         modelComponentSourceIndex=dict(gitPath=str(component_source_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_source_path.read_bytes()).hexdigest()))
-    return result
+    return rebase_git_absolute_paths(result,ROOT,git_link_root)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', help='Verify the generated index without writing it.')
     parser.add_argument('--check-git', action='store_true', help='Also require exact component bytes in the Git index.')
+    parser.add_argument('--git-link-root', type=Path, default=ROOT,
+        help='Checkout root used only for absolute Git links in generated evidence.')
     args = parser.parse_args()
-    result = build()
+    result = build(args.git_link_root.resolve())
     if args.check_git:
         # Historical pre-normalization GLBs are separate from selectable model
         # components, but their catalog paths still claim that exact Git blobs

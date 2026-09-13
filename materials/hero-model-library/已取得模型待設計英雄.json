@@ -60,7 +60,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45"
+      "sha256": "3174444d8cc13fbca8f20c40fdaa41f5e00997d380e3950f8e9440a02264b85d"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -190402,7 +190402,8 @@
       "work": "The King of Fighters",
       "sourceIds": [
         "kof-open3dlab-ash-xv",
-        "kof-open3dlab-ash-xv-material-repair-v2"
+        "kof-open3dlab-ash-xv-material-repair-v2",
+        "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1"
       ],
       "modelCandidates": [
         {
@@ -190538,6 +190539,70 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2/converted/right-hair/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
+          "existsLocal": true,
+          "bytes": 1945824,
+          "sha256": "e54ee27ffca194fd9179481fed260349d93954fad4c48169b37a482d95fb53ee",
+          "sha256Status": "exact-local-sha256-verified",
+          "magicHex": "676c544602000000e0b01d00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 2,
+            "primitives": 18,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "kof-xv-ash-crimson-open3dlab-left-hair-material-v2-budget-v1",
+          "library": "community",
+          "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+          "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
+          "converted": true,
+          "limitations": [
+            "Both candidates remain at 18 draw calls, above the current 3 draw-call adoption limit.",
+            "The existing atlas stage rejected this source because it found fewer than two mergeable primitives after transform constraints.",
+            "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
+            "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
+          ],
+          "identityReviewRequired": false,
+          "recordedBytes": 1945824,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
+          "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
+          "existsLocal": true,
+          "bytes": 1946104,
+          "sha256": "707e3dde8ddd50d71935a079def959399b741aa199a1192eb36343ab337193bf",
+          "sha256Status": "exact-local-sha256-verified",
+          "magicHex": "676c544602000000f8b11d00",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 2,
+            "primitives": 18,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "kof-xv-ash-crimson-open3dlab-right-hair-material-v2-budget-v1",
+          "library": "community",
+          "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+          "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
+          "converted": true,
+          "limitations": [
+            "Both candidates remain at 18 draw calls, above the current 3 draw-call adoption limit.",
+            "The existing atlas stage rejected this source because it found fewer than two mergeable primitives after transform constraints.",
+            "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
+            "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
+          ],
+          "identityReviewRequired": false,
+          "recordedBytes": 1946104,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
@@ -190568,7 +190633,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "原作可播放動作0；3個單幀pose不算動作。4GLB皆0動畫。",
+        "motion": "原作可播放動作0；3個單幀pose不算動作。6GLB皆0動畫；新減面候選仍待 draw-call 與視覺驗收。",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 86 個音訊檔，音效／語音待分型",
         "voice": "已入索引86音訊檔；語音/說話者/逐段語系未全聽審。",
@@ -190619,6 +190684,24 @@
             "provenance": null,
             "readiness": "standard-glb-candidate-material-repaired-runtime-review-pending",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "kof-xv-ash-crimson-open3dlab-left-hair-material-v2-budget-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": "meshoptimizer-derived-from-material-repair-v2",
+            "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
+            "evidence": "exact local SHA-256, GLB metrics and S3 readback receipt; not runtime acceptance"
+          },
+          {
+            "candidateId": "kof-xv-ash-crimson-open3dlab-right-hair-material-v2-budget-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": "meshoptimizer-derived-from-material-repair-v2",
+            "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
+            "evidence": "exact local SHA-256, GLB metrics and S3 readback receipt; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],

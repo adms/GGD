@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T05:46:09+08:00",
-  "inputsSha256": "cbbfd5998ebdbdbc426b620e324acd03f7b3ebe6cb0b5ed8dc40d037f944e848",
+  "generatedAt": "2026-09-14T05:55:04+08:00",
+  "inputsSha256": "4c65062a96c2473a96dbb23243ae633d53969ffa52dc86ebefc0bda646339ea8",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -185598,6 +185598,143 @@
             "s3Use": "backup-only-not-runtime-entry"
           }
         ]
+      },
+      {
+        "id": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+        "target": "KOF XV／Ash Crimson／左右髮材質修訂版的 GGD 預算候選",
+        "heroIds": [],
+        "ownerEntryIds": [],
+        "url": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+        "uploader": "Anthony; original XPS model credited to MichiFreddy35",
+        "format": "2 GLB / embedded 256px PNG / skin-preserving meshoptimizer derivation",
+        "accessStatus": "derived-from-acquired-public-source",
+        "acquisitionStatus": "downloaded-verified",
+        "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
+        "purchaseDecision": "no-purchase-existing-public-source",
+        "defaultEligible": false,
+        "resourceRole": "character-model-budget-candidate",
+        "localPath": "GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2",
+        "sourceGame": "The King of Fighters XV",
+        "platform": "unknown-original-platform; derived offline on macOS",
+        "selectionClass": "community-mod",
+        "discoveryChannel": "model-sharing-community-public-free-mirror",
+        "derivedFromSourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton"
+        ],
+        "publicationStatus": "s3-legacy-readback-verified",
+        "modelCandidates": [
+          {
+            "candidateId": "kof-xv-ash-crimson-open3dlab-left-hair-material-v2-budget-v1",
+            "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+            "character": "Ash Crimson",
+            "heroIds": [],
+            "sourceGame": "The King of Fighters XV",
+            "sourcePlatform": "unknown-original-platform",
+            "platformEvidence": "Upstream author identifies KOF XV; the original game installation platform and patch are not specified.",
+            "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+            "author": "Anthony; original XPS model credited to MichiFreddy35",
+            "sourceClass": "mod-community-port-derived-budget-candidate",
+            "derivedFromSourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+            "variant": "left-hair",
+            "model": "left-hair/body.glb",
+            "bytes": 1945824,
+            "sha256": "e54ee27ffca194fd9179481fed260349d93954fad4c48169b37a482d95fb53ee",
+            "readyStage": "converted-partial-budget-pending-drawcall-and-visual-review",
+            "triangles": 7869,
+            "drawCalls": 18,
+            "meshCount": 2,
+            "skinCount": 1,
+            "jointCounts": [
+              258
+            ],
+            "animationCount": 0,
+            "textureCount": 15,
+            "maxTextureDimension": 256,
+            "rigSurvivalVerified": true,
+            "triangleBudgetPassed": true,
+            "textureDimensionPassed": true,
+            "jointBudgetPassed": true,
+            "drawCallBudgetPassed": false,
+            "visualReviewPassed": false,
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "defaultChanged": false,
+            "candidateMustBeRetained": true,
+            "originalBytesPreserved": true,
+            "limitations": [
+              "Both candidates remain at 18 draw calls, above the current 3 draw-call adoption limit.",
+              "The existing atlas stage rejected this source because it found fewer than two mergeable primitives after transform constraints.",
+              "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
+              "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
+            ]
+          },
+          {
+            "candidateId": "kof-xv-ash-crimson-open3dlab-right-hair-material-v2-budget-v1",
+            "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+            "character": "Ash Crimson",
+            "heroIds": [],
+            "sourceGame": "The King of Fighters XV",
+            "sourcePlatform": "unknown-original-platform",
+            "platformEvidence": "Upstream author identifies KOF XV; the original game installation platform and patch are not specified.",
+            "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+            "author": "Anthony; original XPS model credited to MichiFreddy35",
+            "sourceClass": "mod-community-port-derived-budget-candidate",
+            "derivedFromSourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+            "variant": "right-hair",
+            "model": "right-hair/body.glb",
+            "bytes": 1946104,
+            "sha256": "707e3dde8ddd50d71935a079def959399b741aa199a1192eb36343ab337193bf",
+            "readyStage": "converted-partial-budget-pending-drawcall-and-visual-review",
+            "triangles": 7868,
+            "drawCalls": 18,
+            "meshCount": 2,
+            "skinCount": 1,
+            "jointCounts": [
+              258
+            ],
+            "animationCount": 0,
+            "textureCount": 15,
+            "maxTextureDimension": 256,
+            "rigSurvivalVerified": true,
+            "triangleBudgetPassed": true,
+            "textureDimensionPassed": true,
+            "jointBudgetPassed": true,
+            "drawCallBudgetPassed": false,
+            "visualReviewPassed": false,
+            "runtimeReady": false,
+            "backendSelectionVerified": false,
+            "defaultChanged": false,
+            "candidateMustBeRetained": true,
+            "originalBytesPreserved": true,
+            "limitations": [
+              "Both candidates remain at 18 draw calls, above the current 3 draw-call adoption limit.",
+              "The existing atlas stage rejected this source because it found fewer than two mergeable primitives after transform constraints.",
+              "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
+              "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
+            ]
+          }
+        ],
+        "verification": "Both derivatives preserve one 258-joint skin and all 18 skinned primitives, reduce 94,274 triangles to 7,869/7,868, resize all 15 embedded images from 2,048 to 256, pass the Babylon loader, and have exact local SHA-256. They remain non-runtime candidates because draw calls are 18 (>3), the project atlas step rejected the primitive/transform layout, and no source-versus-decimated visual review or gameplay animation exists.",
+        "backendIntegration": {
+          "required": true,
+          "state": "pending-drawcall-reduction-visual-review-action-and-binding",
+          "selectionVerified": false
+        },
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-material-v2-budget-v2/d682b476c546314251ea935997cfa8082773a7fdf0404314075353a10079ebaa.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xv-ash-material-v2-budget-v2/d682b476c546314251ea935997cfa8082773a7fdf0404314075353a10079ebaa.files.json",
+          "bytes": 2840347,
+          "sha256": "d682b476c546314251ea935997cfa8082773a7fdf0404314075353a10079ebaa",
+          "archiveFormat": "tar-gzip",
+          "fileCount": 6,
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "allMemberSha256Verified": true,
+          "usage": "manual-only legacy conversion backup; not runtime-ready"
+        }
       }
     ],
     "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

@@ -4,7 +4,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
-from current_resource_index import apply_hero_integration_overlay, apply_option_registration_overlay, component_git_evidence, verify_git_contents
+from current_resource_index import apply_hero_integration_overlay, apply_option_registration_overlay, component_git_evidence, rebase_git_absolute_paths, verify_git_contents
 
 
 class CurrentResourceGitFilesTest(unittest.TestCase):
@@ -121,6 +121,15 @@ class CurrentResourceGitFilesTest(unittest.TestCase):
         self.assertTrue(current['runtimeDropdownRegistered'])
         self.assertEqual(current['heroIds'], ['acquired-pal'])
         self.assertEqual(current['modelDocumentGitPath'], 'content/models/community.body.pal.json')
+
+    def test_git_absolute_links_can_target_the_integration_checkout(self):
+        source = self.repo / 'isolated'
+        target = self.repo / 'integration'
+        value = {'gitAbsolutePath': str(source / 'content/model.glb'),
+                 'sourceAbsolutePath': str(source / 'raw/source.glb')}
+        rebase_git_absolute_paths(value, source, target)
+        self.assertEqual(str((target / 'content/model.glb').resolve()), value['gitAbsolutePath'])
+        self.assertEqual(str(source / 'raw/source.glb'), value['sourceAbsolutePath'])
 
 
 if __name__ == '__main__':
