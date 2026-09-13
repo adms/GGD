@@ -1,0 +1,70 @@
+{
+  "schema": "ggd-infinity-strash-priority-raw-evidence@1",
+  "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+  "sourcePak": {
+    "path": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+    "bytes": 8332792957,
+    "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee"
+  },
+  "secondaryPakProbe": {
+    "path": "/Volumes/common/Strash/strash/Content/Paks/pakchunk1-WindowsClient.pak",
+    "bytes": 4382548320,
+    "sha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+    "indexedEntries": 12254,
+    "directNativeIdMatches": 0
+  },
+  "selection": {
+    "nativeIdTokens": [
+      "PN010",
+      "EN801",
+      "EN653"
+    ],
+    "pakEntries": 181304,
+    "selectedEntries": 5530
+  },
+  "countsByIdentity": {
+    "EN653": 790,
+    "EN801": 902,
+    "PN010": 3838
+  },
+  "countsByCategory": {
+    "animation-or-cinematic": 2404,
+    "audio-event-or-audio-package": 1006,
+    "character-model-or-configuration": 1204,
+    "related-package": 401,
+    "texture-or-material": 96,
+    "vfx": 419
+  },
+  "totalBytes": 546039697,
+  "extractionIndex": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json",
+    "sha256": "5f944696172d33b0e3c97880ceb96a2085de91d1cb42a44402142ca1989ddb24"
+  },
+  "states": {
+    "acquired": true,
+    "pakIndexRead": true,
+    "rawSelectedPackagesExtracted": true,
+    "modelConverted": false,
+    "visuallyAccepted": false,
+    "heroRegistered": false,
+    "backendSelectable": false,
+    "deployed": false
+  },
+  "limitations": [
+    "The public generic UModel build fails while serializing the Dai skeletal mesh; the public game-specific exporter is Windows-only and has not been executed on this Mac.",
+    "EN801 is confirmed as Vearn, but body variants have not been visually classified as pre- or post-transformation.",
+    "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
+    "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
+    "No package is converted, visually accepted, registered as a model option, backend-selectable or deployed."
+  ],
+  "s3Backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
+    "archiveBytes": 240447329,
+    "archiveSha256": "57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229",
+    "archiveMembers": 5532,
+    "readbackVerified": true,
+    "allMemberSha256Verified": true,
+    "receiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/s3-backup-receipt.json",
+    "receiptSha256": "f3012d81e259601fc585631c1301bcc5a12b6df86344cac35744a5111bf20d41"
+  }
+}

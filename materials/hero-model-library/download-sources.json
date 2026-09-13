@@ -53425,6 +53425,120 @@
         "fullGetVerified": true,
         "allMemberSha256Verified": true
       }
+    },
+    {
+      "id": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+      "target": "Infinity Strash 原作：小呆／達伊 PN010、巴恩 EN801、密斯特巴恩 EN653 原始套件",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c",
+        "godie-ubal"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://www.square-enix.com/asia/newsportal/en/topics/infinitystrash-dragonquest-aod/post01.html",
+      "uploader": "User-owned local Steam install exposed through read-only SMB",
+      "format": "Unreal Engine 4.26 PAK v11 / Zlib; extracted .uasset/.uexp/.ubulk packages",
+      "accessStatus": "local-installed-game-readonly-share",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "raw-packages-extracted-pending-game-specific-export",
+      "purchaseDecision": "no-purchase-user-owned-install",
+      "defaultEligible": false,
+      "resourceRole": "canonical-game-reserve",
+      "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2",
+      "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+      "platform": "Windows (Steam)",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "local-readonly-smb",
+      "assetKinds": [
+        "model-package",
+        "texture-material-package",
+        "skeleton-package",
+        "animation-cinematic-package",
+        "vfx-package",
+        "audio-event-package",
+        "character-configuration"
+      ],
+      "publicationStatus": "s3-readback-verified",
+      "files": [
+        {
+          "path": "/Volumes/common/Strash/strash/Content/Paks/pakchunk0-WindowsClient.pak",
+          "bytes": 8332792957,
+          "sha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee"
+        }
+      ],
+      "rawPackageIndex": {
+        "path": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-priority-raw-v2/extraction-index.json",
+        "sha256": "5f944696172d33b0e3c97880ceb96a2085de91d1cb42a44402142ca1989ddb24",
+        "fileCount": 5530,
+        "bytes": 546039697,
+        "countsByIdentity": {
+          "EN653": 790,
+          "EN801": 902,
+          "PN010": 3838
+        },
+        "countsByCategory": {
+          "animation-or-cinematic": 2404,
+          "audio-event-or-audio-package": 1006,
+          "character-model-or-configuration": 1204,
+          "related-package": 401,
+          "texture-or-material": 96,
+          "vfx": 419
+        }
+      },
+      "identities": [
+        {
+          "nativeId": "PN010",
+          "nameZh": "小呆／達伊",
+          "originalName": "Dai",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "packageCount": 3838,
+          "formState": "body-variants-present-pending-visual-classification"
+        },
+        {
+          "nativeId": "EN801",
+          "nameZh": "巴恩大魔王",
+          "originalName": "Vearn",
+          "heroIds": [
+            "godie-ubal"
+          ],
+          "packageCount": 902,
+          "formState": "pre-and-post-transformation-not-yet-visually-separated"
+        },
+        {
+          "nativeId": "EN653",
+          "nameZh": "密斯特巴恩",
+          "originalName": "MystVearn",
+          "heroIds": [],
+          "packageCount": 790,
+          "formState": "separate-character-pending-hero-design-and-binding"
+        }
+      ],
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-game-specific-export-conversion-and-visual-review",
+        "selectionVerified": false,
+        "release": null
+      },
+      "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. This is raw package acquisition evidence only. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "limitations": [
+        "The public generic UModel build fails while serializing the Dai skeletal mesh; the public game-specific exporter is Windows-only and has not been executed on this Mac.",
+        "EN801 is confirmed as Vearn, but body variants have not been visually classified as pre- or post-transformation.",
+        "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
+        "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
+        "No package is converted, visually accepted, registered as a model option, backend-selectable or deployed."
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
+        "bytes": 240447329,
+        "sha256": "57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
@@ -53826,7 +53940,11 @@
         "ja",
         "en"
       ],
-      "defaultPolicy": "Keep all independent versions; current approved Popp derivative remains manual priority until an explicit selection change."
+      "defaultPolicy": "Keep all independent versions; current approved Popp derivative remains manual priority until an explicit selection change.",
+      "fulfilledBySourceIds": [
+        "steam-infinity-strash-priority-original-assets-build-local-20240328"
+      ],
+      "acquisitionFollowup": "User-owned Windows Steam PAKs became available through read-only SMB. Priority PN010/EN801/EN653 packages are extracted and SHA-indexed; Popp PN020 and Vearn form classification remain open."
     },
     {
       "id": "lead-vearn-mmd-sketchfab-a264ddd",
