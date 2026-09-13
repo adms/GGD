@@ -26,8 +26,9 @@ def digest(path: Path) -> str:
     return hasher.hexdigest()
 
 
-def encoded(value: object) -> bytes:
-    return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode()
+def encoded(value: object, output: Path) -> bytes:
+    payload = (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode()
+    return gzip.compress(payload, compresslevel=9, mtime=0) if output.suffix == ".gz" else payload
 
 
 def build(group_id: str, workspace_override: Path | None = None) -> dict:
@@ -139,7 +140,7 @@ def build(group_id: str, workspace_override: Path | None = None) -> dict:
         "boundaries": [
             "Directory and filename grouping is not per-clip speaker, language, transcript or event verification.",
             "Local byte verification is not decoded-audio quality, listening, synthesis, runtime binding or deployment acceptance.",
-            "Original OGG files remain in the local asset library and S3 legacy; this receipt contains paths and hashes only.",
+            "Source audio files remain in the local asset library and S3 legacy; this receipt contains paths and hashes only.",
         ],
     }
 
@@ -151,15 +152,15 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    blob = encoded(build(args.group_id, args.workspace))
     output = args.output.resolve()
+    report = build(args.group_id, args.workspace)
+    blob = encoded(report, output)
     if args.check:
         if not output.is_file() or output.read_bytes() != blob:
             raise SystemExit(f"STALE VOICE GROUP VERIFICATION: {output}")
     else:
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_bytes(blob)
-    report = json.loads(blob)
     print(json.dumps({"check": args.check, "groupId": args.group_id, **report["summary"]}, ensure_ascii=False))
     return 0
 

@@ -24,6 +24,8 @@
 
 完成後 latest-seven-delivery-receipt.json 指向不可變 deliveries/local-audio-delivery-*.json。其 localRoot 指向來源根，files[].path 是相對來源根的 PCM 路徑，audioGroups 含專案 heroIds。seven-voice-index.json 是便於其他工作流讀取的七名索引。它們引用既有檔案，不重製音訊或更改舊交付。
 
+本機實檔驗證入口為 [local-file-verification/README.md](local-file-verification/README.md) 與 [local-file-verification/index.json](local-file-verification/index.json)。七名合計 4,927 個 WAV 已逐檔核對存在、bytes 與 SHA-256，缺檔及不符均為 0；這項驗證不取代逐段語言、說話者、台詞、事件、合成用途或 runtime 聽審。
+
 git-handoff-files.json 列出窄版 Git 交付：程式、設定、精簡索引、SHA 與文件。含逐檔詳情的完整 delivery JSON 另留本機，精簡索引用路徑與 SHA 引用，交主工作流決定備份位置；實際音訊／WAD 依主工作流儲存規則處理，本輪不執行 Git 或 S3 操作。native banks、event 關聯、語系來源標記、逐段聽審是不同狀態；PCM 檔數不代表已確認角色台詞數。
 
 本輪僅 ja_JP 來源語系已由 manifest 確認；未逐段聽審、未確認說話者、未轉錄、未整理為可合成資料集。Float32 保留超過 1 的原始峰值，播放或轉整數格式前由使用者記錄 gain 決策。

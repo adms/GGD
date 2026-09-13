@@ -4264,6 +4264,6 @@
   "boundaries": [
     "Directory and filename grouping is not per-clip speaker, language, transcript or event verification.",
     "Local byte verification is not decoded-audio quality, listening, synthesis, runtime binding or deployment acceptance.",
-    "Original OGG files remain in the local asset library and S3 legacy; this receipt contains paths and hashes only."
+    "Source audio files remain in the local asset library and S3 legacy; this receipt contains paths and hashes only."
   ]
 }
