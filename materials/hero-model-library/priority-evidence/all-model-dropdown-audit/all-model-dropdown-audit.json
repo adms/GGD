@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "f3c495492e1aa06f0aeacd2ccbbca7639fbb08233cfd4c01fb3b635ff15c0854"
+      "sha256": "bd0cac510e0b1935fd43e5f17124a5aea9842c15ea711e57cccee13a8f4fcd73"
     }
   },
   "summary": {
@@ -5124,6 +5124,7 @@
         "historicalModelSourceArtifactCount",
         "historicalModelSourceArtifacts",
         "immutableRelease",
+        "kof3dSourceInventory",
         "legacySmashSourceDocument",
         "legacySmashSourceInventory",
         "modelComponentCount",
