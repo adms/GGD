@@ -27,6 +27,21 @@ python3 tools/hero-model-library/steam-library-bridge/scan_mounted_steam.py \
   --usage-output /Volumes/GGDSteamStatus/usage.json
 ```
 
+如果 Windows 已直接分享 `F:\SteamLibrary\steamapps\common`，Finder 通常會掛成
+`/Volumes/common`。掃描器也接受這種佈局；因 share 裡沒有 `appmanifest_*.acf`，用已保存的
+Windows 索引依 `installDirectory` 補回 App ID、Build ID 與正式遊戲名稱：
+
+```bash
+python3 tools/hero-model-library/steam-library-bridge/scan_mounted_steam.py \
+  --mount /Volumes/common \
+  --catalog materials/hero-model-library/source-inventories/windows-game-library.json.gz \
+  --output GGD-Asset-Library/intake/remote-steam/library-index.json
+```
+
+四顆硬碟可以各自重複傳入 `--mount`；同一 App ID 仍保留每個掛載來源並標示
+`duplicateInstall=true`。這一步只讀取目錄名稱與可用的 ACF 小檔，不開啟 PAK／ROM，
+也不需要 Codex 完整磁碟存取權。
+
 相同 App ID 的多個安裝會保留為獨立記錄並標示 `duplicateInstall=true`；不會因去重而遺失來源硬碟或 build ID。
 
 若 macOS 應用程式隔離不允許直接遍歷 SMB 卷宗，改在 Windows PowerShell 直接掃本機路徑，不需把 SMB 密碼交給整合工作流：
