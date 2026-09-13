@@ -158,6 +158,17 @@ def apply_hero_integration_overlay(components, receipt, receipt_git_path):
 
 def build(git_link_root=ROOT):
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
+    unused_300_mba_path=base/'priority-evidence/300-mba-unused-assets-v1/index.json'
+    unused_300_mba=read(unused_300_mba_path)
+    if (unused_300_mba.get('schema')!='ggd.300-mba-unused-assets-index@1'
+        or unused_300_mba.get('newDownloads') is not False
+        or unused_300_mba.get('conversionPerformed') is not False
+        or unused_300_mba.get('runtimeRegistrationPerformed') is not False):
+        raise ValueError('300/MBA unused asset inventory is absent or overclaims readiness')
+    for key in ('files','animationClips'):
+        entry=unused_300_mba[key]
+        if hashlib.sha256((ROOT/entry['gitPath']).read_bytes()).hexdigest()!=entry['sha256']:
+            raise ValueError('Refresh 300/MBA unused asset inventory: '+entry['gitPath'])
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
     windows_game_inventory=read(windows_game_inventory_path)
     fate_unlimited_codes_platform_path=base/'priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json'
@@ -256,6 +267,20 @@ def build(git_link_root=ROOT):
             gitPath=str(workflow_restoration_path.relative_to(ROOT)),
             sha256=hashlib.sha256(workflow_restoration_path.read_bytes()).hexdigest(),
             summary=workflow_restoration['summary']),
+        unused300MbaAssetIndex=dict(
+            gitPath=str(unused_300_mba_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(unused_300_mba_path.read_bytes()).hexdigest(),
+            documentGitPath=str(unused_300_mba_path.with_name('index.md').relative_to(ROOT)),
+            documentSha256=hashlib.sha256(unused_300_mba_path.with_name('index.md').read_bytes()).hexdigest(),
+            filesGitPath=unused_300_mba['files']['gitPath'],
+            filesSha256=unused_300_mba['files']['sha256'],
+            animationClipsGitPath=unused_300_mba['animationClips']['gitPath'],
+            animationClipsSha256=unused_300_mba['animationClips']['sha256'],
+            status='existing-local-sources-indexed; unused reserves remain pending standardization/acceptance/registration',
+            summary=unused_300_mba['summary'],
+            newDownloads=False,
+            runtimeSelectable=False,
+            productionDeploymentVerified=False),
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
@@ -415,6 +440,22 @@ def main():
                 result['fateUnlimitedCodesPlatformDocument'],
                 result['ultimate14NativeMotionIndex'],
                 result['assetWorkflowRestorationManifest'],
+                {
+                    'gitPath': result['unused300MbaAssetIndex']['gitPath'],
+                    'sha256': result['unused300MbaAssetIndex']['sha256'],
+                },
+                {
+                    'gitPath': result['unused300MbaAssetIndex']['documentGitPath'],
+                    'sha256': result['unused300MbaAssetIndex']['documentSha256'],
+                },
+                {
+                    'gitPath': result['unused300MbaAssetIndex']['filesGitPath'],
+                    'sha256': result['unused300MbaAssetIndex']['filesSha256'],
+                },
+                {
+                    'gitPath': result['unused300MbaAssetIndex']['animationClipsGitPath'],
+                    'sha256': result['unused300MbaAssetIndex']['animationClipsSha256'],
+                },
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],
                     'sha256': result['fateubwMotionReserve']['nativeMotionCompletion']['sha256'],

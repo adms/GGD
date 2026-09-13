@@ -6288,6 +6288,71 @@
       "restoredBytes": 2507122
     }
   },
+  "unused300MbaAssetIndex": {
+    "gitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+    "sha256": "7adfdad5269168209d15dbe6532481b5a8db3886c960e0a981ff7b1c0c0b7dd0",
+    "documentGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.md",
+    "documentSha256": "9f1628628b0dfa91f3ec134fd0719b939badcc490308d7dff10a7840afde703a",
+    "filesGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
+    "filesSha256": "82177db2b7cca73320704e77ecfd29104a7351be11c6787f1fbbdb5a5eee5adb",
+    "animationClipsGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
+    "animationClipsSha256": "0c70d752d0e21744dfb79387630cf64e07157d3fc04eaabf516955bc23545519",
+    "status": "existing-local-sources-indexed; unused reserves remain pending standardization/acceptance/registration",
+    "summary": {
+      "physicalFiles": 73852,
+      "physicalBytes": 17034245346,
+      "unusedPhysicalFiles": 73791,
+      "runtimeSourceUsedPhysicalFiles": 61,
+      "animationClipRecords": 51473,
+      "freshLiveSha256VerifiedCharacterBodies": 311,
+      "native300VfxRecords": 58922,
+      "sourceCharactersIndexed": 291,
+      "missingDeclaredBodyPaths": 5,
+      "registryAssetRecords": {
+        "300heroes": {
+          "model": 34378,
+          "animation": 49859,
+          "vfx": 11
+        },
+        "mba": {
+          "model": 447,
+          "animation": 1614,
+          "vfx": 423
+        }
+      },
+      "usageByLibrary": {
+        "300heroes": {
+          "runtime-source-used": 59,
+          "unused-mapped-character-reserve": 1594,
+          "unused-unlinked-reserve": 65924,
+          "unused-unmapped-character-reserve": 5405
+        },
+        "mba": {
+          "runtime-source-used": 2,
+          "unused-mapped-character-reserve": 16,
+          "unused-unlinked-reserve": 829,
+          "unused-unmapped-character-reserve": 23
+        }
+      },
+      "rolesByLibrary": {
+        "300heroes": {
+          "character-linked-model-or-animation-container": 4721,
+          "character-linked-motion-source": 2331,
+          "unlinked-model-prop-or-environment-candidate": 6801,
+          "unlinked-motion-reserve": 196,
+          "vfx-source-or-effect-component": 58933
+        },
+        "mba": {
+          "character-linked-model-or-animation-container": 41,
+          "unlinked-model-prop-or-environment-candidate": 172,
+          "vfx-source-or-effect-component": 657
+        }
+      }
+    },
+    "newDownloads": false,
+    "runtimeSelectable": false,
+    "productionDeploymentVerified": false
+  },
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",
     "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
