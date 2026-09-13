@@ -6730,6 +6730,34 @@
     "entryGitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/current-resource-entry.json",
     "entrySha256": "64b658cb178a7bb408421e7984e1b8d1051f930bed458a52a32247b1ffaf361e"
   },
+  "palworldVfxSfxInventory": {
+    "schema": "ggd.palworld-vfx-sfx-current-resource-entry@1",
+    "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
+    "gitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/inventory.json",
+    "sha256": "66237504d52e2339d94de7aade165ec45b83b0e697e4d82e1c6d983d3dc129f4",
+    "documentGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/README.md",
+    "documentSha256": "9dce6e84bcba5fbad0b65b783e7fb2df56915cb4e10337856c6fde7075c582ff",
+    "unusedAssetIndexGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/unused-assets.json",
+    "unusedAssetIndexSha256": "dbe57cd7ae654c726dd7d3ad5b8c1419afa3fa0c93d697cc148f701437c66fa4",
+    "summary": {
+      "characters": 3,
+      "distinctSourceSkills": 27,
+      "sourceSkillMotionCandidates": 70,
+      "genericCryCandidates": 18,
+      "acquiredStandaloneVfx": 0,
+      "acquiredSkillSpecificSfx": 0,
+      "convertedVfx": 0,
+      "decodedSkillSpecificSfx": 0,
+      "approvedAudio": 0,
+      "runtimeBindingsAdded": 0,
+      "productionDeployed": 0
+    },
+    "stage": "source-installed-container-payload-unavailable",
+    "runtimeBinding": false,
+    "productionDeploymentVerified": false,
+    "entryGitPath": "materials/hero-model-library/source-inventories/palworld-vfx-sfx-v1/current-resource-entry.json",
+    "entrySha256": "91488a188a453d8bd84079ee3b8198906e2a7bb769324964d097723ca3ef4a23"
+  },
   "poppVfxDependencySupport": {
     "heroId": "b2-popp",
     "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",

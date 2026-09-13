@@ -41,6 +41,7 @@
 | 看優先 15 名按現行門檻重算的通過／阻擋狀態 | [優先 15 名模型現行政策稽核](../hero-model-library/priority-model-policy-audit.md)；由 `audit_priority_release.ts` 直接量測目前 GLB |
 | 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測，數量以 `totals.audited` 為準 |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |
+| 查帕魯三名原作技能 VFX／技能 SFX 缺口與重跑掃描 | [Palworld VFX／SFX 索引](../hero-model-library/source-inventories/palworld-vfx-sfx-v1/README.md)；Windows 唯讀容器 probe 與解包樹掃描器在 `tools/hero-model-library/source-workflows/palworld-vfx-sfx-v1/` |
 | 查 300英雄／MBA 未使用角色、道具、動作與特效 | [300／MBA 未使用素材索引](../hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.md)；`python3 tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/query.py <角色／路徑>` |
 | 查 MOD、工作坊、魔獸地圖、論壇及作者公開分享的未使用模型／動作／特效／道具 | [社群未使用素材索引](../hero-model-library/source-inventories/community-unused-assets-v1/README.md)；`python3 tools/hero-model-library/source-workflows/community-unused-assets-v1/query.py --kind model --stage unused` |
 | 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |

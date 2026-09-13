@@ -1,0 +1,50 @@
+{
+  "schema": "ggd.palworld-vfx-sfx-source-config@1",
+  "sourceId": "steam-palworld-windows-1623730-vfx-sfx",
+  "game": "Palworld",
+  "workZh": "幻獸帕魯",
+  "steamAppId": "1623730",
+  "platform": "Windows (Steam)",
+  "expectedWindowsRoot": "F:\\SteamLibrary\\steamapps\\common\\Palworld",
+  "macMountCandidates": [
+    "/Volumes/common/Palworld",
+    "/Volumes/common/Palworld/Pal/Content/Paks",
+    "/Volumes/R/Palworld"
+  ],
+  "accessPolicy": {
+    "readOnly": true,
+    "doNotRequestBroaderSharePermissions": true,
+    "noLoginOrDownloadBypass": true,
+    "noEncryptionKeyDiscovery": true,
+    "noRuntimeBindingBeforeOwnerReview": true
+  },
+  "characters": [
+    {
+      "id": "jetragon",
+      "nameZh": "空渦龍",
+      "nameEn": "Jetragon",
+      "nativeId": "JetDragon",
+      "heroId": "acquired-jetragon",
+      "motionPrefixes": ["FarSkill", "JumpBeam"],
+      "packageTokens": ["JetDragon", "JumpBeam", "BeamComet"]
+    },
+    {
+      "id": "astralym",
+      "nameZh": "枯星龍",
+      "nameEn": "Astralym",
+      "nativeId": "WorldTreeDragon",
+      "heroId": "acquired-astralym",
+      "motionPrefixes": ["FarSkill", "HaloBeam", "HaloCutter", "LaserGliding", "Paldium", "Supernova"],
+      "packageTokens": ["WorldTreeDragon", "PaldiumShot", "PaldiumCannon", "PaldiumRain", "PaldiumExplosion"]
+    },
+    {
+      "id": "cattiva",
+      "nameZh": "搗蛋貓",
+      "nameEn": "Cattiva",
+      "nativeId": "PinkCat",
+      "heroId": "acquired-cattiva",
+      "motionPrefixes": ["FarSkill", "NekoPunch"],
+      "packageTokens": ["PinkCat", "CatPunch", "NekoPunch"]
+    }
+  ]
+}

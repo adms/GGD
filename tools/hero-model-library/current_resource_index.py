@@ -313,6 +313,22 @@ def build(git_link_root=ROOT):
     for path,key in ((fate_asset_path,'sha256'),(fate_asset_document_path,'documentSha256'),(fate_asset_policy_path,'policyAuditSha256')):
         if fate_asset_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
             raise ValueError('Fate current-resource pointer is stale: '+str(path))
+    palworld_av_path=base/'source-inventories/palworld-vfx-sfx-v1/inventory.json'
+    palworld_av_document_path=base/'source-inventories/palworld-vfx-sfx-v1/README.md'
+    palworld_av_unused_path=base/'source-inventories/palworld-vfx-sfx-v1/unused-assets.json'
+    palworld_av_entry_path=base/'source-inventories/palworld-vfx-sfx-v1/current-resource-entry.json'
+    palworld_av=read(palworld_av_path)
+    palworld_av_entry=read(palworld_av_entry_path)
+    if (palworld_av.get('schema')!='ggd.palworld-vfx-sfx-inventory@1'
+        or palworld_av.get('summary',{}).get('characters')!=3
+        or palworld_av.get('summary',{}).get('genericCryCandidates')!=18
+        or palworld_av.get('summary',{}).get('acquiredStandaloneVfx')!=0
+        or palworld_av.get('summary',{}).get('acquiredSkillSpecificSfx')!=0
+        or palworld_av.get('summary',{}).get('runtimeBindingsAdded')!=0):
+        raise ValueError('Palworld VFX/SFX inventory is absent, stale or overclaims readiness')
+    for path,key in ((palworld_av_path,'sha256'),(palworld_av_document_path,'documentSha256'),(palworld_av_unused_path,'unusedAssetIndexSha256')):
+        if palworld_av_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
+            raise ValueError('Palworld VFX/SFX current-resource pointer is stale: '+str(path))
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     kof3d_inventory_path=base/'source-inventories/kof-3d-sources-v1/inventory.json'
@@ -559,6 +575,10 @@ def build(git_link_root=ROOT):
             **fate_asset_entry,
             entryGitPath=str(fate_asset_entry_path.relative_to(ROOT)),
             entrySha256=hashlib.sha256(fate_asset_entry_path.read_bytes()).hexdigest()),
+        palworldVfxSfxInventory=dict(
+            **palworld_av_entry,
+            entryGitPath=str(palworld_av_entry_path.relative_to(ROOT)),
+            entrySha256=hashlib.sha256(palworld_av_entry_path.read_bytes()).hexdigest()),
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
@@ -866,6 +886,22 @@ def main():
                 {
                     'gitPath': result['fateAssetInventory']['entryGitPath'],
                     'sha256': result['fateAssetInventory']['entrySha256'],
+                },
+                {
+                    'gitPath': result['palworldVfxSfxInventory']['gitPath'],
+                    'sha256': result['palworldVfxSfxInventory']['sha256'],
+                },
+                {
+                    'gitPath': result['palworldVfxSfxInventory']['documentGitPath'],
+                    'sha256': result['palworldVfxSfxInventory']['documentSha256'],
+                },
+                {
+                    'gitPath': result['palworldVfxSfxInventory']['unusedAssetIndexGitPath'],
+                    'sha256': result['palworldVfxSfxInventory']['unusedAssetIndexSha256'],
+                },
+                {
+                    'gitPath': result['palworldVfxSfxInventory']['entryGitPath'],
+                    'sha256': result['palworldVfxSfxInventory']['entrySha256'],
                 },
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],
