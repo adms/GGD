@@ -244,6 +244,22 @@ def build(git_link_root=ROOT):
     for path,key in ((jumpforce_path,'sha256'),(jumpforce_document_path,'documentSha256'),(jumpforce_review_path,'listeningReviewQueueSha256')):
         if jumpforce_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
             raise ValueError('JUMP FORCE current-resource pointer is stale: '+str(path))
+    fate_asset_path=base/'source-inventories/fate-assets-v2/inventory.json'
+    fate_asset_document_path=base/'source-inventories/fate-assets-v2/README.md'
+    fate_asset_policy_path=base/'source-inventories/fate-assets-v2/current-policy.json'
+    fate_asset_entry_path=base/'source-inventories/fate-assets-v2/current-resource-entry.json'
+    fate_asset=read(fate_asset_path)
+    fate_asset_entry=read(fate_asset_entry_path)
+    if (fate_asset.get('schema')!='ggd.fate-platform-separated-asset-inventory@1'
+        or fate_asset.get('summary',{}).get('minecraftServants')!=14
+        or fate_asset.get('summary',{}).get('hardPolicyPass')!=14
+        or fate_asset.get('summary',{}).get('pspPayloadBytesRead')!=0
+        or fate_asset.get('summary',{}).get('runtimeSelectable')!=0
+        or fate_asset.get('scope',{}).get('minecraftCommunitySeparateFromFucOriginal') is not True):
+        raise ValueError('Fate platform-separated inventory is absent, stale or overclaims readiness')
+    for path,key in ((fate_asset_path,'sha256'),(fate_asset_document_path,'documentSha256'),(fate_asset_policy_path,'policyAuditSha256')):
+        if fate_asset_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
+            raise ValueError('Fate current-resource pointer is stale: '+str(path))
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     kof3d_inventory_path=base/'source-inventories/kof-3d-sources-v1/inventory.json'
@@ -432,6 +448,10 @@ def build(git_link_root=ROOT):
             **jumpforce_entry,
             entryGitPath=str(jumpforce_entry_path.relative_to(ROOT)),
             entrySha256=hashlib.sha256(jumpforce_entry_path.read_bytes()).hexdigest()),
+        fateAssetInventory=dict(
+            **fate_asset_entry,
+            entryGitPath=str(fate_asset_entry_path.relative_to(ROOT)),
+            entrySha256=hashlib.sha256(fate_asset_entry_path.read_bytes()).hexdigest()),
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
@@ -672,6 +692,22 @@ def main():
                 {
                     'gitPath': result['jumpForceAssetInventory']['entryGitPath'],
                     'sha256': result['jumpForceAssetInventory']['entrySha256'],
+                },
+                {
+                    'gitPath': result['fateAssetInventory']['gitPath'],
+                    'sha256': result['fateAssetInventory']['sha256'],
+                },
+                {
+                    'gitPath': result['fateAssetInventory']['documentGitPath'],
+                    'sha256': result['fateAssetInventory']['documentSha256'],
+                },
+                {
+                    'gitPath': result['fateAssetInventory']['policyAuditGitPath'],
+                    'sha256': result['fateAssetInventory']['policyAuditSha256'],
+                },
+                {
+                    'gitPath': result['fateAssetInventory']['entryGitPath'],
+                    'sha256': result['fateAssetInventory']['entrySha256'],
                 },
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],

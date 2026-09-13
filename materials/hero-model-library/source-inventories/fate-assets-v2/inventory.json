@@ -1,0 +1,2621 @@
+{
+  "schema": "ggd.fate-platform-separated-asset-inventory@1",
+  "scope": {
+    "minecraftCommunitySeparateFromFucOriginal": true,
+    "metadataIsNotPayload": true,
+    "policyPassIsNotRegistration": true,
+    "runtimeRegistrationPerformed": false,
+    "productionDeploymentPerformed": false
+  },
+  "generatedFrom": [
+    {
+      "gitPath": "materials/hero-model-library/download-sources.json",
+      "bytes": 3092685,
+      "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/mapping.json",
+      "bytes": 10738,
+      "sha256": "de4b42336dc7a20c0b935e86f148b0ff2c9db1162302b0ae84001950e8e40b69"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/reserve-integrity.json",
+      "bytes": 157186,
+      "sha256": "4f1365be5725867d36010d72e4dcac18f69e4bcafc2cc26624d9baa9b7f824a3"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+      "bytes": 60808,
+      "sha256": "db24885498f1c9915b8080ccae0d988285be3f13fde39ac021e750d1e072d2c1"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/source-s3-backup.json",
+      "bytes": 1675,
+      "sha256": "1bac544e2e0d5fc6f874bfee4a56e60acbd55a9dd9b536e723bb73aab808189a"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+      "bytes": 1472,
+      "sha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/evidence-receipt.json",
+      "bytes": 4376,
+      "sha256": "e419505fa4902c06f954191738e1df4d5c2790c67f428bb12b09c5b614523a50"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json",
+      "bytes": 1463,
+      "sha256": "ad2bbd112199d7389e220455e05577c49446db47ead0f699184b5316f5aab2c4"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
+      "bytes": 17021,
+      "sha256": "e121923137789389486878e91106383158eaddaac8de1ee5a7f10026978e0c11"
+    },
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/fate-assets-v2/current-policy.json",
+      "bytes": 23722,
+      "sha256": "cfa9e40f6d9bc1685df0eadf728c13c8935116871c3ffaa77de1ebf29aed9d0a"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-assets-v2/build_inventory.py",
+      "bytes": 18334,
+      "sha256": "1606424430d051cb8e06b3b4bcdc7abd7b9c537237b2f4f03755961d151593ff"
+    }
+  ],
+  "summary": {
+    "minecraftServants": 14,
+    "rawModelFilesVerified": 14,
+    "rawTextureFilesVerified": 14,
+    "rawAnimationFilesVerified": 14,
+    "standardizedGlbsVerified": 14,
+    "hardPolicyPass": 14,
+    "sourceClips": 132,
+    "convertedNativeClips": 127,
+    "retainedNoDurationClips": 5,
+    "rightsApproved": 0,
+    "eventMapComplete": 0,
+    "runtimeSelectable": 0,
+    "productionDeployed": 0,
+    "existingHeroIdentityMappings": 4,
+    "unmappedServants": 10,
+    "pspInventoryRows": 2,
+    "pspPayloadBytesRead": 0,
+    "pspPayloadsExtracted": 0,
+    "supplementalSources": 10,
+    "ps2AudioFiles": 653
+  },
+  "minecraftCommunity": {
+    "sourceId": "github-flemmli97-fateubw-07e9d79b",
+    "sourceGame": "Fate/Unlimited Block Works",
+    "platform": "Minecraft Java 1.21.1",
+    "license": "ARR",
+    "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+    "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
+    "sourceS3": {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
+      "bytes": 2331974,
+      "sha256": "ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38",
+      "readbackVerified": true,
+      "verifiedArchiveMembers": 797,
+      "archiveMemberRoot": "fate-bounded-batch10/",
+      "receiptPath": "materials/hero-model-library/priority-evidence/fateubw-community/source-s3-backup.json",
+      "receiptSha256": "1bac544e2e0d5fc6f874bfee4a56e60acbd55a9dd9b536e723bb73aab808189a",
+      "usage": "manual-only legacy raw reserve; not runtime-ready",
+      "archiveFormat": "tar-gzip"
+    },
+    "nativeMotionS3": {
+      "receipt": {
+        "path": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "bytes": 1472,
+        "sha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+      "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+      "archiveBytes": 19555424,
+      "fileCount": 156,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
+      "localUnchanged": true
+    },
+    "durationlessDerivativeS3": {
+      "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+      "counts": {
+        "candidates": 5,
+        "staticPoseHolds": 3,
+        "proceduralFormulaLoops": 2,
+        "nativeDurationClips": 0
+      },
+      "nativeDurationClaim": false
+    },
+    "servants": [
+      {
+        "characterId": "artoria_pendragon_saber",
+        "authorLabel": "Artoria Pendragon (Saber)",
+        "heroIds": [
+          "godie-e002",
+          "godie-e00l"
+        ],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/artoria_pendragon_saber.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/artoria_pendragon_saber.png",
+          "bytes": 2240,
+          "sha256": "7798993543371c893d8f513cd5252879759229c0eaa782affce79e65fff2a388",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/artoria_pendragon_saber.json",
+          "bytes": 32527,
+          "sha256": "359784b7df2de3a4bbb601937548572f51fd6ab9ba23728ac510a70ad5c6de72",
+          "liveVerified": true,
+          "clipCount": 10,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+          "bytes": 245732,
+          "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-artoria_pendragon_saber",
+          "heroIds": [
+            "godie-e002",
+            "godie-e00l"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+          "bytes": 245732,
+          "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 17,
+            "skins": 1,
+            "joints": 21,
+            "clips": 10,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "two_hand_1",
+            "two_hand_2",
+            "two_hand_3",
+            "two_hand_4",
+            "one_hand_1",
+            "stab_1",
+            "invisible_burst",
+            "invisible_burst_hit",
+            "excalibur",
+            "summon"
+          ],
+          "sourceClipCount": 10,
+          "convertedNativeClipCount": 10,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 10,
+        "convertedNativeClipCount": 10,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "two_hand_1",
+          "two_hand_2",
+          "two_hand_3",
+          "two_hand_4",
+          "one_hand_1",
+          "stab_1",
+          "invisible_burst",
+          "invisible_burst_hit",
+          "excalibur",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "two_hand_1",
+            "two_hand_2",
+            "two_hand_3",
+            "two_hand_4",
+            "one_hand_1",
+            "stab_1",
+            "invisible_burst",
+            "invisible_burst_hit",
+            "excalibur"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "cu_chulainn_lancer",
+        "authorLabel": "Cu Chulainn (Lancer)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/cu_chulainn_lancer.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/cu_chulainn_lancer.png",
+          "bytes": 4054,
+          "sha256": "0879dbc8193850319b8e3afe26d7135c6c0d34cd0afee83a020acd5a195f7f5f",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/cu_chulainn_lancer.json",
+          "bytes": 32575,
+          "sha256": "0555c797f61baff0a67a532a6de5410c30d166f10aa1af8e80885b0015461f1c",
+          "liveVerified": true,
+          "clipCount": 8,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+          "bytes": 195016,
+          "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-cu_chulainn_lancer",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+          "bytes": 195016,
+          "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 19,
+            "skins": 1,
+            "joints": 21,
+            "clips": 7,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "spear_1",
+            "spear_2",
+            "spear_3",
+            "spear_4",
+            "spear_5",
+            "spear_stab_combo",
+            "gae_bolg"
+          ],
+          "sourceClipCount": 8,
+          "convertedNativeClipCount": 7,
+          "retainedNoDurationClipCount": 1,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 8,
+        "convertedNativeClipCount": 7,
+        "retainedNoDurationClipCount": 1,
+        "convertedClipNames": [
+          "spear_1",
+          "spear_2",
+          "spear_3",
+          "spear_4",
+          "spear_5",
+          "spear_stab_combo",
+          "gae_bolg"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "spear_1",
+            "spear_2",
+            "spear_3",
+            "spear_4",
+            "spear_5",
+            "spear_stab_combo",
+            "gae_bolg"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "diarmuid_ua_duibhne_lancer",
+        "authorLabel": "Diarmuid Ua Duibhne (Lancer)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/diarmuid_ua_duibhne_lancer.png",
+          "bytes": 2138,
+          "sha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
+          "bytes": 27908,
+          "sha256": "941f7b6d17d0e07660baf123bd6a82b177c2835e3f36db1782f550718e383cd0",
+          "liveVerified": true,
+          "clipCount": 8,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "bytes": 222352,
+          "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "bytes": 222352,
+          "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 19,
+            "skins": 1,
+            "joints": 21,
+            "clips": 7,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "dual_spear_1",
+            "dual_spear_2",
+            "dual_spear_3",
+            "dual_spear_4",
+            "dual_spear_5",
+            "blink",
+            "hogou_unseal"
+          ],
+          "sourceClipCount": 8,
+          "convertedNativeClipCount": 7,
+          "retainedNoDurationClipCount": 1,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 8,
+        "convertedNativeClipCount": 7,
+        "retainedNoDurationClipCount": 1,
+        "convertedClipNames": [
+          "dual_spear_1",
+          "dual_spear_2",
+          "dual_spear_3",
+          "dual_spear_4",
+          "dual_spear_5",
+          "blink",
+          "hogou_unseal"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "dual_spear_1",
+            "dual_spear_2",
+            "dual_spear_3",
+            "dual_spear_4",
+            "dual_spear_5",
+            "hogou_unseal"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "emiya_archer",
+        "authorLabel": "Emiya (Archer)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/emiya_archer.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/emiya_archer.png",
+          "bytes": 1603,
+          "sha256": "ab103993cb5ee13244010225237261ec77b9a547d02c8497e03c637376f8eee5",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/emiya_archer.json",
+          "bytes": 47149,
+          "sha256": "19e807e7ba54a634fdbc6a84fa78c54332780df57655acab1b0991b21e8a417a",
+          "liveVerified": true,
+          "clipCount": 11,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+          "bytes": 296000,
+          "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-emiya_archer",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+          "bytes": 296000,
+          "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 19,
+            "skins": 1,
+            "joints": 21,
+            "clips": 11,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "dual_slash_1",
+            "dual_slash_2",
+            "dual_slash_3",
+            "dual_slash_4",
+            "dual_slash_5",
+            "dual_slash_6",
+            "bow_1",
+            "bow_2",
+            "bow_air",
+            "caladbolg",
+            "summon"
+          ],
+          "sourceClipCount": 11,
+          "convertedNativeClipCount": 11,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 11,
+        "convertedNativeClipCount": 11,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "dual_slash_1",
+          "dual_slash_2",
+          "dual_slash_3",
+          "dual_slash_4",
+          "dual_slash_5",
+          "dual_slash_6",
+          "bow_1",
+          "bow_2",
+          "bow_air",
+          "caladbolg",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "dual_slash_1",
+            "dual_slash_2",
+            "dual_slash_3",
+            "dual_slash_4",
+            "dual_slash_5",
+            "dual_slash_6",
+            "bow_1",
+            "bow_2",
+            "bow_air"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "gilgamesh_archer",
+        "authorLabel": "Gilgamesh (Archer)",
+        "heroIds": [
+          "community-review-18-20260907"
+        ],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilgamesh_archer.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilgamesh_archer.png",
+          "bytes": 2548,
+          "sha256": "ad7cab6566a0be14edcab82ec16b5a17dbfc04e38abb23ec7866bb0ca3a6627d",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilgamesh_archer.json",
+          "bytes": 23184,
+          "sha256": "76ccce2382e3766096ddf6d522b99f31b9d78cf0ca97441332cb32ba2c0ae4ec",
+          "liveVerified": true,
+          "clipCount": 9,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+          "bytes": 208968,
+          "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-gilgamesh_archer",
+          "heroIds": [
+            "community-review-18-20260907"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+          "bytes": 208968,
+          "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 17,
+            "skins": 1,
+            "joints": 21,
+            "clips": 9,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "one_hand_1",
+            "one_hand_2",
+            "stab_1",
+            "guard",
+            "babylon_1",
+            "babylon_2",
+            "babylon_3",
+            "ea",
+            "summon"
+          ],
+          "sourceClipCount": 9,
+          "convertedNativeClipCount": 9,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 9,
+        "convertedNativeClipCount": 9,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "one_hand_1",
+          "one_hand_2",
+          "stab_1",
+          "guard",
+          "babylon_1",
+          "babylon_2",
+          "babylon_3",
+          "ea",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "one_hand_1",
+            "one_hand_2",
+            "stab_1",
+            "babylon_1",
+            "babylon_2",
+            "babylon_3",
+            "ea"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "gilles_de_rais_caster",
+        "authorLabel": "Gilles de Rais (Caster)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilles_de_rais_caster.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilles_de_rais_caster.png",
+          "bytes": 1380,
+          "sha256": "dcabad0ba7d2dcbbd7dd39e11ff4f93b84a9cdb1e232558968fcc4b4432cf9b0",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilles_de_rais_caster.json",
+          "bytes": 3602,
+          "sha256": "3e61c98f483acfbf2965bf8378f7eca9e5ae6bc525e6b79b17f29b6c6e1ef97a",
+          "liveVerified": true,
+          "clipCount": 4,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+          "bytes": 73280,
+          "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-gilles_de_rais_caster",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+          "bytes": 73280,
+          "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 7,
+            "skins": 1,
+            "joints": 21,
+            "clips": 4,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "summon_monster",
+            "shoot",
+            "summon_tentacle",
+            "summon"
+          ],
+          "sourceClipCount": 4,
+          "convertedNativeClipCount": 4,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 4,
+        "convertedNativeClipCount": 4,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "summon_monster",
+          "shoot",
+          "summon_tentacle",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "shoot"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "hassan-i-sabbah_assassin",
+        "authorLabel": "Hassan-i-Sabbah (Assassin)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/hassan-i-sabbah_assassin.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/hassan-i-sabbah_assassin.png",
+          "bytes": 1357,
+          "sha256": "b9d39638863a3faaae4137922016a4ea2a529afb22ad2fd610dd95fa76426214",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/hassan-i-sabbah_assassin.json",
+          "bytes": 23919,
+          "sha256": "f0bcc4330eb9481bef4e6fc163f54aeaa339451c3f43adda311860b19d25a0a5",
+          "liveVerified": true,
+          "clipCount": 8,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+          "bytes": 158296,
+          "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-hassan-i-sabbah_assassin",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+          "bytes": 158296,
+          "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 17,
+            "skins": 1,
+            "joints": 21,
+            "clips": 8,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "dagger_1",
+            "dagger_2",
+            "dagger_3",
+            "dagger_4",
+            "top_stab",
+            "dagger_throw",
+            "dupe",
+            "summon"
+          ],
+          "sourceClipCount": 8,
+          "convertedNativeClipCount": 8,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 8,
+        "convertedNativeClipCount": 8,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "dagger_1",
+          "dagger_2",
+          "dagger_3",
+          "dagger_4",
+          "top_stab",
+          "dagger_throw",
+          "dupe",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "dagger_1",
+            "dagger_2",
+            "dagger_3",
+            "dagger_4",
+            "top_stab",
+            "dagger_throw"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "heracles_berserker",
+        "authorLabel": "Heracles (Berserker)",
+        "heroIds": [
+          "godie-hapm"
+        ],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
+          "bytes": 11274,
+          "sha256": "587028d53b1ff3ef5acf1ae9bbd0b0c4f51b7500c2e37c73d233bb5a66b556a7",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/heracles_berserker.png",
+          "bytes": 2657,
+          "sha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
+          "bytes": 68664,
+          "sha256": "e190324ff83cfb006664a1ecd6234c8e6f97e9e4ad4f6d2f943174bc9a11ee24",
+          "liveVerified": true,
+          "clipCount": 17,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+          "bytes": 500056,
+          "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-heracles_berserker",
+          "heroIds": [
+            "godie-hapm"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+          "bytes": 500056,
+          "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+          "metrics": {
+            "triangles": 480,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 19,
+            "skins": 1,
+            "joints": 36,
+            "clips": 16,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "walk",
+            "run",
+            "one_hand_heavy_1",
+            "one_hand_heavy_2",
+            "one_hand_heavy_3",
+            "two_hand_heavy_1",
+            "two_hand_heavy_2",
+            "upper_cut",
+            "jump",
+            "jump_hit",
+            "land",
+            "leap",
+            "leap_slash",
+            "fake_death",
+            "death",
+            "summon"
+          ],
+          "sourceClipCount": 17,
+          "convertedNativeClipCount": 16,
+          "retainedNoDurationClipCount": 1,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 17,
+        "convertedNativeClipCount": 16,
+        "retainedNoDurationClipCount": 1,
+        "convertedClipNames": [
+          "walk",
+          "run",
+          "one_hand_heavy_1",
+          "one_hand_heavy_2",
+          "one_hand_heavy_3",
+          "two_hand_heavy_1",
+          "two_hand_heavy_2",
+          "upper_cut",
+          "jump",
+          "jump_hit",
+          "land",
+          "leap",
+          "leap_slash",
+          "fake_death",
+          "death",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [
+            "run"
+          ],
+          "hurt": [],
+          "death": [
+            "death"
+          ],
+          "attack": [
+            "one_hand_heavy_1",
+            "one_hand_heavy_2",
+            "one_hand_heavy_3",
+            "two_hand_heavy_1",
+            "two_hand_heavy_2",
+            "upper_cut",
+            "jump_hit",
+            "leap_slash"
+          ],
+          "idleDerivativeReviewCandidate": [
+            "derived-formula-loop-idle"
+          ],
+          "fakeDeathSeparate": [
+            "fake_death"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "hurt"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "iskander_rider",
+        "authorLabel": "Iskander (Rider)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/iskander_rider.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/iskander_rider.png",
+          "bytes": 1588,
+          "sha256": "43260383c6ce3ffece15e23a0730728f5bec419a187e1e9e8b019ee0ab4d9b90",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/iskander_rider.json",
+          "bytes": 27878,
+          "sha256": "9262f9510ff21a0e2d7a55e11b6243f717c93fe808b90667e0b6d1d4ed7c1933",
+          "liveVerified": true,
+          "clipCount": 9,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+          "bytes": 199136,
+          "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-iskander_rider",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+          "bytes": 199136,
+          "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 17,
+            "skins": 1,
+            "joints": 21,
+            "clips": 9,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "one_hand_1",
+            "one_hand_2",
+            "one_hand_3",
+            "one_hand_4",
+            "one_hand_5",
+            "one_hand_6",
+            "one_hand_7",
+            "chariot_summon",
+            "summon"
+          ],
+          "sourceClipCount": 9,
+          "convertedNativeClipCount": 9,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 9,
+        "convertedNativeClipCount": 9,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "one_hand_1",
+          "one_hand_2",
+          "one_hand_3",
+          "one_hand_4",
+          "one_hand_5",
+          "one_hand_6",
+          "one_hand_7",
+          "chariot_summon",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "one_hand_1",
+            "one_hand_2",
+            "one_hand_3",
+            "one_hand_4",
+            "one_hand_5",
+            "one_hand_6",
+            "one_hand_7"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "lancelot_berserker",
+        "authorLabel": "Lancelot (Berserker)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/lancelot_berserker.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/lancelot_berserker.png",
+          "bytes": 2048,
+          "sha256": "534973424b616146d6e5a188c77d1dfd2519cdc5b058c27d84b3ad1969869dd8",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/lancelot_berserker.json",
+          "bytes": 45855,
+          "sha256": "9f92bdaeded9f0d77b7c95917de67158c88cc596a111a5ba2e11772b322226d3",
+          "liveVerified": true,
+          "clipCount": 13,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+          "bytes": 340508,
+          "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-lancelot_berserker",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+          "bytes": 340508,
+          "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 18,
+            "skins": 1,
+            "joints": 21,
+            "clips": 13,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "two_hand_1",
+            "two_hand_2",
+            "two_hand_3",
+            "two_hand_4",
+            "one_hand_1",
+            "stab_1",
+            "jump",
+            "jump_land",
+            "trident",
+            "bow",
+            "crossbow",
+            "gun",
+            "summon"
+          ],
+          "sourceClipCount": 13,
+          "convertedNativeClipCount": 13,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 13,
+        "convertedNativeClipCount": 13,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "two_hand_1",
+          "two_hand_2",
+          "two_hand_3",
+          "two_hand_4",
+          "one_hand_1",
+          "stab_1",
+          "jump",
+          "jump_land",
+          "trident",
+          "bow",
+          "crossbow",
+          "gun",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "two_hand_1",
+            "two_hand_2",
+            "two_hand_3",
+            "two_hand_4",
+            "one_hand_1",
+            "stab_1",
+            "trident",
+            "bow",
+            "crossbow",
+            "gun"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "medea_caster",
+        "authorLabel": "Medea (Caster)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
+          "bytes": 9189,
+          "sha256": "e6b5ff01d97bed4d05448a5022e64107f6c9eb99f0d24285f6f0a8e0b6625efd",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medea_caster.png",
+          "bytes": 2892,
+          "sha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
+          "bytes": 18186,
+          "sha256": "f6b82558f0024f31fd6ade38ba89c8d8424d8bc06f4a2f880f5503f1a8df4b26",
+          "liveVerified": true,
+          "clipCount": 7,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+          "bytes": 242456,
+          "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-medea_caster",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+          "bytes": 242456,
+          "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+          "metrics": {
+            "triangles": 456,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 18,
+            "skins": 1,
+            "joints": 25,
+            "clips": 6,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "cast_1",
+            "cast_2",
+            "cast_3",
+            "cast_4",
+            "magic_circle",
+            "rule_breaker"
+          ],
+          "sourceClipCount": 7,
+          "convertedNativeClipCount": 6,
+          "retainedNoDurationClipCount": 1,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 7,
+        "convertedNativeClipCount": 6,
+        "retainedNoDurationClipCount": 1,
+        "convertedClipNames": [
+          "cast_1",
+          "cast_2",
+          "cast_3",
+          "cast_4",
+          "magic_circle",
+          "rule_breaker"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "cast_1",
+            "cast_2",
+            "cast_3",
+            "cast_4",
+            "rule_breaker"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "medusa_rider",
+        "authorLabel": "Medusa (Rider)",
+        "heroIds": [
+          "godie-hvsh"
+        ],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medusa_rider.geo.json",
+          "bytes": 7155,
+          "sha256": "1797b9f5695d51e32a0b73ddd45a656720871b8e9317529a1d2cd932cce184dc",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medusa_rider.png",
+          "bytes": 1258,
+          "sha256": "bdc7e37394a01c7a7c267e0c8afbf1743a12ccdfa09802af1ce509819d1c0c30",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medusa_rider.json",
+          "bytes": 32318,
+          "sha256": "b05e9c70d66b9d5382052f2f61f600277cc5aed47252e4f355af2ccb5dd6c57d",
+          "liveVerified": true,
+          "clipCount": 11,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+          "bytes": 227824,
+          "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-medusa_rider",
+          "heroIds": [
+            "godie-hvsh"
+          ],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+          "bytes": 227824,
+          "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 20,
+            "skins": 1,
+            "joints": 21,
+            "clips": 11,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "dual_reverse_1",
+            "dual_reverse_2",
+            "dual_reverse_3",
+            "dual_reverse_4",
+            "chain_throw",
+            "chain_retrieve",
+            "eye",
+            "jump",
+            "land",
+            "bellerophon",
+            "summon"
+          ],
+          "sourceClipCount": 11,
+          "convertedNativeClipCount": 11,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 11,
+        "convertedNativeClipCount": 11,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "dual_reverse_1",
+          "dual_reverse_2",
+          "dual_reverse_3",
+          "dual_reverse_4",
+          "chain_throw",
+          "chain_retrieve",
+          "eye",
+          "jump",
+          "land",
+          "bellerophon",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "dual_reverse_1",
+            "dual_reverse_2",
+            "dual_reverse_3",
+            "dual_reverse_4",
+            "chain_throw",
+            "bellerophon"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "nero_claudius_saber",
+        "authorLabel": "Nero Claudius (Saber)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/nero_claudius_saber.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/nero_claudius_saber.png",
+          "bytes": 2192,
+          "sha256": "8ece9b274a39d8dd9cc2936dd776fad3003998034ec9900e8613cff04e026299",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/nero_claudius_saber.json",
+          "bytes": 46005,
+          "sha256": "0e5a8925deb16b2539b84d2e17c544675eb99df92007c88dac327580de4e9185",
+          "liveVerified": true,
+          "clipCount": 6,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+          "bytes": 478168,
+          "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-nero_claudius_saber",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+          "bytes": 478168,
+          "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 21,
+            "skins": 1,
+            "joints": 21,
+            "clips": 6,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "horizontal_slashes",
+            "vertical_slashes",
+            "stab",
+            "aestus_domus_aurea",
+            "aestus_domus_aurea_full",
+            "summon"
+          ],
+          "sourceClipCount": 6,
+          "convertedNativeClipCount": 6,
+          "retainedNoDurationClipCount": 0,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 6,
+        "convertedNativeClipCount": 6,
+        "retainedNoDurationClipCount": 0,
+        "convertedClipNames": [
+          "horizontal_slashes",
+          "vertical_slashes",
+          "stab",
+          "aestus_domus_aurea",
+          "aestus_domus_aurea_full",
+          "summon"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "horizontal_slashes",
+            "vertical_slashes",
+            "stab",
+            "aestus_domus_aurea",
+            "aestus_domus_aurea_full"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      },
+      {
+        "characterId": "sasaki_kojiro_assassin",
+        "authorLabel": "Sasaki Kojiro (Assassin)",
+        "heroIds": [],
+        "identityMappingOnly": true,
+        "visualIdentityVerified": false,
+        "source": {
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "sourceVersion": "2.2.0",
+          "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+          "license": "ARR",
+          "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+          "nativeFucPsp": false
+        },
+        "rawModel": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/sasaki_kojiro_assassin.geo.json",
+          "bytes": 7142,
+          "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+          "liveVerified": true
+        },
+        "rawTexture": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/sasaki_kojiro_assassin.png",
+          "bytes": 1963,
+          "sha256": "7ed74d7fca9b264278cbfec07f9bf14098d94b0ee7d6b4603f47884a95576cb3",
+          "liveVerified": true
+        },
+        "rawAnimation": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/sasaki_kojiro_assassin.json",
+          "bytes": 37619,
+          "sha256": "dc2e8cd51464fc8a702970f273fddb5c39eb435cb1d9b874f8566e23ce1e4914",
+          "liveVerified": true,
+          "clipCount": 11,
+          "unmatchedBoneNames": []
+        },
+        "standardizedModelWithNativeMotion": {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+          "bytes": 253132,
+          "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+          "liveVerified": true
+        },
+        "currentPolicy": {
+          "candidateId": "fateubw-sasaki_kojiro_assassin",
+          "heroIds": [],
+          "sourceGame": "Fate/Unlimited Block Works",
+          "platform": "Minecraft Java 1.21.1",
+          "license": "ARR",
+          "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+          "bytes": 253132,
+          "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+          "metrics": {
+            "triangles": 336,
+            "drawCalls": 1,
+            "maxTextureEdge": 128,
+            "channelsPerFrame": 18,
+            "skins": 1,
+            "joints": 21,
+            "clips": 10,
+            "embeddedImages": 1
+          },
+          "hardPolicy": {
+            "pass": true,
+            "verdict": "ok",
+            "blockingAxes": []
+          },
+          "formalAdoption": {
+            "decimateWhenTrianglesAbove": 10000,
+            "decimatedTargetTrianglesMax": 8000,
+            "requiresDecimatedCandidate": false,
+            "policyEligible": true
+          },
+          "convertedClipNames": [
+            "two_hand_1",
+            "two_hand_2",
+            "two_hand_3",
+            "two_hand_4",
+            "two_hand_5",
+            "two_hand_6",
+            "two_hand_7",
+            "one_hand_1",
+            "katana_1",
+            "tsubame_gaeshi"
+          ],
+          "sourceClipCount": 11,
+          "convertedNativeClipCount": 10,
+          "retainedNoDurationClipCount": 1,
+          "eventMapComplete": false,
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        "sourceClipCount": 11,
+        "convertedNativeClipCount": 10,
+        "retainedNoDurationClipCount": 1,
+        "convertedClipNames": [
+          "two_hand_1",
+          "two_hand_2",
+          "two_hand_3",
+          "two_hand_4",
+          "two_hand_5",
+          "two_hand_6",
+          "two_hand_7",
+          "one_hand_1",
+          "katana_1",
+          "tsubame_gaeshi"
+        ],
+        "motionSemantics": {
+          "idle": [],
+          "run": [],
+          "hurt": [],
+          "death": [],
+          "attack": [
+            "two_hand_1",
+            "two_hand_2",
+            "two_hand_3",
+            "two_hand_4",
+            "two_hand_5",
+            "two_hand_6",
+            "two_hand_7",
+            "one_hand_1",
+            "katana_1",
+            "tsubame_gaeshi"
+          ]
+        },
+        "missingRequiredActions": [
+          "idle",
+          "run",
+          "hurt",
+          "death"
+        ],
+        "s3Backup": {
+          "state": "verified",
+          "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "archiveBytes": 19555424,
+          "fileCount": 156,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true,
+          "localUnchanged": true
+        },
+        "registration": {
+          "eligible": false,
+          "blockers": [
+            "ARR-republication-and-commercial-use-not-approved",
+            "source-engine-animation-parity-unverified",
+            "GGD-event-map-not-owner-approved",
+            "backend-option-not-registered",
+            "no-existing-GGD-hero-definition",
+            "visual-form-identity-not-approved",
+            "required-action-semantics-incomplete"
+          ],
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "productionDeploymentVerified": false
+        }
+      }
+    ]
+  },
+  "fateUnlimitedCodes": {
+    "originalPsp": [
+      {
+        "sourceId": "lv99-fuc-psp-japan-portable-zip",
+        "inventoryId": "windows-rom-scan:0607",
+        "game": "Fate/unlimited codes",
+        "releasePlatform": "Sony PSP",
+        "region": "Japan",
+        "edition": "Portable",
+        "container": "ZIP",
+        "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate-Unlimited Codes Portable (Japan).zip",
+        "inventoryRecordedBytes": 509977835,
+        "inventoryRecordedAt": "2026-09-11T19:06:37.1477340+00:00",
+        "payloadLocalPath": null,
+        "payloadExistsLocal": false,
+        "payloadBytesRead": 0,
+        "payloadSha256": null,
+        "contentInspected": false,
+        "acquisitionStatus": "inventory-metadata-only",
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started",
+        "validationStatus": "not-started",
+        "registrationStatus": "not-registered",
+        "runtimeSelectable": false,
+        "productionDeploymentVerified": false
+      },
+      {
+        "sourceId": "lv99-fuc-psp-usa-portable-iso",
+        "inventoryId": "windows-rom-scan:0608",
+        "game": "Fate/unlimited codes",
+        "releasePlatform": "Sony PSP",
+        "region": "USA",
+        "edition": "Portable",
+        "container": "ISO",
+        "sourcePath": "E:\\Game\\單機遊戲\\模擬器\\PSP\\ROM\\Fate_Unlimited_Codes_USA_PSP-EMiNENT.iso",
+        "inventoryRecordedBytes": 738394112,
+        "inventoryRecordedAt": "2026-09-11T19:06:37.1477340+00:00",
+        "payloadLocalPath": null,
+        "payloadExistsLocal": false,
+        "payloadBytesRead": 0,
+        "payloadSha256": null,
+        "contentInspected": false,
+        "acquisitionStatus": "inventory-metadata-only",
+        "extractionStatus": "not-started",
+        "conversionStatus": "not-started",
+        "validationStatus": "not-started",
+        "registrationStatus": "not-registered",
+        "runtimeSelectable": false,
+        "productionDeploymentVerified": false
+      }
+    ],
+    "otherOriginalPlatforms": {
+      "ps2PublicAudio": [
+        {
+          "sourceId": "spritedatabase-fate-ps2-archer",
+          "releasePlatform": "Sony PlayStation 2",
+          "sourceType": "public-extracted-audio-set",
+          "sourceUrl": "https://spritedatabase.net/file/4521",
+          "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-archer",
+          "assetKinds": [
+            "audio"
+          ],
+          "audioFiles": 180,
+          "audioSeconds": 491.24130158730156,
+          "audioIndex": {
+            "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-archer/audioFileIndex.json",
+            "bytes": 111257,
+            "sha256": "be55db342428dbd4764d58672a620bfc7bdd739d69a01002735a89bf8120866c"
+          },
+          "fileManifest": {
+            "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-archer/files.sha256.json",
+            "bytes": 38696,
+            "sha256": "c81042c51f53287239dd3c12b03d7066a575703249a2a80313e9ff9944324b08"
+          },
+          "acquisitionStatus": "acquired-local-files-indexed",
+          "extractionStatus": "extracted-and-decoded",
+          "conversionStatus": "pcm-audio-produced",
+          "identityReviewStatus": "source-labels-only-pending-human-listening-review",
+          "modelRigMotionVfxStatus": "not-provided-by-this-source",
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        {
+          "sourceId": "spritedatabase-fate-ps2-shirou",
+          "releasePlatform": "Sony PlayStation 2",
+          "sourceType": "public-extracted-audio-set",
+          "sourceUrl": "https://spritedatabase.net/file/4520",
+          "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou",
+          "assetKinds": [
+            "audio"
+          ],
+          "audioFiles": 222,
+          "audioSeconds": 635.8760317460318,
+          "audioIndex": {
+            "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/audioFileIndex.json",
+            "bytes": 136850,
+            "sha256": "1982f7b0637c7a857dd1eca422c812533bfa793445948f18fbbec05efef5082f"
+          },
+          "fileManifest": {
+            "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/files.sha256.json",
+            "bytes": 47647,
+            "sha256": "163ad87d626932fbbaa7ccd5d741f8a5c195aa1dad5cdf86eb17bb43b5794c3c"
+          },
+          "acquisitionStatus": "acquired-local-files-indexed",
+          "extractionStatus": "extracted-and-decoded",
+          "conversionStatus": "pcm-audio-produced",
+          "identityReviewStatus": "source-labels-only-pending-human-listening-review",
+          "modelRigMotionVfxStatus": "not-provided-by-this-source",
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        },
+        {
+          "sourceId": "spritedatabase-fate-ps2-saber",
+          "releasePlatform": "Sony PlayStation 2",
+          "sourceType": "public-extracted-audio-set",
+          "sourceUrl": "https://spritedatabase.net/file/4522",
+          "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber",
+          "assetKinds": [
+            "audio"
+          ],
+          "audioFiles": 251,
+          "audioSeconds": 626.9500952380953,
+          "audioIndex": {
+            "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/audioFileIndex.json",
+            "bytes": 154656,
+            "sha256": "4d6e318fca133dc21d113dfbaf1f80bbd485ff6a5e87e161743ecd992026cd4f"
+          },
+          "fileManifest": {
+            "path": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber/files.sha256.json",
+            "bytes": 53475,
+            "sha256": "e6a36af7f3c1d4948b7e685a7c41f632d4a061077cc29d8c422ad59ed8cc77a2"
+          },
+          "acquisitionStatus": "acquired-local-files-indexed",
+          "extractionStatus": "extracted-and-decoded",
+          "conversionStatus": "pcm-audio-produced",
+          "identityReviewStatus": "source-labels-only-pending-human-listening-review",
+          "modelRigMotionVfxStatus": "not-provided-by-this-source",
+          "runtimeSelectable": false,
+          "productionDeploymentVerified": false
+        }
+      ],
+      "missingOriginalReleases": [
+        {
+          "sourceId": "fuc-ps2-japan-original-disc",
+          "releasePlatform": "Sony PlayStation 2",
+          "region": "Japan",
+          "status": "not-located",
+          "note": "The three acquired Sprite Database sets are extracted PS2 audio sources, not a PS2 game disc image."
+        },
+        {
+          "sourceId": "fuc-arcade-japan-original-data",
+          "releasePlatform": "Arcade",
+          "region": "Japan",
+          "status": "not-located",
+          "note": "No arcade game dump or native asset container is present in the indexed local sources."
+        }
+      ]
+    },
+    "supplementalPublicSources": [
+      {
+        "sourceId": "gamebanana-zero-lancer-493444",
+        "platform": "unknown",
+        "sourceUrl": "https://gamebanana.com/mods/493444",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer",
+        "localRootExists": true,
+        "assetKinds": [
+          "model",
+          "skeleton",
+          "texture",
+          "audio"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "spritedatabase-fate-ps2-archer",
+        "platform": "PS2",
+        "sourceUrl": "https://spritedatabase.net/file/4521",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-archer",
+        "localRootExists": true,
+        "assetKinds": [
+          "audio"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "spritedatabase-fate-ps2-shirou",
+        "platform": "PS2",
+        "sourceUrl": "https://spritedatabase.net/file/4520",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou",
+        "localRootExists": true,
+        "assetKinds": [
+          "audio"
+        ],
+        "heroIds": [
+          "community-review-12-20260907"
+        ],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "spritedatabase-fate-ps2-saber",
+        "platform": "PS2",
+        "sourceUrl": "https://spritedatabase.net/file/4522",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-saber",
+        "localRootExists": true,
+        "assetKinds": [
+          "audio"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "gamebanana-fate-bgm-dnf-62195",
+        "platform": "unknown",
+        "sourceUrl": "https://gamebanana.com/sounds/62195",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-bgm-dnf",
+        "localRootExists": true,
+        "assetKinds": [
+          "audio"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "gamebanana-fuc-shirou-473819",
+        "platform": "unknown",
+        "sourceUrl": "https://gamebanana.com/mods/473819",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou",
+        "localRootExists": true,
+        "assetKinds": [
+          "model",
+          "skeleton",
+          "texture",
+          "audio"
+        ],
+        "heroIds": [
+          "community-review-12-20260907"
+        ],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "gamebanana-fuc-rin-474593",
+        "platform": "unknown",
+        "sourceUrl": "https://gamebanana.com/mods/474593",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin",
+        "localRootExists": true,
+        "assetKinds": [
+          "model",
+          "skeleton",
+          "texture",
+          "audio"
+        ],
+        "heroIds": [
+          "b2-rin"
+        ],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "github-udienzebeer-fate-uc-hd-c8c2d52b",
+        "platform": "PSP",
+        "sourceUrl": "https://github.com/UdienZebeer/Fate-UC-HD",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-texture-recovery-batch6",
+        "localRootExists": true,
+        "assetKinds": [
+          "texture",
+          "portrait",
+          "ui"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
+        "platform": "unknown",
+        "sourceUrl": "https://gamebanana.com/mods/291438",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
+        "localRootExists": true,
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "animation"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      },
+      {
+        "sourceId": "gamebanana-fuc-dark-sakura-492607",
+        "platform": "unknown",
+        "sourceUrl": "https://gamebanana.com/mods/492607",
+        "localPath": "GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+        "localRootExists": true,
+        "assetKinds": [
+          "model",
+          "texture",
+          "skeleton",
+          "audio"
+        ],
+        "heroIds": [],
+        "relationship": "supplemental-public-source-not-proof-of-original-game-payload"
+      }
+    ],
+    "boundary": "PSP inventory rows, PS2 public audio, community MOD ports, and FateUBW Minecraft assets are independent source classes."
+  }
+}

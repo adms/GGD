@@ -1,0 +1,763 @@
+{
+  "schema": "ggd-fate-current-policy-audit@1",
+  "scope": "Current hard-policy measurement of the 14 Fate/Unlimited Block Works Minecraft community conversion candidates. Passing this audit does not grant republication rights, prove source-engine animation parity, complete event mapping, register a backend option, or deploy a model.",
+  "generatedFrom": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+      "bytes": 60808,
+      "sha256": "db24885498f1c9915b8080ccae0d988285be3f13fde39ac021e750d1e072d2c1"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+      "bytes": 292,
+      "sha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/budget.ts",
+      "bytes": 6864,
+      "sha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+    },
+    {
+      "gitPath": "tools/model-budget/limits.ts",
+      "bytes": 21656,
+      "sha256": "09fb1ac4341108c2ce593838d9305febf06c3b679859d13efe7fa58c74d3e1b1"
+    },
+    {
+      "gitPath": "tools/model-budget/glb.ts",
+      "bytes": 12311,
+      "sha256": "aea1f9d648bc5306e9a01c7f71accaf12bac45e41e4086e1a49817c71f1316ce"
+    },
+    {
+      "gitPath": "tools/model-budget/roles.ts",
+      "bytes": 5929,
+      "sha256": "0a064e7381df15d8df50a99afaecc67b3c59f3f65efefbdc30a1a7676edf6258"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-assets-v2/audit_candidates.mts",
+      "bytes": 5481,
+      "sha256": "14e0a01799af0f34728e579930eb2684a1f94f884aa37e7ac228c62f8469a2b3"
+    }
+  ],
+  "policy": {
+    "formalHeroAdoption": {
+      "decimateWhenTrianglesAbove": 10000,
+      "decimatedTargetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5,
+      "preserveOriginalLocally": true,
+      "archiveOriginalToS3Legacy": true,
+      "gitOnlyAfterAcceptance": true
+    },
+    "runtimeChampionGate": {
+      "triangles": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "drawCalls": {
+        "warn": 3,
+        "limit": 6
+      },
+      "maxTextureEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channelsPerFrame": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "summary": {
+    "candidates": 14,
+    "localShaVerified": 14,
+    "hardPolicyPass": 14,
+    "formalPolicyEligibleBeforeRightsAndSemantics": 14,
+    "rightsApproved": 0,
+    "eventMapComplete": 0,
+    "runtimeSelectable": 0,
+    "productionDeployed": 0
+  },
+  "candidates": [
+    {
+      "candidateId": "fateubw-artoria_pendragon_saber",
+      "heroIds": [
+        "godie-e002",
+        "godie-e00l"
+      ],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+      "bytes": 245732,
+      "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 17,
+        "skins": 1,
+        "joints": 21,
+        "clips": 10,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "two_hand_1",
+        "two_hand_2",
+        "two_hand_3",
+        "two_hand_4",
+        "one_hand_1",
+        "stab_1",
+        "invisible_burst",
+        "invisible_burst_hit",
+        "excalibur",
+        "summon"
+      ],
+      "sourceClipCount": 10,
+      "convertedNativeClipCount": 10,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+      "bytes": 195016,
+      "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 19,
+        "skins": 1,
+        "joints": 21,
+        "clips": 7,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "spear_1",
+        "spear_2",
+        "spear_3",
+        "spear_4",
+        "spear_5",
+        "spear_stab_combo",
+        "gae_bolg"
+      ],
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 7,
+      "retainedNoDurationClipCount": 1,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+      "bytes": 222352,
+      "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 19,
+        "skins": 1,
+        "joints": 21,
+        "clips": 7,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "dual_spear_1",
+        "dual_spear_2",
+        "dual_spear_3",
+        "dual_spear_4",
+        "dual_spear_5",
+        "blink",
+        "hogou_unseal"
+      ],
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 7,
+      "retainedNoDurationClipCount": 1,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-emiya_archer",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+      "bytes": 296000,
+      "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 19,
+        "skins": 1,
+        "joints": 21,
+        "clips": 11,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "dual_slash_1",
+        "dual_slash_2",
+        "dual_slash_3",
+        "dual_slash_4",
+        "dual_slash_5",
+        "dual_slash_6",
+        "bow_1",
+        "bow_2",
+        "bow_air",
+        "caladbolg",
+        "summon"
+      ],
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 11,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-gilgamesh_archer",
+      "heroIds": [
+        "community-review-18-20260907"
+      ],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+      "bytes": 208968,
+      "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 17,
+        "skins": 1,
+        "joints": 21,
+        "clips": 9,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "one_hand_1",
+        "one_hand_2",
+        "stab_1",
+        "guard",
+        "babylon_1",
+        "babylon_2",
+        "babylon_3",
+        "ea",
+        "summon"
+      ],
+      "sourceClipCount": 9,
+      "convertedNativeClipCount": 9,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-gilles_de_rais_caster",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+      "bytes": 73280,
+      "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 7,
+        "skins": 1,
+        "joints": 21,
+        "clips": 4,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "summon_monster",
+        "shoot",
+        "summon_tentacle",
+        "summon"
+      ],
+      "sourceClipCount": 4,
+      "convertedNativeClipCount": 4,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-hassan-i-sabbah_assassin",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+      "bytes": 158296,
+      "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 17,
+        "skins": 1,
+        "joints": 21,
+        "clips": 8,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "dagger_1",
+        "dagger_2",
+        "dagger_3",
+        "dagger_4",
+        "top_stab",
+        "dagger_throw",
+        "dupe",
+        "summon"
+      ],
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 8,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "heroIds": [
+        "godie-hapm"
+      ],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+      "bytes": 500056,
+      "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "metrics": {
+        "triangles": 480,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 19,
+        "skins": 1,
+        "joints": 36,
+        "clips": 16,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "walk",
+        "run",
+        "one_hand_heavy_1",
+        "one_hand_heavy_2",
+        "one_hand_heavy_3",
+        "two_hand_heavy_1",
+        "two_hand_heavy_2",
+        "upper_cut",
+        "jump",
+        "jump_hit",
+        "land",
+        "leap",
+        "leap_slash",
+        "fake_death",
+        "death",
+        "summon"
+      ],
+      "sourceClipCount": 17,
+      "convertedNativeClipCount": 16,
+      "retainedNoDurationClipCount": 1,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-iskander_rider",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+      "bytes": 199136,
+      "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 17,
+        "skins": 1,
+        "joints": 21,
+        "clips": 9,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "one_hand_1",
+        "one_hand_2",
+        "one_hand_3",
+        "one_hand_4",
+        "one_hand_5",
+        "one_hand_6",
+        "one_hand_7",
+        "chariot_summon",
+        "summon"
+      ],
+      "sourceClipCount": 9,
+      "convertedNativeClipCount": 9,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-lancelot_berserker",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+      "bytes": 340508,
+      "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 18,
+        "skins": 1,
+        "joints": 21,
+        "clips": 13,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "two_hand_1",
+        "two_hand_2",
+        "two_hand_3",
+        "two_hand_4",
+        "one_hand_1",
+        "stab_1",
+        "jump",
+        "jump_land",
+        "trident",
+        "bow",
+        "crossbow",
+        "gun",
+        "summon"
+      ],
+      "sourceClipCount": 13,
+      "convertedNativeClipCount": 13,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+      "bytes": 242456,
+      "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+      "metrics": {
+        "triangles": 456,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 18,
+        "skins": 1,
+        "joints": 25,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "cast_1",
+        "cast_2",
+        "cast_3",
+        "cast_4",
+        "magic_circle",
+        "rule_breaker"
+      ],
+      "sourceClipCount": 7,
+      "convertedNativeClipCount": 6,
+      "retainedNoDurationClipCount": 1,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-medusa_rider",
+      "heroIds": [
+        "godie-hvsh"
+      ],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+      "bytes": 227824,
+      "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 20,
+        "skins": 1,
+        "joints": 21,
+        "clips": 11,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "dual_reverse_1",
+        "dual_reverse_2",
+        "dual_reverse_3",
+        "dual_reverse_4",
+        "chain_throw",
+        "chain_retrieve",
+        "eye",
+        "jump",
+        "land",
+        "bellerophon",
+        "summon"
+      ],
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 11,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-nero_claudius_saber",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+      "bytes": 478168,
+      "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 21,
+        "skins": 1,
+        "joints": 21,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "horizontal_slashes",
+        "vertical_slashes",
+        "stab",
+        "aestus_domus_aurea",
+        "aestus_domus_aurea_full",
+        "summon"
+      ],
+      "sourceClipCount": 6,
+      "convertedNativeClipCount": 6,
+      "retainedNoDurationClipCount": 0,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "heroIds": [],
+      "sourceGame": "Fate/Unlimited Block Works",
+      "platform": "Minecraft Java 1.21.1",
+      "license": "ARR",
+      "localAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+      "bytes": 253132,
+      "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+      "metrics": {
+        "triangles": 336,
+        "drawCalls": 1,
+        "maxTextureEdge": 128,
+        "channelsPerFrame": 18,
+        "skins": 1,
+        "joints": 21,
+        "clips": 10,
+        "embeddedImages": 1
+      },
+      "hardPolicy": {
+        "pass": true,
+        "verdict": "ok",
+        "blockingAxes": []
+      },
+      "formalAdoption": {
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "policyEligible": true
+      },
+      "convertedClipNames": [
+        "two_hand_1",
+        "two_hand_2",
+        "two_hand_3",
+        "two_hand_4",
+        "two_hand_5",
+        "two_hand_6",
+        "two_hand_7",
+        "one_hand_1",
+        "katana_1",
+        "tsubame_gaeshi"
+      ],
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 10,
+      "retainedNoDurationClipCount": 1,
+      "eventMapComplete": false,
+      "runtimeSelectable": false,
+      "productionDeploymentVerified": false
+    }
+  ]
+}
