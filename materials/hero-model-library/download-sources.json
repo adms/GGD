@@ -53513,7 +53513,7 @@
           "originalName": "MystVearn",
           "heroIds": [],
           "packageCount": 790,
-          "formState": "separate-character-pending-hero-design-and-binding"
+          "formState": "EN653-01-static-skinned-component-accepted-actions-and-hero-binding-missing"
         }
       ],
       "backendIntegration": {
@@ -53537,7 +53537,8 @@
         "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
         "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
         "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
-        "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
+        "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton.",
+        "EN653/01 MystVearn static skinned component passed deterministic conversion, current GGD/Khronos checks and three-view WebGL review; it remains separate from Vearn and Baran."
       ],
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -53600,7 +53601,171 @@
         "meshGltfCount": 29,
         "texturePngCount": 97,
         "nativePsaAnimationCount": 12
-      }
+      },
+      "supplementalDeliveries": [
+        {
+          "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/deliveries/infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-full-readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+          "bytes": 20608400,
+          "sha256": "e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047",
+          "fileCount": 79,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+          "receiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
+          "manifestSha256": "d3bc4f0ac92668bc7108391f2cc9fe9d35d4eae13684b2b53c3a5b9eadc93e25",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
+      ],
+      "sourceClass": "canonical-game-direct-extraction",
+      "componentCandidates": [
+        {
+          "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "conversionCandidateId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "sourceClass": "canonical-game-direct-extraction",
+          "selectionClass": "canonical-game",
+          "nameZh": "密斯特巴恩",
+          "originalName": "MystVearn",
+          "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+          "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+          "sourceGameReleasedAt": "2023-09-28",
+          "platform": "Windows (Steam)",
+          "nativeId": "EN653/01",
+          "sourceVersion": "Steam build local 2024-03-28",
+          "resourceRole": "independent-static-skinned-model-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+          "bytes": 1342948,
+          "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+          "gitPath": "content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
+          "componentReady": true,
+          "converted": true,
+          "structuralValidationPassed": true,
+          "visualValidationPassed": true,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "identityIds": [
+            "infinity-strash:EN653/01"
+          ],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "triangles": 13128,
+          "drawPrimitives": 3,
+          "skinCount": 1,
+          "jointCount": 175,
+          "textureCount": 2,
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "auditEvidence": "Infinity Strash EN653/01 MystVearn is accepted as an independent static skinned component: 13,128 triangles, three normalized skinned draw primitives, 175 joints, two 256px textures and zero clips. Two conversions and two GGD normalizations are byte-identical; Khronos/GGD report zero errors or warnings, 227,304 float values are finite, and front/back/isometric Babylon WebGL views were reviewed.",
+          "limitations": [
+            "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+            "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+            "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+            "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+            "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/delivery.json",
+            "bytes": 6628,
+            "sha256": "18eca537074395231a4a13a1a73c8ea0ae95570ee703c19f93b30f11e2f1957a"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/acceptance.json",
+            "bytes": 1289,
+            "sha256": "2e0605a637266eae5f9e0af1f4b69c6069109e8a3332182fc60e072d6a1e7fc0"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/validation.json",
+            "bytes": 8140,
+            "sha256": "5e16742c938abfcc217b75f184c6f4362a563ccd7816a363bcb34f4b637df31e"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/visual-review.json",
+            "bytes": 2198,
+            "sha256": "60467d715cd0939221407dffcc32731d908485c0caaaded1f6b86160908ac7e2"
+          },
+          "webglProofEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/webgl-proof.json",
+            "bytes": 2514,
+            "sha256": "8c54aea5bcb48163312ed0e66d9c6be45251598b02fe3376367b28954c9e5a0e"
+          },
+          "sourceFidelityEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/source-fidelity.json",
+            "bytes": 4889,
+            "sha256": "f9b82ab7fa3db594be9ea8d9384fcc052a91b1db33ceade44fdf0df26d5fed0a"
+          },
+          "sourceRebuildEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/source-rebuild.json",
+            "bytes": 2604,
+            "sha256": "8b396bb5bb41c79135f9e96d303514cdd09e841623a75cf9aaba3191682c009d"
+          },
+          "backupStatus": "s3-full-readback-verified",
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+              "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+              "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+          "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+          "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+        }
+      ],
+      "conversionAttempts": [
+        {
+          "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1-conversion",
+          "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "status": "accepted-independent-static-skinned-component-actions-missing",
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3",
+          "rebuildPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v4",
+          "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/ggd-upload.json",
+          "reportSha256": "eccf900e688048fca477150098610b5c23d3708ee724a2598a4f89721b720110",
+          "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+          "outputSha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+          "nativeAnimationCount": 0,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "backupStatus": "s3-full-readback-verified",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+          "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+          "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+        }
+      ]
     },
     {
       "id": "steam-infinity-strash-primary-paks-build-local-20240328",

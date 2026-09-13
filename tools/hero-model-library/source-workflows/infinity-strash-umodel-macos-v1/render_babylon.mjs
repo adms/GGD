@@ -2,6 +2,7 @@ import {Engine,Scene,FreeCamera,Vector3,HemisphericLight,DirectionalLight,Color4
 import '@babylonjs/loaders/glTF';
 
 const canvas=document.querySelector('canvas'),engine=new Engine(canvas,true,{preserveDrawingBuffer:true});
+const staticMode=new URLSearchParams(location.search).get('mode')==='static';
 const save=async(name,data)=>{const response=await fetch('/save/'+name,{method:'POST',body:JSON.stringify(data)});if(!response.ok)throw Error('save '+name)};
 try {
   const scene=new Scene(engine);scene.useRightHandedSystem=true;scene.clearColor=new Color4(.12,.14,.18,1);
@@ -12,7 +13,10 @@ try {
   const meshes=container.meshes.filter(mesh=>mesh.getTotalVertices()),shots=[];
   let reviewRows;
   const modelResponse=await fetch('/model.json');
-  if(modelResponse.ok){
+  if(staticMode){
+    if(container.animationGroups.length!==0)throw Error('static component review requires zero animation groups');
+    reviewRows=[{state:'bind-pose',clip:null}];
+  }else if(modelResponse.ok){
     const model=await modelResponse.json(),states=['idle','run','attack','cast','hurt','death'];
     reviewRows=states.map(state=>{const clip=container.animationGroups.find(group=>group.name===model.clipMap?.[state]);if(!clip)throw Error(`missing mapped ${state} clip ${model.clipMap?.[state]}`);return {state,clip}});
   }else{
@@ -21,9 +25,13 @@ try {
   }
   for(const {state,clip} of reviewRows){
     for(const other of container.animationGroups)other.stop();
-    clip.start(false);clip.pause();
-    for(const fraction of [0,.5,1]){
-      clip.goToFrame(clip.from+(clip.to-clip.from)*fraction);
+    if(clip){clip.start(false);clip.pause()}
+    const samples=staticMode
+      ? [{view:'front',direction:[0,0,1]},{view:'back',direction:[0,0,-1]},{view:'isometric',direction:[1,.45,1]}]
+      : [{fraction:0},{fraction:.5},{fraction:1}];
+    for(const sample of samples){
+      const fraction=sample.fraction??0;
+      if(clip)clip.goToFrame(clip.from+(clip.to-clip.from)*fraction);
       for(const node of scene.transformNodes)node.computeWorldMatrix(true);
       for(const skeleton of container.skeletons)skeleton.prepare(true);
       let min=new Vector3(Infinity,Infinity,Infinity),max=new Vector3(-Infinity,-Infinity,-Infinity),finite=true,vertexCount=0;
@@ -36,13 +44,13 @@ try {
       }
       if(!finite)throw Error('non-finite posed vertices');
       const span=Math.max(max.y-min.y,max.x-min.x,max.z-min.z,.01),half=span*.62;
-      const center=min.add(max).scale(.5);camera.position=center.add(new Vector3(0,0,span*2));camera.setTarget(center);camera.orthoLeft=-half;camera.orthoRight=half;camera.orthoTop=half;camera.orthoBottom=-half;
+      const center=min.add(max).scale(.5),direction=Vector3.FromArray(sample.direction??[0,0,1]).normalize();camera.position=center.add(direction.scale(span*2));camera.setTarget(center);camera.orthoLeft=-half;camera.orthoRight=half;camera.orthoTop=half;camera.orthoBottom=-half;
       scene.render();await new Promise(resolve=>requestAnimationFrame(resolve));scene.render();
-      const name=(state?`ggd-state-${state}`:clip.name.toLowerCase().replaceAll('_','-'))+'-'+Math.round(fraction*100)+'.png';
+      const name=staticMode?`${sample.view}.png`:(state?`ggd-state-${state}`:clip.name.toLowerCase().replaceAll('_','-'))+'-'+Math.round(fraction*100)+'.png';
       await save(name,{png:canvas.toDataURL('image/png').split(',')[1]});
-      shots.push({name,state,clip:clip.name,fraction,frame:clip.from+(clip.to-clip.from)*fraction,vertexCount,bounds:{min:min.asArray(),max:max.asArray()},finite});
+      shots.push({name,state,view:sample.view??null,clip:clip?.name??null,fraction:staticMode?null:fraction,frame:clip?clip.from+(clip.to-clip.from)*fraction:null,vertexCount,bounds:{min:min.asArray(),max:max.asArray()},finite});
     }
   }
-  await save('proof.json',{schema:'ggd.infinity-strash-babylon-webgl-motion@1',babylonVersion:Engine.Version,method:'Actual Babylon WebGL glTF loader; three rendered samples for each source clip or each of six mapped runtime states',meshCount:meshes.length,bones:container.skeletons.map(skeleton=>skeleton.bones.length),textures:scene.textures.map(texture=>({name:texture.name,ready:texture.isReady(),size:texture.getSize()})),shots,nativeMotion:true,humanReview:'pending',runtimeRegistration:false,deploymentVerified:false});
+  await save('proof.json',{schema:staticMode?'ggd.infinity-strash-babylon-webgl-static@1':'ggd.infinity-strash-babylon-webgl-motion@1',babylonVersion:Engine.Version,method:staticMode?'Actual Babylon WebGL glTF loader; front, back and isometric bind-pose renders':'Actual Babylon WebGL glTF loader; three rendered samples for each source clip or each of six mapped runtime states',meshCount:meshes.length,bones:container.skeletons.map(skeleton=>skeleton.bones.length),textures:scene.textures.map(texture=>({name:texture.name,ready:texture.isReady(),size:texture.getSize()})),shots,nativeMotion:!staticMode,humanReview:'pending',runtimeRegistration:false,deploymentVerified:false});
   scene.dispose();engine.dispose();await fetch('/done',{method:'POST'});
 } catch(error){await save('error.json',{message:String(error),stack:error.stack});await fetch('/done',{method:'POST'})}

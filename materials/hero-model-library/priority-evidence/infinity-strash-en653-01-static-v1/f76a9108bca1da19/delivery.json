@@ -1,0 +1,128 @@
+{
+  "schema": "ggd.infinity-strash-en653-static-component-delivery@1",
+  "deliveryId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+  "identity": {
+    "nameZh": "密斯特巴恩",
+    "originalName": "MystVearn",
+    "nativeId": "EN653/01",
+    "sourceWorkZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+    "classification": "confirmed-separate-character-do-not-merge-with-vearn-or-baran",
+    "notVearnPostTransformation": true,
+    "notBaran": true
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+    "bytes": 1342948,
+    "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65"
+  },
+  "conversion": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/component-portable-v2/component.glb",
+    "bytes": 1156216,
+    "sha256": "a0d777a38fccd39b59686bf9b0a98062c15f19110606e0cb3ff7deaef99b59ed"
+  },
+  "rebuild": {
+    "conversionByteIdentical": true,
+    "normalizedByteIdentical": true,
+    "conversion": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/component-portable-v3/component.glb",
+      "bytes": 1156216,
+      "sha256": "a0d777a38fccd39b59686bf9b0a98062c15f19110606e0cb3ff7deaef99b59ed"
+    },
+    "normalized": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v4/component-ggd-normalized.glb",
+      "bytes": 1342948,
+      "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65"
+    }
+  },
+  "metrics": {
+    "triangles": 13128,
+    "drawPrimitives": 4,
+    "skinCount": 1,
+    "jointCount": 175,
+    "textureCount": 2,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdUploadErrors": 0,
+    "heroBudget": {
+      "errors": [],
+      "warnings": []
+    },
+    "babylonBones": [
+      175
+    ],
+    "webglViews": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "allWebglVerticesFinite": true,
+    "humanVisualReview": "accepted-independent-static-skinned-component"
+  },
+  "toolPins": [
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/export.py",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/export.py",
+      "bytes": 4513,
+      "sha256": "3f7c3a1a1218c2168265b52fa0a63a52f89ddb5b01bc929ce18c2d1c0649dc0e"
+    },
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/ueviewer-infinity-strash.patch",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/ueviewer-infinity-strash.patch",
+      "bytes": 2639,
+      "sha256": "1ecc9d04150281054182c816b349a0eb136815fa3f0df57928d678375b396e98"
+    },
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/prepare_en653_component.py",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/prepare_en653_component.py",
+      "bytes": 12223,
+      "sha256": "0d50fec57a09075740097bf3513607e63d2854ae2906c78a30e8c82363d90699"
+    },
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/normalize_validate_candidate.mts",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/normalize_validate_candidate.mts",
+      "bytes": 5579,
+      "sha256": "9be7756c59a87666a24fdb2d7a9e37ae428d15a586793a899261784954ab5f60"
+    },
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.py",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.py",
+      "bytes": 5216,
+      "sha256": "e24eb2ed7aec152ee27d7138fae29b92832b80db51e5888e665f52d2c799fbf1"
+    },
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.mjs",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.mjs",
+      "bytes": 5325,
+      "sha256": "0ff58abef0acba02ceb4b46ba6df34ca92005111ece1b4c1219885f284f6fd0a"
+    },
+    {
+      "repoPath": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/collect_en653_delivery.py",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/collect_en653_delivery.py",
+      "bytes": 6906,
+      "sha256": "17394ccc9719a0c579d3e594bd9b263a33da9e2370d83d1b15a44ac0d69ce1cc"
+    }
+  ],
+  "status": {
+    "downloaded": true,
+    "extracted": true,
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "limitations": [
+    "The source supplies no native animation clips for this component export.",
+    "Base colour is portable PBR; the original Unreal custom toon shader, shade, bundle and filter behavior is not reproduced.",
+    "UModel omitted bufferView targets and rounded POSITION bounds; the converter restores those JSON declarations without changing accessor bytes.",
+    "This is MystVearn EN653/01, not Vearn's post-transformation body and not Baran.",
+    "No hero ID, skill binding, backend option, default selection or deployment is claimed."
+  ]
+}

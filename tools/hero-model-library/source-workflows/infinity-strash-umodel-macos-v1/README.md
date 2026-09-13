@@ -111,3 +111,13 @@ receipt into Git evidence.
 an intermediate GLB, and makes deterministic untextured front/back/isometric
 review views. It records that game-shader parity and multipart assembly are
 still incomplete. This fast geometry review does not require Blender.
+
+`prepare_en653_component.py` is the reproducible EN653/01 lane. It preserves
+UModel mesh, skin, UV and accessor bytes; repairs only missing buffer-view
+targets and rounded POSITION bounds; maps the confirmed face/body base-colour
+textures; and embeds them into a portable GLB. `render_babylon.py --static`
+then produces front, back and isometric bind-pose evidence for zero-clip
+components. EN653 is always recorded as MystVearn, separate from Vearn and
+Baran. `collect_en653_delivery.py` accepts only byte-identical conversion and
+normalization rebuilds before collecting the full source, failed attempts,
+successful evidence and pinned tools for the S3 legacy archive.

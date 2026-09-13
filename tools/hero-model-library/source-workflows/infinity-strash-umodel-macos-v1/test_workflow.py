@@ -1,6 +1,7 @@
 import hashlib
 import importlib.util
 import json
+import struct
 import tempfile
 import unittest
 from pathlib import Path
@@ -15,6 +16,14 @@ COLLECT_SPEC = importlib.util.spec_from_file_location("collect_popp_delivery", H
 COLLECT = importlib.util.module_from_spec(COLLECT_SPEC)
 assert COLLECT_SPEC.loader is not None
 COLLECT_SPEC.loader.exec_module(COLLECT)
+EN653_COLLECT_SPEC = importlib.util.spec_from_file_location("collect_en653_delivery", HERE / "collect_en653_delivery.py")
+EN653_COLLECT = importlib.util.module_from_spec(EN653_COLLECT_SPEC)
+assert EN653_COLLECT_SPEC.loader is not None
+EN653_COLLECT_SPEC.loader.exec_module(EN653_COLLECT)
+EN653_SPEC = importlib.util.spec_from_file_location("prepare_en653_component", HERE / "prepare_en653_component.py")
+EN653 = importlib.util.module_from_spec(EN653_SPEC)
+assert EN653_SPEC.loader is not None
+EN653_SPEC.loader.exec_module(EN653)
 
 
 class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
@@ -109,6 +118,64 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
         self.assertEqual(paths["kagayaki/runtime-v1"], "runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki")
         self.assertIn("mahouno/textures-v1", paths)
         self.assertIn("kagayaki/textures-v1", paths)
+
+    def test_en653_component_identity_and_embedded_texture_mapping(self):
+        source = {
+            "asset": {"version": "2.0"},
+            "buffers": [{"uri": "mesh.bin", "byteLength": 72}],
+            "bufferViews": [
+                {"buffer": 0, "byteOffset": 0, "byteLength": 36},
+                {"buffer": 0, "byteOffset": 36, "byteLength": 36},
+            ],
+            "accessors": [
+                {"bufferView": 0, "componentType": 5126, "count": 3, "type": "VEC3"},
+                {"bufferView": 1, "componentType": 5123, "count": 3, "type": "SCALAR"},
+            ],
+            "materials": [{"name": name} for name in EN653.MATERIAL_TEXTURES],
+            "meshes": [{"primitives": [{
+                "indices": 1, "material": index,
+                "attributes": {key: 0 for key in ("POSITION", "NORMAL", "TEXCOORD_0", "JOINTS_0", "WEIGHTS_0")},
+            } for index in range(4)]}],
+            "skins": [{"joints": [0]}],
+            "nodes": [{}],
+        }
+        source_bin = struct.pack("<9f", -1, 0, 2, 3, -4, 5, 6, 7, -8) + b"\0" * 36
+        document, binary = EN653.build_document(source, source_bin, {"body": b"body", "face": b"face"})
+        self.assertEqual(len(document["images"]), 2)
+        self.assertTrue(all("bufferView" in image and "uri" not in image for image in document["images"]))
+        self.assertEqual(document["buffers"], [{"byteLength": len(binary)}])
+        self.assertEqual(document["bufferViews"][0]["target"], 34962)
+        self.assertEqual(document["bufferViews"][1]["target"], 34963)
+        self.assertEqual(document["accessors"][0]["min"], [-1.0, -4.0, -8.0])
+        self.assertEqual(document["accessors"][0]["max"], [6.0, 7.0, 5.0])
+        self.assertEqual(document["materials"][0]["pbrMetallicRoughness"]["baseColorTexture"]["index"], 1)
+        self.assertEqual(document["materials"][1]["pbrMetallicRoughness"]["baseColorTexture"]["index"], 0)
+        glb = EN653.encode_glb(document, binary)
+        self.assertEqual(glb[:4], b"glTF")
+        script = (HERE / "prepare_en653_component.py").read_text(encoding="utf-8")
+        self.assertIn('"notVearnPostTransformation": True', script)
+        self.assertIn('"notBaran": True', script)
+
+    def test_babylon_renderer_has_explicit_static_component_mode(self):
+        runner = (HERE / "render_babylon.py").read_text(encoding="utf-8")
+        browser = (HERE / "render_babylon.mjs").read_text(encoding="utf-8")
+        self.assertIn('parser.add_argument("--static"', runner)
+        self.assertIn('request_path = self.path.partition("?")[0]', runner)
+        self.assertIn("expected_images = 3 if args.static else 18", runner)
+        self.assertIn("static component review requires zero animation groups", browser)
+        self.assertIn("ggd.infinity-strash-babylon-webgl-static@1", browser)
+        self.assertIn("nativeMotion:!staticMode", browser)
+
+    def test_en653_delivery_pins_all_conversion_and_review_modules(self):
+        self.assertEqual(EN653_COLLECT.CANDIDATE_ID, EN653.CANDIDATE_ID)
+        self.assertEqual(
+            {
+                "export.py", "ueviewer-infinity-strash.patch", "prepare_en653_component.py",
+                "normalize_validate_candidate.mts", "render_babylon.py", "render_babylon.mjs",
+                "collect_en653_delivery.py",
+            },
+            set(EN653_COLLECT.TOOL_NAMES),
+        )
 
 if __name__ == "__main__":
     unittest.main()

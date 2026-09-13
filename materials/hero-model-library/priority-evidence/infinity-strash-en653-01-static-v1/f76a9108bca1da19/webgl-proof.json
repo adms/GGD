@@ -1,0 +1,123 @@
+{
+  "schema": "ggd.infinity-strash-babylon-webgl-static@1",
+  "babylonVersion": "7.54.3",
+  "method": "Actual Babylon WebGL glTF loader; front, back and isometric bind-pose renders",
+  "meshCount": 3,
+  "bones": [
+    175
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "size": {
+        "width": 704,
+        "height": 1
+      }
+    },
+    {
+      "name": "MI_EN653_01_Face (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_EN653_00_Body (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_EN653_00_Metal (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front.png",
+      "state": "bind-pose",
+      "view": "front",
+      "clip": null,
+      "fraction": null,
+      "frame": null,
+      "vertexCount": 11851,
+      "bounds": {
+        "min": [
+          -1.5172382593154907,
+          -2.861939174181316e-05,
+          -1.0629700422286987
+        ],
+        "max": [
+          1.5172353982925415,
+          2.8535983562469482,
+          0.6097948551177979
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "back.png",
+      "state": "bind-pose",
+      "view": "back",
+      "clip": null,
+      "fraction": null,
+      "frame": null,
+      "vertexCount": 11851,
+      "bounds": {
+        "min": [
+          -1.5172382593154907,
+          -2.861939174181316e-05,
+          -1.0629700422286987
+        ],
+        "max": [
+          1.5172353982925415,
+          2.8535983562469482,
+          0.6097948551177979
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "isometric.png",
+      "state": "bind-pose",
+      "view": "isometric",
+      "clip": null,
+      "fraction": null,
+      "frame": null,
+      "vertexCount": 11851,
+      "bounds": {
+        "min": [
+          -1.5172382593154907,
+          -2.861939174181316e-05,
+          -1.0629700422286987
+        ],
+        "max": [
+          1.5172353982925415,
+          2.8535983562469482,
+          0.6097948551177979
+        ]
+      },
+      "finite": true
+    }
+  ],
+  "nativeMotion": false,
+  "humanReview": "pending",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

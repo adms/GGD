@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-scoped-tar-s3-receipt@1",
+  "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+  "sha256": "e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047",
+  "bytes": 20608400,
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "fileCount": 79,
+  "manifestSha256": "d3bc4f0ac92668bc7108391f2cc9fe9d35d4eae13684b2b53c3a5b9eadc93e25",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-full-readback.tar.gz",
+  "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/scoped-manifest.json",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true
+}

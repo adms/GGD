@@ -40,7 +40,9 @@ class ModelDesignCandidateRoleTest(unittest.TestCase):
             "ssbu-mario": (16, 11, 0),
             "ssbu-mewtwo": (8, 2, 0),
             "ssbu-ptrainer": (8, 3, 0),
-            "ssbu-ryu": (8, 2, 0),
+            # Eight costume bodies plus the sack prop, accepted static body,
+            # and the separately retained procedural six-state fallback.
+            "ssbu-ryu": (8, 3, 0),
             "ssbu-pickel": (8, 25, 0),
         }
         for identity, counts in expected.items():

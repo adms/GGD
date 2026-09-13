@@ -1,8 +1,8 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 733,
+  "sourceIdentityCount": 734,
   "counts": {
-    "not-defined": 389,
+    "not-defined": 390,
     "definitions-incomplete": 11,
     "identity-review": 247,
     "designed": 86,
@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "06cbadbabdcd4760938a482d50f3a941eea21fe12811663289112e2fad2df937"
+      "sha256": "bf474c1858e8e4583bcfa582155e9aea216b5653cd3cc0902e1a8df63e9b83ac"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "861909cfb89dbf42eb1e541d24265dfdf72fab5a84be7605c0b92e127fcc3206"
+      "sha256": "836191f4ff42d26acd6dcb8be6e0c62caa9ebc09143b550c9ebda405646934ed"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -71,11 +71,11 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "6eeda54144fa825e09afe0450ec632bea4eca98522c6ddf52f3d721b09316819"
+      "sha256": "ff384e7497df0e0e9eb28c2db7b48b394031e6775ecac05f452ce19d756d0831"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "7c5d99d0bfbf5d36299ee5ef73739d5c19000b9fcde5bb6a490b6684f52e987c"
+      "sha256": "42686e51e150911cf7d605b6cd51db74c580bcbc671058f1c0abb7c19114687f"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -196726,6 +196726,130 @@
             "unconvertedCount": null,
             "provenance": null,
             "readiness": "native-character-body-extracted-pending-proprietary-format-conversion",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "infinity-strash:mystvearn-en653-01",
+      "name": "密斯特巴恩／MystVearn",
+      "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceIds": [
+        "steam-infinity-strash-priority-original-assets-build-local-20240328"
+      ],
+      "aliases": [
+        "密斯特巴恩",
+        "MystVearn",
+        "EN653",
+        "EN653/01"
+      ],
+      "modelCandidates": [
+        {
+          "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "library": "community",
+          "nativeId": "EN653/01",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+          "gitPath": "content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
+          "existsLocal": true,
+          "bytes": 1342948,
+          "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/validation.json",
+            "bytes": 8140,
+            "sha256": "5e16742c938abfcc217b75f184c6f4362a563ccd7816a363bcb34f4b637df31e"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/visual-review.json",
+            "bytes": 2198,
+            "sha256": "60467d715cd0939221407dffcc32731d908485c0caaaded1f6b86160908ac7e2"
+          },
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+            "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+            "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+          },
+          "limitations": [
+            "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+            "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+            "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+            "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+            "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "原作 EN653/01 身份已確認為密斯特巴恩；目前沒有對應 GGD 英雄定義，保留原生 ID 並待設計、待綁定，未杜撰英雄 ID。",
+      "evidence": [
+        "Infinity Strash EN653/01 MystVearn is accepted as an independent static skinned component: 13,128 triangles, three normalized skinned draw primitives, 175 joints, two 256px textures and zero clips. Two conversions and two GGD normalizations are byte-identical; Khronos/GGD report zero errors or warnings, 227,304 float values are finite, and front/back/isometric Babylon WebGL views were reviewed."
+      ],
+      "limitations": [
+        "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+        "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+        "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+        "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+        "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+        "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "密斯特巴恩／MystVearn",
+      "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "displayName": "密斯特巴恩／MystVearn",
+      "displayWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],

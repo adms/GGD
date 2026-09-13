@@ -21,6 +21,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("source", type=Path)
 parser.add_argument("output", type=Path)
 parser.add_argument("--model", type=Path, help="Optional uploaded-model.json whose six-state clipMap drives the review")
+parser.add_argument("--static", action="store_true", help="Render front/back/isometric bind-pose views for a zero-clip component")
 args = parser.parse_args()
 source, output = args.source.resolve(), args.output.resolve()
 if not source.is_file():
@@ -41,13 +42,14 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
     def do_GET(self):
-        if self.path == "/":
+        request_path = self.path.partition("?")[0]
+        if request_path == "/":
             data, mime = b'<canvas width="800" height="800"></canvas><script type="module" src="/bundle.js"></script>', "text/html"
-        elif self.path == "/body.glb":
+        elif request_path == "/body.glb":
             data, mime = source.read_bytes(), "model/gltf-binary"
-        elif self.path == "/bundle.js":
+        elif request_path == "/bundle.js":
             data, mime = (output / "bundle.js").read_bytes(), "text/javascript"
-        elif self.path == "/model.json" and model_path is not None:
+        elif request_path == "/model.json" and model_path is not None:
             data, mime = model_path.read_bytes(), "application/json"
         else:
             self.send_error(404)
@@ -85,7 +87,7 @@ command = [
     chrome, "--headless=new", "--no-first-run", "--disable-extensions", "--disable-background-networking",
     "--disable-component-update", "--disable-sync", "--no-default-browser-check", "--use-gl=angle",
     "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--user-data-dir=" + str(profile),
-    f"http://127.0.0.1:{server.server_address[1]}/",
+    f"http://127.0.0.1:{server.server_address[1]}/?mode={'static' if args.static else 'motion'}",
 ]
 with (output / "chrome.log").open("w") as log:
     process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
@@ -108,9 +110,11 @@ receipt = {
     "proofExists": (output / "proof.json").is_file(),
     "errorExists": (output / "error.json").is_file(),
     "images": len(list(output.glob("*.png"))),
+    "mode": "static" if args.static else "motion",
     "model": None if model_path is None else {"path": str(model_path), "sha256": hashlib.sha256(model_path.read_bytes()).hexdigest()},
 }
 (output / "run.json").write_text(json.dumps(receipt, indent=2) + "\n")
 print(json.dumps(receipt))
-if not complete or not receipt["proofExists"] or receipt["errorExists"] or receipt["images"] != 18:
+expected_images = 3 if args.static else 18
+if not complete or not receipt["proofExists"] or receipt["errorExists"] or receipt["images"] != expected_images:
     raise SystemExit(1)

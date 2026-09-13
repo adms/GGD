@@ -2865,6 +2865,85 @@
         "sourceManifestGitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
         "sourceManifestSha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
       }
+    },
+    {
+      "id": "infinity-strash:mystvearn-en653-01",
+      "name": "密斯特巴恩／MystVearn",
+      "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceIds": [
+        "steam-infinity-strash-priority-original-assets-build-local-20240328"
+      ],
+      "aliases": [
+        "密斯特巴恩",
+        "MystVearn",
+        "EN653",
+        "EN653/01"
+      ],
+      "modelCandidates": [
+        {
+          "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+          "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+          "library": "community",
+          "nativeId": "EN653/01",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+          "gitPath": "content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
+          "existsLocal": true,
+          "bytes": 1342948,
+          "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+          "format": "glTF Binary",
+          "resourceRole": "independent-static-skinned-model-component",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/validation.json",
+            "bytes": 8140,
+            "sha256": "5e16742c938abfcc217b75f184c6f4362a563ccd7816a363bcb34f4b637df31e"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/visual-review.json",
+            "bytes": 2198,
+            "sha256": "60467d715cd0939221407dffcc32731d908485c0caaaded1f6b86160908ac7e2"
+          },
+          "backup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.files.json",
+            "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
+            "s3Use": "backup-only-not-runtime-entry",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
+            "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+          },
+          "limitations": [
+            "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+            "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+            "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+            "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+            "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+          ]
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "proxyUseHeroIds": [],
+      "possibleIdentityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "原作 EN653/01 身份已確認為密斯特巴恩；目前沒有對應 GGD 英雄定義，保留原生 ID 並待設計、待綁定，未杜撰英雄 ID。",
+      "evidence": [
+        "Infinity Strash EN653/01 MystVearn is accepted as an independent static skinned component: 13,128 triangles, three normalized skinned draw primitives, 175 joints, two 256px textures and zero clips. Two conversions and two GGD normalizations are byte-identical; Khronos/GGD report zero errors or warnings, 227,304 float values are finite, and front/back/isometric Babylon WebGL views were reviewed."
+      ],
+      "limitations": [
+        "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+        "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+        "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+        "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+        "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+        "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+      ]
     }
   ],
   "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate. ｜ ou99 偶久網付費下載（owner 2026-09-11 授權）：18 顆已轉換入庫並在 GGD 主線 content/models/_index.json 裡，heroBody:true ⇒ 後台與編輯器選單可選。"
