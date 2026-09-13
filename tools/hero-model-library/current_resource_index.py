@@ -193,6 +193,19 @@ def build(git_link_root=ROOT):
         or smash_legacy.get('brawl',{}).get('wavFiles')!=448
         or smash_legacy.get('verification',{}).get('safeNewModelConversionsCompleted')!=0):
         raise ValueError('Legacy Smash source inventory is absent, stale or overclaims payload/conversion status')
+    playstation_platform_path=base/'source-inventories/playstation-platform-sources-v1/inventory.json'
+    playstation_platform=read(playstation_platform_path)
+    playstation_cloud_audit_path=base/'source-inventories/playstation-platform-sources-v1/cloud-policy-audit.json'
+    playstation_cloud_audit=read(playstation_cloud_audit_path)
+    if (playstation_platform.get('schema')!='ggd.playstation-platform-source-inventory@1'
+        or playstation_platform.get('verification',{}).get('windowsMetadataRowsInScope')!=85
+        or playstation_platform.get('verification',{}).get('windowsPayloadFilesRead')!=0
+        or playstation_platform.get('platformSummary',{}).get('PS Vita',{}).get('metadataRows')!=0
+        or playstation_platform.get('acquiredSources',{}).get('pspNativeGmoAuthorSnapshot',{}).get('nativeGmoHeadersVerified')!=21
+        or playstation_platform.get('acquiredSources',{}).get('pspCloudConvertedCandidate',{}).get('nativeMotionClips')!=13
+        or playstation_platform.get('acquiredSources',{}).get('ps4CloudEnglishAudio',{}).get('decodedWavFiles')!=49
+        or playstation_cloud_audit.get('readiness',{}).get('runtimeReady') is not False):
+        raise ValueError('PlayStation platform inventory is absent, stale or overclaims payload/readiness')
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
@@ -295,6 +308,27 @@ def build(git_link_root=ROOT):
         legacySmashSourceDocument=dict(
             gitPath='materials/hero-model-library/source-inventories/smash-legacy-sources-v1/README.md',
             sha256=hashlib.sha256((base/'source-inventories/smash-legacy-sources-v1/README.md').read_bytes()).hexdigest()),
+        playstationPlatformSourceInventory=dict(
+            gitPath=str(playstation_platform_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(playstation_platform_path.read_bytes()).hexdigest(),
+            documentGitPath='materials/hero-model-library/source-inventories/playstation-platform-sources-v1/README.md',
+            documentSha256=hashlib.sha256((base/'source-inventories/playstation-platform-sources-v1/README.md').read_bytes()).hexdigest(),
+            cloudPolicyAuditGitPath=str(playstation_cloud_audit_path.relative_to(ROOT)),
+            cloudPolicyAuditSha256=hashlib.sha256(playstation_cloud_audit_path.read_bytes()).hexdigest(),
+            sourceId=playstation_platform['sourceId'],
+            status='85 Windows game-container rows metadata-only; 3 independent local source IDs byte/SHA/S3-verified; runtime/deployment unverified',
+            summary=dict(
+                platformSummary=playstation_platform['platformSummary'],
+                locallyVerifiedSourceIds=playstation_platform['verification']['locallyVerifiedSourceIds'],
+                locallyVerifiedMemberFiles=playstation_platform['verification']['locallyVerifiedMemberFiles'],
+                pspNativeGmoFiles=21,
+                pspNativeMotionBlocks=258,
+                pspCloudConvertedClips=13,
+                ps4CloudDecodedWavFiles=49,
+                newDownloads=0,
+                newConversions=0,
+                runtimeBindingsVerified=0,
+                productionDeploymentVerified=False)),
         ultimate14NativeMotionIndex=dict(
             gitPath=str(ultimate14_motion_path.relative_to(ROOT)),
             sha256=hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest(),
@@ -477,6 +511,18 @@ def main():
                 result['fateUnlimitedCodesPlatformDocument'],
                 result['legacySmashSourceInventory'],
                 result['legacySmashSourceDocument'],
+                {
+                    'gitPath': result['playstationPlatformSourceInventory']['gitPath'],
+                    'sha256': result['playstationPlatformSourceInventory']['sha256'],
+                },
+                {
+                    'gitPath': result['playstationPlatformSourceInventory']['documentGitPath'],
+                    'sha256': result['playstationPlatformSourceInventory']['documentSha256'],
+                },
+                {
+                    'gitPath': result['playstationPlatformSourceInventory']['cloudPolicyAuditGitPath'],
+                    'sha256': result['playstationPlatformSourceInventory']['cloudPolicyAuditSha256'],
+                },
                 result['ultimate14NativeMotionIndex'],
                 result['assetWorkflowRestorationManifest'],
                 {
