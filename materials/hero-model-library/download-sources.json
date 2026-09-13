@@ -55999,6 +55999,237 @@
         "s3ReadbackVerified": true
       },
       "publicationStatus": "s3-readback-verified"
+    },
+    {
+      "id": "steam-jump-force-priority-original-assets-build-8523149",
+      "target": "JUMP FORCE Steam 原作：小呆／達伊 chr0430 模型、貼圖、骨架、特效、音訊與技能資料",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "ownerEntryIds": [],
+      "url": "https://store.steampowered.com/app/816020/JUMP_FORCE/",
+      "uploader": "User-owned local Steam install exposed through read-only SMB",
+      "format": "Unreal Engine 4.19 encrypted PAK; UAsset/UExp; UModel glTF and PNG evidence",
+      "accessStatus": "local-installed-game-readonly-share",
+      "acquisitionStatus": "priority-scope-extracted-verified",
+      "readiness": "complete-body-review-glb-webgl-rendered-pending-material-parity-and-ggd-intake",
+      "purchaseDecision": "no-purchase-user-owned-install",
+      "defaultEligible": false,
+      "resourceRole": "canonical-game-model-vfx-audio-reserve",
+      "localPath": "GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+      "sourceGame": "JUMP FORCE",
+      "platform": "Windows (Steam)",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "local-readonly-smb",
+      "assetKinds": [
+        "model-package",
+        "texture-material-package",
+        "skeleton-package",
+        "vfx-package",
+        "audio-package",
+        "character-configuration",
+        "skill-configuration"
+      ],
+      "publicationStatus": "local-and-git-evidence-only-s3-pending",
+      "containers": [
+        {
+          "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor.pak",
+          "name": "pakchunk0-WindowsNoEditor.pak",
+          "bytes": 7279219593,
+          "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+          "indexedEntries": 140075,
+          "indexEncrypted": true,
+          "locallyMirrored": false
+        },
+        {
+          "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_0_P.pak",
+          "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+          "bytes": 1543894441,
+          "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+          "indexedEntries": 12906,
+          "indexEncrypted": true,
+          "locallyMirrored": false
+        },
+        {
+          "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+          "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+          "bytes": 2532409095,
+          "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+          "indexedEntries": 30795,
+          "indexEncrypted": true,
+          "locallyMirrored": false
+        },
+        {
+          "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor.pak",
+          "name": "pakchunk1-WindowsNoEditor.pak",
+          "bytes": 7060715441,
+          "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+          "indexedEntries": 36537,
+          "indexEncrypted": true,
+          "locallyMirrored": false
+        },
+        {
+          "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_0_P.pak",
+          "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+          "bytes": 1552635741,
+          "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+          "indexedEntries": 23755,
+          "indexEncrypted": true,
+          "locallyMirrored": false
+        },
+        {
+          "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_1_P.pak",
+          "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+          "bytes": 2410586601,
+          "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+          "indexedEntries": 12551,
+          "indexEncrypted": true,
+          "locallyMirrored": false
+        }
+      ],
+      "containerPreservation": {
+        "state": "mounted-source-only-pending-local-mirror-and-s3-backup",
+        "containerCount": 6,
+        "relationCount": 256619,
+        "uniquePathCount": 221877,
+        "duplicateRelationCount": 34742,
+        "fullIndexPath": "GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/full-path-index.jsonl.gz"
+      },
+      "filesManifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/source-manifest.json",
+        "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+      },
+      "extractedFilesIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
+        "sha256": "16eaf9ce10789a454eab83bf7af066f3772e09e699e773292c8df72b610e15f0",
+        "fileCount": 2000
+      },
+      "gitEvidence": [
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/source-manifest.json",
+          "bytes": 6500,
+          "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/files.jsonl.gz",
+          "bytes": 98644,
+          "sha256": "16eaf9ce10789a454eab83bf7af066f3772e09e699e773292c8df72b610e15f0"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
+          "bytes": 6419,
+          "sha256": "6d93e2625b4a5335cec62ed9388a30ab123879afda35d284c64f30caaf8ca964"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.md",
+          "bytes": 1682,
+          "sha256": "9d7dda0a2319f7d169cbfba5c439760ccbc3601204fe0e82d3881d73558b80ef"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/visual-review.json",
+          "bytes": 1687,
+          "sha256": "0d65b12fd48e354afa9e3c48d6f792b6dcdca3a9cd4098c829cae481a92a66e3"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/conversion-receipt.json",
+          "bytes": 19414,
+          "sha256": "62aecc83ebb1aff62ef8c7aed2ee0ec8ff914545cca12dd1d35434ed479abfa2"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/webgl-proof.json",
+          "bytes": 34110,
+          "sha256": "c016a1c1b400c0fd960441bf8a4eaae0232b27cf33a089a1e1a6d53aaf4e4403"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/front.png",
+          "bytes": 285777,
+          "sha256": "ed75c76d32944120e41a4ec6df79c62a4e9243482af911824d6680b41155f49e"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/back.png",
+          "bytes": 284466,
+          "sha256": "ec852fa4d8be388a793607845d81cbb1dbcb555f8450803ffc0ce766f0e22dc3"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/isometric.png",
+          "bytes": 277491,
+          "sha256": "786f3033baf792626b20a060f2436013cf91bbced4a07c40932c7145aea456f1"
+        }
+      ],
+      "identityRecords": [
+        {
+          "name": "小呆／達伊",
+          "nameZh": "小呆／達伊",
+          "originalName": "Dai",
+          "nativeCharacterId": "chr0430",
+          "aliases": [
+            "小呆",
+            "達伊",
+            "Dai"
+          ],
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ]
+        }
+      ],
+      "modelCandidates": [
+        {
+          "candidateId": "jump-force-native-dai-chr0430-raw-v1",
+          "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+          "name": "小呆／達伊",
+          "character": "小呆／達伊 / Dai",
+          "nativeCharacterId": "chr0430",
+          "heroIds": [
+            "godie-nbbc",
+            "godie-n01c"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "platform": "Windows (Steam)",
+          "selectionClass": "canonical-game",
+          "assetKinds": [
+            "model",
+            "texture",
+            "skeleton",
+            "vfx",
+            "audio",
+            "configuration"
+          ],
+          "nativePackageCount": 1942,
+          "modelGltfCount": 11,
+          "texturePngCount": 36,
+          "modelState": "complete-body-review-glb-webgl-rendered-pending-material-parity-and-ggd-intake",
+          "animationState": "no-accepted-native-clips-in-current-export",
+          "vfxState": "native-packages-extracted-pending-conversion",
+          "audioState": "native-packages-extracted-pending-decode-and-listening-review",
+          "defaultEligible": false,
+          "backendSelectable": false,
+          "deployed": false
+        }
+      ],
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization-and-validation",
+        "heroIds": [
+          "godie-nbbc",
+          "godie-n01c"
+        ],
+        "registered": false,
+        "selectable": false,
+        "selectionVerified": false,
+        "productionDeployed": false
+      },
+      "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. These are acquisition and structural export facts, not GGD acceptance.",
+      "limitations": [
+        "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
+        "The six-part complete-body composition has WebGL three-view evidence, but source-game shader parity and material correction remain pending.",
+        "No native animation clips have been accepted from the current export.",
+        "VFX and audio packages are not decoded or bound to GGD events.",
+        "No model option is registered, selectable or deployed from this source yet.",
+        "Redistribution rights for original game assets are not asserted."
+      ],
+      "backup": {}
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",

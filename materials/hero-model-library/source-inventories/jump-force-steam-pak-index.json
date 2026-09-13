@@ -1,0 +1,183 @@
+{
+  "schema": "ggd-encrypted-unreal-pak-index@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "indexEncryption": {
+    "encrypted": true,
+    "keyRetained": false,
+    "keySha256": "4620c3dc26cccf0f11d0a4764ac135d31ed1077d8f9efd16cb2fde33936008fc",
+    "keyHandling": "environment-only during refresh; value is never written or printed"
+  },
+  "patchOrderPolicy": "Input container order is base-to-patch; the last relation for a path wins.",
+  "containerCount": 6,
+  "relationCount": 256619,
+  "uniquePathCount": 221877,
+  "duplicateRelationCount": 34742,
+  "sourceKindRelationCounts": {
+    "animation-package": 1,
+    "audio-package": 66024,
+    "character-config-package": 5660,
+    "character-package": 13519,
+    "other": 90438,
+    "skill-config-package": 2644,
+    "vfx-package": 78333
+  },
+  "sourceKindSelectedPathCounts": {
+    "animation-package": 1,
+    "audio-package": 65614,
+    "character-config-package": 2336,
+    "character-package": 13437,
+    "other": 81379,
+    "skill-config-package": 1240,
+    "vfx-package": 57870
+  },
+  "containers": [
+    {
+      "name": "pakchunk0-WindowsNoEditor.pak",
+      "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor.pak",
+      "bytes": 7279219593,
+      "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+      "order": 0,
+      "entryCount": 140075,
+      "sourceKindCounts": {
+        "animation-package": 1,
+        "audio-package": 54756,
+        "character-config-package": 1734,
+        "character-package": 4362,
+        "other": 38411,
+        "skill-config-package": 792,
+        "vfx-package": 40019
+      },
+      "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk0-WindowsNoEditor.txt"
+    },
+    {
+      "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+      "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_0_P.pak",
+      "bytes": 1543894441,
+      "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+      "order": 1,
+      "entryCount": 12906,
+      "sourceKindCounts": {
+        "audio-package": 3472,
+        "character-config-package": 1712,
+        "character-package": 80,
+        "other": 4434,
+        "skill-config-package": 710,
+        "vfx-package": 2498
+      },
+      "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk0-WindowsNoEditor_0_P.txt"
+    },
+    {
+      "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "bytes": 2532409095,
+      "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "order": 2,
+      "entryCount": 30795,
+      "sourceKindCounts": {
+        "audio-package": 7796,
+        "character-config-package": 2214,
+        "character-package": 37,
+        "other": 7819,
+        "skill-config-package": 1142,
+        "vfx-package": 11787
+      },
+      "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk0-WindowsNoEditor_1_P.txt"
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor.pak",
+      "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor.pak",
+      "bytes": 7060715441,
+      "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+      "order": 3,
+      "entryCount": 36537,
+      "sourceKindCounts": {
+        "character-package": 6049,
+        "other": 29828,
+        "vfx-package": 660
+      },
+      "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk1-WindowsNoEditor.txt"
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+      "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_0_P.pak",
+      "bytes": 1552635741,
+      "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+      "order": 4,
+      "entryCount": 23755,
+      "sourceKindCounts": {
+        "character-package": 1056,
+        "other": 2342,
+        "vfx-package": 20357
+      },
+      "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk1-WindowsNoEditor_0_P.txt"
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+      "originPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_1_P.pak",
+      "bytes": 2410586601,
+      "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+      "order": 5,
+      "entryCount": 12551,
+      "sourceKindCounts": {
+        "character-package": 1935,
+        "other": 7604,
+        "vfx-package": 3012
+      },
+      "rawList": "../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/raw-lists/pakchunk1-WindowsNoEditor_1_P.txt"
+    }
+  ],
+  "characters": [
+    {
+      "nativeCharacterId": "chr0420",
+      "name": "Asta",
+      "heroIds": [],
+      "relationCount": 2744,
+      "uniquePathCount": 1727,
+      "selectedPathCount": 1727,
+      "sourceKindCounts": {
+        "audio-package": 586,
+        "character-config-package": 66,
+        "character-package": 162,
+        "other": 12,
+        "skill-config-package": 48,
+        "vfx-package": 1870
+      }
+    },
+    {
+      "nativeCharacterId": "chr0230",
+      "name": "Kenshiro",
+      "heroIds": [],
+      "relationCount": 2954,
+      "uniquePathCount": 1890,
+      "selectedPathCount": 1890,
+      "sourceKindCounts": {
+        "audio-package": 812,
+        "character-config-package": 60,
+        "character-package": 106,
+        "other": 208,
+        "skill-config-package": 48,
+        "vfx-package": 1720
+      }
+    },
+    {
+      "nativeCharacterId": "chr0430",
+      "name": "Dai",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "relationCount": 3454,
+      "uniquePathCount": 2106,
+      "selectedPathCount": 2106,
+      "sourceKindCounts": {
+        "audio-package": 632,
+        "character-config-package": 72,
+        "character-package": 150,
+        "other": 12,
+        "skill-config-package": 48,
+        "vfx-package": 2540
+      }
+    }
+  ],
+  "readiness": "indexed-only; extraction, conversion, validation, registration and deployment are separate states"
+}

@@ -1,0 +1,1570 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.5330927968025208,
+      -0.002456470625475049,
+      -0.23003971576690674
+    ],
+    "max": [
+      0.5330927968025208,
+      1.5638749599456787,
+      0.22825071215629578
+    ],
+    "extent": [
+      1.0661855936050415,
+      1.5663314305711538,
+      0.4582904279232025
+    ]
+  },
+  "geometry": [
+    {
+      "name": "chr0430_form0_primitive0",
+      "vertices": 242,
+      "indices": 1278,
+      "worldBounds": {
+        "min": [
+          -0.07361376285552979,
+          1.2747936248779297,
+          0.04371430724859238
+        ],
+        "max": [
+          0.07361376285552979,
+          1.3220276832580566,
+          0.07391873002052307
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_form0_primitive1",
+      "vertices": 242,
+      "indices": 1278,
+      "worldBounds": {
+        "min": [
+          -0.07348288595676422,
+          1.2748727798461914,
+          0.04358319193124771
+        ],
+        "max": [
+          0.07348288595676422,
+          1.322021722793579,
+          0.07373212277889252
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_form0_primitive2",
+      "vertices": 4522,
+      "indices": 21333,
+      "worldBounds": {
+        "min": [
+          -0.26534074544906616,
+          -0.002456470625475049,
+          -0.13343194127082825
+        ],
+        "max": [
+          0.26034578680992126,
+          0.915979266166687,
+          0.22825071215629578
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_form0_primitive3",
+      "vertices": 531,
+      "indices": 2184,
+      "worldBounds": {
+        "min": [
+          -0.09821034222841263,
+          0.8117179274559021,
+          -0.11820466071367264
+        ],
+        "max": [
+          0.15388897061347961,
+          1.1815911531448364,
+          0.09547051042318344
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "chr0430_form0_primitive4",
+      "vertices": 74,
+      "indices": 360,
+      "worldBounds": {
+        "min": [
+          -0.006286781746894121,
+          0.890251874923706,
+          0.0931525006890297
+        ],
+        "max": [
+          0.013849769718945026,
+          1.0758031606674194,
+          0.10056380927562714
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head_primitive0",
+      "vertices": 2599,
+      "indices": 14070,
+      "worldBounds": {
+        "min": [
+          -0.1162337064743042,
+          1.1971746683120728,
+          -0.12223494052886963
+        ],
+        "max": [
+          0.1162337064743042,
+          1.4343490600585938,
+          0.09981412440538406
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head_primitive1",
+      "vertices": 12407,
+      "indices": 65088,
+      "worldBounds": {
+        "min": [
+          -0.20555159449577332,
+          1.1573964357376099,
+          -0.23003971576690674
+        ],
+        "max": [
+          0.20211553573608398,
+          1.5638749599456787,
+          0.1923544555902481
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head_primitive2",
+      "vertices": 580,
+      "indices": 3102,
+      "worldBounds": {
+        "min": [
+          -0.0730576366186142,
+          1.2751295566558838,
+          0.0431571863591671
+        ],
+        "max": [
+          0.0730576291680336,
+          1.3220021724700928,
+          0.07312577217817307
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head_primitive3",
+      "vertices": 1062,
+      "indices": 5418,
+      "worldBounds": {
+        "min": [
+          -0.03753730282187462,
+          1.2265180349349976,
+          0.016354868188500404
+        ],
+        "max": [
+          0.037537120282649994,
+          1.2698513269424438,
+          0.08071308583021164
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part1_chr0430_form0_head_primitive4",
+      "vertices": 96,
+      "indices": 405,
+      "worldBounds": {
+        "min": [
+          -0.05946355313062668,
+          1.2015987634658813,
+          0.039654117077589035
+        ],
+        "max": [
+          0.06629417091608047,
+          1.275032877922058,
+          0.07328757643699646
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part2_chr0430_damage_A_primitive0",
+      "vertices": 98,
+      "indices": 408,
+      "worldBounds": {
+        "min": [
+          -0.20438316464424133,
+          0.32628846168518066,
+          -0.13246692717075348
+        ],
+        "max": [
+          0.227849081158638,
+          0.6303578615188599,
+          0.10439667105674744
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part2_chr0430_damage_A_primitive1",
+      "vertices": 562,
+      "indices": 2502,
+      "worldBounds": {
+        "min": [
+          -0.1315261572599411,
+          0.914577841758728,
+          -0.1159243956208229
+        ],
+        "max": [
+          0.15920762717723846,
+          1.1888774633407593,
+          0.06831306964159012
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part3_chr0430_damage_B_primitive0",
+      "vertices": 336,
+      "indices": 1527,
+      "worldBounds": {
+        "min": [
+          -0.17986145615577698,
+          0.3111448884010315,
+          -0.10712961107492447
+        ],
+        "max": [
+          0.2095555067062378,
+          1.1718392372131348,
+          0.07874742895364761
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part3_chr0430_damage_B_primitive1",
+      "vertices": 1236,
+      "indices": 6066,
+      "worldBounds": {
+        "min": [
+          -0.1424708366394043,
+          0.9096214771270752,
+          -0.1159243956208229
+        ],
+        "max": [
+          0.13905425369739532,
+          1.1829322576522827,
+          0.07294388115406036
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part3_chr0430_damage_B_primitive2",
+      "vertices": 618,
+      "indices": 3039,
+      "worldBounds": {
+        "min": [
+          -0.22662802040576935,
+          0.2914215326309204,
+          -0.1341911256313324
+        ],
+        "max": [
+          0.25960448384284973,
+          0.6482013463973999,
+          0.12082482874393463
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part4_chr0430_damage_AB_primitive0",
+      "vertices": 375,
+      "indices": 1920,
+      "worldBounds": {
+        "min": [
+          -0.0979427620768547,
+          1.1462470293045044,
+          -0.12223494052886963
+        ],
+        "max": [
+          0.0979427620768547,
+          1.348322868347168,
+          0.027142057195305824
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part4_chr0430_damage_AB_primitive1",
+      "vertices": 3010,
+      "indices": 15600,
+      "worldBounds": {
+        "min": [
+          -0.5330927968025208,
+          0.7114071249961853,
+          -0.09796453267335892
+        ],
+        "max": [
+          0.5330927968025208,
+          1.16084885597229,
+          0.031755559146404266
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part4_chr0430_damage_AB_primitive2",
+      "vertices": 3824,
+      "indices": 18342,
+      "worldBounds": {
+        "min": [
+          -0.4303578734397888,
+          0.8150800466537476,
+          -0.12168200314044952
+        ],
+        "max": [
+          0.4303578734397888,
+          1.2131150960922241,
+          0.0888046845793724
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part4_chr0430_damage_AB_primitive3",
+      "vertices": 174,
+      "indices": 684,
+      "worldBounds": {
+        "min": [
+          -0.23652856051921844,
+          0.12607398629188538,
+          -0.08743453770875931
+        ],
+        "max": [
+          0.22546182572841644,
+          0.5149351954460144,
+          0.11004146188497543
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Dai_chr0430_part5_chr0430_equipment1",
+      "vertices": 3296,
+      "indices": 14700,
+      "worldBounds": {
+        "min": [
+          -0.27310559153556824,
+          0.44648513197898865,
+          -0.17737247049808502
+        ],
+        "max": [
+          0.43755045533180237,
+          1.2780280113220215,
+          -0.06830056011676788
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 159,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "MI_chr0430_lens",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": false,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_lens (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 512,
+          "height": 512
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_eyeshadow",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": false,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_eyeshadow (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 512,
+          "height": 512
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_pants",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_pants (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_pants (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_weapon (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_weapon (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_glass",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": false,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_glass (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 512,
+          "height": 512
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_glass (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 1024,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_face",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_face (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_face (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_hair",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": false,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_hair (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 512,
+          "height": 512
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_hair (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 1024,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_eye",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_eye (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 512,
+          "height": 512
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_oral",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_oral (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_oral (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_damage_blood",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": null,
+      "normalTexture": null
+    },
+    {
+      "name": "MI_chr0430_pants",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_pants (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_pants (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_cloth (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_cloth (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_skin",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_skin (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_skin (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_cloth (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_cloth (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_pants",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_pants (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_pants (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_face",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_face (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_face (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_skin",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_skin (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_skin (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_cloth (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_cloth (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_pants",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_pants (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_pants (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "albedoTexture": {
+        "name": "MI_chr0430_weapon (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      },
+      "normalTexture": {
+        "name": "MI_chr0430_weapon (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 2048,
+          "height": 2048
+        }
+      }
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 640,
+        "height": 1
+      }
+    },
+    {
+      "name": "MI_chr0430_lens (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_eyeshadow (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_glass (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_hair (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_eye (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 512,
+        "height": 512
+      }
+    },
+    {
+      "name": "MI_chr0430_oral (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_oral (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_oral (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_oral (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_face (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_skin (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_cloth (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_pants (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 1024,
+        "height": 1024
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Occlusion)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    },
+    {
+      "name": "MI_chr0430_weapon (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 2048,
+        "height": 2048
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "ggd-jump-force-dai-visual-review@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "candidateId": "jump-force-native-dai-chr0430-review-v3",
+  "glb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v3.glb",
+    "bytes": 76796552,
+    "sha256": "087536f1b52ad0cabeea81a039e6acbfe640a03e34dcf47f6e92f8d01269a48e"
+  },
+  "composition": [
+    "chr0430_form0.gltf",
+    "chr0430_form0_head.gltf",
+    "chr0430_damage_A.gltf",
+    "chr0430_damage_B.gltf",
+    "chr0430_damage_AB.gltf",
+    "chr0430_equipment1.gltf"
+  ],
+  "structuralEvidence": {
+    "meshCount": 6,
+    "rendererGeometryCount": 20,
+    "skeletonCount": 1,
+    "animationCount": 0,
+    "textures": 69
+  },
+  "visualEvidence": [
+    {
+      "path": "front.png",
+      "bytes": 285777,
+      "sha256": "ed75c76d32944120e41a4ec6df79c62a4e9243482af911824d6680b41155f49e"
+    },
+    {
+      "path": "back.png",
+      "bytes": 284466,
+      "sha256": "ec852fa4d8be388a793607845d81cbb1dbcb555f8450803ffc0ce766f0e22dc3"
+    },
+    {
+      "path": "isometric.png",
+      "bytes": 277491,
+      "sha256": "786f3033baf792626b20a060f2436013cf91bbced4a07c40932c7145aea456f1"
+    }
+  ],
+  "review": {
+    "completeBodyObserved": true,
+    "frontBackIsometricRendered": true,
+    "sourceGameShaderParity": false,
+    "materialParityStatus": "pending-original-shader-reconstruction",
+    "ggdIntakeAccepted": false,
+    "backendSelectable": false,
+    "productionDeployed": false
+  },
+  "decision": "retain-as-local-review-component-pending-material-correction-and-formal-intake"
+}
