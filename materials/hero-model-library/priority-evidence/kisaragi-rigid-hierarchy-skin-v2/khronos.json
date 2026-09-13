@@ -1,0 +1,37 @@
+{
+  "uri": "kisaragi-final.glb",
+  "mimeType": "model/gltf-binary",
+  "validatorVersion": "2.0.0-dev.3.10",
+  "issues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "info": {
+    "version": "2.0",
+    "generator": "GGD batch2 original Kisaragi tram v2",
+    "resources": [
+      {
+        "pointer": "/buffers/0",
+        "mimeType": "application/gltf-buffer",
+        "storage": "glb",
+        "byteLength": 120004
+      }
+    ],
+    "animationCount": 6,
+    "materialCount": 1,
+    "hasMorphTargets": false,
+    "hasSkins": true,
+    "hasTextures": false,
+    "hasDefaultScene": true,
+    "drawCallCount": 5,
+    "totalVertexCount": 1980,
+    "totalTriangleCount": 660,
+    "maxUVs": 0,
+    "maxInfluences": 4,
+    "maxAttributes": 5
+  }
+}

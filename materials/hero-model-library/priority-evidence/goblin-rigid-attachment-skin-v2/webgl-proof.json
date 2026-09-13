@@ -1,0 +1,180 @@
+{
+  "schema": "ggd-historical-model-webgl-proof@1",
+  "candidateId": "derivative-goblin-skinned-v2",
+  "modelSha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+  "renderer": "Babylon WebGL glTF loader in a right-handed scene; idle or first native clip at 20 percent; CPU-skinned bounds frame three views",
+  "idleClipRequested": "bat_idle",
+  "clipRendered": "bat_idle",
+  "animationGroups": [
+    "bat_idle",
+    "single_run",
+    "single_attack_attcom_1",
+    "dead"
+  ],
+  "worldSkinnedBounds": {
+    "min": [
+      -0.5338082909584045,
+      0.0009500059532001615,
+      -0.1718972772359848
+    ],
+    "max": [
+      0.35279518365859985,
+      0.9678782820701599,
+      0.35109275579452515
+    ],
+    "extent": [
+      0.8866034746170044,
+      0.9669282761169598,
+      0.52299003303051
+    ]
+  },
+  "geometry": [
+    {
+      "name": "269",
+      "vertices": 7305,
+      "indices": 25365,
+      "worldBounds": {
+        "min": [
+          -0.5338082909584045,
+          0.0009500059532001615,
+          -0.1718972772359848
+        ],
+        "max": [
+          0.1707649976015091,
+          0.9678782820701599,
+          0.35109275579452515
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 63
+    },
+    {
+      "name": "goblin-right-small-sword",
+      "vertices": 108,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          -0.24091200530529022,
+          0.07713411003351212,
+          -0.10356330126523972
+        ],
+        "max": [
+          -0.060912035405635834,
+          0.5471339821815491,
+          -0.05356329679489136
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 63
+    },
+    {
+      "name": "goblin-left-small-shield",
+      "vertices": 72,
+      "indices": 0,
+      "worldBounds": {
+        "min": [
+          0.052795156836509705,
+          0.34473559260368347,
+          -0.06295302510261536
+        ],
+        "max": [
+          0.35279518365859985,
+          0.6447355151176453,
+          -0.021953001618385315
+        ]
+      },
+      "skeleton": "skeleton0",
+      "bones": 63
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "skeleton0",
+      "bones": 63
+    }
+  ],
+  "materials": [
+    {
+      "name": "269.tga",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "269.tga (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 128
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "goblin-right-small-sword",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "albedoTexture": null,
+      "normalTexture": null
+    },
+    {
+      "name": "goblin-left-small-shield",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "albedoTexture": null,
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 1
+      }
+    },
+    {
+      "name": "269.tga (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 128
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.2822827157509358
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "visualIdentityAcceptance": "pending-human-review",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

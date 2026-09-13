@@ -349,6 +349,7 @@ class Builder:
         overlay_path = self.audio_report.parent.parent / "current-branch-audio/overlay.json"
         overlay_evidence = self.evidence(overlay_path)
         overlay, overlay_by_id, overlay_files_by_id = {}, {}, {}
+        main_synchronized_by_clip = {}
         if overlay_evidence["existsLocal"]:
             overlay = self.read(overlay_path)
             if overlay.get("schema") != "ggd.priority81.audio-branch-overlay@1" or overlay.get("baselineUnmodified") is not True:
@@ -358,6 +359,15 @@ class Builder:
                 actual = self.evidence(path)
                 if actual["sha256"] != pin["sha256"] or actual["bytes"] != pin["bytes"]:
                     raise ValueError(f"Current-branch audio overlay is stale: {path}; rerun build_priority81_audio_overlay.py")
+            for pin in overlay.get("currentMainPins", []):
+                blob = subprocess.run(
+                    ["git", "-C", str(self.repo), "show", f"{pin['revision']}:{pin['gitPath']}"],
+                    check=True, capture_output=True,
+                ).stdout
+                if hashlib.sha256(blob).hexdigest() != pin["sha256"] or len(blob) != pin["bytes"]:
+                    raise ValueError(
+                        f"Current-Main audio pin is stale: {pin['revision']}:{pin['gitPath']}"
+                    )
             pinned_baseline = next((p for p in overlay["inputs"] if p.get("gitPath") == audio_evidence["gitPath"]), None)
             if not pinned_baseline or pinned_baseline["sha256"] != audio_evidence["sha256"]:
                 raise ValueError("Audio overlay references a different frozen Main baseline")
@@ -368,7 +378,48 @@ class Builder:
                 if row.get("mainMerged") is not False:
                     raise ValueError("Branch audio additions must not claim Main merged")
                 overlay_files_by_id.setdefault(row["heroId"], []).append(row)
-        current_audio_paths = {f["clip"] for f in main_files} | {f["clip"] for f in overlay.get("files", [])}
+            for row in overlay.get("mainSynchronizedFiles", []):
+                if row.get("mainMerged") is not True:
+                    raise ValueError("Current-Main audio replacements must claim Main merged")
+                if row["clip"] in main_synchronized_by_clip:
+                    raise ValueError("Duplicate Current-Main audio replacement: " + row["clip"])
+                main_synchronized_by_clip[row["clip"]] = row
+            current_main_files = overlay.get("currentMainFiles", [])
+            if current_main_files:
+                audio_main_by_id = {}
+                git_queries = []
+                for row in current_main_files:
+                    if row.get("mainMerged") is not True:
+                        raise ValueError("Current-Main audio snapshot row must claim Main merged")
+                    ev = self.evidence(self.repo / "content" / row["clip"])
+                    if ev["sha256"] != row["sha256"] or ev["bytes"] != row["bytes"]:
+                        raise ValueError("Current-Main audio snapshot differs from worktree: " + row["clip"])
+                    blob = row.get("currentMainBlob") or {}
+                    git_queries.append((row, blob))
+                    audio_main_by_id.setdefault(row["heroId"], []).append(row)
+                query = "".join(
+                    f"{blob['revision']}:{blob['gitPath']}\n" for _, blob in git_queries
+                ).encode()
+                raw = subprocess.run(
+                    ["git", "-C", str(self.repo), "cat-file", "--batch"],
+                    input=query, check=True, capture_output=True,
+                ).stdout
+                offset = 0
+                for row, blob in git_queries:
+                    end = raw.index(b"\n", offset)
+                    header = raw[offset:end].decode()
+                    offset = end + 1
+                    if header.endswith(" missing"):
+                        raise ValueError("Current-Main audio Git blob is missing: " + row["clip"])
+                    _, kind, size = header.split()
+                    size = int(size)
+                    data = raw[offset:offset + size]
+                    offset += size + 1
+                    if (kind != "blob" or size != blob["bytes"]
+                            or hashlib.sha256(data).hexdigest() != blob["sha256"]):
+                        raise ValueError("Current-Main audio Git blob differs from overlay: " + row["clip"])
+        current_main_files = overlay.get("currentMainFiles", main_files)
+        current_audio_paths = {f["clip"] for f in current_main_files} | {f["clip"] for f in overlay.get("files", [])}
         if overlay and overlay["summary"]["currentUniqueClipPaths"] != len(current_audio_paths):
             raise ValueError("Audio overlay count does not match distinct current paths")
         derivatives = policy.get("approvedDerivatives", [])
@@ -423,9 +474,16 @@ class Builder:
             for f in audio_main_by_id.get(hero_id, audio_main_by_id.get(runtime_id, [])):
                 ev = self.evidence(self.repo / "content" / f["clip"])
                 match = ev["sha256"] == f["sha256"]
-                finished_audio.append({**ev, "classification": f["classification"],
-                                       "categories": f["categories"], "auditSha256": f["sha256"],
-                                       "currentMatchesAudit": match, "speakerVerified": False})
+                finished_audio.append({
+                    **ev,
+                    "classification": f["classification"],
+                    "categories": f["categories"],
+                    "auditSha256": f["sha256"],
+                    "currentMatchesAudit": match,
+                    "currentMatchesLaterMain": match if overlay.get("currentMainFiles") else None,
+                    "currentMainRevision": f.get("currentMainRevision"),
+                    "speakerVerified": False,
+                })
                 if not match:
                     gaps.append("committed audio no longer matches audit: " + f["clip"])
             branch_additions = []
@@ -504,7 +562,12 @@ class Builder:
                         "perHeroAudioAudits": sum(h["audio"]["status"] == "per-hero-audited" for h in heroes),
                         "heroesWithReportedGaps": sum(bool(h["gaps"]) for h in heroes),
                         "mainBaselineAudioFiles": len({f["clip"] for f in main_files}),
+                        "currentMainAudioFiles": len({f["clip"] for f in current_main_files}),
                         "currentBranchAudioAdditions": len(overlay.get("files", [])),
+                        "currentMainAudioUpdatesAfterFrozenBaseline": len(overlay.get("mainSynchronizedFiles", [])),
+                        "currentMainAudioAddedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainAddedPathsAfterBaseline", 0),
+                        "currentMainAudioRemovedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainRemovedPathsAfterBaseline", 0),
+                        "currentMainAudioChangedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainChangedPathsAfterBaseline", 0),
                         "currentBranchAudioFiles": len(current_audio_paths),
                         "mainMergedAudioAdditions": False,
                         "productionDeploymentVerified": False,
@@ -579,15 +642,20 @@ def render(data):
              f"{summary['activeModelFilesAndMappingsPass']}/81 個作用中模型通過本機檔案與映射檢查；"
              + (f"{summary['activePlaceholderCount']} 個仍為佔位。" if summary['activePlaceholderCount']
                 else "目前無新增角色使用原有佔位。") + "剩餘轉換由 Root 負責。", "",
-             f"Main 已合併音訊基準：{committed.get('heroesWithCommittedCharacterPack', 0)} 位有 "
+             f"凍結 Main 音訊基準：{committed.get('heroesWithCommittedCharacterPack', 0)} 位有 "
              f"{committed.get('uniqueClipPaths', 0)} 個成品檔（來源沿用 "
              f"{classes.get('source-file-reused-not-speaker-verified', 0)}、自身參考合成 "
              f"{classes.get('synthetic-own-reference-labelled', 0)}、借用參考合成 "
-             f"{classes.get('synthetic-donor-reference', 0)}）；另 LoL 7 位有 "
-             f"{audio_summary.get('sevenJapaneseFileRows', 0)} 個日文 WAV 儲備待綁定。", "",
+             f"{classes.get('synthetic-donor-reference', 0)}）；另 LoL 7 位保留 "
+             f"{audio_summary.get('sevenJapaneseFileRows', 0)} 個日文 WAV 儲備，目前 Main 已挑選部分成品，"
+             "核心技能事件仍有缺口。", "",
              (f"本分支目前共 **{summary.get('currentBranchAudioFiles', 0)} 個成品音訊檔**："
-              f"新增 {summary.get('currentBranchAudioAdditions', 0)} 檔鐵路廣播／發車音樂，補上如月列車 taunt、victory；"
-              "**新增項仍待 Main 合併**。表格採本分支現況，凍結 Main 基準保留於 JSON。"
+              f"目前 Main 固定為 {summary.get('currentMainAudioFiles', 0)} 檔；相對凍結基準新增 "
+              f"{summary.get('currentMainAudioAddedAfterFrozenBaseline', 0)}、移除 "
+              f"{summary.get('currentMainAudioRemovedAfterFrozenBaseline', 0)}、同路徑更新 "
+              f"{summary.get('currentMainAudioChangedAfterFrozenBaseline', 0)} 檔。"
+              f"另新增 {summary.get('currentBranchAudioAdditions', 0)} 檔鐵路廣播／發車音樂，補上 taunt、victory；"
+              "**兩個新增項仍待 Main 合併**。表格採本分支現況，凍結 Main 基準保留於 JSON。"
               if summary.get("currentBranchAudioAdditions") else ""), "",
              "保留 **15 筆手動指定與 11 支認可加工副本**，全部候選供後台選用。預設順位："
              + " ＞ ".join(rules["priorityLabels"][k] for k in rules["priority"]) + "。", "",
@@ -611,7 +679,7 @@ def render(data):
                                       ("uniqueClipCount", "originalSourceLabelledCount", "syntheticCount"))
         jp_count = jp.get("localShaVerifiedFiles", 0)
         audio_label = f"{total}（原{original}／合{synthetic}）"
-        if branch_voice:
+        if hero["audio"]["currentBranchAdditions"]:
             audio_label += f"；新增{len(hero['audio']['currentBranchAdditions'])}待合併"
         if jp_count:
             audio_label += f"；JP {jp_count} 未綁"
