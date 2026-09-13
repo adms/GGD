@@ -1,6 +1,6 @@
 {
   "schema": "ggd.asset-review-portal@1",
-  "sourceFingerprint": "b0e2c0dc4f02b279dfb3271f4179f3edada482156d6d901a22b6dccf0ca56ab5",
+  "sourceFingerprint": "c88b9a74ebd2a93eecee3e977b9ff0042f10846dc9f881331d116249df75c820",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json",
@@ -9,8 +9,8 @@
     },
     {
       "gitPath": "materials/hero-model-library/palworld/review/palworld-av-review.json",
-      "bytes": 78629,
-      "sha256": "31ed5daeb700deeb58f73c8a8ac59dd188df3eb346796088572045f41ce9ceb2"
+      "bytes": 78800,
+      "sha256": "5a52676e800bbb22e38d685fa08bdca2835c758509f651c17c8cc90647b6e0b0"
     },
     {
       "gitPath": "materials/hero-model-library/motion-review/borrowed-motion-review.json",

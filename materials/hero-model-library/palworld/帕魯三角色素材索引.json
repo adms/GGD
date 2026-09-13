@@ -11,7 +11,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "a3c0471d03ccff5614a604693c076b8aa57aef0ad3411f92ddbee49e57d4c989"
+      "sha256": "c521b4d9c47a910b4b568f7a5225b40456fc9cdcd524c48a0f471d1533d45a3d"
     },
     {
       "gitPath": "materials/hero-model-library/palworld/character-settings.json",
@@ -19,12 +19,12 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "sha256": "4f26cf91dc890a40687e5174e7a1bfa57069b38451bfc585a23284902e2ec592"
+      "sha256": "c68a02dbd7c86c18945b56671e295ec27b3c54321cf621ae15bebe6bbb7c70fb"
     }
   ],
   "characterCount": 3,
   "modelSourceCount": 5,
-  "preservedModelFileCount": 22,
+  "preservedModelFileCount": 23,
   "distinctCryCount": 18,
   "characterSettingsGitPath": "materials/hero-model-library/palworld/character-settings.json",
   "heroIntegrationReceipt": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -906,8 +906,8 @@
         "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
         "package": {
           "status": "passed",
-          "digest": "sha256:a25ebc542500b7afccf7f4216453dec43d965360e64963fff9c8a38b800661a4",
-          "zipSha256": "sha256:d37d2459aeafd772c026eb6a39889e486e49959169c3a596e4492656bfce0c47",
+          "digest": "sha256:95db5259da03110150d1fcf476a24e11f6008d7c356c511e513bb6f3451c5f66",
+          "zipSha256": "sha256:b505d53787a2ec6a4c175487ae75fe0f7bf02c3a35c316ea4c3a2c51598555b7",
           "zipBytes": 6288568,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -1547,6 +1547,175 @@
           ],
           "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb"
+        },
+        {
+          "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+          "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+          "label": "枯星龍／7,896面／256px／完整58動作",
+          "character": "枯星龍",
+          "library": "public-community",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+          "bytes": 17043436,
+          "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+          "format": "glb",
+          "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
+          "existsLocal": true,
+          "resourceRole": "character-body",
+          "sourceId": "opgg-palworld-astralym-2026081102",
+          "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+          "sourceWork": "幻獸帕魯／Palworld",
+          "heroIds": [
+            "acquired-astralym"
+          ],
+          "relatedHeroIds": [
+            "acquired-astralym"
+          ],
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "componentReady": true,
+          "runtimeSelectable": true,
+          "runtimeDropdownRegistered": true,
+          "runtimeModelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+          "modelDocumentGitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+          "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+          "triangles": 7896,
+          "drawPrimitives": 3,
+          "boneCount": 145,
+          "textureCount": 9,
+          "maxTextureEdge": 256,
+          "nativeAnimationCount": 57,
+          "animationClipCount": 58,
+          "uniqueAnimationContentCount": 58,
+          "staticPoseClipCount": 1,
+          "animationScope": "complete-source-animation-library",
+          "animationNames": [
+            "Damage",
+            "FarSkill_Action",
+            "FarSkill_ActionLoop",
+            "FarSkill_End",
+            "FarSkill_Start",
+            "FarSkill_StartLoop",
+            "HaloBeam_End",
+            "HaloBeam_End_Ring",
+            "HaloBeam_Loop",
+            "HaloBeam_Loop_Ring",
+            "HaloBeam_Start",
+            "HaloBeam_Start_Ring",
+            "HaloCutter",
+            "HaloCutter_End_Ring",
+            "HaloCutter_Loop_Ring",
+            "HaloCutter_Start_Ring",
+            "Idle",
+            "Idle_Ring",
+            "LaserGliding_End",
+            "LaserGliding_End_Ring",
+            "LaserGliding_Loop",
+            "LaserGliding_Loop_Ring",
+            "LaserGliding_Start",
+            "LaserGliding_Start_Ring",
+            "PaldiumCannon_Attack",
+            "PaldiumCannon_Attack_Loop",
+            "PaldiumCannon_Attack_Loop_Ring",
+            "PaldiumCannon_Attack_Ring",
+            "PaldiumCannon_End",
+            "PaldiumCannon_End_Ring",
+            "PaldiumCannon_Start",
+            "PaldiumCannon_Start_Loop",
+            "PaldiumCannon_Start_Loop_Ring",
+            "PaldiumCannon_Start_Ring",
+            "PaldiumExplosion_Cancel",
+            "PaldiumExplosion_Cancel_Ring",
+            "PaldiumExplosion_End",
+            "PaldiumExplosion_End_Ring",
+            "PaldiumExplosion_Loop",
+            "PaldiumExplosion_Loop_Ring",
+            "PaldiumExplosion_Start",
+            "PaldiumExplosion_Start_Ring",
+            "PaldiumRain_End",
+            "PaldiumRain_Loop",
+            "PaldiumRain_Start",
+            "PaldiumShot_End",
+            "PaldiumShot_End_Ring",
+            "PaldiumShot_Loop",
+            "PaldiumShot_Loop_Ring",
+            "PaldiumShot_Start",
+            "PaldiumShot_Start_Ring",
+            "Supernova_End",
+            "Supernova_End_Ring",
+            "Supernova_Loop",
+            "Supernova_Loop_Ring",
+            "Supernova_Start",
+            "Supernova_Start_Ring",
+            "Walk"
+          ],
+          "proceduralAnimationCount": 0,
+          "retargetedAnimationCount": 0,
+          "sourceSamplePreservationVerified": true,
+          "selectedClips": {
+            "idle": "Idle",
+            "run": "Walk",
+            "attack": "FarSkill_Action",
+            "cast": "HaloBeam_Loop",
+            "hurt": "Damage",
+            "death": "Damage"
+          },
+          "fallbacks": [
+            {
+              "state": "death",
+              "clip": "Damage",
+              "reason": "No native Death clip; owner-authorized Damage plus ascend/fade presentation, not a generated animation."
+            }
+          ],
+          "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+          "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+          "s3ArchiveMember": "palworld-astralym-materials-20260911/astralym-material-bound.glb",
+          "conversionStageBackupStatus": "full-download-and-all-member-sha256-verified",
+          "conversionStageBackup": {
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+            "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+            "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+            "archiveBytes": 53102420,
+            "fileCount": 74,
+            "fullGetVerified": true,
+            "allMemberSha256Verified": true,
+            "localUnchanged": true,
+            "receipt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-receipt.json",
+              "bytes": 1231,
+              "sha256": "7b4a6bed91fecb61dbabc835910b558a4d65d01f2fcc7d07547ebbbbe67dd978"
+            },
+            "manifest": {
+              "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-manifest.json",
+              "bytes": 13958,
+              "sha256": "07078528e85e8d0034ff1a3699f8a2273951779ce57dc9cd576cda38b74de6ee"
+            },
+            "candidateArchiveMember": "final/astralym-full58-256-decimated.glb"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+            "bytes": 22294,
+            "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+          },
+          "generationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/generation.json",
+            "bytes": 5073,
+            "sha256": "268c378a863324ccae3e15abd78490e6df91c891dc254b64b249539fec5838ba"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+            "bytes": 6481,
+            "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1"
+          },
+          "limitations": [
+            "58 clips are preserved, but HaloCutter_Loop_Ring is a fixed pose; 57 clips contain changing samples.",
+            "Each clip has 435 channels: above the live 300 warning and below the 500 hard limit.",
+            "No native Death clip is claimed; Damage plus ascend/fade remains a declared fallback.",
+            "Representative five-clip, three-view A/B passed the 5% contract; low-poly faceting remains visible.",
+            "Original Palworld standalone VFX, skill-specific SFX and production deployment remain unverified.",
+            "The conversion stage is archived in S3 legacy with full download and every member SHA-256 verified; this does not prove production deployment."
+          ],
+          "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb"
         },
         {
           "id": "opgg-palworld-astralym-2026081102.idle-walk-hd",
@@ -2279,7 +2448,8 @@
         "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
         "modelOptions": [
           "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
-          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+          "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
         ],
         "contentSchema": {
           "modelSchema": "model@1",
@@ -2302,7 +2472,8 @@
           "status": "eligible-registered-alternative",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+            "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
           ],
           "defaultModelPolicyEligible": false,
           "registeredOptionPreserved": true,
@@ -2342,6 +2513,23 @@
               "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
               "bytes": 3793672
             }
+          },
+          {
+            "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+            "isDefault": false,
+            "triangles": 7896,
+            "status": "eligible",
+            "currentPolicyEligible": true,
+            "modelDocument": {
+              "gitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+              "sha256": "ffe2ef5c49f792b0d4ad663999c55f049455f55c5debebeab6072fef348dfa0c",
+              "bytes": 456
+            },
+            "modelGlb": {
+              "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+              "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+              "bytes": 17043436
+            }
           }
         ],
         "modelDocument": {
@@ -2366,8 +2554,8 @@
         "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
         "package": {
           "status": "passed",
-          "digest": "sha256:b4d6540363632818f89c3956aafc4d718eec6be96823d011b306b7a1b1011dc9",
-          "zipSha256": "sha256:622ef8575d44f7ad1df378fb645936228bf668346fc53f199e9e0088e1e5df77",
+          "digest": "sha256:61beccc5bbec63ca2be3ebac28397913de9aaad973b53a54ed0a6db02bb95583",
+          "zipSha256": "sha256:dfc4711761a1f4797c23b3acb7a1dca510f1a8f9a65935ea29fe26df7fca7c9d",
           "zipBytes": 6855714,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -2393,7 +2581,8 @@
         "status": "eligible-registered-alternative",
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
-          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+          "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
         ],
         "defaultModelPolicyEligible": false,
         "registeredOptionPreserved": true,
@@ -3566,8 +3755,8 @@
         "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
         "package": {
           "status": "passed",
-          "digest": "sha256:51003a95e892545f9285623d09c6da0f222e2eae038b2cd9a361ab343285b95c",
-          "zipSha256": "sha256:9e177c2288eaa001b7ac4c807b40e8a2470c0656b5eb015910129af9242bc65a",
+          "digest": "sha256:f19d6b5b57da6eada0877a1fb04974b930fa94055b242fc232c9f81c4801ec2b",
+          "zipSha256": "sha256:e1047e939e6bf228a3b9d34c23c50fe03029d3963384be2b290fc31cdf42c82b",
           "zipBytes": 4401433,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -3609,11 +3798,11 @@
     "Creature cries are sound effects, not Japanese or English spoken dialogue.",
     "PalDB settings are community snapshots, not original game DataTables or GGD abilities.",
     "Khronos structural validation does not prove material fidelity or GGD runtime acceptance.",
-    "The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym now has a separately validated 7,996-triangle historical candidate registered as a non-default option; production deployment remains unverified.",
+    "The three GGD Hero Forge authoring packages are complete and locally selectable. Astralym has a separately validated 7,996-triangle historical five-motion candidate and a 7,896-triangle 256px full-58-motion candidate registered as non-default options; production deployment remains unverified.",
     "Local authoring completeness does not prove original Palworld audiovisual fidelity or production deployment.",
     "Hero Forge package acceptance and dropdown registration are local authoring evidence; production deployment remains unverified."
   ],
-  "gitModelComponentCount": 3,
+  "gitModelComponentCount": 4,
   "gitModelComponents": [
     {
       "id": "opgg-palworld-jetragon.material-bound-256-v1",
@@ -3701,6 +3890,186 @@
         "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
         "heroId": "acquired-jetragon",
         "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+        "isDefault": false,
+        "productionDeploymentVerified": false
+      }
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+      "candidateId": "opgg-palworld-astralym-2026081102.full58-256-decimated-v1",
+      "label": "枯星龍／7,896面／256px／完整58動作",
+      "character": "枯星龍",
+      "library": "public-community",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+      "bytes": 17043436,
+      "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874",
+      "format": "glb",
+      "readiness": "registered-non-default-hero-forge-option; production deployment unverified",
+      "existsLocal": true,
+      "resourceRole": "character-body",
+      "sourceId": "opgg-palworld-astralym-2026081102",
+      "sourceUrl": "https://op.gg/zh-tw/palworld/pals/astralym",
+      "sourceWork": "幻獸帕魯／Palworld",
+      "heroIds": [
+        "acquired-astralym"
+      ],
+      "relatedHeroIds": [
+        "acquired-astralym"
+      ],
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "componentReady": true,
+      "runtimeSelectable": true,
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+      "modelDocumentGitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+      "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "triangles": 7896,
+      "drawPrimitives": 3,
+      "boneCount": 145,
+      "textureCount": 9,
+      "maxTextureEdge": 256,
+      "nativeAnimationCount": 57,
+      "animationClipCount": 58,
+      "uniqueAnimationContentCount": 58,
+      "staticPoseClipCount": 1,
+      "animationScope": "complete-source-animation-library",
+      "animationNames": [
+        "Damage",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "HaloBeam_End",
+        "HaloBeam_End_Ring",
+        "HaloBeam_Loop",
+        "HaloBeam_Loop_Ring",
+        "HaloBeam_Start",
+        "HaloBeam_Start_Ring",
+        "HaloCutter",
+        "HaloCutter_End_Ring",
+        "HaloCutter_Loop_Ring",
+        "HaloCutter_Start_Ring",
+        "Idle",
+        "Idle_Ring",
+        "LaserGliding_End",
+        "LaserGliding_End_Ring",
+        "LaserGliding_Loop",
+        "LaserGliding_Loop_Ring",
+        "LaserGliding_Start",
+        "LaserGliding_Start_Ring",
+        "PaldiumCannon_Attack",
+        "PaldiumCannon_Attack_Loop",
+        "PaldiumCannon_Attack_Loop_Ring",
+        "PaldiumCannon_Attack_Ring",
+        "PaldiumCannon_End",
+        "PaldiumCannon_End_Ring",
+        "PaldiumCannon_Start",
+        "PaldiumCannon_Start_Loop",
+        "PaldiumCannon_Start_Loop_Ring",
+        "PaldiumCannon_Start_Ring",
+        "PaldiumExplosion_Cancel",
+        "PaldiumExplosion_Cancel_Ring",
+        "PaldiumExplosion_End",
+        "PaldiumExplosion_End_Ring",
+        "PaldiumExplosion_Loop",
+        "PaldiumExplosion_Loop_Ring",
+        "PaldiumExplosion_Start",
+        "PaldiumExplosion_Start_Ring",
+        "PaldiumRain_End",
+        "PaldiumRain_Loop",
+        "PaldiumRain_Start",
+        "PaldiumShot_End",
+        "PaldiumShot_End_Ring",
+        "PaldiumShot_Loop",
+        "PaldiumShot_Loop_Ring",
+        "PaldiumShot_Start",
+        "PaldiumShot_Start_Ring",
+        "Supernova_End",
+        "Supernova_End_Ring",
+        "Supernova_Loop",
+        "Supernova_Loop_Ring",
+        "Supernova_Start",
+        "Supernova_Start_Ring",
+        "Walk"
+      ],
+      "proceduralAnimationCount": 0,
+      "retargetedAnimationCount": 0,
+      "sourceSamplePreservationVerified": true,
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "FarSkill_Action",
+        "cast": "HaloBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "fallbacks": [
+        {
+          "state": "death",
+          "clip": "Damage",
+          "reason": "No native Death clip; owner-authorized Damage plus ascend/fade presentation, not a generated animation."
+        }
+      ],
+      "backupArchiveId": "conversion-palworld-astralym-materials-20260911",
+      "s3ArchiveUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "s3ArchiveMember": "palworld-astralym-materials-20260911/astralym-material-bound.glb",
+      "conversionStageBackupStatus": "full-download-and-all-member-sha256-verified",
+      "conversionStageBackup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+        "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+        "archiveBytes": 53102420,
+        "fileCount": 74,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "receipt": {
+          "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-receipt.json",
+          "bytes": 1231,
+          "sha256": "7b4a6bed91fecb61dbabc835910b558a4d65d01f2fcc7d07547ebbbbe67dd978"
+        },
+        "manifest": {
+          "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-manifest.json",
+          "bytes": 13958,
+          "sha256": "07078528e85e8d0034ff1a3699f8a2273951779ce57dc9cd576cda38b74de6ee"
+        },
+        "candidateArchiveMember": "final/astralym-full58-256-decimated.glb"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+        "bytes": 22294,
+        "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+      },
+      "generationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/generation.json",
+        "bytes": 5073,
+        "sha256": "268c378a863324ccae3e15abd78490e6df91c891dc254b64b249539fec5838ba"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+        "bytes": 6481,
+        "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1"
+      },
+      "limitations": [
+        "58 clips are preserved, but HaloCutter_Loop_Ring is a fixed pose; 57 clips contain changing samples.",
+        "Each clip has 435 channels: above the live 300 warning and below the 500 hard limit.",
+        "No native Death clip is claimed; Damage plus ascend/fade remains a declared fallback.",
+        "Representative five-clip, three-view A/B passed the 5% contract; low-poly faceting remains visible.",
+        "Original Palworld standalone VFX, skill-specific SFX and production deployment remain unverified.",
+        "The conversion stage is archived in S3 legacy with full download and every member SHA-256 verified; this does not prove production deployment."
+      ],
+      "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+      "characterIdentity": "community:palworld-astralym",
+      "characterName": "枯星龍",
+      "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+      "ggdHeroImplemented": true,
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+        "heroId": "acquired-astralym",
+        "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
         "isDefault": false,
         "productionDeploymentVerified": false
       }

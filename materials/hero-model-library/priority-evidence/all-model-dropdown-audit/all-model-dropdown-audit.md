@@ -4,12 +4,12 @@
 
 ## 結果
 
-- `content/models` 有 1013 份 `model@1`。
-- 正式 champion 的主模型與 `modelVersions` 合計 513 個不同可選 model key；`modelVersions` 有 566 列。
+- `content/models` 有 1015 份 `model@1`。
+- 正式 champion 的主模型與 `modelVersions` 合計 514 個不同可選 model key；`modelVersions` 有 567 列。
 - Hero Forge 有 34 名英雄、45 個不同模型選項。
 - 中央索引有 159 筆來源；146 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，4 筆只證明 Git 來源存在，後台導入驗收仍未通過。
 - 中央登記旗標與實際參照不一致：0 筆。
-- `componentReady` 但尚未註冊：角色／動作元件 33 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
+- `componentReady` 但尚未註冊：角色／動作元件 35 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
 - 找到 67 份失去英雄對應的 `version.body.*` 凍結文件；保留位元組，但須先找回原 hero/version 關係。
 - 明確 `prop.*` 且無內容參照的道具文件 4 筆。
 
@@ -50,11 +50,13 @@
 | `rezero-rem-thunderstore-0.1.1-static-skinned-v1` | 蕾姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-subaru-thunderstore-0.1.1-static-skinned-v1` | 菜月昴 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-chrom-c00-static-skinned-v1` | 庫洛姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-chrom-c00-ultimate14-motion-v1` | 庫洛姆 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-daisy-c00-static-skinned-v1` | 黛西 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ganondorf-c00-static-skinned-v1` | 加儂多夫 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-kirby-c00-static-skinned-v1` | 卡比 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-link-c00-static-skinned-v1` | 林克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-lucina-c00-static-skinned-v1` | 露琪娜 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-lucina-c00-ultimate14-motion-v1` | 露琪娜 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-mario-c00-static-skinned-v1` | Mario／瑪利歐 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-mario-c00-static-skinned-v2` | 瑪利歐 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-mario-c00-ultimate14-motion-v1` | Mario／瑪利歐 | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
@@ -95,7 +97,7 @@
 
 current-resources.json has no VFX component collection and all model@1 documents lack resourceRole. Exact semantic references can prove that a model is used by VFX/ability content, but absence of such a reference cannot prove that an unreferenced model is VFX rather than a character, prop, reserved source, or orphan. Only the explicit prop.* prefix is reported separately.
 
-目前 1013 / 1013 份 `model@1` 都沒有 `resourceRole`；`current-resources.json` 也沒有 VFX component collection。因此本報告不猜測未參照檔案是否為特效。需先在中央產生器加入 `resourceRole/assetKinds`、取得狀態與驗證狀態，才能產生完整的未使用特效清單。
+目前 1015 / 1015 份 `model@1` 都沒有 `resourceRole`；`current-resources.json` 也沒有 VFX component collection。因此本報告不猜測未參照檔案是否為特效。需先在中央產生器加入 `resourceRole/assetKinds`、取得狀態與驗證狀態，才能產生完整的未使用特效清單。
 
 ## 重建
 

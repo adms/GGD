@@ -9,47 +9,47 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "3231b3556fdbd6b7c74b53777cb01258e7545eee9e3d8033168c8f23817c5a95",
-      "fileCount": 1017
+      "sha256": "8b3ee94d556bf48ddb437921496700a478195895ffd4938be5ebd04dfcdd771a",
+      "fileCount": 1020
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "182b2a31975ae030d41b74ebcc8349fa8f4513882d7065fe7963355739926f0a",
+      "sha256": "0e0db946a738b36a3fded73e90bba2050378305d0e87895ea86b916a95521751",
       "fileCount": 154
     },
     "heroForgeOptions": {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c"
+      "sha256": "048f098786e8ae9e431f015d1b5c054af32058d0b1eb6e0f9206c2ac0888e3d4"
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "bd0cac510e0b1935fd43e5f17124a5aea9842c15ea711e57cccee13a8f4fcd73"
+      "sha256": "a1ddc2cd620bb2ef0a1dfe7629f10b4b1381e22b52259a65e120548f860e02d8"
     }
   },
   "summary": {
-    "modelAt1Documents": 1012,
+    "modelAt1Documents": 1015,
     "championDocuments": 153,
-    "championPrimaryAndVersionSelectableModelKeys": 513,
-    "championModelVersionRows": 566,
-    "sourceModelsRepresentedByFrozenVersions": 201,
+    "championPrimaryAndVersionSelectableModelKeys": 514,
+    "championModelVersionRows": 567,
+    "sourceModelsRepresentedByFrozenVersions": 202,
     "heroForgeHeroesWithOptions": 34,
-    "heroForgeSelectableModelKeys": 44,
-    "allActualSelectableModelKeys": 549,
+    "heroForgeSelectableModelKeys": 45,
+    "allActualSelectableModelKeys": 551,
     "centralSourceRows": 159,
     "centralUniqueModelKeys": 152,
-    "centralRowsWithQualificationEvidence": 141,
+    "centralRowsWithQualificationEvidence": 140,
     "centralRegisteredRows": 146,
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 35,
-    "readyUnregisteredCharacterOrMotionComponents": 33,
+    "readyUnregisteredIndependentComponents": 37,
+    "readyUnregisteredCharacterOrMotionComponents": 35,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1012,
+    "modelDocumentsWithoutResourceRole": 1015,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -536,6 +536,33 @@
       ]
     },
     {
+      "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+      "character": "庫洛姆",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "readiness": "accepted-independent-native-motion-9-clips-incomplete-action-set",
+      "nativeAnimationCount": 9,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "The 9 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+        "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+        "Visibility and material tracks were not imported into this body-motion GLB.",
+        "No hero binding, backend registration, runtime switching or deployment was performed.",
+        "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+        "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
+      ]
+    },
+    {
       "id": "ssbu-daisy-c00-static-skinned-v1",
       "character": "黛西",
       "resourceRole": "independent-static-skinned-model-component",
@@ -664,6 +691,33 @@
         "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
         "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
         "The two-atlas 256px layout used measured quality 0.408; WebGL views were reviewed after conversion."
+      ]
+    },
+    {
+      "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+      "character": "露琪娜",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "readiness": "accepted-independent-native-motion-13-clips-incomplete-action-set",
+      "nativeAnimationCount": 13,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "The 13 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+        "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+        "Visibility and material tracks were not imported into this body-motion GLB.",
+        "No hero binding, backend registration, runtime switching or deployment was performed.",
+        "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+        "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
       ]
     },
     {
@@ -5113,8 +5167,11 @@
         "content/models/*.json resourceRole"
       ],
       "currentResourceTopLevelKeys": [
+        "approvedDerivativeAudit",
+        "assetReviewPortal",
         "assetWorkflowRestorationManifest",
         "communityUnusedAssetIndex",
+        "fateAssetInventory",
         "fateUnlimitedCodesPlatformDocument",
         "fateUnlimitedCodesPlatformIndex",
         "fateubwMotionReserve",
@@ -5124,6 +5181,7 @@
         "historicalModelSourceArtifactCount",
         "historicalModelSourceArtifacts",
         "immutableRelease",
+        "jumpForceAssetInventory",
         "kof3dSourceInventory",
         "legacySmashSourceDocument",
         "legacySmashSourceInventory",
@@ -5146,13 +5204,15 @@
         "projectSevenJapaneseVoiceIndex",
         "schema",
         "sourceManifests",
+        "ssbuUltimateLocalRoster",
         "ultimate14NativeMotionIndex",
         "unused300MbaAssetIndex",
+        "valhalla37ModelOptionAudit",
         "voiceIndex",
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1012
+      "modelAt1DocumentsWithoutResourceRole": 1015
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },
