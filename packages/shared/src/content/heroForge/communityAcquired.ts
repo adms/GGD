@@ -23,7 +23,7 @@ export const ACQUIRED_MODEL_OPTIONS: Readonly<Record<string, readonly string[]>>
   "acquired-mario": ["imported.linkstik"],
   "acquired-mewtwo": ["imported.herobuu"],
   "acquired-pokemon-trainer": ["imported.heropikachu"],
-  "acquired-ryu": ["imported.herokyo"],
+  "acquired-ryu": ["imported.herokyo", "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9"],
   "acquired-minecraft": ["champ.thorne"],
   "acquired-kita-kita": ["community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e", "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9"],
   "acquired-lord-nightmares": ["community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223", "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd"],

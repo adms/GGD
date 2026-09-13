@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "ece4844724a2",
+  "hash": "c44d4df055b1",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -427,6 +427,12 @@
       "path": "models/community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42.json",
       "hash": "51ec4303cae3",
       "size": 504
+    },
+    {
+      "id": "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9",
+      "path": "models/community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9.json",
+      "hash": "b262ea02e8ac",
+      "size": 524
     },
     {
       "id": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
@@ -967,6 +973,12 @@
       "path": "models/community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc.json",
       "hash": "98fa31450054",
       "size": 439
+    },
+    {
+      "id": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+      "path": "models/community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945.json",
+      "hash": "8c2bf22d8bb9",
+      "size": 456
     },
     {
       "id": "imported.1hswd-01",
@@ -2773,6 +2785,12 @@
       "path": "models/version.body.0769bfa2e9a324fc61839ff31ec306790621053f5628238f.json",
       "hash": "595861b4e153",
       "size": 641
+    },
+    {
+      "id": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+      "path": "models/version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5.json",
+      "hash": "20e159f741e8",
+      "size": 606
     },
     {
       "id": "version.body.0883dbe1f4facc6f264b2356d9579fa1ddfb639e3a349458",

@@ -12471,13 +12471,17 @@
       "structuralValidationPassed": true,
       "visualValidationPassed": true,
       "runtimeReady": false,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "defaultEligible": false,
       "automaticEligible": false,
       "fullHeroModel": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "relatedHeroIds": [],
+      "runtimeDropdownRegistered": true,
+      "heroIds": [
+        "acquired-ryu"
+      ],
+      "relatedHeroIds": [
+        "acquired-ryu"
+      ],
       "identityIds": [
         "ssbu-ryu"
       ],
@@ -12499,7 +12503,7 @@
       "textureCount": 5,
       "sixStateFallbackComplete": true,
       "completeGameplayActionSet": false,
-      "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
+      "readiness": "registered-non-default-procedural-fallback-option; production deployment unverified",
       "auditEvidence": "Ryu c00 preserves the accepted SSBU static component and adds six clearly labelled GGD procedural fallback clips. Khronos reports 0 errors/0 warnings, GGD hard budget has 0 errors, 129,228 float values are finite, and 60 front/side WebGL samples were visually accepted. No native action, hero binding, dropdown registration or deployment is claimed.",
       "limitations": [
         "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
@@ -12569,6 +12573,16 @@
         "blockingAxes": [],
         "heroAdoptionEligible": false,
         "requiresDecimatedCandidate": true
+      },
+      "runtimeModelKey": "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9",
+      "modelDocumentGitPath": "content/models/community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9.json",
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/eight-missing-models-v1/registration.json",
+        "heroId": "acquired-ryu",
+        "modelKey": "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9",
+        "isDefault": false,
+        "motionProvenance": "ggd-procedural-fallback-not-native-or-retargeted",
+        "productionDeploymentVerified": false
       }
     },
     {
@@ -13430,6 +13444,24 @@
     "exactHistoricalGlbsByteIdentical": 4,
     "standardizedLineageOptionsRegistered": 4,
     "defaultsChanged": 0,
+    "productionDeploymentVerified": false
+  },
+  "eightMissingModelOptionRegistration": {
+    "gitPath": "materials/hero-model-library/priority-evidence/eight-missing-models-v1/registration.json",
+    "bytes": 2925,
+    "sha256": "99b23d62426d092ec6f3d36ee63336c39679bb308a314e13def0c753d3faf7d0",
+    "registeredHeroIds": [
+      "acquired-ryu"
+    ],
+    "blockedHeroIds": [
+      "acquired-beatrice",
+      "acquired-mario",
+      "acquired-mewtwo",
+      "acquired-minecraft",
+      "acquired-pokemon-trainer",
+      "acquired-ram",
+      "acquired-zero"
+    ],
     "productionDeploymentVerified": false
   },
   "modelComponentIndex": {

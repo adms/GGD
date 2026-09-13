@@ -9,32 +9,32 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "8b3ee94d556bf48ddb437921496700a478195895ffd4938be5ebd04dfcdd771a",
-      "fileCount": 1020
+      "sha256": "5d639d99d247c555a0b1aa57dfaef1faa6720804a1026ee2633644537b817543",
+      "fileCount": 1021
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "0e0db946a738b36a3fded73e90bba2050378305d0e87895ea86b916a95521751",
+      "sha256": "0bba2c053ca1fa1116857a94585f995d8bbeadf2aac405fc4e2e796a03e6982a",
       "fileCount": 154
     },
     "heroForgeOptions": {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "048f098786e8ae9e431f015d1b5c054af32058d0b1eb6e0f9206c2ac0888e3d4"
+      "sha256": "e217f6c21962fe2dac430df88e0f8058513d7882f34ce2bca60d73bf20e97ceb"
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "a1ddc2cd620bb2ef0a1dfe7629f10b4b1381e22b52259a65e120548f860e02d8"
+      "sha256": "e2f84eab74a00d6b69ba297654941f6c2c1b58f43526e97c32439ba1cd17d26b"
     }
   },
   "summary": {
-    "modelAt1Documents": 1015,
+    "modelAt1Documents": 1016,
     "championDocuments": 153,
     "championPrimaryAndVersionSelectableModelKeys": 514,
     "championModelVersionRows": 567,
     "sourceModelsRepresentedByFrozenVersions": 202,
     "heroForgeHeroesWithOptions": 34,
-    "heroForgeSelectableModelKeys": 45,
-    "allActualSelectableModelKeys": 551,
+    "heroForgeSelectableModelKeys": 46,
+    "allActualSelectableModelKeys": 552,
     "centralSourceRows": 159,
     "centralUniqueModelKeys": 152,
     "centralRowsWithQualificationEvidence": 140,
@@ -42,14 +42,14 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 37,
-    "readyUnregisteredCharacterOrMotionComponents": 35,
+    "readyUnregisteredIndependentComponents": 36,
+    "readyUnregisteredCharacterOrMotionComponents": 34,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1015,
+    "modelDocumentsWithoutResourceRole": 1016,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -957,32 +957,6 @@
         "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
         "25 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
         "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
-      ]
-    },
-    {
-      "id": "ssbu-ryu-c00-procedural-six-state-v1",
-      "character": "隆／Ryu",
-      "resourceRole": "independent-skinned-model-motion-component",
-      "componentReady": true,
-      "runtimeSelectable": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
-      "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
-      "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
-      "nativeAnimationCount": 0,
-      "animationClipCount": null,
-      "blockers": [
-        "no-ggd-hero-id-or-target-binding",
-        "no-runtime-model-at-1-document",
-        "component-is-not-runtime-selectable"
-      ],
-      "limitations": [
-        "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
-        "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
-        "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
-        "No source VFX, SFX or voice was created or inferred by this motion conversion.",
-        "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
       ]
     },
     {
@@ -5171,6 +5145,7 @@
         "assetReviewPortal",
         "assetWorkflowRestorationManifest",
         "communityUnusedAssetIndex",
+        "eightMissingModelOptionRegistration",
         "fateAssetInventory",
         "fateUnlimitedCodesPlatformDocument",
         "fateUnlimitedCodesPlatformIndex",
@@ -5181,6 +5156,7 @@
         "historicalModelSourceArtifactCount",
         "historicalModelSourceArtifacts",
         "immutableRelease",
+        "infinityStrashWeaponReview",
         "jumpForceAssetInventory",
         "kof3dSourceInventory",
         "legacySmashSourceDocument",
@@ -5212,7 +5188,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1015
+      "modelAt1DocumentsWithoutResourceRole": 1016
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

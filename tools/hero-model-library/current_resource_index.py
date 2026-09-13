@@ -160,6 +160,24 @@ def apply_hero_integration_overlay(components, receipt, receipt_git_path):
     return components
 
 
+def apply_eight_model_registration_overlay(components, receipt, receipt_git_path):
+    """Expose the verified non-default Ryu procedural fallback option."""
+    by_id={row['componentId']:row for row in receipt.get('registrations',[])}
+    for component in components:
+        row=by_id.get(component.get('id'))
+        if not row:continue
+        model=row['modelGlb']
+        if (component.get('gitPath'),component.get('sha256'),component.get('bytes')) != (model['gitPath'],model['sha256'],model['bytes']):
+            raise ValueError('Eight-model option/component GLB mismatch: '+component['id'])
+        component.update(
+            runtimeSelectable=True,runtimeDropdownRegistered=True,
+            heroIds=[row['heroId']],relatedHeroIds=[row['heroId']],
+            runtimeModelKey=row['modelKey'],modelDocumentGitPath=row['modelDocument']['gitPath'],
+            readiness='registered-non-default-procedural-fallback-option; production deployment unverified',
+            registrationEvidence={'receiptGitPath':receipt_git_path,'heroId':row['heroId'],'modelKey':row['modelKey'],'isDefault':row['isDefault'],'motionProvenance':row['motionProvenance'],'productionDeploymentVerified':False})
+    return components
+
+
 def build(git_link_root=ROOT):
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
     unused_300_mba_path=base/'priority-evidence/300-mba-unused-assets-v1/index.json'
@@ -648,6 +666,11 @@ def build(git_link_root=ROOT):
     components.extend(source_skinned_components(component_sources,ROOT))
     components.extend(source_animated_components(component_sources,ROOT))
     components.extend(source_historical_components(component_sources,ROOT))
+    eight_registration_path=base/'priority-evidence/eight-missing-models-v1/registration.json'
+    eight_registration=read(eight_registration_path)
+    if eight_registration.get('schema')!='ggd.eight-missing-model-option-registration@1':
+        raise ValueError('Eight-model option registration is not current')
+    apply_eight_model_registration_overlay(components,eight_registration,str(eight_registration_path.relative_to(ROOT)))
     historical_artifacts=source_historical_artifacts(component_sources,ROOT)
     restoration_receipt_path=base/'priority-evidence/historical-model-recovery/restoration-receipt.json'
     historical_option_registration_path=base/'priority-evidence/historical-model-recovery/model-option-registration.json'
@@ -681,6 +704,13 @@ def build(git_link_root=ROOT):
             exactHistoricalGlbsByteIdentical=historical_lineage_audit['summary']['exactHistoricalGlbsByteIdentical'],
             standardizedLineageOptionsRegistered=historical_lineage_audit['summary']['standardizedLineageOptionsRegistered'],
             defaultsChanged=historical_lineage_audit['summary']['defaultsChanged'],
+            productionDeploymentVerified=False),
+        eightMissingModelOptionRegistration=dict(
+            gitPath=str(eight_registration_path.relative_to(ROOT)),
+            bytes=eight_registration_path.stat().st_size,
+            sha256=hashlib.sha256(eight_registration_path.read_bytes()).hexdigest(),
+            registeredHeroIds=[row['heroId'] for row in eight_registration['registrations']],
+            blockedHeroIds=sorted(set(row['heroId'] for row in eight_registration['blocked'])),
             productionDeploymentVerified=False),
         modelComponentIndex=dict(gitPath=str(component_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_path.read_bytes()).hexdigest()),
