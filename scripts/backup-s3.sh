@@ -27,6 +27,7 @@ cd "$(dirname "$0")/.."
 BUCKET="${GGD_S3_BUCKET:-ggd-390630837668-ap-east-2-an}"
 REGION="${GGD_S3_REGION:-ap-east-2}"
 PROFILE="${AWS_PROFILE:-vibe-coding}"
+LEGACY_PREFIX="${GGD_S3_LEGACY_PREFIX:-legacy}"
 MANIFEST="docs/_data/s3-backup-manifest.json"
 TREES=("tools/w3x-import/out" "materials" "tools/bgm-gen/sf")
 check=0; [ "${1:-}" = "--check" ] && check=1
@@ -74,8 +75,13 @@ echo "⭐ git 樹已備份：${key}（$bytes bytes）"
 trees_json="["; first=1
 for t in "${TREES[@]}"; do
   [ -d "$t" ] || continue
-  prefix="intermediates/${t//\//_}/"
-  aws_ s3 sync "$t" "s3://$BUCKET/$prefix" --no-progress > /dev/null 2>&1
+  prefix="$LEGACY_PREFIX/intermediates/${t//\//_}/"
+  if ! sync_error="$(aws_ s3 sync "$t" "s3://$BUCKET/$prefix" --no-progress 2>&1)"; then
+    printf '%s\n' "$sync_error" >&2
+    echo "⛔ 同步失敗：AWS action=s3:ListBucket/s3:PutObject，resource=s3://$BUCKET/$prefix" >&2
+    echo "   若上方是 AccessDenied，立即停止；不換 profile、不擴權、不繞過。" >&2
+    exit 1
+  fi
   n="$(aws_ s3 ls "s3://$BUCKET/$prefix" --recursive --summarize 2>/dev/null | sed -n 's/.*Total Objects: *\([0-9]*\).*/\1/p' | tail -1)"
   : "${n:=0}"
   [ "$first" = "0" ] && trees_json="$trees_json,"
