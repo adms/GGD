@@ -225,6 +225,25 @@ def build(git_link_root=ROOT):
         or playstation_platform.get('acquiredSources',{}).get('ps4CloudEnglishAudio',{}).get('decodedWavFiles')!=49
         or playstation_cloud_audit.get('readiness',{}).get('runtimeReady') is not False):
         raise ValueError('PlayStation platform inventory is absent, stale or overclaims payload/readiness')
+    jumpforce_path=base/'source-inventories/jumpforce-assets-v2/inventory.json'
+    jumpforce_document_path=base/'source-inventories/jumpforce-assets-v2/README.md'
+    jumpforce_review_path=base/'source-inventories/jumpforce-assets-v2/listening-review-groups.json'
+    jumpforce_entry_path=base/'source-inventories/jumpforce-assets-v2/current-resource-entry.json'
+    jumpforce=read(jumpforce_path)
+    jumpforce_review=read(jumpforce_review_path)
+    jumpforce_entry=read(jumpforce_entry_path)
+    if (jumpforce.get('schema')!='ggd.jumpforce-acquired-asset-inventory@2'
+        or jumpforce.get('summary',{}).get('publicPackages')!=58
+        or jumpforce.get('summary',{}).get('publicCharacterPackages')!=57
+        or jumpforce.get('summary',{}).get('steamDecodedAudioFiles')!=4034
+        or jumpforce.get('summary',{}).get('automaticSpeakerBindings')!=0
+        or jumpforce.get('summary',{}).get('runtimeSelectableAssets')!=0
+        or jumpforce_review.get('schema')!='ggd.jumpforce-audio-listening-review-groups@1'
+        or jumpforce_review.get('counts',{}).get('approvedForRuntimeBinding')!=0):
+        raise ValueError('JUMP FORCE acquired asset inventory is absent, stale or overclaims readiness')
+    for path,key in ((jumpforce_path,'sha256'),(jumpforce_document_path,'documentSha256'),(jumpforce_review_path,'listeningReviewQueueSha256')):
+        if jumpforce_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
+            raise ValueError('JUMP FORCE current-resource pointer is stale: '+str(path))
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     kof3d_inventory_path=base/'source-inventories/kof-3d-sources-v1/inventory.json'
@@ -409,6 +428,10 @@ def build(git_link_root=ROOT):
             productionDeployed=community_unused['summary']['sourcePipelineCounts']['productionDeployed'],
             authoritativeFileRows=community_unused['summary']['authoritativeFileRows'],
             note='Per-file rows remain in public-source-files.json; registered, selectable and deployed are separate facts.'),
+        jumpForceAssetInventory=dict(
+            **jumpforce_entry,
+            entryGitPath=str(jumpforce_entry_path.relative_to(ROOT)),
+            entrySha256=hashlib.sha256(jumpforce_entry_path.read_bytes()).hexdigest()),
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
@@ -633,6 +656,22 @@ def main():
                 {
                     'gitPath': result['communityUnusedAssetIndex']['localVerificationGitPath'],
                     'sha256': result['communityUnusedAssetIndex']['localVerificationSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceAssetInventory']['gitPath'],
+                    'sha256': result['jumpForceAssetInventory']['sha256'],
+                },
+                {
+                    'gitPath': result['jumpForceAssetInventory']['documentGitPath'],
+                    'sha256': result['jumpForceAssetInventory']['documentSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceAssetInventory']['listeningReviewQueueGitPath'],
+                    'sha256': result['jumpForceAssetInventory']['listeningReviewQueueSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceAssetInventory']['entryGitPath'],
+                    'sha256': result['jumpForceAssetInventory']['entrySha256'],
                 },
                 {
                     'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],
