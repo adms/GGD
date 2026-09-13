@@ -225,8 +225,13 @@ def jumpforce_candidates(document: dict[str, Any]) -> list[dict[str, Any]]:
 def borrowed_candidates(document: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     if document.get("schema") != "ggd.borrowed-motion-review@1":
         raise ValueError("unexpected borrowed-motion review schema")
-    if document["summary"].get("approvedCount") != 0 or document["summary"].get("runtimeBindingsChanged") != 0:
-        raise ValueError("borrowed-motion queue overclaims approval or binding")
+    resolved = document.get("resolvedCandidates", [])
+    if document["summary"].get("pendingDecisionCount") != len(document["candidates"]):
+        raise ValueError("borrowed-motion pending count disagrees with queue")
+    if document["summary"].get("resolvedCandidateCount", 0) != len(resolved):
+        raise ValueError("borrowed-motion resolved count disagrees with receipts")
+    if document["summary"].get("runtimeBindingsChanged") != sum(bool(row.get("runtimeBindingChanged")) for row in resolved):
+        raise ValueError("borrowed-motion runtime binding count disagrees with receipts")
     candidates = []
     for source in document["candidates"]:
         if source["review"].get("decision") is not None or source["review"].get("runtimeBindingChanged") is not False:
@@ -307,7 +312,7 @@ def build_contract() -> dict[str, Any]:
             "runtimeMutationAllowed": False,
             "jumpForceGroupSampleApprovalDoesNotAuthorizeEventBinding": True,
             "borrowedAndDeathSubstitutionMotionsRequirePerCandidateApproval": True,
-            "hurtAscendFadeIsPresentationPreviewUntilRuntimeCalibration": True,
+            "resolvedReceiptCandidatesAreNotRequeued": True,
         },
         "summary": {
             "audioCandidateCount": len(audio),
@@ -377,7 +382,7 @@ def build_html(contract: dict[str, Any]) -> str:
 :root{{--bg:#071019;--card:#111d2a;--line:#294158;--fg:#eef6ff;--dim:#a9b8c6;--accent:#66d9ef;--warn:#ffc66d;--ok:#8bd49c;--bad:#ff8b8b}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}}header{{position:sticky;top:0;z-index:6;padding:12px 18px;background:#08131ef2;border-bottom:1px solid var(--line)}}main{{max-width:1440px;margin:auto;padding:18px}}h1{{font-size:20px;margin:0}}h2{{margin:28px 0 8px}}.dim{{color:var(--dim)}}.warn{{border:1px solid #8d692e;background:#2c2414;padding:10px 12px;border-radius:8px;color:#ffe2a6}}.toolbar{{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}}input,select,textarea,button,.button-link{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 9px;border-radius:7px}}input[type=search]{{min-width:300px}}button,.button-link{{cursor:pointer;text-decoration:none}}button:hover,.button-link:hover{{border-color:var(--accent)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}}.card{{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:12px;min-width:0}}.card.approve{{border-color:var(--ok)}}.card.reject{{border-color:var(--bad)}}.card.pending{{border-color:#6f7f91}}audio{{width:100%}}code{{font-size:11px;word-break:break-all}}.tags{{display:flex;gap:5px;flex-wrap:wrap}}.tag{{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px}}dl{{display:grid;grid-template-columns:105px 1fr;gap:3px 8px}}dt{{color:var(--dim)}}dd{{margin:0;min-width:0;word-break:break-word}}textarea{{width:100%;min-height:55px}}.buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}}.viewer{{position:relative;height:430px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#05080c}}iframe{{width:100%;height:100%;border:0}}.viewer-status{{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#071019e8;color:var(--dim)}}.viewer-status.error{{color:var(--bad);background:#210d10ee}}.viewer-status[hidden]{{display:none}}details{{margin-top:8px}}li{{margin:4px 0}}.hidden{{display:none!important}}.count{{font-variant-numeric:tabular-nums}}
 </style></head><body><header><h1>GGD 素材逐項審查中心</h1><div class="dim">資料指紋 <code>{fingerprint}</code> · 所有項目預設 pending · 匯出決定不會修改 runtime</div></header>
-<main><div class="warn">音效／語音與動作候選必須逐項核准。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣，核准只代表群組分類審查，不能授權技能事件綁定。死亡升天淡出是預覽合成，仍需核准後實作及遊戲內校準。</div>
+<main><div class="warn">音效／語音與尚在 pending 的動作候選必須逐項核准。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣，核准只代表群組分類審查，不能授權技能事件綁定。已有 owner 決定與 runtime 收據的項目不會重新排入 pending。</div>
 <div class="toolbar"><input id="search" type="search" placeholder="搜尋角色、來源、事件、SHA"><select id="kind"><option value="">全部來源</option><option value="popp">波普音訊</option><option value="palworld">帕魯</option><option value="jumpforce">JUMP FORCE</option><option value="borrowed">借用／死亡替代</option></select><select id="status"><option value="">全部裁決</option><option value="pending">pending</option><option value="approve">approve</option><option value="reject">reject</option></select><span id="visible" class="dim count"></span></div>
 <h2>一、尚未核准音效／語音 <span id="audioCount" class="dim count"></span></h2><div id="audio" class="grid"></div>
 <h2>二、原生／借用／死亡替代動作 <span id="motionCount" class="dim count"></span></h2><div id="motion" class="grid"></div>

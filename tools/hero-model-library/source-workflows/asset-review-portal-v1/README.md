@@ -10,7 +10,7 @@
 
 JUMP FORCE 目前只有 89 個群組級審查項目。產生器會從每組選出字典序第一個可播放檔案，重新核對該抽樣的 SHA-256，供角色群分類聽審。這不是逐檔說話者、語言或技能事件證據，所以該類核准不會產生事件綁定權限。
 
-所有候選固定以 `pending` 開始，頁面可逐項記錄 `approve`、`reject` 或 `pending`，並匯出 `ggd.asset-review-decisions@1`。匯出檔的 `runtimeMutationAllowed` 與每列 `runtimeBindingAuthorized` 都固定為 `false`；後續整合流程仍需驗證使用者裁決、來源指紋與實際 runtime 實作。
+所有進入這個頁面的候選固定以 `pending` 開始，頁面可逐項記錄 `approve`、`reject` 或 `pending`，並匯出 `ggd.asset-review-decisions@1`。已有 owner 決定與 runtime 收據的候選不會重新排入頁面；完成項保留在其來源契約及收據。匯出檔的 `runtimeMutationAllowed` 與每列 `runtimeBindingAuthorized` 都固定為 `false`；後續整合流程仍需驗證使用者裁決、來源指紋與實際 runtime 實作。
 
 重建及驗證：
 
@@ -35,4 +35,4 @@ python3 tools/hero-model-library/source-workflows/asset-review-portal-v1/serve_r
 
 開啟 `http://127.0.0.1:5173/asset-review-portal.html`。動作預覽使用既有 `champion-model-audition.html`，並等待 `__settled`、確認可見三角形後才移除狀態遮罩，避免黑畫面被誤當成成功。每項另有「全頁查看」方便排除 iframe 問題。音訊服務只暴露生成佇列中已核對 bytes 與 SHA-256 的檔案，支援 `HEAD` 和單段 HTTP Range，無法用路徑讀取其他本機檔案。
 
-`hurt-ascend-fade` 播放的是已驗證的受傷／倒地 clip，再對整個預覽框做半透明升天淡出示意。它不是原生 Death，也不是 runtime 世界座標實作證據。相同作品借用動作同樣必須先有目標 GLB、骨架相容性與播放證據，才可進可裁決清單。
+新出現的 `hurt-ascend-fade` 候選會播放已驗證的受傷／倒地 clip，再對整個預覽框做半透明升天淡出示意；預覽本身不是原生 Death 或 runtime 世界座標實作證據。波普已有獨立 owner 決定與 runtime 收據，因此不再出現在 pending 佇列。相同作品借用動作同樣必須先有目標 GLB、骨架相容性與播放證據，才可進可裁決清單。

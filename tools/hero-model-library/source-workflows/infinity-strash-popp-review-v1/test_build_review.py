@@ -31,7 +31,8 @@ class PoppReviewTest(unittest.TestCase):
         death = next(row for row in gaps if row["id"] == "distinct-death-presentation")
         self.assertEqual(death["candidate"]["motionProvenance"], "native PN020 down loop")
         self.assertFalse(death["candidate"]["borrowedMotion"])
-        self.assertTrue(death["candidate"]["reviewRequired"])
+        self.assertFalse(death["candidate"]["reviewRequired"])
+        self.assertFalse(death["candidate"]["reviewPreview"]["runtimeWorldSpaceCalibrationRequiredAfterApproval"])
         self.assertTrue(death["candidate"]["runtimeImplemented"])
         self.assertEqual(death["status"], "owner-approved-existing-runtime-bound")
         self.assertEqual(self.contract["remainingOpenIntegrationGapCount"], 4)
@@ -61,6 +62,9 @@ class PoppReviewTest(unittest.TestCase):
         self.assertIn("popp-native-down-rise-fade-v1", page)
         self.assertIn("weaponCandidateId:D.weaponReview.selectedCandidateId", page)
         self.assertIn("下載裁決 JSON", page)
+        self.assertIn("已核准並鎖定", page)
+        self.assertIn("candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)", page)
+        self.assertNotIn("id=\"clearWeapon\"", page)
 
     def test_every_candidate_has_a_pinned_visible_contact_sheet(self):
         for row in self.contract["weaponReview"]["candidates"]:

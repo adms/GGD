@@ -264,6 +264,18 @@ def build(git_link_root=ROOT):
         or asset_review_queue.get('summary',{}).get('runtimeBindingsChanged')!=0
         or asset_review_queue.get('policy',{}).get('runtimeMutationAllowed') is not False):
         raise ValueError('Unified asset review portal is absent, stale or overclaims approval/runtime binding')
+    infinity_strash_weapon_review_path=base/'infinity-strash/weapon-review.json'
+    infinity_strash_weapon_review_page=ROOT/'apps/client/public/infinity-strash-weapon-review.html'
+    infinity_strash_weapon_review=read(infinity_strash_weapon_review_path)
+    if (infinity_strash_weapon_review.get('schema')!='ggd.infinity-strash-weapon-review@1'
+        or infinity_strash_weapon_review.get('popp',{}).get('selectedCandidateId')!='infinity-strash-popp-pn020-02-kagayaki-native-v1'
+        or len(infinity_strash_weapon_review.get('popp',{}).get('candidates',[]))!=3
+        or len(infinity_strash_weapon_review.get('dai',{}).get('candidates',[]))!=2
+        or infinity_strash_weapon_review.get('dai',{}).get('ownerSelectedCandidateId') is not None
+        or any(row.get('selectableAsHeroWeapon') for row in infinity_strash_weapon_review.get('dai',{}).get('independentProps',[]))
+        or infinity_strash_weapon_review.get('runtimeMutationAllowed') is not False
+        or infinity_strash_weapon_review.get('audioOrVoiceBindingChanged') is not False):
+        raise ValueError('Infinity Strash weapon review is absent, stale or overclaims selection/runtime binding')
     fate_asset_path=base/'source-inventories/fate-assets-v2/inventory.json'
     fate_asset_document_path=base/'source-inventories/fate-assets-v2/README.md'
     fate_asset_policy_path=base/'source-inventories/fate-assets-v2/current-policy.json'
@@ -506,6 +518,21 @@ def build(git_link_root=ROOT):
             summary=asset_review_queue['summary'],
             defaultDecision='pending',
             runtimeMutationAllowed=False,
+            productionDeploymentVerified=False),
+        infinityStrashWeaponReview=dict(
+            schema=infinity_strash_weapon_review['schema'],
+            sourceFingerprint=infinity_strash_weapon_review['sourceFingerprint'],
+            reviewGitPath=str(infinity_strash_weapon_review_path.relative_to(ROOT)),
+            reviewSha256=hashlib.sha256(infinity_strash_weapon_review_path.read_bytes()).hexdigest(),
+            reviewPageGitPath=str(infinity_strash_weapon_review_page.relative_to(ROOT)),
+            reviewPageSha256=hashlib.sha256(infinity_strash_weapon_review_page.read_bytes()).hexdigest(),
+            poppSelectedCandidateId=infinity_strash_weapon_review['popp']['selectedCandidateId'],
+            poppCandidateCount=len(infinity_strash_weapon_review['popp']['candidates']),
+            daiCandidateCount=len(infinity_strash_weapon_review['dai']['candidates']),
+            daiOwnerSelectedCandidateId=None,
+            daiIndependentPropCount=len(infinity_strash_weapon_review['dai']['independentProps']),
+            runtimeMutationAllowed=False,
+            audioOrVoiceBindingChanged=False,
             productionDeploymentVerified=False),
         fateAssetInventory=dict(
             **fate_asset_entry,
@@ -782,6 +809,14 @@ def main():
                 {
                     'gitPath': result['assetReviewPortal']['reviewPageGitPath'],
                     'sha256': result['assetReviewPortal']['reviewPageSha256'],
+                },
+                {
+                    'gitPath': result['infinityStrashWeaponReview']['reviewGitPath'],
+                    'sha256': result['infinityStrashWeaponReview']['reviewSha256'],
+                },
+                {
+                    'gitPath': result['infinityStrashWeaponReview']['reviewPageGitPath'],
+                    'sha256': result['infinityStrashWeaponReview']['reviewPageSha256'],
                 },
                 {
                     'gitPath': result['fateAssetInventory']['gitPath'],

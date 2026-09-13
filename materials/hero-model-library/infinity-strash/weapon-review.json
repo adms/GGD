@@ -1,0 +1,393 @@
+{
+  "schema": "ggd.infinity-strash-weapon-review@1",
+  "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+  "sourceInputs": [
+    {
+      "gitPath": "materials/hero-model-library/infinity-strash/popp-integration-review.json",
+      "bytes": 22038,
+      "sha256": "51e7c15b104a03a1bdcdf1f7094af9ee45e28cc4cadf8efa965a1ec8c929f928"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",
+      "bytes": 3123,
+      "sha256": "112f4e7402ac1fa8464308d35350d264f79520e3aea7815a58870dfadd809e78"
+    },
+    {
+      "gitPath": "content/champions/godie-nbbc.json",
+      "bytes": 15242,
+      "sha256": "1334199e9ab9b6e41195e49d8206e5ca6474e5f19ba3fbe2906536871bd27114"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/validation.json",
+      "bytes": 22560,
+      "sha256": "472e0a4fd0bfa864e6b2f2b6b3809dc683bb5066defe7ea04c3f6e0ace3c5169"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/acceptance.json",
+      "bytes": 2322,
+      "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
+    }
+  ],
+  "popp": {
+    "heroId": "b2-popp",
+    "nativeCharacterId": "PN020",
+    "selectionStatus": "owner-selection-applied-and-locked",
+    "selectedCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+    "candidates": [
+      {
+        "candidateId": "infinity-strash-popp-pn020-00-magikaru-native-v2",
+        "label": "何布／波普｜Infinity Strash 原作 PN020/00＋Magikaru 法杖（原生動作）",
+        "staff": "Magikaru",
+        "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+        "registeredModelKey": "version.body.9837a873a8d48788daf25a2c3c027fe950e39a1ae8f6461e",
+        "binary": {
+          "gitPath": "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
+          "bytes": 2367208,
+          "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe"
+        },
+        "nativeAnimationCount": 5,
+        "reviewContactSheet": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/contact-sheet.png",
+          "bytes": 227754,
+          "sha256": "c847992be100c89bc527c671501c1df9f8c9f9628d693e11e47e2647a972a51a",
+          "publicPath": "review-assets/infinity-strash-weapons/popp-magikaru.png",
+          "states": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "rowAspectRatio": "808 / 268",
+          "source": "actual Babylon WebGL glTF playback"
+        },
+        "selectedByOwner": false,
+        "selectionLockedByReceipt": true
+      },
+      {
+        "candidateId": "infinity-strash-popp-pn020-01-mahouno-native-v1",
+        "label": "何布／波普｜Infinity Strash 原作 PN020/01＋Mahouno 法杖（原生動作）",
+        "staff": "Mahouno",
+        "modelKey": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+        "registeredModelKey": "version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa",
+        "binary": {
+          "gitPath": "content/assets/models/community/d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c.glb",
+          "bytes": 2344376,
+          "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c"
+        },
+        "nativeAnimationCount": 5,
+        "reviewContactSheet": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/contact-sheet.png",
+          "bytes": 233582,
+          "sha256": "94324c82781931d4c295da2fd7ffdd3bbaa8c3936e93ebb9321f59f3745abab9",
+          "publicPath": "review-assets/infinity-strash-weapons/popp-mahouno.png",
+          "states": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "rowAspectRatio": "808 / 268",
+          "source": "actual Babylon WebGL glTF playback"
+        },
+        "selectedByOwner": false,
+        "selectionLockedByReceipt": true
+      },
+      {
+        "candidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+        "label": "何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）",
+        "staff": "Kagayaki",
+        "modelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+        "registeredModelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+        "binary": {
+          "gitPath": "content/assets/models/community/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+          "bytes": 2485584,
+          "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27"
+        },
+        "nativeAnimationCount": 5,
+        "reviewContactSheet": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/contact-sheet.png",
+          "bytes": 235516,
+          "sha256": "220f08caa997f580f1bd63ed7194fe54033bd47c3f7253fd4ec23e30ac8f1e1d",
+          "publicPath": "review-assets/infinity-strash-weapons/popp-kagayaki.png",
+          "states": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "rowAspectRatio": "808 / 268",
+          "source": "actual Babylon WebGL glTF playback"
+        },
+        "selectedByOwner": true,
+        "selectionLockedByReceipt": true
+      }
+    ],
+    "deathPresentation": {
+      "candidateId": "popp-native-down-rise-fade-v1",
+      "motion": "GGD_native_down",
+      "motionProvenance": "native PN020 down loop",
+      "distinctNativeDeathClip": false,
+      "status": "owner-approved-existing-runtime-bound",
+      "presentation": "existing global ChampionView corpse dissolve: lie 3 seconds, rise 3.2 world units while fading for 1.4 seconds, then hide",
+      "runtimeEvidence": [
+        {
+          "gitPath": "apps/client/src/render/deathDissolve.ts",
+          "bytes": 5004,
+          "sha256": "897afc9fabb9f6146e1bf9ec4a26d1b1e912c37ebf86af68f71ff337b1e69cf9"
+        },
+        {
+          "gitPath": "apps/client/src/render/deathDissolve.test.ts",
+          "bytes": 2695,
+          "sha256": "05025be4c6638ed9fb9187852f1af5a43e2ccbc7f5deb1f96e1b8caee103e82f"
+        },
+        {
+          "gitPath": "apps/client/src/render/views/ChampionView.ts",
+          "bytes": 106196,
+          "sha256": "425dd935d14f73a070c469f4f56e21545128dbdffc6403feb08fa9c8a1a6ffd5"
+        },
+        {
+          "gitPath": "apps/client/src/render/views/ChampionView.test.ts",
+          "bytes": 31965,
+          "sha256": "c347a6933b7e5c32ba0d76ef90e57c02c7593044d9666fe4458118c74bf07c7e"
+        }
+      ]
+    }
+  },
+  "dai": {
+    "heroId": "godie-nbbc",
+    "nativeCharacterId": "PN010",
+    "currentRuntimeCandidateId": "dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+    "currentSelectionMode": "automatic",
+    "ownerSelectedCandidateId": null,
+    "automaticDefaultChangeAllowed": false,
+    "selectionRule": "exactly one complete model candidate per owner decision; no generated default",
+    "candidates": [
+      {
+        "candidateId": "dai-pn010-02-backdrop-decimated-v1",
+        "form": "PN010/02",
+        "weapon": "原作 PN010/02 裝備",
+        "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）（背景修復＋7,917 面正式採用減面）",
+        "sourceModelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+        "registeredModelKey": "version.body.f639b84a136f628fdd6e87378e152f3df74d6ad73842f541",
+        "binary": {
+          "gitPath": "content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+          "bytes": 1880364,
+          "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+        },
+        "modelDocument": {
+          "gitPath": "content/models/community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561.json",
+          "bytes": 484,
+          "sha256": "d31b69dc516c1b42210d44f79089bb425469921bc7ad41ec7b64084f0e4fce08"
+        },
+        "clipMap": {
+          "idle": "GGD_native_idle",
+          "run": "GGD_native_run",
+          "attack": "GGD_native_attack",
+          "cast": "GGD_native_special02",
+          "hurt": "GGD_native_down",
+          "death": "GGD_native_down"
+        },
+        "nativeAnimationCount": 5,
+        "triangles": 7917,
+        "meshes": 6,
+        "formalHeroAdoptionEligible": true,
+        "reviewContactSheet": {
+          "states": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "overviewImage": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/all-states-contact-sheet.png",
+            "bytes": 982680,
+            "sha256": "cd58934d1b3ef69a5c4e39165efc471b8100caa7031558058f887bdc46f9a1bf",
+            "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02.png"
+          },
+          "stateImages": {
+            "idle": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/idle-contact-sheet.png",
+              "bytes": 203756,
+              "sha256": "3b01696c75716f020d2640ff7c92f41238fd91399bbe022d6f230c9e77a51936",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02-idle.png"
+            },
+            "run": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/run-contact-sheet.png",
+              "bytes": 214274,
+              "sha256": "f70fd5869b52dc8e4d9d4bb2c07610b420fedd73acec0027c500582b94b8682e",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02-run.png"
+            },
+            "attack": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/attack-contact-sheet.png",
+              "bytes": 238909,
+              "sha256": "d57e8f9727d34d3311f9a682ede1fecee03ac80d09d27696715d7d4c67b02417",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02-attack.png"
+            },
+            "cast": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/cast-contact-sheet.png",
+              "bytes": 268956,
+              "sha256": "d737cea6a2d70e1a4f87ad6e5e6a7d4bdfacc61c3feb227c6a0325e3541aaea1",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02-cast.png"
+            },
+            "hurt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/hurt-contact-sheet.png",
+              "bytes": 51331,
+              "sha256": "b82131e4491f5c047003b759c4a53f042c40dbf16deda5b32c8c2b9d2fed8a8f",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02-hurt.png"
+            },
+            "death": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/death-contact-sheet.png",
+              "bytes": 51570,
+              "sha256": "f1ddbfedb6961e65d677727590f2be8e4293200cd2de2e31b2d211b1342b7724",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-02-death.png"
+            }
+          },
+          "rowAspectRatio": "1200 / 840",
+          "source": "actual Babylon WebGL glTF source/candidate comparison; 0/50/100 percent per state"
+        },
+        "isCurrentRuntimeSelection": false,
+        "ownerSelection": null
+      },
+      {
+        "candidateId": "dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+        "form": "PN010/05",
+        "weapon": "達伊之劍",
+        "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）（背景修復＋7,918 面正式採用減面）",
+        "sourceModelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+        "registeredModelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
+        "binary": {
+          "gitPath": "content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+          "bytes": 2081176,
+          "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+        },
+        "modelDocument": {
+          "gitPath": "content/models/community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81.json",
+          "bytes": 484,
+          "sha256": "a4c2e9098e58cf23385a9a9a51454a92c7a4b41b6ff68f6b204af6914a9bb905"
+        },
+        "clipMap": {
+          "idle": "GGD_native_idle",
+          "run": "GGD_native_run",
+          "attack": "GGD_native_attack",
+          "cast": "GGD_native_special02",
+          "hurt": "GGD_native_down",
+          "death": "GGD_native_down"
+        },
+        "nativeAnimationCount": 5,
+        "triangles": 7918,
+        "meshes": 6,
+        "formalHeroAdoptionEligible": true,
+        "reviewContactSheet": {
+          "states": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "overviewImage": {
+            "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/all-states-contact-sheet.png",
+            "bytes": 1021772,
+            "sha256": "1471fdb2fee763aaaeec7ef716da440989b29b5d8c52bd41ec784d275bb6b699",
+            "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi.png"
+          },
+          "stateImages": {
+            "idle": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/idle-contact-sheet.png",
+              "bytes": 222044,
+              "sha256": "4809be76f8349ef366e69e7476a52fab4c89fb4fff1c0ff9e46a15c9a9c71e03",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi-idle.png"
+            },
+            "run": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/run-contact-sheet.png",
+              "bytes": 230725,
+              "sha256": "e9235f7f7250e34ceb4027b4a90755efb7da784d22964e71678884868e5f24da",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi-run.png"
+            },
+            "attack": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/attack-contact-sheet.png",
+              "bytes": 232931,
+              "sha256": "d1ae7d4bfba5baf931375811995a12a0fdd079eb77002fde1367302e33568898",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi-attack.png"
+            },
+            "cast": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/cast-contact-sheet.png",
+              "bytes": 267596,
+              "sha256": "4664b642a0a324e9aa940be6317dc38078eda355257ad0f0380e1c64ab18017f",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi-cast.png"
+            },
+            "hurt": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/hurt-contact-sheet.png",
+              "bytes": 62449,
+              "sha256": "7da8341dbec860e9ece1c3eaa38d09ecf20fc8a6a4625f80d592d17d7349d987",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi-hurt.png"
+            },
+            "death": {
+              "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/death-contact-sheet.png",
+              "bytes": 62684,
+              "sha256": "349a99884b64b1bae998941f26f2521327d841798c81c6fbbe390439f2420272",
+              "publicPath": "review-assets/infinity-strash-weapons/dai-pn010-05-daino-tsurugi-death.png"
+            }
+          },
+          "rowAspectRatio": "1200 / 840",
+          "source": "actual Babylon WebGL glTF source/candidate comparison; 0/50/100 percent per state"
+        },
+        "isCurrentRuntimeSelection": true,
+        "ownerSelection": null
+      }
+    ],
+    "independentProps": [
+      {
+        "id": "dai-shinteo-v2-sword-handheld-256-v1",
+        "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
+        "accepted": true,
+        "scope": "independent-weapon-prop",
+        "reviewImage": {
+          "absoluteSourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/evidence/webgl-handheld-256-r2/face-a.png",
+          "bytes": 77856,
+          "sha256": "e1aee010ff83cfed150ff24be3cc1668e8f99f432a9aca8c324fe2ac11f65f5e",
+          "publicPath": "review-assets/infinity-strash-weapons/handheld-face-a.png"
+        },
+        "heroAttachmentFitVerified": false,
+        "selectableAsHeroWeapon": false,
+        "status": "accepted-independent-component-awaiting-character-fit"
+      },
+      {
+        "id": "dai-shinteo-v2-sword-back-256-v1",
+        "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
+        "accepted": true,
+        "scope": "independent-weapon-prop",
+        "reviewImage": {
+          "absoluteSourcePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/dai-rigid-props-20260911-v1/revision-02/evidence/webgl-back-256/face-a.png",
+          "bytes": 116186,
+          "sha256": "f83ac85eb7088c7a6b109c6b0cb4df4956faa7b30d0cc1b0a19e51c25d050011",
+          "publicPath": "review-assets/infinity-strash-weapons/back-face-a.png"
+        },
+        "heroAttachmentFitVerified": false,
+        "selectableAsHeroWeapon": false,
+        "status": "accepted-independent-component-awaiting-character-fit"
+      }
+    ],
+    "deathPresentation": {
+      "candidateId": "dai-native-down-rise-fade-v1",
+      "motion": "GGD_native_down",
+      "motionProvenance": "native PN010 down pose shared by hurt/death",
+      "distinctNativeDeathClip": false,
+      "presentation": "existing global ChampionView corpse dissolve",
+      "status": "available-policy-approved-substitution; model choice still pending owner review"
+    }
+  },
+  "runtimeMutationAllowed": false,
+  "audioOrVoiceBindingChanged": false,
+  "productionDeploymentVerified": false,
+  "sourceFingerprint": "8e80e48d9636277c0f9588c6fdf1ab2286bd8ade636ddc593d7473f0b2f3065c"
+}

@@ -421,9 +421,9 @@
           "durationMs": 2200,
           "fadeStartRatio": 0.35,
           "translateYPixels": -80,
-          "runtimeWorldSpaceCalibrationRequiredAfterApproval": true
+          "runtimeWorldSpaceCalibrationRequiredAfterApproval": false
         },
-        "reviewRequired": true,
+        "reviewRequired": false,
         "runtimeImplemented": true,
         "decisionReceipt": {
           "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/receipt.json",

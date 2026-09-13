@@ -24,7 +24,7 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertEqual(summary["palworldCreatureCryCandidateCount"], 18)
         self.assertEqual(summary["jumpForceGroupSampleCount"], 89)
         self.assertEqual(summary["palworldMotionCandidateCount"], 18)
-        self.assertGreaterEqual(summary["borrowedOrDeathSubstitutionCandidateCount"], 1)
+        self.assertEqual(summary["borrowedOrDeathSubstitutionCandidateCount"], 0)
         self.assertGreaterEqual(summary["blockedMotionLeadCount"], 2)
         self.assertEqual(summary["runtimeBindingsChanged"], 0)
         self.assertEqual(summary["approvedDecisionCount"], 0)
@@ -52,13 +52,12 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertTrue(all(row["eventCandidates"] == [] for row in rows))
         self.assertTrue(all("group-not-expanded-to-event-pairs" in row["gaps"] for row in rows))
 
-    def test_death_substitution_stays_explicit_and_reviewable(self):
+    def test_resolved_popp_death_substitution_is_not_requeued(self):
         rows = [row for row in self.contract["motionCandidates"] if row["presentation"]["mode"] == "hurt-ascend-fade"]
-        self.assertGreaterEqual(len(rows), 1)
-        self.assertTrue(all(row["semanticState"] == "death" for row in rows))
-        self.assertTrue(all(row["presentation"]["runtimeWorldSpaceCalibrationRequired"] for row in rows))
+        self.assertEqual(rows, [])
         page = MODULE.build_html(self.contract)
-        self.assertIn("播放受傷＋升天淡出", page)
+        self.assertNotIn("popp-native-hurt-ascend-fade-v1", page)
+        self.assertIn("不會重新排入 pending", page)
         self.assertIn("__settled", page)
         self.assertIn("畫面上沒有可見三角形", page)
         self.assertIn("runtimeBindingAuthorized:false", page)

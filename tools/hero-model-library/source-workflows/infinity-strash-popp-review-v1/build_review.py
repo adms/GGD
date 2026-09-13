@@ -217,9 +217,9 @@ def build_contract() -> dict:
                     "durationMs": 2200,
                     "fadeStartRatio": 0.35,
                     "translateYPixels": -80,
-                    "runtimeWorldSpaceCalibrationRequiredAfterApproval": True,
+                    "runtimeWorldSpaceCalibrationRequiredAfterApproval": not bool(applied_decision),
                 },
-                "reviewRequired": True,
+                "reviewRequired": not bool(applied_decision),
                 "runtimeImplemented": bool(applied_decision),
                 "decisionReceipt": file_evidence(DECISION_RECEIPT) if applied_decision else None,
             },
@@ -335,13 +335,12 @@ button:hover,.pick:hover{{border-color:var(--accent)}} button.active{{border-col
 textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1px solid var(--line);border-radius:7px;padding:8px}}
 </style></head><body><header><h1>何布／波普 PN020 武器與死亡演出審查</h1><div class="meta">資料指紋 <code>{contract['sourceFingerprint']}</code> · 正式站部署仍待 Main</div></header>
 <main><div class="warn">三支法杖都是功能分支的獨立後台選項。<b>{'已套用你的 Kagayaki 手動選擇；其他兩支仍保留為選項。' if contract['weaponReview']['selectedCandidateId'] else '尚未套用裁決，不會自動切換。'}</b></div>
-<h2>一、選一支預設法杖</h2><div id="weapons" class="grid"></div><div class="buttons"><button id="clearWeapon">清除法杖選擇</button></div>
-<h2>二、死亡演出候選</h2><div class="card"><p>原作解包範圍沒有獨立 death，hurt/death 都播放原生 <code>GGD_native_down</code>。你核准的「down＋整體升天淡出」已由既有 ChampionView 死亡流程提供：倒地 3 秒，再升高並淡出 1.4 秒。</p>
+<h2>一、核對三支法杖</h2><div id="weapons" class="grid"></div>{'' if contract['weaponReview']['selectedCandidateId'] else '<div class="buttons"><button id="clearWeapon">清除法杖選擇</button></div>'}
+<h2>二、已核准死亡演出</h2><div class="card"><p>原作解包範圍沒有獨立 death，hurt/death 都播放原生 <code>GGD_native_down</code>。你核准的「down＋整體升天淡出」已由既有 ChampionView 死亡流程提供：倒地 3 秒，再升高並淡出 1.4 秒。</p>
 <div class="buttons"><button id="nativeDeath">播放原生 down</button><button id="fadeDeath">預覽 down＋升天淡出</button></div>
 <div id="deathStage"><div id="deathFrame" class="review-frame" data-state="hurt" role="img" aria-label="死亡演出三幀預覽"></div></div>
 <div class="frame-status"><b>可見證據圖</b><span>實際 Babylon WebGL：0%／50%／100%</span></div>
-<label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1"> 核准 down＋升天淡出候選</label>
-<label class="pick"><input type="radio" name="death" value="reject"> 不核准，繼續找同作品動作</label></div>
+<label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1" {'checked disabled' if contract['weaponReview']['selectedCandidateId'] else ''}> 已核准 down＋升天淡出</label></div>
 <h2>三、五項整合狀態（剩餘 {contract['remainingOpenIntegrationGapCount']} 項）</h2><ol id="gaps"></ol>
 <p class="note">已建立 {contract['vfxRuntimeCandidates']['summary']['ggdVfxDocumentsBuilt']} 個未綁定 GGD VFX 重建候選，請用 <code>/asset-review.html</code> 現場播放逐項審查；未核准前不綁技能。音效佇列 {contract['eventAudioReviewGate']['candidateCount']} 項目前已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項。</p>
 <h2>四、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
@@ -351,12 +350,12 @@ const D=JSON.parse(document.getElementById('contract').textContent), key='ggd-po
 const state=Object.assign({{weaponCandidateId:D.weaponReview.selectedCandidateId,deathCandidateId:D.weaponReview.selectedCandidateId?'popp-native-down-rise-fade-v1':null,note:''}},JSON.parse(localStorage.getItem(key)||'{{}}'));
 const save=()=>{{state.note=document.getElementById('reviewNote').value;localStorage.setItem(key,JSON.stringify(state));renderChosen()}};
 const wrap=document.getElementById('weapons');
-for(const c of D.weaponReview.candidates){{const sheet=c.validation.reviewContactSheet;const card=document.createElement('section');card.className='card';card.dataset.id=c.candidateId;card.innerHTML=`<h3>${{c.staff}}</h3><p>${{c.nativeCharacterId}}</p><div class="review-frame" data-state="idle" role="img" aria-label="${{c.staff}} idle 三幀預覽" style="background-image:url('/${{sheet.publicPath}}')"></div><div class="frame-status"><b>可見證據圖</b><span>實際 WebGL：0%／50%／100%</span></div><div class="buttons">${{sheet.states.map(x=>`<button data-clip="${{x}}" class="${{x==='idle'?'active':''}}">${{x}}</button>`).join('')}}</div><label class="pick"><input type="radio" name="weapon" value="${{c.candidateId}}"> 選為預設法杖</label><p class="meta"><code>${{c.glb.sha256}}</code><br>${{c.nativeAnimationCount}} 段原生動作 · 後台選項已存在 · 正式站未驗</p>`;card.querySelectorAll('[data-clip]').forEach(b=>b.onclick=()=>{{const frame=card.querySelector('.review-frame');frame.dataset.state=b.dataset.clip;frame.setAttribute('aria-label',c.staff+' '+b.dataset.clip+' 三幀預覽');card.querySelectorAll('[data-clip]').forEach(x=>x.classList.toggle('active',x===b))}});wrap.append(card)}}
+for(const c of D.weaponReview.candidates){{const sheet=c.validation.reviewContactSheet,locked=!!D.weaponReview.selectedCandidateId;const card=document.createElement('section');card.className='card';card.dataset.id=c.candidateId;card.innerHTML=`<h3>${{c.staff}}</h3><p>${{c.nativeCharacterId}}</p><div class="review-frame" data-state="idle" role="img" aria-label="${{c.staff}} idle 三幀預覽" style="background-image:url('/${{sheet.publicPath}}')"></div><div class="frame-status"><b>可見證據圖</b><span>實際 WebGL：0%／50%／100%</span></div><div class="buttons">${{sheet.states.map(x=>`<button data-clip="${{x}}" class="${{x==='idle'?'active':''}}">${{x}}</button>`).join('')}}</div><label class="pick"><input type="radio" name="weapon" value="${{c.candidateId}}" ${{locked?'disabled':''}}> ${{locked?(c.candidateId===D.weaponReview.selectedCandidateId?'已核准並鎖定':'保留後台候選'):'選為預設法杖'}}</label><p class="meta"><code>${{c.glb.sha256}}</code><br>${{c.nativeAnimationCount}} 段原生動作 · 後台選項已存在 · 正式站未驗</p>`;card.querySelectorAll('[data-clip]').forEach(b=>b.onclick=()=>{{const frame=card.querySelector('.review-frame');frame.dataset.state=b.dataset.clip;frame.setAttribute('aria-label',c.staff+' '+b.dataset.clip+' 三幀預覽');card.querySelectorAll('[data-clip]').forEach(x=>x.classList.toggle('active',x===b))}});wrap.append(card)}}
 function renderChosen(){{document.querySelectorAll('#weapons .card').forEach(x=>x.classList.toggle('chosen',x.dataset.id===state.weaponCandidateId));document.querySelectorAll('input[name=weapon]').forEach(x=>x.checked=x.value===state.weaponCandidateId);document.querySelectorAll('input[name=death]').forEach(x=>x.checked=x.value===state.deathCandidateId)}}
 document.querySelectorAll('input[name=weapon]').forEach(x=>x.onchange=()=>{{state.weaponCandidateId=x.value;save()}});document.querySelectorAll('input[name=death]').forEach(x=>x.onchange=()=>{{state.deathCandidateId=x.value;save()}});
-document.getElementById('clearWeapon').onclick=()=>{{state.weaponCandidateId=null;save()}};
+const clearWeapon=document.getElementById('clearWeapon');if(clearWeapon)clearWeapon.onclick=()=>{{state.weaponCandidateId=null;save()}};
 document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>`<li><b>${{g.id}}</b> · <span class="status">${{g.status}}</span><br><span class="note">${{g.evidence}}</span></li>`).join('');
-const death=document.getElementById('deathFrame'), base=D.weaponReview.candidates[0].validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
+const death=document.getElementById('deathFrame'), selected=D.weaponReview.candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)||D.weaponReview.candidates[0],base=selected.validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
 document.getElementById('reviewNote').value=state.note;document.getElementById('reviewNote').oninput=save;renderChosen();
 document.getElementById('export').onclick=()=>{{save();const out={{schema:'ggd.popp-integration-review-decision@1',sourceFingerprint:D.sourceFingerprint,heroId:D.heroId,weaponCandidateId:state.weaponCandidateId,deathCandidateId:state.deathCandidateId,note:state.note}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)+'\\n'],{{type:'application/json'}}));a.download='popp-integration-review-decision.json';a.click();URL.revokeObjectURL(a.href)}};
 </script></body></html>\n'''

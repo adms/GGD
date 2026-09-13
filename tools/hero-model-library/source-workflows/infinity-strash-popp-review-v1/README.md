@@ -8,9 +8,9 @@ python3 tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1
 python3 -m unittest tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/test_build_review.py
 ```
 
-Start the client dev server and open `/popp-integration-review.html`. The page displays the already accepted Babylon WebGL 0%/50%/100% evidence row for each idle/run/attack/cast/hurt/death state. This image-backed presentation remains visible when an embedded browser cannot display a nested live WebGL canvas, and each public review image is copied byte-for-byte from the Git-pinned acceptance evidence by the generator. Its rise/fade death button is explicitly a compositing review preview: it does not claim the runtime behavior is implemented.
+Start the client dev server and open `/popp-integration-review.html`. The page displays the already accepted Babylon WebGL 0%/50%/100% evidence row for each idle/run/attack/cast/hurt/death state. This image-backed presentation remains visible when an embedded browser cannot display a nested live WebGL canvas, and each public review image is copied byte-for-byte from the Git-pinned acceptance evidence by the generator. When an applied decision receipt exists, the page locks the selected staff and death decision, and the death preview uses that selected model's contact sheet.
 
-No candidate is selected by generation. The page keeps a local draft and exports `ggd.popp-integration-review-decision@1`; only an explicit non-null user decision may be used by a later integration step. It does not bind SFX, change the current model, claim production deployment, or treat the source down loop as a distinct native death animation.
+The generator never invents a candidate. The current committed receipt preserves the owner's Kagayaki selection and records that the existing global corpse-dissolve runtime supplies the approved rise/fade presentation. It does not bind SFX, claim production deployment, or treat the source down loop as a distinct native death animation.
 
 Apply an exported owner decision through the checked workflow; do not edit the champion default by hand:
 
