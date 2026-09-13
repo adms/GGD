@@ -51498,9 +51498,9 @@
             "texture",
             "native-animation"
           ],
-          "bytes": 3795720,
-          "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
-          "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+          "bytes": 3782388,
+          "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
+          "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
           "componentReady": true,
           "runtimeSelectable": false,
           "defaultEligible": false,
@@ -51585,6 +51585,39 @@
             "fullGetVerified": true,
             "allMemberSha256Verified": true,
             "localUnchanged": true
+          },
+          "sourceArtifact": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "bytes": 3795720,
+            "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
+            "gitPathAtIngest": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "gitCommitAtIngest": "9c8783d0e",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/historical-astralym-decimation-v1/ffb84140667f0ab8d387cc8bf9d06e511e35390dbbb7f36a9f64f67e778f8442.tar.gz",
+            "s3ArchiveMember": "historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
+            "backupReceiptPath": null,
+            "backupReceiptSha256": null,
+            "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb"
+          },
+          "materialNormalization": {
+            "schema": "ggd-model-texture-backdrop-repair@1",
+            "revision": 1,
+            "changes": [
+              "mat1:MI_WorldTreeDragon_Extra zero-hidden-rgb —— alpha ≤ 5（檢查器的 ALPHA_BACKGROUND_MAX）的像素 RGB 歸零，2548 px",
+              "mat2:MI_WorldTreeDragon_Eye zero-hidden-rgb —— 同上，3934 px"
+            ],
+            "binaryChunkByteIdentical": false,
+            "nonMaterialJsonByteSemanticIdentical": false,
+            "nonImageBufferViewsByteIdentical": true,
+            "gltfJsonIdenticalExceptImageLayout": true,
+            "changedImageBufferViews": [
+              4,
+              6
+            ]
+          },
+          "normalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+            "bytes": 3585,
+            "sha256": "f74c020f1cccefe6e8d2cd2474b39a6a56d7646b9aa827137523773ec2592052"
           }
         },
         {
@@ -51612,9 +51645,9 @@
             "texture",
             "native-animation"
           ],
-          "bytes": 3224424,
-          "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-          "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+          "bytes": 3222184,
+          "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+          "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
           "componentReady": true,
           "runtimeSelectable": false,
           "defaultEligible": false,
@@ -51690,7 +51723,39 @@
           "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
           "s3Use": "backup-only-not-runtime-entry",
           "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
-          "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9"
+          "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
+          "sourceArtifact": {
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+            "bytes": 3224424,
+            "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+            "gitPathAtIngest": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+            "gitCommitAtIngest": "9c8783d0e",
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
+            "s3ArchiveMember": "restored/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+            "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/historical-model-recovery-7bc2fa3f8/latest-receipt.json",
+            "backupReceiptSha256": "1bd5b158e434f645a639921e11b5a46a2e71d60f303c02284f0298f30bfa1ef9",
+            "gitArchivePath": "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb"
+          },
+          "materialNormalization": {
+            "schema": "ggd-model-texture-backdrop-repair@1",
+            "revision": 1,
+            "changes": [
+              "mat2:MI_JetDragon_Extra key-carrier —— BLEND 平面卡的紅色不透明底（94.58%／邊緣 98.0%）摳成透明，保留 8 個粉紅菱形",
+              "mat2:MI_JetDragon_Extra zero-hidden-rgb —— 材質帶 emissive，摳掉的底色 RGB 歸零，⛔ 否則自發光把它照回來（量到 94.60%）"
+            ],
+            "binaryChunkByteIdentical": false,
+            "nonMaterialJsonByteSemanticIdentical": false,
+            "nonImageBufferViewsByteIdentical": true,
+            "gltfJsonIdenticalExceptImageLayout": true,
+            "changedImageBufferViews": [
+              10
+            ]
+          },
+          "normalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/model-texture-backdrop-repair-v1.json",
+            "bytes": 3585,
+            "sha256": "f74c020f1cccefe6e8d2cd2474b39a6a56d7646b9aa827137523773ec2592052"
+          }
         },
         {
           "id": "historical-kita-kita-7bc2fa3f8",

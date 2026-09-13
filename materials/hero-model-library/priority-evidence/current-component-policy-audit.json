@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 2862806,
-      "sha256": "b4f5af9f9fe41f5810cfeb402f0416784718e4679e705d872323a0170053c38c"
+      "bytes": 2867020,
+      "sha256": "02210690d918cb40f9373c5386191819416fcae28b409e560597f2c1fc6d9282"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -225,9 +225,9 @@
       "id": "historical-astralym-decimated-f77cf1ee",
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
       "resourceRole": "independent-historical-model-body-component",
-      "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
-      "bytes": 3795720,
+      "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+      "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
+      "bytes": 3782388,
       "metrics": {
         "triangles": 7996,
         "meshes": 3,
@@ -274,9 +274,9 @@
       "id": "historical-jetragon-7bc2fa3f8",
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
       "resourceRole": "independent-historical-model-body-component",
-      "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
-      "bytes": 3224424,
+      "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+      "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+      "bytes": 3222184,
       "metrics": {
         "triangles": 8468,
         "meshes": 3,

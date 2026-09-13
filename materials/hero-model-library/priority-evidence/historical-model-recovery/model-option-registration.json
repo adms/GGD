@@ -15,7 +15,7 @@
     {
       "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
       "bytes": 43391,
-      "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e"
+      "sha256": "b9a942ef5e875c08517942d94c59e0590ca0e5dd515e280d1dc8444b9ceebb48"
     },
     {
       "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
@@ -39,12 +39,12 @@
       "modelDocument": {
         "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
         "bytes": 455,
-        "sha256": "0cad8166f0b691c52606f6891ab7caaf56b9de497e0fd88709c7ba523409473a"
+        "sha256": "63093713e8887e59570921aedc85e841028634dbd2c24234e58d8108d9374819"
       },
       "modelGlb": {
-        "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
-        "bytes": 3224424,
-        "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6"
+        "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+        "bytes": 3222184,
+        "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d"
       },
       "selectedClips": {
         "idle": "Idle",
@@ -74,12 +74,12 @@
       "modelDocument": {
         "gitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
         "bytes": 456,
-        "sha256": "1911ab362958f48a9425dac6ea38082b2f2c93e96e3ce1dad24ba4ff7eea9c12"
+        "sha256": "9ca3bf8dd347205417edca5e973e2029aa50ec322a4d94d2f7e60d224d3ec149"
       },
       "modelGlb": {
-        "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-        "bytes": 3795720,
-        "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
+        "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+        "bytes": 3782388,
+        "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f"
       },
       "selectedClips": {
         "idle": "Idle",

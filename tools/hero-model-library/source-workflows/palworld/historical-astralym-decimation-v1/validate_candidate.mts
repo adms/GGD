@@ -14,7 +14,10 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../../../../..");
 const CHECK = process.argv.includes("--check");
 const SOURCE = path.join(ROOT, "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb");
-const CANDIDATE = path.join(ROOT, "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb");
+// ⭐ PR #1152 合併準備（2026-09-14）：減面產物之後又做過貼圖背板修補（出貨版本 7d8264d1…）。
+//   這支驗的是**減面**這一步 ⇒ 讀逐位元組封存的減面產物；修補只動貼圖位元組，由
+//   tools/model-fix/record_backdrop_repairs.py 的證明與 historical_components.py 守著。
+const CANDIDATE = path.join(ROOT, "materials/hero-model-library/source-artifacts/historical-model-recovery-7bc2fa3f8/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb");
 const VISUAL = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/visual-comparison.json");
 const OUTPUT = path.join(ROOT, "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json");
 const LOCAL_SOURCE = "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-model-recovery-7bc2fa3f8/restored/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb";

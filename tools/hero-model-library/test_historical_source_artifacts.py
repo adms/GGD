@@ -20,7 +20,8 @@ class HistoricalSourceArtifactsTest(unittest.TestCase):
                 "designed",
             ),
             "historical-jetragon-7bc2fa3f8": (
-                "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+                # PR #1152 合併準備：貼圖背板修補後的出貨版本；原件見 test_exact_pre_normalization…
+                "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
                 "community:palworld-jetragon",
                 "designed",
             ),
@@ -61,6 +62,9 @@ class HistoricalSourceArtifactsTest(unittest.TestCase):
             {
                 "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
                 "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+                # PR #1152 合併準備：貼圖背板修補前的逐位元組原件（空渦龍歷史復原、枯星龍減面產物）
+                "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+                "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
             },
         )
         for row in rows:
