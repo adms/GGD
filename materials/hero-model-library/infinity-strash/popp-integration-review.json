@@ -5,7 +5,7 @@
   "workZh": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
   "nativeCharacterId": "PN020",
   "sourcePlatform": "Windows (Steam)",
-  "sourceFingerprint": "83a37dc80aaf7b2c70cc8d2e1488a82505d1395f1832bec441bc19bfb5f81a84",
+  "sourceFingerprint": "d1e8c129dfb6af0ceca14c1ca977886665886d64d2404c1b355fa09f228e858a",
   "sourceInputs": [
     {
       "gitPath": "materials/hero-model-library/priority-runtime-inputs.json",
@@ -16,6 +16,16 @@
       "gitPath": "content/champions/b2-popp.json",
       "bytes": 18701,
       "sha256": "01fa1ccb62c222f45a0ca91103eb612064e3d225a2fd2586abaa72a67c57102d"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json",
+      "bytes": 24509,
+      "sha256": "a2caf04a35d7a04126870cd122853a51d55eb34cf5c61ac3898037c5c7e4ff27"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json",
+      "bytes": 41264,
+      "sha256": "8832056688a34178418d9c995040c6929e9203e82c28b4ba088ab2acda045c87"
     }
   ],
   "currentSelection": {
@@ -286,6 +296,43 @@
       }
     ]
   },
+  "eventAudioReviewGate": {
+    "source": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json",
+      "bytes": 41264,
+      "sha256": "8832056688a34178418d9c995040c6929e9203e82c28b4ba088ab2acda045c87"
+    },
+    "candidateCount": 36,
+    "reviewedCount": 0,
+    "automaticBindingAllowed": false,
+    "runtimeSelectable": false
+  },
+  "vfxRuntimeCandidates": {
+    "source": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json",
+      "bytes": 24509,
+      "sha256": "a2caf04a35d7a04126870cd122853a51d55eb34cf5c61ac3898037c5c7e4ff27"
+    },
+    "summary": {
+      "niagaraRoots": 14,
+      "ggdVfxDocumentsBuilt": 12,
+      "sourceTexturesConverted": 9,
+      "identityExcludedRoots": 2,
+      "skillBindingsCreated": 0,
+      "visuallyAccepted": 0,
+      "runtimeSelectable": 0,
+      "productionDeployed": 0
+    },
+    "conversionBoundary": {
+      "kind": "source-texture-based-GGD-reconstruction-candidate",
+      "niagaraTimingRecovered": false,
+      "meshLayersReconstructed": false,
+      "originalEffectParityClaimed": false,
+      "candidateDocumentsUseCurrentGgdVfxSchema": true,
+      "audioBindingAllowed": false
+    },
+    "reviewPage": "apps/client/public/asset-review.html"
+  },
   "sourceDependencyEvidence": {
     "source": {
       "gitPath": "materials/hero-model-library/infinity-strash/dependency-index.json",
@@ -392,13 +439,13 @@
     },
     {
       "id": "original-vfx-conversion",
-      "status": "source-references-retained-pending-conversion",
-      "evidence": "17 VFX package references, including Mera, Merami, Hyadaruko, Io, Iora and Raidein, are retained. The index explicitly says package names are not acquisition; no converted and accepted PN020 VFX package is bound."
+      "status": "source-texture-ggd-candidates-ready-review",
+      "evidence": "17 VFX package references are retained. Twelve recognised Niagara roots now have unbound vfx@1 reconstruction candidates using nine byte-verified source textures; two PN030 roots were excluded from PN020. Niagara timing, mesh layers, visual acceptance and skill binding remain open."
     },
     {
       "id": "animation-events-and-sfx-binding",
       "status": "pending-user-listening-review",
-      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist, but event-to-file and skill meaning require explicit listening approval before binding."
+      "evidence": "41 PN020 animation/Wwise event references and 311 indexed decoded audio files exist. The dedicated 36-item queue has zero decisions and automaticBindingAllowed=false, so no event audio is bound before listening approval."
     },
     {
       "id": "skill-timing-and-full-combat-binding",

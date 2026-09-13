@@ -43,6 +43,15 @@ class PoppReviewTest(unittest.TestCase):
         self.assertFalse(audio["allSpeakerVerified"])
         self.assertEqual(self.contract["sourceDependencyEvidence"]["vfxReferenceCount"], 17)
         self.assertTrue(self.contract["sourceDependencyEvidence"]["rawPackageNamesAreNotAssetAcquisition"])
+        vfx = self.contract["vfxRuntimeCandidates"]
+        self.assertEqual(vfx["summary"]["ggdVfxDocumentsBuilt"], 12)
+        self.assertEqual(vfx["summary"]["identityExcludedRoots"], 2)
+        self.assertEqual(vfx["summary"]["skillBindingsCreated"], 0)
+        gate = self.contract["eventAudioReviewGate"]
+        self.assertEqual(gate["candidateCount"], 36)
+        self.assertEqual(gate["reviewedCount"], 0)
+        self.assertFalse(gate["automaticBindingAllowed"])
+        self.assertFalse(gate["runtimeSelectable"])
 
     def test_html_has_visible_state_controls_and_applied_owner_receipt(self):
         page = MODULE.build_html(self.contract)

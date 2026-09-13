@@ -17,6 +17,8 @@ OUTPUT_JSON = LIBRARY / "infinity-strash/popp-integration-review.json"
 OUTPUT_HTML = ROOT / "apps/client/public/popp-integration-review.html"
 OUTPUT_ASSET_DIR = ROOT / "apps/client/public/review-assets/popp-pn020"
 DECISION_RECEIPT = LIBRARY / "priority-evidence/infinity-strash-popp-review-decision/receipt.json"
+VFX_RUNTIME_MANIFEST = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json"
+EVENT_AUDIO_QUEUE = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json"
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -167,6 +169,18 @@ def build_contract() -> dict:
     }
 
     dependency_index = read_json(dependency_index_path)
+    vfx_runtime = read_json(VFX_RUNTIME_MANIFEST)
+    assert vfx_runtime["schema"] == "ggd.infinity-strash-popp-vfx-runtime-candidates@1"
+    assert vfx_runtime["summary"]["ggdVfxDocumentsBuilt"] == 12
+    assert vfx_runtime["summary"]["identityExcludedRoots"] == 2
+    assert vfx_runtime["summary"]["skillBindingsCreated"] == 0
+    assert vfx_runtime["summary"]["visuallyAccepted"] == 0
+    event_audio_queue = read_json(EVENT_AUDIO_QUEUE)
+    assert event_audio_queue["schema"] == "ggd.popp-event-audio-review-queue@1"
+    assert event_audio_queue["automaticBindingAllowed"] is False
+    assert event_audio_queue["runtimeSelectable"] is False
+    assert len(event_audio_queue["candidates"]) == 36
+    assert all(row["reviewDecision"] is None for row in event_audio_queue["candidates"])
     dependencies = dependency_index["externalPackageDependencies"]
     vfx_references = [path for path in dependencies if "/VFX/" in path]
     pn020_event_references = [
@@ -217,13 +231,13 @@ def build_contract() -> dict:
         },
         {
             "id": "original-vfx-conversion",
-            "status": "source-references-retained-pending-conversion",
-            "evidence": f"{len(vfx_references)} VFX package references, including Mera, Merami, Hyadaruko, Io, Iora and Raidein, are retained. The index explicitly says package names are not acquisition; no converted and accepted PN020 VFX package is bound.",
+            "status": "source-texture-ggd-candidates-ready-review",
+            "evidence": f"{len(vfx_references)} VFX package references are retained. Twelve recognised Niagara roots now have unbound vfx@1 reconstruction candidates using nine byte-verified source textures; two PN030 roots were excluded from PN020. Niagara timing, mesh layers, visual acceptance and skill binding remain open.",
         },
         {
             "id": "animation-events-and-sfx-binding",
             "status": "pending-user-listening-review",
-            "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist, but event-to-file and skill meaning require explicit listening approval before binding.",
+            "evidence": f"{len(pn020_event_references)} PN020 animation/Wwise event references and {audio_evidence['fileCount']} indexed decoded audio files exist. The dedicated 36-item queue has zero decisions and automaticBindingAllowed=false, so no event audio is bound before listening approval.",
         },
         {
             "id": "skill-timing-and-full-combat-binding",
@@ -243,6 +257,8 @@ def build_contract() -> dict:
         "gapStates": [(row["id"], row["status"]) for row in gaps],
         "poppAudioGroupsSha256": audio_evidence["selectedGroupsSha256"],
         "dependencyIndexSha256": dependency_evidence["source"]["sha256"],
+        "vfxRuntimeManifestSha256": sha256(VFX_RUNTIME_MANIFEST),
+        "eventAudioQueueSha256": sha256(EVENT_AUDIO_QUEUE),
     }
     fingerprint = hashlib.sha256(
         json.dumps(facts, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -255,7 +271,12 @@ def build_contract() -> dict:
         "nativeCharacterId": "PN020",
         "sourcePlatform": "Windows (Steam)",
         "sourceFingerprint": fingerprint,
-        "sourceInputs": [file_evidence(runtime_inputs_path), file_evidence(champion_path)],
+        "sourceInputs": [
+            file_evidence(runtime_inputs_path),
+            file_evidence(champion_path),
+            file_evidence(VFX_RUNTIME_MANIFEST),
+            file_evidence(EVENT_AUDIO_QUEUE),
+        ],
         "currentSelection": {
             "modelKey": champion["modelKey"],
             "selectionMode": champion.get("modelSelectionMode", "automatic"),
@@ -270,6 +291,19 @@ def build_contract() -> dict:
             "candidates": candidates,
         },
         "audioReviewEvidence": audio_evidence,
+        "eventAudioReviewGate": {
+            "source": file_evidence(EVENT_AUDIO_QUEUE),
+            "candidateCount": len(event_audio_queue["candidates"]),
+            "reviewedCount": sum(row["reviewDecision"] is not None for row in event_audio_queue["candidates"]),
+            "automaticBindingAllowed": event_audio_queue["automaticBindingAllowed"],
+            "runtimeSelectable": event_audio_queue["runtimeSelectable"],
+        },
+        "vfxRuntimeCandidates": {
+            "source": file_evidence(VFX_RUNTIME_MANIFEST),
+            "summary": vfx_runtime["summary"],
+            "conversionBoundary": vfx_runtime["conversionBoundary"],
+            "reviewPage": vfx_runtime["review"]["page"],
+        },
         "sourceDependencyEvidence": dependency_evidence,
         "fiveOpenIntegrationGaps": gaps,
         "remainingOpenIntegrationGapCount": sum(row["status"] != "owner-approved-existing-runtime-bound" for row in gaps),
@@ -309,6 +343,7 @@ textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1
 <label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1"> 核准 down＋升天淡出候選</label>
 <label class="pick"><input type="radio" name="death" value="reject"> 不核准，繼續找同作品動作</label></div>
 <h2>三、五項整合狀態（剩餘 {contract['remainingOpenIntegrationGapCount']} 項）</h2><ol id="gaps"></ol>
+<p class="note">已建立 {contract['vfxRuntimeCandidates']['summary']['ggdVfxDocumentsBuilt']} 個未綁定 GGD VFX 重建候選，請用 <code>/asset-review.html</code> 現場播放逐項審查；未核准前不綁技能。音效佇列 {contract['eventAudioReviewGate']['candidateCount']} 項目前已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項。</p>
 <h2>四、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
 <textarea id="reviewNote" placeholder="選擇理由、要修的顏色或動作問題"></textarea><div class="buttons"><button id="export">下載裁決 JSON</button></div></main>
 <script id="contract" type="application/json">{encoded}</script><script>

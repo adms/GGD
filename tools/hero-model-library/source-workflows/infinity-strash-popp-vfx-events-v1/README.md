@@ -122,3 +122,19 @@ The server exposes only the 36 WAV files enumerated by the generated queue.
 Every candidate starts pending with `runtimeSelectable=false`. Exported browser
 decisions are review input; another validated integration step must consume an
 owner-approved receipt before any skill binding can exist.
+
+## GGD runtime reconstruction candidates
+
+Build the bounded, unbound `vfx@1` candidates from the retained reconstruction
+recipes and byte-verified exported textures:
+
+```bash
+bash scripts/python-pillow.sh tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/build_runtime_candidates.py
+bash scripts/python-pillow.sh tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/build_runtime_candidates.py --check
+```
+
+The builder reads the current `HERO_TEXTURE_EDGE.limit` from
+`packages/shared/src/content/modelUpload/budget.ts`, resizes output textures to
+that cap, and records the policy source hash in its manifest. It does not bind a
+skill or audio event and does not claim Niagara timing, mesh-layer parity,
+visual acceptance, runtime selection, or production deployment.

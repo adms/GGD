@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "7df129081586",
+  "hash": "b5b312448f47",
   "entries": [
     {
       "id": "attach.ex.midchilder-aura",
@@ -1459,6 +1459,78 @@
       "path": "vfx/fx.scorch-ring.json",
       "hash": "cd96dfc1a93b",
       "size": 680
+    },
+    {
+      "id": "fx.strash.popp.nps-hyadaruko-core.candidate",
+      "path": "vfx/fx.strash.popp.nps-hyadaruko-core.candidate.json",
+      "hash": "0737eec41ad4",
+      "size": 1202
+    },
+    {
+      "id": "fx.strash.popp.nps-hyadaruko-hit.candidate",
+      "path": "vfx/fx.strash.popp.nps-hyadaruko-hit.candidate.json",
+      "hash": "695d90351090",
+      "size": 1200
+    },
+    {
+      "id": "fx.strash.popp.nps-io-bullet-00.candidate",
+      "path": "vfx/fx.strash.popp.nps-io-bullet-00.candidate.json",
+      "hash": "293121a56844",
+      "size": 1258
+    },
+    {
+      "id": "fx.strash.popp.nps-io-explosive-00.candidate",
+      "path": "vfx/fx.strash.popp.nps-io-explosive-00.candidate.json",
+      "hash": "251220672b60",
+      "size": 1202
+    },
+    {
+      "id": "fx.strash.popp.nps-ionazun-explosive-00.candidate",
+      "path": "vfx/fx.strash.popp.nps-ionazun-explosive-00.candidate.json",
+      "hash": "0a9ef5147b1b",
+      "size": 1207
+    },
+    {
+      "id": "fx.strash.popp.nps-iora-explosive-00.candidate",
+      "path": "vfx/fx.strash.popp.nps-iora-explosive-00.candidate.json",
+      "hash": "35725dd0e186",
+      "size": 1204
+    },
+    {
+      "id": "fx.strash.popp.nps-mera-firetrail-00.candidate",
+      "path": "vfx/fx.strash.popp.nps-mera-firetrail-00.candidate.json",
+      "hash": "c85d088c4a40",
+      "size": 1266
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-core.candidate",
+      "path": "vfx/fx.strash.popp.nps-merami-core.candidate.json",
+      "hash": "6c3f5e602d0a",
+      "size": 1202
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-firetrail-00.candidate",
+      "path": "vfx/fx.strash.popp.nps-merami-firetrail-00.candidate.json",
+      "hash": "b31f7da367c0",
+      "size": 1268
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-landing-2.candidate",
+      "path": "vfx/fx.strash.popp.nps-merami-landing-2.candidate.json",
+      "hash": "edc38ad0333e",
+      "size": 1247
+    },
+    {
+      "id": "fx.strash.popp.nps-merami-muzzle.candidate",
+      "path": "vfx/fx.strash.popp.nps-merami-muzzle.candidate.json",
+      "hash": "fadfedabd132",
+      "size": 1262
+    },
+    {
+      "id": "fx.strash.popp.nps-raidein-charge-core.candidate",
+      "path": "vfx/fx.strash.popp.nps-raidein-charge-core.candidate.json",
+      "hash": "de00aef0e5ae",
+      "size": 1198
     },
     {
       "id": "fx.thorn",

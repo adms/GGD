@@ -241,6 +241,8 @@ def build(git_link_root=ROOT):
     popp_vfx_reconstruction=read(popp_vfx_reconstruction_path)
     popp_vfx_reconstruction_receipt_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates-receipt.json'
     popp_vfx_reconstruction_receipt=read(popp_vfx_reconstruction_receipt_path)
+    popp_vfx_runtime_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json'
+    popp_vfx_runtime=read(popp_vfx_runtime_path)
     if (popp_vfx_receipt.get('schema')!='ggd.infinity-strash-popp-vfx-events@1'
         or popp_vfx_receipt.get('summary',{}).get('vfxDependencySupportFilesExported',0)<=0
         or popp_vfx_receipt.get('summary',{}).get('vfxConverted')!=0):
@@ -262,6 +264,12 @@ def build(git_link_root=ROOT):
         or popp_vfx_reconstruction.get('summary',{}).get('ggdVfxBuilt')!=0
         or popp_vfx_reconstruction_receipt.get('states',{}).get('ggdVfxBuilt') is not False):
         raise ValueError('Popp VFX reconstruction candidates are absent or overclaim readiness')
+    if (popp_vfx_runtime.get('schema')!='ggd.infinity-strash-popp-vfx-runtime-candidates@1'
+        or popp_vfx_runtime.get('summary',{}).get('ggdVfxDocumentsBuilt')!=12
+        or popp_vfx_runtime.get('summary',{}).get('identityExcludedRoots')!=2
+        or popp_vfx_runtime.get('summary',{}).get('skillBindingsCreated')!=0
+        or popp_vfx_runtime.get('summary',{}).get('visuallyAccepted')!=0):
+        raise ValueError('Popp GGD VFX candidates are absent, stale or overclaim acceptance/binding')
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -388,7 +396,7 @@ def build(git_link_root=ROOT):
         poppVfxDependencySupport=dict(
             heroId='b2-popp',
             sourceId=popp_vfx_receipt['sourceId'],
-            status='reconstruction-support-assets-exported; Niagara and GGD VFX conversion pending',
+            status='12 source-texture GGD VFX candidates built; Niagara timing/mesh layers/visual acceptance and skill binding pending',
             receiptGitPath=str(popp_vfx_receipt_path.relative_to(ROOT)),
             receiptSha256=hashlib.sha256(popp_vfx_receipt_path.read_bytes()).hexdigest(),
             backupReceiptGitPath=str(popp_vfx_export_backup_path.relative_to(ROOT)),
@@ -402,6 +410,13 @@ def build(git_link_root=ROOT):
             reconstructionReceiptGitPath=str(popp_vfx_reconstruction_receipt_path.relative_to(ROOT)),
             reconstructionReceiptSha256=hashlib.sha256(popp_vfx_reconstruction_receipt_path.read_bytes()).hexdigest(),
             reconstructionReviewGitPath='materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html',
+            runtimeCandidates=dict(
+                gitPath=str(popp_vfx_runtime_path.relative_to(ROOT)),
+                sha256=hashlib.sha256(popp_vfx_runtime_path.read_bytes()).hexdigest(),
+                documentGitPath='materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/README.md',
+                candidates=popp_vfx_runtime['candidates'],
+                excluded=popp_vfx_runtime['excluded'],
+                reviewPage=popp_vfx_runtime['review']['page']),
             localRoot=popp_vfx_export_backup['source'],
             s3Uri=popp_vfx_export_backup['s3Uri'],
             manifestUri=popp_vfx_export_backup['manifestUri'],
@@ -423,7 +438,9 @@ def build(git_link_root=ROOT):
                 niagaraSystemCandidates=popp_vfx_receipt['summary']['vfxNiagaraSystemCandidates'],
                 supportRoots=popp_vfx_receipt['summary']['vfxSupportRoots'],
                 candidateRecipes=popp_vfx_receipt['summary']['vfxCandidateRecipes'],
-                ggdVfxConverted=0,
+                ggdVfxConvertedCandidates=popp_vfx_runtime['summary']['ggdVfxDocumentsBuilt'],
+                identityExcludedRoots=popp_vfx_runtime['summary']['identityExcludedRoots'],
+                visuallyAccepted=0,
                 runtimeBindingsCreated=popp_vfx_receipt['summary']['runtimeBindingsCreated']),
             fullGetVerified=True,
             allMemberSha256Verified=True,
@@ -640,6 +657,15 @@ def main():
                     'gitPath': result['poppVfxDependencySupport']['reconstructionReceiptGitPath'],
                     'sha256': result['poppVfxDependencySupport']['reconstructionReceiptSha256'],
                 },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['runtimeCandidates']['gitPath'],
+                    'sha256': result['poppVfxDependencySupport']['runtimeCandidates']['sha256'],
+                },
+                *[
+                    evidence
+                    for candidate in result['poppVfxDependencySupport']['runtimeCandidates']['candidates']
+                    for evidence in (candidate['runtimeTexture'], candidate['vfxDocument'])
+                ],
                 result['historicalModelRestorationReceipt'],
                 result['historicalModelOptionRegistration'],
                 result['historicalModelLineageAudit'],
