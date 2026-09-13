@@ -6521,17 +6521,19 @@
       "bytes": 4297580,
       "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
       "format": "glb",
-      "readiness": "material-bound-component-pending-hero-binding",
+      "readiness": "hero-forge-six-slot-package-and-dropdown-verified; production deployment unverified",
       "existsLocal": true,
       "resourceRole": "character-body",
       "sourceId": "opgg-palworld-jetragon",
       "sourceUrl": "https://op.gg/zh-tw/palworld/pals/jetragon",
       "sourceWork": "幻獸帕魯／Palworld",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-jetragon"
+      ],
       "defaultEligible": false,
       "automaticEligible": false,
       "componentReady": true,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "boneCount": 75,
       "nativeAnimationCount": 29,
       "animationClipCount": 29,
@@ -6581,11 +6583,25 @@
       "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
       "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+      "modelDocumentGitPath": "content/models/community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63.json",
       "characterIdentity": "community:palworld-jetragon",
       "characterName": "空渦龍",
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
-      "ggdHeroImplemented": false,
-      "runtimeDropdownRegistered": false
+      "ggdHeroImplemented": true,
+      "relatedHeroIds": [
+        "acquired-jetragon"
+      ],
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+        "heroId": "acquired-jetragon",
+        "modelKey": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
+        "isDefault": false,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "authoringState": "six-slot-package-verified",
+        "productionDeploymentVerified": false
+      }
     },
     {
       "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
@@ -6647,17 +6663,19 @@
       "bytes": 2148052,
       "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
       "format": "glb",
-      "readiness": "material-bound-component-pending-hero-binding",
+      "readiness": "hero-forge-six-slot-package-and-dropdown-verified; production deployment unverified",
       "existsLocal": true,
       "resourceRole": "character-body",
       "sourceId": "palworld-cattiva-opgg",
       "sourceUrl": "https://op.gg/palworld/pals/cattiva",
       "sourceWork": "幻獸帕魯／Palworld",
-      "heroIds": [],
+      "heroIds": [
+        "acquired-cattiva"
+      ],
       "defaultEligible": false,
       "automaticEligible": false,
       "componentReady": true,
-      "runtimeSelectable": false,
+      "runtimeSelectable": true,
       "boneCount": 43,
       "nativeAnimationCount": 33,
       "animationClipCount": 33,
@@ -6711,11 +6729,25 @@
       "ggdValidationEvidence": "materials/hero-model-library/priority-evidence/palworld-materials/current-contract-audit.json",
       "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+      "runtimeDropdownRegistered": true,
+      "runtimeModelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+      "modelDocumentGitPath": "content/models/community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef.json",
       "characterIdentity": "community:palworld-cattiva",
       "characterName": "搗蛋貓",
       "gitAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
-      "ggdHeroImplemented": false,
-      "runtimeDropdownRegistered": false
+      "ggdHeroImplemented": true,
+      "relatedHeroIds": [
+        "acquired-cattiva"
+      ],
+      "registrationEvidence": {
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
+        "heroId": "acquired-cattiva",
+        "modelKey": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
+        "isDefault": false,
+        "backendDropdownScope": "Hero Forge acquired-model selector",
+        "authoringState": "six-slot-package-verified",
+        "productionDeploymentVerified": false
+      }
     },
     {
       "id": "dai-shinteo-v2-sword-handheld-256-v1",
@@ -12121,11 +12153,11 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "5fbf6e9113afaaa146a25ffb77a2b9461c1c7c57d0b3b67662f55924be7b20c6"
+    "sha256": "a6c70c8e943cd6a39c803d3ded109a36b40b845e9811d92d33b9d2cc3bd305ed"
   },
   "palworldHeroIntegrationReceipt": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-    "sha256": "1829625349481d3eaf32548924ea73988144506d1c3ce1d9dd4d2a4acb051f00",
+    "sha256": "4f26cf91dc890a40687e5174e7a1bfa57069b38451bfc585a23284902e2ec592",
     "heroIds": [
       "acquired-jetragon",
       "acquired-astralym",

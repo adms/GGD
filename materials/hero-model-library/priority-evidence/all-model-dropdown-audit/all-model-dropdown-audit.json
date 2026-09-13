@@ -9,8 +9,8 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "31b7d2032a80b47882bbaaa5623873a9009ffdeff25c8e9d321e4f893802d198",
-      "fileCount": 1015
+      "sha256": "3231b3556fdbd6b7c74b53777cb01258e7545eee9e3d8033168c8f23817c5a95",
+      "fileCount": 1017
     },
     "contentChampions": {
       "path": "content/champions/*.json",
@@ -19,22 +19,22 @@
     },
     "heroForgeOptions": {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "724473673ee76d78a5c484f042c9e3c8da9a036d2f189c650a40d1f1b1db7ca6"
+      "sha256": "5e4957b50ad438959f82cdbf87cb772f8237b73230352018d85982ca39e18e6c"
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "ceab0b74c720c81eeeb7c1d232ae40679a34d0392573cf3d6bcecdf8f27e0060"
+      "sha256": "8fe9267db88ab07bfef441ec3e0d8cab2decb09f9d14219d9f6767410a086de7"
     }
   },
   "summary": {
-    "modelAt1Documents": 1010,
+    "modelAt1Documents": 1012,
     "championDocuments": 153,
     "championPrimaryAndVersionSelectableModelKeys": 513,
     "championModelVersionRows": 566,
     "sourceModelsRepresentedByFrozenVersions": 201,
     "heroForgeHeroesWithOptions": 34,
-    "heroForgeSelectableModelKeys": 42,
-    "allActualSelectableModelKeys": 547,
+    "heroForgeSelectableModelKeys": 44,
+    "allActualSelectableModelKeys": 549,
     "centralSourceRows": 159,
     "centralUniqueModelKeys": 152,
     "centralRowsWithQualificationEvidence": 141,
@@ -42,14 +42,14 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 37,
-    "readyUnregisteredCharacterOrMotionComponents": 35,
+    "readyUnregisteredIndependentComponents": 35,
+    "readyUnregisteredCharacterOrMotionComponents": 33,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1010,
+    "modelDocumentsWithoutResourceRole": 1012,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -343,52 +343,6 @@
         "256px元件只含Idle／Walk；完整58條目另存，含57段變動與1個固定姿勢。",
         "23928面、435動畫通道接近限制；眼睛透明、塗層與原作著色仍待驗收。",
         "未提供Death及六態映射。"
-      ]
-    },
-    {
-      "id": "opgg-palworld-jetragon.material-bound-256-v1",
-      "character": "空渦龍 / Jetragon",
-      "resourceRole": "character-body",
-      "componentReady": true,
-      "runtimeSelectable": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "gitPath": "content/assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
-      "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8",
-      "readiness": "material-bound-component-pending-hero-binding",
-      "nativeAnimationCount": 29,
-      "animationClipCount": 29,
-      "blockers": [
-        "no-ggd-hero-id-or-target-binding",
-        "no-runtime-model-at-1-document",
-        "component-is-not-runtime-selectable"
-      ],
-      "limitations": [
-        "原生29條目／28種不同內容；未提供Death與六態映射。",
-        "次表面散射與眼睛／晶體透明深度細節仍與原作著色器有差異。"
-      ]
-    },
-    {
-      "id": "palworld-cattiva-opgg-materials-256-v1",
-      "character": "搗蛋貓",
-      "resourceRole": "character-body",
-      "componentReady": true,
-      "runtimeSelectable": false,
-      "runtimeDropdownRegistered": false,
-      "heroIds": [],
-      "gitPath": "content/assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
-      "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5",
-      "readiness": "material-bound-component-pending-hero-binding",
-      "nativeAnimationCount": 33,
-      "animationClipCount": 33,
-      "blockers": [
-        "no-ggd-hero-id-or-target-binding",
-        "no-runtime-model-at-1-document",
-        "component-is-not-runtime-selectable"
-      ],
-      "limitations": [
-        "保留原生33動作；未提供Death及六態映射。",
-        "眼嘴透明、深度偏移與互動表情UV尚未完全對應原作。"
       ]
     },
     {
@@ -5194,7 +5148,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1010
+      "modelAt1DocumentsWithoutResourceRole": 1012
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },
