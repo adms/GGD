@@ -1,12 +1,12 @@
 {
  "schema": "model-budget@1",
- "sourcesDigest": "f42ffb534ecda3a0",
+ "sourcesDigest": "e1dcb09367663119",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "a6cc02b83aa40c54",
-   "bytes": 203744
+   "sha256": "3cc71b7cc6d5a867",
+   "bytes": 205138
   },
   {
    "path": "content/arenas/_index.json",
@@ -15,7 +15,7 @@
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "b26b4ecb0eb851d9",
+   "sha256": "e02b2d77eca12312",
    "bytes": 21475
   },
   {
@@ -3530,6 +3530,61 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
+   "id": "assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+   "path": "assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7896,
+   "vertices": 5636,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 44,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 4,
+   "textureBytes": 212170,
+   "vramBytes": 1398100,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 102714,
+     "digest": "ad9032d2e200b4ea"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 42705,
+     "digest": "8de52528367afd6a"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 46663,
+     "digest": "38bdb97b2a96aeba"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 20088,
+     "digest": "87dba9415af2968b"
+    }
+   ],
+   "fileBytes": 1178320,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
    "path": "assets/models/community/076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889.glb",
    "group": "community",
@@ -4255,6 +4310,61 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
+   "id": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+   "path": "assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7994,
+   "vertices": 6360,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 141,
+   "clips": 5,
+   "animChannels": 117,
+   "textureCount": 4,
+   "textureBytes": 248089,
+   "vramBytes": 1398100,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 118171,
+     "digest": "c2dcdfc95bf78df6"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 43306,
+     "digest": "65352c22291720d1"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 43306,
+     "digest": "65352c22291720d1"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 43306,
+     "digest": "65352c22291720d1"
+    }
+   ],
+   "fileBytes": 1149836,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
    "id": "community.body.3a1e2d90176c4c9e50cc3abf1f0c26e7867a9daf51df1589",
    "path": "assets/models/community/229c2dce4a639b861c7b55084a2f9f5bae41e4225646d028c05899992aa2f607.glb",
    "group": "community",
@@ -4384,6 +4494,68 @@
     }
    ],
    "fileBytes": 801772,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+   "path": "assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 8980,
+   "vertices": 5478,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 115,
+   "clips": 10,
+   "animChannels": 345,
+   "textureCount": 5,
+   "textureBytes": 226869,
+   "vramBytes": 1747625,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 77618,
+     "digest": "73b6ca19d8fc89f8"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 70734,
+     "digest": "b721de42ef2f8d3f"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 37087,
+     "digest": "62390137ed3cddfa"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 37210,
+     "digest": "1f24ecc7e7c47332"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 4220,
+     "digest": "4a359b6d21cd2077"
+    }
+   ],
+   "fileBytes": 2000388,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -4589,137 +4761,6 @@
     }
    ],
    "fileBytes": 337876,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
-   "id": "assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
-   "path": "assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7189,
-   "vertices": 4589,
-   "drawCalls": 6,
-   "materials": 6,
-   "skins": 1,
-   "joints": 98,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 5,
-   "textureBytes": 168924,
-   "vramBytes": 1572863,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 256,
-     "h": 128,
-     "format": "png",
-     "diskBytes": 54479,
-     "digest": "309b7883590e7dd5"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 43735,
-     "digest": "bd07efe7e054b52d"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 16971,
-     "digest": "6370eb1f915094a9"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 878,
-     "digest": "6c5c9633b5e93d51"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 52861,
-     "digest": "42e1d7ecf7c85836"
-    }
-   ],
-   "fileBytes": 817900,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
-   "id": "assets/models/community/2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527.glb",
-   "path": "assets/models/community/2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7890,
-   "vertices": 7195,
-   "drawCalls": 6,
-   "materials": 6,
-   "skins": 1,
-   "joints": 123,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 6,
-   "textureBytes": 364733,
-   "vramBytes": 1660244,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 128,
-     "h": 128,
-     "format": "png",
-     "diskBytes": 9032,
-     "digest": "b4815127357636be"
-    },
-    {
-     "w": 128,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 49048,
-     "digest": "d58c2d7e4176d502"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 127402,
-     "digest": "72c349772c7edd44"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 76067,
-     "digest": "ca781cce24b15b61"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 97368,
-     "digest": "d67ea49e1f240efe"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 5816,
-     "digest": "b257ea2cb1b64b4b"
-    }
-   ],
-   "fileBytes": 957288,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -5810,75 +5851,6 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860.glb",
-   "path": "assets/models/community/4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7890,
-   "vertices": 5832,
-   "drawCalls": 6,
-   "materials": 6,
-   "skins": 1,
-   "joints": 136,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 6,
-   "textureBytes": 354967,
-   "vramBytes": 2097150,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 125148,
-     "digest": "8cfcba3240956b07"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 58335,
-     "digest": "824bcad80deb799c"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 70858,
-     "digest": "255c81590f6ad560"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 53065,
-     "digest": "df1d3ee71183ba42"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 11223,
-     "digest": "e71b5d34073dc4e0"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 36338,
-     "digest": "15d2a5063753e9d3"
-    }
-   ],
-   "fileBytes": 840384,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
    "id": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
    "path": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
    "group": "community",
@@ -6349,6 +6321,68 @@
     }
    ],
    "fileBytes": 652744,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+   "path": "assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7900,
+   "vertices": 5478,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 115,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 5,
+   "textureBytes": 226869,
+   "vramBytes": 1747625,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 77618,
+     "digest": "73b6ca19d8fc89f8"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 37087,
+     "digest": "62390137ed3cddfa"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 37210,
+     "digest": "1f24ecc7e7c47332"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 4220,
+     "digest": "4a359b6d21cd2077"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 70734,
+     "digest": "b721de42ef2f8d3f"
+    }
+   ],
+   "fileBytes": 916024,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -7193,61 +7227,61 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0.glb",
-   "path": "assets/models/community/6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0.glb",
+   "id": "assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+   "path": "assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
    "group": "community",
    "shipping": true,
    "role": "unused",
-   "triangles": 7888,
-   "vertices": 5803,
+   "triangles": 7927,
+   "vertices": 6814,
    "drawCalls": 6,
    "materials": 6,
    "skins": 1,
-   "joints": 134,
-   "clips": 0,
-   "animChannels": 0,
+   "joints": 156,
+   "clips": 13,
+   "animChannels": 468,
    "textureCount": 5,
-   "textureBytes": 336681,
-   "vramBytes": 1747625,
+   "textureBytes": 339960,
+   "vramBytes": 1572863,
    "maxTextureEdge": 256,
    "textures": [
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 63100,
-     "digest": "b26117f94b3402f2"
+     "diskBytes": 64908,
+     "digest": "f40a6170a222ae38"
+    },
+    {
+     "w": 256,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 52503,
+     "digest": "9e7636e3b855720f"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 83363,
-     "digest": "910f72bf8c81d51b"
+     "diskBytes": 109195,
+     "digest": "86eda89e3548845c"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 24336,
-     "digest": "725f7125b8185c81"
+     "diskBytes": 58561,
+     "digest": "a8ef3c57bf704b16"
     },
     {
      "w": 256,
      "h": 256,
      "format": "png",
-     "diskBytes": 85259,
-     "digest": "9aa9681b8239d847"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 80623,
-     "digest": "a7faabb04de3fd08"
+     "diskBytes": 54793,
+     "digest": "25e2d99807413ce1"
     }
    ],
-   "fileBytes": 840920,
+   "fileBytes": 2731060,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -7385,6 +7419,68 @@
     }
    ],
    "fileBytes": 2226392,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+   "path": "assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7892,
+   "vertices": 5477,
+   "drawCalls": 6,
+   "materials": 6,
+   "skins": 1,
+   "joints": 72,
+   "clips": 0,
+   "animChannels": 0,
+   "textureCount": 5,
+   "textureBytes": 252446,
+   "vramBytes": 1747625,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 96363,
+     "digest": "e06697b09ee50f5e"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 34996,
+     "digest": "c1522f8e11657f65"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 63773,
+     "digest": "de251a7b50c8e046"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 37995,
+     "digest": "d0b1ad7702fb1fff"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 19319,
+     "digest": "0dca0cc0fc9ed66e"
+    }
+   ],
+   "fileBytes": 1221592,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -7741,61 +7837,6 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4.glb",
-   "path": "assets/models/community/7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7927,
-   "vertices": 6814,
-   "drawCalls": 6,
-   "materials": 6,
-   "skins": 1,
-   "joints": 156,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 4,
-   "textureBytes": 283347,
-   "vramBytes": 1223338,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 64908,
-     "digest": "f40a6170a222ae38"
-    },
-    {
-     "w": 256,
-     "h": 128,
-     "format": "png",
-     "diskBytes": 52503,
-     "digest": "9e7636e3b855720f"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 109195,
-     "digest": "86eda89e3548845c"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 56741,
-     "digest": "ccf92b64dde5f32f"
-    }
-   ],
-   "fileBytes": 838712,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
    "id": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
    "path": "assets/models/community/7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892.glb",
    "group": "community",
@@ -8089,7 +8130,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
+   "id": "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63",
    "path": "assets/models/community/894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8.glb",
    "group": "community",
    "shipping": true,
@@ -8685,7 +8726,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+   "id": "community.body.6329b227d1e34b92b8ab9c5e21760b7d00d811296154efc9",
    "path": "assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
    "group": "community",
    "shipping": true,
@@ -9228,6 +9269,82 @@
     }
    ],
    "fileBytes": 3139792,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+   "path": "assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7890,
+   "vertices": 7195,
+   "drawCalls": 6,
+   "materials": 6,
+   "skins": 1,
+   "joints": 123,
+   "clips": 9,
+   "animChannels": 369,
+   "textureCount": 7,
+   "textureBytes": 370299,
+   "vramBytes": 2009769,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 9032,
+     "digest": "b4815127357636be"
+    },
+    {
+     "w": 128,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 49048,
+     "digest": "d58c2d7e4176d502"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 127402,
+     "digest": "72c349772c7edd44"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 76067,
+     "digest": "ca781cce24b15b61"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 97368,
+     "digest": "d67ea49e1f240efe"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 5816,
+     "digest": "b257ea2cb1b64b4b"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 5566,
+     "digest": "6db76de738f54785"
+    }
+   ],
+   "fileBytes": 1942664,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -10250,7 +10367,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
+   "id": "community.body.b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbef",
    "path": "assets/models/community/b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5.glb",
    "group": "community",
    "shipping": true,
@@ -11253,68 +11370,6 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/community/ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40.glb",
-   "path": "assets/models/community/ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 8980,
-   "vertices": 5478,
-   "drawCalls": 5,
-   "materials": 5,
-   "skins": 1,
-   "joints": 115,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 5,
-   "textureBytes": 177898,
-   "vramBytes": 1747625,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 77618,
-     "digest": "73b6ca19d8fc89f8"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 12581,
-     "digest": "bfefbbc5edf1a963"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 12745,
-     "digest": "0eca8bdb308c24af"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 4220,
-     "digest": "4a359b6d21cd2077"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 70734,
-     "digest": "b721de42ef2f8d3f"
-    }
-   ],
-   "fileBytes": 887140,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
    "id": "assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
    "path": "assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
    "group": "community",
@@ -11561,6 +11616,96 @@
     }
    ],
    "fileBytes": 2738480,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+   "path": "assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 7896,
+   "vertices": 16097,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 145,
+   "clips": 58,
+   "animChannels": 435,
+   "textureCount": 9,
+   "textureBytes": 434183,
+   "vramBytes": 3145725,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 62378,
+     "digest": "c596a5e433ef91b2"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 25351,
+     "digest": "56696dd891958990"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 78518,
+     "digest": "d4ddc40e029cd5a7"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 133473,
+     "digest": "b0a46fd6b4db3019"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26347,
+     "digest": "f02e1de656e566e2"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26347,
+     "digest": "f02e1de656e566e2"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 36205,
+     "digest": "4cfac4c316433260"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 36205,
+     "digest": "4cfac4c316433260"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 9359,
+     "digest": "f56edce12e3c2cd5"
+    }
+   ],
+   "fileBytes": 17043436,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -11834,61 +11979,6 @@
     }
    ],
    "fileBytes": 589076,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
-   "id": "assets/models/community/de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b.glb",
-   "path": "assets/models/community/de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7897,
-   "vertices": 7781,
-   "drawCalls": 6,
-   "materials": 6,
-   "skins": 1,
-   "joints": 145,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 4,
-   "textureBytes": 370124,
-   "vramBytes": 1282047,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 121495,
-     "digest": "9bdd256a49e73eb9"
-    },
-    {
-     "w": 256,
-     "h": 171,
-     "format": "png",
-     "diskBytes": 88561,
-     "digest": "0d4e549d6c715690"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 98686,
-     "digest": "caf5c4cb033100f4"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 61382,
-     "digest": "776c0954b0b87b94"
-    }
-   ],
-   "fileBytes": 981540,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -12183,75 +12273,6 @@
     }
    ],
    "fileBytes": 658940,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
-   "id": "assets/models/community/e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794.glb",
-   "path": "assets/models/community/e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7894,
-   "vertices": 5404,
-   "drawCalls": 6,
-   "materials": 6,
-   "skins": 1,
-   "joints": 96,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 6,
-   "textureBytes": 332962,
-   "vramBytes": 2097150,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 58035,
-     "digest": "ca9a1d2a9424f068"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 46437,
-     "digest": "c9d031a76a66c1d7"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 105098,
-     "digest": "e914844f71240bc0"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 104929,
-     "digest": "7e94765921930d5d"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 9085,
-     "digest": "4d8545e0de4967cf"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 9378,
-     "digest": "db348077d9255e5d"
-    }
-   ],
-   "fileBytes": 968308,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -12675,68 +12696,6 @@
     }
    ],
    "fileBytes": 1249564,
-   "worstCount": 1,
-   "usedBy": [],
-   "broken": "",
-   "verdicts": {},
-   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
-  },
-  {
-   "id": "assets/models/community/ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f.glb",
-   "path": "assets/models/community/ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f.glb",
-   "group": "community",
-   "shipping": true,
-   "role": "unused",
-   "triangles": 7890,
-   "vertices": 6211,
-   "drawCalls": 5,
-   "materials": 5,
-   "skins": 1,
-   "joints": 90,
-   "clips": 0,
-   "animChannels": 0,
-   "textureCount": 5,
-   "textureBytes": 319281,
-   "vramBytes": 1456810,
-   "maxTextureEdge": 256,
-   "textures": [
-    {
-     "w": 128,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 55356,
-     "digest": "ba584c3dcde69130"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 101244,
-     "digest": "f741ce496c8bd653"
-    },
-    {
-     "w": 256,
-     "h": 171,
-     "format": "png",
-     "diskBytes": 61131,
-     "digest": "2aa911cbd0ed8c51"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 8189,
-     "digest": "16b086ede8a3ec22"
-    },
-    {
-     "w": 256,
-     "h": 256,
-     "format": "png",
-     "diskBytes": 93361,
-     "digest": "786a304789209c9e"
-    }
-   ],
-   "fileBytes": 1250324,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -15023,6 +14982,73 @@
    "broken": "",
    "verdicts": {},
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+   "path": "assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+   "group": "community",
+   "shipping": true,
+   "role": "champion",
+   "triangles": 7994,
+   "vertices": 6360,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 141,
+   "clips": 5,
+   "animChannels": 117,
+   "textureCount": 4,
+   "textureBytes": 248089,
+   "vramBytes": 1398100,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 118171,
+     "digest": "c2dcdfc95bf78df6"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 43306,
+     "digest": "65352c22291720d1"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 43306,
+     "digest": "65352c22291720d1"
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 43306,
+     "digest": "65352c22291720d1"
+    }
+   ],
+   "fileBytes": 1149836,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "COMBAT",
+     "label": "英雄",
+     "count": 12,
+     "detail": "1 位英雄使用：不知火舞"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
   },
   {
    "id": "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af",
@@ -18699,7 +18725,7 @@
    "path": "assets/models/community/versions/7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2.glb",
    "group": "community",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 13796,
    "vertices": 9956,
    "drawCalls": 4,
@@ -18743,23 +18769,11 @@
     }
    ],
    "fileBytes": 1431116,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：不知火舞"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "warn",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "version.body.7eb6f6479c9dde50a9d28924edb2e19f27c896f91b4c44ff",
@@ -48074,10 +48088,10 @@
  "totals": {
   "files": 959,
   "shipping": 959,
-  "triangles": 5888405,
-  "shippingTriangles": 5888405,
-  "textureBytes": 307587694,
-  "vramBytes": 2086465238,
+  "triangles": 5889329,
+  "shippingTriangles": 5889329,
+  "textureBytes": 307437751,
+  "vramBytes": 2087745918,
   "zeroGeometry": 1,
   "nearZero": 44,
   "unused": 740

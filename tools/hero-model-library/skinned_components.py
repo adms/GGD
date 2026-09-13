@@ -160,6 +160,8 @@ def validate_component(candidate, repo):
             'ssbu-pickel-alex-c01-static-skinned-v1': 'ggd.ssbu-pickel-alex-source-rebuild@1',
             'ssbu-ptrainer-male-c00-static-skinned-v1': 'ggd.ssbu-ptrainer-male-source-rebuild@1',
             'ssbu-ptrainer-female-c01-static-skinned-v1': 'ggd.ssbu-ptrainer-female-source-rebuild@1',
+            'ssbu-ptrainer-male-c00-formal-decimated-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-ptrainer-female-c01-formal-decimated-v1': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-kirby-c00-static-skinned-v1': 'ggd.ssbu-kirby-source-rebuild@1',
             'ssbu-mario-c00-static-skinned-v2': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-link-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',

@@ -36,10 +36,12 @@ class AuditTest(unittest.TestCase):
     def test_manual_defaults_are_preserved(self):
         self.assertEqual(MODULE.CURRENT_DEFAULTS, self.audit["currentManualDefaults"])
 
-    def test_trainer_formal_decimation_gap_is_explicit(self):
+    def test_trainer_formal_decimation_candidates_are_current(self):
         trainer = [row for row in self.audit["candidates"] if row["fighterId"] == "ptrainer"]
         self.assertEqual(2, len(trainer))
-        self.assertTrue(all(row["formalHeroAdoption"]["requiresDecimatedCandidate"] for row in trainer))
+        self.assertEqual([7896, 7892], [row["metrics"]["triangles"] for row in trainer])
+        self.assertTrue(all(row["formalHeroAdoption"]["eligible"] for row in trainer))
+        self.assertTrue(all(not row["formalHeroAdoption"]["requiresDecimatedCandidate"] for row in trainer))
 
 
 if __name__ == "__main__":

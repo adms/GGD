@@ -46,12 +46,14 @@ CANDIDATES = [
     },
     {
         "heroId": "acquired-pokemon-trainer", "nameZh": "Pokémon Trainer／寶可夢訓練家（男）", "fighterId": "ptrainer", "formId": "male-c00",
-        "componentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+        "componentId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+        "sourceComponentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
         "sourceAnalysis": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/c2ec0952d0aaeaa144d6475eb5b51a83ddd59b00df7b5fe48d308b55cac33530/source-analysis.json",
     },
     {
         "heroId": "acquired-pokemon-trainer", "nameZh": "Pokémon Trainer／寶可夢訓練家（女）", "fighterId": "ptrainer", "formId": "female-c01",
-        "componentId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+        "componentId": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+        "sourceComponentId": "ssbu-ptrainer-female-c01-static-skinned-v1",
         "sourceAnalysis": "materials/hero-model-library/priority-evidence/ssbu-ptrainer/5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf/source-analysis.json",
     },
     {
@@ -154,7 +156,8 @@ def build() -> dict[str, Any]:
         require(component_policy["sha256"] == glb_pin["sha256"], f"policy SHA mismatch: {spec['componentId']}")
         require(component_policy["runtimeBudget"]["pass"] is True, f"hard policy failed: {spec['componentId']}")
         analysis = read_json(spec["sourceAnalysis"])
-        require(analysis["candidateId"] in {spec["componentId"], "ssbu-mario-c00-static-skinned-v2"}, "source analysis identity mismatch")
+        source_component_id = spec.get("sourceComponentId", spec["componentId"])
+        require(analysis["candidateId"] in {source_component_id, "ssbu-mario-c00-static-skinned-v2"}, "source analysis identity mismatch")
         require(analysis["sourceId"] == "gitlab-ssbu-models", "unexpected model source ID")
         require(analysis["actions"] == [], f"Worldblender source unexpectedly contains actions: {spec['componentId']}")
         fighter = fighters[spec["fighterId"]]
@@ -224,7 +227,8 @@ def build() -> dict[str, Any]:
         "decisions": [
             "Mario 的 5 段 d01special* 保留原始名稱與順序，未映射 idle/run/attack/cast/hurt/death。",
             "Mewtwo、Pokémon Trainer、Steve/Alex 在固定 Worldblender 與 Ultimate14 來源中沒有原生 body motion。",
-            "Pokémon Trainer 男／女現有模型各 10,698／11,086 面；runtime 硬上限通過，但依正式採用規則仍需不高於 8,000 面候選與視覺 A/B。",
+            "Pokémon Trainer 男／女已由 10,698／11,086 面來源重建為 7,896／7,892 面候選；逐位元重建、Khronos、GGD policy、材質貼圖骨架保存與 Babylon 三視角 A/B 通過。",
+            "Pokémon Trainer 新減面階段尚未上傳 S3；來源轉換既有備份不宣稱涵蓋本批新階段。",
             "死亡替代目前都沒有目標骨架上的 hurt/down 播放證據，因此只保留提案，不建立 model@1、不加下拉選項、不自動綁定。",
             "既有手動預設完全保留；本收據不代表 Main 合併或正式站部署。",
         ],
@@ -243,11 +247,12 @@ def report_block(audit: dict[str, Any]) -> str:
     for hero_id in ("acquired-mario", "acquired-mewtwo", "acquired-pokemon-trainer", "acquired-minecraft"):
         rows = by_hero[hero_id]
         clips = sum(len(row["nativeClipNames"]) for row in rows)
-        formal = "通過" if all(row["formalHeroAdoption"]["eligible"] for row in rows) else "Trainer 男／女需 ≤8,000 面候選"
+        formal = "通過" if all(row["formalHeroAdoption"]["eligible"] for row in rows) else "仍需 ≤8,000 面候選"
         display = "Steve／Alex" if hero_id == "acquired-minecraft" else rows[0]["nameZh"].split("（")[0]
         lines.append(f"| {display}（`{hero_id}`） | {len(rows)} | {clips} | {formal} | 六態缺；未新增 model@1／下拉 |")
     lines += [
-        "", "Mario 的原生 clip 保留 `d01specialairsdash`、`d01specialairsend`、`d01specialairsjump`、`d01specialsdash`、`d01specialsend`，沒有把特殊招式硬標為六態。其餘三組固定來源原生 body motion 都是 0。", "",
+        "", "Pokémon Trainer 男／女已分別從 10,698／11,086 面降到 7,896／7,892 面；逐位元重建、Khronos 0 error／0 warning、GGD hard policy、材質／貼圖／骨架保存與 Babylon front/back/isometric A/B 均通過。最大 changed-pixel 差異為 0.300156%／0.224531%（契約上限 5%）。新減面階段 S3 仍為待上傳。", "",
+        "Mario 的原生 clip 保留 `d01specialairsdash`、`d01specialairsend`、`d01specialairsjump`、`d01specialsdash`、`d01specialsend`，沒有把特殊招式硬標為六態。其餘三組固定來源原生 body motion 都是 0。", "",
         "四組的「hurt/down＋向上淡出」死亡替代均為待 owner 審查提案；目前沒有目標骨架 hurt/down 動作與可播放審查媒體，所以不可自動綁定。既有 `imported.linkstik`、`imported.herobuu`、`imported.heropikachu`、`champ.thorne` 預設保持不變。", "",
         "來源：`tools/hero-model-library/source-workflows/ssbu-missing-four-v1/build_audit.py`；收據：`materials/hero-model-library/priority-evidence/ssbu-missing-four-v1/audit.json`。", "", END,
     ]

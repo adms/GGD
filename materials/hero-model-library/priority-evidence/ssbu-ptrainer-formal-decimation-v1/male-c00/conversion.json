@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-ssbu-ptrainer-formal-decimation@1",
+  "candidateId": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "platform": "Nintendo Switch",
+  "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+  "input": {
+    "path": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+    "bytes": 1317084,
+    "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b"
+  },
+  "output": {
+    "path": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/male-c00/candidate.glb",
+    "bytes": 1178320,
+    "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91"
+  },
+  "rebuild": {
+    "path": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/male-c00/candidate-rebuild.glb",
+    "bytes": 1178320,
+    "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91"
+  },
+  "parameters": {
+    "targetTriangles": 7900,
+    "errorBound": 0.02
+  },
+  "tool": {
+    "worker": {
+      "path": "tools/model-budget/optimize/decimate.mjs",
+      "bytes": 3340,
+      "sha256": "d92e1b84969c243574630959350664a7992742fe5b64ee5746434bed4e777bab"
+    },
+    "packageJson": {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/decimate-runtime/package.json",
+      "bytes": 183,
+      "sha256": "0142aa4b54623afc7883acb56268b3acb28b20e3e7bef180b7df200da8465227"
+    },
+    "packageLock": {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/decimate-runtime/package-lock.json",
+      "bytes": 25779,
+      "sha256": "5411b7fee57e6e7279c25e559c2eaf92f05782b4dd15f5e0161223c58cda61db"
+    }
+  },
+  "sourceActionCount": 0,
+  "nativeAnimationCount": 0,
+  "proceduralAnimationCount": 0,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "s3BackupStatus": "pending-not-uploaded-by-this-workflow"
+}

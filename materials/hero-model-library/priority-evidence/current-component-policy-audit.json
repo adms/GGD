@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3105536,
-      "sha256": "13bb2ff8f730b43e880d3dd6dc00215525c8b880a74177f0444edb4135e5cfd8"
+      "bytes": 3127436,
+      "sha256": "9650a1081c1c9f8fc3493ebee40f9fdc61f7b5da7b07498c53fe16003ce2a044"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 40,
-    "runtimeBudgetPass": 40,
+    "audited": 42,
+    "runtimeBudgetPass": 42,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 27,
+    "heroAdoptionEligible": 29,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -1496,6 +1496,55 @@
       }
     },
     {
+      "id": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+      "bytes": 1221592,
+      "metrics": {
+        "triangles": 7892,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 72,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
       "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "resourceRole": "independent-static-skinned-model-component",
@@ -1536,6 +1585,55 @@
         "decimatedCandidateTargetMax": 8000,
         "requiresDecimatedCandidate": true,
         "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "bytes": 1178320,
+      "metrics": {
+        "triangles": 7896,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 44,
+        "clips": 0,
+        "embeddedImages": 4
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
       },
       "catalogSemantics": {
         "componentReady": true,
