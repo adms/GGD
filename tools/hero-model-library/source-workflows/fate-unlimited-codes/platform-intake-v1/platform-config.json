@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-fuc-platform-intake-config@1",
+  "game": "Fate/unlimited codes",
+  "inventoryCandidates": [
+    {
+      "sourceId": "lv99-fuc-psp-japan-portable-zip",
+      "inventoryId": "windows-rom-scan:0607",
+      "releasePlatform": "Sony PSP",
+      "region": "Japan",
+      "edition": "Portable",
+      "container": "ZIP",
+      "payloadLocalPath": null
+    },
+    {
+      "sourceId": "lv99-fuc-psp-usa-portable-iso",
+      "inventoryId": "windows-rom-scan:0608",
+      "releasePlatform": "Sony PSP",
+      "region": "USA",
+      "edition": "Portable",
+      "container": "ISO",
+      "payloadLocalPath": null
+    }
+  ],
+  "missingOriginalReleases": [
+    {
+      "sourceId": "fuc-ps2-japan-original-disc",
+      "releasePlatform": "Sony PlayStation 2",
+      "region": "Japan",
+      "status": "not-located",
+      "note": "The three acquired Sprite Database sets are extracted PS2 audio sources, not a PS2 game disc image."
+    },
+    {
+      "sourceId": "fuc-arcade-japan-original-data",
+      "releasePlatform": "Arcade",
+      "region": "Japan",
+      "status": "not-located",
+      "note": "No arcade game dump or native asset container is present in the indexed local sources."
+    }
+  ],
+  "ps2AudioSourceIds": [
+    "spritedatabase-fate-ps2-archer",
+    "spritedatabase-fate-ps2-shirou",
+    "spritedatabase-fate-ps2-saber"
+  ],
+  "relatedCommunitySourceId": "github-flemmli97-fateubw-07e9d79b"
+}

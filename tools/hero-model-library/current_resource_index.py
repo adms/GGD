@@ -144,6 +144,14 @@ def build():
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
     windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
     windows_game_inventory=read(windows_game_inventory_path)
+    fate_unlimited_codes_platform_path=base/'priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json'
+    fate_unlimited_codes_platform=read(fate_unlimited_codes_platform_path)
+    if (fate_unlimited_codes_platform.get('schema')!='ggd-fuc-platform-source-index@1'
+        or fate_unlimited_codes_platform.get('summary',{}).get('originalGameInventoryRows')!=2
+        or fate_unlimited_codes_platform.get('summary',{}).get('originalGamePayloadBytesRead')!=0
+        or fate_unlimited_codes_platform.get('summary',{}).get('fateUbwServants')!=14
+        or fate_unlimited_codes_platform.get('summary',{}).get('fateUbwConvertedNativeClips')!=127):
+        raise ValueError('Fate/unlimited codes platform index is absent, stale or overclaims original payload access')
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
@@ -215,6 +223,14 @@ def build():
             status=windows_game_inventory['statusSemantics']['current'],
             summary=windows_game_inventory['summary']),
         windowsGameSourceDocument='materials/hero-model-library/source-inventories/windows-game-library.md',
+        fateUnlimitedCodesPlatformIndex=dict(
+            gitPath=str(fate_unlimited_codes_platform_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(fate_unlimited_codes_platform_path.read_bytes()).hexdigest(),
+            status='psp-inventory-metadata-only; PS2 public audio and FateUBW community reserve indexed separately',
+            summary=fate_unlimited_codes_platform['summary']),
+        fateUnlimitedCodesPlatformDocument=dict(
+            gitPath='materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md',
+            sha256=hashlib.sha256((base/'priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md').read_bytes()).hexdigest()),
         ultimate14NativeMotionIndex=dict(
             gitPath=str(ultimate14_motion_path.relative_to(ROOT)),
             sha256=hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest(),
@@ -377,6 +393,8 @@ def main():
             result['sourceManifests']
             + [
                 result['windowsGameSourceInventory'],
+                result['fateUnlimitedCodesPlatformIndex'],
+                result['fateUnlimitedCodesPlatformDocument'],
                 result['ultimate14NativeMotionIndex'],
                 result['assetWorkflowRestorationManifest'],
                 {

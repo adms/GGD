@@ -6222,6 +6222,32 @@
     }
   },
   "windowsGameSourceDocument": "materials/hero-model-library/source-inventories/windows-game-library.md",
+  "fateUnlimitedCodesPlatformIndex": {
+    "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.json",
+    "sha256": "540feecb458c17999e7e5cf95f6467a5a1a3d4268d0fc5d77af25074e65488ba",
+    "status": "psp-inventory-metadata-only; PS2 public audio and FateUBW community reserve indexed separately",
+    "summary": {
+      "originalGameInventoryRows": 2,
+      "originalGamePayloadsPresentLocal": 0,
+      "originalGamePayloadBytesRead": 0,
+      "originalGamePayloadsExtracted": 0,
+      "originalGameNativeModelsConverted": 0,
+      "originalGameNativeAnimationsConverted": 0,
+      "originalGameNativeVfxConverted": 0,
+      "originalGameNativeAudioConverted": 0,
+      "ps2PublicAudioSourcesAcquired": 3,
+      "ps2PublicAudioFiles": 653,
+      "supplementalPublicSources": 10,
+      "fateUbwServants": 14,
+      "fateUbwConvertedNativeClips": 127,
+      "runtimeSelectableSources": 0,
+      "productionDeployedSources": 0
+    }
+  },
+  "fateUnlimitedCodesPlatformDocument": {
+    "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md",
+    "sha256": "8dfd6076c707c2957f569eb2c24c7fd04491d8ac2b67f78e78178a1d2bb6316c"
+  },
   "ultimate14NativeMotionIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
     "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23",
