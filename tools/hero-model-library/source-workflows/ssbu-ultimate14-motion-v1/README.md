@@ -79,6 +79,6 @@ action approval remain pending.
 `integrate_matching_motion_batch.py` copies only the final GLB and compact
 evidence into Git and registers the rows as accepted independent components.
 They have no invented hero ID, backend dropdown entry, runtime switch, or
-deployment. Their full conversion-stage S3 backup remains
-`pending-upload-and-full-readback-verification` until an upload manifest and
-complete read-back receipt exist.
+deployment. Chrom and Lucina each have a full conversion-stage S3 backup. The
+committed receipts record a complete GET, archive SHA-256, every member
+SHA-256, and an unchanged local source check.
