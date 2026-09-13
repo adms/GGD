@@ -3,8 +3,8 @@
   "generatedFrom": {
     "downloadSources": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3073427,
-      "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155"
+      "bytes": 3081792,
+      "sha256": "b3516c9f406bd1f4b06d9dcf91495198b1ce2e0a4e14c6826aa23c403e3d2eb5"
     },
     "publicSourceFiles": {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -109,7 +109,7 @@
   },
   "summary": {
     "sourceRecords": 59,
-    "componentRecords": 36,
+    "componentRecords": 37,
     "excludedPublicSourceRecords": 57,
     "excludedReasons": {
       "outside-four-kind-community-scope": 57
@@ -153,9 +153,9 @@
       "verifiedBytes": 26424809517,
       "missingFiles": 39,
       "mismatchedFiles": 1,
-      "componentFilesExpected": 36,
-      "componentFilesVerified": 36,
-      "componentVerifiedBytes": 38441352,
+      "componentFilesExpected": 37,
+      "componentFilesVerified": 37,
+      "componentVerifiedBytes": 40441740,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0
     }
@@ -177,7 +177,7 @@
   "localVerificationReceipt": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
     "bytes": 55757,
-    "sha256": "e87dc841ee1401cc241e3b2bc78b06b2c399a8d95bdc9eecf088490bbf6e728c"
+    "sha256": "96365a7c7e9edb7e8a536abce01f2585f429f90de3910dfcffa47be128c92f08"
   },
   "sources": [
     {
@@ -1884,7 +1884,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 0,
-        "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155",
+        "sha256": "b3516c9f406bd1f4b06d9dcf91495198b1ce2e0a4e14c6826aa23c403e3d2eb5",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
         "sourceRecordIndexes": [
@@ -1950,7 +1950,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 90764853,
-        "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155",
+        "sha256": "b3516c9f406bd1f4b06d9dcf91495198b1ce2e0a4e14c6826aa23c403e3d2eb5",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-xv-mai-sfmlab-lordscrub-v1",
         "sourceRecordIndexes": [
@@ -2782,11 +2782,12 @@
         "Runtime selection is not explicitly verified.",
         "Production deployment is not verified."
       ],
-      "readiness": "pending-standardization",
+      "readiness": "partially-standardized-independent-components-pending-semantic-mapping",
       "verification": "1,071 個解出檔案完整保存；666 個 SSBH 檔頭檢查通過。435 NUANMB（176 個不同檔案內容）、33 組武器／投射物模型（6 個不同內容）、108 NUTEXB、3 個特效相關檔與 56 原生 NUS3 音訊補丁庫。無角色模型本體；33 組部件不能算成 33 位英雄。原生音訊有 152 索引條目、7 個不同 bank 內容，尚未解碼／確認語音。NRO／LC 原樣保存但未執行。",
       "gaps": [],
       "componentIds": [
-        "ssbu-mario-c00-ultimate14-motion-v1"
+        "ssbu-mario-c00-ultimate14-motion-v1",
+        "ssbu-sonic-c00-ultimate14-motion-v1"
       ]
     },
     {
@@ -3543,7 +3544,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 2984329,
-        "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155",
+        "sha256": "b3516c9f406bd1f4b06d9dcf91495198b1ce2e0a4e14c6826aa23c403e3d2eb5",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "thunderstore-holya-kaiji-suit2",
         "sourceRecordIndexes": [
@@ -5133,6 +5134,44 @@
         "Visibility and material animation tracks remain in the original NUANMB sources and were not imported into this Transform-only body component.",
         "Mario has no GGD hero definition or skill mapping, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
         "Source-game shader parity and semantic action-event mapping remain unverified; six draw primitives pass the hard budget but exceed the warning threshold of three."
+      ]
+    },
+    {
+      "id": "ssbu-sonic-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "nameZh": "Sonic／索尼克",
+      "originalName": "Sonic",
+      "nativeId": "fighter/sonic/body/c00 + fighter/sonic/motion/body/c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model",
+        "motion"
+      ],
+      "kindEvidence": [
+        "explicit asset kind: animation",
+        "explicit asset kind: model-component",
+        "explicit model-like asset kind: independent-skinned-model-motion-component"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/body.glb",
+      "gitPath": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.tar.gz",
+      "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+      "bytes": 2000388,
+      "acquired": true,
+      "extracted": true,
+      "converted": true,
+      "validated": true,
+      "registered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "unusedForRuntime": true,
+      "readiness": "accepted-independent-native-motion-ten-clips-incomplete-action-set",
+      "limitations": [
+        "The ten acquired Sonic motions are an incomplete gameplay set; idle, run, hurt, death and semantic GGD state mapping are still missing.",
+        "These Transform motions are native to the acquired Ultimate14 community MOD package, not verified Nintendo-original animations and not retargeted animations.",
+        "The source NUANMB visibility and material tracks were deliberately not imported into this Transform-only component.",
+        "Sonic has no verified GGD hero definition in this integration, so no backend dropdown option, runtime switch or deployment is claimed.",
+        "The model passes hard limits at 8,980 triangles and 256px textures; 5 draw primitives and 345 channels per clip exceed the 3/300 warning thresholds and require runtime load review before adoption."
       ]
     },
     {
