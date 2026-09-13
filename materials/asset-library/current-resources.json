@@ -14,7 +14,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
-      "sha256": "a1072c1a9e4124dfb7b1a5ada539541cb871e1b9ef4b4e4843842bd7ca452fd2"
+      "sha256": "20ac62531e005940801fb66a1868c99a271a08f7e16a51b087b31feedf36d1ac"
     }
   ],
   "modelSourceCount": 153,
@@ -5785,12 +5785,12 @@
       "modelDocumentGitPath": "content/models/community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990.json"
     },
     {
-      "id": "runtime:infinity-strash-popp-pn020-00-native-v1",
-      "modelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
-      "glbPath": "assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
-      "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
-      "bytes": 2226392,
-      "documentSha256": "b87d712da5f3c11ed9a382986df6fcb102cb866934426f71af339ec2f08a9b2d",
+      "id": "runtime:infinity-strash-popp-pn020-00-magikaru-native-v2",
+      "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+      "glbPath": "assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
+      "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "bytes": 2367208,
+      "documentSha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc",
       "sourceCharacter": "何布／波普（PN020/00）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
@@ -5803,13 +5803,13 @@
         "death": "GGD_native_down"
       },
       "limitations": [
-        "原作模型、貼圖、骨架與動作；本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
+        "原作模型、貼圖、骨架與 Magikaru 法杖；法杖依 CB_PN020 設定剛性綁定 Weapon1_R。本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
         "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
         "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
-        "原作法杖、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
+        "替代法杖 Mahouno／Kagayaki、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
+      "gitPath": "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
@@ -5818,7 +5818,7 @@
         "b2-popp"
       ],
       "runtimeDropdownRegistered": true,
-      "modelDocumentGitPath": "content/models/community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0.json"
+      "modelDocumentGitPath": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json"
     }
   ],
   "voiceIndex": "materials/hero-model-library/voice-index.json",
@@ -9339,10 +9339,10 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "718f92637ca1c22d25cc0356f8f75617e0bf2dd9418483b5c29f4d40ee5908de"
+    "sha256": "8ce1cacdd8a23f684db69b1b85f36a34689e30b524750ee9cb3bbfc2a7624b2c"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "3fad18879acbc51060945770a249811bb799fcfb6a3525d10b7e56a633ffca2c"
+    "sha256": "6eeda54144fa825e09afe0450ec632bea4eca98522c6ddf52f3d721b09316819"
   }
 }

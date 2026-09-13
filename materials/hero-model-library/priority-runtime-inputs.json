@@ -285,13 +285,13 @@
       ]
     },
     {
-      "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+      "candidateId": "infinity-strash-popp-pn020-00-magikaru-native-v2",
       "heroId": "b2-popp",
       "name": "何布／波普",
-      "label": "何布／波普｜Infinity Strash 原作 PN020/00（原生動作）",
-      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
-      "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
-      "documentSha256": "b87d712da5f3c11ed9a382986df6fcb102cb866934426f71af339ec2f08a9b2d",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00＋Magikaru 法杖（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00",
+      "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "documentSha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc",
       "source": {
         "kind": "exact",
         "tier": "original",
@@ -307,10 +307,10 @@
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
       "limitations": [
-        "原作模型、貼圖、骨架與動作；本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
+        "原作模型、貼圖、骨架與 Magikaru 法杖；法杖依 CB_PN020 設定剛性綁定 Weapon1_R。本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
         "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
         "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
-        "原作法杖、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
+        "替代法杖 Mahouno／Kagayaki、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
       ]
     }
   ]

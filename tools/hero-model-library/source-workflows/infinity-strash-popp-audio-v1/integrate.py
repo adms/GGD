@@ -171,11 +171,11 @@ def main() -> int:
     relation_gzip.write_bytes(gzip.compress(relation_bytes, mtime=0))
     copied.append({"gitPath": relation_gzip.relative_to(REPO).as_posix(), "bytes": relation_gzip.stat().st_size, "sha256": sha256(relation_gzip)})
 
-    runtime_root = workspace / "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00"
-    review_root = workspace / "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00"
+    runtime_root = workspace / "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00"
+    review_root = workspace / "GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-popp-magikaru-v5/popp-pn020-00"
     runtime_receipt_path = runtime_root / "receipt.json"
     review_receipt_path = review_root / "run.json"
-    acceptance_path = GIT_EVIDENCE.parents[1] / "priority-evidence/infinity-strash-popp-audio-v1/runtime-candidates-v1/popp-pn020-00/acceptance-summary.json"
+    acceptance_path = GIT_EVIDENCE.parents[1] / "priority-evidence/infinity-strash-popp-magikaru-v2/runtime-candidates-v4/popp-pn020-00/acceptance-summary.json"
     runtime_evidence = None
     registered_version = None
     if runtime_receipt_path.is_file() and review_receipt_path.is_file():
@@ -220,17 +220,17 @@ def main() -> int:
             or acceptance.get("registration", {}).get("productionDeployed") is not False
         ):
             raise ValueError("Popp Git acceptance evidence differs from runtime or registration")
-        backup_root = workspace / "GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-delivery-v1"
+        backup_root = workspace / "GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-magikaru-delivery-v2"
         backup_manifest_path = backup_root / "scoped-manifest.json"
         backup_receipt_path = backup_root / "s3-verified-receipt.json"
         if not backup_manifest_path.is_file() or not backup_receipt_path.is_file():
             raise ValueError("Popp conversion stages have not been frozen and S3 readback verified")
         backup_manifest = json.loads(backup_manifest_path.read_text(encoding="utf-8"))
         backup_receipt = json.loads(backup_receipt_path.read_text(encoding="utf-8"))
-        expected_backup_id = "infinity-strash-popp-pn020-00-delivery-v1"
+        expected_backup_id = "infinity-strash-popp-pn020-00-magikaru-delivery-v2"
         if (
             backup_manifest.get("sourceId") != expected_backup_id
-            or backup_manifest.get("fileCount") != 115
+            or backup_manifest.get("fileCount") != 60
             or backup_receipt.get("id") != expected_backup_id
             or backup_receipt.get("sha256") != backup_manifest.get("sha256")
             or backup_receipt.get("manifestSha256") != sha256(backup_manifest_path)
@@ -251,7 +251,7 @@ def main() -> int:
         shutil.copyfile(backup_manifest_path, git_backup_manifest)
         shutil.copyfile(backup_receipt_path, git_backup_receipt)
         runtime_evidence = {
-            "candidateId": "infinity-strash-popp-pn020-00-native-v1",
+            "candidateId": "infinity-strash-popp-pn020-00-magikaru-native-v2",
             "localRoot": runtime_root.relative_to(workspace).as_posix(),
             "body": {"path": "body.glb", "bytes": body_path.stat().st_size, "sha256": output["sha256"]},
             "receipt": {"path": str(runtime_receipt_path), "sha256": sha256(runtime_receipt_path)},
@@ -288,7 +288,7 @@ def main() -> int:
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "downloaded-verified",
         "readiness": (
-            "popp-native-model-converted-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending"
+            "popp-native-model-magikaru-attached-webgl-accepted-registered-on-feature-branch-audio-listening-and-effects-pending"
             if runtime_evidence else "popp-raw-extracted-audio-decoded-pending-model-export-and-listening-review"
         ),
         "purchaseDecision": "no-purchase-user-owned-install",
@@ -352,8 +352,8 @@ def main() -> int:
         ),
         "limitations": (
             [
-                "Popp PN020/00 model, textures, skeleton and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
-                "The original staff, effects, animation events and exact toon shader remain pending; the 8x8 hair base relies on game shader parameters.",
+                "Popp PN020/00 model, textures, skeleton, Magikaru staff and seven native sequences are converted; runtime uses five distinct native clips and reuses down for hurt/death.",
+                "Magikaru is rigid-skinned to the source-configured Weapon1_R socket; Mahouno and Kagayaki alternate staffs, effects, animation events and exact toon shader remain pending. The 8x8 hair base relies on game shader parameters.",
                 "Decoded audio passed automated validation but still requires speaker, language, transcript and skill-event listening review.",
                 "Nine referenced media packages contain no .ubulk payload and remain explicit missing-payload relations.",
                 "Feature-branch registration is not Main merge, production backend availability or deployment evidence.",

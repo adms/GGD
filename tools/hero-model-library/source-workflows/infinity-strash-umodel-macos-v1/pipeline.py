@@ -96,11 +96,15 @@ def main() -> int:
                     print(json.dumps({"skip": stage, "candidate": candidate, "reason": "receipt-and-sha-verified"}))
                     continue
                 assembly.parent.mkdir(parents=True, exist_ok=True)
-                run([blender, "--background", "--python", str(script_root / "assemble_candidate_blender.py"), "--", candidate,
+                command = [blender, "--background", "--python", str(script_root / "assemble_candidate_blender.py"), "--", candidate,
                      "--mesh-root", str(expand(row.get("meshRoot", config["meshRoot"]), roots)), "--mesh-format", "psk",
                      "--material-context-root", str(expand(row.get("materialContextRoot", config["materialContextRoot"]), roots)),
                      "--texture-root", str(expand(row.get("textureRoot", config["textureRoot"]), roots)), "--psa-root", str(expand(row.get("psaRoot", config["psaRoot"]), roots)),
-                     "--addon-root", str(expand(config["addonRoot"], roots)), "--output", str(assembly)], repo, args.plan)
+                     "--addon-root", str(expand(config["addonRoot"], roots)), "--output", str(assembly)]
+                for name in ("attachmentMeshRoot", "attachmentTextureRoot", "attachmentSourceRoot"):
+                    if name in row:
+                        command.extend(["--" + name.replace("Root", "-root").replace("attachment", "attachment-").lower(), str(expand(row[name], roots))])
+                run(command, repo, args.plan)
             elif stage == "normalize":
                 receipt = normalized / "ggd-upload.json"
                 if validate_receipt_file(receipt, "output"):

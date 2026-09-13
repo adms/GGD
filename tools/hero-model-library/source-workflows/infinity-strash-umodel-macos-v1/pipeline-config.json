@@ -27,16 +27,19 @@
     },
     {
       "id": "popp-pn020-00",
-      "catalogCandidateId": "infinity-strash-popp-pn020-00-native-v1",
+      "catalogCandidateId": "infinity-strash-popp-pn020-00-magikaru-native-v2",
       "heroId": "b2-popp",
       "meshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-psk-v1",
       "materialContextRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-material-context-v2",
       "textureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-textures-v1",
       "psaRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-native-animations-v1",
-      "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-popp-v1/popp-pn020-00",
-      "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-v1/popp-pn020-00",
-      "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/popp-pn020-00",
-      "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-v2/popp-pn020-00"
+      "attachmentMeshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-weapon-magikaru-mesh-psk-v1",
+      "attachmentTextureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-weapon-magikaru-textures-v1",
+      "attachmentSourceRoot": "{asset}/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content",
+      "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-popp-magikaru-v3/popp-pn020-00",
+      "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-magikaru-v3/popp-pn020-00",
+      "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00",
+      "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-popp-magikaru-v5/popp-pn020-00"
     }
   ],
   "indexCommands": [

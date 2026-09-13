@@ -469,6 +469,26 @@
         "sourcePlatform": "Windows (Steam)"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9837a873a8d48788daf25a2c3c027fe950e39a1ae8f6461e",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00＋Magikaru 法杖（原生動作）",
+      "sourceModelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+      "modelSha256": "1e48818b07c990cc591a562ee4a24493d7c3b1d051b42f8bc5e01956af49495f",
+      "binarySha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "registeredAt": "2026-09-13T12:41:54.158Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "automatic"

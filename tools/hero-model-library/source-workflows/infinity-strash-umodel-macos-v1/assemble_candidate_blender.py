@@ -92,6 +92,15 @@ CANDIDATES = {
             ("special02", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special02_01.psa"),
             ("special03", "Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Special03_01.psa"),
         ],
+        "attachments": [
+            {
+                "role": "weapon-magikaru",
+                "mesh": "Strash/Chara/Player/PN020/Weapon/Magikaru/SK_PN020_Weapon_Magikaru.gltf",
+                "socket": "Weapon1_R",
+                "texture": "Strash/Chara/Player/PN020/Weapon/Magikaru/T_PN020_Weapon_Magikaru_Base.png",
+                "sourceConfig": "Strash/Chara/Player/PN020/Data/CB_PN020.uasset",
+            },
+        ],
     },
 }
 
@@ -388,6 +397,40 @@ def dedupe_material_slots(mesh_object: bpy.types.Object) -> list[bpy.types.Mater
     return unique_materials
 
 
+def attach_rigid_mesh_to_bone(
+    mesh: bpy.types.Object,
+    source_armature: bpy.types.Object,
+    target_armature: bpy.types.Object,
+    bone_name: str,
+) -> None:
+    """Recreate a zero-relative Unreal attachment as a one-bone rigid skin.
+
+    GGD rejects unskinned primitives even if glTF bone parenting would animate
+    them correctly. Transforming the source vertices into the socket bind pose
+    and giving them weight 1 on that bone preserves the source placement while
+    satisfying the same skin contract as the character meshes.
+    """
+    if bone_name not in target_armature.data.bones:
+        raise RuntimeError(f"attachment socket is absent from character skeleton: {bone_name}")
+    for modifier in list(mesh.modifiers):
+        if modifier.type == "ARMATURE" and modifier.object == source_armature:
+            mesh.modifiers.remove(modifier)
+    for group in list(mesh.vertex_groups):
+        mesh.vertex_groups.remove(group)
+    socket_bind = target_armature.data.bones[bone_name].matrix_local.copy()
+    for vertex in mesh.data.vertices:
+        vertex.co = socket_bind @ vertex.co
+    mesh.parent = target_armature
+    mesh.parent_type = "OBJECT"
+    mesh.matrix_world = target_armature.matrix_world
+    group = mesh.vertex_groups.new(name=bone_name)
+    group.add(range(len(mesh.data.vertices)), 1.0, "REPLACE")
+    modifier = mesh.modifiers.new(name="GGD rigid socket skin", type="ARMATURE")
+    modifier.object = target_armature
+    modifier.use_vertex_groups = True
+    bpy.data.objects.remove(source_armature, do_unlink=True)
+
+
 def import_part(path: Path, part: str, mesh_format: str) -> tuple[bpy.types.Object, bpy.types.Object, list[bpy.types.Object]]:
     before = set(bpy.data.objects)
     if mesh_format == "gltf":
@@ -456,6 +499,9 @@ def main() -> int:
     parser.add_argument("--material-context-root", type=Path)
     parser.add_argument("--texture-root", type=Path, required=True)
     parser.add_argument("--psa-root", type=Path, required=True)
+    parser.add_argument("--attachment-mesh-root", type=Path)
+    parser.add_argument("--attachment-texture-root", type=Path)
+    parser.add_argument("--attachment-source-root", type=Path)
     parser.add_argument("--addon-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(args_after_double_dash)
@@ -562,6 +608,60 @@ def main() -> int:
     unique_materials = dedupe_material_slots(combined)
     meshes = [combined]
 
+    attachment_rows = []
+    attachment_specs = spec.get("attachments", [])
+    if attachment_specs:
+        if not args.attachment_mesh_root or not args.attachment_texture_root or not args.attachment_source_root:
+            raise SystemExit("attachment recipes require mesh, texture, and source roots")
+        attachment_mesh_root = args.attachment_mesh_root.resolve()
+        attachment_texture_root = args.attachment_texture_root.resolve()
+        attachment_source_root = args.attachment_source_root.resolve()
+        for attachment in attachment_specs:
+            gltf_relative = attachment["mesh"]
+            relative = str(Path(gltf_relative).with_suffix(".psk")) if args.mesh_format == "psk" else gltf_relative
+            path = (attachment_mesh_root / relative).resolve()
+            texture_path = (attachment_texture_root / attachment["texture"]).resolve()
+            source_config_path = (attachment_source_root / attachment["sourceConfig"]).resolve()
+            checks = (
+                (path, attachment_mesh_root, "attachment mesh"),
+                (texture_path, attachment_texture_root, "attachment texture"),
+                (source_config_path, attachment_source_root, "attachment source config"),
+            )
+            for candidate_path, root, label in checks:
+                if not candidate_path.is_relative_to(root) or not candidate_path.is_file():
+                    raise RuntimeError(f"missing {label}: {candidate_path}")
+            weapon_armature, weapon_mesh, extras = import_part(path, attachment["role"], args.mesh_format)
+            for extra in extras:
+                bpy.data.objects.remove(extra, do_unlink=True)
+            source_material_slots = len(weapon_mesh.material_slots)
+            weapon_material = bpy.data.materials.new(name="GGD_" + attachment["role"])
+            configure_material(weapon_material, texture_path, None, False)
+            for slot in weapon_mesh.material_slots:
+                slot.material = weapon_material
+            dedupe_material_slots(weapon_mesh)
+            attach_rigid_mesh_to_bone(
+                weapon_mesh, weapon_armature, primary_armature, attachment["socket"]
+            )
+            weapon_mesh.name = args.candidate + "-" + attachment["role"]
+            meshes.append(weapon_mesh)
+            attachment_rows.append({
+                "role": attachment["role"],
+                "sourceObject": weapon_mesh.name,
+                "socket": attachment["socket"],
+                "transform": "source-component-zero-relative-rigid-skin",
+                "vertices": len(weapon_mesh.data.vertices),
+                "polygons": len(weapon_mesh.data.polygons),
+                "sourceMaterialSlots": source_material_slots,
+                "outputMaterialRoles": [material.name for material in weapon_mesh.data.materials],
+                "sourceConfig": str(source_config_path),
+                "sourceConfigSha256": sha256(source_config_path),
+            })
+            inputs.extend([
+                {"role": attachment["role"], "path": str(path), "sha256": sha256(path)},
+                {"role": attachment["role"] + "-texture", "path": str(texture_path), "sha256": sha256(texture_path)},
+                {"role": attachment["role"] + "-source-config", "path": str(source_config_path), "sha256": sha256(source_config_path)},
+            ])
+
     bpy.ops.object.select_all(action="DESELECT")
     primary_armature.select_set(True)
     bpy.context.view_layer.objects.active = primary_armature
@@ -634,6 +734,7 @@ def main() -> int:
         "output": {"path": str(glb_path), "bytes": glb_path.stat().st_size, "sha256": sha256(glb_path)},
         "blend": {"path": str(blend_path), "bytes": blend_path.stat().st_size, "sha256": sha256(blend_path)},
         "parts": part_rows,
+        "attachments": attachment_rows,
         "combined": {"object": combined.name, "vertices": len(combined.data.vertices), "polygons": len(combined.data.polygons), "materialRoles": [material.name for material in unique_materials]},
         "bones": len(primary_armature.data.bones),
         "animations": animation_rows,
@@ -642,8 +743,8 @@ def main() -> int:
         "embeddedAnimationNames": embedded_animation_names,
         "animationOptimization": animation_optimization,
         "filteredMaterials": filtered,
-        "readiness": "textured-multipart-native-animation-candidate",
-        "limitations": ["toon-shader-parity-pending", "animation-event-semantic-review-pending", "weapon-switching-and-attachment-behavior-pending", "GGD-validation-pending", "runtime-registration-pending", "deployment-pending"],
+        "readiness": "textured-multipart-native-animation-rigid-attachment-candidate" if attachment_rows else "textured-multipart-native-animation-candidate",
+        "limitations": ["toon-shader-parity-pending", "animation-event-semantic-review-pending", "alternate-weapon-switching-pending", "GGD-validation-pending", "runtime-registration-pending", "deployment-pending"] if attachment_rows else ["toon-shader-parity-pending", "animation-event-semantic-review-pending", "weapon-switching-and-attachment-behavior-pending", "GGD-validation-pending", "runtime-registration-pending", "deployment-pending"],
     }
     (output / "receipt.json").write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n")
     print("GGD_BLENDER_ASSEMBLY " + json.dumps(receipt, ensure_ascii=False))

@@ -350,12 +350,12 @@
       "fullCharacterPackage": false
     },
     {
-      "id": "runtime:infinity-strash-popp-pn020-00-native-v1",
-      "modelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
-      "glbPath": "assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
-      "sha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
-      "bytes": 2226392,
-      "documentSha256": "b87d712da5f3c11ed9a382986df6fcb102cb866934426f71af339ec2f08a9b2d",
+      "id": "runtime:infinity-strash-popp-pn020-00-magikaru-native-v2",
+      "modelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+      "glbPath": "assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
+      "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "bytes": 2367208,
+      "documentSha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc",
       "sourceCharacter": "何布／波普（PN020/00）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
@@ -368,13 +368,13 @@
         "death": "GGD_native_down"
       },
       "limitations": [
-        "原作模型、貼圖、骨架與動作；本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
+        "原作模型、貼圖、骨架與 Magikaru 法杖；法杖依 CB_PN020 設定剛性綁定 Weapon1_R。本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
         "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
         "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
-        "原作法杖、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
+        "替代法杖 Mahouno／Kagayaki、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1.glb",
+      "gitPath": "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
@@ -611,9 +611,9 @@
       "name": "何布／波普",
       "options": [
         {
-          "sourceId": "runtime:infinity-strash-popp-pn020-00-native-v1",
-          "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
-          "label": "何布／波普｜Infinity Strash 原作 PN020/00（原生動作）",
+          "sourceId": "runtime:infinity-strash-popp-pn020-00-magikaru-native-v2",
+          "sourceModelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+          "label": "何布／波普｜Infinity Strash 原作 PN020/00＋Magikaru 法杖（原生動作）",
           "source": {
             "kind": "exact",
             "tier": "original",
