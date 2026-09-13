@@ -53,12 +53,11 @@ free download 多數是 CC-BY 不是 CC0（授權義務要逐件留證），而�
 鳥居的島木在 **1.98u**、幡旗的橫梁在 **2.06u**，兩者都高於 1.8u 的英雄 ——
 所以「走得過去」與「不擋鏡頭」是同時成立的，⛔ 不是二選一。
 
-## 面數預算
+## 面數量測與上架檢查
 
-每件 ≤ **300 三角面**（一個零件 = 12 面，所以 ≤ 25 個零件）。這比 `arena-decor`
-閘的 warn 4,000 緊了一個數量級，理由是**英雄只有 168 面**：布景比主角重會讓
-整個畫面的重心跑掉，而且擺設會被放 50 份。實測最重的一件是鐵柵欄 192 面。
-量尺用現成的：
+產生器在程式內維護比通用上架規則更緊的建構限制；本 README 不複製限制數字。
+現行上架門檻只見[模型動作特效上架限制](../../materials/asset-library/模型動作特效上架限制.md)。
+這批輸出的實測最重候選是鐵柵欄 **192 面**；下列命令用正式量尺重新判定：
 
 ```sh
 pnpm --filter @ggd/model-budget budget:guard content/assets/models/scenery --role arena-decor
@@ -67,12 +66,12 @@ pnpm --filter @ggd/model-budget budget:guard content/assets/models/scenery --rol
 
 ## LOD：這 15 件**正確地只出一階**，⛔ 不是漏做
 
-`tools/lod-gen/gen_lod.py` 自己寫著門檻：`LOD_FLOOR_TRIS = 1500`、
-`LOD_FLOOR_BYTES = 64 KB`，**兩個都低於就跳過**，而且註解點名了為什麼 ——
+`tools/lod-gen/gen_lod.py` 維護 LOD 選擇條件，符合其略過條件時就不產生額外 tier，
+而且程式註解點名了為什麼 ——
 `tools/voxel-gen` 的 168 面方塊人被硬拉進去產 tier 之後，`_lod.json` 裡會多出
 一列「這是便宜版」的**謊話**，而它跟本尊一模一樣。
 
-這 15 件最重的是 **192 面 / 15.9 KB**，兩個門檻都差了一個數量級。
+這 15 件的候選量測中，最重的是 **192 面 / 15.9 KB**，符合該程式的略過條件。
 所以 `match_corpus()` 會自動略過它們，`pnpm lod:gen` 跑幾次都不會產出
 `-mid` / `-small` —— **那是對的狀態，不是缺工。** 手寫兩個一模一樣的 tier 檔
 只會多兩個 HTTP request 與兩列 manifest，省下零位元組。

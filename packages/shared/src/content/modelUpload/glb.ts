@@ -42,7 +42,12 @@ export const MODEL_UPLOAD_LIMITS = {
   clipChannels: 2048,
   clipSeconds: 300,
 } as const;
-const extensions = new Set(["KHR_materials_unlit", "KHR_texture_transform", "KHR_materials_emissive_strength", "KHR_materials_specular"]);
+export const MODEL_UPLOAD_IMAGE_MIME_TYPES = ["image/png", "image/jpeg"] as const;
+export const MODEL_UPLOAD_EXTENSIONS = ["KHR_materials_unlit", "KHR_texture_transform", "KHR_materials_emissive_strength", "KHR_materials_specular"] as const;
+export function isModelUploadImageMimeType(value: string | undefined): value is typeof MODEL_UPLOAD_IMAGE_MIME_TYPES[number] {
+  return MODEL_UPLOAD_IMAGE_MIME_TYPES.some((mime) => mime === value);
+}
+const extensions = new Set<string>(MODEL_UPLOAD_EXTENSIONS);
 const dimensions: Record<string, number> = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4, MAT2: 4, MAT3: 9, MAT4: 16 };
 
 /** Bound work before calling the official validator or allocating accessor arrays. */

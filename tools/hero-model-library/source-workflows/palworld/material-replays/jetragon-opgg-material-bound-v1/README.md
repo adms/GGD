@@ -2,10 +2,13 @@
 
 本目錄是獨立、可重跑的材質轉換。原始已備份 intake 完全不改；不修改中央索引、content、預設或 Git；後續明確授權將此新目錄完整備份至 S3 legacy，驗證狀態記在外部備份收據。
 
+現行模型、貼圖、mesh 與動畫通道上架門檻只以[模型動作特效上架限制](../../../../../../materials/asset-library/模型動作特效上架限制.md)
+為準；以下數字是本候選的量測或當次驗證收據，不是另一套現行門檻。
+
 ## 檔案與用途
 
-- `models/jetragon-materials-native-res.glb`：原貼圖解析度、自含材質、75骨／29個來源動作名称。11,266,728 bytes。可直接載入預覽；2048貼圖不符合GGD的256上限。
-- `models/jetragon-materials-256.glb`：所有貼圖最大256，4,297,580 bytes。GGD inspect與模型預算均通過；保持全部29名稱／28種不同動作內容。
+- `models/jetragon-materials-native-res.glb`：原貼圖解析度、自含材質、75骨／29個來源動作名称。11,266,728 bytes。可直接載入預覽；候選實測貼圖最大邊為2048，現行判定須依中央政策重跑。
+- `models/jetragon-materials-256.glb`：所有貼圖實測最大邊256，4,297,580 bytes。當次 GGD inspect 與模型預算檢查均通過；保持全部29名稱／28種不同動作內容。
 - `candidate-additions.json`：交根工作流整合的2個候選，均非自動預設、非已完成英雄上架。
 - `inputs/`：本次使用的GLB／外置materials.json／全部8個原WebP之完整副本。
 - `textures/source-png/`：8張原WebP解碼後的PNG；RGBA像素完全相同。
@@ -27,7 +30,7 @@ SSS是網站的自訂、依視角變化之indirectDiffuse shader，不是glTF標
 
 僅將3個normalized SHORT法線accessor轉成語意等值的FLOAT，消除原本不在GGD白名單內的KHR_mesh_quantization需求。沒有重取樣、重綁、補鍵或程序化動畫；原29個名稱保留，Carrying／Carrying_Start仍為同內容。
 
-Khronos兩版均0 errors、3 warnings（2個runtime tangent generation＋1個原有skinned mesh非root）；3個原法線bufferView留存與SSS未標準引用列為infos，不隱藏。256版GGD inspect及預算0 errors／0 warnings，75骨與所有29動作通道均可載入。
+Khronos兩版當次驗證均0 errors、3 warnings（2個runtime tangent generation＋1個原有skinned mesh非root）；3個原法線bufferView留存與SSS未標準引用列為infos，不隱藏。256版當次 GGD inspect 及預算結果為0 errors／0 warnings，75骨與所有29動作通道均可載入；這些是歷史收據，現行採用仍須依中央政策重跑。
 
 **這不是完成六態接線的GGD英雄。** 原包沒有可確認的Death片段，尚無合法完整clipMap；專案`prepareUploadedHeroModel`會只保留六個選定用途，`verifyUploadedHeroModel`不允許其餘未引用片段。此任務要求保留29，所以未偽造死亡／未刪原動作／未生成假的ready receipt或model.json。SSS與實際英雄行為／落地碰撞仍待整合。
 

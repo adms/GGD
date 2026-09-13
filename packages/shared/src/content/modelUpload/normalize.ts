@@ -1,4 +1,4 @@
-import { encodeUploadGlb, parseUploadGlb, readFloatAccessor, type GlbDocument, type GlbPrimitive } from "./glb";
+import { encodeUploadGlb, isModelUploadImageMimeType, parseUploadGlb, readFloatAccessor, type GlbDocument, type GlbPrimitive } from "./glb";
 import { HERO_MODEL_BUDGET } from "./budget";
 import { sniffImageHeader } from "../icons/encodeIcon";
 
@@ -134,7 +134,7 @@ export async function normalizeUploadedModel(
       if (!size || Math.max(size.w, size.h) <= cap) continue;
       const next = options.resizeImage ? await options.resizeImage(raw, cap) : null;
       const got = next ? sniffImageHeader(next) : null;
-      if (!next || !got || !["image/png", "image/jpeg"].includes(got.mime)
+      if (!next || !got || !isModelUploadImageMimeType(got.mime)
         || got.width <= 0 || got.height <= 0 || Math.max(got.width, got.height) > cap) {
         overCap.push(Math.max(size.w, size.h)); continue;
       }

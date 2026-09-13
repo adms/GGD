@@ -1,6 +1,6 @@
 import { sha256Bytes } from "../sha256";
 import { sniffImageHeader } from "../icons/encodeIcon";
-import { MODEL_UPLOAD_LIMITS, parseUploadGlb, readFloatAccessor } from "./glb";
+import { isModelUploadImageMimeType, MODEL_UPLOAD_LIMITS, parseUploadGlb, readFloatAccessor } from "./glb";
 
 export interface UploadClip { index: number; name: string; duration: number; channels: number }
 export interface UploadValidationReport {
@@ -47,7 +47,7 @@ export async function inspectModelUpload(bytes: Uint8Array, kind: "model" | "ani
   const skins = (json.skins ?? []).length;
   if (kind === "model" && (!meshes || !triangles)) throw new Error("模型檔沒有可見的三角網格。");
   const textures = (json.images ?? []).map((image) => {
-    if (image.bufferView === undefined || !["image/png", "image/jpeg"].includes(image.mimeType ?? "")) throw new Error("GLB 貼圖必須是內嵌 PNG 或 JPEG。");
+    if (image.bufferView === undefined || !isModelUploadImageMimeType(image.mimeType)) throw new Error("GLB 貼圖必須是內嵌 PNG 或 JPEG。");
     const view = json.bufferViews[image.bufferView]!, offset = view.byteOffset ?? 0;
     const imageBytes = bin.subarray(offset, offset + view.byteLength);
     const header = sniffImageHeader(imageBytes);

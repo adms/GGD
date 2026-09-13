@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { modelUploadFixture } from "./fixtures";
 import { prepareUploadedHeroModel, verifyUploadedHeroModel, heroModelBudgetIssues } from "./heroModel";
 import { inspectModelUpload } from "./inspect";
-import { HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "./budget";
 import { encodeUploadGlb } from "./glb";
 
 function sourceWithLeadingZeroClip() {
@@ -85,4 +85,20 @@ it("enforces the tablet budget on the selected runtime body", async () => {
   const selected = await prepareUploadedHeroModel(bytes, { idle: 0, run: 0, attack: 0, cast: 0, hurt: 0, death: 0 });
   expect(selected.inspected.clips[0]!.channels).toBe(1);
   await expect(prepareUploadedHeroModel(bytes, { idle: 1, run: 1, attack: 1, cast: 1, hurt: 1, death: 1 })).rejects.toThrow(overChannels);
+});
+
+it("applies the formal adoption decimation policy only above 10,000 triangles", async () => {
+  expect(HERO_MODEL_ADOPTION_POLICY).toMatchObject({
+    decimateWhenTrianglesAbove: 10_000,
+    decimatedTargetTrianglesMax: 8_000,
+  });
+  const source = modelUploadFixture();
+  const inspected = await inspectModelUpload(source.bytes);
+  const adoptionErrors = (triangles: number) =>
+    heroModelBudgetIssues({ ...inspected, triangles }).errors.filter((issue) => issue.includes("正式採用門檻"));
+
+  expect(adoptionErrors(10_000)).toEqual([]);
+  expect(adoptionErrors(10_001)).toEqual([
+    expect.stringMatching(/三角面 10001 .*門檻 10000.*不超過 8000 面/),
+  ]);
 });

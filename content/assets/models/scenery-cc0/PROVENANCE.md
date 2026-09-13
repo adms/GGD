@@ -323,10 +323,13 @@ tomb-chaser-2__TempleWall01_Art.glb
 draw call／貼圖邊長，bbox 由 `normalize.ts::worldBox()` 走節點階層算出（accessor 的
 min/max 是**區域座標**，這些模型帶節點 TRS，⛔ 直接讀 accessor 會錯）。
 
+現行上架門檻只以[模型動作特效上架限制](../../../../materials/asset-library/模型動作特效上架限制.md)
+及其列出的程式來源為準；本文件只保存這批模型的逐件量測與歷史整合證據，不另維護門檻副本。
+
 | 欄 | 意思 |
 |---|---|
-| **面** | 三角面數（閘：warn 4,000 / limit 8,000，與 `arena-decor` 一字不差）|
-| **DC** | draw call = 節點×primitive，每個材質一個（閘：`arena-decor-cc0` 的 **warn 3 / limit 6**，見五之①）|
+| **面** | 候選的三角面量測值；現行門檻見上方中央政策文件 |
+| **DC** | 候選的 draw call 量測值 = 節點×primitive，每個材質一個；現行門檻見上方中央政策文件 |
 | **材** | 材質數 |
 | **bbox** | 寬 × **高** × 深（u），scale 1.0 時。最低點已經是 y=0 |
 | **scale** | 建議寫進 `decor[].scale` 的值 |
@@ -396,10 +399,11 @@ min/max 是**區域座標**，這些模型帶節點 TRS，⛔ 直接讀 accessor
 > 底下保留每一條原本的診斷（那是**為什麼**），並在後面接上**做了什麼**。
 > ⛔ 不要把診斷刪掉改寫成結論：下一輪要看的是這個決定當初面對的是什麼。
 
-### ① draw call：原本 **23 件 OVER，18 件 WARN**，只有 12 件乾淨 → 現在 **0 OVER**
+### ① draw call：當時 **23 件 OVER，18 件 WARN**，只有 12 件乾淨 → 整合後 **0 OVER**
 
-`arena-decor` 閘是 `meshes: warn 1, limit 2`，理由寫在 `tools/model-budget/limits.ts`：
-一件擺設會被放 50 份（現已修正為量到的 78 份），所以單件不得吃掉超過 1/4 的 mesh 額度。
+這一節保存 2026-08-19 決策當時的診斷與量測，並不是現行門檻副本。現行上架門檻只見
+[模型動作特效上架限制](../../../../materials/asset-library/模型動作特效上架限制.md)。
+當時的理由寫在 `tools/model-budget/limits.ts`：一件擺設會重複放置，所以需把實際同時擺放量納入預算。
 
 **這批的 draw call 不是「多個 mesh」，是「一個 mesh 多個 primitive，每個材質一個」** ——
 Babylon 對每個 primitive 開一個 mesh，所以 **draw call ≈ 材質數**。實際成因有兩種：
@@ -412,15 +416,15 @@ Babylon 對每個 primitive 開一個 mesh，所以 **draw call ≈ 材質數**�
 ⛔ **沒有合併它們。** 合併材質＝重做貼圖 atlas＝那不是「下載」是「重新製作」，
 而且會讓上面那條「BIN 逐位元組不變」的證明整個消失。
 
-**⇒ 採用方案 (b)：`arena-decor-cc0` 一條自己的 gate**（`tools/model-budget/limits.ts`）。
+**⇒ 當時採用方案 (b)：`arena-decor-cc0` 一條自己的 gate**（`tools/model-budget/limits.ts`）。
 
 | | 值 | 從哪來 |
 |---|---:|---|
 | 擺放數（除數） | **10** | 地標不是草。出貨 13 張圖對這批的最大用量是 **8 份**（colosseum 的 `TempleColumn_Art`） |
-| draw call | **warn 3 / limit 6** | 跟 `arena-decor` 同一條算術：擺設額度 120 mesh，單件不得超過 1/4（30）→ 30÷10 = 3；硬上限用一半（60）÷10 = 6 |
-| 面數 · 貼圖邊長 · 動畫通道 | 4,000/8,000 · 512/1024 · 0/0 | **一字不差沿用 `arena-decor`** —— 10 份而不是 78 份代表同樣的面數便宜 7.8 倍，放寬它沒有理由 |
+| draw call 門檻 | 見中央政策 | 當時依 `arena-decor` 的重複擺放算術建立；本文件不複製現行數字 |
+| 面數 · 貼圖邊長 · 動畫通道門檻 | 見中央政策 | 當時沿用 `arena-decor`；現行數字由中央政策文件生成 |
 
-**結果**：53 件在新閘下 **0 OVER · 5 WARN · 48 OK**（已被 arena 引用的 32 件是 30 OK / 2 WARN），
+**當時執行結果**：53 件在新閘下 **0 OVER · 5 WARN · 48 OK**（已被 arena 引用的 32 件是 30 OK / 2 WARN），
 `tools/model-budget/baseline.json` 因此少掉 **12 筆** 被接受的 draw call 破線（32 → 20）。
 
 ⭐ **而「一張圖 10 份」⛔ 不是一句註解 —— 它是一條會紅的線。**
@@ -492,8 +496,9 @@ Babylon 對每個 primitive 開一個 mesh，所以 **draw call ≈ 材質數**�
 
 ### ④ 下載量：33 MB / 53 件，⛔ 面數從來不是問題
 
-三角面**全部在閘內**（最重 3,540 面 < warn 4,000）。體積全部是**貼圖**：
-512px（51 件）與 1024px（2 件）的 atlas，而 trim sheet 的每一張材質都帶一張。
+當時的 guard 結果顯示三角面全部在閘內；這批候選實測最重 **3,540 面**。現行判定須依中央政策
+重新執行 guard。體積全部是**貼圖**：實測為 512px（51 件）與 1024px（2 件）的 atlas，
+而 trim sheet 的每一張材質都帶一張。
 扣掉 C 級之後可用的是 **25.6 MB**。
 
 ⚠️ **這 33 MB ⛔ 不會一次全載** —— `dressArena()` 只載那張圖 `decor[]` 用到的。

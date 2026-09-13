@@ -18,7 +18,9 @@
     而 `inspectModelUpload` 逐字擋「動作長度必須大於零」⇒ 整顆註冊不進去。
  ④ **貼圖整組掉成佔位圖** —— BLP 住在子目錄時查不到 ⇒ 靜默退回 8×8。
     ⚠️ 它與「這顆本來就沒貼圖」量起來一模一樣，所以要**單獨**問。
- ⑤ **英雄預算** —— 三角面／draw call／貼圖邊長，對照 `HERO_MODEL_BUDGET`。
+ ⑤ **正式採用與 runtime 診斷分流** —— 已註冊英雄身體或 `champions/` 路徑的模型，
+    三角面正式採用門檻讀 `modelUpload/adoptionPolicy.json`；draw call、貼圖與 28k
+    runtime 容量仍對照 `HERO_MODEL_BUDGET`，但 runtime 上限不能代替正式採用門檻。
 
 用法：
     python3 tools/w3x-import/model_intake.py <路徑…>            # 只檢查（預設）
@@ -31,8 +33,9 @@ import argparse, json, os, shutil, struct, subprocess, sys, tempfile, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DEFAULT_SCAN = os.path.join(ROOT, "content", "assets", "models")
-# ⭐ 與 `HERO_MODEL_BUDGET` 同步 —— ⚠️ 那份是 TS，這裡是 python ⇒ 兩個住處。
-#    改上限時**兩邊都要動**，而 `--check` 會把不一致喊出來（見 _budget_drift）。
+# ⭐ runtime 容量診斷，與 `HERO_MODEL_BUDGET` 同步。28k 是較寬的 renderer
+#    safety ceiling，⛔ 不能代替 hero 正式採用規則；後者動態讀 ADOPTION_POLICY_JSON。
+#    改 runtime 上限時兩邊仍要一致，而 `--check` 會由 _budget_drift 擋漂移。
 BUDGET = {"tris": 28_000, "meshes": 6, "texEdge": 256}
 #: ⭐ 兩個**量得出來**的貼圖例外 —— 它們不吃 `ArenaScene.SIGHTLINE_HEIGHT_CAP`(2.4 單位)，
 #: 在畫面上真的更大。⛔ 不是「重要模型」的白名單:每一列都寫得出螢幕像素高。
@@ -73,6 +76,36 @@ def tex_cap(path: str) -> int:
             return edge
     return BUDGET["texEdge"]
 BUDGET_TS = os.path.join(ROOT, "packages/shared/src/content/modelUpload/budget.ts")
+ADOPTION_POLICY_JSON = os.path.join(ROOT, "packages/shared/src/content/modelUpload/adoptionPolicy.json")
+CHAMPION_MODEL_DIR = os.path.abspath(os.path.join(ROOT, "content", "assets", "models", "champions"))
+
+
+def read_hero_adoption_policy() -> dict:
+    """Read and validate the formal hero adoption thresholds on every invocation."""
+    try:
+        with open(ADOPTION_POLICY_JSON, encoding="utf-8") as fh:
+            document = json.load(fh)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"讀不到正式採用政策 {os.path.relpath(ADOPTION_POLICY_JSON, ROOT)}：{exc}") from exc
+    if document.get("schema") != "ggd-model-adoption-policy@1" or not isinstance(document.get("hero"), dict):
+        raise ValueError("正式採用政策 schema/hero 無效")
+    policy = document["hero"]
+    trigger = policy.get("decimateWhenTrianglesAbove")
+    target = policy.get("decimatedTargetTrianglesMax")
+    if not isinstance(trigger, int) or isinstance(trigger, bool) or trigger <= 0:
+        raise ValueError("hero.decimateWhenTrianglesAbove 必須是正整數")
+    if not isinstance(target, int) or isinstance(target, bool) or target <= 0 or target > trigger:
+        raise ValueError("hero.decimatedTargetTrianglesMax 必須是正整數且不得高於減面門檻")
+    return policy
+
+
+def explicit_champion_path(path: str) -> bool:
+    """Whether a file is under the explicit content/assets/models/champions tree."""
+    absolute = os.path.abspath(path)
+    try:
+        return os.path.commonpath((absolute, CHAMPION_MODEL_DIR)) == CHAMPION_MODEL_DIR
+    except ValueError:
+        return False
 
 
 def read_glb(path):
@@ -232,6 +265,13 @@ def main() -> int:
         print("   ⇒ 兩邊同一個數字要一致，⛔ 不要在這裡用舊值繼續掃。")
         return 2
 
+    try:
+        adoption = read_hero_adoption_policy()
+    except ValueError as exc:
+        print(f"⛔ {exc}")
+        print("   ⇒ 正式採用門檻沒有可驗證真源，停止 intake；⛔ 不回退到 28k runtime 上限。")
+        return 2
+
     merged = []
     if a.merge:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -270,8 +310,19 @@ def main() -> int:
         cap = tex_cap(f)
         if s["texEdge"] > cap:
             issues.append(f"⛔ 貼圖邊長 {s['texEdge']} > {cap}")
+        if f in heroes or explicit_champion_path(f):
+            trigger = adoption["decimateWhenTrianglesAbove"]
+            target = adoption["decimatedTargetTrianglesMax"]
+            if s["tris"] > trigger:
+                issues.append(
+                    f"⛔ 英雄模型三角面 {s['tris']:,} 超過正式採用門檻 {trigger:,}；"
+                    f"請從保留原檔另產生 ≤{target:,} 面候選並完成視覺與骨架驗收"
+                )
         if s["tris"] > BUDGET["tris"]:
-            issues.append(f"⛔ 三角面 {s['tris']:,} > {BUDGET['tris']:,}")
+            issues.append(
+                f"⛔ runtime 容量診斷：三角面 {s['tris']:,} > {BUDGET['tris']:,}；"
+                "此 28k renderer 上限不能代替英雄正式採用門檻"
+            )
         if s["draws"] > BUDGET["meshes"]:
             issues.append(f"⛔ draw call {s['draws']} > {BUDGET['meshes']}（英雄身體）")
         # ⭐ ⑥ 骨架綁定 —— ⛔ 只問英雄身體（道具/場景本來就沒有骨架）。

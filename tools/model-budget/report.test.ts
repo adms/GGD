@@ -58,7 +58,7 @@ const itWithOverlay = HAS_OVERLAY ? it : it.skip;
 let report: any;
 
 beforeAll(() => {
-  execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--out", OUT], { cwd: ROOT, stdio: "pipe" });
+  execFileSync(process.execPath, ["--import", "tsx", path.join(HERE, "emit_report.ts"), "--out", OUT], { cwd: ROOT, stdio: "pipe" });
   report = JSON.parse(fs.readFileSync(OUT, "utf8"));
 }, 120_000);
 
@@ -255,7 +255,7 @@ describe("WHERE IT IS USED is traced, not guessed", () => {
 
 describe("the CI gate is a ratchet against an accepted baseline, not an alarm", () => {
   itWithOverlay("the baseline covers every current breach — --check exits 0", () => {
-    const out = execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--check", "--out", OUT], {
+    const out = execFileSync(process.execPath, ["--import", "tsx", path.join(HERE, "emit_report.ts"), "--check", "--out", OUT], {
       cwd: ROOT,
       encoding: "utf8",
     });
@@ -272,7 +272,7 @@ describe("the CI gate is a ratchet against an accepted baseline, not an alarm", 
       fs.writeFileSync(baselinePath, JSON.stringify(b));
       let failed = false;
       try {
-        execFileSync("npx", ["tsx", path.join(HERE, "emit_report.ts"), "--check", "--out", OUT], {
+        execFileSync(process.execPath, ["--import", "tsx", path.join(HERE, "emit_report.ts"), "--check", "--out", OUT], {
           cwd: ROOT,
           stdio: "pipe",
         });

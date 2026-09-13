@@ -1,4 +1,4 @@
-import { C_CHAN_MS, C_MESH_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { C_CHAN_MS, C_MESH_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT, HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, DERIVED_CHAMPION_CHANNEL_LIMIT };
 
 /**
@@ -29,9 +29,9 @@ export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHA
  *            (task #99 runtime probe: 12 KayKit champions = 1,476 channels =
  *            2.19 ms p50, Babylon NullEngine, Apple M5 Max)
  * Both were measured on a fast development machine. The supported portable
- * target is iPad mini (A17 Pro) at 30 fps; phones are outside this budget's
+ * target is the iPad (M1) tier at 30 fps; phones are outside this budget's
  * support scope. DERATE remains a conservative planning assumption, not a
- * measured A17 Pro equivalence. Device benchmarking is not a release gate.
+ * measured device equivalence. Device benchmarking is not a release gate.
  * Allocation and rounding are policy choices; the channel slope is an estimate
  * and does not account for every skeleton, clip blend, GPU or thermal workload.
  */
@@ -94,10 +94,10 @@ export interface Line {
 
 const round = (n: number, step: number): number => Math.round(n / step) * step;
 
-/** meshes resident before the mesh/draw slice is spent: 6.0 ms ÷ (c_mesh × 3). */
-export const MESH_LIMIT = round(6.0 / (C_MESH_MS * DERATE), 10); // 240
+/** meshes resident before the mesh/draw slice is spent: 6.0 ms ÷ (c_mesh × DERATE). */
+export const MESH_LIMIT = round(6.0 / (C_MESH_MS * DERATE), 10);
 /** The scene allowance covers twelve heroes at the rounded-down per-hero cap. */
-export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES; // 1,920
+export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES;
 
 /**
  * Texture VRAM is deliberately NOT derived from a guessed hardware ceiling.
@@ -242,12 +242,9 @@ export interface Gate {
  *   · 被壓過的擺設 2.4 單位 = 307 px ⇒ 1.16×
  *   · 商店預覽面板 `minHeight 260` px ⇒ 1.62×
  *
- * ⚠️⚠️ **兩個真的例外 —— 它們不吃這條上限,所以留 512²**（⛔ 不是「感覺重要」）：
- *   ① `hex/tower_red|blue.glb` —— 它們在 `FADE_MODELS` 裡：擋到視線時**變鬼影**,
+ * ⚠️ **量得出來的例外 —— 它不吃這條上限,所以留 512²**（⛔ 不是「感覺重要」）：
+ *   `hex/tower_red|blue.glb` —— 它們在 `FADE_MODELS` 裡：擋到視線時**變鬼影**,
  *      ⛔ 不被壓矮 ⇒ 3.98 bbox × 1.4 擺放縮放 = 5.57 單位 = **712 px** ⇒ 256² 只有 0.22×
- *   ② `menu/dragon2.glb` —— 登入場景**自己的鏡頭**(radius 40 / fov 0.95),
- *      13.73 單位 ⇒ **360 px** ⇒ 256² 是 0.84×、512² 是 3.36×
- *      ⭐ 而它隨 LoginScene 一起釋放,⛔ 不與戰鬥的 VRAM 疊加
  *
  * ⛔ 我第一版在這裡寫過「地標可能佔半高、256 會偏軟」—— **那句話是錯的**,
  *    我當時沒有去讀 `SIGHTLINE_HEIGHT_CAP`。⭐ 判準要從**出貨程式**量,⛔ 不是從直覺。
@@ -297,10 +294,11 @@ export const GATES: Gate[] = [
       "12 個席次，且 champ select 與 MatchRoom 都沒有「不可重複選角」的規則 —— 同一支模型出現 12 份是合法的最壞情況。",
     ...HERO_MODEL_BUDGET,
     why:
-      "面數 =(250k 警戒 − 58k 最重競技場)/12 ≈ 16k、(400k − 64k)/12 = 28k。" +
-      "Mesh = 英雄可用的 60 個 mesh 額度 ÷ 12。" +
-      "貼圖 = 32 MB 英雄額度 ÷ 12 = 2.67 MB/隻，512²+mip = 1.33 MB 過關，1024²+mip = 5.33 MB 不過（除非它被多隻英雄共用、只上傳一次）。" +
-      `通道 = ${CHAN_LIMIT} ÷ ${CHAMPION_INSTANCES} = ${CHAMPION_CHANNEL_LIMIT}；以 iPad mini A17 Pro／30 fps 的估算額度執行，警戒線為上限的 75%。`,
+      `正式採用：來源超過 ${HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove} 面時，候選必須減到不超過 ${HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax} 面並完成視覺/骨架驗收。` +
+      `執行期容量診斷：面數警戒 ${HERO_MODEL_BUDGET.tris.warn}、絕對上限 ${HERO_MODEL_BUDGET.tris.limit}；不能取代正式採用門檻。` +
+      `Mesh = 英雄場景份額 ${Math.floor(MESH_LIMIT * 0.25)} 個 ÷ ${CHAMPION_INSTANCES}，得到單體警戒 ${HERO_MODEL_BUDGET.meshes.warn}／上限 ${HERO_MODEL_BUDGET.meshes.limit}。` +
+      `一般貼圖最長邊警戒與上限均為 ${HERO_MODEL_BUDGET.texEdge.limit}px；只有 TEX_EDGE_EXEMPT 指名路徑可例外。` +
+      `通道 = ${CHAN_LIMIT} ÷ ${CHAMPION_INSTANCES} = ${CHAMPION_CHANNEL_LIMIT}；以 ${TARGET.device}／${TARGET.fps} fps 的估算額度執行，警戒 ${HERO_MODEL_BUDGET.channels.warn}／上限 ${HERO_MODEL_BUDGET.channels.limit}。`,
   },
   {
     role: "arena-decor",
@@ -349,7 +347,7 @@ export const GATES: Gate[] = [
     why:
       "跟 `arena-decor` **同一條算術**，只換擺放數：擺設可用 120 個 mesh，單一模型不得吃掉超過 1/4（30 mesh）" +
       "→ 30 ÷ 10 = 3 是警戒線；硬上限用一半的額度（60 mesh）÷ 10 = 6。" +
-      "面數與貼圖邊長刻意**不放寬**（4k/8k、512/1024 與 arena-decor 一字不差）—— 這批最重的一件 3,540 面本來就在線內，" +
+      `面數與貼圖邊長刻意**不放寬**（4k/8k、${TEX_EDGE.warn}/${TEX_EDGE.limit}px，與 arena-decor 一字不差）—— 這批最重的一件 3,540 面本來就在線內，` +
       "而且 10 份而不是 78 份意味著同樣的面數在畫面上便宜 7.8 倍，所以放寬它沒有任何理由。" +
       "通道上限同樣是 0：布景不得帶骨架。",
   },
@@ -373,7 +371,7 @@ export const GATES: Gate[] = [
     meshes: { warn: 12, limit: 20 },
     texEdge: TEX_EDGE,
     channels: { warn: 120, limit: 200 },
-    why: "只有 1–2 份，所以可以吃掉整個場景額度的一大塊；但 1024² 是硬上限 —— 沒有任何一張貼圖在這個鏡頭距離下需要更高。",
+    why: `只有 1–2 份，所以可以吃掉整個場景額度的一大塊；一般貼圖仍服從 ${TEX_EDGE.limit}px 硬上限，只有 TEX_EDGE_EXEMPT 指名路徑可例外。`,
   },
   {
     role: "vfx-model",

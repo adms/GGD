@@ -10,6 +10,8 @@
 
 **第三守則：成品一律進 Git；半成品、原始來源、準備材料等進 S3；本機全部保留。** 固定入口：[current-resources.json](current-resources.json)，合併本次模型與舊成品來源；[git-release.json](git-release.json) 保留既有不可變模型／動作與 VFX 元件。原始與半成品仍在 S3 `legacy/`，不供程序自動取用。
 
+**模型、貼圖、mesh、動畫通道及 VFX 的數值門檻只讀 [模型動作特效上架限制.md](模型動作特效上架限制.md)。** 該文件由 `tools/model-budget/generate_policy_doc.ts` 從正式程式常數與設定生成；修改來源後執行 `pnpm modelpolicy:build`，用 `pnpm modelpolicy:check` 防止漂移。本 README 的個別素材量測與歷史案例都不是上架門檻。
+
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前變更在 `codex/hero-model-library-options` 分支，[PR #1152](https://github.com/adms/GGD/pull/1152)。PR 未合併前，不要把 `main` 當成已有這批素材設定。
 
 **分工固定：來源工作流找檔、下載與交付；本工作流負責轉換驗收、版本合併、中央索引與 Git 分支推送；Main 審查合併及部署。** 已交付素材分批發布，不等待 KOF／其他遊戲整庫搜尋完成。
@@ -34,6 +36,8 @@
 | 整合另一工作流付費取得的模型 | 同一 `download-sources.json` 的 `paidSources`；查詢回傳 `paidCandidates`，與免費來源一起保留整合 |
 | 看使用者給的付費下載清單與改造要求 | 同份盤點最前面的「指定下載來源與購買順位」 |
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
+| 查模型、貼圖、mesh、動畫通道與 VFX 上架限制 | [模型動作特效上架限制.md](模型動作特效上架限制.md)；由 `generate_policy_doc.ts` 產生，不在 README 抄寫數字 |
+| 看優先 15 名按現行門檻重算的通過／阻擋狀態 | [優先 15 名模型現行政策稽核](../hero-model-library/priority-model-policy-audit.md)；由 `audit_priority_release.ts` 直接量測目前 GLB |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |
 | 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |
 | 查 Ultimate「16 名」與 NSandNS2 容器位置 | [16 個動作角色群與來源核對](../hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/README.md)；128 份 body 候選只核對存在與大小，NSP／ZIP 維持 metadata-only |
@@ -64,7 +68,7 @@ Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名�
 
 FateUBW 實檔驗證使用 `python3 tools/hero-model-library/verify_fateubw_reserve.py --workspace <ABxVFX_EDIT>`。它會逐檔重算來源模型、貼圖、動畫、靜態／原生動作 GLB 與驗收證據的 SHA-256，交叉核對 42 筆中央候選及 S3 讀回收據；省略 `--workspace` 時只驗證 Git 可攜的索引與收據關係。最新本機逐檔收據在 [reserve-integrity.json](../hero-model-library/priority-evidence/fateubw-community/reserve-integrity.json)，該收據仍不表示取得再散布權、後台可切換或已部署。
 
-言峰綺禮的 Sven／GoldSrc 社群 MOD 完整來源保留 349 個動作項；GGD 候選另固定挑出 `idle`、`run2`、`2handshoot`、`action_wave`、`gutshot`、`die_simple` 六段，並經正式 `prepareUploadedHeroModel`／`verifyUploadedHeroModel`、Khronos 與 Babylon WebGL 分段驗證。候選為 4,812 三角面、4 個 draw primitive、4 張貼圖、17 個有權重 glTF joints，模型正面為 +X，文件朝向修正為 90 度。這六段是社群 MOD 動作且用途映射仍待遊戲內核准；完整來源中的其餘 343 項只從候選排除，仍保留在本機與 S3，不能把候選寫成 Fate 原生動作、已可切換或已部署。
+言峰綺禮的 Sven／GoldSrc 社群 MOD 完整來源保留 349 個動作項；GGD 候選另固定挑出 `idle`、`run2`、`2handshoot`、`action_wave`、`gutshot`、`die_simple` 六段，並經正式 `prepareUploadedHeroModel`／`verifyUploadedHeroModel`、Khronos 與 Babylon WebGL 分段驗證。以下是該候選的量測證據，不是上架契約：4,812 三角面、4 個 draw primitive、4 張貼圖、17 個有權重 glTF joints，模型正面為 +X，文件朝向修正為 90 度。這六段是社群 MOD 動作且用途映射仍待遊戲內核准；完整來源中的其餘 343 項只從候選排除，仍保留在本機與 S3，不能把候選寫成 Fate 原生動作、已可切換或已部署。
 
 獨立合格元件由 `current-resources.json → modelComponents` 查詢；`resourceRole=weapon-prop` 是武器元件，`resourceRole=independent-historical-model-body-component` 是從 Git 歷史復原、尚未綁定真實英雄 ID 的舊模型版本。兩者均以 `fullHeroModel=false`、`heroIds=[]` 防止被誤認成英雄下拉選項。來源 `download-sources.json → componentCandidates` 保留轉換、人工視覺核對、Git 路徑及補充備份關係；`query.py <角色或來源 ID> --candidates --json` 可連同未對應角色的元件一起查詢。達伊手持劍／背劍的重建入口是 `intake_dai_weapon_components.py`，先讀其 `--help`；必須有固定交付 SHA 與父整合驗收收據。
 

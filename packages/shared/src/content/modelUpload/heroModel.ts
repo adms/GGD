@@ -3,7 +3,7 @@ import { contentSha256 } from "../import/jcs";
 import { inspectModelUpload, type InspectedModelUpload } from "./inspect";
 import { selectModelAnimations } from "./compose";
 import { normalizeUploadedModel, type ResizeImage } from "./normalize";
-import { HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "./budget";
 import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from "./heroModelSchema";
 export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
   const model = zUploadedHeroModel.parse(raw);
@@ -18,8 +18,16 @@ export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
 
 export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: string[]; warnings: string[] } {
   const errors: string[] = [], warnings: string[] = [];
+  if (model.triangles > HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove) {
+    errors.push(
+      `三角面 ${model.triangles} 超過素材正式採用門檻 ${HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove}；` +
+      `請從保留的原始檔另產生不超過 ${HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax} 面的減面候選，並完成視覺與骨架驗收。`,
+    );
+  }
   const rows = [
-    ["三角面", model.triangles, HERO_MODEL_BUDGET.tris],
+    // The formal adoption policy above is the effective intake gate. Keep this
+    // wider runtime budget row for capacity diagnostics, but do not emit a
+    // duplicate error for the same triangle count.
     ["繪製網格", model.meshes, HERO_MODEL_BUDGET.meshes],
     ["貼圖邊長", Math.max(0, ...model.textures.flatMap((texture) => [texture.width, texture.height])), HERO_MODEL_BUDGET.texEdge],
     ["單段動作通道", Math.max(0, ...model.clips.map((clip) => clip.channels)), HERO_MODEL_BUDGET.channels],

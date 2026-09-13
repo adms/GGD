@@ -2,10 +2,13 @@
 
 本目錄與已封存來源 intake 分開。`delivery.json` 是交付入口，`model-candidates.json` 保留三種候選，`motion-library.json` 列出全部58個原生動畫條目：57變動、1固定姿勢。無英雄ID、沒有生成六狀態對照，未註冊後台。
 
+現行模型、貼圖、mesh 與動畫通道上架門檻只以[模型動作特效上架限制](../../../../../../materials/asset-library/模型動作特效上架限制.md)
+為準；以下數字是候選量測或當次驗證結果，不是另一套現行契約。
+
 候選：
-- `astralym-material-bound.glb`：完整58段、原解析度9圖；Khronos零錯誤，Babylon全部58段×3時間點通過。JSON 4,753,652 bytes 超過 GGD 4MiB 匯入上限，保留完整動作來源用途。
-- `idle-walk/astralym-idle-walk.glb`：只引用原生Idle/Walk並精簡JSON，其他動作仍在完整庫。法線改成等值FLOAT，無位置、骨架、動畫key改動。通過GGD格式檢查，原圖2048超過256预算。
-- `idle-walk-256/astralym-idle-walk-256.glb`：使用既有GGD normalizeUploadedModel及ffmpeg縮圖到256；通過實際inspectModelUpload、heroModelBudgetIssues與Khronos。145 joints、435 channels/clip，低於500通道上限；23928面低於28000，但超過16000警戒。3 primitives低於6。沒有把通過檢查宣稱為完整英雄後台成品。
+- `astralym-material-bound.glb`：完整58段、原解析度9圖；當次 Khronos 零錯誤，Babylon全部58段×3時間點通過。JSON 實測4,753,652 bytes，當次 GGD 匯入檢查未通過，保留完整動作來源用途；現行判定須依中央政策重跑。
+- `idle-walk/astralym-idle-walk.glb`：只引用原生Idle/Walk並精簡JSON，其他動作仍在完整庫。法線改成等值FLOAT，無位置、骨架、動畫key改動。當次通過GGD格式檢查；原圖實測最大邊2048，現行判定須依中央政策重跑。
+- `idle-walk-256/astralym-idle-walk-256.glb`：使用既有GGD normalizeUploadedModel及ffmpeg縮圖到256；當次通過實際inspectModelUpload、heroModelBudgetIssues與Khronos。候選實測145 joints、最重單段435 channels、23,928面、3 primitives。這些是歷史收據，現行採用仍須依中央政策重跑；沒有把通過檢查宣稱為完整英雄後台成品。
 
 材質以原GLB材料名精確匹配materials.json，不猜其他部件。Body/Extra/Eye三種baseColor、三種emissive、法線、金屬粗糙及specular alpha都有可查來源映射。第9張SSS貼圖嵌入且於extras記錄引用，來源subsurfaceColor=[0,0,0]，不虛構非零散射。GLTF無法完整表達來源Eye的微小alphaTest和深度偏移；來源只給clearcoat模型標籤，未猜coat強度。高解析度PNG與原WebP解碼像素完全一致；256版是明確獨立縮圖衍生，完整圖保留。
 
