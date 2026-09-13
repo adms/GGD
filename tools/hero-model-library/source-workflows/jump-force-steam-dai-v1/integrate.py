@@ -40,10 +40,19 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
     git_visual = workspace / "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/visual-review.json"
     git_conversion = workspace / "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/conversion-receipt.json"
     git_webgl = workspace / "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/webgl-proof.json"
+    git_game_config = workspace / "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json"
+    git_audio_summary = workspace / "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json"
+    git_audio_files = workspace / "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz"
     git_images = [workspace / f"materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/{name}.png" for name in ("front", "back", "isometric")]
-    for path in (git_manifest, git_files, git_pak_json, git_pak_md, git_visual, git_conversion, git_webgl, *git_images):
+    for path in (git_manifest, git_files, git_pak_json, git_pak_md, git_visual, git_conversion, git_webgl, git_game_config, git_audio_summary, git_audio_files, *git_images):
         if not path.is_file():
             raise ValueError(f"missing Git evidence: {path}")
+    game_config = json.loads(git_game_config.read_text(encoding="utf-8"))
+    audio_summary = json.loads(git_audio_summary.read_text(encoding="utf-8"))
+    if game_config["counts"]["selectedPaths"] != 40 or game_config["counts"]["selectedPathsPresentInFrozenExtraction"] != 0:
+        raise ValueError("JUMP FORCE Dai configuration extraction state changed; rerun and inspect the scoped audit")
+    if audio_summary["counts"]["files"] != 261 or audio_summary["counts"]["errors"] != 0:
+        raise ValueError("JUMP FORCE Dai related audio audit changed; rerun and inspect the scoped audit")
     result = {
         "id": SOURCE_ID,
         "target": "JUMP FORCE Steam 原作：小呆／達伊 chr0430 模型、貼圖、骨架、特效、音訊與技能資料",
@@ -67,6 +76,15 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
             "model-package", "texture-material-package", "skeleton-package",
             "vfx-package", "audio-package", "character-configuration", "skill-configuration",
         ],
+        "assetKindStates": {
+            "model-package": "extracted-and-converted-review-glb",
+            "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
+            "skeleton-package": "extracted-159-joint-skin",
+            "vfx-package": "extracted-pending-conversion-and-event-binding",
+            "audio-package": "steam-native-packages-extracted-pending-decode",
+            "character-configuration": "indexed-only-24-selected-files-pending-extraction",
+            "skill-configuration": "indexed-only-16-selected-files-pending-extraction",
+        },
         "publicationStatus": "local-and-git-evidence-only-s3-pending",
         "containers": containers,
         "containerPreservation": {
@@ -94,8 +112,34 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
             {"gitPath": str(git_visual.relative_to(workspace)), "bytes": git_visual.stat().st_size, "sha256": sha256(git_visual)},
             {"gitPath": str(git_conversion.relative_to(workspace)), "bytes": git_conversion.stat().st_size, "sha256": sha256(git_conversion)},
             {"gitPath": str(git_webgl.relative_to(workspace)), "bytes": git_webgl.stat().st_size, "sha256": sha256(git_webgl)},
+            {"gitPath": str(git_game_config.relative_to(workspace)), "bytes": git_game_config.stat().st_size, "sha256": sha256(git_game_config)},
+            {"gitPath": str(git_audio_summary.relative_to(workspace)), "bytes": git_audio_summary.stat().st_size, "sha256": sha256(git_audio_summary)},
+            {"gitPath": str(git_audio_files.relative_to(workspace)), "bytes": git_audio_files.stat().st_size, "sha256": sha256(git_audio_files)},
             *[{"gitPath": str(path.relative_to(workspace)), "bytes": path.stat().st_size, "sha256": sha256(path)} for path in git_images],
         ],
+        "gameConfigurationEvidence": {
+            "gitPath": str(git_game_config.relative_to(workspace)),
+            "selectedPaths": game_config["counts"]["selectedPaths"],
+            "selectedPackageStems": game_config["counts"]["selectedPackageStems"],
+            "selectedPathsPresentInFrozenExtraction": game_config["counts"]["selectedPathsPresentInFrozenExtraction"],
+            "selectedPathsPendingExtraction": game_config["counts"]["selectedPathsPendingExtraction"],
+            "state": "indexed-only-pending-approved-aes-key-extraction",
+        },
+        "relatedExistingAudio": {
+            "newThisAcquisition": False,
+            "sourceId": audio_summary["relatedAudioSourceId"],
+            "groupId": audio_summary["groupId"],
+            "heroIds": audio_summary["heroIds"],
+            "relatedFormHeroIdsPendingReview": audio_summary["relatedFormHeroIdsPendingReview"],
+            "fileCount": audio_summary["counts"]["files"],
+            "bytes": audio_summary["counts"]["bytes"],
+            "seconds": audio_summary["counts"]["seconds"],
+            "categoryCounts": audio_summary["counts"]["categoryCounts"],
+            "classification": audio_summary["classification"],
+            "gitSummaryPath": str(git_audio_summary.relative_to(workspace)),
+            "gitFilesPath": str(git_audio_files.relative_to(workspace)),
+            "allLocalFilesRehashed": audio_summary["checks"]["allLocalFilesRehashed"],
+        },
         "identityRecords": [{
             "name": "小呆／達伊",
             "nameZh": "小呆／達伊",
@@ -121,7 +165,8 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
             "modelState": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
             "animationState": "no-accepted-native-clips-in-current-export",
             "vfxState": "native-packages-extracted-pending-conversion",
-            "audioState": "native-packages-extracted-pending-decode-and-listening-review",
+            "audioState": "steam-native-packages-extracted-pending-decode; separate-public-source-261-ogg-rehashed-pending-listening-review",
+            "configurationState": "40-patch-selected-character-and-skill-files-indexed-none-extracted",
             "defaultEligible": False,
             "backendSelectable": False,
             "deployed": False,
@@ -140,13 +185,17 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
             "The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, "
             "and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's "
             "diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints "
-            "were bound. Parent shader parity and formal GGD intake remain unverified."
+            "were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen "
+            "extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; "
+            "its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified."
         ),
         "limitations": [
             "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
             "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
             "No native animation clips have been accepted from the current export.",
-            "VFX and audio packages are not decoded or bound to GGD events.",
+            "Character and skill configuration packages are indexed but not extracted or parsed; animation references are unresolved.",
+            "Steam-native VFX and audio packages are not converted or bound to GGD events.",
+            "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
             "No model option is registered, selectable or deployed from this source yet.",
             "Redistribution rights for original game assets are not asserted.",
         ],

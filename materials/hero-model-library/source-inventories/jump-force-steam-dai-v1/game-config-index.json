@@ -1,0 +1,451 @@
+{
+  "schema": "ggd-jump-force-dai-game-config-index@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "sourceGame": "JUMP FORCE",
+  "platform": "Windows (Steam)",
+  "nativeCharacterId": "chr0430",
+  "characterNameZh": "小呆／達伊",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "inputs": {
+    "fullPakIndex": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/full-path-index.jsonl.gz",
+      "sha256": "9ea256eb40ad1589c5577c857c81d27d242238c5ded740147143fbd1f9880fef"
+    },
+    "pakSummary": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
+      "sha256": "6d93e2625b4a5335cec62ed9388a30ab123879afda35d284c64f30caaf8ca964"
+    },
+    "frozenExtractionIndex": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
+      "sha256": "16eaf9ce10789a454eab83bf7af066f3772e09e699e773292c8df72b610e15f0"
+    }
+  },
+  "counts": {
+    "allPatchRelations": 120,
+    "allPatchUniquePaths": 40,
+    "selectedPaths": 40,
+    "selectedPackageStems": 20,
+    "selectedSourceKindCounts": {
+      "character-config-package": 24,
+      "skill-config-package": 16
+    },
+    "selectedPathsPresentInFrozenExtraction": 0,
+    "selectedPathsPendingExtraction": 40
+  },
+  "states": {
+    "pathsIndexed": true,
+    "packagesExtracted": false,
+    "packagesParsed": false,
+    "animationReferencesResolved": false,
+    "registered": false
+  },
+  "files": [
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_action.uasset",
+      "packageRelativePath": "Game/chr0430_action.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_action.uexp",
+      "packageRelativePath": "Game/chr0430_action.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_action_flow.uasset",
+      "packageRelativePath": "Game/chr0430_action_flow.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_action_flow.uexp",
+      "packageRelativePath": "Game/chr0430_action_flow.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_action_flow_debug.uasset",
+      "packageRelativePath": "Game/chr0430_action_flow_debug.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_action_flow_debug.uexp",
+      "packageRelativePath": "Game/chr0430_action_flow_debug.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_anim.uasset",
+      "packageRelativePath": "Game/chr0430_anim.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_anim.uexp",
+      "packageRelativePath": "Game/chr0430_anim.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_bullet_flow.uasset",
+      "packageRelativePath": "Game/chr0430_bullet_flow.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_bullet_flow.uexp",
+      "packageRelativePath": "Game/chr0430_bullet_flow.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_bullet_flow_debug.uasset",
+      "packageRelativePath": "Game/chr0430_bullet_flow_debug.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_bullet_flow_debug.uexp",
+      "packageRelativePath": "Game/chr0430_bullet_flow_debug.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_frmd.uasset",
+      "packageRelativePath": "Game/chr0430_frmd.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_frmd.uexp",
+      "packageRelativePath": "Game/chr0430_frmd.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_ftfrmd.uasset",
+      "packageRelativePath": "Game/chr0430_ftfrmd.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_ftfrmd.uexp",
+      "packageRelativePath": "Game/chr0430_ftfrmd.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_lipsync.uasset",
+      "packageRelativePath": "Game/chr0430_lipsync.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_lipsync.uexp",
+      "packageRelativePath": "Game/chr0430_lipsync.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_lobby_anim.uasset",
+      "packageRelativePath": "Game/chr0430_lobby_anim.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_lobby_anim.uexp",
+      "packageRelativePath": "Game/chr0430_lobby_anim.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_model.uasset",
+      "packageRelativePath": "Game/chr0430_model.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_model.uexp",
+      "packageRelativePath": "Game/chr0430_model.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_share_param.uasset",
+      "packageRelativePath": "Game/chr0430_share_param.uasset",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/chr0430_share_param.uexp",
+      "packageRelativePath": "Game/chr0430_share_param.uexp",
+      "sourceKind": "character-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_00_anim.uasset",
+      "packageRelativePath": "Game/skill_0430_00_anim.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_00_anim.uexp",
+      "packageRelativePath": "Game/skill_0430_00_anim.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_00_frmd.uasset",
+      "packageRelativePath": "Game/skill_0430_00_frmd.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_00_frmd.uexp",
+      "packageRelativePath": "Game/skill_0430_00_frmd.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_01_anim.uasset",
+      "packageRelativePath": "Game/skill_0430_01_anim.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_01_anim.uexp",
+      "packageRelativePath": "Game/skill_0430_01_anim.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_01_frmd.uasset",
+      "packageRelativePath": "Game/skill_0430_01_frmd.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_01_frmd.uexp",
+      "packageRelativePath": "Game/skill_0430_01_frmd.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_02_anim.uasset",
+      "packageRelativePath": "Game/skill_0430_02_anim.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_02_anim.uexp",
+      "packageRelativePath": "Game/skill_0430_02_anim.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_02_frmd.uasset",
+      "packageRelativePath": "Game/skill_0430_02_frmd.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_02_frmd.uexp",
+      "packageRelativePath": "Game/skill_0430_02_frmd.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_03_anim.uasset",
+      "packageRelativePath": "Game/skill_0430_03_anim.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_03_anim.uexp",
+      "packageRelativePath": "Game/skill_0430_03_anim.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_03_frmd.uasset",
+      "packageRelativePath": "Game/skill_0430_03_frmd.uasset",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    },
+    {
+      "path": "JUMP_FORCE/Content/Game/skill_0430_03_frmd.uexp",
+      "packageRelativePath": "Game/skill_0430_03_frmd.uexp",
+      "sourceKind": "skill-config-package",
+      "container": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerOriginPath": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "containerSha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "existsInFrozenExtraction": false,
+      "extractionState": "indexed-only-pending-extraction"
+    }
+  ],
+  "gaps": [
+    "The selected Game configuration packages are indexed in the encrypted PAKs but absent from the frozen extraction.",
+    "The packages cannot be parsed for referenced AnimSequence assets until they are extracted with the approved AES-key workflow."
+  ]
+}

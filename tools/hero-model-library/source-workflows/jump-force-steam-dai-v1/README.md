@@ -55,6 +55,22 @@ python3 tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/valida
 
 這一步只建立待驗收組件。第一個 `form0 + form0_head + equipment1` 實驗版經 WebGL 發現缺少上身；第二版加入 `damage_AB` 後仍有褲管缺口，兩者均已拒收並保留證據。目前預設組合依原生分區加入 `damage_A + damage_B + damage_AB`，正背面完整。UModel glTF exporter 另會替材質槽填入紅、綠、藍診斷色；這些不是 MaterialInstanceConstant 的來源顏色。轉換器會在綁定來源貼圖時清除診斷色，依原生材質用途套用 MASK／BLEND，並把六個分區合併到同一套 159 關節骨架。修正版 `review-v4` 已通過結構與三視角一般 PBR 視覺檢查；原遊戲 parent shader parity、正式 GGD intake、效能、動作與後台註冊仍待完成。
 
+## 角色／技能設定與既有音訊稽核
+
+PAK 全路徑索引可證明 `Content/Game/` 中有 20 個套件 stem（40 個 `.uasset`/`.uexp` 檔），包含角色 action／anim／flow 與四組 skill anim／frmd。這 40 檔目前全部只是已索引，並未在凍結擷取集中；不能寫成已擷取角色／技能設定。
+
+現有 `parallel-ps-jumpforce-audio:JForce_Dai` 是先前取得的獨立公開音訊來源，不是這次 Steam PAK 新解碼的音訊。稽核會對 261 個 OGG 重算 SHA-256／大小／時長，並交叉比對中央 `voice-files.jsonl.gz`；`ActVoice` 與 `ActSE` 只保留為來源目錄分類，不代表語言、說話者或台詞已經聽審。
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/audit_existing_scope.py \
+  --workspace . \
+  --local-extraction-root ../GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1 \
+  --full-pak-index ../GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/full-path-index.jsonl.gz \
+  --output-dir materials/hero-model-library/source-inventories/jump-force-steam-dai-v1
+```
+
+產物為 `game-config-index.json`、`audio-summary.json` 與 `audio-file-index.jsonl.gz`。可重現檢查用同一命令加 `--check`。
+
 這台主機的 Blender 5.2.1 目前會在 Metal 後端偵測時、尚未執行 Python 前崩潰。可先用不依賴 Blender 的等價 GLB 組裝器：
 
 ```bash

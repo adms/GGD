@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T23:53:26+08:00",
-  "inputsSha256": "7ae74c44708e7591796d6d87e78450184e4dff566b0b7790ee887fcca66ef32b",
+  "generatedAt": "2026-09-14T00:12:25+08:00",
+  "inputsSha256": "46998f21bf2787ba39b8a8583e7650a2c191e5daf471d234abf5f7c40adb8ff2",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -44486,6 +44486,15 @@
             "character-configuration",
             "skill-configuration"
           ],
+          "assetKindStates": {
+            "model-package": "extracted-and-converted-review-glb",
+            "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
+            "skeleton-package": "extracted-159-joint-skin",
+            "vfx-package": "extracted-pending-conversion-and-event-binding",
+            "audio-package": "steam-native-packages-extracted-pending-decode",
+            "character-configuration": "indexed-only-24-selected-files-pending-extraction",
+            "skill-configuration": "indexed-only-16-selected-files-pending-extraction"
+          },
           "publicationStatus": "s3-readback-verified",
           "containers": [
             {
@@ -44553,7 +44562,7 @@
           },
           "filesManifest": {
             "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/source-manifest.json",
-            "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+            "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
           },
           "extractedFilesIndex": {
             "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
@@ -44563,8 +44572,8 @@
           "gitEvidence": [
             {
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/source-manifest.json",
-              "bytes": 6500,
-              "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+              "bytes": 6783,
+              "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
             },
             {
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/files.jsonl.gz",
@@ -44597,6 +44606,21 @@
               "sha256": "bbcfc44b58cac05b35d59312ffc9ffb0ea312edfd386390bd184ce13ff9fd1d7"
             },
             {
+              "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+              "bytes": 24114,
+              "sha256": "c546a0b8bd503cccff4652891e24db3298199cdc15094bdbd78a8af26cb3a3d1"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json",
+              "bytes": 2166,
+              "sha256": "7c9b9175bfca6d015347d588037d1fd8c0926339800e268488dd13ce66c4a737"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz",
+              "bytes": 16790,
+              "sha256": "0f9a702cdfd1fd425d797f1269b933b41f9dac1ca68d9aa3f5cb113b99b43756"
+            },
+            {
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/front.png",
               "bytes": 288881,
               "sha256": "608511f2d44cbb761ccfbccd37d281d81391535208eec1126e23fdb0a2762529"
@@ -44612,6 +44636,43 @@
               "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
             }
           ],
+          "gameConfigurationEvidence": {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+            "selectedPaths": 40,
+            "selectedPackageStems": 20,
+            "selectedPathsPresentInFrozenExtraction": 0,
+            "selectedPathsPendingExtraction": 40,
+            "state": "indexed-only-pending-approved-aes-key-extraction"
+          },
+          "relatedExistingAudio": {
+            "newThisAcquisition": false,
+            "sourceId": "parallel-ps-jumpforce-audio",
+            "groupId": "parallel-ps-jumpforce-audio:JForce_Dai",
+            "heroIds": [
+              "godie-nbbc"
+            ],
+            "relatedFormHeroIdsPendingReview": [
+              "godie-n01c"
+            ],
+            "fileCount": 261,
+            "bytes": 7868623,
+            "seconds": 420.93145300000015,
+            "categoryCounts": {
+              "sound-effect": 14,
+              "voice-source-label-unreviewed": 247
+            },
+            "classification": {
+              "basis": "source folder labels only: chr0430_ActVoice versus chr0430_ActSE",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "transcriptReviewed": false,
+              "synthesisReady": false,
+              "note": "ActVoice is retained as an unreviewed source label; it is not proof that every clip is Dai speech or Japanese."
+            },
+            "gitSummaryPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json",
+            "gitFilesPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz",
+            "allLocalFilesRehashed": true
+          },
           "identityRecords": [
             {
               "name": "小呆／達伊",
@@ -44657,7 +44718,8 @@
               "modelState": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
               "animationState": "no-accepted-native-clips-in-current-export",
               "vfxState": "native-packages-extracted-pending-conversion",
-              "audioState": "native-packages-extracted-pending-decode-and-listening-review",
+              "audioState": "steam-native-packages-extracted-pending-decode; separate-public-source-261-ogg-rehashed-pending-listening-review",
+              "configurationState": "40-patch-selected-character-and-skill-files-indexed-none-extracted",
               "defaultEligible": false,
               "backendSelectable": false,
               "deployed": false
@@ -44675,12 +44737,14 @@
             "selectionVerified": false,
             "productionDeployed": false
           },
-          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
             "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
             "No native animation clips have been accepted from the current export.",
-            "VFX and audio packages are not decoded or bound to GGD events.",
+            "Character and skill configuration packages are indexed but not extracted or parsed; animation references are unresolved.",
+            "Steam-native VFX and audio packages are not converted or bound to GGD events.",
+            "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
             "No model option is registered, selectable or deployed from this source yet.",
             "Redistribution rights for original game assets are not asserted."
           ],
@@ -47549,6 +47613,15 @@
             "character-configuration",
             "skill-configuration"
           ],
+          "assetKindStates": {
+            "model-package": "extracted-and-converted-review-glb",
+            "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
+            "skeleton-package": "extracted-159-joint-skin",
+            "vfx-package": "extracted-pending-conversion-and-event-binding",
+            "audio-package": "steam-native-packages-extracted-pending-decode",
+            "character-configuration": "indexed-only-24-selected-files-pending-extraction",
+            "skill-configuration": "indexed-only-16-selected-files-pending-extraction"
+          },
           "publicationStatus": "s3-readback-verified",
           "containers": [
             {
@@ -47616,7 +47689,7 @@
           },
           "filesManifest": {
             "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/source-manifest.json",
-            "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+            "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
           },
           "extractedFilesIndex": {
             "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
@@ -47626,8 +47699,8 @@
           "gitEvidence": [
             {
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/source-manifest.json",
-              "bytes": 6500,
-              "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+              "bytes": 6783,
+              "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
             },
             {
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/files.jsonl.gz",
@@ -47660,6 +47733,21 @@
               "sha256": "bbcfc44b58cac05b35d59312ffc9ffb0ea312edfd386390bd184ce13ff9fd1d7"
             },
             {
+              "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+              "bytes": 24114,
+              "sha256": "c546a0b8bd503cccff4652891e24db3298199cdc15094bdbd78a8af26cb3a3d1"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json",
+              "bytes": 2166,
+              "sha256": "7c9b9175bfca6d015347d588037d1fd8c0926339800e268488dd13ce66c4a737"
+            },
+            {
+              "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz",
+              "bytes": 16790,
+              "sha256": "0f9a702cdfd1fd425d797f1269b933b41f9dac1ca68d9aa3f5cb113b99b43756"
+            },
+            {
               "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/front.png",
               "bytes": 288881,
               "sha256": "608511f2d44cbb761ccfbccd37d281d81391535208eec1126e23fdb0a2762529"
@@ -47675,6 +47763,43 @@
               "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
             }
           ],
+          "gameConfigurationEvidence": {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+            "selectedPaths": 40,
+            "selectedPackageStems": 20,
+            "selectedPathsPresentInFrozenExtraction": 0,
+            "selectedPathsPendingExtraction": 40,
+            "state": "indexed-only-pending-approved-aes-key-extraction"
+          },
+          "relatedExistingAudio": {
+            "newThisAcquisition": false,
+            "sourceId": "parallel-ps-jumpforce-audio",
+            "groupId": "parallel-ps-jumpforce-audio:JForce_Dai",
+            "heroIds": [
+              "godie-nbbc"
+            ],
+            "relatedFormHeroIdsPendingReview": [
+              "godie-n01c"
+            ],
+            "fileCount": 261,
+            "bytes": 7868623,
+            "seconds": 420.93145300000015,
+            "categoryCounts": {
+              "sound-effect": 14,
+              "voice-source-label-unreviewed": 247
+            },
+            "classification": {
+              "basis": "source folder labels only: chr0430_ActVoice versus chr0430_ActSE",
+              "languageReviewed": false,
+              "speakerReviewed": false,
+              "transcriptReviewed": false,
+              "synthesisReady": false,
+              "note": "ActVoice is retained as an unreviewed source label; it is not proof that every clip is Dai speech or Japanese."
+            },
+            "gitSummaryPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json",
+            "gitFilesPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz",
+            "allLocalFilesRehashed": true
+          },
           "identityRecords": [
             {
               "name": "小呆／達伊",
@@ -47720,7 +47845,8 @@
               "modelState": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
               "animationState": "no-accepted-native-clips-in-current-export",
               "vfxState": "native-packages-extracted-pending-conversion",
-              "audioState": "native-packages-extracted-pending-decode-and-listening-review",
+              "audioState": "steam-native-packages-extracted-pending-decode; separate-public-source-261-ogg-rehashed-pending-listening-review",
+              "configurationState": "40-patch-selected-character-and-skill-files-indexed-none-extracted",
               "defaultEligible": false,
               "backendSelectable": false,
               "deployed": false
@@ -47738,12 +47864,14 @@
             "selectionVerified": false,
             "productionDeployed": false
           },
-          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+          "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
           "limitations": [
             "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
             "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
             "No native animation clips have been accepted from the current export.",
-            "VFX and audio packages are not decoded or bound to GGD events.",
+            "Character and skill configuration packages are indexed but not extracted or parsed; animation references are unresolved.",
+            "Steam-native VFX and audio packages are not converted or bound to GGD events.",
+            "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
             "No model option is registered, selectable or deployed from this source yet.",
             "Redistribution rights for original game assets are not asserted."
           ],
@@ -173419,6 +173547,15 @@
           "character-configuration",
           "skill-configuration"
         ],
+        "assetKindStates": {
+          "model-package": "extracted-and-converted-review-glb",
+          "texture-material-package": "extracted-and-bound-generic-pbr-parent-shader-parity-pending",
+          "skeleton-package": "extracted-159-joint-skin",
+          "vfx-package": "extracted-pending-conversion-and-event-binding",
+          "audio-package": "steam-native-packages-extracted-pending-decode",
+          "character-configuration": "indexed-only-24-selected-files-pending-extraction",
+          "skill-configuration": "indexed-only-16-selected-files-pending-extraction"
+        },
         "publicationStatus": "s3-readback-verified",
         "containers": [
           {
@@ -173486,7 +173623,7 @@
         },
         "filesManifest": {
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/source-manifest.json",
-          "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+          "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
         },
         "extractedFilesIndex": {
           "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
@@ -173496,8 +173633,8 @@
         "gitEvidence": [
           {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/source-manifest.json",
-            "bytes": 6500,
-            "sha256": "634d090158da7671cfac0ae5e9e81f4e473ba7574186de1577bb7df0aa05a3bf"
+            "bytes": 6783,
+            "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
           },
           {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/files.jsonl.gz",
@@ -173530,6 +173667,21 @@
             "sha256": "bbcfc44b58cac05b35d59312ffc9ffb0ea312edfd386390bd184ce13ff9fd1d7"
           },
           {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+            "bytes": 24114,
+            "sha256": "c546a0b8bd503cccff4652891e24db3298199cdc15094bdbd78a8af26cb3a3d1"
+          },
+          {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json",
+            "bytes": 2166,
+            "sha256": "7c9b9175bfca6d015347d588037d1fd8c0926339800e268488dd13ce66c4a737"
+          },
+          {
+            "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz",
+            "bytes": 16790,
+            "sha256": "0f9a702cdfd1fd425d797f1269b933b41f9dac1ca68d9aa3f5cb113b99b43756"
+          },
+          {
             "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/front.png",
             "bytes": 288881,
             "sha256": "608511f2d44cbb761ccfbccd37d281d81391535208eec1126e23fdb0a2762529"
@@ -173545,6 +173697,43 @@
             "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
           }
         ],
+        "gameConfigurationEvidence": {
+          "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/game-config-index.json",
+          "selectedPaths": 40,
+          "selectedPackageStems": 20,
+          "selectedPathsPresentInFrozenExtraction": 0,
+          "selectedPathsPendingExtraction": 40,
+          "state": "indexed-only-pending-approved-aes-key-extraction"
+        },
+        "relatedExistingAudio": {
+          "newThisAcquisition": false,
+          "sourceId": "parallel-ps-jumpforce-audio",
+          "groupId": "parallel-ps-jumpforce-audio:JForce_Dai",
+          "heroIds": [
+            "godie-nbbc"
+          ],
+          "relatedFormHeroIdsPendingReview": [
+            "godie-n01c"
+          ],
+          "fileCount": 261,
+          "bytes": 7868623,
+          "seconds": 420.93145300000015,
+          "categoryCounts": {
+            "sound-effect": 14,
+            "voice-source-label-unreviewed": 247
+          },
+          "classification": {
+            "basis": "source folder labels only: chr0430_ActVoice versus chr0430_ActSE",
+            "languageReviewed": false,
+            "speakerReviewed": false,
+            "transcriptReviewed": false,
+            "synthesisReady": false,
+            "note": "ActVoice is retained as an unreviewed source label; it is not proof that every clip is Dai speech or Japanese."
+          },
+          "gitSummaryPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-summary.json",
+          "gitFilesPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/audio-file-index.jsonl.gz",
+          "allLocalFilesRehashed": true
+        },
         "identityRecords": [
           {
             "name": "小呆／達伊",
@@ -173590,7 +173779,8 @@
             "modelState": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
             "animationState": "no-accepted-native-clips-in-current-export",
             "vfxState": "native-packages-extracted-pending-conversion",
-            "audioState": "native-packages-extracted-pending-decode-and-listening-review",
+            "audioState": "steam-native-packages-extracted-pending-decode; separate-public-source-261-ogg-rehashed-pending-listening-review",
+            "configurationState": "40-patch-selected-character-and-skill-files-indexed-none-extracted",
             "defaultEligible": false,
             "backendSelectable": false,
             "deployed": false
@@ -173608,12 +173798,14 @@
           "selectionVerified": false,
           "productionDeployed": false
         },
-        "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+        "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. The PAK index also proves 40 patch-selected Game configuration files, but none are in the frozen extraction. A separate previously acquired Dai audio source has 261 local OGG files rehashed with zero errors; its 247 ActVoice and 14 ActSE labels remain listening-unreviewed. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": [
           "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
           "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
           "No native animation clips have been accepted from the current export.",
-          "VFX and audio packages are not decoded or bound to GGD events.",
+          "Character and skill configuration packages are indexed but not extracted or parsed; animation references are unresolved.",
+          "Steam-native VFX and audio packages are not converted or bound to GGD events.",
+          "The related 261 OGG files are from an already archived public source, not newly decoded from the Steam PAKs; language, speaker and transcript remain unreviewed.",
           "No model option is registered, selectable or deployed from this source yet.",
           "Redistribution rights for original game assets are not asserted."
         ],

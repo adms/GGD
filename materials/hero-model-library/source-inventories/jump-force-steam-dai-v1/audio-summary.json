@@ -1,0 +1,58 @@
+{
+  "schema": "ggd-jump-force-dai-existing-audio-audit@1",
+  "steamSourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "relatedAudioSourceId": "parallel-ps-jumpforce-audio",
+  "groupId": "parallel-ps-jumpforce-audio:JForce_Dai",
+  "characterNameZh": "小呆／達伊",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc"
+  ],
+  "relatedFormHeroIdsPendingReview": [
+    "godie-n01c"
+  ],
+  "inputs": {
+    "audioValidation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jumpforce-audio/audio-validation.json",
+      "sha256": "2ad5611f375451ed893630141f360fe5ab1533deb812c8917119926ad96e122b"
+    },
+    "voiceIndex": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/voice-index.json",
+      "sha256": "3d6fa12486e5909ee304ff79c887af12050b8d8857ad97312941dd6e35dd73de"
+    },
+    "voiceFiles": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/voice-files.jsonl.gz",
+      "sha256": "8d310de8ddea62d94cce74210f8d2686661e421d9ac623a16ab797c2bb82e6ac"
+    }
+  },
+  "counts": {
+    "files": 261,
+    "bytes": 7868623,
+    "seconds": 420.93145300000015,
+    "categoryCounts": {
+      "sound-effect": 14,
+      "voice-source-label-unreviewed": 247
+    },
+    "categorySeconds": {
+      "sound-effect": 15.275291999999999,
+      "voice-source-label-unreviewed": 405.65616100000017
+    },
+    "errors": 0
+  },
+  "checks": {
+    "expectedFileCount": true,
+    "centralGroupFileCountMatch": true,
+    "centralFileRowsMatch": true,
+    "allLocalFilesRehashed": true,
+    "allDecodeFlagsPass": true
+  },
+  "classification": {
+    "basis": "source folder labels only: chr0430_ActVoice versus chr0430_ActSE",
+    "languageReviewed": false,
+    "speakerReviewed": false,
+    "transcriptReviewed": false,
+    "synthesisReady": false,
+    "note": "ActVoice is retained as an unreviewed source label; it is not proof that every clip is Dai speech or Japanese."
+  },
+  "errors": []
+}

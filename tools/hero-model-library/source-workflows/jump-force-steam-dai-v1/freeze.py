@@ -149,6 +149,9 @@ def main() -> int:
             "sourceFound": True,
             "downloaded": True,
             "extracted": True,
+            "gameConfigurationPathsIndexed": True,
+            "gameConfigurationPackagesExtracted": False,
+            "gameConfigurationPackagesParsed": False,
             "convertedToGgd": False,
             "visuallyAccepted": False,
             "registered": False,
@@ -158,6 +161,7 @@ def main() -> int:
         "gaps": [
             "GGD GLB composition and material binding are not complete.",
             "No native animation clips are present in the current model export.",
+            "Character and skill configuration paths are indexed separately, but their 40 patch-selected files are absent from this frozen extraction.",
             "VFX and audio packages are extracted but not decoded or event-bound.",
             "Backend registration and production switch verification are pending.",
         ],
