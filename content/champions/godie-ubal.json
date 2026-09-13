@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法師",
-  "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
+  "modelKey": "version.body.2720d256116ac94d911e910d126ae25bb5cae67fcefd4442",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -297,11 +297,31 @@
     },
     {
       "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
-      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復高面數保留版）",
       "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-      "modelSha256": "3e567a65de18d2807adf9ff94bff2eefb0558c3a86e94c5370ee307dee7b6924",
-      "binarySha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+      "modelSha256": "b5c198ed21f19471b33f1ad0da2d9f78be81b3c6d47a237b73c5392322b6cbf6",
+      "binarySha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
       "registeredAt": "2026-09-13T11:29:19.327Z",
+      "source": {
+        "kind": "exact",
+        "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2720d256116ac94d911e910d126ae25bb5cae67fcefd4442",
+      "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復＋7,998 面正式採用減面）",
+      "sourceModelKey": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+      "modelSha256": "8c4e54267d706e691f29c4f8c13ca8cacea78f27be376bed32aa246184975ec8",
+      "binarySha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00",
+      "registeredAt": "2026-09-13T20:17:10.040Z",
       "source": {
         "kind": "exact",
         "character": "巴恩大魔王（EN801，變身前／老巴恩）",

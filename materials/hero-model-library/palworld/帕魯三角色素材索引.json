@@ -3,7 +3,7 @@
   "inputs": [
     {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "sha256": "b4f5af9f9fe41f5810cfeb402f0416784718e4679e705d872323a0170053c38c"
+      "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
     },
     {
       "gitPath": "materials/hero-model-library/public-source-files.json",
@@ -11,7 +11,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "4318599ddd99e47edac7afa7df5aee1d6ac2de752fd60da70ae9d6c07f680a27"
+      "sha256": "006c317ff4dd7aaf8f20930e2c9ae269d28df423ac267fad1e0abb8ab731b3f1"
     },
     {
       "gitPath": "materials/hero-model-library/palworld/character-settings.json",
@@ -19,7 +19,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "sha256": "da6f6410867dcace47605c1f691666d507c34c0822fb9ed3e42054bfe3c0c8ef"
+      "sha256": "1829625349481d3eaf32548924ea73988144506d1c3ce1d9dd4d2a4acb051f00"
     }
   ],
   "characterCount": 3,
@@ -882,8 +882,8 @@
         "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
         "package": {
           "status": "passed",
-          "digest": "sha256:9d0e00cae6333ff94c8779ea6b5428af99aaecf69ca7264c55fddfa0e5dc2076",
-          "zipSha256": "sha256:75bfb0ea55f3fbcc9475a4dfb61f0bf03fbc2392dff2c40e9f95a53cd7482a25",
+          "digest": "sha256:cd7fba0cf733ae9d069c3e228245b82b4b976a9888c36c2598ffee8547f9446b",
+          "zipSha256": "sha256:fcf6e827e4c10737bdce4f738f0a5e0897c6e9f70ff922873345c08c070dc918",
           "zipBytes": 6288568,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -2254,7 +2254,7 @@
         "defaultModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
         "modelOptions": [
           "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
-          "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
         ],
         "contentSchema": {
           "modelSchema": "model@1",
@@ -2277,7 +2277,7 @@
           "status": "eligible-registered-alternative",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
           ],
           "defaultModelPolicyEligible": false,
           "registeredOptionPreserved": true,
@@ -2302,20 +2302,20 @@
             }
           },
           {
-            "modelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+            "modelKey": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
             "isDefault": false,
             "triangles": 7996,
             "status": "eligible",
             "currentPolicyEligible": true,
             "modelDocument": {
-              "gitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
-              "sha256": "1911ab362958f48a9425dac6ea38082b2f2c93e96e3ce1dad24ba4ff7eea9c12",
+              "gitPath": "content/models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
+              "sha256": "b74809087a19d4defba4557ec46d0c5355c9442136a0af1b249ea1032b9fc23c",
               "bytes": 456
             },
             "modelGlb": {
-              "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-              "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7",
-              "bytes": 3795720
+              "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+              "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+              "bytes": 3793672
             }
           }
         ],
@@ -2341,8 +2341,8 @@
         "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
         "package": {
           "status": "passed",
-          "digest": "sha256:729903bd2d7be5716a89272d792f9c17721cc5fce000b8164090626523e127bd",
-          "zipSha256": "sha256:2cf9186d61e0f19d39ebe2d802df45fdad706219adf18c935976097b5c3c4772",
+          "digest": "sha256:e59c2226574aa61568381b8e25a8407e7db1ed22a5521bf402ef2b274ac84e41",
+          "zipSha256": "sha256:bbdf65d06cacf1b7cfb0bf809374814511cbde8c0c9e8f671fa0fb91181c3253",
           "zipBytes": 6855714,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -2368,7 +2368,7 @@
         "status": "eligible-registered-alternative",
         "currentPolicyEligible": true,
         "policyEligibleModelKeys": [
-          "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+          "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
         ],
         "defaultModelPolicyEligible": false,
         "registeredOptionPreserved": true,
@@ -3517,8 +3517,8 @@
         "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
         "package": {
           "status": "passed",
-          "digest": "sha256:631f447522ef4e5ba8d954969ddd39b9094c8f360634345d99231110ad672620",
-          "zipSha256": "sha256:50fdc9fec3b4b5d19385e61b949b2be5dc7cfc8afed171bdc5f3448b352dda83",
+          "digest": "sha256:dda9491d0dda7622790e2b1519680920a91f1515b62e3a4fd4ef3905efe365d9",
+          "zipSha256": "sha256:6a116c3b276baa87d3ffb52527349fdc56386e78851d5191a0d8045d72f8736f",
           "zipBytes": 4401433,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"

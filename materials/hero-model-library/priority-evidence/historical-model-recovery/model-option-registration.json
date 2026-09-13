@@ -9,23 +9,23 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
-      "bytes": 15161,
-      "sha256": "63d392db90b7b48aeca6cb2f15c049602a66353aafa8d1927b9812d8d7efce38"
+      "bytes": 16081,
+      "sha256": "cdf5953408a9b7eeab9d983f9471b52ce8c0cee05dc19c6603e7563cb9454f42"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
-      "bytes": 43391,
-      "sha256": "9f866faf1def288280c019db79bd313647e685dcd90829c810e956c8bb8be00e"
+      "bytes": 59054,
+      "sha256": "2bb1ecaf685ed7ca6e6afb4ae20281c6a19fe88b056ee91735aba58a51a7a1ab"
     },
     {
       "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
       "bytes": 5344,
-      "sha256": "3aa9717751f182ce77ae6c38b5264db2a77c1394ca49535c32fae4f0e050f0db"
+      "sha256": "724473673ee76d78a5c484f042c9e3c8da9a036d2f189c650a40d1f1b1db7ca6"
     },
     {
       "gitPath": "tools/hero-model-library/register_historical_model_options.mts",
-      "bytes": 7811,
-      "sha256": "b8c7c5e26523f78d619f7e1d94cbcd1330d26bd06c3c220005998f4df43a1c02"
+      "bytes": 7876,
+      "sha256": "2b45abe59b287a6817836243f377727f54f2454479f002d2525163ccb5acb0e6"
     }
   ],
   "blocked": [],
@@ -57,29 +57,31 @@
       "nativeClipCount": 5,
       "metrics": {
         "triangles": 8468,
+        "drawPrimitives": 3,
         "maxTextureEdge": 256,
         "maxAnimationChannels": 225,
-        "skins": 1
+        "skins": 1,
+        "joints": 75
       },
       "deathPresentation": "native-hurt-clip-plus-authorized-runtime-fade",
       "runtimeDropdownRegistered": true,
       "productionDeploymentVerified": false
     },
     {
-      "componentId": "historical-astralym-decimated-f77cf1ee",
+      "componentId": "historical-astralym-decimated-c45f111d",
       "validationComponentId": "historical-astralym-7bc2fa3f8",
       "heroId": "acquired-astralym",
-      "modelKey": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+      "modelKey": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
       "label": "枯星龍／7bc2fa3f8 發光紋理保護減面版",
       "modelDocument": {
-        "gitPath": "content/models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
+        "gitPath": "content/models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
         "bytes": 456,
-        "sha256": "1911ab362958f48a9425dac6ea38082b2f2c93e96e3ce1dad24ba4ff7eea9c12"
+        "sha256": "b74809087a19d4defba4557ec46d0c5355c9442136a0af1b249ea1032b9fc23c"
       },
       "modelGlb": {
-        "gitPath": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-        "bytes": 3795720,
-        "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
+        "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+        "bytes": 3793672,
+        "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
       },
       "selectedClips": {
         "idle": "Idle",
@@ -92,9 +94,11 @@
       "nativeClipCount": 5,
       "metrics": {
         "triangles": 7996,
+        "drawPrimitives": 3,
         "maxTextureEdge": 256,
         "maxAnimationChannels": 435,
-        "skins": 1
+        "skins": 1,
+        "joints": 145
       },
       "deathPresentation": "native-hurt-clip-plus-authorized-runtime-fade",
       "runtimeDropdownRegistered": true,
@@ -127,9 +131,11 @@
       "nativeClipCount": 6,
       "metrics": {
         "triangles": 1202,
+        "drawPrimitives": 1,
         "maxTextureEdge": 256,
         "maxAnimationChannels": 54,
-        "skins": 1
+        "skins": 1,
+        "joints": 17
       },
       "deathPresentation": "native-death-clip",
       "runtimeDropdownRegistered": true,
@@ -162,9 +168,11 @@
       "nativeClipCount": 6,
       "metrics": {
         "triangles": 3274,
+        "drawPrimitives": 1,
         "maxTextureEdge": 256,
         "maxAnimationChannels": 96,
-        "skins": 1
+        "skins": 1,
+        "joints": 31
       },
       "deathPresentation": "native-death-clip",
       "runtimeDropdownRegistered": true,

@@ -28,6 +28,15 @@ OUTPUT = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-
 CONVERSION_PROBE = OUTPUT / "conversion-probe.json"
 CLOSURE_CONVERSION_PROBE = OUTPUT / "closure-conversion-probe.json"
 CLOSURE_S3_BACKUP_RECEIPT = OUTPUT / "dependency-closure-s3-backup-receipt.json"
+DEPENDENCY_EXPORT_MANIFEST = LIBRARY / "conversions/infinity-strash-popp-vfx-dependency-export-v1/source-manifest.json"
+DEPENDENCY_EXPORT_S3_BACKUP_RECEIPT = OUTPUT / "dependency-export-s3-backup-receipt.json"
+DEPENDENCY_SUPPORT_CATALOG = OUTPUT / "dependency-support-catalog.json"
+DEPENDENCY_SUPPORT_CATALOG_RECEIPT = OUTPUT / "dependency-support-catalog-receipt.json"
+STATICMESH_RECOVERY_RECEIPT = OUTPUT / "staticmesh-recovery-receipt.json"
+STATICMESH_RECOVERY_KHRONOS = OUTPUT / "staticmesh-recovery-khronos.json"
+STATICMESH_RECOVERY_S3_BACKUP_RECEIPT = OUTPUT / "staticmesh-recovery-s3-backup-receipt.json"
+VFX_RECONSTRUCTION_CANDIDATES = OUTPUT / "vfx-reconstruction-candidates.json"
+VFX_RECONSTRUCTION_RECEIPT = OUTPUT / "vfx-reconstruction-candidates-receipt.json"
 
 
 def sha256(path: Path) -> str:
@@ -309,7 +318,13 @@ def render_markdown(receipt: dict) -> str:
         f"- VFX 引用：{counts['vfxReferences']}；直接套件對已取得：{counts['vfxDirectPairsAcquired']}；GGD 轉換完成：{counts['vfxConverted']}。",
         f"- VFX 第一層依賴：{counts['vfxFirstLevelDependencyReferenceOccurrences']} 次引用／{counts['vfxFirstLevelUniqueDependencyReferences']} 個唯一 package。",
         f"- VFX 非腳本 package 遞迴閉包：發現 {counts['vfxClosurePackageReferencesDiscovered']}；取得 {counts['vfxClosurePackageReferencesAcquired']}；缺失 {counts['vfxClosurePackageReferencesMissing']}；閉包完整：{str(counts['vfxNonScriptPackageDependencyClosureComplete']).lower()}。",
+        f"- VFX 重建支援素材：309 個 package 全數嘗試；{counts['vfxDependencyPackagesExported']} 個有輸出，匯出 {counts['vfxDependencySupportFilesExported']} 檔／{counts['vfxDependencySupportBytesExported']} bytes（{counts['vfxDependencySupportExtensionCounts']}）。",
+        f"- VFX 支援素材目錄：{counts['vfxDependencySupportFilesReadable']}/{counts['vfxDependencySupportFilesExported']} 可完整解碼；依 SHA-256 分為 {counts['vfxDependencySupportUniqueByteAssets']} 個獨立位元組素材，{counts['vfxDependencySupportDuplicateOccurrences']} 個重複 occurrence 的 package／來源關係仍完整保留。",
         f"- VFX 閉包 S3 legacy 歸檔：{receipt['sourceAvailability']['dependencyClosureS3Backup']['s3Uri']}；完整下載讀回與逐成員 SHA-256：通過。",
+        f"- VFX 重建支援素材 S3 legacy 歸檔：{receipt['sourceAvailability']['dependencySupportExport']['s3Backup']['s3Uri']}；完整下載讀回與逐成員 SHA-256：通過。",
+        f"- 原先失敗的 StaticMesh：{receipt['summary']['vfxStaticMeshPackagesRecovered']}/33 已恢復為 {receipt['summary']['vfxStaticMeshGlbFiles']} 個 GLB，Khronos 0 error / 0 warning；尚未轉換 {receipt['summary']['vfxStaticMeshPackagesStillBlocked']}。",
+        f"- StaticMesh 恢復成果 S3 legacy 歸檔：{receipt['sourceAvailability']['staticMeshRecovery']['s3Backup']['s3Uri']}；完整下載讀回與逐成員 SHA-256：通過。",
+        f"- 重建候選配方：{receipt['summary']['vfxNiagaraSystemCandidates']} 個 Niagara system、{receipt['summary']['vfxSupportRoots']} 個支援根、{receipt['summary']['vfxCandidateRecipes']} 份靜態候選配方；87/87 unique image 與 33/33 mesh 已連回來源。",
         f"- 事件引用：{counts['eventReferences']}；原始套件對已取得：{counts['eventPairsAcquired']}。",
         f"- 可播放逐項審查候選：{counts['audioReviewCandidates']}；使用者已核准：0。",
         f"- 41 筆 PN020 直接事件以外另有 {counts['otherExternalReferences']} 筆相依引用；其中 {counts['supportingGenericSfxReferences']} 筆通用魔法音效事件尚未抽出與對媒體。",
@@ -329,7 +344,7 @@ def render_markdown(receipt: dict) -> str:
         "",
         "## 仍缺",
         "",
-        "- 14 個 NiagaraSystem 的非腳本 package 依賴閉包已取得，但尚無可重現的 GGD 轉換器與原作播放視覺驗收。",
+        "- 17 個根引用精確分為 14 個 NiagaraSystem、2 個 CurveFloat 與 1 個 Material Parameter Collection；貼圖／HDR 與 33 個靜態網格都已連回候選配方。Niagara 程式及原作播放時序仍未轉成 GGD VFX。",
         "- 2 個 CurveFloat 與 1 個 MaterialParameterCollection 是支援元件，不能單獨冒稱完整特效。",
         "- 事件到 GGD 技能時點尚未完成；全部音效／語音候選需逐項聽審後才能綁定。",
         "- 依賴索引另含 10 個通用魔法音效事件；它們不在指定的 41 個 PN020 直接事件內，本批未將名稱當成已取得音檔。",
@@ -369,6 +384,15 @@ def main() -> int:
     parser.add_argument("--conversion-probe", type=Path, default=CONVERSION_PROBE)
     parser.add_argument("--closure-conversion-probe", type=Path, default=CLOSURE_CONVERSION_PROBE)
     parser.add_argument("--closure-s3-backup-receipt", type=Path, default=CLOSURE_S3_BACKUP_RECEIPT)
+    parser.add_argument("--dependency-export-manifest", type=Path, default=DEPENDENCY_EXPORT_MANIFEST)
+    parser.add_argument("--dependency-export-s3-backup-receipt", type=Path, default=DEPENDENCY_EXPORT_S3_BACKUP_RECEIPT)
+    parser.add_argument("--dependency-support-catalog", type=Path, default=DEPENDENCY_SUPPORT_CATALOG)
+    parser.add_argument("--dependency-support-catalog-receipt", type=Path, default=DEPENDENCY_SUPPORT_CATALOG_RECEIPT)
+    parser.add_argument("--staticmesh-recovery-receipt", type=Path, default=STATICMESH_RECOVERY_RECEIPT)
+    parser.add_argument("--staticmesh-recovery-khronos", type=Path, default=STATICMESH_RECOVERY_KHRONOS)
+    parser.add_argument("--staticmesh-recovery-s3-backup-receipt", type=Path, default=STATICMESH_RECOVERY_S3_BACKUP_RECEIPT)
+    parser.add_argument("--vfx-reconstruction-candidates", type=Path, default=VFX_RECONSTRUCTION_CANDIDATES)
+    parser.add_argument("--vfx-reconstruction-receipt", type=Path, default=VFX_RECONSTRUCTION_RECEIPT)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     dependency_index = json.loads(args.dependency_index.read_text())
@@ -379,6 +403,15 @@ def main() -> int:
     conversion_probe = json.loads(args.conversion_probe.read_text())
     closure_conversion_probe = json.loads(args.closure_conversion_probe.read_text())
     closure_s3_backup = json.loads(args.closure_s3_backup_receipt.read_text())
+    dependency_export = json.loads(args.dependency_export_manifest.read_text())
+    dependency_export_s3_backup = json.loads(args.dependency_export_s3_backup_receipt.read_text())
+    dependency_support_catalog = json.loads(args.dependency_support_catalog.read_text())
+    dependency_support_catalog_receipt = json.loads(args.dependency_support_catalog_receipt.read_text())
+    staticmesh_recovery = json.loads(args.staticmesh_recovery_receipt.read_text())
+    staticmesh_khronos = json.loads(args.staticmesh_recovery_khronos.read_text())
+    staticmesh_s3_backup = json.loads(args.staticmesh_recovery_s3_backup_receipt.read_text())
+    vfx_reconstruction = json.loads(args.vfx_reconstruction_candidates.read_text())
+    vfx_reconstruction_receipt = json.loads(args.vfx_reconstruction_receipt.read_text())
     dependencies = dependency_index["externalPackageDependencies"]
     vfx_references = [reference for reference in dependencies if reference.startswith("/Game/Strash/VFX/")]
     event_references = [
@@ -416,7 +449,73 @@ def main() -> int:
                 "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/"
             )):
         raise ValueError("VFX dependency closure S3 backup receipt is absent, unverified or outside the authorized prefix")
-    vfx_rows = build_vfx_rows(vfx_references, args.raw_vfx, conversion_probe, closure_conversion_probe)
+    dependency_export_root = str(args.dependency_export_manifest.resolve().parent)
+    if (dependency_export.get("schema") != "ggd.infinity-strash-popp-vfx-dependency-export@1"
+            or dependency_export.get("parentSourceId") != vfx_closure_manifest.get("sourceId")
+            or dependency_export.get("summary", {}).get("packagesAttempted") != vfx_closure_manifest["summary"]["referencesAcquired"]
+            or dependency_export.get("states", {}).get("ggdVfxConverted") is not False):
+        raise ValueError("VFX dependency support export manifest is absent, mismatched or overclaims conversion")
+    for row in dependency_export.get("files", []):
+        path = args.dependency_export_manifest.resolve().parent / row["path"]
+        if not path.is_file() or path.stat().st_size != row["bytes"] or sha256(path) != row["sha256"]:
+            raise ValueError(f"VFX dependency support export hash drift: {path}")
+    if (dependency_export_s3_backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or dependency_export_s3_backup.get("source") != dependency_export_root
+            or not dependency_export_s3_backup.get("fullGetVerified")
+            or not dependency_export_s3_backup.get("allMemberSha256Verified")
+            or not dependency_export_s3_backup.get("localUnchanged")
+            or not str(dependency_export_s3_backup.get("s3Uri", "")).startswith(
+                "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-dependency-export-v1/"
+            )):
+        raise ValueError("VFX dependency support export S3 backup receipt is absent, unverified or outside the authorized prefix")
+    if (dependency_support_catalog.get("schema") != "ggd.infinity-strash-popp-vfx-support-catalog@1"
+            or dependency_support_catalog.get("summary", {}).get("fileOccurrencesInspected") != dependency_export["summary"]["filesExported"]
+            or dependency_support_catalog.get("summary", {}).get("fileOccurrencesReadable") != dependency_export["summary"]["filesExported"]
+            or dependency_support_catalog.get("states", {}).get("ggdVfxConverted") is not False):
+        raise ValueError("VFX dependency support catalog is absent, incomplete or overclaims conversion")
+    catalog_pin = dependency_support_catalog_receipt.get("catalog", {})
+    contact_sheet_pin = dependency_support_catalog_receipt.get("contactSheet", {})
+    contact_sheet_path = args.dependency_support_catalog.parent / contact_sheet_pin.get("path", "")
+    if (dependency_support_catalog_receipt.get("schema") != "ggd.infinity-strash-popp-vfx-support-catalog-receipt@1"
+            or catalog_pin.get("bytes") != args.dependency_support_catalog.stat().st_size
+            or catalog_pin.get("sha256") != sha256(args.dependency_support_catalog)
+            or not contact_sheet_path.is_file()
+            or contact_sheet_pin.get("bytes") != contact_sheet_path.stat().st_size
+            or contact_sheet_pin.get("sha256") != sha256(contact_sheet_path)):
+        raise ValueError("VFX dependency support catalog receipt is absent or hash-mismatched")
+    staticmesh_root = staticmesh_s3_backup.get("source")
+    if (staticmesh_recovery.get("schema") != "ggd.infinity-strash-popp-vfx-staticmesh-recovery@1"
+            or staticmesh_recovery.get("summary", {}).get("failedStaticMeshPackagesAttempted") != dependency_export["summary"]["packagesFailed"]
+            or staticmesh_recovery.get("summary", {}).get("packagesConverted") != dependency_export["summary"]["packagesFailed"]
+            or staticmesh_recovery.get("summary", {}).get("packagesStillBlocked") != 0
+            or staticmesh_khronos.get("summary", {}).get("files") != staticmesh_recovery["summary"]["glbFiles"]
+            or staticmesh_khronos.get("summary", {}).get("errors") != 0
+            or staticmesh_khronos.get("summary", {}).get("warnings") != 0):
+        raise ValueError("VFX StaticMesh recovery receipts are absent, incomplete or inconsistent")
+    if (staticmesh_s3_backup.get("schema") != "ggd-intake-backup-receipt@1"
+            or not staticmesh_s3_backup.get("fullGetVerified")
+            or not staticmesh_s3_backup.get("allMemberSha256Verified")
+            or not staticmesh_s3_backup.get("localUnchanged")
+            or not str(staticmesh_s3_backup.get("s3Uri", "")).startswith(
+                "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/"
+            )):
+        raise ValueError("VFX StaticMesh recovery S3 backup is absent, unverified or outside the authorized prefix")
+    if (vfx_reconstruction.get("schema") != "ggd.infinity-strash-popp-vfx-reconstruction-candidates@1"
+            or vfx_reconstruction.get("summary", {}).get("rootReferences") != len(vfx_rows := build_vfx_rows(vfx_references, args.raw_vfx, conversion_probe, closure_conversion_probe))
+            or vfx_reconstruction.get("summary", {}).get("niagaraSystemCandidates") != 14
+            or vfx_reconstruction.get("summary", {}).get("convertedStaticMeshAssets") != staticmesh_recovery["summary"]["glbFiles"]
+            or vfx_reconstruction.get("summary", {}).get("ggdVfxBuilt") != 0
+            or vfx_reconstruction.get("summary", {}).get("skillBindingsCreated") != 0):
+        raise ValueError("VFX reconstruction candidate data is absent, incomplete or overclaims conversion")
+    if (vfx_reconstruction_receipt.get("schema") != "ggd.infinity-strash-popp-vfx-reconstruction-candidates-receipt@1"
+            or vfx_reconstruction_receipt.get("summary", {}).get("uniqueTextureAssetsLinked") != dependency_support_catalog["summary"]["uniqueByteAssets"]
+            or vfx_reconstruction_receipt.get("summary", {}).get("convertedStaticMeshesLinked") != staticmesh_recovery["summary"]["glbFiles"]
+            or not vfx_reconstruction_receipt.get("summary", {}).get("allInputAndLinkedBytesVerified")
+            or vfx_reconstruction_receipt.get("states", {}).get("ggdVfxBuilt") is not False
+            or vfx_reconstruction_receipt.get("states", {}).get("runtimeSelectable") is not False):
+        raise ValueError("VFX reconstruction candidate receipt is absent, incomplete or overclaims readiness")
+    # vfx_rows was built above so the candidate root count is validated against
+    # the same source package rows used by this receipt.
     event_rows, candidates = build_event_rows(event_references, args.raw_events, audio_index)
     receipt = {
         "schema": "ggd.infinity-strash-popp-vfx-events@1",
@@ -438,6 +537,41 @@ def main() -> int:
                 "fullGetVerified": True,
                 "allMemberSha256Verified": True,
             },
+            "dependencySupportExport": {
+                "root": dependency_export_root,
+                "manifest": proof(args.dependency_export_manifest),
+                "s3Backup": {
+                    **proof(args.dependency_export_s3_backup_receipt),
+                    "s3Uri": dependency_export_s3_backup["s3Uri"],
+                    "manifestUri": dependency_export_s3_backup["manifestUri"],
+                    "archiveSha256": dependency_export_s3_backup["archiveSha256"],
+                    "archiveBytes": dependency_export_s3_backup["archiveBytes"],
+                    "fileCount": dependency_export_s3_backup["fileCount"],
+                    "fullGetVerified": True,
+                    "allMemberSha256Verified": True,
+                },
+            },
+            "staticMeshRecovery": {
+                "root": staticmesh_root,
+                "receipt": proof(args.staticmesh_recovery_receipt),
+                "khronos": proof(args.staticmesh_recovery_khronos),
+                "s3Backup": {
+                    **proof(args.staticmesh_recovery_s3_backup_receipt),
+                    "s3Uri": staticmesh_s3_backup["s3Uri"],
+                    "manifestUri": staticmesh_s3_backup["manifestUri"],
+                    "archiveSha256": staticmesh_s3_backup["archiveSha256"],
+                    "archiveBytes": staticmesh_s3_backup["archiveBytes"],
+                    "fileCount": staticmesh_s3_backup["fileCount"],
+                    "fullGetVerified": True,
+                    "allMemberSha256Verified": True,
+                },
+            },
+            "vfxReconstructionCandidates": {
+                "data": proof(args.vfx_reconstruction_candidates),
+                "receipt": proof(args.vfx_reconstruction_receipt),
+                "reviewHtml": proof(args.vfx_reconstruction_candidates.parent / "vfx-reconstruction-review.html"),
+                "contactSheet": proof(args.vfx_reconstruction_candidates.parent / "vfx-reconstruction-candidate-preview.png"),
+            },
             "eventExtractRoot": str(args.raw_events.resolve()),
         },
         "inputs": {
@@ -446,6 +580,13 @@ def main() -> int:
             "conversionProbe": proof(args.conversion_probe),
             "vfxDependencyClosureManifest": proof(args.vfx_closure_manifest),
             "closureConversionProbe": proof(args.closure_conversion_probe),
+            "dependencySupportExportManifest": proof(args.dependency_export_manifest),
+            "dependencySupportCatalog": proof(args.dependency_support_catalog),
+            "dependencySupportCatalogReceipt": proof(args.dependency_support_catalog_receipt),
+            "staticMeshRecoveryReceipt": proof(args.staticmesh_recovery_receipt),
+            "staticMeshRecoveryKhronos": proof(args.staticmesh_recovery_khronos),
+            "vfxReconstructionCandidates": proof(args.vfx_reconstruction_candidates),
+            "vfxReconstructionReceipt": proof(args.vfx_reconstruction_receipt),
         },
         "summary": {
             "vfxReferences": len(vfx_rows),
@@ -457,6 +598,26 @@ def main() -> int:
             "vfxClosurePackageReferencesAcquired": vfx_closure_manifest["summary"]["referencesAcquired"],
             "vfxClosurePackageReferencesMissing": vfx_closure_manifest["summary"]["referencesMissing"],
             "vfxNonScriptPackageDependencyClosureComplete": vfx_closure_manifest["states"]["nonScriptPackageDependencyClosureComplete"],
+            "vfxDependencyPackagesAttempted": dependency_export["summary"]["packagesAttempted"],
+            "vfxDependencyPackagesExported": dependency_export["summary"]["packagesExported"],
+            "vfxDependencyPackagesWithoutExportableOutput": dependency_export["summary"]["packagesWithoutExportableOutput"],
+            "vfxDependencyPackagesFailed": dependency_export["summary"]["packagesFailed"],
+            "vfxDependencyPackagesTimedOut": dependency_export["summary"]["packagesTimedOut"],
+            "vfxDependencySupportFilesExported": dependency_export["summary"]["filesExported"],
+            "vfxDependencySupportBytesExported": dependency_export["summary"]["bytesExported"],
+            "vfxDependencySupportExtensionCounts": dependency_export["summary"]["extensionCounts"],
+            "vfxDependencySupportFilesReadable": dependency_support_catalog["summary"]["fileOccurrencesReadable"],
+            "vfxDependencySupportUniqueByteAssets": dependency_support_catalog["summary"]["uniqueByteAssets"],
+            "vfxDependencySupportDuplicateOccurrences": dependency_support_catalog["summary"]["duplicateOccurrencesCollapsed"],
+            "vfxDependencySupportSemanticGroups": dependency_support_catalog["summary"]["uniqueSemanticGroupCounts"],
+            "vfxStaticMeshPackagesRecovered": staticmesh_recovery["summary"]["packagesConverted"],
+            "vfxStaticMeshPackagesStillBlocked": staticmesh_recovery["summary"]["packagesStillBlocked"],
+            "vfxStaticMeshGlbFiles": staticmesh_recovery["summary"]["glbFiles"],
+            "vfxStaticMeshVertices": staticmesh_recovery["summary"]["vertices"],
+            "vfxStaticMeshTriangles": staticmesh_recovery["summary"]["triangles"],
+            "vfxNiagaraSystemCandidates": vfx_reconstruction["summary"]["niagaraSystemCandidates"],
+            "vfxSupportRoots": vfx_reconstruction["summary"]["supportRoots"],
+            "vfxCandidateRecipes": vfx_reconstruction["summary"]["candidateRecipes"],
             "eventReferences": len(event_rows),
             "eventPairsAcquired": sum(row["packageState"].startswith("acquired") for row in event_rows),
             "audioReviewCandidates": len(candidates),

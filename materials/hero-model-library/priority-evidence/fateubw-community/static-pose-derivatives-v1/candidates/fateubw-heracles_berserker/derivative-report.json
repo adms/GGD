@@ -1,0 +1,80 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+  "candidateId": "fateubw-heracles_berserker",
+  "sourceClip": "idle",
+  "derivedClip": "derived-formula-loop-idle",
+  "classification": "derived-procedural-formula-loop",
+  "sourceAnimationLengthProvided": false,
+  "derivedDurationSeconds": 4.0,
+  "nativeDurationClaim": false,
+  "formulaPeriodEvidence": {
+    "formulas": [
+      "math.sin(time*90)*2-3",
+      "-math.cos(time*90)*2-6",
+      "math.cos(time*90)*2+6"
+    ],
+    "angularRateDegreesPerSecond": 90,
+    "exactPeriodSeconds": 4.0
+  },
+  "sourceFormulas": [
+    "-math.cos(time*90)*2-6",
+    "math.cos(time*90)*2+6",
+    "math.sin(time*90)*2-3"
+  ],
+  "inputs": {
+    "geometry": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
+      "sha256": "587028d53b1ff3ef5acf1ae9bbd0b0c4f51b7500c2e37c73d233bb5a66b556a7",
+      "bytes": 11274
+    },
+    "texture": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/heracles_berserker.png",
+      "sha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e",
+      "bytes": 2657
+    },
+    "animation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
+      "sha256": "e190324ff83cfb006664a1ecd6234c8e6f97e9e4ad4f6d2f943174bc9a11ee24",
+      "bytes": 68664
+    },
+    "derivedAnimationInput": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-heracles_berserker/derived-animation-input.json",
+      "sha256": "16228beec3a6394bf9026d31f8949d469f56936c4c1271113f1cda1727f634a7",
+      "bytes": 485
+    }
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-heracles_berserker/body.glb",
+    "sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+    "bytes": 78492,
+    "animationCount": 1,
+    "channelCount": 2,
+    "outputKeyCount": 482
+  },
+  "process": {
+    "durationPolicy": "exact trigonometric period derived from the retained source formula",
+    "rotationSamplingFps": 60,
+    "intermediateGlb": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-heracles_berserker/intermediate-duration-injected.glb",
+      "sha256": "a60da0a6b4be3374d0a2e89cb619f53ee0d1ba20b35318c6a5cd90f1bc88e591"
+    },
+    "intermediateReport": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-heracles_berserker/intermediate-conversion-report.json",
+      "sha256": "a915599b3b698e7d358c747d3241c80fb03d790e5e49e6700e67a852a59c969c"
+    },
+    "metadataRewrite": "relabels injected duration and clip as derived; no source-authored length is claimed"
+  },
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "rightsStatus": "Source metadata says ARR; redistribution permission remains pending.",
+  "remaining": [
+    "structural and Khronos validation",
+    "WebGL visual review",
+    "GGD action/event mapping",
+    "rights clearance",
+    "backend registration and deployment"
+  ]
+}

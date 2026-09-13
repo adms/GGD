@@ -38,7 +38,7 @@
 | 查單一角色、取得 modelKey 與 Git／S3 檔案位置 | 下方的 `query.py`；程序加 `--json` |
 | 查模型、貼圖、mesh、動畫通道、VFX、粒子與音訊上架限制 | [模型動作特效上架限制.md](模型動作特效上架限制.md)；由 `generate_policy_doc.ts` 產生，不在 README 抄寫數字 |
 | 看優先 15 名按現行門檻重算的通過／阻擋狀態 | [優先 15 名模型現行政策稽核](../hero-model-library/priority-model-policy-audit.md)；由 `audit_priority_release.ts` 直接量測目前 GLB |
-| 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測 25 個現有 GLB |
+| 看獨立元件按現行門檻重算的量測與待減面項目 | `priority-evidence/current-component-policy-audit.json`；由 `audit_current_component_policy.mts` 直接量測，數量以 `totals.audited` 為準 |
 | 查 Windows Steam、模擬器與 ROM 來源庫 | [Windows 遊戲來源盤點](../hero-model-library/source-inventories/windows-game-library.md)；`python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py <關鍵字>`；容器層徹查用 `scan_windows_asset_containers.ps1` |
 | 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |
 | 查 Ultimate「16 名」與 NSandNS2 容器位置 | [16 個動作角色群與來源核對](../hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/README.md)；機器讀 `reconciliation.json → sourceStageCounts`；128 份 body 候選只核對存在與大小，NSP／ZIP 維持 metadata-only |
@@ -65,7 +65,7 @@ python3 tools/hero-model-library/steam-library-bridge/query_windows_game_invento
 
 Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。Git 的機器查詢入口是 `materials/hero-model-library/source-inventories/windows-game-library.json.gz`；它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整未壓縮 JSON 與原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/` 及 S3 `legacy/`，Git 只收壓縮正規化索引與重建／查詢程式。
 
-Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名皆有本機及 S3 讀回驗證的靜態 GLB、骨架與原生動作 GLB。132 段來源片段中已轉換 112 段，另保留 20 段公式驅動或缺少時長的未轉換缺口；Heracles 未被動作命中的末端休息旋轉已用獨立烘焙與完整逆綁定流程處理。這批是 ARR 權利審查中的社群 MOD 儲備，尚未成為 Git 成品、後台選項或正式站內容。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 查詢，摘要以同名 Markdown 顯示。
+Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名皆有本機及 S3 讀回驗證的靜態 GLB、骨架與原生動作 GLB。132 段來源片段中已轉換 127 段原生動作；其餘 5 段來源沒有 `animation_length`，已各自保留靜態姿勢或公式驅動衍生候選，並固定 `nativeDurationClaim=false`。這批是 ARR 權利審查中的社群 MOD 儲備，尚未成為 Git 成品、後台選項或正式站內容。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 查詢，摘要以同名 Markdown 顯示。
 
 FateUBW 實檔驗證使用 `python3 tools/hero-model-library/verify_fateubw_reserve.py --workspace <ABxVFX_EDIT>`。它會逐檔重算來源模型、貼圖、動畫、靜態／原生動作 GLB 與驗收證據的 SHA-256，交叉核對 42 筆中央候選及 S3 讀回收據；省略 `--workspace` 時只驗證 Git 可攜的索引與收據關係。最新本機逐檔收據在 [reserve-integrity.json](../hero-model-library/priority-evidence/fateubw-community/reserve-integrity.json)，該收據仍不表示取得再散布權、後台可切換或已部署。
 

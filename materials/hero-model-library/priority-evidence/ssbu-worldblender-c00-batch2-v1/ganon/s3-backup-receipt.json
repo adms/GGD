@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8.files.json",
+  "archiveSha256": "99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8",
+  "archiveBytes": 10475690,
+  "fileCount": 49,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/cd9d15621fd067d8ad55032b586226d149659e695f7e16b42a76963369c78291/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/cd9d15621fd067d8ad55032b586226d149659e695f7e16b42a76963369c78291/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/cd9d15621fd067d8ad55032b586226d149659e695f7e16b42a76963369c78291/manifest.json"
+}

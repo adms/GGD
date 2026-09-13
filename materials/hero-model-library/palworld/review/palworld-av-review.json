@@ -1,16 +1,16 @@
 {
   "schema": "ggd.palworld-av-review@1",
-  "sourceFingerprint": "d13ea7a3f9b1b57a32f9d842ea3b3def0db023f5c963178daa3f3ec6dd2e851a",
+  "sourceFingerprint": "6da079aca0f5549318cbf7a25abee1bcce3b07258400ec017e0a7c809bbbe09a",
   "sourceInputs": [
     {
       "path": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
       "bytes": 193091,
-      "sha256": "2884ae7d345e0ef72d4aabe8da42f6f0e61cb1258263d274b3cb209a7d5f4077"
+      "sha256": "253ef6dcc5a49ee4ece1b6852c355bb26c1dddaddab480e3cc58f65887ef902a"
     },
     {
       "path": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
       "bytes": 18244,
-      "sha256": "da6f6410867dcace47605c1f691666d507c34c0822fb9ed3e42054bfe3c0c8ef"
+      "sha256": "1829625349481d3eaf32548924ea73988144506d1c3ce1d9dd4d2a4acb051f00"
     },
     {
       "path": "packages/shared/src/content/heroForge/communityAcquiredFirst.ts",
@@ -832,7 +832,7 @@
           "status": "eligible-registered-alternative",
           "currentPolicyEligible": true,
           "policyEligibleModelKeys": [
-            "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"
+            "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"
           ],
           "defaultModelPolicyEligible": false,
           "registeredOptionPreserved": true,

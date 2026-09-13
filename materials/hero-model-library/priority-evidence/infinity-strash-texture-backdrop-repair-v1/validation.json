@@ -1,0 +1,369 @@
+{
+  "schema": "ggd.infinity-strash-texture-backdrop-validation@1",
+  "receipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/receipt.json",
+  "tools": {
+    "khronos": "gltf-validator@2.0.0-dev.3.10",
+    "ggdUpload": "packages/shared/src/content/modelUpload/inspect.ts",
+    "adoption": "packages/shared/src/content/modelUpload/heroModel.ts"
+  },
+  "records": [
+    {
+      "candidateId": "dai-pn010-02",
+      "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+      "bytes": 1986068,
+      "khronos": {
+        "errors": 0,
+        "warnings": 3,
+        "infos": 6
+      },
+      "ggdUpload": {
+        "errors": 0,
+        "warnings": 3,
+        "meshes": 6,
+        "triangles": 16035,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 7057,
+            "sha256": "2ca2785fcddc7c4c480da5248af3e3eb3e0b0a4b9cf6500df2af48887ffac489"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 13169,
+            "sha256": "62ff10bdcc7ce232b139b601b1f9bede8ac2ee89a678ebf93f2a67142c17c06a"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 11952,
+            "sha256": "d95d1df1588d0a684b06a72114e0dffce62f352334e1e919bf0da29e0d85fcf1"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 19742,
+            "sha256": "d00d60c8301fc9c005bdbf18793ef104f00bf993846c1e127f028e13cabf260d"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 6985,
+            "sha256": "9dde646ae7f98f21b7d7dd92fe846cb722e3f14cb211cb1af5fba7e9e6e1298f"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 13341,
+            "sha256": "04eb3dc57bbc51cfa1ae0e708850950345cb064eaf3b3e46b34b39e1a84305af"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 35458,
+            "sha256": "cb29cd482d243688a6bcda8181f3fd7f7f2e8cdca9775d3ce3023b70378711b3"
+          },
+          {
+            "width": 8,
+            "height": 8,
+            "bytes": 79,
+            "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "GGD_native_idle",
+            "duration": 2.5,
+            "channels": 199
+          },
+          {
+            "index": 1,
+            "name": "GGD_native_run",
+            "duration": 0.5833333134651184,
+            "channels": 266
+          },
+          {
+            "index": 2,
+            "name": "GGD_native_attack",
+            "duration": 1.25,
+            "channels": 239
+          },
+          {
+            "index": 3,
+            "name": "GGD_native_special02",
+            "duration": 4.166666507720947,
+            "channels": 151
+          },
+          {
+            "index": 4,
+            "name": "GGD_native_down",
+            "duration": 0.0416666679084301,
+            "channels": 214
+          }
+        ],
+        "skins": 1,
+        "skinnedPrimitives": 6
+      },
+      "runtimeHardLimitsPassed": true,
+      "formalAdoption": {
+        "status": "needs-decimation",
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "visualLitPixelDeltaPctMax": 5,
+        "preserveOriginalLocally": true,
+        "archiveOriginalToS3Legacy": true,
+        "gitOnlyAfterAcceptance": true,
+        "errors": [
+          "三角面 16035 超過素材正式採用門檻 10000；請從保留的原始檔另產生不超過 8000 面的減面候選，並完成視覺與骨架驗收。"
+        ],
+        "warnings": [
+          "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "baseFrozenByteIdentical": true
+    },
+    {
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+      "bytes": 2192280,
+      "khronos": {
+        "errors": 0,
+        "warnings": 3,
+        "infos": 12
+      },
+      "ggdUpload": {
+        "errors": 0,
+        "warnings": 3,
+        "meshes": 6,
+        "triangles": 16882,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 23757,
+            "sha256": "b16a6591ee54c1b6dd7c216edf91ec20fad91a34a73e0e1b84f32d434a52aeb4"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 16745,
+            "sha256": "65b6df0feb12cb75b079bf7287e5cb07126a2b35985c08937091b957aa0b5499"
+          },
+          {
+            "width": 256,
+            "height": 128,
+            "bytes": 25870,
+            "sha256": "e09c516bc6dad71c01852402339c5c2ceae2317f5dc25b1bcdb6fd80efa9e634"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 19742,
+            "sha256": "d00d60c8301fc9c005bdbf18793ef104f00bf993846c1e127f028e13cabf260d"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 6985,
+            "sha256": "9dde646ae7f98f21b7d7dd92fe846cb722e3f14cb211cb1af5fba7e9e6e1298f"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 13341,
+            "sha256": "04eb3dc57bbc51cfa1ae0e708850950345cb064eaf3b3e46b34b39e1a84305af"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 39608,
+            "sha256": "6621419281fb50742874fe114f940cddd3507812b8b61022306ffd4f436c0e08"
+          },
+          {
+            "width": 8,
+            "height": 8,
+            "bytes": 79,
+            "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "GGD_native_idle",
+            "duration": 2.5,
+            "channels": 199
+          },
+          {
+            "index": 1,
+            "name": "GGD_native_run",
+            "duration": 0.5833333134651184,
+            "channels": 266
+          },
+          {
+            "index": 2,
+            "name": "GGD_native_attack",
+            "duration": 1.25,
+            "channels": 239
+          },
+          {
+            "index": 3,
+            "name": "GGD_native_special02",
+            "duration": 4.166666507720947,
+            "channels": 151
+          },
+          {
+            "index": 4,
+            "name": "GGD_native_down",
+            "duration": 0.0416666679084301,
+            "channels": 214
+          }
+        ],
+        "skins": 1,
+        "skinnedPrimitives": 6
+      },
+      "runtimeHardLimitsPassed": true,
+      "formalAdoption": {
+        "status": "needs-decimation",
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "visualLitPixelDeltaPctMax": 5,
+        "preserveOriginalLocally": true,
+        "archiveOriginalToS3Legacy": true,
+        "gitOnlyAfterAcceptance": true,
+        "errors": [
+          "三角面 16882 超過素材正式採用門檻 10000；請從保留的原始檔另產生不超過 8000 面的減面候選，並完成視覺與骨架驗收。"
+        ],
+        "warnings": [
+          "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "baseFrozenByteIdentical": true
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+      "bytes": 3004016,
+      "khronos": {
+        "errors": 0,
+        "warnings": 3,
+        "infos": 6
+      },
+      "ggdUpload": {
+        "errors": 0,
+        "warnings": 3,
+        "meshes": 6,
+        "triangles": 16760,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 9075,
+            "sha256": "121e8a77adb9bfee63c8689d513fdf910586608ca065e465e694fa7d5537342f"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 16577,
+            "sha256": "8559f552bfbeb2789ab4ce2a8dcbe694e5aeb52685304f477813f17c3fd7045c"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 30700,
+            "sha256": "a9665fad6602e43a63945fea9d89810ecd2fd953b4784b4e5fad1fabca810a0e"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 15717,
+            "sha256": "fedd83eb04fbc07beca85234e21ddbf65a8d403a1277a90911b1348585a588e7"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 30865,
+            "sha256": "fae076d3b30819d0db303de2b3b1b0634e983eecb0af7365e403485ddf9f3969"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 16665,
+            "sha256": "80d836ba97ce6d253517e7cf216a39088c4155a50e8b40ca1960d287a98bf181"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 71760,
+            "sha256": "0bc24339dbafafc59e3086eeaa1ae19b84c7b7c8b4698cec1bf829866a35ff04"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 11144,
+            "sha256": "02f867a7ac8845b1dbc41732148b21ac846d6c95be34ac98c15c256e7ab93ab1"
+          }
+        ],
+        "clips": [
+          {
+            "index": 0,
+            "name": "GGD_native_idle",
+            "duration": 3.3333332538604736,
+            "channels": 197
+          },
+          {
+            "index": 1,
+            "name": "GGD_native_run",
+            "duration": 0.5416666865348816,
+            "channels": 184
+          },
+          {
+            "index": 2,
+            "name": "GGD_native_attack",
+            "duration": 2.5,
+            "channels": 215
+          },
+          {
+            "index": 3,
+            "name": "GGD_native_special01",
+            "duration": 5.791666507720947,
+            "channels": 223
+          },
+          {
+            "index": 4,
+            "name": "GGD_native_death",
+            "duration": 5,
+            "channels": 281
+          }
+        ],
+        "skins": 1,
+        "skinnedPrimitives": 6
+      },
+      "runtimeHardLimitsPassed": true,
+      "formalAdoption": {
+        "status": "needs-decimation",
+        "decimateWhenTrianglesAbove": 10000,
+        "decimatedTargetTrianglesMax": 8000,
+        "visualLitPixelDeltaPctMax": 5,
+        "preserveOriginalLocally": true,
+        "archiveOriginalToS3Legacy": true,
+        "gitOnlyAfterAcceptance": true,
+        "errors": [
+          "三角面 16760 超過素材正式採用門檻 10000；請從保留的原始檔另產生不超過 8000 面的減面候選，並完成視覺與骨架驗收。"
+        ],
+        "warnings": [
+          "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+        ]
+      },
+      "baseFrozenByteIdentical": true
+    }
+  ],
+  "summary": {
+    "models": 3,
+    "khronosErrors": 0,
+    "ggdUploadErrors": 0,
+    "runtimeHardLimitsPassed": true,
+    "formalAdoptionStatus": "needs-decimation"
+  }
+}

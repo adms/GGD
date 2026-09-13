@@ -1,0 +1,307 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -1.0152860746742363,
+      7.121048223248001e-08,
+      -0.6045585852982569
+    ],
+    "max": [
+      1.0152860746742363,
+      1.799998436152836,
+      0.6045591697918873
+    ],
+    "extent": [
+      2.0305721493484725,
+      1.7999983649423539,
+      1.2091177550901442
+    ]
+  },
+  "geometry": [
+    {
+      "name": "sonic_Brow1_VIS_O_OBJShape_primitive0",
+      "vertices": 2748,
+      "indices": 13656,
+      "worldBounds": {
+        "min": [
+          -0.49608623216418124,
+          0.25503056702310667,
+          -0.6045585852982569
+        ],
+        "max": [
+          0.49608633246756284,
+          1.799998436152836,
+          0.47818470178486844
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 115,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "sonic_Brow1_VIS_O_OBJShape_primitive1",
+      "vertices": 65,
+      "indices": 300,
+      "worldBounds": {
+        "min": [
+          2.0440439930332173e-08,
+          1.1813624680656458,
+          0.20130772547925913
+        ],
+        "max": [
+          0.2187717306846899,
+          1.475536215834314,
+          0.37714427509600223
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 115,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "sonic_Brow1_VIS_O_OBJShape_primitive2",
+      "vertices": 65,
+      "indices": 300,
+      "worldBounds": {
+        "min": [
+          -0.2187716554571537,
+          1.1813624680656458,
+          0.2013076941344546
+        ],
+        "max": [
+          3.3898444638876373e-08,
+          1.4755362158343215,
+          0.37714427509600223
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 115,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "sonic_Brow1_VIS_O_OBJShape_primitive3",
+      "vertices": 165,
+      "indices": 900,
+      "worldBounds": {
+        "min": [
+          -0.1896201326007656,
+          1.089579093219698,
+          0.1426430493781655
+        ],
+        "max": [
+          0.1896201702145337,
+          1.2209225375536712,
+          0.38334359171400517
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 115,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "sonic_Brow1_VIS_O_OBJShape_primitive4",
+      "vertices": 2435,
+      "indices": 11784,
+      "worldBounds": {
+        "min": [
+          -1.0152860746742363,
+          7.121048223248001e-08,
+          -0.050061140863299575
+        ],
+        "max": [
+          1.0152860746742363,
+          1.1641802492766868,
+          0.6045591697918873
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 115,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "def_sonic_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_sonic_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeL",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeR",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeR (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "skin_sonic_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "skin_sonic_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "metal_sonic_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "metal_sonic_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 464,
+        "height": 1
+      }
+    },
+    {
+      "name": "def_sonic_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeL (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeR (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "skin_sonic_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "metal_sonic_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

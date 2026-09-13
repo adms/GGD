@@ -160,6 +160,16 @@ def validate_component(candidate, repo):
             'ssbu-pickel-alex-c01-static-skinned-v1': 'ggd.ssbu-pickel-alex-source-rebuild@1',
             'ssbu-ptrainer-male-c00-static-skinned-v1': 'ggd.ssbu-ptrainer-male-source-rebuild@1',
             'ssbu-ptrainer-female-c01-static-skinned-v1': 'ggd.ssbu-ptrainer-female-source-rebuild@1',
+            'ssbu-kirby-c00-static-skinned-v1': 'ggd.ssbu-kirby-source-rebuild@1',
+            'ssbu-mario-c00-static-skinned-v2': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-link-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-sonic-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-chrom-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-ganondorf-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-lucina-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-daisy-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-peach-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-toonlink-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
         }
         require(rebuild.get('schema') == expected_rebuild_schemas.get(candidate['id']), 'Unexpected SSBU rebuild schema')
         require(rebuild.get('componentId') == candidate['id'], 'SSBU rebuild component ID mismatch')

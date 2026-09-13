@@ -57,7 +57,7 @@ class PalworldHeroIntegrationTest(unittest.TestCase):
         self.assertEqual("eligible-registered-alternative", by_hero["acquired-astralym"]["formalModelAdoption"]["status"])
         self.assertEqual(23928, by_hero["acquired-astralym"]["formalModelAdoption"]["defaultModelTriangles"])
         self.assertEqual(
-            ["community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"],
+            ["community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"],
             by_hero["acquired-astralym"]["formalModelAdoption"]["policyEligibleModelKeys"],
         )
         self.assertEqual("eligible-default", by_hero["acquired-cattiva"]["formalModelAdoption"]["status"])

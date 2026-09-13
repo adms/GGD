@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-dependency-export-v1/07e30bbeb2b3f12da5f4a1ecb54b7a49a72f2432c9c5224fb801537270556fcb.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-dependency-export-v1/07e30bbeb2b3f12da5f4a1ecb54b7a49a72f2432c9c5224fb801537270556fcb.files.json",
+  "archiveSha256": "07e30bbeb2b3f12da5f4a1ecb54b7a49a72f2432c9c5224fb801537270556fcb",
+  "archiveBytes": 44236888,
+  "fileCount": 790,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-dependency-export-v1/d348284a6229cee175e784fc7337ce40c26be32696e221ad98a3ee86a201df36/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-dependency-export-v1/d348284a6229cee175e784fc7337ce40c26be32696e221ad98a3ee86a201df36/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-dependency-export-v1/d348284a6229cee175e784fc7337ce40c26be32696e221ad98a3ee86a201df36/manifest.json"
+}

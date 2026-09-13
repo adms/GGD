@@ -16,6 +16,13 @@ from pathlib import Path
 import struct
 import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from glb_material_alpha import (
+    composite_alpha_masked_colors,
+    promote_transparent_base_color_materials,
+    should_promote_source_material,
+)
+
 
 def digest(path: Path) -> str:
     value = hashlib.sha256()
@@ -105,6 +112,16 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--source-id", default="gitlab-ssbu-models")
     parser.add_argument("--target-height", type=float, default=1.8)
     parser.add_argument(
+        "--exclude-visible-mesh-prefix",
+        action="append",
+        default=[],
+        help=(
+            "Exclude a render-visible mesh whose name starts with this exact prefix. "
+            "May be repeated; every exclusion is recorded in the receipts. This is "
+            "used to choose one source LOD when a Worldblender file exposes both."
+        ),
+    )
+    parser.add_argument(
         "--join-visible-by-material",
         action="store_true",
         help=(
@@ -180,7 +197,15 @@ for collection in (
             )
 
 all_meshes = [obj for obj in bpy.context.scene.objects if obj.type == "MESH"]
-meshes = [obj for obj in all_meshes if not obj.hide_render and obj.visible_get()]
+source_visible_meshes = [
+    obj for obj in all_meshes if not obj.hide_render and obj.visible_get()
+]
+excluded_visible_meshes = [
+    obj
+    for obj in source_visible_meshes
+    if any(obj.name.startswith(prefix) for prefix in args.exclude_visible_mesh_prefix)
+]
+meshes = [obj for obj in source_visible_meshes if obj not in excluded_visible_meshes]
 hidden_or_nonrender_mesh_names = [obj.name for obj in all_meshes if obj not in meshes]
 if not meshes:
     raise RuntimeError("Source has no render-visible mesh objects")
@@ -206,8 +231,212 @@ used_materials = {
     for slot in mesh.material_slots
     if slot.material is not None
 }
+output.mkdir(parents=True)
 used_images = set()
 material_compatibility_adjustments = []
+
+
+def upstream_image_nodes(socket) -> set:
+    """Return image nodes feeding a material input, through intermediate nodes."""
+    found = set()
+    pending = [link.from_node for link in socket.links]
+    visited = set()
+    while pending:
+        node = pending.pop()
+        if node in visited:
+            continue
+        visited.add(node)
+        if node.type == "TEX_IMAGE" and node.image is not None:
+            found.add(node)
+        for node_input in node.inputs:
+            pending.extend(link.from_node for link in node_input.links)
+    return found
+
+
+def image_alpha_minimum(image) -> float | None:
+    """Read the source image alpha channel without changing or saving the image."""
+    if int(image.channels) < 4:
+        return None
+    pixels = image.pixels[:]
+    if len(pixels) < 4:
+        return None
+    return float(min(pixels[3::4]))
+
+
+def one_link(socket):
+    return socket.links[0] if len(socket.links) == 1 else None
+
+
+def vector_source_signature(image_node):
+    vector = image_node.inputs.get("Vector")
+    link = one_link(vector) if vector is not None else None
+    if link is None:
+        return None
+    source = link.from_node
+    return (
+        source.type,
+        getattr(source, "uv_map", None),
+        link.from_socket.name,
+    )
+
+
+def bake_alpha_masked_base_color_mix(material) -> dict | None:
+    """Bake the exact two-image eye graph that glTF cannot represent.
+
+    Worldblender eyes use ``mix(A.color, B.color, B.alpha)`` as an opaque Base
+    Color. Blender's glTF exporter drops A and writes B as an OPAQUE RGBA image,
+    leaving transparent alpha in an opaque atlas. We only bake when the graph,
+    image sizes, colour spaces, and UV source are all unambiguous.
+    """
+    if not material.use_nodes or not material.node_tree:
+        return None
+    tree = material.node_tree
+    principled = [node for node in tree.nodes if node.type == "BSDF_PRINCIPLED"]
+    if len(principled) != 1:
+        return None
+    base_socket = principled[0].inputs.get("Base Color")
+    base_link = one_link(base_socket) if base_socket is not None else None
+    if base_link is None or base_link.from_node.type != "MIX":
+        return None
+    mix_node = base_link.from_node
+    incoming = [link for link in tree.links if link.to_node == mix_node]
+
+    def named_link(name: str):
+        found = [link for link in incoming if link.to_socket.name == name]
+        return found[0] if len(found) == 1 else None
+
+    factor_link = named_link("Factor")
+    a_link = named_link("A")
+    b_link = named_link("B")
+    if any(link is None for link in (factor_link, a_link, b_link)):
+        return None
+    if any(link.from_node.type != "TEX_IMAGE" for link in (a_link, b_link, factor_link)):
+        return None
+    if a_link.from_socket.name != "Color" or b_link.from_socket.name != "Color":
+        return None
+    if factor_link.from_socket.name != "Alpha" or factor_link.from_node != b_link.from_node:
+        return None
+    base_node, overlay_node = a_link.from_node, b_link.from_node
+    base_image, overlay_image = base_node.image, overlay_node.image
+    if base_image is None or overlay_image is None:
+        return None
+    if tuple(base_image.size) != tuple(overlay_image.size):
+        return None
+    if base_image.colorspace_settings.name != overlay_image.colorspace_settings.name:
+        return None
+    base_vector = vector_source_signature(base_node)
+    overlay_vector = vector_source_signature(overlay_node)
+    if base_vector is None or overlay_vector is None:
+        return None
+    if image_alpha_minimum(overlay_image) is None:
+        return None
+    width, height = int(base_image.size[0]), int(base_image.size[1])
+    baked = bpy.data.images.new(
+        f"{material.name}.ggd-opaque-base-color",
+        width=width,
+        height=height,
+        alpha=True,
+        float_buffer=False,
+    )
+    baked.colorspace_settings.name = base_image.colorspace_settings.name
+    baked_node = tree.nodes.new("ShaderNodeTexImage")
+    baked_node.name = f"GGD Opaque Base Color {material.name}"
+    baked_node.image = baked
+    baked_node.interpolation = overlay_node.interpolation
+    baked_node.extension = overlay_node.extension
+    vector_socket = overlay_node.inputs.get("Vector")
+    vector_link = one_link(vector_socket) if vector_socket is not None else None
+    if vector_link is not None:
+        tree.links.new(vector_link.from_socket, baked_node.inputs["Vector"])
+    bake_method = "scene-linear-pixel-composite"
+    if base_vector == overlay_vector:
+        baked_pixels = composite_alpha_masked_colors(
+            base_image.pixels[:], overlay_image.pixels[:]
+        )
+        baked.pixels.foreach_set(baked_pixels)
+        baked.update()
+    else:
+        target_uv = overlay_vector[1]
+        material_users = [
+            mesh
+            for mesh in meshes
+            if any(slot.material == material for slot in mesh.material_slots)
+        ]
+        if len(material_users) != 1:
+            tree.nodes.remove(baked_node)
+            bpy.data.images.remove(baked)
+            return None
+        bake_object = material_users[0]
+        if any(slot.material != material for slot in bake_object.material_slots):
+            tree.nodes.remove(baked_node)
+            bpy.data.images.remove(baked)
+            return None
+        uv_layer = bake_object.data.uv_layers.get(target_uv)
+        if uv_layer is None:
+            tree.nodes.remove(baked_node)
+            bpy.data.images.remove(baked)
+            return None
+        bake_object.data.uv_layers.active = uv_layer
+        uv_layer.active_render = True
+        for obj in bpy.context.scene.objects:
+            obj.select_set(False)
+        bake_object.hide_set(False)
+        bake_object.select_set(True)
+        bpy.context.view_layer.objects.active = bake_object
+        tree.nodes.active = baked_node
+        for node in tree.nodes:
+            node.select = node == baked_node
+        bpy.context.scene.render.engine = "CYCLES"
+        bpy.context.scene.cycles.device = "CPU"
+        bpy.context.scene.cycles.samples = 1
+        bpy.ops.object.bake(
+            type="DIFFUSE",
+            pass_filter={"COLOR"},
+            margin=4,
+            use_clear=True,
+        )
+        baked_pixels = list(baked.pixels[:])
+        baked_pixels[3::4] = [1.0] * (len(baked_pixels) // 4)
+        baked.pixels.foreach_set(baked_pixels)
+        baked.update()
+        bake_method = f"Blender diffuse-colour bake to {target_uv}"
+    baked.file_format = "PNG"
+    baked_path = output / "derived-materials" / f"{material.name}.ggd-opaque-base-color.png"
+    baked_path.parent.mkdir(parents=True, exist_ok=True)
+    baked.filepath_raw = str(baked_path)
+    baked.save()
+    tree.links.remove(base_link)
+    tree.links.new(baked_node.outputs["Color"], base_socket)
+    return {
+        "material": material.name,
+        "node": mix_node.name,
+        "property": "Principled Base Color alpha-mask mix",
+        "sourceValue": {
+            "baseImage": base_image.name,
+            "overlayImage": overlay_image.name,
+            "factor": f"{overlay_image.name}.Alpha",
+            "opaqueSurface": True,
+        },
+        "exportValue": {
+            "image": baked.name,
+            "path": str(baked_path),
+            "bytes": baked_path.stat().st_size,
+            "sha256": digest(baked_path),
+            "alphaMinimum": 1.0,
+            "method": bake_method,
+        },
+        "reason": (
+            "Bake a source opaque two-image colour mix that glTF core cannot "
+            "represent; retaining only the overlay creates OPAQUE+transparent texture data."
+        ),
+    }
+
+
+for material in sorted(used_materials, key=lambda item: item.name):
+    adjustment = bake_alpha_masked_base_color_mix(material)
+    if adjustment is not None:
+        material_compatibility_adjustments.append(adjustment)
+
 for material in used_materials:
     if not material.use_nodes or not material.node_tree:
         continue
@@ -230,6 +459,30 @@ for material in used_materials:
                     }
                 )
                 ior.default_value = 1.5
+
+
+transparent_base_color_materials = {}
+for material in sorted(used_materials, key=lambda item: item.name):
+    if not material.use_nodes or not material.node_tree:
+        continue
+    render_method = getattr(material, "surface_render_method", None)
+    base_color_images = {
+        image_node.image
+        for node in material.node_tree.nodes
+        if node.type == "BSDF_PRINCIPLED"
+        for image_node in upstream_image_nodes(node.inputs["Base Color"])
+    }
+    alpha_minima = {
+        image.name: image_alpha_minimum(image)
+        for image in sorted(base_color_images, key=lambda item: item.name)
+    }
+    minimum = next(iter(alpha_minima.values()), None)
+    if should_promote_source_material(render_method, minimum, len(base_color_images)):
+        transparent_base_color_materials[material.name] = {
+            "sourceSurfaceRenderMethod": render_method,
+            "baseColorImages": sorted(alpha_minima),
+            "baseColorAlphaMinimum": minimum,
+        }
 
 image_inputs = []
 missing_used_images = []
@@ -264,7 +517,6 @@ if missing_used_images:
         + json.dumps(missing_used_images, ensure_ascii=False)
     )
 
-output.mkdir(parents=True)
 texture_compatibility_adjustments = []
 for image in sorted(used_images, key=lambda item: item.name):
     width, height = int(image.size[0]), int(image.size[1])
@@ -454,6 +706,10 @@ for key, value in {
 bpy.ops.export_scene.gltf(**export_options)
 if not glb_path.is_file():
     raise RuntimeError("Blender did not produce body.glb")
+alpha_mode_adjustments = promote_transparent_base_color_materials(
+    glb_path, set(transparent_base_color_materials)
+)
+material_compatibility_adjustments.extend(alpha_mode_adjustments)
 hierarchy_compatibility_adjustments = detach_skinned_mesh_nodes(glb_path)
 if digest(source) != source_sha256:
     raise RuntimeError("Source .blend bytes changed during conversion")
@@ -470,6 +726,15 @@ analysis = {
     "embeddedTextBlockCount": len(bpy.data.texts),
     "mutedDrivers": muted_drivers,
     "visibleMeshes": source_geometry,
+    "sourceVisibleMeshesExcludedByPrefix": [
+        {
+            "name": obj.name,
+            "vertices": len(obj.data.vertices),
+            "polygons": len(obj.data.polygons),
+        }
+        for obj in sorted(excluded_visible_meshes, key=lambda item: item.name)
+    ],
+    "excludeVisibleMeshPrefixes": args.exclude_visible_mesh_prefix,
     "hiddenOrNonrenderMeshes": hidden_or_nonrender_mesh_names,
     "armatures": [
         {
@@ -494,6 +759,7 @@ analysis = {
         for material in sorted(used_materials, key=lambda item: item.name)
     ],
     "usedImages": image_inputs,
+    "transparentBaseColorMaterials": transparent_base_color_materials,
     "materialCompatibilityAdjustments": material_compatibility_adjustments,
     "materialJoinAdjustments": material_join_adjustments,
     "textureCompatibilityAdjustments": texture_compatibility_adjustments,
@@ -523,6 +789,7 @@ receipt = {
         "embeddedScriptsExecuted": False,
         "driversMuted": len(muted_drivers),
         "visibleMeshesJoinedByMaterial": args.join_visible_by_material,
+        "excludeVisibleMeshPrefixes": args.exclude_visible_mesh_prefix,
     },
     "output": {
         "path": str(glb_path),
@@ -540,6 +807,7 @@ receipt = {
     "sourceRigCount": len(armatures),
     "sourceBoneCounts": [len(obj.data.bones) for obj in armatures],
     "sourceActionCount": len(bpy.data.actions),
+    "sourceVisibleMeshesExcludedByPrefix": [obj.name for obj in excluded_visible_meshes],
     "sourceImageCountUsed": len(used_images),
     "materialCompatibilityAdjustments": material_compatibility_adjustments,
     "materialJoinAdjustments": material_join_adjustments,

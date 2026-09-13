@@ -13,6 +13,10 @@
     "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
     "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486"
   },
+  "sourceCatalog": {
+    "gitPath": "materials/hero-model-library/download-sources.json",
+    "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
+  },
   "motionSummary": {
     "pathCount": 435,
     "uniquePayloadCount": 176,
@@ -394,9 +398,9 @@
     "worldblenderBodyCandidates": {
       "identifiableFighterGroups": 16,
       "bodyCandidateFiles": 128,
-      "freshPayloadHashes": 0,
-      "skeletonValidatedModels": 0,
-      "convertedAndAcceptedModels": 0,
+      "freshPayloadHashes": 10,
+      "skeletonValidatedModels": 10,
+      "convertedAndAcceptedModels": 10,
       "backendSelectableModels": 0
     },
     "nsandns2GameContainers": {
@@ -411,6 +415,388 @@
       "backendSelectableModels": 0
     }
   },
+  "standardizedBodyComponents": [
+    {
+      "id": "ssbu-chrom-c00-static-skinned-v1",
+      "nameZh": "庫洛姆",
+      "nativeId": "fighter/chrom/model/body/c00",
+      "variant": "c00",
+      "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+      "bytes": 963000,
+      "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 123,
+      "textureCount": 7,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/delivery.json",
+        "bytes": 3742,
+        "sha256": "e3f9bb9abbc46559c300eac31bb468a130488c4dbe762eebe1a583139b94dd31"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/validation.json",
+        "bytes": 19165,
+        "sha256": "d6f986feaf431a1fe3ed883f5c74ca73c2ca40e847e8157c20118f8e8df9f3e2"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/visual-review.json",
+        "bytes": 707,
+        "sha256": "1365de37a0dfc541fd0da4b1e605726ec44a85aaa30e6e29daceb218800a2149"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "f97f5275deed627acfe3f45367bbb670ee1eb07aaccc19e022e023949fe4e31f"
+      }
+    },
+    {
+      "id": "ssbu-daisy-c00-static-skinned-v1",
+      "nameZh": "黛西",
+      "nativeId": "fighter/daisy/model/body/c00",
+      "variant": "c00",
+      "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+      "bytes": 846532,
+      "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 136,
+      "textureCount": 7,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/delivery.json",
+        "bytes": 3901,
+        "sha256": "d835564929a1e707c082de2a5d152e903616c6e85ceb078434cb75aa585c77c9"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/validation.json",
+        "bytes": 19245,
+        "sha256": "8e1e7eac41df27bff4b8581fe27d97be0d9ecedac5e2182b41ee6b45ccb084d5"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/visual-review.json",
+        "bytes": 700,
+        "sha256": "1a03de2620ca02089f0917cbb1f1e0c416a4d43542270658442592f7d8fd73f8"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "d749b4e89f31729aaf3afdfdf6e5280dff26a3083b4b1ee6b8ad817405b15bca"
+      }
+    },
+    {
+      "id": "ssbu-ganondorf-c00-static-skinned-v1",
+      "nameZh": "加儂多夫",
+      "nativeId": "fighter/ganon/model/body/c00",
+      "variant": "c00",
+      "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "bytes": 1264104,
+      "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "triangles": 7890,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 90,
+      "textureCount": 6,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/delivery.json",
+        "bytes": 3761,
+        "sha256": "bfa37cd95e04a95c538ee75e7e372a1b575a050952e974ca7b11b781ece96e0d"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/validation.json",
+        "bytes": 36532,
+        "sha256": "cdf9836c8360421b8d8f6f38f484bb596bd397e94aad4c84dc7cda2890d3e2d9"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/visual-review.json",
+        "bytes": 704,
+        "sha256": "b7fdd49912b52726a228ec6a6f604a50dc01d9dd12c800a93afca316f25777d6"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/source-rebuild.json",
+        "bytes": 1024,
+        "sha256": "c1d3cfd1f8b94ceb9554f210d42634e5dd91306f3291e45dda11fc2288a1409c"
+      }
+    },
+    {
+      "id": "ssbu-kirby-c00-static-skinned-v1",
+      "nameZh": "卡比",
+      "nativeId": "fighter/kirby/model/body/c00",
+      "variant": "c00",
+      "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+      "bytes": 496028,
+      "gitPath": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "triangles": 5500,
+      "drawPrimitives": 2,
+      "skinCount": 1,
+      "jointCount": 51,
+      "textureCount": 2,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/delivery.json",
+        "bytes": 2945,
+        "sha256": "8e5cc493d832a56366c1251be426880c4e4f9a79b35dd9fa8bd0ebec0939a76f"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/validation.json",
+        "bytes": 13806,
+        "sha256": "28fc829f9d101e5bc1f93b18315ce8f1d52eff69a5116e0c7dcbb3cbc6e2f4ff"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/visual-review.json",
+        "bytes": 628,
+        "sha256": "6c46f1d629471cb94c87e316602d66ecf50339b279c547a4b24f9235f8fcd064"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/source-rebuild.json",
+        "bytes": 1046,
+        "sha256": "2e73ec0640a9f28d0f4e7ce6d7e8e75b0b3c80959b63817924971a5732d2ae84"
+      }
+    },
+    {
+      "id": "ssbu-link-c00-static-skinned-v1",
+      "nameZh": "林克",
+      "nativeId": "fighter/link/model/body/c00",
+      "variant": "c00",
+      "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+      "bytes": 1035504,
+      "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "triangles": 7897,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 145,
+      "textureCount": 5,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/delivery.json",
+        "bytes": 3431,
+        "sha256": "4c7999ad8ea1d0a8e75404bff301265c61fc15ef8e454c7808cd4598265ea3a6"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/validation.json",
+        "bytes": 18616,
+        "sha256": "a0822aa62dadefcc86e62e272c99784e1baa1f2c3990120a24a9e12d9ebbc4e1"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/visual-review.json",
+        "bytes": 689,
+        "sha256": "4ad56fd7bb61071b7cf70e45c69c0180602350aaf7eb07a4ddfabed24f743475"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/source-rebuild.json",
+        "bytes": 1017,
+        "sha256": "d3a231cb431822027ce9654aaa85eb8da768a28b95e6b3d755de8866629e676c"
+      }
+    },
+    {
+      "id": "ssbu-lucina-c00-static-skinned-v1",
+      "nameZh": "露琪娜",
+      "nativeId": "fighter/lucina/model/body/c00",
+      "variant": "c00",
+      "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+      "bytes": 895472,
+      "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "triangles": 7927,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 156,
+      "textureCount": 5,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/delivery.json",
+        "bytes": 3861,
+        "sha256": "dc223f673d41a22404d1bf3002a932863ac4e7ccc41c0955a9aaba3f218baed2"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/validation.json",
+        "bytes": 18883,
+        "sha256": "f180cc21bf286cb85652516f2851f931e8e12d9e05958fdc2827eed32a82ebd0"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/visual-review.json",
+        "bytes": 709,
+        "sha256": "39b2a6a6b69a618e6accc8c973bd3382e67995e9efa1dfb7854dd10a269100ea"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/source-rebuild.json",
+        "bytes": 1021,
+        "sha256": "b75ed8f41be28cc55a332be3377d223e4b847fc4a63bdbcc486d9f1aff089213"
+      }
+    },
+    {
+      "id": "ssbu-mario-c00-static-skinned-v2",
+      "nameZh": "瑪利歐",
+      "nativeId": "fighter/mario/model/body/c00",
+      "variant": "c00",
+      "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "bytes": 865396,
+      "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "triangles": 7189,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 98,
+      "textureCount": 6,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/delivery.json",
+        "bytes": 3229,
+        "sha256": "a85b3008e21c99b2bf46df814243bded32d2590d8988e7dbd8915d4be175adde"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/validation.json",
+        "bytes": 28111,
+        "sha256": "81ad2daff3112b8dcc650ce616d8c0c53d8191ed0ee29b54cf2fe1ce50b10fd2"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/visual-review.json",
+        "bytes": 691,
+        "sha256": "d81894e9157775955db17a5c4e08cdf4654383daac4a6331a071a5b986f520dc"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "ef2ecf541fed5d06daf39a17b10a0392ee16a75e39ed3323a5e45a623cb8a2a7"
+      }
+    },
+    {
+      "id": "ssbu-peach-c00-static-skinned-v1",
+      "nameZh": "碧姬公主",
+      "nativeId": "fighter/peach/model/body/c00",
+      "variant": "c00",
+      "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+      "bytes": 932380,
+      "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "triangles": 7888,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 134,
+      "textureCount": 6,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/delivery.json",
+        "bytes": 3748,
+        "sha256": "800c001d1365eb2e9b48d39f87cded2781ad87f6496f159d2d77a74a8df76b0e"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/validation.json",
+        "bytes": 18152,
+        "sha256": "7868f36bfcf29c1656d38e2b722673d071dfad66a3222396dd0caf5c4a799412"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/visual-review.json",
+        "bytes": 698,
+        "sha256": "201d74ef29a653a535b6938599d555d7689d70d48c493aef23b84d7bd67a6761"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "840b635fa6562e71e58471d50470395b3064b16c341e3c518c11bae4e9d8122c"
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v1",
+      "nameZh": "索尼克",
+      "nativeId": "fighter/sonic/model/body/c00",
+      "variant": "c00",
+      "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+      "bytes": 936116,
+      "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "triangles": 8980,
+      "drawPrimitives": 5,
+      "skinCount": 1,
+      "jointCount": 115,
+      "textureCount": 5,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/delivery.json",
+        "bytes": 3384,
+        "sha256": "19e2694acfcf0c158421e25bbc0a19b6725067ae02cb204fb9f82fd536321a58"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/validation.json",
+        "bytes": 23819,
+        "sha256": "6ed3bbcc86bd131777c1b699ebecd6f4e870db78df69568d517bf7beed3e22d2"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/visual-review.json",
+        "bytes": 691,
+        "sha256": "e9adfa1a5ed0194a5a30f8d4b5a0c03626b77a20995d5280ff5ee7ab565ba265"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/source-rebuild.json",
+        "bytes": 1018,
+        "sha256": "43b544c11d2ac8adcefe7fbb159359de4a16e223f0bf13341c0ee2c6f2d476bd"
+      }
+    },
+    {
+      "id": "ssbu-toonlink-c00-static-skinned-v1",
+      "nameZh": "卡通林克",
+      "nativeId": "fighter/toonlink/model/body/c00",
+      "variant": "c00",
+      "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+      "bytes": 993100,
+      "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "triangles": 7894,
+      "drawPrimitives": 6,
+      "skinCount": 1,
+      "jointCount": 96,
+      "textureCount": 7,
+      "nativeAnimationCount": 0,
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/delivery.json",
+        "bytes": 4151,
+        "sha256": "d9a9c617fb5a8273a5421f8ea251cfb567080f34bc55c9cb4ff2de4e08405e17"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/validation.json",
+        "bytes": 39855,
+        "sha256": "1369ce771dbdd563d98dfcc56bda3f1c3d5640d64adb8de0f11cdb8f7bd26619"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/visual-review.json",
+        "bytes": 744,
+        "sha256": "e79137d0b6c3b5a14cf0aeb8bb8118cc153de9b6ae08d4566dd0c53c8d3515e7"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/source-rebuild.json",
+        "bytes": 1027,
+        "sha256": "f64a9a5393d02d3762ea064dfeb0d85421c2d13e2bf17aa3056ac3e02b98f20a"
+      }
+    }
+  ],
   "otherNativeGroups": {
     "parameterOrMotionListOnly": [
       "common",

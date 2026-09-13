@@ -1,0 +1,20 @@
+{
+  "schema": "ggd.ssbu-kirby-source-rebuild@1",
+  "componentId": "ssbu-kirby-c00-static-skinned-v1",
+  "sourceSha256": "8674bd9eea87d351662cf4c3090f1b18ab2a10128c96d42656b4216f2e75829b",
+  "blenderExportSha256": "7732820d43dc20847534dc2cde429947ae09519c7730be3ad07e67e3ddc48e98",
+  "outputSha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/body.glb",
+    "bytes": 496028,
+    "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/ssbu-kirby-c00-rebuild-v1/body.glb",
+    "bytes": 496028,
+    "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114"
+  },
+  "byteIdenticalRebuild": true,
+  "blenderExportByteIdenticalRebuild": true,
+  "bothValidationsPassed": true
+}

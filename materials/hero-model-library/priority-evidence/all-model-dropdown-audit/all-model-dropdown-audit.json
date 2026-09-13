@@ -9,47 +9,47 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "d580bcfa2cdede8d8f49c95bd4687245d56c81c21fc63c16581a007e7b5e59be",
-      "fileCount": 1009
+      "sha256": "31b7d2032a80b47882bbaaa5623873a9009ffdeff25c8e9d321e4f893802d198",
+      "fileCount": 1015
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "edeaa7cadc8982fcc55a327c03230088e68de7947aa13f13efbb39def9a06cef",
+      "sha256": "182b2a31975ae030d41b74ebcc8349fa8f4513882d7065fe7963355739926f0a",
       "fileCount": 154
     },
     "heroForgeOptions": {
       "path": "packages/shared/src/content/heroForge/communityAcquired.ts",
-      "sha256": "3aa9717751f182ce77ae6c38b5264db2a77c1394ca49535c32fae4f0e050f0db"
+      "sha256": "724473673ee76d78a5c484f042c9e3c8da9a036d2f189c650a40d1f1b1db7ca6"
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "18ec900c4b420900bc11ffdcc33ac4caa5b52179bbfad7b6904ae57fe3e8853a"
+      "sha256": "c97bad2061b8d896e3a0ec9b1866e890fb240267be3583e6e58d6a86e5dd7605"
     }
   },
   "summary": {
-    "modelAt1Documents": 1004,
+    "modelAt1Documents": 1010,
     "championDocuments": 153,
-    "championPrimaryAndVersionSelectableModelKeys": 510,
-    "championModelVersionRows": 563,
-    "sourceModelsRepresentedByFrozenVersions": 198,
+    "championPrimaryAndVersionSelectableModelKeys": 513,
+    "championModelVersionRows": 566,
+    "sourceModelsRepresentedByFrozenVersions": 201,
     "heroForgeHeroesWithOptions": 34,
     "heroForgeSelectableModelKeys": 42,
-    "allActualSelectableModelKeys": 544,
-    "centralSourceRows": 156,
-    "centralUniqueModelKeys": 149,
+    "allActualSelectableModelKeys": 547,
+    "centralSourceRows": 159,
+    "centralUniqueModelKeys": 152,
     "centralRowsWithQualificationEvidence": 141,
-    "centralRegisteredRows": 143,
+    "centralRegisteredRows": 146,
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 25,
-    "readyUnregisteredCharacterOrMotionComponents": 23,
+    "readyUnregisteredIndependentComponents": 35,
+    "readyUnregisteredCharacterOrMotionComponents": 33,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1004,
+    "modelDocumentsWithoutResourceRole": 1010,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -556,6 +556,163 @@
       ]
     },
     {
+      "id": "ssbu-chrom-c00-static-skinned-v1",
+      "character": "庫洛姆",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ]
+    },
+    {
+      "id": "ssbu-daisy-c00-static-skinned-v1",
+      "character": "黛西",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "The source exposed body_highShape and body_lowShape together; the reproducible candidate excludes body_highShape and retains the low LOD before reduction."
+      ]
+    },
+    {
+      "id": "ssbu-ganondorf-c00-static-skinned-v1",
+      "character": "加儂多夫",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+      ]
+    },
+    {
+      "id": "ssbu-kirby-c00-static-skinned-v1",
+      "character": "卡比",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "The Ultimate14 native motion payload has not been retargeted to this 51-joint body or playback accepted.",
+        "This independent component is not bound to the existing Kirby hero, not registered in the backend dropdown and not deployed.",
+        "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported."
+      ]
+    },
+    {
+      "id": "ssbu-link-c00-static-skinned-v1",
+      "character": "林克",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "Link uses the source low LOD, a 7,900-triangle reduction target, and a two-atlas 256px layout measured at 0.40 atlas quality; the retained source and all conversion stages remain local for later A/B review."
+      ]
+    },
+    {
+      "id": "ssbu-lucina-c00-static-skinned-v1",
+      "character": "露琪娜",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "The two-atlas 256px layout used measured quality 0.408; WebGL views were reviewed after conversion."
+      ]
+    },
+    {
       "id": "ssbu-mario-c00-static-skinned-v1",
       "character": "Mario／瑪利歐",
       "resourceRole": "independent-static-skinned-model-component",
@@ -580,6 +737,31 @@
         "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
         "Fifty-three hidden facial and source mesh variants remain preserved only in the original Blender source and were excluded from the visible c00 appearance.",
         "Blender emitted NumPy transform warnings; both validations checked 101,330 exported float values as finite and Babylon WebGL rendered the connected body intact."
+      ]
+    },
+    {
+      "id": "ssbu-mario-c00-static-skinned-v2",
+      "character": "瑪利歐",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
       ]
     },
     {
@@ -633,6 +815,32 @@
         "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
         "Twenty-three hidden facial/source mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
         "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    },
+    {
+      "id": "ssbu-peach-c00-static-skinned-v1",
+      "character": "碧姬公主",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
       ]
     },
     {
@@ -794,6 +1002,60 @@
         "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
         "Thirty-eight hidden costume, facial and expression mesh variants remain in the original Blender source and were excluded from the visible c00 appearance.",
         "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v1",
+      "character": "索尼克",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "Sonic remains at 8,980 triangles, above the 8,000-triangle formal-adoption target; further visual A/B decimation is required before hero adoption."
+      ]
+    },
+    {
+      "id": "ssbu-toonlink-c00-static-skinned-v1",
+      "character": "卡通林克",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+        "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+        "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+        "The source-connected eye material renders very dark and lacks original-game eye highlights; this was already present in the direct Blender export and needs shader/material polish before default use.",
+        "The static neutral candidate excludes the two expression-specific LMabuta/RMabuta eyelid meshes to meet the six-draw limit; the complete source remains preserved."
       ]
     },
     {
@@ -4847,6 +5109,7 @@
       ],
       "currentResourceTopLevelKeys": [
         "assetWorkflowRestorationManifest",
+        "fateubwMotionReserve",
         "historicalModelOptionRegistration",
         "historicalModelRestorationReceipt",
         "historicalModelSourceArtifactCount",
@@ -4865,6 +5128,7 @@
         "palworldHeroIntegrationReceipt",
         "palworldResourceDocument",
         "palworldResourceIndex",
+        "poppVfxDependencySupport",
         "postRegistrationReview",
         "projectSevenJapaneseVoiceIndex",
         "schema",
@@ -4874,7 +5138,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1004
+      "modelAt1DocumentsWithoutResourceRole": 1010
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

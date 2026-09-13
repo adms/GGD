@@ -24,10 +24,10 @@ const OPTIONS = [
     label: "空渦龍／7bc2fa3f8 歷史復原版",
   },
   {
-    componentId: "historical-astralym-decimated-f77cf1ee",
+    componentId: "historical-astralym-decimated-c45f111d",
     validationComponentId: "historical-astralym-7bc2fa3f8",
     heroId: "acquired-astralym",
-    modelKey: "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
+    modelKey: "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
     label: "枯星龍／7bc2fa3f8 發光紋理保護減面版",
   },
   {
@@ -105,11 +105,11 @@ async function build() {
       nativeClipCount: inspected.clips.length,
       metrics: {
         triangles: inspected.triangles,
-        drawPrimitives: inspected.drawPrimitives,
+        drawPrimitives: inspected.meshes,
         maxTextureEdge: Math.max(0, ...inspected.textures.flatMap((texture) => [texture.width, texture.height])),
         maxAnimationChannels: Math.max(0, ...inspected.clips.map((clip) => clip.channels)),
         skins: inspected.skins,
-        joints: inspected.joints,
+        joints: Math.max(0, ...(inspected.json.skins ?? []).map((skin: any) => skin.joints?.length ?? 0)),
       },
       deathPresentation: selectedClips.death === selectedClips.hurt
         ? "native-hurt-clip-plus-authorized-runtime-fade"

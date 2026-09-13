@@ -1,0 +1,12 @@
+diff --git a/Unreal/UnrealMesh/UnMesh4.cpp b/Unreal/UnrealMesh/UnMesh4.cpp
+--- a/Unreal/UnrealMesh/UnMesh4.cpp
++++ b/Unreal/UnrealMesh/UnMesh4.cpp
+@@ -2232,1 +2232,8 @@ struct FStaticMeshSection4
+ #endif
++		// Infinity Strash stores an additional uint64 cumulative base vertex value
++		// after every static-mesh section. Without consuming it, subsequent LOD
++		// fields are read eight bytes early and fail in distance-field/occluder data.
++		if (Ar.Game == GAME_InfinityStrash)
++		{
++			Ar.Seek(Ar.Tell()+8);
++		}

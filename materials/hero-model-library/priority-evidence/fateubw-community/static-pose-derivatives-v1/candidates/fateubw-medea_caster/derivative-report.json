@@ -1,0 +1,74 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+  "candidateId": "fateubw-medea_caster",
+  "sourceClip": "summon",
+  "derivedClip": "derived-formula-loop-summon",
+  "classification": "derived-procedural-formula-loop",
+  "sourceAnimationLengthProvided": false,
+  "derivedDurationSeconds": 2.0,
+  "nativeDurationClaim": false,
+  "formulaPeriodEvidence": {
+    "formula": "1+math.sin(query.anim_time * 180)",
+    "angularRateDegreesPerSecond": 180,
+    "exactPeriodSeconds": 2.0
+  },
+  "sourceFormulas": [
+    "1+math.sin(query.anim_time * 180)"
+  ],
+  "inputs": {
+    "geometry": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
+      "sha256": "e6b5ff01d97bed4d05448a5022e64107f6c9eb99f0d24285f6f0a8e0b6625efd",
+      "bytes": 9189
+    },
+    "texture": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medea_caster.png",
+      "sha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb",
+      "bytes": 2892
+    },
+    "animation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
+      "sha256": "f6b82558f0024f31fd6ade38ba89c8d8424d8bc06f4a2f880f5503f1a8df4b26",
+      "bytes": 18186
+    },
+    "derivedAnimationInput": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-medea_caster/derived-animation-input.json",
+      "sha256": "066e3e2feed8724b63c5cff902e2fc890ba3b5a3256515be3bd98fdde7c03b47",
+      "bytes": 1322
+    }
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-medea_caster/body.glb",
+    "sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+    "bytes": 85300,
+    "animationCount": 1,
+    "channelCount": 9,
+    "outputKeyCount": 970
+  },
+  "process": {
+    "durationPolicy": "exact trigonometric period derived from the retained source formula",
+    "rotationSamplingFps": 60,
+    "intermediateGlb": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-medea_caster/intermediate-duration-injected.glb",
+      "sha256": "72e21aa0749f5d233a074192a585582b703db6bce47fe6be70a5de061e3ecae4"
+    },
+    "intermediateReport": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-medea_caster/intermediate-conversion-report.json",
+      "sha256": "07c4570e1a7e63912fe74d4eb92282510fe397694cb4a1117b02c923a7b304d9"
+    },
+    "metadataRewrite": "relabels injected duration and clip as derived; no source-authored length is claimed"
+  },
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "rightsStatus": "Source metadata says ARR; redistribution permission remains pending.",
+  "remaining": [
+    "structural and Khronos validation",
+    "WebGL visual review",
+    "GGD action/event mapping",
+    "rights clearance",
+    "backend registration and deployment"
+  ]
+}

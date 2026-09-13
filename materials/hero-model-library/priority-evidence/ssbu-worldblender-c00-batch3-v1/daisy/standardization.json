@@ -1,0 +1,235 @@
+{
+  "schema": "ggd-worldblender-c00-standardization@2",
+  "candidateId": "ssbu-daisy-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/daisy/model/body/c00/daisy-c00.blend",
+    "bytes": 8716576,
+    "sha256": "4bfc6e261670eb4d6412cfc26ae2afd883d4334703b82ae58c2a0ddff00c1531"
+  },
+  "sourceActionCount": 0,
+  "stages": {
+    "lodSelection": {
+      "excludedVisibleMeshPrefixes": [
+        "body_highShape"
+      ]
+    },
+    "decimation": {
+      "targetTriangles": 7900,
+      "errorBound": 0.02
+    },
+    "coalescingReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/coalescing.json",
+    "attributeHarmonizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/attribute-harmonization.json",
+    "nearDuplicateMaterialFinalizationReceipt": null,
+    "primitiveMergeReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/primitive-merge.json",
+    "atlas": {
+      "src": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/merged.glb",
+      "beforeDraws": 8,
+      "edge": 256,
+      "pad": 4,
+      "prims": [
+        {
+          "mesh": 0,
+          "prim": 0,
+          "material": 0,
+          "image": 0,
+          "uv": [
+            -0.98926,
+            0.99023,
+            0.00977,
+            0.98975
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[-0.98926, 0.99023, 0.00977, 0.98975]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        },
+        {
+          "mesh": 0,
+          "prim": 1,
+          "material": 1,
+          "image": 1,
+          "uv": [
+            -0.98389,
+            0.9873,
+            0.01035,
+            0.98584
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[-0.98389, 0.9873, 0.01035, 0.98584]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        },
+        {
+          "mesh": 0,
+          "prim": 2,
+          "material": 2,
+          "image": 2,
+          "uv": [
+            0.03644,
+            0.20898,
+            0.06342,
+            0.42651
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 3,
+          "material": 3,
+          "image": 3,
+          "uv": [
+            -0.94287,
+            0.98828,
+            0.01064,
+            0.97949
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[-0.94287, 0.98828, 0.01064, 0.97949]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        },
+        {
+          "mesh": 0,
+          "prim": 4,
+          "material": 4,
+          "image": 4,
+          "uv": [
+            0.0065,
+            0.24292,
+            0.0499,
+            0.4834
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 5,
+          "material": 5,
+          "image": 5,
+          "uv": [
+            0.26685,
+            0.8418,
+            0.26611,
+            0.75244
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 6,
+          "material": 6,
+          "image": 6,
+          "uv": [
+            0.26685,
+            0.8418,
+            0.26611,
+            0.75293
+          ],
+          "eligible": true,
+          "why": ""
+        },
+        {
+          "mesh": 0,
+          "prim": 7,
+          "material": 7,
+          "image": 7,
+          "uv": [
+            -0.98828,
+            0.98877,
+            0.01254,
+            0.98389
+          ],
+          "eligible": false,
+          "why": "UV 超出 [0,1]（[-0.98828, 0.98877, 0.01254, 0.98389]）⇒ 這張貼圖會 tile,⛔ 不可進圖集"
+        }
+      ],
+      "quality": 0.5,
+      "atlases": 2,
+      "cells": {
+        "2": {
+          "cell": [
+            256,
+            128
+          ],
+          "at": [
+            0,
+            0,
+            0
+          ],
+          "from": [
+            256,
+            128
+          ]
+        },
+        "4": {
+          "cell": [
+            256,
+            128
+          ],
+          "at": [
+            0,
+            0,
+            128
+          ],
+          "from": [
+            256,
+            128
+          ]
+        },
+        "5": {
+          "cell": [
+            128,
+            128
+          ],
+          "at": [
+            1,
+            0,
+            0
+          ],
+          "from": [
+            256,
+            256
+          ]
+        },
+        "6": {
+          "cell": [
+            128,
+            128
+          ],
+          "at": [
+            1,
+            128,
+            0
+          ],
+          "from": [
+            256,
+            256
+          ]
+        }
+      },
+      "afterDrawsPredicted": 6,
+      "out": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
+      "merge": "⭐ draw call 8 → 6",
+      "gc": {
+        "images": 6,
+        "materials": 6,
+        "draws": 6
+      },
+      "afterDraws": 6
+    },
+    "alphaAtlasFinalizationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/alpha-atlas-finalization.json"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
+    "bytes": 846532,
+    "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a"
+  },
+  "ultimate14MotionCandidate": {
+    "nuanmbPaths": 13,
+    "bodyMotionPaths": 13,
+    "uniqueTransformPayloads": 13,
+    "status": "source-indexed-not-converted-not-rig-tested-not-merged",
+    "sixStateCoverageClaimed": false
+  },
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false
+}

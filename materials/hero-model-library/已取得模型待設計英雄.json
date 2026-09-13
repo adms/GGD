@@ -1,11 +1,11 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 734,
+  "sourceIdentityCount": 744,
   "counts": {
-    "not-defined": 387,
+    "not-defined": 395,
     "definitions-incomplete": 11,
     "identity-review": 247,
-    "designed": 89,
+    "designed": 91,
     "source-unavailable": 0
   },
   "heroesInProject": 153,
@@ -47,24 +47,12 @@
   },
   "inputs": [
     {
-      "path": "materials/hero-model-library/design-backlog/sources-300-mba.json",
-      "sha256": "57e240f00e6e02ef08d06ad825d9cdbaabcfb6fed4848192bb07e00d63b7368f"
-    },
-    {
-      "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "bf474c1858e8e4583bcfa582155e9aea216b5653cd3cc0902e1a8df63e9b83ac"
-    },
-    {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "0a73b81ee50cf1cfc936b73789b2b0562de5a2703fa496bdfb4467a180631957"
+      "sha256": "31c4ad25fda3d845df0096d7484bc1b5bbb6db7dd0b9181d3053f81895d8ee67"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
       "sha256": "0ff158632b1401b8ca09112b703889ceccc2ffc5ffe1c2599272b91611a8d520"
-    },
-    {
-      "path": "materials/hero-model-library/design-backlog/resource-coverage.json",
-      "sha256": "81573b37fd0d7f077c631973039aa20bd93a01def81ace97776a0f72b17a14af"
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
@@ -72,15 +60,15 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "b4f5af9f9fe41f5810cfeb402f0416784718e4679e705d872323a0170053c38c"
+      "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "4318599ddd99e47edac7afa7df5aee1d6ac2de752fd60da70ae9d6c07f680a27"
+      "sha256": "361cbb5738edf2f2444b9b2b40b8264919e58fc816ba1717130115b49755cc18"
     },
     {
       "path": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "sha256": "da6f6410867dcace47605c1f691666d507c34c0822fb9ed3e42054bfe3c0c8ef"
+      "sha256": "1829625349481d3eaf32548924ea73988144506d1c3ce1d9dd4d2a4acb051f00"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -540,7 +528,7 @@
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "sha256": "842623dc374a64f44f3134e3f16ca6ca12874b9990f8f1b20f4abad7c204deed"
+      "sha256": "a2852f999d1bf617aef280260909480aa753b96959abeefa893c55540f046f50"
     },
     {
       "path": "content/champions/godie-nsjs.json",
@@ -632,7 +620,7 @@
     },
     {
       "path": "content/champions/godie-ubal.json",
-      "sha256": "eb90d876732f99014ea5db8e20a1c22ffce7b2cd4057e8cd08badc1c7bae6c17"
+      "sha256": "4f4c789b7130e5e68f5400f314248f80a0f5d899bc8efa55562a8c7126d9ab06"
     },
     {
       "path": "content/champions/godie-ucrl.json",
@@ -693,6 +681,26 @@
     {
       "path": "content/champions/thorne.json",
       "sha256": "053297d3ac1bd1761d40b6f033ae9644dd0b9fc5dbba1ac7cc57ec3804051744"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+      "sha256": "db24885498f1c9915b8080ccae0d988285be3f13fde39ac021e750d1e072d2c1"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+      "sha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+      "sha256": "5fe47f44926666457d0dc3fda2efc9d99c9bef7b2d9c626fcce3560f04c8a8e6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+      "sha256": "0e2882e153f2847a82a1751d89bee3db86c74c93aaff7ac77d16639c28b50a71"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json",
+      "sha256": "ad2bbd112199d7389e220455e05577c49446db47ead0f699184b5316f5aab2c4"
     }
   ],
   "characters": [
@@ -90294,6 +90302,83 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+          "existsLocal": true,
+          "bytes": 208968,
+          "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 208968,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-gilgamesh_archer-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 9,
+          "nativeAnimationCount": 9,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/conversion-report.json",
+              "bytes": 48538,
+              "sha256": "bd534cde49b44f6a6e80e16afdf5bfa25756f4867d686a748755abb4b8212f28"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/native-structural-readback.json",
+              "bytes": 1636,
+              "sha256": "0c0ef88bccda138360def0af865fd1d6945f5f2cf1aa65f6d5531b4b7e915636"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/contract-validation.json",
+              "bytes": 4870,
+              "sha256": "8fa427e5fcc35e94d989b17da013c2eef39f0c88ce4f94a7bdbdd74ef0452c9d"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-gilgamesh_archer",
+              "bodySha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+              "clipNames": [
+                "ea"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/webgl-completion-v2/proof.json",
+                "sha256": "ae5b9fe8fa1f43b0ff779a6bcd0b05c5b66e8e7e518b401c3d84781b37cdd38b"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/webgl-completion-v2/run.json",
+                "sha256": "4395ee2b75ad930cbb1f824465cae36b4dcc5faa3924528ca0505c18ec41b48b"
+              },
+              "shots": 4
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-gilgamesh_archer/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [
@@ -90427,8 +90512,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -90453,7 +90538,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 9 個片段；已轉換 8 個原生動作；1 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 9 個片段；已轉換 9 個原生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -90497,6 +90582,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-gilgamesh_archer-native-motion-completion-v2",
+            "count": 9,
+            "sourceCount": 9,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -90514,7 +90608,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -90762,6 +90861,83 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+          "existsLocal": true,
+          "bytes": 227824,
+          "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 227824,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-medusa_rider-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 11,
+          "nativeAnimationCount": 11,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/conversion-report.json",
+              "bytes": 57980,
+              "sha256": "2bacfb22f33e3d96508865ff05286e2533771e647edb7e6d362c9bc6d4002b4c"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/native-structural-readback.json",
+              "bytes": 1629,
+              "sha256": "db2f0c48542d0e5fddca913c2e08c43f86bbde0de2b84481adc68774dfe065b1"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/contract-validation.json",
+              "bytes": 5177,
+              "sha256": "3123613178708ebc26ab15fe7c300d5823c3220a5bb8a5dec7033b6436575d85"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-medusa_rider",
+              "bodySha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+              "clipNames": [
+                "summon"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/webgl-completion-v2/proof.json",
+                "sha256": "7ef04981f25e2e1e4d6af45295db48a0b272978d548968595a03a350674c7a98"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/webgl-completion-v2/run.json",
+                "sha256": "6f8d57ee05b7a2b9cbc6694806751b77e76dcca54700cd4bda20386280a5d964"
+              },
+              "shots": 4
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-medusa_rider/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [
@@ -90885,8 +91061,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -90911,7 +91087,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 11 個片段；已轉換 10 個原生動作；1 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 11 個片段；已轉換 11 個原生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -90955,6 +91131,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-medusa_rider-native-motion-completion-v2",
+            "count": 11,
+            "sourceCount": 11,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -90972,7 +91157,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -91186,6 +91376,141 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+          "existsLocal": true,
+          "bytes": 500056,
+          "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 500056,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-heracles_berserker-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 17,
+          "nativeAnimationCount": 16,
+          "unconvertedAnimationCount": 1,
+          "proceduralAnimationCount": 2,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/conversion-report.json",
+              "bytes": 95655,
+              "sha256": "6d236b18edfe54ba8e19c9f05685fabd87b1e2fa8c029abfd400dd8759bbd4f0"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/native-structural-readback.json",
+              "bytes": 1649,
+              "sha256": "c53c38cdf858813ea4c0dcaeae7a6c9fbcd4d409415b4d272b6980ab653dca30"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/contract-validation.json",
+              "bytes": 5853,
+              "sha256": "95c62240dd609449ec9315eaaf920843376b05b5810fc585d7810757e2093b96"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-heracles_berserker",
+              "bodySha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+              "clipNames": [
+                "jump_hit",
+                "land"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/webgl-completion-v2/proof.json",
+                "sha256": "7b90f8b368c016c7c05f57cca9bc6bc98dd9d489cba393b3f43f7bf1233ae07b"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/webgl-completion-v2/run.json",
+                "sha256": "ad124167530c892d80c3eac589fdc162f92650b5e5aafc7ae401f981a04ce9ca"
+              },
+              "shots": 8
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-heracles_berserker/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-heracles_berserker/body.glb",
+          "existsLocal": true,
+          "bytes": 78492,
+          "sha256": "aa6f4894d819336cdaf2b095e5e533f1b0788da12ea150eb7143f5d74147be41",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 78492,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-heracles_berserker/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-heracles_berserker-durationless-derivative-v1",
+          "readiness": "derived-motion-validated-reserve-owner-review-pending",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "isStandaloneModelCandidate": false,
+          "sourceAnimationCount": 1,
+          "nativeAnimationCount": 0,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationClipCount": 1,
+          "animationProvenance": "derived-procedural-formula-loop",
+          "sourceClip": "idle",
+          "derivedClip": "derived-formula-loop-idle",
+          "durationSeconds": 4.0,
+          "sourceAnimationLengthProvided": false,
+          "nativeDurationClaim": false,
+          "limitations": [
+            "derived motion; not a native-duration source clip",
+            "owner visual approval pending",
+            "redistribution permission for ARR source",
+            "GGD action/event mapping and backend selection"
+          ],
+          "validationEvidence": {
+            "derivativeReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-heracles_berserker/derivative-report.json",
+              "bytes": 4124,
+              "sha256": "4c8e96b76a9bc3a11e13ac60395418f47ea1c5ae33e2fab29c13d468d24946c9"
+            }
+          },
+          "visualEvidence": {
+            "visuallyOwnerApproved": false
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+          "s3ArchiveMember": "fateubw-heracles_berserker/body.glb",
+          "archiveSha256": "71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [
@@ -91319,9 +91644,9 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
-        "componentsOrProps": 0,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
+        "componentsOrProps": 1,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -91345,7 +91670,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 17 個片段；已轉換 14 個原生動作；3 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 17 個片段；已轉換 16 個原生動作；1 個無來源時長片段另建標示清楚的衍生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 1 個音訊檔，音效／語音待分型",
         "voice": "FateUBW咆哮1檔，非已確認台詞。",
@@ -91390,6 +91715,24 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-heracles_berserker-native-motion-completion-v2",
+            "count": 16,
+            "sourceCount": 17,
+            "unconvertedCount": 1,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-heracles_berserker-durationless-derivative-v1",
+            "count": 0,
+            "sourceCount": 1,
+            "unconvertedCount": 0,
+            "provenance": "derived-procedural-formula-loop",
+            "readiness": "derived-motion-validated-reserve-owner-review-pending",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -91409,7 +91752,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/webgl-native-v1/run.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/manual-visual-review.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/midpoint-contact-sheet.png"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/midpoint-contact-sheet.png",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -91659,6 +92007,84 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+          "existsLocal": true,
+          "bytes": 245732,
+          "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 245732,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-artoria_pendragon_saber-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 10,
+          "nativeAnimationCount": 10,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 2,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/conversion-report.json",
+              "bytes": 57310,
+              "sha256": "2a7244644145fba13fbeca35543dafcb6c867dc10d0ca2333dcfcaf39d1f04fd"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/native-structural-readback.json",
+              "bytes": 1651,
+              "sha256": "fa865e9a2722ac752fcfbe12d91919d662400802cabf72bc6be1ddb5f0eccd23"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/contract-validation.json",
+              "bytes": 5085,
+              "sha256": "87dc6a97f3b06e1780bb52e190ae59af006d378cee578eb27732d81ea66cc302"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-artoria_pendragon_saber",
+              "bodySha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+              "clipNames": [
+                "stab_1",
+                "excalibur"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/webgl-completion-v2/proof.json",
+                "sha256": "941c3660a12f652cded34d71051a0d49fd4287f02d7bd06a8a140db96466d3a0"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/webgl-completion-v2/run.json",
+                "sha256": "35ba8d84c00fd96af2b821ddd68e32505fe439b499a5b3b0d83d6086720add6b"
+              },
+              "shots": 8
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-artoria_pendragon_saber/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [
@@ -91890,8 +92316,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -91926,7 +92352,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 10 個片段；已轉換 8 個原生動作；2 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 10 個片段；已轉換 10 個原生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 251 個音訊檔，音效／語音待分型",
         "voice": "已入索引251音訊檔；語音/說話者/逐段語系未全聽審。",
@@ -91972,6 +92398,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-artoria_pendragon_saber-native-motion-completion-v2",
+            "count": 10,
+            "sourceCount": 10,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -91989,7 +92424,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -141260,6 +141700,68 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+          "existsLocal": true,
+          "bytes": 296000,
+          "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 296000,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-emiya_archer-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 11,
+          "nativeAnimationCount": 11,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/conversion-report.json",
+              "bytes": 64134,
+              "sha256": "4d2cf9b633358a78c04a9625c327bde8866d2531a7dc6dd5ba3a5061ec3d5e99"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/native-structural-readback.json",
+              "bytes": 1629,
+              "sha256": "a5f76bcb48c21d8ab0c0c69a4db2f3893abdadb8d717fb1cd303ce4caff4767e"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/contract-validation.json",
+              "bytes": 5189,
+              "sha256": "5bad76f9a6b0c039c7ba0d67f8b6ff2e83544ac13cafecc7e9adbb148ef7be70"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": null
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-emiya_archer/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -141281,8 +141783,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -141343,6 +141845,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-emiya_archer-native-motion-completion-v2",
+            "count": 11,
+            "sourceCount": 11,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -141360,7 +141871,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -141608,6 +142124,83 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+          "existsLocal": true,
+          "bytes": 199136,
+          "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 199136,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-iskander_rider-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 9,
+          "nativeAnimationCount": 9,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/conversion-report.json",
+              "bytes": 48913,
+              "sha256": "79ec5535c0e394b7e5597f80a6edd053ab1ced6906ad627190c22a7851b4eb5a"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/native-structural-readback.json",
+              "bytes": 1632,
+              "sha256": "52bd573f52ce55799cbd547c9f714a8c4a8218dac6f52751bb7e61010ce41c18"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/contract-validation.json",
+              "bytes": 4921,
+              "sha256": "3179265b4827a95c1d448b1e0f1eb96a5d46c6b453f1632c7b3845454c7667b5"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-iskander_rider",
+              "bodySha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+              "clipNames": [
+                "summon"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/webgl-completion-v2/proof.json",
+                "sha256": "b829251c99c093d662bbbbec3ecd3b702996cd5b9132b593330e41a7bdbbe239"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/webgl-completion-v2/run.json",
+                "sha256": "749c68bcf58d6af7eb721a36aed84a96f4f575a6cf62a268d03c35bceebcd77a"
+              },
+              "shots": 4
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-iskander_rider/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -141629,8 +142222,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -141645,7 +142238,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 9 個片段；已轉換 8 個原生動作；1 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 9 個片段；已轉換 9 個原生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -141689,6 +142282,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-iskander_rider-native-motion-completion-v2",
+            "count": 9,
+            "sourceCount": 9,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -141706,7 +142308,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -141954,6 +142561,125 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+          "existsLocal": true,
+          "bytes": 253132,
+          "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 253132,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-sasaki_kojiro_assassin-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 11,
+          "nativeAnimationCount": 10,
+          "unconvertedAnimationCount": 1,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/conversion-report.json",
+              "bytes": 59874,
+              "sha256": "2fcbcd03760d7a8e861ac22ce60a4a1d157eeec0239ca3b61602355ba44e586f"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/native-structural-readback.json",
+              "bytes": 1649,
+              "sha256": "6a485d326bfd0c1b6eb9470e2564da0675f803c225da19a31924a034d7b98006"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/contract-validation.json",
+              "bytes": 5080,
+              "sha256": "141a7ef6266df6e747f91d96b0e07005880af54f3128d4ae93dde6831cb583b9"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": null
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-sasaki_kojiro_assassin/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+          "existsLocal": true,
+          "bytes": 51384,
+          "sha256": "824dd900ae2bb8217718af74b688bb7a53c5d55eeb42545b14d59e835c846c1d",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 51384,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-sasaki_kojiro_assassin-durationless-derivative-v1",
+          "readiness": "derived-motion-validated-reserve-owner-review-pending",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "isStandaloneModelCandidate": false,
+          "sourceAnimationCount": 1,
+          "nativeAnimationCount": 0,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationClipCount": 1,
+          "animationProvenance": "derived-static-pose-hold",
+          "sourceClip": "summon",
+          "derivedClip": "derived-hold-summon",
+          "durationSeconds": 1.0,
+          "sourceAnimationLengthProvided": false,
+          "nativeDurationClaim": false,
+          "limitations": [
+            "derived motion; not a native-duration source clip",
+            "owner visual approval pending",
+            "redistribution permission for ARR source",
+            "GGD action/event mapping and backend selection"
+          ],
+          "validationEvidence": {
+            "derivativeReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-sasaki_kojiro_assassin/derivative-report.json",
+              "bytes": 3821,
+              "sha256": "93b5b8dc282ea532ff6d79a835a36e7a73c6d8e9ecb587aafb443e91b589a868"
+            }
+          },
+          "visualEvidence": {
+            "visuallyOwnerApproved": false
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+          "s3ArchiveMember": "fateubw-sasaki_kojiro_assassin/body.glb",
+          "archiveSha256": "71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -141975,9 +142701,9 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
-        "componentsOrProps": 0,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
+        "componentsOrProps": 1,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -141991,7 +142717,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 11 個片段；已轉換 10 個原生動作；1 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 11 個片段；已轉換 10 個原生動作；1 個無來源時長片段另建標示清楚的衍生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -142035,6 +142761,24 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-sasaki_kojiro_assassin-native-motion-completion-v2",
+            "count": 10,
+            "sourceCount": 11,
+            "unconvertedCount": 1,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-sasaki_kojiro_assassin-durationless-derivative-v1",
+            "count": 0,
+            "sourceCount": 1,
+            "unconvertedCount": 0,
+            "provenance": "derived-static-pose-hold",
+            "readiness": "derived-motion-validated-reserve-owner-review-pending",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -142052,7 +142796,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -142302,6 +143051,68 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+          "existsLocal": true,
+          "bytes": 73280,
+          "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 73280,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-gilles_de_rais_caster-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 4,
+          "nativeAnimationCount": 4,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/conversion-report.json",
+              "bytes": 11795,
+              "sha256": "86c30f42b3a3a5532742ba2fd8375cb206d3d57bbbe65372c7b5122202e156ab"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/native-structural-readback.json",
+              "bytes": 1645,
+              "sha256": "5af61a462ecb5c246baff9aa736c256539f7a9f493a357dde392ef55ded3ffaa"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/contract-validation.json",
+              "bytes": 4303,
+              "sha256": "eaa16116a11ecb4b2bd9b38ce356760a6ca056dab7b69534319a2983080ffa88"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": null
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-gilles_de_rais_caster/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -142323,8 +143134,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -142383,6 +143194,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-gilles_de_rais_caster-native-motion-completion-v2",
+            "count": 4,
+            "sourceCount": 4,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -142400,7 +143220,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -142650,6 +143475,68 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+          "existsLocal": true,
+          "bytes": 158296,
+          "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 158296,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-hassan-i-sabbah_assassin-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 8,
+          "nativeAnimationCount": 8,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/conversion-report.json",
+              "bytes": 39415,
+              "sha256": "19c64027ed0248edb0f6e92a09c53100af34903d81e4752aefc80b19086d00c4"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/native-structural-readback.json",
+              "bytes": 1652,
+              "sha256": "9f9eb94073e4c9986d2972f5eba9e54a86a8977d91d060858fecf8c95376796e"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/contract-validation.json",
+              "bytes": 4818,
+              "sha256": "5f69f515da127dbc1edaff3a7551029f351a2dc1cb66f95ff9eb86f8345c2281"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": null
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-hassan-i-sabbah_assassin/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -142671,8 +143558,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -142731,6 +143618,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-hassan-i-sabbah_assassin-native-motion-completion-v2",
+            "count": 8,
+            "sourceCount": 8,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -142748,7 +143644,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -143020,6 +143921,85 @@
           "identityReviewRequired": false,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/hive-anime-team-survival/extracted/NeroSaber.mdx",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+          "existsLocal": true,
+          "bytes": 478168,
+          "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 478168,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-nero_claudius_saber-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 6,
+          "nativeAnimationCount": 6,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 3,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/conversion-report.json",
+              "bytes": 41338,
+              "sha256": "8add2f64f91565fd94a11d1bd6869a34a33555522eaf2f25835e8dd0fd95dc83"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/native-structural-readback.json",
+              "bytes": 1642,
+              "sha256": "92a0e05cb83ccb912aa17b66d91f5f844ffb6b489353d2e2fbe66f15f0ac2472"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/contract-validation.json",
+              "bytes": 4587,
+              "sha256": "6c783636aa2cc31f35e29e53db4e7e444c8961c7e0b56fd898180fe030352e70"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-nero_claudius_saber",
+              "bodySha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+              "clipNames": [
+                "horizontal_slashes",
+                "aestus_domus_aurea",
+                "aestus_domus_aurea_full"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/webgl-completion-v2/proof.json",
+                "sha256": "ff8d29ac0de394869f6124320a89641fc867962665eb22ae5eabd48aba0763c6"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/webgl-completion-v2/run.json",
+                "sha256": "f01aaf1132dddfc48d53bfcafeff1639526eb338a31afb469a3214596f8f6370"
+              },
+              "shots": 12
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-nero_claudius_saber/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -143043,11 +144023,11 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
-        "otherCandidateFiles": 1
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "suggestedHeroIds": [],
@@ -143059,7 +144039,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 6 個片段；已轉換 3 個原生動作；3 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收；另保留 MDX 序列區塊，片段數與轉換可用性待核",
+        "motion": "來源 6 個片段；已轉換 6 個原生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 1 個音訊檔，音效／語音待分型",
         "voice": "FateUBW固有結界1檔待分類，非已確認台詞。",
@@ -143122,6 +144102,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-nero_claudius_saber-native-motion-completion-v2",
+            "count": 6,
+            "sourceCount": 6,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -143139,7 +144128,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -143387,6 +144381,125 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+          "existsLocal": true,
+          "bytes": 195016,
+          "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 195016,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-cu_chulainn_lancer-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 8,
+          "nativeAnimationCount": 7,
+          "unconvertedAnimationCount": 1,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/conversion-report.json",
+              "bytes": 44300,
+              "sha256": "acec671ccea214067d2ffe684a6e3b466c3c6e23af0629f7846fd36c9adae5ee"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/native-structural-readback.json",
+              "bytes": 1640,
+              "sha256": "ee2bc29d7db3338a9eacf840cc9baf7f84e29181ce30f4acb0f6516496aed793"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/contract-validation.json",
+              "bytes": 4680,
+              "sha256": "e317676bb9d7c09fc5bf36f181330d66f6be4d315417dbc2054f815770084f6a"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": null
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-cu_chulainn_lancer/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-cu_chulainn_lancer/body.glb",
+          "existsLocal": true,
+          "bytes": 52276,
+          "sha256": "3a2cf74f45205a1247ce24ca59de2f49f3baab61c34b49324ee3a993c4582dfe",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 52276,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-cu_chulainn_lancer/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-cu_chulainn_lancer-durationless-derivative-v1",
+          "readiness": "derived-motion-validated-reserve-owner-review-pending",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "isStandaloneModelCandidate": false,
+          "sourceAnimationCount": 1,
+          "nativeAnimationCount": 0,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationClipCount": 1,
+          "animationProvenance": "derived-static-pose-hold",
+          "sourceClip": "summon",
+          "derivedClip": "derived-hold-summon",
+          "durationSeconds": 1.0,
+          "sourceAnimationLengthProvided": false,
+          "nativeDurationClaim": false,
+          "limitations": [
+            "derived motion; not a native-duration source clip",
+            "owner visual approval pending",
+            "redistribution permission for ARR source",
+            "GGD action/event mapping and backend selection"
+          ],
+          "validationEvidence": {
+            "derivativeReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-cu_chulainn_lancer/derivative-report.json",
+              "bytes": 3787,
+              "sha256": "0c8ba2b1a36381fbdd7026f3c06d129b7bcc80c96beafa6971259c67ec7e5592"
+            }
+          },
+          "visualEvidence": {
+            "visuallyOwnerApproved": false
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+          "s3ArchiveMember": "fateubw-cu_chulainn_lancer/body.glb",
+          "archiveSha256": "71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -143408,9 +144521,9 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
-        "componentsOrProps": 0,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
+        "componentsOrProps": 1,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -143424,7 +144537,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 8 個片段；已轉換 7 個原生動作；1 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 8 個片段；已轉換 7 個原生動作；1 個無來源時長片段另建標示清楚的衍生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -143468,6 +144581,24 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-cu_chulainn_lancer-native-motion-completion-v2",
+            "count": 7,
+            "sourceCount": 8,
+            "unconvertedCount": 1,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-cu_chulainn_lancer-durationless-derivative-v1",
+            "count": 0,
+            "sourceCount": 1,
+            "unconvertedCount": 0,
+            "provenance": "derived-static-pose-hold",
+            "readiness": "derived-motion-validated-reserve-owner-review-pending",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -143485,7 +144616,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -143733,6 +144869,141 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+          "existsLocal": true,
+          "bytes": 242456,
+          "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 242456,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-medea_caster-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 7,
+          "nativeAnimationCount": 6,
+          "unconvertedAnimationCount": 1,
+          "proceduralAnimationCount": 2,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/conversion-report.json",
+              "bytes": 31937,
+              "sha256": "f44fb6cdbf54aa469564dadf31207dd01ec48896f2996da59ed7d2383fe0bb1b"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/native-structural-readback.json",
+              "bytes": 1630,
+              "sha256": "7b6c6f968150ce8af2dc5b68cff9c5a3f0e1b1d7286824a4b7e1cd00eaf056bd"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/contract-validation.json",
+              "bytes": 4528,
+              "sha256": "5af01aa4a48060fa369941214be15d0c0360e35cf2acaa2470a363e26e3a82b4"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-medea_caster",
+              "bodySha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+              "clipNames": [
+                "cast_3",
+                "cast_4"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/webgl-completion-v2/proof.json",
+                "sha256": "19f1c1c1292a98c0a44f30c1ed95eb2d3902bacd763401570cbf3c605a24dacb"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/webgl-completion-v2/run.json",
+                "sha256": "231811131d34d5ced71ec373c92b3e1fc1d7fe042724513301397f6eec25bb6a"
+              },
+              "shots": 8
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-medea_caster/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-medea_caster/body.glb",
+          "existsLocal": true,
+          "bytes": 85300,
+          "sha256": "d1af8b3d9b55ce12b2f6bd94426cd7eeb0daa56e5b99e3420d140a6aef3c5e63",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 85300,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-medea_caster/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-medea_caster-durationless-derivative-v1",
+          "readiness": "derived-motion-validated-reserve-owner-review-pending",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "isStandaloneModelCandidate": false,
+          "sourceAnimationCount": 1,
+          "nativeAnimationCount": 0,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationClipCount": 1,
+          "animationProvenance": "derived-procedural-formula-loop",
+          "sourceClip": "summon",
+          "derivedClip": "derived-formula-loop-summon",
+          "durationSeconds": 2.0,
+          "sourceAnimationLengthProvided": false,
+          "nativeDurationClaim": false,
+          "limitations": [
+            "derived motion; not a native-duration source clip",
+            "owner visual approval pending",
+            "redistribution permission for ARR source",
+            "GGD action/event mapping and backend selection"
+          ],
+          "validationEvidence": {
+            "derivativeReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-medea_caster/derivative-report.json",
+              "bytes": 3968,
+              "sha256": "69e734f58644531fb85360e8b2c9493fb39ecd15d659b2d06d04f4fff554e80c"
+            }
+          },
+          "visualEvidence": {
+            "visuallyOwnerApproved": false
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+          "s3ArchiveMember": "fateubw-medea_caster/body.glb",
+          "archiveSha256": "71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -143754,9 +145025,9 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
-        "componentsOrProps": 0,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
+        "componentsOrProps": 1,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -143770,7 +145041,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 7 個片段；已轉換 4 個原生動作；3 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 7 個片段；已轉換 6 個原生動作；1 個無來源時長片段另建標示清楚的衍生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -143814,6 +145085,24 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-medea_caster-native-motion-completion-v2",
+            "count": 6,
+            "sourceCount": 7,
+            "unconvertedCount": 1,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-medea_caster-durationless-derivative-v1",
+            "count": 0,
+            "sourceCount": 1,
+            "unconvertedCount": 0,
+            "provenance": "derived-procedural-formula-loop",
+            "readiness": "derived-motion-validated-reserve-owner-review-pending",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -143831,7 +145120,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -144079,6 +145373,84 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+          "existsLocal": true,
+          "bytes": 340508,
+          "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 340508,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-lancelot_berserker-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 13,
+          "nativeAnimationCount": 13,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 2,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/conversion-report.json",
+              "bytes": 72459,
+              "sha256": "04b3d64fcd9a942061419f9633d007872bbf6272769a8c6d1ec42971f1070716"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/native-structural-readback.json",
+              "bytes": 1641,
+              "sha256": "9fe7a2e7d34d6d684122c5602835de0f3f5ea25eae4c7ce6601e0b61e565f1ce"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/contract-validation.json",
+              "bytes": 5406,
+              "sha256": "d1938286c71ca63f6675c8fc088dbb8eb4fc48acb3a4847447506292439f21a4"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-lancelot_berserker",
+              "bodySha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+              "clipNames": [
+                "gun",
+                "summon"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/webgl-completion-v2/proof.json",
+                "sha256": "8dfdf657438da85f015e55c1037d446a51108c42f02fe25cf1441a2cc59a8472"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/webgl-completion-v2/run.json",
+                "sha256": "afbb9a8a655ccca1d82ac2790ddaa7561019cc825cc148ae05d1264227859a3c"
+              },
+              "shots": 8
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-lancelot_berserker/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -144100,8 +145472,8 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
         "componentsOrProps": 0,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
@@ -144116,7 +145488,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 13 個片段；已轉換 11 個原生動作；2 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 13 個片段；已轉換 13 個原生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "同來源包 5 個音訊檔；角色／音效分型待核",
         "voice": "同來源音訊已建檔；尚未逐角色確認語音",
@@ -144160,6 +145532,15 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-lancelot_berserker-native-motion-completion-v2",
+            "count": 13,
+            "sourceCount": 13,
+            "unconvertedCount": 0,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -144177,7 +145558,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -144474,6 +145860,140 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "existsLocal": true,
+          "bytes": 222352,
+          "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 222352,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-diarmuid_ua_duibhne_lancer-native-motion-completion-v2",
+          "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+          "resourceRole": "character-body",
+          "isStandaloneModelCandidate": true,
+          "sourceAnimationCount": 8,
+          "nativeAnimationCount": 7,
+          "unconvertedAnimationCount": 1,
+          "proceduralAnimationCount": 1,
+          "animationProvenance": "community-mod-native-with-bounded-formula-baking",
+          "limitations": [
+            "redistribution permission for ARR source",
+            "continuous playback and source-engine formula parity",
+            "GGD action/event mapping",
+            "GGD backend selection and production deployment"
+          ],
+          "validationEvidence": {
+            "converterReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/conversion-report.json",
+              "bytes": 43481,
+              "sha256": "afb863a85e7f882c31e53e9a801c6c5eb2733326f9d00367721b8a024c6b3cba"
+            },
+            "structuralReadback": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/native-structural-readback.json",
+              "bytes": 1656,
+              "sha256": "3f050b8d6b68c805deaa2811b349f626096837c760e04d95555d69dc9f643f5a"
+            },
+            "contractValidation": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/contract-validation.json",
+              "bytes": 4703,
+              "sha256": "cc4e38ad3cfae6db52a5e5124b166730444e830a81c5efb24fb25e711a174b8a"
+            },
+            "completionReceipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json"
+          },
+          "visualEvidence": {
+            "webglNewCurveReview": {
+              "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+              "bodySha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+              "clipNames": [
+                "hogou_unseal"
+              ],
+              "proof": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/webgl-completion-v2/proof.json",
+                "sha256": "587ec17a310febc69c215829883d3c308e545cca8cce46b63a0a699a7cd204a4"
+              },
+              "run": {
+                "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/webgl-completion-v2/run.json",
+                "sha256": "1668c147fe0fc692d6e40387d22dfa5c105722e5a1abb6434d5f9508e129a6c1"
+              },
+              "shots": 4
+            }
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+          "s3ArchiveMember": "fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+          "readbackVerified": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "existsLocal": true,
+          "bytes": 50044,
+          "sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+          "sha256Status": "pinned Git receipt plus verified S3 full readback",
+          "magicHex": "676c544602000000",
+          "library": "community",
+          "sourceId": "github-flemmli97-fateubw-07e9d79b",
+          "sourceUrl": "https://github.com/Flemmli97/FateUBW",
+          "converted": true,
+          "format": "glTF Binary",
+          "componentReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "identityReviewRequired": false,
+          "recordedBytes": 50044,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "localSizeMatches": true,
+          "id": "fateubw-diarmuid_ua_duibhne_lancer-durationless-derivative-v1",
+          "readiness": "derived-motion-validated-reserve-owner-review-pending",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "isStandaloneModelCandidate": false,
+          "sourceAnimationCount": 1,
+          "nativeAnimationCount": 0,
+          "unconvertedAnimationCount": 0,
+          "proceduralAnimationCount": 1,
+          "animationClipCount": 1,
+          "animationProvenance": "derived-static-pose-hold",
+          "sourceClip": "summon",
+          "derivedClip": "derived-hold-summon",
+          "durationSeconds": 1.0,
+          "sourceAnimationLengthProvided": false,
+          "nativeDurationClaim": false,
+          "limitations": [
+            "derived motion; not a native-duration source clip",
+            "owner visual approval pending",
+            "redistribution permission for ARR source",
+            "GGD action/event mapping and backend selection"
+          ],
+          "validationEvidence": {
+            "derivativeReport": {
+              "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-diarmuid_ua_duibhne_lancer/derivative-report.json",
+              "bytes": 3851,
+              "sha256": "b014f1e9eeecf4dd56da160b2b76116ebf59c93da32cb9787a46438ee0c95ca5"
+            }
+          },
+          "visualEvidence": {
+            "visuallyOwnerApproved": false
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-static-pose-derivatives-v2/71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07.tar.gz",
+          "s3ArchiveMember": "fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+          "archiveSha256": "71eee866ea94ddc17c3b51a8caeb11007046ab27e7e2ce9adaf9574743a54c07",
+          "readbackVerified": true
         }
       ],
       "mappedHeroIds": [],
@@ -144497,11 +146017,11 @@
         "policy": "Exact identity mapping against all inventory + champion names; same-name/donor-proxy is not automatically equivalent."
       },
       "candidateBreakdown": {
-        "characterBodySources": 3,
-        "standaloneCharacterBodies": 2,
-        "componentsOrProps": 0,
+        "characterBodySources": 4,
+        "standaloneCharacterBodies": 3,
+        "componentsOrProps": 1,
         "sharedContainers": 0,
-        "otherCandidateFiles": 2
+        "otherCandidateFiles": 0
       },
       "currentHeroChecks": [],
       "suggestedHeroIds": [],
@@ -144513,7 +146033,7 @@
       "workTranslationBasis": "中文社群通稱，非本次核實的官方中文標題；保留原 work key 以免混淆子作品。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "來源 8 個片段；已轉換 6 個原生動作；2 個公式／無時長等片段保留未轉換；待來源引擎曲線比對、事件映射、權利與後台驗收",
+        "motion": "來源 8 個片段；已轉換 7 個原生動作；1 個無來源時長片段另建標示清楚的衍生動作；待來源引擎曲線比對、事件映射、權利與後台驗收",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 13 個音訊檔，音效／語音待分型",
         "voice": "已入索引13音訊檔；語音/說話者/逐段語系未全聽審。",
@@ -144534,24 +146054,6 @@
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
         "motionCandidateCounts": [
-          {
-            "candidateId": "fuc-mod-zero-lancer-p1",
-            "count": 0,
-            "sourceCount": null,
-            "unconvertedCount": null,
-            "provenance": null,
-            "readiness": "standard-glb-candidate",
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          },
-          {
-            "candidateId": "fuc-mod-zero-lancer-p2",
-            "count": 0,
-            "sourceCount": null,
-            "unconvertedCount": null,
-            "provenance": null,
-            "readiness": "standard-glb-candidate",
-            "evidence": "existing-candidate-metadata; not runtime acceptance"
-          },
           {
             "candidateId": "fateubw-diarmuid_ua_duibhne_lancer:0",
             "count": 0,
@@ -144578,6 +146080,24 @@
             "provenance": null,
             "readiness": "native-motion-khronos-webgl-phase-validated-pending-source-engine-parity-rights-event-map-backend",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-diarmuid_ua_duibhne_lancer-native-motion-completion-v2",
+            "count": 7,
+            "sourceCount": 8,
+            "unconvertedCount": 1,
+            "provenance": "community-mod-native-with-bounded-formula-baking",
+            "readiness": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "fateubw-diarmuid_ua_duibhne_lancer-durationless-derivative-v1",
+            "count": 0,
+            "sourceCount": 1,
+            "unconvertedCount": 0,
+            "provenance": "derived-static-pose-hold",
+            "readiness": "derived-motion-validated-reserve-owner-review-pending",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -144595,7 +146115,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -196904,6 +198429,1128 @@
         "evidencePaths": [],
         "classificationIsAcquisitionSnapshot": true
       }
+    },
+    {
+      "id": "community:ssbu-kirby-c00-standardized-v1",
+      "name": "卡比",
+      "work": "Super Smash Bros. Ultimate",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Kirby",
+        "fighter/kirby"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-kirby-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+          "bytes": 496028,
+          "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/validation.json",
+            "bytes": 13806,
+            "sha256": "28fc829f9d101e5bc1f93b18315ce8f1d52eff69a5116e0c7dcbb3cbc6e2f4ff"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/visual-review.json",
+            "bytes": 628,
+            "sha256": "6c46f1d629471cb94c87e316602d66ecf50339b279c547a4b24f9235f8fcd064"
+          },
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "The Ultimate14 native motion payload has not been retargeted to this 51-joint body or playback accepted.",
+            "This independent component is not bound to the existing Kirby hero, not registered in the backend dropdown and not deployed.",
+            "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [
+        "community-review-06-20260907"
+      ],
+      "identityHeroIds": [
+        "community-review-06-20260907"
+      ],
+      "designStatus": "designed",
+      "evidence": [
+        "SSBU Kirby c00 was rebuilt twice byte-identically and passed GGD/Khronos/WebGL static-component checks."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [
+        {
+          "heroId": "community-review-06-20260907",
+          "name": "卡比",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "mechanics-defined",
+          "availability": "正式機白名單可選"
+        }
+      ],
+      "nameZh": "卡比",
+      "workZh": "任天堂明星大亂鬥 特別版（角色原作待確認）",
+      "displayName": "卡比",
+      "displayWork": "任天堂明星大亂鬥 特別版（角色原作待確認）（Super Smash Bros. Ultimate）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-kirby-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-mario-c00-standardized-v2",
+      "name": "瑪利歐",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Mario",
+        "瑪利歐",
+        "fighter/mario"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-mario-c00-static-skinned-v2",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+          "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+          "bytes": 817900,
+          "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/validation.json",
+            "bytes": 27528,
+            "sha256": "d99eefd0e71bf0f1d17d3e36afe8421c4c6ecde16e10eae0291a6418993097ca"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/visual-review.json",
+            "bytes": 660,
+            "sha256": "cbe691efaa8b42b4467ad6d9814afd9cab261d037d7b38032097837ceaad342a"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/s3-backup-receipt.json",
+            "bytes": 1446,
+            "sha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Mario identity.",
+      "evidence": [
+        "Mario c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "瑪利歐",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "瑪利歐",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-mario-c00-static-skinned-v2",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-link-c00-standardized-v1",
+      "name": "林克",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Link",
+        "林克",
+        "fighter/link"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-link-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-link-c00-blender4513-v2/atlas-final.glb",
+          "gitPath": "content/assets/models/community/de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b.glb",
+          "bytes": 981540,
+          "sha256": "de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/validation.json",
+            "bytes": 18044,
+            "sha256": "7162aa7814ffa829141e7888a0fa33916e73644a9b869f7455044bb07d86c8be"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/visual-review.json",
+            "bytes": 658,
+            "sha256": "e0fd6c345d704e86ee77201e6858b45014198c345d7b1d6aad2d9c8302d1ffef"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/s3-backup-receipt.json",
+            "bytes": 1441,
+            "sha256": "5ae9aa501b367889eeffce10cebf3421927a78c99bdf36578b10283f619c8cc0"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-link-c00-blender4513-v2/4f47d8ae3a541c22153a08464df8fdbac30afc22dcb075153a8ac3dad5e1c605.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "Link uses the source low LOD, a 7,900-triangle reduction target, and a two-atlas 256px layout measured at 0.40 atlas quality; the retained source and all conversion stages remain local for later A/B review."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-link-c00-blender4513-v2/atlas-final.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [
+        "godie-h00l"
+      ],
+      "identityHeroIds": [
+        "godie-h00l"
+      ],
+      "designStatus": "designed",
+      "noDesignReason": null,
+      "evidence": [
+        "Link c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [
+        {
+          "heroId": "godie-h00l",
+          "name": "時空勇者 - 林克",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "mechanics-defined",
+          "availability": "正式機白名單可選"
+        }
+      ],
+      "nameZh": "林克",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "林克",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-link-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-sonic-c00-standardized-v1",
+      "name": "索尼克",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Sonic",
+        "索尼克",
+        "fighter/sonic"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-sonic-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-blender4513-v1/body.glb",
+          "gitPath": "content/assets/models/community/ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40.glb",
+          "bytes": 887140,
+          "sha256": "ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/validation.json",
+            "bytes": 23762,
+            "sha256": "c2abcc40f2b44d219cf02ccaf8e52baba079f49c3deec1a001cb289b824e22ee"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/visual-review.json",
+            "bytes": 660,
+            "sha256": "f3de7a4e8fef1f438da627f3cf1629f8b764ec3572ee3bf010b73984f4867605"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/s3-backup-receipt.json",
+            "bytes": 1446,
+            "sha256": "4c030a2d15e29b96fc76e2363d8a2c5089f42e81cf8d3d5197d12ce61ccbf210"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-blender4513-v1/f895f83591e9013e4e9a4cced14a9ed51d01cd3d36ae60aa3f94ba0c23cbcf4e.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-blender4513-v1/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Sonic identity.",
+      "evidence": [
+        "Sonic c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "索尼克",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "索尼克",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-sonic-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-chrom-c00-standardized-v1",
+      "name": "庫洛姆",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Chrom",
+        "庫洛姆",
+        "fighter/chrom"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-chrom-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/chrom/first/body.glb",
+          "gitPath": "content/assets/models/community/2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527.glb",
+          "bytes": 957288,
+          "sha256": "2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/validation.json",
+            "bytes": 18461,
+            "sha256": "bb3baabd9bbbde5d7e55f3c45c217811cf50b1a395ec69d5ab2f0660698bb0b5"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/visual-review.json",
+            "bytes": 676,
+            "sha256": "9791dbf611af9f56e97f1de67016c4a75b7a6af28ef5b15797adb32b374635a3"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/s3-backup-receipt.json",
+            "bytes": 1495,
+            "sha256": "67622bdc3255112e000be1a99a58dc7af9b1afab6bd50e538f8662f8ca81065f"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/chrom/68dae159f9f16cfb4a7cc55f44614f6c8b9db1e5a19821fe7edd1cd13cb4845f.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/chrom/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Chrom identity.",
+      "evidence": [
+        "Chrom c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "庫洛姆",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "庫洛姆",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-chrom-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-ganondorf-c00-standardized-v1",
+      "name": "加儂多夫",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Ganondorf",
+        "加儂多夫",
+        "fighter/ganon"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-ganondorf-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/ganon/first/body.glb",
+          "gitPath": "content/assets/models/community/ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f.glb",
+          "bytes": 1250324,
+          "sha256": "ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/validation.json",
+            "bytes": 39301,
+            "sha256": "c1b5eb16186020b1a57660be141200dd0afb310a1e96014e90e45f200a9441bd"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/visual-review.json",
+            "bytes": 673,
+            "sha256": "d0b4a0c417df4f730b3a79b137b8620ad6d32d9b14ecf0a09aab4134408a9e01"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/s3-backup-receipt.json",
+            "bytes": 1495,
+            "sha256": "3e80bdbc2a65e0f405570c1d5a3ce567f30d02059984a6e21eea8c76ea5a6251"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/ganon/e7bee74814895cf807cc5321675df138974923bf87b4dad8685d38ed6cfcdd40.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/ganon/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Ganondorf identity.",
+      "evidence": [
+        "Ganondorf c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "加儂多夫",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "加儂多夫",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-ganondorf-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-lucina-c00-standardized-v1",
+      "name": "露琪娜",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Lucina",
+        "露琪娜",
+        "fighter/lucina"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-lucina-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/lucina/first/body.glb",
+          "gitPath": "content/assets/models/community/7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4.glb",
+          "bytes": 838712,
+          "sha256": "7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/validation.json",
+            "bytes": 18333,
+            "sha256": "a65a131d742f2bdeb1ac7732c6846516afb154aed756ac8f61ad9d4ea40cc497"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/visual-review.json",
+            "bytes": 678,
+            "sha256": "b9a4ab611940d03416a19a33f2e265a7e736efd8e7cb598751e908a6bb05fd1d"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/s3-backup-receipt.json",
+            "bytes": 1500,
+            "sha256": "7d470397cd207e3e582fcef6f37565396edb2fb64950406c7aa62adcbf47dd95"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/lucina/ff2ee818096417de97d8ba230975db90c9ab931efa5661eeeea7b11b84d1e364.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "The two-atlas 256px layout used measured quality 0.408; WebGL views were reviewed after conversion."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/lucina/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Lucina identity.",
+      "evidence": [
+        "Lucina c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "露琪娜",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "露琪娜",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-lucina-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-daisy-c00-standardized-v1",
+      "name": "黛西",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Daisy",
+        "黛西",
+        "fighter/daisy"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-daisy-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/daisy/first/body.glb",
+          "gitPath": "content/assets/models/community/4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860.glb",
+          "bytes": 840384,
+          "sha256": "4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/validation.json",
+            "bytes": 18542,
+            "sha256": "8d916a236c675cda30ce9b53ccb503f7ecec08e5794f4a15c108f2316f4c1243"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/visual-review.json",
+            "bytes": 669,
+            "sha256": "02f90cb1e504ec7d5548d24951b73170a2c80907a4f772199b7405568b3fd436"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/s3-backup-receipt.json",
+            "bytes": 1495,
+            "sha256": "a8b102c21c97d70f982c7743b4e6e0a15af2f9928a3f0abef510b527807fc718"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/daisy/838688afd3e8ec38f7d4f49f8c9c6922be4c7a7ac273f9d58215f13b75d92a56.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "The source exposed body_highShape and body_lowShape together; the reproducible candidate excludes body_highShape and retains the low LOD before reduction."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/daisy/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Daisy identity.",
+      "evidence": [
+        "Daisy c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "黛西",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "黛西",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-daisy-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-peach-c00-standardized-v1",
+      "name": "碧姬公主",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Peach",
+        "碧姬公主",
+        "fighter/peach"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-peach-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/peach/first/body.glb",
+          "gitPath": "content/assets/models/community/6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0.glb",
+          "bytes": 840920,
+          "sha256": "6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/validation.json",
+            "bytes": 17602,
+            "sha256": "c62f6878dc167ec58fca012d8a9f12b9b5833eace920a20af0fdf677ffa5f60a"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/visual-review.json",
+            "bytes": 667,
+            "sha256": "7b54a0218df897ccf26d5b80d05e829043c6974d05951b8f2c0c04d6ff9cbcf2"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/s3-backup-receipt.json",
+            "bytes": 1494,
+            "sha256": "4e18b1b181377cafafecfcad50f86e5ab4112a72e09821f26764300e7d908b77"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/peach/89a31ec976ed8202d3fd6f29b72422b02ba2ef59728ca7e91b8113501559667c.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/peach/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Peach identity.",
+      "evidence": [
+        "Peach c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "碧姬公主",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "碧姬公主",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-peach-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "community:ssbu-toonlink-c00-standardized-v1",
+      "name": "卡通林克",
+      "work": "任天堂明星大亂鬥 特別版",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "aliases": [
+        "Toon Link",
+        "卡通林克",
+        "fighter/toonlink"
+      ],
+      "modelCandidates": [
+        {
+          "id": "ssbu-toonlink-c00-static-skinned-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/toonlink/first/body.glb",
+          "gitPath": "content/assets/models/community/e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794.glb",
+          "bytes": 968308,
+          "sha256": "e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/validation.json",
+            "bytes": 39151,
+            "sha256": "a278b66b3e2a16788aaa27b650d1da09dbf7c036cd965ee451a7dca9a59e072b"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/visual-review.json",
+            "bytes": 713,
+            "sha256": "cbcefd8682cacff90910153a49a2abfd6e2f145809ac4b8bb21aace8015c9cd3"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/s3-backup-receipt.json",
+            "bytes": 1512,
+            "sha256": "5f23d315cbc3f50e101bfc381ce5652370baa5c482bf4673d9c5f6b045e131e4"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/toonlink/ae042147a56a75b6f5aa225c24e92aa8edcef414a2069dee453a0028126d6f52.tar.gz",
+          "limitations": [
+            "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
+            "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "The source-connected eye material renders very dark and lacks original-game eye highlights; this was already present in the direct Blender export and needs shader/material polish before default use.",
+            "The static neutral candidate excludes the two expression-specific LMabuta/RMabuta eyelid meshes to meet the six-draw limit; the complete source remains preserved."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/toonlink/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        }
+      ],
+      "mappedHeroIds": [],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "noDesignReason": "No current GGD champion definition matches the exact Toon Link identity.",
+      "evidence": [
+        "Toon Link c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 0,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 1,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "卡通林克",
+      "workZh": "任天堂明星大亂鬥 特別版",
+      "displayName": "卡通林克",
+      "displayWork": "任天堂明星大亂鬥 特別版",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "existing-source-label",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "已核對版本未含動作；其他來源待核",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [
+          "大亂鬥特別版／NS：Worldblender 模型整庫"
+        ],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [
+          {
+            "candidateId": "ssbu-toonlink-c00-static-skinned-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          }
+        ],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
     }
   ],
   "localization": {
@@ -197134,8 +199781,8 @@
         "sourceIds": [
           "github-flemmli97-fateubw-07e9d79b"
         ],
-        "model": "14名英靈均已轉為靜態GLB並通過結構、Khronos與WebGL驗證，並各有骨架及原生動作GLB。5個道具／生物仍保留原始幾何JSON。全部待權利、來源引擎比對、事件映射與後台驗收。",
-        "motion": "20個動畫JSON共156項：14名英靈合計132項，已轉換112項原生動作、保留20項公式／無時長片段。Heracles的9個靜態旋轉末端骨已採休息姿勢烘焙及完整逆綁定矩陣轉換。5個道具／生物20項及共用4項仍為原始格式；非FUC PSP。",
+        "model": "14名英靈皆保留靜態GLB、舊原生動作GLB及目前native-v2骨架動作GLB；5個道具／生物仍保留原始幾何JSON。全部待權利、來源引擎比對、事件映射與後台驗收。",
+        "motion": "14名英靈合計132項來源動作：127項已轉換原生動作，5項未提供來源時長的姿勢已另建3項靜態姿勢保持與2項程序公式循環；衍生動作不宣稱原生時長。另5個道具／生物20項及共用4項仍為原始格式；非FUC PSP。",
         "vfx": "道具/投射物幾何保留；未驗證逐角獨立VFX與執行時綁定。",
         "sfx": "3檔來源標示劃斬/揮動SFX；另海克力斯咆哮1、尼祿固有結界1待分類。",
         "voice": "共5OGG全部已入音訊索引；未確認可用人物台詞，不列成品語音。",
@@ -205803,5 +208450,23 @@
     "Mechanics present is not proof of faithful design, balance or gameplay acceptance.",
     "Unknown source identity is not a confirmed undesigned hero.",
     "Local file size presence is not full model conversion acceptance."
-  ]
+  ],
+  "portableOverlay": {
+    "schema": "ggd-fateubw-backlog-overlay@1",
+    "sourceId": "github-flemmli97-fateubw-07e9d79b",
+    "nativeCandidates": 14,
+    "convertedNativeClips": 127,
+    "derivedCandidates": 5,
+    "nativeDurationClaimForDerivatives": false,
+    "runtimeSelectable": false,
+    "inputs": [
+      "materials/hero-model-library/download-sources.json",
+      "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+      "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+      "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+      "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+      "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
+    ],
+    "base": "non-Fate rows are retained from the tracked generated backlog when local audit caches are absent"
+  }
 }

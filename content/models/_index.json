@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "7569464db9fe",
+  "hash": "392c48729bb9",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -59,7 +59,7 @@
     {
       "id": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
       "path": "models/community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b.json",
-      "hash": "886f195e6c74",
+      "hash": "479b993d74ff",
       "size": 484
     },
     {
@@ -137,7 +137,7 @@
     {
       "id": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
       "path": "models/community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990.json",
-      "hash": "a50d6bfc5d05",
+      "hash": "35f8df22d3e7",
       "size": 486
     },
     {
@@ -185,7 +185,7 @@
     {
       "id": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
       "path": "models/community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785.json",
-      "hash": "e6d28563b005",
+      "hash": "fa081ec27c70",
       "size": 484
     },
     {
@@ -397,6 +397,12 @@
       "path": "models/community.body.5de9cf2a7afbb0e21cc2e402072b22ff4b380bb11ff0ea40.json",
       "hash": "a075ace59c8c",
       "size": 418
+    },
+    {
+      "id": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+      "path": "models/community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81.json",
+      "hash": "2550f9edd975",
+      "size": 484
     },
     {
       "id": "community.body.60d8cb84d9ca91fc005e849df2b10d48520fc812e2927cca",
@@ -615,6 +621,12 @@
       "size": 455
     },
     {
+      "id": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+      "path": "models/community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563.json",
+      "hash": "11e07ae77ac9",
+      "size": 486
+    },
+    {
       "id": "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd",
       "path": "models/community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd.json",
       "hash": "72b35f8c9193",
@@ -741,6 +753,12 @@
       "size": 455
     },
     {
+      "id": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+      "path": "models/community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561.json",
+      "hash": "42398052806f",
+      "size": 484
+    },
+    {
       "id": "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9",
       "path": "models/community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9.json",
       "hash": "abdd18d386a7",
@@ -781,6 +799,12 @@
       "path": "models/community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1.json",
       "hash": "d3341325b1ce",
       "size": 455
+    },
+    {
+      "id": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+      "path": "models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
+      "hash": "fcb3d638cc5c",
+      "size": 456
     },
     {
       "id": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
@@ -907,12 +931,6 @@
       "path": "models/community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5.json",
       "hash": "b69d81874af5",
       "size": 455
-    },
-    {
-      "id": "community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706",
-      "path": "models/community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706.json",
-      "hash": "10618490ef99",
-      "size": 456
     },
     {
       "id": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
@@ -3189,6 +3207,12 @@
       "size": 541
     },
     {
+      "id": "version.body.2720d256116ac94d911e910d126ae25bb5cae67fcefd4442",
+      "path": "models/version.body.2720d256116ac94d911e910d126ae25bb5cae67fcefd4442.json",
+      "hash": "8c4e54267d70",
+      "size": 636
+    },
+    {
       "id": "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473",
       "path": "models/version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473.json",
       "hash": "d5ee0c47f2d1",
@@ -3383,7 +3407,7 @@
     {
       "id": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
       "path": "models/version.body.37369175767e587335582605d4ed6d271221101d0311c82c.json",
-      "hash": "3e567a65de18",
+      "hash": "b5c198ed21f1",
       "size": 636
     },
     {
@@ -3703,6 +3727,12 @@
       "path": "models/version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047.json",
       "hash": "4bfd7fe3b8aa",
       "size": 1244
+    },
+    {
+      "id": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
+      "path": "models/version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc.json",
+      "hash": "0656d0797f97",
+      "size": 634
     },
     {
       "id": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
@@ -5381,7 +5411,7 @@
     {
       "id": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
       "path": "models/version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020.json",
-      "hash": "6517526e64c3",
+      "hash": "fcd8366db285",
       "size": 634
     },
     {
@@ -5693,7 +5723,7 @@
     {
       "id": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
       "path": "models/version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb.json",
-      "hash": "0713cb62a180",
+      "hash": "a969a0fc9bbb",
       "size": 634
     },
     {
@@ -5761,6 +5791,12 @@
       "path": "models/version.body.f5672186284c6c404a1269c660d077546e82ce7f49e4d882.json",
       "hash": "b51c43a37331",
       "size": 583
+    },
+    {
+      "id": "version.body.f639b84a136f628fdd6e87378e152f3df74d6ad73842f541",
+      "path": "models/version.body.f639b84a136f628fdd6e87378e152f3df74d6ad73842f541.json",
+      "hash": "b13f3d682fe4",
+      "size": 634
     },
     {
       "id": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",

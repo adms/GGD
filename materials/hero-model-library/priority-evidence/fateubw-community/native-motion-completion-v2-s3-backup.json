@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+  "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+  "archiveBytes": 19555424,
+  "fileCount": 156,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-native-motion-completion-v2/342bf26deb5eeda25d7fa7142d8a0ec292ba2c76820180a9480629cad1cb4296/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-native-motion-completion-v2/342bf26deb5eeda25d7fa7142d8a0ec292ba2c76820180a9480629cad1cb4296/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/fateubw-native-motion-completion-v2/342bf26deb5eeda25d7fa7142d8a0ec292ba2c76820180a9480629cad1cb4296/manifest.json"
+}

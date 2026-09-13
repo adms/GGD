@@ -7,6 +7,7 @@ from pathlib import Path
 import argparse,hashlib,json,re,unicodedata
 from design_backlog_labels import labels_for, hero_check_label
 from design_backlog_resources import resource_view, resource_cell, source_overview, audio_reserve_section
+from fateubw_backlog_overlay import apply_fateubw_overlay
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'materials/hero-model-library'
@@ -50,7 +51,7 @@ def candidate_summary(candidates):
     if counts['otherCandidateFiles']:parts.append(f"其他候選檔 {counts['otherCandidateFiles']}")
     return '；'.join(parts) if parts else '無可用候選檔'
 
-def build():
+def build_from_local_audits():
     files=[DATA/'sources-300-mba.json',DATA/'sources-community.json',DATA/'hero-design-coverage.json']
     inputs=[dict(path=p.relative_to(ROOT).as_posix(),sha256=sha(p)) for p in files]
     audits=[read(p) for p in files[:2]];coverage=read(files[2]);proof={r.get('heroId',r.get('id')):r for r in coverage['heroes']}
@@ -172,6 +173,29 @@ def build():
             'Unknown source identity is not a confirmed undesigned hero.','Local file size presence is not full model conversion acceptance.'])
     return result
 
+def build(*, refresh_local_audits=False):
+    """Build portably, or explicitly refresh the non-portable audit snapshot.
+
+    The three large audit/cache files are deliberately not committed.  A clean
+    checkout therefore retains non-Fate rows from the tracked generated JSON,
+    while the Fate completion overlay is rebuilt from tracked source metadata
+    and receipts on every invocation.
+    """
+    if refresh_local_audits:
+        local_files=[DATA/'sources-300-mba.json',DATA/'sources-community.json',DATA/'resource-coverage.json']
+        missing=[str(path) for path in local_files if not path.is_file()]
+        if missing:
+            raise ValueError('Local audit refresh requested with missing caches: '+', '.join(missing))
+        base=build_from_local_audits()
+    else:
+        portable=BASE/(TITLE+'.json')
+        if not portable.is_file():
+            raise ValueError('Portable backlog base is missing and local audit caches are incomplete.')
+        base=read(portable)
+        if base.get('schema')!='ggd-acquired-model-design-backlog@1':
+            raise ValueError('Portable backlog base schema drifted; refresh it with reviewed local audits.')
+    return apply_fateubw_overlay(base, ROOT)
+
 def friendly_stage(value):
     value=str(value or 'unknown')
     if value=='accepted-independent-static-skinned-component-actions-missing':return '靜態蒙皮元件已驗收；動作、英雄綁定與後台切換仍缺'
@@ -195,7 +219,7 @@ def render(data):
         f"本次逐庫來源身份記錄：尚未建立英雄 **{n['not-defined']}** 筆；已有定義但需補查／實作 **{n['definitions-incomplete']}** 筆；身份待確認 **{n['identity-review']}** 筆。另有 {n['designed']} 筆已對應有機制資料的英雄、{n['source-unavailable']} 筆無可核對本機模型，不列入可用待辦。跨庫同角色及形態未經核准合併前，這些數字不是去重後的新英雄總數。",'',
         f"目前專案有 {data['heroesInProject']} 份靜態英雄定義，另有 {data.get('heroForgeRecipesVerified',0)} 份已驗證 Hero Forge 配方被納入本索引的設計核對。技能檔存在與機制可解析，不等於平衡、實戰或正式站驗收完成；上架狀態只採盤點內既有快照，並非即時正式站檢查。",'',
         '## 維護方式','',
-        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. 執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`；Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
+        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. Git 追蹤收據的一般重建執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`。只有在三個本機大型快取都已更新與核對時，才以 `--refresh-local-audits` 刷新非 Fate 基底。Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
     lines+=source_overview(data['resourceCoverage'])
     labels=[('not-defined','尚未建立對應英雄'),('definitions-incomplete','已有定義，需補查或實作'),('identity-review','來源身份／英雄對應待確認'),('designed','已有英雄設計：全部來源版本仍保留')]
     for status,label in labels:
@@ -223,8 +247,8 @@ def render(data):
     return ('\n'.join(lines)).encode()
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--check',action='store_true');p.add_argument('--workspace',type=Path);a=p.parse_args()
-    result=build();products={BASE/(TITLE+'.json'):encoded(result),BASE/(TITLE+'.md'):render(result)}
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--check',action='store_true');p.add_argument('--workspace',type=Path);p.add_argument('--refresh-local-audits',action='store_true',help='explicitly rebuild all rows from the three local-only audit caches before applying tracked overlays');a=p.parse_args()
+    result=build(refresh_local_audits=a.refresh_local_audits);products={BASE/(TITLE+'.json'):encoded(result),BASE/(TITLE+'.md'):render(result)}
     if a.check:
         stale=[str(p) for p,b in products.items() if not p.exists() or p.read_bytes()!=b]
         if stale:raise SystemExit('STALE DESIGN BACKLOG: '+', '.join(stale))

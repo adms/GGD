@@ -1,0 +1,68 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+  "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+  "sourceClip": "summon",
+  "derivedClip": "derived-hold-summon",
+  "classification": "derived-static-pose-hold",
+  "sourceAnimationLengthProvided": false,
+  "derivedDurationSeconds": 1.0,
+  "nativeDurationClaim": false,
+  "formulaPeriodEvidence": null,
+  "sourceFormulas": [],
+  "inputs": {
+    "geometry": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "bytes": 7142
+    },
+    "texture": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/diarmuid_ua_duibhne_lancer.png",
+      "sha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80",
+      "bytes": 2138
+    },
+    "animation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
+      "sha256": "941f7b6d17d0e07660baf123bd6a82b177c2835e3f36db1782f550718e383cd0",
+      "bytes": 27908
+    },
+    "derivedAnimationInput": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-diarmuid_ua_duibhne_lancer/derived-animation-input.json",
+      "sha256": "28a02fd8e5e04c17b0655c94e8b3f5dd797a639ccf559cdc290ee70efd7c4d62",
+      "bytes": 960
+    }
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+    "sha256": "010fe9704ea4fd7b7d414494af4152962de1b43d43db85b3889d1306d6aa55a4",
+    "bytes": 50044,
+    "animationCount": 1,
+    "channelCount": 6,
+    "outputKeyCount": 12
+  },
+  "process": {
+    "durationPolicy": "one-second review hold",
+    "rotationSamplingFps": 1,
+    "intermediateGlb": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-diarmuid_ua_duibhne_lancer/intermediate-duration-injected.glb",
+      "sha256": "ec390df0facc713256542ea5f47eeb089846242be356a31917cb9638bf6b78e1"
+    },
+    "intermediateReport": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2/fateubw-diarmuid_ua_duibhne_lancer/intermediate-conversion-report.json",
+      "sha256": "ef0017e1e333ef8ba0f4087f4696595c3de76a701b375a094c1837e0064ade7f"
+    },
+    "metadataRewrite": "relabels injected duration and clip as derived; no source-authored length is claimed"
+  },
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "rightsStatus": "Source metadata says ARR; redistribution permission remains pending.",
+  "remaining": [
+    "structural and Khronos validation",
+    "WebGL visual review",
+    "GGD action/event mapping",
+    "rights clearance",
+    "backend registration and deployment"
+  ]
+}

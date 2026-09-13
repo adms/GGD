@@ -18,7 +18,7 @@ python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/audi
   --output-dir '/absolute/path/to/ABxVFX_EDIT/GGD-Asset-Library/intake/new-ultimate-audit'
 ```
 
-它重新 SHA 驗證 Ultimate14 原包與既有 manifest 中 1,071 個檔案、比對435個NUANMB aliases，讀取已保存的 Windows inventory ZIP 和5個成員，核對128個Worldblender body候選的存在及大小。**不重新 SHA 這128個body，不做模型／動作轉換，不讀取遠端ROM payload。** 新目錄內的完整報告、大型逐檔 JSON 留作本機及 legacy 備份材料。
+它重新 SHA 驗證 Ultimate14 原包與既有 manifest 中 1,071 個檔案、比對435個NUANMB aliases，讀取已保存的 Windows inventory ZIP 和5個成員，核對128個Worldblender body候選的存在及大小。這個掃描步驟本身不重算128個body的SHA、不做轉換、不讀遠端ROM payload；已選 c00 的後續標準化由下方獨立流程記錄。新目錄內的完整報告、大型逐檔 JSON 留作本機及 legacy 備份材料。
 
 要更新共享證據，使用上述重跑產生的完整報告；不要只手改生成 README：
 
@@ -38,5 +38,26 @@ Windows helper 使用 UTF-8 BOM，兼顧 Windows PowerShell 5.1。它只讀既�
 ```
 
 預設來源為 `E:\Game\單機遊戲\模擬器\NSandNS2`，可用 `-SourceRoot` 指定已獲授權的其他來源。表頭不是 PFS0 時只報 unknown，不解密；ZIP 不解包、不執行任何成員。Helper 已靜態審查，這次未在 Windows 執行。遇到權限問題照實回報，不改 ExecutionPolicy、分享或ACL來繞過。
+
+Worldblender c00 的固定轉換先以 `ssbu-models-v1/convert_blend_component.py` 透過 Blender 4.5.13 匯出，再依角色使用減面、同渲染狀態合併與 256px atlas，最後跑 Khronos、GGD 預算、finite accessor、雙重建 SHA 及 WebGL 三視圖。卡比使用獨立整合器；後續三角批次使用 `run_worldblender_c00_batch*.py`、`freeze_worldblender_c00_batch*.py` 及對應 `integrate_worldblender_c00_batch*.py`，把成品、S3 收據與來源關係寫回固定索引。卡比入口如下：
+
+```sh
+python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/integrate_kirby_c00.py \
+  --final-root '/absolute/path/to/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1' \
+  --rebuild-root '/absolute/path/to/GGD-Asset-Library/rebuilds/ssbu-kirby-c00-rebuild-v1' \
+  --write
+python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..
+```
+
+目前有 10 個唯一 c00 來源槽完成靜態蒙皮元件驗收：Kirby、Mario、Link、Sonic、Chrom、Ganondorf、Lucina、Daisy、Peach、Toon Link；Mario v1／v2 都保留但來源槽只計一次。Mario、Link、Sonic、Chrom、Ganondorf、Lucina、Daisy、Peach 與 Toon Link 已重建為黑底修復版：來源的眼睛雙貼圖／雙 UV Mix 烘焙為不透明 Base Color，並通過 alpha audit、Khronos、兩次位元組一致重建與 WebGL 三視圖；Kirby 的來源貼圖全不透明，不需此修正。所有 c00 元件仍是 0 動作、未綁英雄、未成為後台選項、未部署；Sonic 仍為 8,980 面，超過 8,000 面正式採用目標。其餘 118 份 body 仍只有存在與大小證據。Toon Link 的表情 eyelid 排除已列為表情缺口，不能把結構通過寫成原作 shader 完整。
+
+JUMP FORCE／J-STARS、KOF、Fate/unlimited codes 與 NSandNS2 的10筆優先來源存取快照可重建及核對：
+
+```sh
+python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/audit_priority_game_sources.py --write
+python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/audit_priority_game_sources.py
+```
+
+共享收據位於 `materials/hero-model-library/priority-evidence/priority-game-sources-20260914/source-access.json`；目前 common 3筆、game 7筆都因分享未掛載受阻，既有清單仍是0 payload bytes read、0解包、0轉換、0登記。
 
 工具不連 S3、不下載、不建立 GGD 英雄 ID、不註冊後台選項、不提交或推送 Git。來源快照存在不代表已擷取、驗收、可切換或已部署。

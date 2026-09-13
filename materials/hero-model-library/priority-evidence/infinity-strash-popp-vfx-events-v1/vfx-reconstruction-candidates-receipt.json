@@ -1,0 +1,126 @@
+{
+  "schema": "ggd.infinity-strash-popp-vfx-reconstruction-candidates-receipt@1",
+  "inputs": {
+    "candidates": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json",
+      "bytes": 1311582,
+      "sha256": "b67d7657b6d451aaa8320980deeddd05e60bd7a8a47d80dbfe21895309c3f888"
+    },
+    "html": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html",
+      "bytes": 41833,
+      "sha256": "343451b2a9995a21929f8640700d61b235bfd03b72e48e2a61ccadd747a74f16"
+    }
+  },
+  "validator": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/check_vfx_reconstruction_candidates.py",
+    "bytes": 4785,
+    "sha256": "f4c3916103e33efff7ab08ad9f60d25e167df374a39e4555e9af1b143326bc1d"
+  },
+  "staticEvidence": {
+    "contactSheet": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidate-preview.png",
+      "bytes": 1164349,
+      "sha256": "bdf620955918b3b708af8b523b8294e9c188d501a043b5e7d213de4939a8d85c",
+      "path": "vfx-reconstruction-candidate-preview.png"
+    },
+    "recipePreviewDimensions": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-01.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-02.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-03.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-04.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-05.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-06.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-07.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-08.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-09.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-10.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-11.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-12.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-13.png",
+        "width": 1200,
+        "height": 700
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-14.png",
+        "width": 1200,
+        "height": 700
+      }
+    ]
+  },
+  "summary": {
+    "rootReferences": 17,
+    "niagaraSystemCandidates": 14,
+    "supportRoots": 3,
+    "uniqueTextureAssetsLinked": 87,
+    "convertedStaticMeshesLinked": 33,
+    "recipePreviewImages": 14,
+    "contactSheetDimensions": {
+      "width": 1200,
+      "height": 2450
+    },
+    "allInputAndLinkedBytesVerified": true,
+    "honestIncompleteStatesVerified": true
+  },
+  "states": {
+    "candidateRelationshipsBuilt": true,
+    "staticPreviewsBuilt": true,
+    "niagaraTimingRecovered": false,
+    "ggdVfxBuilt": false,
+    "skillBindingsCreated": 0,
+    "visualAcceptancePassed": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "claim": "The receipt verifies candidate relationships, linked source bytes, mesh bytes, preview bytes and explicit incomplete states only.",
+  "createdAt": "2026-09-13T19:51:57.019206+00:00"
+}

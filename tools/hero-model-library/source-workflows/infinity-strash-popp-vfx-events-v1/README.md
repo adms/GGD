@@ -68,10 +68,28 @@ S3 prefix. `build.py` requires the committed full-download and per-member
 SHA-256 readback receipt. That receipt proves preservation only and never
 changes `vfxConverted`, visual acceptance, runtime selection or deployment.
 
+The preserved project-specific UModel build can still export many support
+assets even though it cannot emit the 17 Niagara roots. Run the bounded batch
+export against the verified closure:
+
+```bash
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/export_dependency_assets.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/export_dependency_assets.py --check
+```
+
+The output is retained at
+`GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/`.
+Its manifest records every package result, emitted file path, size and SHA-256.
+The current run attempted all 309 packages and exported 789 support files from
+203 packages. These files are reconstruction inputs; the manifest keeps
+`niagaraSystemsConverted=false` and `ggdVfxConverted=false` until a GGD effect
+and visual acceptance evidence exist.
+
 Rebuild and verify:
 
 ```bash
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py
+python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/export_dependency_assets.py --check
 python3 tools/hero-model-library/source-workflows/infinity-strash-popp-vfx-events-v1/probe_conversion.py \
   --raw-vfx ../GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content \
   --output materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/closure-conversion-probe.json

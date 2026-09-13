@@ -40,7 +40,7 @@ class PalworldReviewBuildTest(unittest.TestCase):
             by_hero["acquired-astralym"]["currentOptimizedModel"]["formalModelAdoption"]["status"],
         )
         self.assertEqual(
-            ["community.body.f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc706"],
+            ["community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959"],
             by_hero["acquired-astralym"]["currentOptimizedModel"]["formalModelAdoption"]["policyEligibleModelKeys"],
         )
 

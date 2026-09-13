@@ -1,0 +1,1260 @@
+{
+  "schema": "ggd-fateubw-native-motion-completion@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+  "sourceVersion": "2.2.0",
+  "sourceGame": "Fate/Unlimited Block Works",
+  "platform": "Minecraft Java 1.21.1",
+  "license": "ARR",
+  "status": "native-motion-127-of-132-formula-baked-khronos-webgl-phase-validated-pending-parity-rights-event-map-backend",
+  "scope": "Local conversion reserve and phase-sampled WebGL evidence. Formula source expressions are retained, but source-engine parity, continuous playback, rights, event mapping, runtime registration and deployment are not claimed.",
+  "tools": [
+    "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/convert_bedrock_native_animation.py",
+    "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/convert_native_batch.py",
+    "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_native_animation.py",
+    "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_native_animation.mjs",
+    "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_native_completion.py",
+    "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/validate_native_animation.mts"
+  ],
+  "parameters": {
+    "samplingFps": 60,
+    "formulaTrigUnit": "degrees",
+    "formulaGrammar": "time/query.anim_time, numeric constants, + - * /, unary signs, math.sin/math.cos",
+    "prePostDiscontinuityEpsilonSecondsMax": 0.0001
+  },
+  "summary": {
+    "servants": 14,
+    "sourceClips": 132,
+    "previouslyConvertedNativeClips": 112,
+    "newlyConvertedFormulaOrPrePostClips": 15,
+    "convertedNativeClips": 127,
+    "retainedNoDurationSourcePoses": 5,
+    "unsupportedTimedClips": 0,
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "webglReviewedNewClips": 15,
+    "webglShots": 60,
+    "s3BackupVerified": true,
+    "s3BackupFiles": 156,
+    "s3ArchiveBytes": 19555424
+  },
+  "formulaOrPrePostClips": [
+    {
+      "candidateId": "fateubw-artoria_pendragon_saber",
+      "name": "stab_1",
+      "sourceLength": 1.4,
+      "formulaChannelCount": 1,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "22.5+math.sin(query.anim_time * 7200)"
+      ]
+    },
+    {
+      "candidateId": "fateubw-artoria_pendragon_saber",
+      "name": "excalibur",
+      "sourceLength": 2.84,
+      "formulaChannelCount": 2,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-2.5+math.sin(time * 3000) * 2",
+        "-30+math.sin(time * 3000) * 2",
+        "-42.5+math.sin(time * 3000) * 2",
+        "5+math.sin(time * 3000) * 2"
+      ]
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "name": "hogou_unseal",
+      "sourceLength": 5.04,
+      "formulaChannelCount": 1,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "25+math.sin((query.anim_time-0.56)*80)*30",
+        "28+math.sin((query.anim_time-0.56)*80)*30"
+      ]
+    },
+    {
+      "candidateId": "fateubw-gilgamesh_archer",
+      "name": "ea",
+      "sourceLength": 3.12,
+      "formulaChannelCount": 1,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-85+math.sin(time * 3000) * 3",
+        "5+math.sin(time * 3000) * 3"
+      ]
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "name": "jump_hit",
+      "sourceLength": 0.6,
+      "formulaChannelCount": 7,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-17.5674158572+math.sin(query.anim_time*240)*3",
+        "-31.6705570616+math.sin(query.anim_time*240)*5",
+        "19.712696253-math.sin(query.anim_time*240)*2",
+        "9.82+math.sin(query.anim_time*500)*1"
+      ]
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "name": "land",
+      "sourceLength": 0.44,
+      "formulaChannelCount": 7,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-17.5674158572+math.sin(query.anim_time*240)*3",
+        "-31.6705570616+math.sin(query.anim_time*240)*5",
+        "19.712696253-math.sin(query.anim_time*240)*2",
+        "9.82+math.sin(query.anim_time*500)*1"
+      ]
+    },
+    {
+      "candidateId": "fateubw-iskander_rider",
+      "name": "summon",
+      "sourceLength": 2.0,
+      "formulaChannelCount": 1,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "math.sin(time * 360*6) * 2"
+      ]
+    },
+    {
+      "candidateId": "fateubw-lancelot_berserker",
+      "name": "gun",
+      "sourceLength": 3.28,
+      "formulaChannelCount": 2,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-1+math.sin(query.anim_time*3200)*0.2",
+        "54+math.cos(query.anim_time*3200)*2"
+      ]
+    },
+    {
+      "candidateId": "fateubw-lancelot_berserker",
+      "name": "summon",
+      "sourceLength": 2.0,
+      "formulaChannelCount": 3,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-math.sin(time * 2160)*0.5",
+        "math.sin(time * 2160)*0.5"
+      ]
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "name": "cast_3",
+      "sourceLength": 1.36,
+      "formulaChannelCount": 1,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "2+math.sin(query.anim_time * 580)"
+      ]
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "name": "cast_4",
+      "sourceLength": 3.04,
+      "formulaChannelCount": 1,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "2+math.sin(query.anim_time * 580)"
+      ]
+    },
+    {
+      "candidateId": "fateubw-medusa_rider",
+      "name": "summon",
+      "sourceLength": 2.0,
+      "formulaChannelCount": 2,
+      "prePostChannelCount": 0,
+      "sourceExpressions": [
+        "-87.3787+math.sin(time*90)*2",
+        "math.sin(time*90)*2"
+      ]
+    },
+    {
+      "candidateId": "fateubw-nero_claudius_saber",
+      "name": "horizontal_slashes",
+      "sourceLength": 1.84,
+      "formulaChannelCount": 0,
+      "prePostChannelCount": 2,
+      "sourceExpressions": []
+    },
+    {
+      "candidateId": "fateubw-nero_claudius_saber",
+      "name": "aestus_domus_aurea",
+      "sourceLength": 6.2,
+      "formulaChannelCount": 0,
+      "prePostChannelCount": 2,
+      "sourceExpressions": []
+    },
+    {
+      "candidateId": "fateubw-nero_claudius_saber",
+      "name": "aestus_domus_aurea_full",
+      "sourceLength": 12.16,
+      "formulaChannelCount": 0,
+      "prePostChannelCount": 2,
+      "sourceExpressions": []
+    }
+  ],
+  "retainedNoDurationSourcePoses": [
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "name": "summon",
+      "sourceLoop": true,
+      "sourceLength": null,
+      "converted": false,
+      "reason": "source pose has no animation_length; retained without inventing playback duration"
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "name": "summon",
+      "sourceLoop": "hold_on_last_frame",
+      "sourceLength": null,
+      "converted": false,
+      "reason": "source pose has no animation_length; retained without inventing playback duration"
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "name": "idle",
+      "sourceLoop": true,
+      "sourceLength": null,
+      "converted": false,
+      "reason": "source pose has no animation_length; retained without inventing playback duration"
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "name": "summon",
+      "sourceLoop": "hold_on_last_frame",
+      "sourceLength": null,
+      "converted": false,
+      "reason": "source pose has no animation_length; retained without inventing playback duration"
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "name": "summon",
+      "sourceLoop": true,
+      "sourceLength": null,
+      "converted": false,
+      "reason": "source pose has no animation_length; retained without inventing playback duration"
+    }
+  ],
+  "batchManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/batch-manifest.json",
+    "bytes": 15618,
+    "sha256": "633099ea58ddcaf6741a0e060b6e1abdb4788d6bad2f900ff890e458db9603e8"
+  },
+  "reproducibility": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/reproducibility.json",
+    "bytes": 3805,
+    "sha256": "1f9c4bbe5f90acb17861035dd7ab6b7123c05eee08f2f3320d777c7f266f0279"
+  },
+  "s3Backup": {
+    "receipt": {
+      "path": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+      "bytes": 1472,
+      "sha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f"
+    },
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+    "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+    "archiveBytes": 19555424,
+    "fileCount": 156,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true
+  },
+  "webglCompletion": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/completion-webgl-review.json",
+    "bytes": 8935,
+    "sha256": "35846238d66ecb71d9b7e80b897f996772d8fdffd6555016bf83e82ca8f8411a"
+  },
+  "contactSheet": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/completion-midpoint-contact-sheet.png",
+    "bytes": 190231,
+    "sha256": "dda3be6ec6822d9466d612523afe6c147cca0ec80f481d0827adad07ee865d85"
+  },
+  "humanVisualReview": {
+    "reviewer": "Codex visual inspection",
+    "result": "accepted-as-conversion-reserve",
+    "scope": "All 15 midpoint tiles inspected after 60 phase-sampled WebGL renders; figures remain finite and coherent. This does not establish continuous source-engine formula parity."
+  },
+  "candidates": [
+    {
+      "candidateId": "fateubw-artoria_pendragon_saber",
+      "heroIds": [
+        "godie-e002",
+        "godie-e00l"
+      ],
+      "previousAttemptId": "fateubw-artoria_pendragon_saber-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+        "bytes": 245732,
+        "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/conversion-report.json",
+        "bytes": 57310,
+        "sha256": "2a7244644145fba13fbeca35543dafcb6c867dc10d0ca2333dcfcaf39d1f04fd"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/native-structural-readback.json",
+        "bytes": 1651,
+        "sha256": "fa865e9a2722ac752fcfbe12d91919d662400802cabf72bc6be1ddb5f0eccd23"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/contract-validation.json",
+        "bytes": 5085,
+        "sha256": "87dc6a97f3b06e1780bb52e190ae59af006d378cee578eb27732d81ea66cc302"
+      },
+      "sourceClipCount": 10,
+      "convertedNativeClipCount": 10,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "two_hand_1",
+        "two_hand_2",
+        "two_hand_3",
+        "two_hand_4",
+        "one_hand_1",
+        "stab_1",
+        "invisible_burst",
+        "invisible_burst_hit",
+        "excalibur",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "stab_1",
+        "excalibur"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-artoria_pendragon_saber",
+        "bodySha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+        "clipNames": [
+          "stab_1",
+          "excalibur"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/webgl-completion-v2/proof.json",
+          "sha256": "941c3660a12f652cded34d71051a0d49fd4287f02d7bd06a8a140db96466d3a0"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/webgl-completion-v2/run.json",
+          "sha256": "35ba8d84c00fd96af2b821ddd68e32505fe439b499a5b3b0d83d6086720add6b"
+        },
+        "shots": 8
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-cu_chulainn_lancer",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-cu_chulainn_lancer-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+        "bytes": 195016,
+        "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/conversion-report.json",
+        "bytes": 44300,
+        "sha256": "acec671ccea214067d2ffe684a6e3b466c3c6e23af0629f7846fd36c9adae5ee"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/native-structural-readback.json",
+        "bytes": 1640,
+        "sha256": "ee2bc29d7db3338a9eacf840cc9baf7f84e29181ce30f4acb0f6516496aed793"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/contract-validation.json",
+        "bytes": 4680,
+        "sha256": "e317676bb9d7c09fc5bf36f181330d66f6be4d315417dbc2054f815770084f6a"
+      },
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 7,
+      "retainedNoDurationClipCount": 1,
+      "convertedClipNames": [
+        "spear_1",
+        "spear_2",
+        "spear_3",
+        "spear_4",
+        "spear_5",
+        "spear_stab_combo",
+        "gae_bolg"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [],
+      "webglCompletion": null,
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-diarmuid_ua_duibhne_lancer-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+        "bytes": 222352,
+        "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/conversion-report.json",
+        "bytes": 43481,
+        "sha256": "afb863a85e7f882c31e53e9a801c6c5eb2733326f9d00367721b8a024c6b3cba"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/native-structural-readback.json",
+        "bytes": 1656,
+        "sha256": "3f050b8d6b68c805deaa2811b349f626096837c760e04d95555d69dc9f643f5a"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/contract-validation.json",
+        "bytes": 4703,
+        "sha256": "cc4e38ad3cfae6db52a5e5124b166730444e830a81c5efb24fb25e711a174b8a"
+      },
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 7,
+      "retainedNoDurationClipCount": 1,
+      "convertedClipNames": [
+        "dual_spear_1",
+        "dual_spear_2",
+        "dual_spear_3",
+        "dual_spear_4",
+        "dual_spear_5",
+        "blink",
+        "hogou_unseal"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "hogou_unseal"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-diarmuid_ua_duibhne_lancer",
+        "bodySha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+        "clipNames": [
+          "hogou_unseal"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/webgl-completion-v2/proof.json",
+          "sha256": "587ec17a310febc69c215829883d3c308e545cca8cce46b63a0a699a7cd204a4"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/webgl-completion-v2/run.json",
+          "sha256": "1668c147fe0fc692d6e40387d22dfa5c105722e5a1abb6434d5f9508e129a6c1"
+        },
+        "shots": 4
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-emiya_archer",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-emiya_archer-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+        "bytes": 296000,
+        "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/conversion-report.json",
+        "bytes": 64134,
+        "sha256": "4d2cf9b633358a78c04a9625c327bde8866d2531a7dc6dd5ba3a5061ec3d5e99"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/native-structural-readback.json",
+        "bytes": 1629,
+        "sha256": "a5f76bcb48c21d8ab0c0c69a4db2f3893abdadb8d717fb1cd303ce4caff4767e"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/contract-validation.json",
+        "bytes": 5189,
+        "sha256": "5bad76f9a6b0c039c7ba0d67f8b6ff2e83544ac13cafecc7e9adbb148ef7be70"
+      },
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 11,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "dual_slash_1",
+        "dual_slash_2",
+        "dual_slash_3",
+        "dual_slash_4",
+        "dual_slash_5",
+        "dual_slash_6",
+        "bow_1",
+        "bow_2",
+        "bow_air",
+        "caladbolg",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [],
+      "webglCompletion": null,
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-gilgamesh_archer",
+      "heroIds": [
+        "community-review-18-20260907"
+      ],
+      "previousAttemptId": "fateubw-gilgamesh_archer-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+        "bytes": 208968,
+        "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/conversion-report.json",
+        "bytes": 48538,
+        "sha256": "bd534cde49b44f6a6e80e16afdf5bfa25756f4867d686a748755abb4b8212f28"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/native-structural-readback.json",
+        "bytes": 1636,
+        "sha256": "0c0ef88bccda138360def0af865fd1d6945f5f2cf1aa65f6d5531b4b7e915636"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/contract-validation.json",
+        "bytes": 4870,
+        "sha256": "8fa427e5fcc35e94d989b17da013c2eef39f0c88ce4f94a7bdbdd74ef0452c9d"
+      },
+      "sourceClipCount": 9,
+      "convertedNativeClipCount": 9,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "one_hand_1",
+        "one_hand_2",
+        "stab_1",
+        "guard",
+        "babylon_1",
+        "babylon_2",
+        "babylon_3",
+        "ea",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "ea"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-gilgamesh_archer",
+        "bodySha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+        "clipNames": [
+          "ea"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/webgl-completion-v2/proof.json",
+          "sha256": "ae5b9fe8fa1f43b0ff779a6bcd0b05c5b66e8e7e518b401c3d84781b37cdd38b"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/webgl-completion-v2/run.json",
+          "sha256": "4395ee2b75ad930cbb1f824465cae36b4dcc5faa3924528ca0505c18ec41b48b"
+        },
+        "shots": 4
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-gilles_de_rais_caster",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-gilles_de_rais_caster-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+        "bytes": 73280,
+        "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/conversion-report.json",
+        "bytes": 11795,
+        "sha256": "86c30f42b3a3a5532742ba2fd8375cb206d3d57bbbe65372c7b5122202e156ab"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/native-structural-readback.json",
+        "bytes": 1645,
+        "sha256": "5af61a462ecb5c246baff9aa736c256539f7a9f493a357dde392ef55ded3ffaa"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/contract-validation.json",
+        "bytes": 4303,
+        "sha256": "eaa16116a11ecb4b2bd9b38ce356760a6ca056dab7b69534319a2983080ffa88"
+      },
+      "sourceClipCount": 4,
+      "convertedNativeClipCount": 4,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "summon_monster",
+        "shoot",
+        "summon_tentacle",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [],
+      "webglCompletion": null,
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-hassan-i-sabbah_assassin",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-hassan-i-sabbah_assassin-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+        "bytes": 158296,
+        "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/conversion-report.json",
+        "bytes": 39415,
+        "sha256": "19c64027ed0248edb0f6e92a09c53100af34903d81e4752aefc80b19086d00c4"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/native-structural-readback.json",
+        "bytes": 1652,
+        "sha256": "9f9eb94073e4c9986d2972f5eba9e54a86a8977d91d060858fecf8c95376796e"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/contract-validation.json",
+        "bytes": 4818,
+        "sha256": "5f69f515da127dbc1edaff3a7551029f351a2dc1cb66f95ff9eb86f8345c2281"
+      },
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 8,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "dagger_1",
+        "dagger_2",
+        "dagger_3",
+        "dagger_4",
+        "top_stab",
+        "dagger_throw",
+        "dupe",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [],
+      "webglCompletion": null,
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-heracles_berserker",
+      "heroIds": [
+        "godie-hapm"
+      ],
+      "previousAttemptId": "fateubw-heracles_berserker-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+        "bytes": 500056,
+        "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/conversion-report.json",
+        "bytes": 95655,
+        "sha256": "6d236b18edfe54ba8e19c9f05685fabd87b1e2fa8c029abfd400dd8759bbd4f0"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/native-structural-readback.json",
+        "bytes": 1649,
+        "sha256": "c53c38cdf858813ea4c0dcaeae7a6c9fbcd4d409415b4d272b6980ab653dca30"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/contract-validation.json",
+        "bytes": 5853,
+        "sha256": "95c62240dd609449ec9315eaaf920843376b05b5810fc585d7810757e2093b96"
+      },
+      "sourceClipCount": 17,
+      "convertedNativeClipCount": 16,
+      "retainedNoDurationClipCount": 1,
+      "convertedClipNames": [
+        "walk",
+        "run",
+        "one_hand_heavy_1",
+        "one_hand_heavy_2",
+        "one_hand_heavy_3",
+        "two_hand_heavy_1",
+        "two_hand_heavy_2",
+        "upper_cut",
+        "jump",
+        "jump_hit",
+        "land",
+        "leap",
+        "leap_slash",
+        "fake_death",
+        "death",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "jump_hit",
+        "land"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-heracles_berserker",
+        "bodySha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+        "clipNames": [
+          "jump_hit",
+          "land"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/webgl-completion-v2/proof.json",
+          "sha256": "7b90f8b368c016c7c05f57cca9bc6bc98dd9d489cba393b3f43f7bf1233ae07b"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/webgl-completion-v2/run.json",
+          "sha256": "ad124167530c892d80c3eac589fdc162f92650b5e5aafc7ae401f981a04ce9ca"
+        },
+        "shots": 8
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-iskander_rider",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-iskander_rider-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+        "bytes": 199136,
+        "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/conversion-report.json",
+        "bytes": 48913,
+        "sha256": "79ec5535c0e394b7e5597f80a6edd053ab1ced6906ad627190c22a7851b4eb5a"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/native-structural-readback.json",
+        "bytes": 1632,
+        "sha256": "52bd573f52ce55799cbd547c9f714a8c4a8218dac6f52751bb7e61010ce41c18"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/contract-validation.json",
+        "bytes": 4921,
+        "sha256": "3179265b4827a95c1d448b1e0f1eb96a5d46c6b453f1632c7b3845454c7667b5"
+      },
+      "sourceClipCount": 9,
+      "convertedNativeClipCount": 9,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "one_hand_1",
+        "one_hand_2",
+        "one_hand_3",
+        "one_hand_4",
+        "one_hand_5",
+        "one_hand_6",
+        "one_hand_7",
+        "chariot_summon",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "summon"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-iskander_rider",
+        "bodySha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+        "clipNames": [
+          "summon"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/webgl-completion-v2/proof.json",
+          "sha256": "b829251c99c093d662bbbbec3ecd3b702996cd5b9132b593330e41a7bdbbe239"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/webgl-completion-v2/run.json",
+          "sha256": "749c68bcf58d6af7eb721a36aed84a96f4f575a6cf62a268d03c35bceebcd77a"
+        },
+        "shots": 4
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-lancelot_berserker",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-lancelot_berserker-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+        "bytes": 340508,
+        "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/conversion-report.json",
+        "bytes": 72459,
+        "sha256": "04b3d64fcd9a942061419f9633d007872bbf6272769a8c6d1ec42971f1070716"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/native-structural-readback.json",
+        "bytes": 1641,
+        "sha256": "9fe7a2e7d34d6d684122c5602835de0f3f5ea25eae4c7ce6601e0b61e565f1ce"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/contract-validation.json",
+        "bytes": 5406,
+        "sha256": "d1938286c71ca63f6675c8fc088dbb8eb4fc48acb3a4847447506292439f21a4"
+      },
+      "sourceClipCount": 13,
+      "convertedNativeClipCount": 13,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "two_hand_1",
+        "two_hand_2",
+        "two_hand_3",
+        "two_hand_4",
+        "one_hand_1",
+        "stab_1",
+        "jump",
+        "jump_land",
+        "trident",
+        "bow",
+        "crossbow",
+        "gun",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "gun",
+        "summon"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-lancelot_berserker",
+        "bodySha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+        "clipNames": [
+          "gun",
+          "summon"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/webgl-completion-v2/proof.json",
+          "sha256": "8dfdf657438da85f015e55c1037d446a51108c42f02fe25cf1441a2cc59a8472"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/webgl-completion-v2/run.json",
+          "sha256": "afbb9a8a655ccca1d82ac2790ddaa7561019cc825cc148ae05d1264227859a3c"
+        },
+        "shots": 8
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-medea_caster",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-medea_caster-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+        "bytes": 242456,
+        "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/conversion-report.json",
+        "bytes": 31937,
+        "sha256": "f44fb6cdbf54aa469564dadf31207dd01ec48896f2996da59ed7d2383fe0bb1b"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/native-structural-readback.json",
+        "bytes": 1630,
+        "sha256": "7b6c6f968150ce8af2dc5b68cff9c5a3f0e1b1d7286824a4b7e1cd00eaf056bd"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/contract-validation.json",
+        "bytes": 4528,
+        "sha256": "5af01aa4a48060fa369941214be15d0c0360e35cf2acaa2470a363e26e3a82b4"
+      },
+      "sourceClipCount": 7,
+      "convertedNativeClipCount": 6,
+      "retainedNoDurationClipCount": 1,
+      "convertedClipNames": [
+        "cast_1",
+        "cast_2",
+        "cast_3",
+        "cast_4",
+        "magic_circle",
+        "rule_breaker"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "cast_3",
+        "cast_4"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-medea_caster",
+        "bodySha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+        "clipNames": [
+          "cast_3",
+          "cast_4"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/webgl-completion-v2/proof.json",
+          "sha256": "19f1c1c1292a98c0a44f30c1ed95eb2d3902bacd763401570cbf3c605a24dacb"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/webgl-completion-v2/run.json",
+          "sha256": "231811131d34d5ced71ec373c92b3e1fc1d7fe042724513301397f6eec25bb6a"
+        },
+        "shots": 8
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-medusa_rider",
+      "heroIds": [
+        "godie-hvsh"
+      ],
+      "previousAttemptId": "fateubw-medusa_rider-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+        "bytes": 227824,
+        "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/conversion-report.json",
+        "bytes": 57980,
+        "sha256": "2bacfb22f33e3d96508865ff05286e2533771e647edb7e6d362c9bc6d4002b4c"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/native-structural-readback.json",
+        "bytes": 1629,
+        "sha256": "db2f0c48542d0e5fddca913c2e08c43f86bbde0de2b84481adc68774dfe065b1"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/contract-validation.json",
+        "bytes": 5177,
+        "sha256": "3123613178708ebc26ab15fe7c300d5823c3220a5bb8a5dec7033b6436575d85"
+      },
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 11,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "dual_reverse_1",
+        "dual_reverse_2",
+        "dual_reverse_3",
+        "dual_reverse_4",
+        "chain_throw",
+        "chain_retrieve",
+        "eye",
+        "jump",
+        "land",
+        "bellerophon",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "summon"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-medusa_rider",
+        "bodySha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+        "clipNames": [
+          "summon"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/webgl-completion-v2/proof.json",
+          "sha256": "7ef04981f25e2e1e4d6af45295db48a0b272978d548968595a03a350674c7a98"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/webgl-completion-v2/run.json",
+          "sha256": "6f8d57ee05b7a2b9cbc6694806751b77e76dcca54700cd4bda20386280a5d964"
+        },
+        "shots": 4
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-nero_claudius_saber",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-nero_claudius_saber-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+        "bytes": 478168,
+        "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/conversion-report.json",
+        "bytes": 41338,
+        "sha256": "8add2f64f91565fd94a11d1bd6869a34a33555522eaf2f25835e8dd0fd95dc83"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/native-structural-readback.json",
+        "bytes": 1642,
+        "sha256": "92a0e05cb83ccb912aa17b66d91f5f844ffb6b489353d2e2fbe66f15f0ac2472"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/contract-validation.json",
+        "bytes": 4587,
+        "sha256": "6c783636aa2cc31f35e29e53db4e7e444c8961c7e0b56fd898180fe030352e70"
+      },
+      "sourceClipCount": 6,
+      "convertedNativeClipCount": 6,
+      "retainedNoDurationClipCount": 0,
+      "convertedClipNames": [
+        "horizontal_slashes",
+        "vertical_slashes",
+        "stab",
+        "aestus_domus_aurea",
+        "aestus_domus_aurea_full",
+        "summon"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [
+        "horizontal_slashes",
+        "aestus_domus_aurea",
+        "aestus_domus_aurea_full"
+      ],
+      "webglCompletion": {
+        "candidateId": "fateubw-nero_claudius_saber",
+        "bodySha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+        "clipNames": [
+          "horizontal_slashes",
+          "aestus_domus_aurea",
+          "aestus_domus_aurea_full"
+        ],
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/webgl-completion-v2/proof.json",
+          "sha256": "ff8d29ac0de394869f6124320a89641fc867962665eb22ae5eabd48aba0763c6"
+        },
+        "run": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/webgl-completion-v2/run.json",
+          "sha256": "f01aaf1132dddfc48d53bfcafeff1639526eb338a31afb469a3214596f8f6370"
+        },
+        "shots": 12
+      },
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    },
+    {
+      "candidateId": "fateubw-sasaki_kojiro_assassin",
+      "heroIds": [],
+      "previousAttemptId": "fateubw-sasaki_kojiro_assassin-native-motion-reserve-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+        "bytes": 253132,
+        "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7"
+      },
+      "converterReport": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/conversion-report.json",
+        "bytes": 59874,
+        "sha256": "2fcbcd03760d7a8e861ac22ce60a4a1d157eeec0239ca3b61602355ba44e586f"
+      },
+      "structuralReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/native-structural-readback.json",
+        "bytes": 1649,
+        "sha256": "6a485d326bfd0c1b6eb9470e2564da0675f803c225da19a31924a034d7b98006"
+      },
+      "contractValidation": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/contract-validation.json",
+        "bytes": 5080,
+        "sha256": "141a7ef6266df6e747f91d96b0e07005880af54f3128d4ae93dde6831cb583b9"
+      },
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 10,
+      "retainedNoDurationClipCount": 1,
+      "convertedClipNames": [
+        "two_hand_1",
+        "two_hand_2",
+        "two_hand_3",
+        "two_hand_4",
+        "two_hand_5",
+        "two_hand_6",
+        "two_hand_7",
+        "one_hand_1",
+        "katana_1",
+        "tsubame_gaeshi"
+      ],
+      "newlyConvertedFormulaOrPrePostClips": [],
+      "webglCompletion": null,
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultEligible": false,
+      "backup": {
+        "state": "verified",
+        "receipt": "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+        "receiptSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.files.json",
+        "archiveSha256": "6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f",
+        "archiveBytes": 19555424,
+        "fileCount": 156,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true
+      }
+    }
+  ],
+  "productionDeploymentVerified": false
+}

@@ -300,10 +300,10 @@
     {
       "id": "runtime:infinity-strash-dai-pn010-02-native-v1",
       "modelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-      "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
-      "bytes": 2000480,
-      "documentSha256": "3a45f21e6f4114765aae37abd6ed7cc594a1faa8d4f69054e8ea617c145cf9ab",
+      "glbPath": "assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+      "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+      "bytes": 1986068,
+      "documentSha256": "caf1eed462b7a021f93ce311536cad45aff897ba3edf72a5d6cbe3f947d7cb36",
       "sourceCharacter": "小呆／達伊（PN010/02）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
@@ -318,23 +318,40 @@
       "limitations": [
         "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
         "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
-        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。"
+        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。",
+        "此高面數保留選項的透明背景像素已修復；前、後、等角三視圖與原始顯示逐像素 RGB 完全一致。",
+        "此版本為 16,035 面的歷史保留選項；正式自動預選仍使用另存的 <=8,000 面驗收版。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
-      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
+      "gitPath": "content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02/final",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
-      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
-      "fullCharacterPackage": false
+      "validation": "background-repair-khronos-ggd-hard-limits-and-three-view-exact-rgb-passed-high-poly-retained",
+      "fullCharacterPackage": false,
+      "backdropRepair": {
+        "originalSha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "repairedSha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+        "originalBytesRemovedFromCurrentContentTree": true,
+        "originalBytesPreservedInGitHistory": true,
+        "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02/body.glb",
+        "visualExactRgbMatch": true,
+        "formalAdoptionStatus": "high-poly-retained-option-decimated-version-preferred",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/receipt.json",
+        "validationGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/validation.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.files.json",
+        "archiveSha256": "e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114",
+        "fullReadbackVerified": true
+      }
     },
     {
       "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
       "modelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
-      "glbPath": "assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
-      "sha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
-      "bytes": 2206692,
-      "documentSha256": "a33c93548c20248c6f5086fd3a55f77b8e08caacc4e62a1848cd2c37de4446ef",
+      "glbPath": "assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+      "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+      "bytes": 2192280,
+      "documentSha256": "a7df63662627ccec329496cd3af53b63f766e0892ceb7cd4cb934582a43657f9",
       "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
@@ -350,14 +367,16 @@
         "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
         "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
         "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
-        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。"
+        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。",
+        "此高面數保留選項的透明背景像素已修復；前、後、等角三視圖與原始顯示逐像素 RGB 完全一致。",
+        "此版本為 16,882 面的歷史保留選項；正式自動預選仍使用另存的 <=8,000 面驗收版。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d.glb",
-      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi",
+      "gitPath": "content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05-daino-tsurugi/final",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
-      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "validation": "background-repair-khronos-ggd-hard-limits-and-three-view-exact-rgb-passed-high-poly-retained",
       "fullCharacterPackage": false,
       "s3": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-dai-pn010-05-daino-tsurugi-delivery-v1/c0f31a715cc46af18d378879cce351db6e711273d944ce38ccfed95fa160b7e6.tar.gz",
@@ -367,15 +386,30 @@
         "fileCount": 147,
         "readbackVerified": true,
         "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-pn010-05-daino-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/s3-conversion-receipt.json"
+      },
+      "backdropRepair": {
+        "originalSha256": "1e1379ec54152a09339c2c5f92e79ee4320fb848ba3ea8da52d723efb1d2c55d",
+        "repairedSha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+        "originalBytesRemovedFromCurrentContentTree": true,
+        "originalBytesPreservedInGitHistory": true,
+        "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-dai-pn010-05-daino-v2/dai-pn010-05-daino-tsurugi/body.glb",
+        "visualExactRgbMatch": true,
+        "formalAdoptionStatus": "high-poly-retained-option-decimated-version-preferred",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/receipt.json",
+        "validationGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/validation.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.files.json",
+        "archiveSha256": "e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114",
+        "fullReadbackVerified": true
       }
     },
     {
       "id": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
       "modelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-      "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-      "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
-      "bytes": 3011048,
-      "documentSha256": "d207086df033c9a82639ac00e3d0a16215bdbab395cedbdb26e1453527f47a6c",
+      "glbPath": "assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+      "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+      "bytes": 3004016,
+      "documentSha256": "7bf4f37a9c94c83424d3b1065e5c1e0ab7fe7aad297375416d120307fe0b4610",
       "sourceCharacter": "巴恩大魔王（EN801，變身前／老巴恩）",
       "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
       "sourceAssetId": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
@@ -391,15 +425,32 @@
         "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
         "GGD hurt/death 共用原生死亡序列。",
         "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
-        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。"
+        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。",
+        "此高面數保留選項的透明背景像素已修復；前、後、等角三視圖與原始顯示逐像素 RGB 完全一致。",
+        "此版本為 16,760 面的歷史保留選項；正式自動預選仍使用另存的 <=8,000 面驗收版。"
       ],
       "storage": "git",
-      "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
-      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
+      "gitPath": "content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1/vearn-en801-pre-transformation/final",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
-      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
-      "fullCharacterPackage": false
+      "validation": "background-repair-khronos-ggd-hard-limits-and-three-view-exact-rgb-passed-high-poly-retained",
+      "fullCharacterPackage": false,
+      "backdropRepair": {
+        "originalSha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "repairedSha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+        "originalBytesRemovedFromCurrentContentTree": true,
+        "originalBytesPreservedInGitHistory": true,
+        "originalLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation/body.glb",
+        "visualExactRgbMatch": true,
+        "formalAdoptionStatus": "high-poly-retained-option-decimated-version-preferred",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/receipt.json",
+        "validationGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/validation.json",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.files.json",
+        "archiveSha256": "e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114",
+        "fullReadbackVerified": true
+      }
     },
     {
       "id": "runtime:infinity-strash-popp-pn020-00-magikaru-native-v2",
@@ -513,6 +564,140 @@
         "fileCount": 101,
         "readbackVerified": true,
         "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/s3-conversion-receipt.json"
+      }
+    },
+    {
+      "id": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
+      "modelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+      "glbPath": "assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+      "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6",
+      "bytes": 1880364,
+      "documentSha256": "d31b69dc516c1b42210d44f79089bb425469921bc7ad41ec7b64084f0e4fce08",
+      "sourceCharacter": "小呆／達伊（PN010/02）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+        "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/final",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "dai-pn010-02/final/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      }
+    },
+    {
+      "id": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+      "modelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+      "glbPath": "assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+      "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540",
+      "bytes": 2081176,
+      "documentSha256": "a4c2e9098e58cf23385a9a9a51454a92c7a4b41b6ff68f6b204af6914a9bb905",
+      "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
+        "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
+        "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
+        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/final",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "dai-pn010-05-daino-tsurugi/final/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      }
+    },
+    {
+      "id": "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1",
+      "modelKey": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+      "glbPath": "assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+      "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00",
+      "bytes": 2899468,
+      "documentSha256": "0fcdc24f250ce4b1b70af73d1529ab1a6c5f8d4e64e0d1ce47bc31111e6667b3",
+      "sourceCharacter": "巴恩大魔王（EN801，變身前／老巴恩）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special01",
+        "hurt": "GGD_native_death",
+        "death": "GGD_native_death"
+      },
+      "limitations": [
+        "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+        "GGD hurt/death 共用原生死亡序列。",
+        "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/final",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "vearn-en801-pre-transformation/final/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
       }
     }
   ],
@@ -706,7 +891,7 @@
         {
           "sourceId": "runtime:infinity-strash-dai-pn010-02-native-v1",
           "sourceModelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
-          "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）（背景修復高面數保留版）",
           "source": {
             "kind": "exact",
             "tier": "original",
@@ -720,7 +905,37 @@
         {
           "sourceId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
           "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
-          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）（背景修復高面數保留版）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/05，達伊之劍）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+            "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+            "sourcePlatform": "Windows (Steam)"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
+          "sourceModelKey": "community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）（背景修復＋7,917 面正式採用減面）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "小呆／達伊（PN010/02）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+          "sourceModelKey": "community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81",
+          "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）（背景修復＋7,918 面正式採用減面）",
           "source": {
             "kind": "exact",
             "tier": "original",
@@ -743,7 +958,21 @@
         {
           "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
           "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
-          "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+          "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復高面數保留版）",
+          "source": {
+            "kind": "exact",
+            "tier": "original",
+            "selectionClass": "canonical-game",
+            "library": "Infinity Strash Steam 原作擷取",
+            "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+            "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source"
+          }
+        },
+        {
+          "sourceId": "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1",
+          "sourceModelKey": "community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563",
+          "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復＋7,998 面正式採用減面）",
           "source": {
             "kind": "exact",
             "tier": "original",

@@ -1,0 +1,355 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.9728817902508382,
+      -5.313879249341583e-07,
+      -0.2820071720650135
+    ],
+    "max": [
+      0.9728817039161868,
+      1.7999996494361177,
+      0.28200639234652286
+    ],
+    "extent": [
+      1.945763494167025,
+      1.8000001808240427,
+      0.5640135644115364
+    ]
+  },
+  "geometry": [
+    {
+      "name": "backShape_primitive0",
+      "vertices": 1825,
+      "indices": 4983,
+      "worldBounds": {
+        "min": [
+          -0.15864751944815225,
+          1.1722124508511635,
+          -0.21630737880619166
+        ],
+        "max": [
+          0.15864745469716368,
+          1.7999996494361177,
+          0.2100193073434633
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 156,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "backShape_primitive1",
+      "vertices": 265,
+      "indices": 1056,
+      "worldBounds": {
+        "min": [
+          -0.09125544597170787,
+          1.569631896765217,
+          -0.047046210644424685
+        ],
+        "max": [
+          0.09125533805339359,
+          1.7883940334942454,
+          0.18258879520737437
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 156,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "backShape_primitive2",
+      "vertices": 2990,
+      "indices": 10869,
+      "worldBounds": {
+        "min": [
+          -0.8783619231903259,
+          -5.313879249341583e-07,
+          -0.2820071720650135
+        ],
+        "max": [
+          0.8783620095249773,
+          1.5873211953034752,
+          0.27533252946241704
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 156,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "backShape_primitive3",
+      "vertices": 674,
+      "indices": 2394,
+      "worldBounds": {
+        "min": [
+          -0.36314404838559966,
+          0.9631909663482168,
+          -0.030495106277485265
+        ],
+        "max": [
+          0.36314396205094823,
+          1.7956361109313488,
+          0.28200639234652286
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 156,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "backShape_primitive4",
+      "vertices": 1030,
+      "indices": 4377,
+      "worldBounds": {
+        "min": [
+          -0.9728817902508382,
+          1.3736196792711886,
+          -0.016137404660580182
+        ],
+        "max": [
+          0.9728817039161868,
+          1.7815138429497714,
+          0.19365708369816814
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 156,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "backShape_primitive5",
+      "vertices": 30,
+      "indices": 102,
+      "worldBounds": {
+        "min": [
+          -0.05530687342674234,
+          1.6346023049034182,
+          0.15584313138618872
+        ],
+        "max": [
+          0.05530658744320949,
+          1.6498812911365317,
+          0.1662103861373111
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 156,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "alp_lucina_001",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "alp_lucina_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "material2",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "material2 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "def_lucina_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_lucina_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 128
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "material3",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "material3 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "material4",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "material4 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "material5",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "material5 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 628,
+        "height": 1
+      }
+    },
+    {
+      "name": "alp_lucina_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "material2 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "def_lucina_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 128
+      }
+    },
+    {
+      "name": "material3 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "material4 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "material5 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

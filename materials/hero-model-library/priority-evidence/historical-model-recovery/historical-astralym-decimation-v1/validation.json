@@ -1,6 +1,6 @@
 {
   "schema": "ggd-historical-astralym-decimation-validation@1",
-  "candidateId": "historical-astralym-decimated-f77cf1ee",
+  "candidateId": "historical-astralym-decimated-c45f111d",
   "heroId": "acquired-astralym",
   "originalRetained": {
     "git": {
@@ -16,14 +16,14 @@
   },
   "candidate": {
     "git": {
-      "path": "content/assets/models/community/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-      "bytes": 3795720,
-      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
+      "path": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "bytes": 3793672,
+      "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
     },
     "local": {
-      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7.glb",
-      "bytes": 3795720,
-      "sha256": "f77cf1ee8dd52cd14e75356f424034f2f8e866d3adafc70642a9f4efed36c2a7"
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/historical-astralym-decimation-v1/final/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "bytes": 3793672,
+      "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
     }
   },
   "parameters": {
@@ -32,7 +32,11 @@
     "actualTriangles": 7996,
     "emissiveThreshold": 192,
     "errorBound": 0.02,
-    "lockBorder": true
+    "lockBorder": true,
+    "transparentEmissiveMatteSanitization": {
+      "alphaMax": 5,
+      "hiddenRgbFloorExclusive": 8
+    }
   },
   "metrics": {
     "triangles": 7996,
@@ -65,26 +69,26 @@
       {
         "width": 256,
         "height": 256,
-        "bytes": 28378,
-        "sha256": "1b2df6654c29d5a256da5263502097720d2fec49488575253a0653d38ad1266d"
+        "bytes": 27897,
+        "sha256": "95e845524fe0ee9efccdd7f663e21a436a0dbdfb8c12a1bfd2eed768d4f2e3db"
       },
       {
         "width": 256,
         "height": 256,
-        "bytes": 28378,
-        "sha256": "1b2df6654c29d5a256da5263502097720d2fec49488575253a0653d38ad1266d"
+        "bytes": 27897,
+        "sha256": "95e845524fe0ee9efccdd7f663e21a436a0dbdfb8c12a1bfd2eed768d4f2e3db"
       },
       {
         "width": 256,
         "height": 256,
-        "bytes": 39305,
-        "sha256": "06bd38f03db98e1d34a0244d0442c51a35dbed278e951fedce5153bc9c66d40a"
+        "bytes": 38761,
+        "sha256": "dd04a8788e937e076e501dc072b316c6e49b1e7765f20f3128db5c2afc8dd0e5"
       },
       {
         "width": 256,
         "height": 256,
-        "bytes": 39305,
-        "sha256": "06bd38f03db98e1d34a0244d0442c51a35dbed278e951fedce5153bc9c66d40a"
+        "bytes": 38761,
+        "sha256": "dd04a8788e937e076e501dc072b316c6e49b1e7765f20f3128db5c2afc8dd0e5"
       }
     ],
     "skins": 1,
@@ -124,7 +128,7 @@
   "preservation": {
     "nodeHierarchyAndTransformsExact": true,
     "materialDefinitionsExact": true,
-    "embeddedImagesExact": true,
+    "embeddedImagesExactExceptTransparentEmissiveRgbSanitization": true,
     "skinJointsAndInverseBindMatricesExact": true,
     "allNonIndexVertexAttributesExact": true,
     "animationChannelsAndKeyValuesExact": true,
@@ -210,32 +214,66 @@
         "width": 256,
         "height": 256,
         "format": "png",
-        "bytes": 28378,
-        "sha256": "1b2df6654c29d5a256da5263502097720d2fec49488575253a0653d38ad1266d"
+        "bytes": 27897,
+        "sha256": "95e845524fe0ee9efccdd7f663e21a436a0dbdfb8c12a1bfd2eed768d4f2e3db"
       },
       {
         "index": 5,
         "width": 256,
         "height": 256,
         "format": "png",
-        "bytes": 28378,
-        "sha256": "1b2df6654c29d5a256da5263502097720d2fec49488575253a0653d38ad1266d"
+        "bytes": 27897,
+        "sha256": "95e845524fe0ee9efccdd7f663e21a436a0dbdfb8c12a1bfd2eed768d4f2e3db"
       },
       {
         "index": 6,
         "width": 256,
         "height": 256,
         "format": "png",
-        "bytes": 39305,
-        "sha256": "06bd38f03db98e1d34a0244d0442c51a35dbed278e951fedce5153bc9c66d40a"
+        "bytes": 38761,
+        "sha256": "dd04a8788e937e076e501dc072b316c6e49b1e7765f20f3128db5c2afc8dd0e5"
       },
       {
         "index": 7,
         "width": 256,
         "height": 256,
         "format": "png",
-        "bytes": 39305,
-        "sha256": "06bd38f03db98e1d34a0244d0442c51a35dbed278e951fedce5153bc9c66d40a"
+        "bytes": 38761,
+        "sha256": "dd04a8788e937e076e501dc072b316c6e49b1e7765f20f3128db5c2afc8dd0e5"
+      }
+    ],
+    "imageSanitization": [
+      {
+        "imageIndex": 4,
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 927,
+        "alphaValuesChanged": 0,
+        "visiblePixelsChanged": 0
+      },
+      {
+        "imageIndex": 5,
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 927,
+        "alphaValuesChanged": 0,
+        "visiblePixelsChanged": 0
+      },
+      {
+        "imageIndex": 6,
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 1428,
+        "alphaValuesChanged": 0,
+        "visiblePixelsChanged": 0
+      },
+      {
+        "imageIndex": 7,
+        "width": 256,
+        "height": 256,
+        "clearedPixels": 1428,
+        "alphaValuesChanged": 0,
+        "visiblePixelsChanged": 0
       }
     ]
   },
@@ -319,7 +357,7 @@
           "pointer": "/buffers/0",
           "mimeType": "application/gltf-buffer",
           "storage": "glb",
-          "byteLength": 3351856
+          "byteLength": 3349808
         },
         {
           "pointer": "/images/0",
@@ -493,12 +531,12 @@
   "deathPresentation": "Native Damage clip plus authorized runtime ascend/fade fallback; no native Death clip claimed.",
   "visualEvidence": {
     "path": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/visual-comparison.json",
-    "bytes": 6493,
-    "sha256": "ed8ac520031c8b2fe4db5e7cb299bb2946cb52e270f0ab0361904c2bed2aa2f5"
+    "bytes": 6497,
+    "sha256": "377835be3479d4dd38c90933b97fb0ef8b0603f0237f0d75d80df3356c8c5942"
   },
   "visualAcceptance": {
-    "changedPixelPctMax": 4.490156,
-    "litClassificationXorPctMax": 2.032031,
+    "changedPixelPctMax": 4.490938,
+    "litClassificationXorPctMax": 2.032188,
     "contractMaxPct": 5,
     "humanReview": {
       "reviewer": "Codex visual inspection",

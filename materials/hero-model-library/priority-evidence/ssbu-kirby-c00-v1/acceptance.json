@@ -1,0 +1,24 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "acceptedAt": "2026-09-14",
+  "components": [
+    {
+      "id": "ssbu-kirby-c00-static-skinned-v1",
+      "variant": "c00",
+      "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "The Ultimate14 native motion payload has not been retargeted to this 51-joint body or playback accepted.",
+        "This independent component is not bound to the existing Kirby hero, not registered in the backend dropdown and not deployed.",
+        "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported."
+      ]
+    }
+  ]
+}

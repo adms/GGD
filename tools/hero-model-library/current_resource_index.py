@@ -148,6 +148,39 @@ def build():
     ultimate14_motion=read(ultimate14_motion_path)
     workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
     workflow_restoration=read(workflow_restoration_path)
+    popp_vfx_receipt_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json'
+    popp_vfx_receipt=read(popp_vfx_receipt_path)
+    popp_vfx_export_backup_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-export-s3-backup-receipt.json'
+    popp_vfx_export_backup=read(popp_vfx_export_backup_path)
+    popp_vfx_staticmesh_receipt_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-receipt.json'
+    popp_vfx_staticmesh_receipt=read(popp_vfx_staticmesh_receipt_path)
+    popp_vfx_staticmesh_backup_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/staticmesh-recovery-s3-backup-receipt.json'
+    popp_vfx_staticmesh_backup=read(popp_vfx_staticmesh_backup_path)
+    popp_vfx_reconstruction_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json'
+    popp_vfx_reconstruction=read(popp_vfx_reconstruction_path)
+    popp_vfx_reconstruction_receipt_path=base/'priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates-receipt.json'
+    popp_vfx_reconstruction_receipt=read(popp_vfx_reconstruction_receipt_path)
+    if (popp_vfx_receipt.get('schema')!='ggd.infinity-strash-popp-vfx-events@1'
+        or popp_vfx_receipt.get('summary',{}).get('vfxDependencySupportFilesExported',0)<=0
+        or popp_vfx_receipt.get('summary',{}).get('vfxConverted')!=0):
+        raise ValueError('Popp VFX dependency support receipt is absent, empty or overclaims conversion')
+    if (popp_vfx_export_backup.get('schema')!='ggd-intake-backup-receipt@1'
+        or not popp_vfx_export_backup.get('fullGetVerified')
+        or not popp_vfx_export_backup.get('allMemberSha256Verified')):
+        raise ValueError('Popp VFX dependency support S3 backup is not verified')
+    if (popp_vfx_staticmesh_receipt.get('schema')!='ggd.infinity-strash-popp-vfx-staticmesh-recovery@1'
+        or popp_vfx_staticmesh_receipt.get('summary',{}).get('packagesConverted')!=33
+        or popp_vfx_staticmesh_receipt.get('summary',{}).get('packagesStillBlocked')!=0):
+        raise ValueError('Popp VFX StaticMesh recovery receipt is not complete')
+    if (popp_vfx_staticmesh_backup.get('schema')!='ggd-intake-backup-receipt@1'
+        or not popp_vfx_staticmesh_backup.get('fullGetVerified')
+        or not popp_vfx_staticmesh_backup.get('allMemberSha256Verified')):
+        raise ValueError('Popp VFX StaticMesh recovery S3 backup is not verified')
+    if (popp_vfx_reconstruction.get('schema')!='ggd.infinity-strash-popp-vfx-reconstruction-candidates@1'
+        or popp_vfx_reconstruction.get('summary',{}).get('niagaraSystemCandidates')!=14
+        or popp_vfx_reconstruction.get('summary',{}).get('ggdVfxBuilt')!=0
+        or popp_vfx_reconstruction_receipt.get('states',{}).get('ggdVfxBuilt') is not False):
+        raise ValueError('Popp VFX reconstruction candidates are absent or overclaim readiness')
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -191,6 +224,50 @@ def build():
             gitPath=str(workflow_restoration_path.relative_to(ROOT)),
             sha256=hashlib.sha256(workflow_restoration_path.read_bytes()).hexdigest(),
             summary=workflow_restoration['summary']),
+        poppVfxDependencySupport=dict(
+            heroId='b2-popp',
+            sourceId=popp_vfx_receipt['sourceId'],
+            status='reconstruction-support-assets-exported; Niagara and GGD VFX conversion pending',
+            receiptGitPath=str(popp_vfx_receipt_path.relative_to(ROOT)),
+            receiptSha256=hashlib.sha256(popp_vfx_receipt_path.read_bytes()).hexdigest(),
+            backupReceiptGitPath=str(popp_vfx_export_backup_path.relative_to(ROOT)),
+            backupReceiptSha256=hashlib.sha256(popp_vfx_export_backup_path.read_bytes()).hexdigest(),
+            staticMeshReceiptGitPath=str(popp_vfx_staticmesh_receipt_path.relative_to(ROOT)),
+            staticMeshReceiptSha256=hashlib.sha256(popp_vfx_staticmesh_receipt_path.read_bytes()).hexdigest(),
+            staticMeshBackupReceiptGitPath=str(popp_vfx_staticmesh_backup_path.relative_to(ROOT)),
+            staticMeshBackupReceiptSha256=hashlib.sha256(popp_vfx_staticmesh_backup_path.read_bytes()).hexdigest(),
+            reconstructionCandidatesGitPath=str(popp_vfx_reconstruction_path.relative_to(ROOT)),
+            reconstructionCandidatesSha256=hashlib.sha256(popp_vfx_reconstruction_path.read_bytes()).hexdigest(),
+            reconstructionReceiptGitPath=str(popp_vfx_reconstruction_receipt_path.relative_to(ROOT)),
+            reconstructionReceiptSha256=hashlib.sha256(popp_vfx_reconstruction_receipt_path.read_bytes()).hexdigest(),
+            reconstructionReviewGitPath='materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html',
+            localRoot=popp_vfx_export_backup['source'],
+            s3Uri=popp_vfx_export_backup['s3Uri'],
+            manifestUri=popp_vfx_export_backup['manifestUri'],
+            summary=dict(
+                packagesAttempted=popp_vfx_receipt['summary']['vfxDependencyPackagesAttempted'],
+                packagesExported=popp_vfx_receipt['summary']['vfxDependencyPackagesExported'],
+                filesExported=popp_vfx_receipt['summary']['vfxDependencySupportFilesExported'],
+                bytesExported=popp_vfx_receipt['summary']['vfxDependencySupportBytesExported'],
+                extensionCounts=popp_vfx_receipt['summary']['vfxDependencySupportExtensionCounts'],
+                filesReadable=popp_vfx_receipt['summary']['vfxDependencySupportFilesReadable'],
+                uniqueByteAssets=popp_vfx_receipt['summary']['vfxDependencySupportUniqueByteAssets'],
+                duplicateOccurrences=popp_vfx_receipt['summary']['vfxDependencySupportDuplicateOccurrences'],
+                semanticGroups=popp_vfx_receipt['summary']['vfxDependencySupportSemanticGroups'],
+                staticMeshPackagesRecovered=popp_vfx_receipt['summary']['vfxStaticMeshPackagesRecovered'],
+                staticMeshPackagesStillBlocked=popp_vfx_receipt['summary']['vfxStaticMeshPackagesStillBlocked'],
+                staticMeshGlbFiles=popp_vfx_receipt['summary']['vfxStaticMeshGlbFiles'],
+                staticMeshVertices=popp_vfx_receipt['summary']['vfxStaticMeshVertices'],
+                staticMeshTriangles=popp_vfx_receipt['summary']['vfxStaticMeshTriangles'],
+                niagaraSystemCandidates=popp_vfx_receipt['summary']['vfxNiagaraSystemCandidates'],
+                supportRoots=popp_vfx_receipt['summary']['vfxSupportRoots'],
+                candidateRecipes=popp_vfx_receipt['summary']['vfxCandidateRecipes'],
+                ggdVfxConverted=0,
+                runtimeBindingsCreated=popp_vfx_receipt['summary']['runtimeBindingsCreated']),
+            fullGetVerified=True,
+            allMemberSha256Verified=True,
+            runtimeSelectable=False,
+            productionDeploymentVerified=False),
         note='Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.')
     component_path=base/'palworld/帕魯三角色素材索引.json'
     component_data=read(component_path)
@@ -209,6 +286,38 @@ def build():
     )
     component_source_path=base/'download-sources.json'
     component_sources=read(component_source_path)
+    fateubw_source=next(source for source in component_sources['publicSources'] if source['id']=='github-flemmli97-fateubw-07e9d79b')
+    fateubw_native_path=base/'priority-evidence/fateubw-community/native-motion-completion-v2.json'
+    fateubw_native_backup_path=base/'priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json'
+    fateubw_derivative_path=base/'priority-evidence/fateubw-community/static-pose-derivatives-v1/evidence-receipt.json'
+    fateubw_derivative_backup_path=base/'priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json'
+    fateubw_derivative=fateubw_source.get('durationlessDerivativeCompletion',{})
+    fateubw_native_backup=read(fateubw_native_backup_path)
+    if (not fateubw_native_backup.get('fullGetVerified')
+        or not fateubw_native_backup.get('allMemberSha256Verified')
+        or not fateubw_native_backup.get('localUnchanged')):
+        raise ValueError('FateUBW native completion backup is not fully verified')
+    if (fateubw_derivative.get('counts') != {'candidates': 5, 'staticPoseHolds': 3, 'proceduralFormulaLoops': 2, 'nativeDurationClips': 0}
+        or fateubw_derivative.get('nativeDurationClaim') is not False
+        or fateubw_derivative.get('runtimeReady') is not False):
+        raise ValueError('FateUBW durationless derivative reserve is absent or overclaims readiness')
+    result.update(fateubwMotionReserve=dict(
+        sourceId=fateubw_source['id'],
+        nativeMotionCompletion=dict(
+            gitPath=str(fateubw_native_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(fateubw_native_path.read_bytes()).hexdigest(),
+            backupReceiptGitPath=str(fateubw_native_backup_path.relative_to(ROOT)),
+            backupReceiptSha256=hashlib.sha256(fateubw_native_backup_path.read_bytes()).hexdigest(),
+            s3Uri=fateubw_native_backup['s3Uri'],
+            manifestUri=fateubw_native_backup['manifestUri'],
+            archiveSha256=fateubw_native_backup['archiveSha256'],
+            archiveBytes=fateubw_native_backup['archiveBytes'],
+            fileCount=fateubw_native_backup['fileCount'],
+            fullGetVerified=True,
+            allMemberSha256Verified=True,
+            convertedNativeClips=127,
+            retainedNoDurationSourcePoses=5),
+        durationlessDerivativeCompletion=dict(gitPath=str(fateubw_derivative_path.relative_to(ROOT)),sha256=hashlib.sha256(fateubw_derivative_path.read_bytes()).hexdigest(),backupReceiptGitPath=str(fateubw_derivative_backup_path.relative_to(ROOT)),backupReceiptSha256=hashlib.sha256(fateubw_derivative_backup_path.read_bytes()).hexdigest(),s3Uri=fateubw_derivative['s3Uri'],counts=fateubw_derivative['counts'],nativeDurationClaim=False,runtimeSelectable=False,productionDeploymentVerified=False)))
     ultimate14_source=next(source for source in component_sources['publicSources'] if source['id']=='parallel-ns-ultimate14')
     if ultimate14_source['nativeMotionIndex']['sha256'] != hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest():
         raise ValueError('Refresh Ultimate14 native motion index relationship')
@@ -270,6 +379,46 @@ def main():
                 result['windowsGameSourceInventory'],
                 result['ultimate14NativeMotionIndex'],
                 result['assetWorkflowRestorationManifest'],
+                {
+                    'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['gitPath'],
+                    'sha256': result['fateubwMotionReserve']['nativeMotionCompletion']['sha256'],
+                },
+                {
+                    'gitPath': result['fateubwMotionReserve']['nativeMotionCompletion']['backupReceiptGitPath'],
+                    'sha256': result['fateubwMotionReserve']['nativeMotionCompletion']['backupReceiptSha256'],
+                },
+                {
+                    'gitPath': result['fateubwMotionReserve']['durationlessDerivativeCompletion']['gitPath'],
+                    'sha256': result['fateubwMotionReserve']['durationlessDerivativeCompletion']['sha256'],
+                },
+                {
+                    'gitPath': result['fateubwMotionReserve']['durationlessDerivativeCompletion']['backupReceiptGitPath'],
+                    'sha256': result['fateubwMotionReserve']['durationlessDerivativeCompletion']['backupReceiptSha256'],
+                },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['receiptGitPath'],
+                    'sha256': result['poppVfxDependencySupport']['receiptSha256'],
+                },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['backupReceiptGitPath'],
+                    'sha256': result['poppVfxDependencySupport']['backupReceiptSha256'],
+                },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['staticMeshReceiptGitPath'],
+                    'sha256': result['poppVfxDependencySupport']['staticMeshReceiptSha256'],
+                },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['staticMeshBackupReceiptGitPath'],
+                    'sha256': result['poppVfxDependencySupport']['staticMeshBackupReceiptSha256'],
+                },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['reconstructionCandidatesGitPath'],
+                    'sha256': result['poppVfxDependencySupport']['reconstructionCandidatesSha256'],
+                },
+                {
+                    'gitPath': result['poppVfxDependencySupport']['reconstructionReceiptGitPath'],
+                    'sha256': result['poppVfxDependencySupport']['reconstructionReceiptSha256'],
+                },
                 result['historicalModelRestorationReceipt'],
                 result['historicalModelOptionRegistration'],
                 result['modelComponentIndex'],
