@@ -6,7 +6,7 @@
   "sourceManifests": [
     {
       "gitPath": "materials/hero-model-library/manifest.json",
-      "sha256": "b45a9f599f5c3d09420a57b44937d23cd6c77883d975c86f333b1270075c23c3"
+      "sha256": "9d6c255947b75701d7bf4fd7ad847cfdb97e6b322ef925b05e3d9b49310b2e03"
     },
     {
       "gitPath": "materials/hero-model-library/workflow-model-options.json",
@@ -2699,12 +2699,12 @@
     },
     {
       "id": "derivative:mai",
-      "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
-      "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
-      "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
-      "bytes": 1736188,
-      "documentSha256": "3efeb4dc4c0a6bf25fd8bab60cc54b4da9607cd950aaea7a5186d2d1ea78382a",
-      "sourceCharacter": "不知火舞（獨立副本／真田幸村）",
+      "modelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+      "glbPath": "assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+      "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
+      "bytes": 1149836,
+      "documentSha256": "fe78d41b4e4fc7221b57791083afcf9fbf55a1762deb4698f627df8fa7286fb4",
+      "sourceCharacter": "不知火舞（獨立副本／真田幸村，7,994 面正式版）",
       "sourceWork": "百花繚亂 SAMURAI GIRLS",
       "sourceAssetId": "derivative:mai",
       "sourceSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
@@ -2718,9 +2718,10 @@
       },
       "limitations": [
         "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
-        "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+        "部分狀態共用原生動作，非六段獨立的專屬角色動作。",
+        "舊 13,796 面改色副本保留；本模型是 7,994 面獨立完整副本，已通過現行正式採用規則、骨架保留與固定鏡頭三視圖 A/B。"
       ],
-      "validation": "shared-upload-and-runtime-motion",
+      "validation": "hard-policy-khronos-rig-and-static-webgl-ab-accepted",
       "fullCharacterPackage": false,
       "derivation": {
         "heroId": "community-review-03-20260907",
@@ -2732,12 +2733,13 @@
         "changes": "白色衣料改紅色"
       },
       "bundleId": "ggd.model.3efeb4dc4c0a6bf25fd8bab6",
+      "acceptanceEvidence": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-acceptance.json",
+      "gitPath": "content/assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
       "registeredFor": [
         "community-review-03-20260907"
       ],
       "runtimeDropdownRegistered": true,
-      "gitPath": "content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
-      "modelDocumentGitPath": "content/models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json"
+      "modelDocumentGitPath": "content/models/community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945.json"
     },
     {
       "id": "derivative:kirby",
@@ -13250,5 +13252,13 @@
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
     "sha256": "13bb2ff8f730b43e880d3dd6dc00215525c8b880a74177f0444edb4135e5cfd8"
+  },
+  "approvedDerivativeAudit": {
+    "gitPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/audit.json",
+    "sha256": "f5cc50bfce0accf2978d3a02a395c6de3fc604688647055c6faf23f48614a21c",
+    "approvedCount": 11,
+    "hardPolicyPass": 11,
+    "registeredAndSelectable": 11,
+    "productionDeploymentVerified": false
   }
 }

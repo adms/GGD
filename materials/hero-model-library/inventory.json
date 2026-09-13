@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T07:15:06+08:00",
-  "inputsSha256": "885fc4a654e5dd40b795f38cdb49f0b7ea2e4d19d5c350cf8aadda30fd9fecf2",
+  "generatedAt": "2026-09-14T07:23:38+08:00",
+  "inputsSha256": "acaa19a267cdb26c1547898ee78566e7b3f359f880dd63be5e6921b3e12f6b46",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -133555,6 +133555,240 @@
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/receipt.json",
             "backupReceiptSha256": "d4dd56a6a67525b06c9581dfa513e9b389835d32fc20127c2962afd613f3f33c",
             "backupStatus": "s3-full-readback-verified"
+          },
+          {
+            "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+            "sourceId": "parallel-ns-ultimate14",
+            "sourceIds": [
+              "gitlab-ssbu-models",
+              "parallel-ns-ultimate14"
+            ],
+            "sourceClass": "community-mod",
+            "selectionClass": "community-mod",
+            "nameZh": "庫洛姆",
+            "originalName": "Chrom",
+            "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+            "sourceGame": "Super Smash Bros. Ultimate",
+            "sourceGameReleasedAt": "2018-12-07",
+            "platform": "Nintendo Switch MOD",
+            "nativeId": "fighter/chrom/body/c00 + fighter/chrom/motion/body/c00",
+            "variant": "c00",
+            "resourceRole": "independent-skinned-model-motion-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture",
+              "animation"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/body.glb",
+            "bytes": 1942664,
+            "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+            "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ssbu-chrom"
+            ],
+            "nativeAnimationCount": 9,
+            "proceduralAnimationCount": 0,
+            "animationProvenance": "community-mod-native-not-original-game",
+            "animationNames": [
+              "a04fallspecial",
+              "a04fallspecialb",
+              "a04fallspecialf",
+              "c05attackairn",
+              "d02specialairhi1",
+              "d02specialairhi2",
+              "d02specialhi1",
+              "d02specialhi2",
+              "d02specialhi3"
+            ],
+            "animationChannelCountPerClip": 369,
+            "triangles": 7890,
+            "drawPrimitives": 6,
+            "skinCount": 1,
+            "jointCount": 123,
+            "textureCount": 7,
+            "sourceAnimationCount": 9,
+            "unconvertedAnimationCount": 0,
+            "readiness": "accepted-independent-native-motion-9-clips-incomplete-action-set",
+            "auditEvidence": "Matching chrom rig plus 9 pinned Ultimate14 Transform motions; byte-identical dual final GLB, Khronos 0/0, GGD hard errors 0 and 27 WebGL samples completed.",
+            "limitations": [
+              "The 9 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+              "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+              "Visibility and material tracks were not imported into this body-motion GLB.",
+              "No hero binding, backend registration, runtime switching or deployment was performed.",
+              "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+              "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/delivery.json",
+              "bytes": 2300,
+              "sha256": "11001b08a6af7d33ea5730da8f2e83a95114dfc58a0527b2d0d7ffd1c06039ae"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/acceptance.json",
+              "bytes": 495,
+              "sha256": "624496502a025c7fe720d176ec34fdf2d908a4d5e47d0526d31177c37216f843"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/validation.json",
+              "bytes": 11758,
+              "sha256": "c1587e9d5088a3db4cdc4d0558f2b0219d304211668d278b46781b13532e415c"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/visual-review.json",
+              "bytes": 696,
+              "sha256": "9f5d7631157cd7b22d68cd317b34d0ce2c3d1b23be52dea635302a8434e9a8f5"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/webgl-proof.json",
+              "bytes": 18469,
+              "sha256": "c751e2419dfeb208825dd8d78d52c1dcb112bc370a6a73908586620ecc0491a9"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/source-rebuild.json",
+              "bytes": 2507,
+              "sha256": "6b724dd4741f8f86ad09285b899e4945818fea8c105572cf71fcdcedf20a8f51"
+            },
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.tar.gz",
+            "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.files.json",
+            "s3BackupEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/s3-backup-receipt.json",
+              "bytes": 1460,
+              "sha256": "40f08fd3a6145f3d12fddf670d2a7cb6e84dc5dbeb9dd84f7100af364c647913"
+            },
+            "backupStatus": "full-get-and-all-member-sha256-verified"
+          },
+          {
+            "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+            "sourceId": "parallel-ns-ultimate14",
+            "sourceIds": [
+              "gitlab-ssbu-models",
+              "parallel-ns-ultimate14"
+            ],
+            "sourceClass": "community-mod",
+            "selectionClass": "community-mod",
+            "nameZh": "露琪娜",
+            "originalName": "Lucina",
+            "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+            "sourceGame": "Super Smash Bros. Ultimate",
+            "sourceGameReleasedAt": "2018-12-07",
+            "platform": "Nintendo Switch MOD",
+            "nativeId": "fighter/lucina/body/c00 + fighter/lucina/motion/body/c00",
+            "variant": "c00",
+            "resourceRole": "independent-skinned-model-motion-component",
+            "assetKinds": [
+              "model-component",
+              "skeleton",
+              "texture",
+              "animation"
+            ],
+            "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+            "bytes": 2731060,
+            "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+            "gitPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+            "componentReady": true,
+            "converted": true,
+            "structuralValidationPassed": true,
+            "visualValidationPassed": true,
+            "runtimeReady": false,
+            "runtimeSelectable": false,
+            "defaultEligible": false,
+            "automaticEligible": false,
+            "fullHeroModel": false,
+            "runtimeDropdownRegistered": false,
+            "heroIds": [],
+            "relatedHeroIds": [],
+            "identityIds": [
+              "ssbu-lucina"
+            ],
+            "nativeAnimationCount": 13,
+            "proceduralAnimationCount": 0,
+            "animationProvenance": "community-mod-native-not-original-game",
+            "animationNames": [
+              "c00attack100",
+              "c00attack100start",
+              "c00attack11",
+              "c00attack12",
+              "c00attack13",
+              "c00attackend",
+              "c02attackhi3",
+              "d01specialairs1",
+              "d01specialairs2lw",
+              "d01specialairs3s",
+              "d01specials1",
+              "d01specials2lw",
+              "d01specials3s"
+            ],
+            "animationChannelCountPerClip": 468,
+            "triangles": 7927,
+            "drawPrimitives": 6,
+            "skinCount": 1,
+            "jointCount": 156,
+            "textureCount": 5,
+            "sourceAnimationCount": 13,
+            "unconvertedAnimationCount": 0,
+            "readiness": "accepted-independent-native-motion-13-clips-incomplete-action-set",
+            "auditEvidence": "Matching lucina rig plus 13 pinned Ultimate14 Transform motions; byte-identical dual final GLB, Khronos 0/0, GGD hard errors 0 and 39 WebGL samples completed.",
+            "limitations": [
+              "The 13 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+              "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+              "Visibility and material tracks were not imported into this body-motion GLB.",
+              "No hero binding, backend registration, runtime switching or deployment was performed.",
+              "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+              "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
+            ],
+            "deliveryEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/delivery.json",
+              "bytes": 2309,
+              "sha256": "eb277b339aeff7a8bdbd7c680798501ed0ba6f29cd5723541c42bd0ca9aa88fc"
+            },
+            "acceptanceEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/acceptance.json",
+              "bytes": 496,
+              "sha256": "d7acb9d51dd31a5b3ddcb8e116e0c5adf4974a04964405cfd92c79a05d152734"
+            },
+            "validationEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/validation.json",
+              "bytes": 14333,
+              "sha256": "6099e2a31aba414ae29335f29d402e55e590ae370fbf059ce11de250a5a8613b"
+            },
+            "visualEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/visual-review.json",
+              "bytes": 698,
+              "sha256": "eff7b173e3c3d7f67fb61e242470687b12612dcab6c89c7de5bdaee255318d87"
+            },
+            "webglProofEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/webgl-proof.json",
+              "bytes": 26445,
+              "sha256": "63c9dd0295fc80676a031142ddf04d1c27e8ac5a7fc1c3941f8970496dd2cd7d"
+            },
+            "sourceRebuildEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/source-rebuild.json",
+              "bytes": 2512,
+              "sha256": "144a00123af96a01f45bc5a48d9bc0b2e49b1da854f06f723738eb704503a67a"
+            },
+            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.tar.gz",
+            "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.files.json",
+            "s3BackupEvidence": {
+              "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/s3-backup-receipt.json",
+              "bytes": 1465,
+              "sha256": "6fc42ec9d895a7c720e0786440a744177da36c69da0f4af77c715469b5b2a9fd"
+            },
+            "backupStatus": "full-get-and-all-member-sha256-verified"
           }
         ],
         "supplementalDeliveries": [
