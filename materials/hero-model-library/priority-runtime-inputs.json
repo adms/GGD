@@ -310,7 +310,83 @@
         "原作模型、貼圖、骨架與 Magikaru 法杖；法杖依 CB_PN020 設定剛性綁定 Weapon1_R。本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
         "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
         "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
-        "替代法杖 Mahouno／Kagayaki、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
+        "Mahouno／Kagayaki 已另建獨立選項；特效、動畫事件、技能時序與完整實戰尚未綁定，正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-popp-pn020-01-mahouno-native-v1",
+      "heroId": "b2-popp",
+      "name": "何布／波普",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/01＋Mahouno 法杖（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno",
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "documentSha256": "55740b6bfdfa9d7e18676729f761dee169fa44eb833984fd299ffa939e539b0e",
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+        "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+        "bytes": 31696021,
+        "fileCount": 101,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/s3-conversion-receipt.json"
+      },
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "何布／波普（PN020/01，Mahouno）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/01; CB_PN020_01; user-owned read-only source",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作 PN020 身體、貼圖、331 骨及 Mahouno 法杖；CB_PN020_01 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+        "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+        "原作 Mahouno Base／Normal／Bundle／Shade 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Base，原作 toon、金屬及陰影 shader 仍待還原。",
+        "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
+      ]
+    },
+    {
+      "candidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+      "heroId": "b2-popp",
+      "name": "何布／波普",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+      "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "documentSha256": "a4df65eba593278c5fb065b86988ab18b329244e46d5b38917f0599316e992c3",
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+        "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+        "bytes": 31696021,
+        "fileCount": 101,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/s3-conversion-receipt.json"
+      },
+      "source": {
+        "kind": "exact",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "library": "Infinity Strash Steam 原作擷取",
+        "character": "何布／波普（PN020/02，Kagayaki）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/02; CB_PN020_02; user-owned read-only source",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "limitations": [
+        "原作 PN020 身體、貼圖、331 骨及 Kagayaki 法杖；CB_PN020_02 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+        "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+        "原作 Kagayaki Diffuse／Bundle Mask／Shadow 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Diffuse，原作 toon、遮罩及陰影 shader 仍待還原。",
+        "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
       ]
     }
   ]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect every Popp PN020/00 conversion stage into one immutable delivery tree."""
+"""Collect each Popp PN020 model/weapon conversion delta into an immutable tree."""
 from __future__ import annotations
 
 import argparse
@@ -36,6 +36,23 @@ MAGIKARU_V2_STAGES = (
     ("webgl-review-v5", "runtime-webgl-review-popp-magikaru-v5/popp-pn020-00"),
 )
 
+ALTERNATE_STAFFS_V3_STAGES = (
+    ("mahouno/material-context-v1", "popp-pn020-weapon-mahouno-material-context-v1"),
+    ("mahouno/mesh-psk-v1", "popp-pn020-weapon-mahouno-mesh-psk-v1"),
+    ("mahouno/textures-v1", "popp-pn020-weapon-mahouno-textures-v1"),
+    ("mahouno/assembly-v1", "animated-candidates-psk-blender-popp-mahouno-v1/popp-pn020-01-mahouno"),
+    ("mahouno/normalized-v1", "normalized-animated-candidates-psk-blender-popp-mahouno-v1/popp-pn020-01-mahouno"),
+    ("mahouno/runtime-v1", "runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno"),
+    ("mahouno/webgl-review-v1", "runtime-webgl-review-popp-mahouno-v1/popp-pn020-01-mahouno"),
+    ("kagayaki/material-context-v1", "popp-pn020-weapon-kagayaki-material-context-v1"),
+    ("kagayaki/mesh-psk-v1", "popp-pn020-weapon-kagayaki-mesh-psk-v1"),
+    ("kagayaki/textures-v1", "popp-pn020-weapon-kagayaki-textures-v1"),
+    ("kagayaki/assembly-v1", "animated-candidates-psk-blender-popp-kagayaki-v1/popp-pn020-02-kagayaki"),
+    ("kagayaki/normalized-v1", "normalized-animated-candidates-psk-blender-popp-kagayaki-v1/popp-pn020-02-kagayaki"),
+    ("kagayaki/runtime-v1", "runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki"),
+    ("kagayaki/webgl-review-v1", "runtime-webgl-review-popp-kagayaki-v1/popp-pn020-02-kagayaki"),
+)
+
 PROFILES = {
     "v1": {
         "deliveryId": "infinity-strash-popp-pn020-00-delivery-v1",
@@ -59,6 +76,19 @@ PROFILES = {
             "Effects remain package-extracted and pending conversion/binding.",
             "No distinct native death animation was found; hurt and death reuse native down.",
             "Exact source toon-shader reproduction remains pending.",
+            "Decoded audio remains pending listening review and event/speaker binding.",
+        ],
+    },
+    "alternate-staffs-v3": {
+        "deliveryId": "infinity-strash-popp-pn020-alternate-staffs-delivery-v3",
+        "baseDeliveryId": "infinity-strash-popp-pn020-00-magikaru-delivery-v2",
+        "stages": ALTERNATE_STAFFS_V3_STAGES,
+        "limitations": [
+            "This is an append-only Mahouno and Kagayaki delta over the fully verified Magikaru v2 delivery.",
+            "All three acquired PN020 staffs are preserved as independent GGD model options.",
+            "Weapon effects, animation events and gameplay timing remain pending.",
+            "No distinct native death animation was found; hurt and death reuse native down.",
+            "Exact source toon, metal, bundle-mask and shadow shader reproduction remains pending.",
             "Decoded audio remains pending listening review and event/speaker binding.",
         ],
     },

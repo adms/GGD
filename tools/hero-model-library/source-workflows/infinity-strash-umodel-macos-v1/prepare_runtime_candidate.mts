@@ -9,6 +9,19 @@ const [repoArg, candidateId, inputArg, outputArg] = process.argv.slice(2);
 if (!outputArg) throw Error('usage: prepare_runtime_candidate.mts <repo> <candidate-id> <input GLB> <new output directory>');
 const repo = resolve(repoArg), inputPath = resolve(inputArg), output = resolve(outputArg);
 
+const poppMapping = {idle: 'GGD_native_idle', run: 'GGD_native_run', attack: 'GGD_native_attack', cast: 'GGD_native_special03', hurt: 'GGD_native_down', death: 'GGD_native_down'};
+const poppRoleNotes = {
+  idle: 'Infinity Strash native battle idle loop', run: 'Infinity Strash native forward battle run', attack: 'Infinity Strash native attack',
+  cast: 'Infinity Strash native Special03 phase 01; provisional GGD cast mapping', hurt: 'Native down loop reused as hurt', death: 'Native down loop reused as death; no distinct PN020 death AnimSequence was acquired',
+};
+const poppLimitations = (weapon: string) => [
+  'GGD hurt and death both reuse the acquired native down loop because PN020 has no distinct death AnimSequence in the extracted package set.',
+  'Native Special01 and Special02 remain embedded and preserved but are not referenced by the six-state runtime document.',
+  'The original 8x8 hair base texture relies on game shader parameters; the runtime candidate preserves the exported texture and simplified PBR material, so toon shader and hair-colour parity require visual review.',
+  `The ${weapon} staff is rigid-skinned to the source-configured Weapon1_R socket; the other acquired PN020 staff variants remain independent model options.`,
+  'Animation events, original effects, gameplay acceptance and deployment remain pending.',
+];
+
 const specifications: Record<string, {mapping: Record<string, string>; roleNotes: Record<string, string>; limitations: string[]}> = {
   'dai-pn010-02': {
     mapping: {idle: 'GGD_native_idle', run: 'GGD_native_run', attack: 'GGD_native_attack', cast: 'GGD_native_special02', hurt: 'GGD_native_down', death: 'GGD_native_down'},
@@ -27,12 +40,19 @@ const specifications: Record<string, {mapping: Record<string, string>; roleNotes
     limitations: ['This is EN801 old Vearn before transformation; no post-transformation Vearn body was located in either primary PAK.', 'GGD hurt reuses the native death sequence.', 'Kaizer Phoenix remains in the preserved conversion/archive set and is excluded from runtime because the source PSA references 100 absent effect/helper bones.', 'Original effect systems, toon shader parity, animation events, gameplay acceptance and deployment remain pending.'],
   },
   'popp-pn020-00': {
-    mapping: {idle: 'GGD_native_idle', run: 'GGD_native_run', attack: 'GGD_native_attack', cast: 'GGD_native_special03', hurt: 'GGD_native_down', death: 'GGD_native_down'},
-    roleNotes: {
-      idle: 'Infinity Strash native battle idle loop', run: 'Infinity Strash native forward battle run', attack: 'Infinity Strash native attack',
-      cast: 'Infinity Strash native Special03 phase 01; provisional GGD cast mapping', hurt: 'Native down loop reused as hurt', death: 'Native down loop reused as death; no distinct PN020 death AnimSequence was acquired',
-    },
-    limitations: ['GGD hurt and death both reuse the acquired native down loop because PN020 has no distinct death AnimSequence in the extracted package set.', 'Native Special01 and Special02 remain embedded and preserved but are not referenced by the six-state runtime document.', 'The original 8x8 hair base texture relies on game shader parameters; the runtime candidate preserves the exported texture and simplified PBR material, so toon shader and hair-colour parity require visual review.', 'The PN020/00 Magikaru staff is rigid-skinned to the source-configured Weapon1_R socket; alternate Mahouno and Kagayaki staff switching remains pending.', 'Animation events, original effects, gameplay acceptance and deployment remain pending.'],
+    mapping: poppMapping,
+    roleNotes: poppRoleNotes,
+    limitations: poppLimitations('PN020/00 Magikaru'),
+  },
+  'popp-pn020-01-mahouno': {
+    mapping: poppMapping,
+    roleNotes: poppRoleNotes,
+    limitations: poppLimitations('PN020/01 Mahouno'),
+  },
+  'popp-pn020-02-kagayaki': {
+    mapping: poppMapping,
+    roleNotes: poppRoleNotes,
+    limitations: poppLimitations('PN020/02 Kagayaki'),
   },
 };
 const spec = specifications[candidateId];

@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T12:45:33.733604+00:00",
+  "generatedAt": "2026-09-13T13:02:14.116740+00:00",
   "repo": "/private/tmp/ggd-pr1152-merge-audit",
-  "revision": "82873b5bc64708861409d3666668e92cdffa9d80",
+  "revision": "831f619b0f961b16e499b02a740af2860164adf3",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5132,8 +5132,8 @@
     },
     {
       "path": "content/champions/b2-popp.json",
-      "bytes": 16496,
-      "sha256": "d0109ecaf8c016d8769d350aac4dad8b45f1703aa8b99e03fc2782e5d1647c1a"
+      "bytes": 18704,
+      "sha256": "8d6ce2a18cb02c1718c7f53ad5f271c0ba03c3c68ce454901f26335ec6eaf456"
     },
     {
       "path": "content/champions/b2-rem.json",
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "f4ce9065b7b80dd6ca463935e53209033776c568552c1290d027ba1d23986949",
-      "bytes": 8705124
+      "sha256": "c277cbc9bed6af2b002ea1ec4e662fc795e45c02cdc6c1d64e3072b2555a54f3",
+      "bytes": 8756213
     },
     {
       "path": "package.json",
@@ -14728,7 +14728,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "08741e09bb2a80db1e5114f92b80d7480e32ad1033d52faab9d2b82d6445ae66"
+    "sha256": "5e2b9700ac397366acba187b2805d50998a17502fef558dff1d65facb5ef4c0d"
   },
   "heroes": [
     {
@@ -17941,8 +17941,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/b2-popp.json",
-        "sha256": "d0109ecaf8c016d8769d350aac4dad8b45f1703aa8b99e03fc2782e5d1647c1a",
-        "bytes": 16496
+        "sha256": "8d6ce2a18cb02c1718c7f53ad5f271c0ba03c3c68ce454901f26335ec6eaf456",
+        "bytes": 18704
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",

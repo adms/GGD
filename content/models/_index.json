@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "6bcdf498de72",
+  "hash": "cae54bd57777",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -543,6 +543,12 @@
       "size": 414
     },
     {
+      "id": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+      "path": "models/community.body.81d11962afcd132185028923d44a046203de90a94154caf9.json",
+      "hash": "d47690a2a02a",
+      "size": 484
+    },
+    {
       "id": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
       "path": "models/community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840.json",
       "hash": "11d2a98dab79",
@@ -619,6 +625,12 @@
       "path": "models/community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc.json",
       "hash": "2c1a54b94eae",
       "size": 475
+    },
+    {
+      "id": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+      "path": "models/community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14.json",
+      "hash": "b96456b3041d",
+      "size": 484
     },
     {
       "id": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
@@ -5205,6 +5217,12 @@
       "size": 605
     },
     {
+      "id": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+      "path": "models/version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec.json",
+      "hash": "926505585f56",
+      "size": 634
+    },
+    {
       "id": "version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931",
       "path": "models/version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931.json",
       "hash": "e66493d715e5",
@@ -5827,6 +5845,12 @@
       "path": "models/version.body.ff6d8255b711b5b0e69f13845edc2413aa1f3e40575fadd3.json",
       "hash": "49a3c6d7245a",
       "size": 518
+    },
+    {
+      "id": "version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa",
+      "path": "models/version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa.json",
+      "hash": "f9531198615e",
+      "size": 634
     },
     {
       "id": "w3x.stock.aivitarget",

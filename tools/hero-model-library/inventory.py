@@ -261,7 +261,8 @@ for r in rows:
   m=by_key.get(option['key'])
   if m:
    location=release['model_locations'].get(m['modelKey'])
-   option['asset']={'modelKey':m['modelKey'],'glbPath':m['glbPath'],'sha256':m['sha256'],'s3Uri':release['release_uri']+location if location else None,'gitPath':m.get('gitPath') or 'materials/asset-library/releases/'+release['release']+'/'+location,'limitations':m['limitations']}
+   s3=m.get('s3',{})
+   option['asset']={'modelKey':m['modelKey'],'glbPath':m['glbPath'],'sha256':m['sha256'],'localRuntimeRoot':m.get('localRuntimeRoot'),'s3Uri':s3.get('s3Uri') or (release['release_uri']+location if location else None),'s3ManifestUri':s3.get('manifestUri'),'s3ReadbackVerified':s3.get('readbackVerified'),'gitPath':m.get('gitPath') or 'materials/asset-library/releases/'+release['release']+'/'+location,'limitations':m['limitations']}
   else:option['asset']={'modelKey':option['key'],'location':'existing-project-model','s3Uri':None}
 path=repo/'materials/hero-model-library/全角色模型盤點.md'
 inventory={'schema':'ggd-hero-model-inventory@1','generatedAt':now,'inputsSha256':input_digest,'release':release['release'],'aliases':aliases,'productionSnapshot':{'observedAt':observation['observedAt'],'contentVersion':observation['contentVersion'],'commit':None},'heroes':rows,'downloadPlan':download_plan}

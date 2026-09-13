@@ -489,6 +489,46 @@
         "sourcePlatform": "Windows (Steam)"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/01＋Mahouno 法杖（原生動作）",
+      "sourceModelKey": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+      "modelSha256": "f9531198615ea1f1b0a8dc5e386e43711bd25ddbd373cef4a28c1e8fcc437979",
+      "binarySha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "registeredAt": "2026-09-13T12:58:00.283Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/01，Mahouno）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/01; CB_PN020_01; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）",
+      "sourceModelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+      "modelSha256": "926505585f56f8a78f0a7e81c9f3001209b3355043778549f79eb7ba530b484e",
+      "binarySha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "registeredAt": "2026-09-13T12:58:02.104Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/02，Kagayaki）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/02; CB_PN020_02; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "automatic"

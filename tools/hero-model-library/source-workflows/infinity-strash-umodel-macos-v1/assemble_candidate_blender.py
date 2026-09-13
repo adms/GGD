@@ -99,9 +99,52 @@ CANDIDATES = {
                 "socket": "Weapon1_R",
                 "texture": "Strash/Chara/Player/PN020/Weapon/Magikaru/T_PN020_Weapon_Magikaru_Base.png",
                 "sourceConfig": "Strash/Chara/Player/PN020/Data/CB_PN020.uasset",
+                "sourceConfigTokens": [
+                    "SK_PN020_Weapon_Magikaru",
+                    "RightAttachWeaponAttachSocketName",
+                    "Weapon1_R",
+                ],
             },
         ],
     },
+}
+
+# The three PN020 variants share the original body, skeleton, textures and native
+# animation set. Only the source-selected staff and its character-balance record
+# differ, so keep those differences explicit without duplicating the body recipe.
+CANDIDATES["popp-pn020-01-mahouno"] = {
+    **CANDIDATES["popp-pn020-00"],
+    "attachments": [
+        {
+            "role": "weapon-mahouno",
+            "mesh": "Strash/Chara/Player/PN020/Weapon/Mahouno/SK_PN020_Weapon_Mahouno.gltf",
+            "socket": "Weapon1_R",
+            "texture": "Strash/Chara/Player/PN020/Weapon/Mahouno/T_PN020_Weapon_Mahouno_Base.png",
+            "sourceConfig": "Strash/Chara/Player/PN020/Data/CB_PN020_01.uasset",
+            "sourceConfigTokens": [
+                "SK_PN020_Weapon_Mahouno",
+                "RightAttachWeaponAttachSocketName",
+                "Weapon1_R",
+            ],
+        },
+    ],
+}
+CANDIDATES["popp-pn020-02-kagayaki"] = {
+    **CANDIDATES["popp-pn020-00"],
+    "attachments": [
+        {
+            "role": "weapon-kagayaki",
+            "mesh": "Strash/Chara/Player/PN020/Weapon/Kagayaki/SK_PN020_Weapon_Kagayaki.gltf",
+            "socket": "Weapon1_R",
+            "texture": "Strash/Chara/Player/PN020/Weapon/Kagayaki/T_PN020_Weapon_Kagayaki_D.png",
+            "sourceConfig": "Strash/Chara/Player/PN020/Data/CB_PN020_02.uasset",
+            "sourceConfigTokens": [
+                "SK_PN020_Weapon_Kagayaki",
+                "RightAttachWeaponAttachSocketName",
+                "Weapon1_R",
+            ],
+        },
+    ],
 }
 
 
@@ -630,6 +673,13 @@ def main() -> int:
             for candidate_path, root, label in checks:
                 if not candidate_path.is_relative_to(root) or not candidate_path.is_file():
                     raise RuntimeError(f"missing {label}: {candidate_path}")
+            source_config_bytes = source_config_path.read_bytes()
+            source_config_token_offsets = {}
+            for token in attachment.get("sourceConfigTokens", []):
+                offset = source_config_bytes.find(token.encode("ascii"))
+                if offset < 0:
+                    raise RuntimeError(f"attachment source config lacks required token {token}: {source_config_path}")
+                source_config_token_offsets[token] = offset
             weapon_armature, weapon_mesh, extras = import_part(path, attachment["role"], args.mesh_format)
             for extra in extras:
                 bpy.data.objects.remove(extra, do_unlink=True)
@@ -655,6 +705,7 @@ def main() -> int:
                 "outputMaterialRoles": [material.name for material in weapon_mesh.data.materials],
                 "sourceConfig": str(source_config_path),
                 "sourceConfigSha256": sha256(source_config_path),
+                "sourceConfigTokenOffsets": source_config_token_offsets,
             })
             inputs.extend([
                 {"role": attachment["role"], "path": str(path), "sha256": sha256(path)},

@@ -88,7 +88,7 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
         self.assertIn('"sourceConfig": "Strash/Chara/Player/PN020/Data/CB_PN020.uasset"', assembly)
         self.assertIn("source-component-zero-relative-rigid-skin", assembly)
         self.assertIn('group.add(range(len(mesh.data.vertices)), 1.0, "REPLACE")', assembly)
-        self.assertIn("Magikaru staff is rigid-skinned", runtime)
+        self.assertIn("The ${weapon} staff is rigid-skinned", runtime)
         self.assertIn("AS_PN020_00_B_Special03_01.psa", assembly)
         self.assertIn("'popp-pn020-00'", runtime)
         self.assertIn("cast: 'GGD_native_special03'", runtime)
@@ -100,6 +100,15 @@ class InfinityStrashUmodelWorkflowTest(unittest.TestCase):
         self.assertEqual(paths["runtime-v4"], "runtime-candidates-v4/popp-pn020-00")
         self.assertIn("failed-attempts/unskinned-attachment", paths)
         self.assertIn("weapon/mesh-psk-v1", paths)
+
+    def test_popp_alternate_staffs_are_independent_append_only_delta(self):
+        profile = COLLECT.PROFILES["alternate-staffs-v3"]
+        self.assertEqual(profile["baseDeliveryId"], "infinity-strash-popp-pn020-00-magikaru-delivery-v2")
+        paths = {destination: source for destination, source in profile["stages"]}
+        self.assertEqual(paths["mahouno/runtime-v1"], "runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno")
+        self.assertEqual(paths["kagayaki/runtime-v1"], "runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki")
+        self.assertIn("mahouno/textures-v1", paths)
+        self.assertIn("kagayaki/textures-v1", paths)
 
 if __name__ == "__main__":
     unittest.main()

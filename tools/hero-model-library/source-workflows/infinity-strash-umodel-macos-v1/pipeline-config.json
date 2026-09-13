@@ -40,6 +40,38 @@
       "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-magikaru-v3/popp-pn020-00",
       "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00",
       "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-popp-magikaru-v5/popp-pn020-00"
+    },
+    {
+      "id": "popp-pn020-01-mahouno",
+      "catalogCandidateId": "infinity-strash-popp-pn020-01-mahouno-native-v1",
+      "heroId": "b2-popp",
+      "meshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-psk-v1",
+      "materialContextRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-material-context-v2",
+      "textureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-textures-v1",
+      "psaRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-native-animations-v1",
+      "attachmentMeshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-weapon-mahouno-mesh-psk-v1",
+      "attachmentTextureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-weapon-mahouno-textures-v1",
+      "attachmentSourceRoot": "{asset}/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content",
+      "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-popp-mahouno-v1/popp-pn020-01-mahouno",
+      "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-mahouno-v1/popp-pn020-01-mahouno",
+      "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno",
+      "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-popp-mahouno-v1/popp-pn020-01-mahouno"
+    },
+    {
+      "id": "popp-pn020-02-kagayaki",
+      "catalogCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+      "heroId": "b2-popp",
+      "meshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-psk-v1",
+      "materialContextRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-mesh-material-context-v2",
+      "textureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-textures-v1",
+      "psaRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-00-native-animations-v1",
+      "attachmentMeshRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-weapon-kagayaki-mesh-psk-v1",
+      "attachmentTextureRoot": "{asset}/converted/infinity-strash-umodel-macos-v1/popp-pn020-weapon-kagayaki-textures-v1",
+      "attachmentSourceRoot": "{asset}/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content",
+      "assemblyOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+      "normalizedOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+      "runtimeOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+      "reviewOutput": "{asset}/converted/infinity-strash-umodel-macos-v1/runtime-webgl-review-popp-kagayaki-v1/popp-pn020-02-kagayaki"
     }
   ],
   "indexCommands": [

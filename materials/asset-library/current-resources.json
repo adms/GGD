@@ -14,10 +14,10 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-runtime-options.json",
-      "sha256": "20ac62531e005940801fb66a1868c99a271a08f7e16a51b087b31feedf36d1ac"
+      "sha256": "1860c938be1b6de9a82af89ca621fa82166bec00bc4891626d5bad6c3f1c13a3"
     }
   ],
-  "modelSourceCount": 153,
+  "modelSourceCount": 155,
   "models": [
     {
       "id": "300heroes:20",
@@ -5409,6 +5409,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-v1",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5449,6 +5450,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/runtime-v2",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5487,6 +5489,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/runtime-v1",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5522,6 +5525,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/sinbad-baal-runtime-option-20260910/runtime-v3",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5558,6 +5562,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/kstamil-runtime-v2",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5594,6 +5599,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910/sd2-runtime-v2",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5629,6 +5635,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-and-sampled-babylon-render-passed",
@@ -5665,6 +5672,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/haga-native-visibility-20260910/runtime-v2-hidden-primitive",
       "nativeAnimationCount": 13,
       "proceduralAnimationCount": 0,
       "validation": "shared-inspect-budget-backend-prepare-and-82-sample-babylon-comparison-passed",
@@ -5703,6 +5711,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/runtime-v2",
       "nativeAnimationCount": 0,
       "proceduralAnimationCount": 6,
       "validation": "shared-prepare-verify-khronos-and-36-sample-babylon-render-passed",
@@ -5738,6 +5747,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
@@ -5774,6 +5784,7 @@
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
@@ -5806,10 +5817,11 @@
         "原作模型、貼圖、骨架與 Magikaru 法杖；法杖依 CB_PN020 設定剛性綁定 Weapon1_R。本機轉換庫另保留 Special01／Special02，共匯出七段原生動作，執行版保留五段獨立原生動作。",
         "GGD hurt/death 共用 PN020 原生 down loop；解包範圍未取得獨立死亡 AnimSequence。",
         "原作頭髮 Base 是依賴遊戲 shader 參數的 8×8 貼圖；目前簡化 PBR 顯示為深灰，已完成 WebGL 可見性與動作抽查，toon shader 與精確髮色仍待還原。",
-        "替代法杖 Mahouno／Kagayaki、特效、動畫事件、技能時序與完整實戰尚未綁定；正式站部署另驗。"
+        "Mahouno／Kagayaki 已另建獨立選項；特效、動畫事件、技能時序與完整實戰尚未綁定，正式站部署另驗。"
       ],
       "storage": "git",
       "gitPath": "content/assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00",
       "nativeAnimationCount": 5,
       "proceduralAnimationCount": 0,
       "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
@@ -5819,6 +5831,98 @@
       ],
       "runtimeDropdownRegistered": true,
       "modelDocumentGitPath": "content/models/community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c.json"
+    },
+    {
+      "id": "runtime:infinity-strash-popp-pn020-01-mahouno-native-v1",
+      "modelKey": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+      "glbPath": "assets/models/community/d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c.glb",
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "bytes": 2344376,
+      "documentSha256": "55740b6bfdfa9d7e18676729f761dee169fa44eb833984fd299ffa939e539b0e",
+      "sourceCharacter": "何布／波普（PN020/01，Mahouno）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN020/01; CB_PN020_01; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作 PN020 身體、貼圖、331 骨及 Mahouno 法杖；CB_PN020_01 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+        "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+        "原作 Mahouno Base／Normal／Bundle／Shade 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Base，原作 toon、金屬及陰影 shader 仍待還原。",
+        "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+        "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+        "bytes": 31696021,
+        "fileCount": 101,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/s3-conversion-receipt.json"
+      },
+      "registeredFor": [
+        "b2-popp"
+      ],
+      "runtimeDropdownRegistered": true,
+      "modelDocumentGitPath": "content/models/community.body.81d11962afcd132185028923d44a046203de90a94154caf9.json"
+    },
+    {
+      "id": "runtime:infinity-strash-popp-pn020-02-kagayaki-native-v1",
+      "modelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+      "glbPath": "assets/models/community/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+      "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "bytes": 2485584,
+      "documentSha256": "a4df65eba593278c5fb065b86988ab18b329244e46d5b38917f0599316e992c3",
+      "sourceCharacter": "何布／波普（PN020/02，Kagayaki）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN020/02; CB_PN020_02; user-owned read-only source",
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "limitations": [
+        "原作 PN020 身體、貼圖、331 骨及 Kagayaki 法杖；CB_PN020_02 同時含武器名稱、RightAttachWeaponAttachSocketName 與 Weapon1_R，法杖依該來源設定剛性綁定右手。",
+        "來源共匯出七段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用 PN020 原生 down loop，未取得獨立死亡 AnimSequence。",
+        "原作 Kagayaki Diffuse／Bundle Mask／Shadow 全部保存在本機與 S3 交付材料；執行版使用簡化 PBR Diffuse，原作 toon、遮罩及陰影 shader 仍待還原。",
+        "已完成 18 張 WebGL 六狀態抽查；特效、動畫事件、技能時序、完整實戰與正式站部署另驗。"
+      ],
+      "storage": "git",
+      "gitPath": "content/assets/models/community/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+      "localRuntimeRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-kagayaki-v1/popp-pn020-02-kagayaki",
+      "nativeAnimationCount": 5,
+      "proceduralAnimationCount": 0,
+      "validation": "shared-prepare-verify-khronos-and-18-state-sample-babylon-webgl-passed",
+      "fullCharacterPackage": false,
+      "s3": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.files.json",
+        "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+        "bytes": 31696021,
+        "fileCount": 101,
+        "readbackVerified": true,
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-02-kagayaki/s3-conversion-receipt.json"
+      },
+      "registeredFor": [
+        "b2-popp"
+      ],
+      "runtimeDropdownRegistered": true,
+      "modelDocumentGitPath": "content/models/community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14.json"
     }
   ],
   "voiceIndex": "materials/hero-model-library/voice-index.json",

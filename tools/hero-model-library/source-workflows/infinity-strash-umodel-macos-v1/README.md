@@ -98,12 +98,14 @@ sheet for human review. A second invocation with `--output` and `--observation`
 verifies every receipt and SHA-256, copies the bounded evidence into Git and
 records feature-branch registration without claiming Main merge or deployment.
 
-`collect_popp_delivery.py` copies the ten immutable PN020/00 conversion stages,
-including the retained failed attempts, into one bounded local delivery tree.
-It writes the original absolute path, size and SHA-256 for every copied file.
-Freeze that tree with `freeze_scoped_stage.py`, then publish it with
-`upload_scoped_tar.py`; the Popp source integration validates and copies the
-full manifest and S3 readback receipt into Git evidence.
+`collect_popp_delivery.py` supports three append-only profiles: the original
+PN020/00 body delivery, the Magikaru attachment delta, and the Mahouno plus
+Kagayaki alternate-staff delta. Each profile copies its immutable conversion
+stages into one bounded local delivery tree and records the original absolute
+path, size and SHA-256 for every file. Freeze that tree with
+`freeze_scoped_stage.py`, then publish it with `upload_scoped_tar.py`; the Popp
+source integration validates and copies the full manifest and S3 readback
+receipt into Git evidence.
 
 `prepare_component.py` validates one exported glTF with Assimp, converts it to
 an intermediate GLB, and makes deterministic untextured front/back/isometric

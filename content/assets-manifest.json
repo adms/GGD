@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2857,
-    "totalBytes": 1083032666
+    "entries": 2861,
+    "totalBytes": 1092692586
   },
   "entries": [
     {
@@ -23403,6 +23403,17 @@
       ]
     },
     {
+      "path": "assets/models/community/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+      "bytes": 2485584,
+      "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14"
+      ]
+    },
+    {
       "path": "assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
       "bytes": 373212,
       "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
@@ -23577,6 +23588,17 @@
       "refs": [
         "bundle",
         "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a"
+      ]
+    },
+    {
+      "path": "assets/models/community/d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c.glb",
+      "bytes": 2344376,
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "community.body.81d11962afcd132185028923d44a046203de90a94154caf9"
       ]
     },
     {
@@ -26069,6 +26091,17 @@
       ]
     },
     {
+      "path": "assets/models/community/versions/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+      "bytes": 2485584,
+      "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec"
+      ]
+    },
+    {
       "path": "assets/models/community/versions/bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717.glb",
       "bytes": 743568,
       "sha256": "bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717",
@@ -26339,6 +26372,17 @@
         "version.body.80c676912c0c63a47519b75f49821316bb6d80cc335f3801",
         "version.body.8c7d9c17a45eacbf0463ad09896708d85b8a8602f16344c5",
         "version.body.e2db418dc4431b5e5ccdcc50ca8ecc33946efeb840296340"
+      ]
+    },
+    {
+      "path": "assets/models/community/versions/d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c.glb",
+      "bytes": 2344376,
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "contentType": "model/gltf-binary",
+      "kind": "models",
+      "refs": [
+        "bundle",
+        "version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa"
       ]
     },
     {

@@ -20,9 +20,12 @@ def main():
         model=dict(id=sid,modelKey=doc['id'],glbPath=doc['glbPath'],sha256=row['sha256'],bytes=(src/'body.glb').stat().st_size,
             documentSha256=row['documentSha256'],sourceCharacter=s['character'],sourceWork=s['work'],sourceAssetId=s['reference'],
             clipMap=doc['clipMap'],limitations=row['limitations'],storage='git',gitPath='content/'+doc['glbPath'],
+            localRuntimeRoot=row['localRuntimeRoot'],
             nativeAnimationCount=row.get('nativeAnimationCount',0),
             proceduralAnimationCount=row.get('proceduralAnimationCount',6),
             validation=row.get('validation','shared-prepare-verify-and-sampled-babylon-render-passed'),fullCharacterPackage=False)
+        if row.get('s3'):
+            model['s3']=row['s3']
         models.append(model)
         h=heroes.setdefault(row['heroId'],dict(id=row['heroId'],name=row['name'],options=[],pending=[]))
         h['options'].append(dict(sourceId=sid,sourceModelKey=doc['id'],label=row['label'],source=s))
