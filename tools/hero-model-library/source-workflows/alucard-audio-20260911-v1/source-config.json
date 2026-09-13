@@ -1,0 +1,297 @@
+{
+  "upstreamSourceId": "parallel-ns-alucard-ssbu",
+  "sourceUrl": "https://github.com/CSharpM7/alucard-release/releases/tag/2.7",
+  "sourceFiles": [
+    {
+      "path": "original/Alucard.SSM.7z",
+      "bytes": 33198617,
+      "sha256": "9798de5326e9296ae72c596228f759bee175aafde22fc7c934a46f4f243ddc72"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3audio",
+      "bytes": 2683824,
+      "sha256": "9a58cb45c0a1cf1e4f1be2a0e94842bdf8377caa909f17821c31f8fadbde6a56"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3bank",
+      "bytes": 56296,
+      "sha256": "dbbbc8e3894f0b4bbceb945c79e5c485dfecb861480544ad40a58a7a7f410088"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_c120.nus3audio",
+      "bytes": 1116080,
+      "sha256": "2d35f36ef20d9673419f4c8cca1814b7887f620bb0784993ffe6d70da59cfde3"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_c120.nus3bank",
+      "bytes": 37784,
+      "sha256": "8e28278a5a86b631da5723bd37e7ddd2e65622084b052511af4269625813276b"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_cheer_c120.nus3audio",
+      "bytes": 2688,
+      "sha256": "3bd10c93db3661274d5be7553fc3ce6f78c64abeeda793e016f09eca4418b87a"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_cheer_c120.nus3bank",
+      "bytes": 24872,
+      "sha256": "c696bd7f3869932728be562c5533f903dacd40c20ffc3bba3080d722a6a95e18"
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/narration/vc_narration_characall_alucard.idsp",
+      "bytes": 47072,
+      "sha256": "14e09378b8def217d172280a711e0d42553de1f2598a0de7ee47a7cc52448c84"
+    },
+    {
+      "path": "source-release.json",
+      "bytes": 4697,
+      "sha256": "324783ff10d57139fe20d44ab91e69ec0c738b53196ff05175cd445c330ef0d4"
+    },
+    {
+      "path": "native-format-validation.json",
+      "bytes": 28501,
+      "sha256": "8f5fe84d806d457b070296622a412ded724382125d51ea51515c9337843a13c6"
+    },
+    {
+      "path": "extracted-files.jsonl",
+      "bytes": 69951,
+      "sha256": "39f8ed75b858ff8b569784edade80990b019de9bdd5da53239fa7fcb0a1cb233"
+    }
+  ],
+  "audioInputs": [
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter/se_richter_c120.nus3audio",
+      "sha256": "9a58cb45c0a1cf1e4f1be2a0e94842bdf8377caa909f17821c31f8fadbde6a56",
+      "groupId": "alucard-ssm-source-se",
+      "sourceLabelCategory": "sfx-source-labelled",
+      "expectedStreams": 94,
+      "sourceBankEntryNames": [
+        "se_richter_step_left_l",
+        "se_richter_step_left_m",
+        "se_richter_step_left_s",
+        "se_richter_step_right_l",
+        "se_richter_step_right_m",
+        "se_richter_step_right_s",
+        "se_richter_step_crawing_left_F",
+        "se_richter_step_crawing_right_F",
+        "se_richter_step_crawing_left_B",
+        "se_richter_step_crawing_right_B",
+        "se_richter_dash_start",
+        "se_richter_dash_stop",
+        "se_richter_dash_turn",
+        "se_richter_jump01",
+        "se_richter_jump02",
+        "se_richter_jump03",
+        "se_richter_landing01",
+        "se_richter_landing02",
+        "se_richter_landing03",
+        "se_richter_squat",
+        "se_richter_rise",
+        "se_richter_escape",
+        "se_richter_escapeair",
+        "se_richter_Whip_chain",
+        "se_richter_Whip_chain_a",
+        "se_richter_Whip_chain_b",
+        "se_richter_Whip_chain_c",
+        "se_richter_Whip_chain_d",
+        "se_richter_Whip_chain_e",
+        "se_richter_Whip_Holding",
+        "se_richter_Whip_hit",
+        "se_richter_special_S06",
+        "se_richter_special_S06_",
+        "se_richter_special_S06_hit_punch_m",
+        "se_richter_Whip_landing01",
+        "se_richter_Whip_landing02",
+        "se_richter_swing_s",
+        "se_richter_swing_m",
+        "se_richter_attack_Hold",
+        "se_richter_attackdash",
+        "se_richter_attack100_01",
+        "se_richter_attack100_02",
+        "se_richter_attackhard_H01",
+        "se_richter_attackhard_L01",
+        "se_richter_attackhard_L02",
+        "se_richter_attackhard_S01",
+        "se_richter_attackair_N01",
+        "se_richter_attackair_F01",
+        "se_richter_attackair_B01",
+        "se_richter_attackair_B02",
+        "se_richter_attackair_H01",
+        "se_richter_attackair_H02",
+        "se_richter_attackair_L01",
+        "se_richter_attackair_L02",
+        "se_richter_smash_H01",
+        "se_richter_smash_H02",
+        "se_richter_smash_L01",
+        "se_richter_smash_S01",
+        "se_richter_smash_S02",
+        "se_richter_special_N01",
+        "se_richter_special_N02",
+        "se_richter_special_H01",
+        "se_richter_special_L01",
+        "se_richter_special_L02",
+        "se_richter_special_L03",
+        "se_richter_special_L04",
+        "se_richter_special_S01",
+        "se_richter_special_S02",
+        "se_richter_special_S02_smash",
+        "se_richter_special_S03",
+        "se_richter_special_S03_smash",
+        "se_richter_special_S04",
+        "se_richter_special_S04_smash",
+        "se_richter_special_S05",
+        "se_richter_final01",
+        "se_richter_final02",
+        "se_richter_final03",
+        "se_richter_final04",
+        "se_richter_final05",
+        "se_richter_final06",
+        "se_richter_appear01",
+        "se_richter_appear02",
+        "se_richter_appeal_H01",
+        "se_richter_appeal_H02",
+        "se_richter_appeal_L01",
+        "se_richter_appeal_L02",
+        "se_richter_appeal_S01",
+        "se_richter_appeal_S02",
+        "se_richter_win01_01",
+        "se_richter_win01_02",
+        "se_richter_win02_01",
+        "se_richter_win02_02",
+        "se_richter_win03_01",
+        "se_richter_win03_02"
+      ]
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_c120.nus3audio",
+      "sha256": "2d35f36ef20d9673419f4c8cca1814b7887f620bb0784993ffe6d70da59cfde3",
+      "groupId": "alucard-ssm-source-vc",
+      "sourceLabelCategory": "voice-source-labelled",
+      "expectedStreams": 39,
+      "sourceBankEntryNames": [
+        "vc_richter_attack01",
+        "vc_richter_attack02",
+        "vc_richter_attack03",
+        "vc_richter_attack04",
+        "vc_richter_attack05",
+        "vc_richter_attack06",
+        "vc_richter_attack07",
+        "vc_richter_attack100",
+        "vc_richter_jump01",
+        "vc_richter_ottotto",
+        "vc_richter_damage01",
+        "vc_richter_damage02",
+        "vc_richter_damagefly01",
+        "vc_richter_damagefly02",
+        "vc_richter_missfoot01",
+        "vc_richter_missfoot02",
+        "vc_richter_damage_twinkle",
+        "vc_richter_swimup",
+        "vc_richter_furafura",
+        "vc_richter_furasleep",
+        "vc_richter_wakeup",
+        "vc_richter_heavyget",
+        "vc_richter_passive",
+        "vc_richter_cliffcatch",
+        "vc_richter_special_N01",
+        "vc_richter_special_S01",
+        "vc_richter_special_S02",
+        "vc_richter_special_H01",
+        "vc_richter_special_L01",
+        "vc_richter_final01",
+        "vc_richter_final02",
+        "vc_richter_final03",
+        "vc_richter_appeal_H01",
+        "vc_richter_appeal_S01",
+        "vc_richter_appeal_L01",
+        "vc_richter_win01",
+        "vc_richter_win02",
+        "vc_richter_win03",
+        "vc_richter_knockout"
+      ]
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/fighter_voice/vc_richter_cheer_c120.nus3audio",
+      "sha256": "3bd10c93db3661274d5be7553fc3ce6f78c64abeeda793e016f09eca4418b87a",
+      "groupId": "alucard-ssm-source-cheer",
+      "sourceLabelCategory": "cheer-source-labelled",
+      "expectedStreams": 1,
+      "sourceBankEntryNames": [
+        "vc_richter_cheer"
+      ]
+    },
+    {
+      "path": "extracted/Alucard.SSM/ultimate/mods/Alucard SSM/sound/bank/narration/vc_narration_characall_alucard.idsp",
+      "sha256": "14e09378b8def217d172280a711e0d42553de1f2598a0de7ee47a7cc52448c84",
+      "groupId": "alucard-ssm-source-narration",
+      "sourceLabelCategory": "narration-source-labelled",
+      "expectedStreams": 1
+    }
+  ],
+  "audioGroups": [
+    {
+      "id": "alucard-ssm-source-se",
+      "name": "惡魔城阿魯卡多 Alucard SSM / sfx-source-labelled",
+      "heroIds": [],
+      "pathPrefixes": [
+        "decoded-audio/alucard-ssm-source-se/"
+      ],
+      "classification": "unclassified",
+      "sourceLabelCategory": "sfx-source-labelled",
+      "manualReview": "pending",
+      "language": "unknown",
+      "languageReviewed": false,
+      "speakerReviewed": false,
+      "transcriptReviewed": false,
+      "synthesisReady": false
+    },
+    {
+      "id": "alucard-ssm-source-vc",
+      "name": "惡魔城阿魯卡多 Alucard SSM / voice-source-labelled",
+      "heroIds": [],
+      "pathPrefixes": [
+        "decoded-audio/alucard-ssm-source-vc/"
+      ],
+      "classification": "unclassified",
+      "sourceLabelCategory": "voice-source-labelled",
+      "manualReview": "pending",
+      "language": "unknown",
+      "languageReviewed": false,
+      "speakerReviewed": false,
+      "transcriptReviewed": false,
+      "synthesisReady": false
+    },
+    {
+      "id": "alucard-ssm-source-cheer",
+      "name": "惡魔城阿魯卡多 Alucard SSM / cheer-source-labelled",
+      "heroIds": [],
+      "pathPrefixes": [
+        "decoded-audio/alucard-ssm-source-cheer/"
+      ],
+      "classification": "unclassified",
+      "sourceLabelCategory": "cheer-source-labelled",
+      "manualReview": "pending",
+      "language": "unknown",
+      "languageReviewed": false,
+      "speakerReviewed": false,
+      "transcriptReviewed": false,
+      "synthesisReady": false
+    },
+    {
+      "id": "alucard-ssm-source-narration",
+      "name": "惡魔城阿魯卡多 Alucard SSM / narration-source-labelled",
+      "heroIds": [],
+      "pathPrefixes": [
+        "decoded-audio/alucard-ssm-source-narration/"
+      ],
+      "classification": "unclassified",
+      "sourceLabelCategory": "narration-source-labelled",
+      "manualReview": "pending",
+      "language": "unknown",
+      "languageReviewed": false,
+      "speakerReviewed": false,
+      "transcriptReviewed": false,
+      "synthesisReady": false
+    }
+  ]
+}

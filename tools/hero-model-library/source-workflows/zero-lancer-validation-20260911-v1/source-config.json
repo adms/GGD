@@ -1,0 +1,41 @@
+{
+  "sourceId": "gamebanana-zero-lancer-493444",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-first-batch/gamebanana-zero-lancer",
+  "sourceManifestSha256": "a48f0ecd0d4d0cb631ca8e9a7d009d856a21c8dd1a0b5ce4f86072e6a6c3eac9",
+  "sourceManifestFiles": 358,
+  "sourceManifestBytes": 4772223,
+  "sourceGame": "Fate/unlimited codes",
+  "sourcePlatform": "unknown",
+  "modTarget": "PC Bomb Rush Cyberfunk",
+  "sourceClass": "community-mod",
+  "characterNativeName": "Diarmuid Ua Duibhne / Zero Lancer",
+  "nativeRootName": "Diarmuid BRC_character",
+  "heroIds": [],
+  "originalArchive": {
+    "path": "original/zero_lancer.7z",
+    "bytes": 377869,
+    "sha256": "140b5934cb06f32d360c20c659c99484ce3c726ba32597d1c10ae7ddffea0e1a"
+  },
+  "variants": [
+    {
+      "variant": "P1",
+      "path": "converted/diarmuid-p1-textured/body.glb",
+      "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308"
+    },
+    {
+      "variant": "P2",
+      "path": "converted/diarmuid-p2-textured/body.glb",
+      "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6"
+    }
+  ],
+  "sourceToolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "109bab326cbc62a3daf8a10ff40695e8a983cb351a4cbd2fdc2e4a8ce71674f1"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-zero-lancer-process.py",
+      "sha256": "34a156dbdc534acb9b84cdf840a8ecdf0bfd2f4885783de45b23add85f7828d0"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "tools/ggd-kof-convert-ash-blend.py",
+    "bytes": 7139,
+    "sha256": "b00bd633f4102b1b587725c4cc3567a325107201e271a89c108bed17cfcd2733"
+  },
+  {
+    "path": "tools/ggd-kof-convert-ash-deform-variants.py",
+    "bytes": 4305,
+    "sha256": "43124c6ec017034c4f60a94f04d37acead9bdb193c457a7f3c0641e93036c34b"
+  },
+  {
+    "path": "tools/ggd-kof-freeze-model-variants.py",
+    "bytes": 5876,
+    "sha256": "2712eed620496a6e44e16ad48e8c7d053862c8efe5a560807fb614e5e41b41c6"
+  },
+  {
+    "path": "tools/ggd-kof-glb-validate.py",
+    "bytes": 4513,
+    "sha256": "61be0a362d7c2b65490c1925d6d49fb39a4db3697c7a692f7d289f53d7e4cd22"
+  },
+  {
+    "path": "tools/ggd-kof-render-glb-preview.py",
+    "bytes": 3268,
+    "sha256": "b0e494d2672888acbf496255ea12ab26219ff4dadc6ef893a611a515665c3864"
+  },
+  {
+    "path": "tools/ggd-kof-render-source-preview.py",
+    "bytes": 3849,
+    "sha256": "67c2cc610bd35225fbbf60185f260d7ca4e5be02dc0a153b5d5a8a533705ce53"
+  }
+]

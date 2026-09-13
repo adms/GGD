@@ -44,6 +44,8 @@ def build():
     windows_game_inventory=read(windows_game_inventory_path)
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
+    workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
+    workflow_restoration=read(workflow_restoration_path)
     reviewPath=base/'post-registration-review.json'
     review=read(reviewPath) if reviewPath.exists() else {'affectedSources':[]}
     reviewByKey={key:item for item in review['affectedSources'] for key in item['modelKeys']}
@@ -83,6 +85,10 @@ def build():
             sha256=hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest(),
             status='parsed-native-mod-motion-reserve-pending-conversion-and-skeleton-playback',
             summary=ultimate14_motion['summary']),
+        assetWorkflowRestorationManifest=dict(
+            gitPath=str(workflow_restoration_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(workflow_restoration_path.read_bytes()).hexdigest(),
+            summary=workflow_restoration['summary']),
         note='Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.')
     component_path=base/'palworld/帕魯三角色素材索引.json'
     component_data=read(component_path)
@@ -133,6 +139,7 @@ def main():
             + [
                 result['windowsGameSourceInventory'],
                 result['ultimate14NativeMotionIndex'],
+                result['assetWorkflowRestorationManifest'],
                 result['historicalModelRestorationReceipt'],
                 result['modelComponentIndex'],
                 result['modelComponentSourceIndex'],

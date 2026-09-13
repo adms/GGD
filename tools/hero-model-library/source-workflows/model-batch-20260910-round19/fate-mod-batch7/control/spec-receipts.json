@@ -1,0 +1,18 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/ValveSoftware/halflife/master/engine/studio.h",
+    "path": "control/specs/studio.h",
+    "httpStatus": "200",
+    "exitCode": 0,
+    "bytes": 8052,
+    "sha256": "46eadf886bb301637a1289576f71cd45eab7593044eef29b7f080cc02af2edb5"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/assimp/assimp/v6.0.0/code/AssetLib/MDL/HalfLife/HL1MDLLoader.cpp",
+    "path": "control/specs/HL1MDLLoader.cpp",
+    "httpStatus": "200",
+    "exitCode": 0,
+    "bytes": 59126,
+    "sha256": "c91b237eb3346b007fc74a8ac62153ce424e80adaf064a7fef8e850f386bc34a"
+  }
+]

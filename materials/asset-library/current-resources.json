@@ -5792,6 +5792,16 @@
       "runtimeSelectableCount": 0
     }
   },
+  "assetWorkflowRestorationManifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/asset-workflow-restoration/manifest.json",
+    "sha256": "9f92e29719045fd1ebeed21f4ccc96bc9a22ca63bf555b4ffff3b43f657a34c9",
+    "summary": {
+      "restoredFiles": 411,
+      "historicalByteExactFiles": 410,
+      "reviewedPostDeletionFixFiles": 1,
+      "restoredBytes": 2507122
+    }
+  },
   "note": "Immutable releases, new canonical models and all source alternatives remain available. Registration is separate from production deployment; raw/intermediate sources remain local and S3 legacy.",
   "modelComponents": [
     {

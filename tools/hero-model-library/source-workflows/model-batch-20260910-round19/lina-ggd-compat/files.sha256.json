@@ -1,0 +1,42 @@
+[
+  {
+    "path": "scripts/ggd-lina-compat-build.cjs",
+    "bytes": 910,
+    "sha256": "9507f26222c66e3771203beca2410088b6ab2421257131fb897734f18c4a2e94"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-contracts.ts",
+    "bytes": 5528,
+    "sha256": "39dd764c978a0cb71be30ad067dfe9a117ff39258b88a8c69312535decfcd5b5"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-foot-spike.py",
+    "bytes": 3848,
+    "sha256": "600d37175d6ec5a0bdc8328db6786167364ea46c7c62a09b83f85ffbd6acadb3"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-freeze.py",
+    "bytes": 14447,
+    "sha256": "e3bbaaeeee7da6b054d0ecd13f1cbdcc797908f46e6483616b1b9a30055d3c2c"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-provenance.py",
+    "bytes": 4054,
+    "sha256": "8fec7b1f69a7eb768514961f27299d71cc7181bdfac2362165c60b796f6a68e3"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-runtime-server.py",
+    "bytes": 3852,
+    "sha256": "524954d3309a6654386a2b21a41d09795b2dac56e3f7a63774d5e5f0bf6dc701"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-runtime.mjs",
+    "bytes": 8317,
+    "sha256": "9e8a538f4023582b9b160b92bef9f99714ecd667bae4826c00f18741920d9c58"
+  },
+  {
+    "path": "scripts/ggd-lina-compat-setup.py",
+    "bytes": 1910,
+    "sha256": "4a78f839676362f95cd117e931175a73774f4adf05ad977b0cda10e301b03ed2"
+  }
+]
