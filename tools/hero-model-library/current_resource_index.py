@@ -490,8 +490,14 @@ def build(git_link_root=ROOT):
     restoration_receipt_path=base/'priority-evidence/historical-model-recovery/restoration-receipt.json'
     historical_option_registration_path=base/'priority-evidence/historical-model-recovery/model-option-registration.json'
     historical_option_registration=read(historical_option_registration_path)
+    historical_lineage_audit_path=base/'priority-evidence/historical-model-recovery/current-lineage-audit.json'
+    historical_lineage_audit=read(historical_lineage_audit_path)
     if historical_option_registration.get('schema')!='ggd-historical-model-option-registration@1':
         raise ValueError('Historical model option registration is not current')
+    if (historical_lineage_audit.get('schema')!='ggd-historical-model-lineage-audit@1'
+        or historical_lineage_audit.get('summary',{}).get('exactHistoricalGlbsByteIdentical')!=4
+        or historical_lineage_audit.get('summary',{}).get('standardizedLineageOptionsRegistered')!=4):
+        raise ValueError('Historical model lineage audit is not current')
     apply_option_registration_overlay(components, historical_option_registration)
     result.update(modelComponents=components,modelComponentCount=len(components),
         historicalModelSourceArtifacts=historical_artifacts,
@@ -505,6 +511,14 @@ def build(git_link_root=ROOT):
             sha256=hashlib.sha256(historical_option_registration_path.read_bytes()).hexdigest(),
             registeredHeroIds=[row['heroId'] for row in historical_option_registration['registrations']],
             blockedHeroIds=[row['heroId'] for row in historical_option_registration['blocked']],
+            productionDeploymentVerified=False),
+        historicalModelLineageAudit=dict(
+            gitPath=str(historical_lineage_audit_path.relative_to(ROOT)),
+            bytes=historical_lineage_audit_path.stat().st_size,
+            sha256=hashlib.sha256(historical_lineage_audit_path.read_bytes()).hexdigest(),
+            exactHistoricalGlbsByteIdentical=historical_lineage_audit['summary']['exactHistoricalGlbsByteIdentical'],
+            standardizedLineageOptionsRegistered=historical_lineage_audit['summary']['standardizedLineageOptionsRegistered'],
+            defaultsChanged=historical_lineage_audit['summary']['defaultsChanged'],
             productionDeploymentVerified=False),
         modelComponentIndex=dict(gitPath=str(component_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_path.read_bytes()).hexdigest()),
@@ -628,6 +642,7 @@ def main():
                 },
                 result['historicalModelRestorationReceipt'],
                 result['historicalModelOptionRegistration'],
+                result['historicalModelLineageAudit'],
                 result['modelComponentIndex'],
                 result['palworldHeroIntegrationReceipt'],
                 result['modelComponentSourceIndex'],

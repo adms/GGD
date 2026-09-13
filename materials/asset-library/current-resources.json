@@ -12234,7 +12234,7 @@
   "historicalModelOptionRegistration": {
     "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/model-option-registration.json",
     "bytes": 7190,
-    "sha256": "2660443c81fe2649ce49f434bbc474ad85ca8554c4a0fe4c079e2fc2c13b1d4c",
+    "sha256": "66198edf98d9645d810ed886a964b362ea42967ae6416a8f8fe44da7950ce223",
     "registeredHeroIds": [
       "acquired-jetragon",
       "acquired-astralym",
@@ -12242,6 +12242,15 @@
       "acquired-lord-nightmares"
     ],
     "blockedHeroIds": [],
+    "productionDeploymentVerified": false
+  },
+  "historicalModelLineageAudit": {
+    "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json",
+    "bytes": 17948,
+    "sha256": "041cab0ac80cf316ff34dbadce5c9564b2ce47dffeaf2a5b1598b2fc0a06675d",
+    "exactHistoricalGlbsByteIdentical": 4,
+    "standardizedLineageOptionsRegistered": 4,
+    "defaultsChanged": 0,
     "productionDeploymentVerified": false
   },
   "modelComponentIndex": {

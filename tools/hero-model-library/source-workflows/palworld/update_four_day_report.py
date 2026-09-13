@@ -12,16 +12,23 @@ REPORT = ROOT / "materials/hero-model-library/近四日新增模型動作特效�
 REGISTRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-full-motion-options-v1/registration.json"
 INTEGRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json"
 DROPDOWN = ROOT / "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json"
+HISTORICAL = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json"
 
 
 def render() -> str:
     registration = json.loads(REGISTRATION.read_text())
     integration = json.loads(INTEGRATION.read_text())
     dropdown = json.loads(DROPDOWN.read_text())
+    historical = json.loads(HISTORICAL.read_text())
     by_hero = {row["heroId"]: row for row in integration["integrations"]}
     summary = dropdown["summary"]
     lines = REPORT.read_text().splitlines()
     replacements = {
+        "| 歷史四顆 GLB |": (
+            f"| 歷史四顆 GLB | {historical['summary']['exactHistoricalGlbsByteIdentical']}/4 原始位元組與 `7bc2fa3f8` 完全一致；"
+            f"{historical['summary']['standardizedLineageOptionsRegistered']}/4 標準化血緣候選已註冊為非預設選項 | "
+            "原始枯星龍受 10,000 面正式採用規則阻擋；MBA 兩顆原始透明材質只作來源保留；Main 合併與正式站切換未驗證 |"
+        ),
         "| 帕魯三名 |": (
             "| 帕魯三名 | 3/3 Hero Forge 六技能槽套件通過，3/3 本機下拉可選；"
             f"空渦龍與搗蛋貓新增 {registration['summary']['newNativeMotionEntriesExposed']} 條原生動作的完整庫非預設選項 | "
@@ -71,6 +78,10 @@ def render() -> str:
     if evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("- 帕魯影音審查：")) + 1
         output.insert(position, evidence)
+    historical_evidence = "- 四顆歷史模型當前位元組與候選關係：`materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json`"
+    if historical_evidence not in output:
+        position = next(index for index, line in enumerate(output) if line.startswith("- 四顆歷史模型：")) + 1
+        output.insert(position, historical_evidence)
     return "\n".join(output) + "\n"
 
 
