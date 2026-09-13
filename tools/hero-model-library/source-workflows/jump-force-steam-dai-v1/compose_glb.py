@@ -98,8 +98,12 @@ def append_material_textures(document: dict, binary: bytearray, texture_dir: Pat
         stem = material_stem(name)
         bound: dict[str, str] = {}
         pbr = material.setdefault("pbrMetallicRoughness", {})
-        pbr.setdefault("metallicFactor", 0.0)
-        pbr.setdefault("roughnessFactor", 0.8)
+        # UModel assigns red/green/blue diagnostic factors to material slots.
+        # They are not serialized MaterialInstanceConstant values and must not
+        # tint the actual exported textures.
+        pbr["baseColorFactor"] = [1.0, 1.0, 1.0, 1.0]
+        pbr["metallicFactor"] = 0.0
+        pbr["roughnessFactor"] = 0.8
         if stem:
             color = find_texture(texture_dir, stem, "C")
             normal = find_texture(texture_dir, stem, "N")
@@ -114,11 +118,17 @@ def append_material_textures(document: dict, binary: bytearray, texture_dir: Pat
                 index = texture_index(orm)
                 pbr["metallicRoughnessTexture"] = {"index": index}
                 material["occlusionTexture"] = {"index": index}
+                pbr["metallicFactor"] = 1.0
+                pbr["roughnessFactor"] = 1.0
                 bound["orm"] = str(orm)
         if "damage_blood" in name.lower():
             pbr["baseColorFactor"] = [0.18, 0.005, 0.005, 1.0]
-        if any(token in name.lower() for token in ("hair", "lens", "glass", "eyeshadow")):
+        if "eyeshadow" in name.lower() or "head_shadow" in name.lower():
             material["alphaMode"] = "BLEND"
+            material["doubleSided"] = True
+        elif any(token in name.lower() for token in ("hair", "lens", "glass")):
+            material["alphaMode"] = "MASK"
+            material["alphaCutoff"] = 0.333
             material["doubleSided"] = True
         bindings.append({"material": name, "textureStem": stem, "bound": bound})
     return bindings

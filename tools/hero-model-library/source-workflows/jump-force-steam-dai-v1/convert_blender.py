@@ -87,11 +87,18 @@ def bind_material(material, texture_dir: Path) -> dict[str, object]:
     if "damage_blood" in material.name.lower():
         shader.inputs["Base Color"].default_value = (0.18, 0.005, 0.005, 1.0)
         shader.inputs["Roughness"].default_value = 0.7
-    if any(token in material.name.lower() for token in ("hair", "lens", "glass", "eyeshadow")):
+    if "eyeshadow" in material.name.lower() or "head_shadow" in material.name.lower():
         if hasattr(material, "surface_render_method"):
             material.surface_render_method = "DITHERED"
         elif hasattr(material, "blend_method"):
             material.blend_method = "HASHED"
+    elif any(token in material.name.lower() for token in ("hair", "lens", "glass")):
+        if hasattr(material, "surface_render_method"):
+            material.surface_render_method = "DITHERED"
+        elif hasattr(material, "blend_method"):
+            material.blend_method = "CLIP"
+        if hasattr(material, "alpha_threshold"):
+            material.alpha_threshold = 0.333
     return {"material": material.name, "textureStem": stem, "bound": bound}
 
 

@@ -1,11 +1,11 @@
 {
   "schema": "ggd-jump-force-dai-visual-review@1",
   "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
-  "candidateId": "jump-force-native-dai-chr0430-review-v3",
+  "candidateId": "jump-force-native-dai-chr0430-review-v4",
   "glb": {
-    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v3.glb",
-    "bytes": 76796552,
-    "sha256": "087536f1b52ad0cabeea81a039e6acbfe640a03e34dcf47f6e92f8d01269a48e"
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
   },
   "composition": [
     "chr0430_form0.gltf",
@@ -25,28 +25,31 @@
   "visualEvidence": [
     {
       "path": "front.png",
-      "bytes": 285777,
-      "sha256": "ed75c76d32944120e41a4ec6df79c62a4e9243482af911824d6680b41155f49e"
+      "bytes": 288881,
+      "sha256": "608511f2d44cbb761ccfbccd37d281d81391535208eec1126e23fdb0a2762529"
     },
     {
       "path": "back.png",
-      "bytes": 284466,
-      "sha256": "ec852fa4d8be388a793607845d81cbb1dbcb555f8450803ffc0ce766f0e22dc3"
+      "bytes": 284793,
+      "sha256": "111e3cd0adab915bca7541b5e9ea0267aa8798cfec1fb2f5a89a412b14ec3fd6"
     },
     {
       "path": "isometric.png",
-      "bytes": 277491,
-      "sha256": "786f3033baf792626b20a060f2436013cf91bbced4a07c40932c7145aea456f1"
+      "bytes": 278604,
+      "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
     }
   ],
   "review": {
     "completeBodyObserved": true,
     "frontBackIsometricRendered": true,
+    "diagnosticMaterialTintRemoved": true,
+    "sourceTexturesBound": true,
+    "genericPbrMaterialBindingAccepted": true,
     "sourceGameShaderParity": false,
-    "materialParityStatus": "pending-original-shader-reconstruction",
+    "materialParityStatus": "source-textures-and-blend-modes-bound-parent-shader-parity-unverified",
     "ggdIntakeAccepted": false,
     "backendSelectable": false,
     "productionDeployed": false
   },
-  "decision": "retain-as-local-review-component-pending-material-correction-and-formal-intake"
+  "decision": "retain-as-local-complete-body-review-component-pending-parent-shader-parity-formal-intake-and-motion"
 }

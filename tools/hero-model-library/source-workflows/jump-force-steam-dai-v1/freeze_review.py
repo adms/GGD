@@ -50,7 +50,7 @@ def main() -> int:
     receipt = {
         "schema": "ggd-jump-force-dai-visual-review@1",
         "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
-        "candidateId": "jump-force-native-dai-chr0430-review-v3",
+        "candidateId": "jump-force-native-dai-chr0430-review-v4",
         "glb": {"absolutePath": str(glb), "bytes": glb.stat().st_size, "sha256": sha256(glb)},
         "composition": conversion["composition"],
         "structuralEvidence": {
@@ -64,13 +64,16 @@ def main() -> int:
         "review": {
             "completeBodyObserved": True,
             "frontBackIsometricRendered": True,
+            "diagnosticMaterialTintRemoved": True,
+            "sourceTexturesBound": True,
+            "genericPbrMaterialBindingAccepted": True,
             "sourceGameShaderParity": False,
-            "materialParityStatus": "pending-original-shader-reconstruction",
+            "materialParityStatus": "source-textures-and-blend-modes-bound-parent-shader-parity-unverified",
             "ggdIntakeAccepted": False,
             "backendSelectable": False,
             "productionDeployed": False,
         },
-        "decision": "retain-as-local-review-component-pending-material-correction-and-formal-intake",
+        "decision": "retain-as-local-complete-body-review-component-pending-parent-shader-parity-formal-intake-and-motion",
     }
     target_receipt = git_dir / "visual-review.json"
     target_receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

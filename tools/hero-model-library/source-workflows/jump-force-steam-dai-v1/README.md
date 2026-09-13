@@ -6,8 +6,8 @@
 
 - PAK 索引：完成，保留 256,619 筆容器關係與 221,877 條唯一路徑。
 - 達伊原生套件：已擷取 1,942 個目前版本檔案至本機素材庫。
-- 模型：UModel 已匯出 11 組含 159 關節皮膚的 glTF 元件；尚未完成 GGD GLB 組裝與視覺驗收。
-- 貼圖：修正版 UModel 已匯出 36 張 PNG；尚未完成材質、透明度與效能驗收。
+- 模型：UModel 已匯出 11 組含 159 關節皮膚的 glTF 元件；六個角色分區已組成完整身體並通過三視角 WebGL 檢查，但仍未完成正式 GGD intake。
+- 貼圖：修正版 UModel 已匯出 36 張 PNG；來源貼圖與原生混合模式提示已綁定並通過一般 PBR 視覺檢查，原遊戲 parent shader parity 與效能驗收仍未完成。
 - 特效、音訊及角色／技能設定：原生套件已擷取；仍待解析、解碼與事件綁定。
 - 動作：目前沒有可驗收的原生動作剪輯，不宣稱已完成。
 - 後台選項與部署：未註冊、不可切換、未部署。
@@ -53,7 +53,7 @@ python3 tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/valida
   ../GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review.glb
 ```
 
-這一步只建立待驗收組件。第一個 `form0 + form0_head + equipment1` 實驗版經 WebGL 發現缺少上身；第二版加入 `damage_AB` 後仍有褲管缺口，兩者均已拒收並保留證據。目前預設組合依原生分區加入 `damage_A + damage_B + damage_AB`，正背面完整。轉換器會合併成同一套 159 關節骨架並嵌入貼圖，但不補造動作；結構與完整身體已通過，原遊戲 shader parity、正式 GGD intake、動作與後台註冊仍待完成。
+這一步只建立待驗收組件。第一個 `form0 + form0_head + equipment1` 實驗版經 WebGL 發現缺少上身；第二版加入 `damage_AB` 後仍有褲管缺口，兩者均已拒收並保留證據。目前預設組合依原生分區加入 `damage_A + damage_B + damage_AB`，正背面完整。UModel glTF exporter 另會替材質槽填入紅、綠、藍診斷色；這些不是 MaterialInstanceConstant 的來源顏色。轉換器會在綁定來源貼圖時清除診斷色，依原生材質用途套用 MASK／BLEND，並把六個分區合併到同一套 159 關節骨架。修正版 `review-v4` 已通過結構與三視角一般 PBR 視覺檢查；原遊戲 parent shader parity、正式 GGD intake、效能、動作與後台註冊仍待完成。
 
 這台主機的 Blender 5.2.1 目前會在 Metal 後端偵測時、尚未執行 Python 前崩潰。可先用不依賴 Blender 的等價 GLB 組裝器：
 

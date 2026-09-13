@@ -54,7 +54,7 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
         "format": "Unreal Engine 4.19 encrypted PAK; UAsset/UExp; UModel glTF and PNG evidence",
         "accessStatus": "local-installed-game-readonly-share",
         "acquisitionStatus": "priority-scope-extracted-verified",
-        "readiness": "complete-body-review-glb-webgl-rendered-pending-material-parity-and-ggd-intake",
+        "readiness": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
         "purchaseDecision": "no-purchase-user-owned-install",
         "defaultEligible": False,
         "resourceRole": "canonical-game-model-vfx-audio-reserve",
@@ -105,7 +105,7 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
             "heroIds": ["godie-nbbc", "godie-n01c"],
         }],
         "modelCandidates": [{
-            "candidateId": "jump-force-native-dai-chr0430-raw-v1",
+            "candidateId": "jump-force-native-dai-chr0430-review-v4",
             "sourceId": SOURCE_ID,
             "name": "小呆／達伊",
             "character": "小呆／達伊 / Dai",
@@ -118,7 +118,7 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
             "nativePackageCount": manifest["counts"]["nativePackages"],
             "modelGltfCount": manifest["counts"]["modelGltf"],
             "texturePngCount": manifest["counts"]["texturePng"],
-            "modelState": "complete-body-review-glb-webgl-rendered-pending-material-parity-and-ggd-intake",
+            "modelState": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
             "animationState": "no-accepted-native-clips-in-current-export",
             "vfxState": "native-packages-extracted-pending-conversion",
             "audioState": "native-packages-extracted-pending-decode-and-listening-review",
@@ -138,11 +138,13 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
         "verification": (
             "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. "
             "The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, "
-            "and 36 exported PNG textures. These are acquisition and structural export facts, not GGD acceptance."
+            "and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's "
+            "diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints "
+            "were bound. Parent shader parity and formal GGD intake remain unverified."
         ),
         "limitations": [
             "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
-            "The six-part complete-body composition has WebGL three-view evidence, but source-game shader parity and material correction remain pending.",
+            "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
             "No native animation clips have been accepted from the current export.",
             "VFX and audio packages are not decoded or bound to GGD events.",
             "No model option is registered, selectable or deployed from this source yet.",

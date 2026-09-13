@@ -56013,7 +56013,7 @@
       "format": "Unreal Engine 4.19 encrypted PAK; UAsset/UExp; UModel glTF and PNG evidence",
       "accessStatus": "local-installed-game-readonly-share",
       "acquisitionStatus": "priority-scope-extracted-verified",
-      "readiness": "complete-body-review-glb-webgl-rendered-pending-material-parity-and-ggd-intake",
+      "readiness": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
       "purchaseDecision": "no-purchase-user-owned-install",
       "defaultEligible": false,
       "resourceRole": "canonical-game-model-vfx-audio-reserve",
@@ -56128,33 +56128,33 @@
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/visual-review.json",
-          "bytes": 1687,
-          "sha256": "0d65b12fd48e354afa9e3c48d6f792b6dcdca3a9cd4098c829cae481a92a66e3"
+          "bytes": 1863,
+          "sha256": "148566ae5a9515ecacd5f71ac354aa84786baf8fad21cda423464f8e4933b20a"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/conversion-receipt.json",
           "bytes": 19414,
-          "sha256": "62aecc83ebb1aff62ef8c7aed2ee0ec8ff914545cca12dd1d35434ed479abfa2"
+          "sha256": "f43d519c7f9bf08abf5382e4fb60145899ff72ea95bd67a0400b5d1954e90694"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/webgl-proof.json",
-          "bytes": 34110,
-          "sha256": "c016a1c1b400c0fd960441bf8a4eaae0232b27cf33a089a1e1a6d53aaf4e4403"
+          "bytes": 34038,
+          "sha256": "bbcfc44b58cac05b35d59312ffc9ffb0ea312edfd386390bd184ce13ff9fd1d7"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/front.png",
-          "bytes": 285777,
-          "sha256": "ed75c76d32944120e41a4ec6df79c62a4e9243482af911824d6680b41155f49e"
+          "bytes": 288881,
+          "sha256": "608511f2d44cbb761ccfbccd37d281d81391535208eec1126e23fdb0a2762529"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/back.png",
-          "bytes": 284466,
-          "sha256": "ec852fa4d8be388a793607845d81cbb1dbcb555f8450803ffc0ce766f0e22dc3"
+          "bytes": 284793,
+          "sha256": "111e3cd0adab915bca7541b5e9ea0267aa8798cfec1fb2f5a89a412b14ec3fd6"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/isometric.png",
-          "bytes": 277491,
-          "sha256": "786f3033baf792626b20a060f2436013cf91bbced4a07c40932c7145aea456f1"
+          "bytes": 278604,
+          "sha256": "720fb6eb322205e0d4048bec9ac44b6381009372e3ac4863200ab8545f4daf52"
         }
       ],
       "identityRecords": [
@@ -56176,7 +56176,7 @@
       ],
       "modelCandidates": [
         {
-          "candidateId": "jump-force-native-dai-chr0430-raw-v1",
+          "candidateId": "jump-force-native-dai-chr0430-review-v4",
           "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
           "name": "小呆／達伊",
           "character": "小呆／達伊 / Dai",
@@ -56199,7 +56199,7 @@
           "nativePackageCount": 1942,
           "modelGltfCount": 11,
           "texturePngCount": 36,
-          "modelState": "complete-body-review-glb-webgl-rendered-pending-material-parity-and-ggd-intake",
+          "modelState": "complete-body-source-textures-webgl-accepted-pending-parent-shader-parity-ggd-intake-and-motion",
           "animationState": "no-accepted-native-clips-in-current-export",
           "vfxState": "native-packages-extracted-pending-conversion",
           "audioState": "native-packages-extracted-pending-decode-and-listening-review",
@@ -56220,10 +56220,10 @@
         "selectionVerified": false,
         "productionDeployed": false
       },
-      "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. These are acquisition and structural export facts, not GGD acceptance. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "Six PAK indexes were decoded with the externally supplied AES key and indexed with patch relations intact. The priority Dai scope contains 1,942 extracted native packages, 11 skinned glTF components with 159 joints, and 36 exported PNG textures. The six-part complete body passed three-view WebGL review after UModel's diagnostic RGB material factors were removed and the exported source textures and native blend-mode hints were bound. Parent shader parity and formal GGD intake remain unverified. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
         "The six original PAK byte streams remain on the mounted Windows Steam library and are not yet locally mirrored or S3-backed up.",
-        "The six-part complete-body composition has WebGL three-view evidence, but source-game shader parity and material correction remain pending.",
+        "The six-part complete-body composition and generic PBR texture binding have WebGL three-view evidence; source-game parent shader parity remains unverified.",
         "No native animation clips have been accepted from the current export.",
         "VFX and audio packages are not decoded or bound to GGD events.",
         "No model option is registered, selectable or deployed from this source yet.",
@@ -56237,7 +56237,35 @@
         "readbackVerified": true,
         "fullGetVerified": true,
         "allMemberSha256Verified": true
-      }
+      },
+      "supplementalDeliveries": [
+        {
+          "id": "jump-force-steam-dai-conversion-review-v4",
+          "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/converted/jump-force-steam-dai-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-dai-conversion-review-v4/fe234ea76936d11896183eb0615b5b554e0f73faad8457b7ec7016e824a89caa/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-dai-conversion-review-v4/fe234ea76936d11896183eb0615b5b554e0f73faad8457b7ec7016e824a89caa/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/jump-force-steam-dai-conversion-review-v4/19dde421fc124363bfac94a96c15ec01bc80276f9a16a13bbea2bf88280fa62c.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/jump-force-steam-dai-conversion-review-v4/19dde421fc124363bfac94a96c15ec01bc80276f9a16a13bbea2bf88280fa62c.files.json",
+          "bytes": 284995030,
+          "sha256": "19dde421fc124363bfac94a96c15ec01bc80276f9a16a13bbea2bf88280fa62c",
+          "fileCount": 37,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/jump-force-steam-dai-conversion-review-v4/latest-receipt.json",
+          "receiptSha256": "a8672e56cad826cc3d0ed1cbc91d96fd5d285dede732c9be3828aac1752b960a",
+          "manifestSha256": "de177716ddd63b07107da3f96bed2212382bb4daedd2dabb240c78768e5635d6",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
+      ]
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
