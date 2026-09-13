@@ -5721,8 +5721,8 @@
   "palworldResourceDocument": "materials/hero-model-library/palworld/帕魯三角色素材索引.md",
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
   "windowsGameSourceInventory": {
-    "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json",
-    "sha256": "7841c03d12cb233be4a12e4767eba1510a19bdaafef5c4c3ff036e30b65cf8a1",
+    "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
+    "sha256": "5b2532b8d3ec2a2226ac6293305844a2a02b374d67bfdc14902830da0882afcd",
     "status": "inventory-only",
     "summary": {
       "steamInstallCount": 312,

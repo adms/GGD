@@ -4,6 +4,8 @@
 
 > 本索引只證明 Windows 遊戲庫中有對應安裝目錄或 ROM／封裝候選。尚未擷取、轉換、驗收、登記、切換或部署。
 
+機器查詢入口：`materials/hero-model-library/source-inventories/windows-game-library.json.gz`。完整未壓縮 JSON、原始 ZIP 與 CSV 留在本機素材庫及 S3 `legacy/`。
+
 ## 摘要
 
 - Steam 安裝：**312**

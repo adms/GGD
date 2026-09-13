@@ -57,7 +57,7 @@ python3 tools/hero-model-library/steam-library-bridge/query_windows_game_invento
 python3 tools/hero-model-library/steam-library-bridge/query_windows_game_inventory.py 'Fate-Unlimited' --json
 ```
 
-Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/`，Git 只收正規化來源索引與重建／查詢程式。
+Windows 遊戲來源索引保存 Steam App ID／Build ID、ROM 平台候選、Windows 原始路徑與盤點狀態。Git 的機器查詢入口是 `materials/hero-model-library/source-inventories/windows-game-library.json.gz`；它只證明來源機上存在安裝目錄或候選檔，不代表已擷取、轉換、驗收、登記、可切換或已部署。完整未壓縮 JSON 與原始目錄掃描保留在本機 `GGD-Asset-Library/intake/remote-game-libraries/` 及 S3 `legacy/`，Git 只收壓縮正規化索引與重建／查詢程式。
 
 Fate／Unlimited Block Works 作者素材庫目前保留 14 名英靈：14 名皆有本機及 S3 讀回驗證的靜態 GLB、骨架與原生動作 GLB。132 段來源片段中已轉換 112 段，另保留 20 段公式驅動或缺少時長的未轉換缺口；Heracles 未被動作命中的末端休息旋轉已用獨立烘焙與完整逆綁定流程處理。這批是 ARR 權利審查中的社群 MOD 儲備，尚未成為 Git 成品、後台選項或正式站內容。逐角實檔、SHA、S3 位置及驗收證據由 [已取得模型待設計英雄.json](../hero-model-library/已取得模型待設計英雄.json) 查詢，摘要以同名 Markdown 顯示。
 

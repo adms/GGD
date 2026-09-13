@@ -1,5 +1,5 @@
 """Compose the fixed Git resource entry point without rewriting immutable releases."""
-import argparse, json, hashlib, subprocess
+import argparse, gzip, json, hashlib, subprocess
 from pathlib import Path
 from build_palworld_index import model_components
 from weapon_components import source_weapon_components
@@ -7,7 +7,9 @@ from skinned_components import source_skinned_components
 from historical_components import source_historical_artifacts, source_historical_components
 from animated_components import source_animated_components
 ROOT=Path(__file__).resolve().parents[2]
-def read(path):return json.loads(path.read_text())
+def read(path):
+    payload = gzip.decompress(path.read_bytes()) if path.suffix == '.gz' else path.read_bytes()
+    return json.loads(payload.decode('utf-8'))
 def verify_component_git_contents(components, repo=ROOT):
     """Check staged blobs, so ignored or unstaged local copies cannot be published."""
     for component in components:
@@ -21,7 +23,7 @@ def verify_component_git_contents(components, repo=ROOT):
 
 def build():
     base=ROOT/'materials/hero-model-library';sources=[];models={};registered={}
-    windows_game_inventory_path=base/'source-inventories/windows-game-library.json'
+    windows_game_inventory_path=base/'source-inventories/windows-game-library.json.gz'
     windows_game_inventory=read(windows_game_inventory_path)
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)

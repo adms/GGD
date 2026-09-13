@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from build_windows_game_inventory import markdown
+from build_windows_game_inventory import index_bytes, load_json_index, markdown, write_json_index
 from merge_windows_asset_container_inventory import merge, write_jsonl_gzip
 
 
@@ -100,6 +100,19 @@ class WindowsAssetContainerInventoryMergeTest(unittest.TestCase):
             with gzip.open(compressed, "rt", encoding="utf-8") as handle:
                 restored = [json.loads(line) for line in handle]
             self.assertEqual(restored, detail["candidateFiles"])
+
+    def test_json_index_gzip_is_deterministic_and_round_trips(self):
+        index = {"summary": {"steamInstallCount": 1}, "steamGames": [{"title": "Palworld"}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "windows-game-library.json.gz"
+            write_json_index(path, index)
+            first = path.read_bytes()
+            write_json_index(path, index)
+            second = path.read_bytes()
+
+            self.assertEqual(first, second)
+            self.assertEqual(first, index_bytes(index, path))
+            self.assertEqual(load_json_index(path), index)
 
 
 if __name__ == "__main__":

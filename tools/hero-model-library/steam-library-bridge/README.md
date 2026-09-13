@@ -38,7 +38,7 @@ Set-ExecutionPolicy -Scope Process Bypass
   -GameRoot 'E:\Game\單機遊戲'
 ```
 
-產生的 ZIP 只含 Steam 目錄、appmanifest、遊戲目錄、ROM／封裝候選與掃描收據，不讀 ROM／PAK 內容。交付 ZIP 後用 `build_windows_game_inventory.py` 正規化；Git 的 `materials/hero-model-library/source-inventories/windows-game-library.json` 是共編查詢入口，原始 CSV 與 ZIP 留在本機素材庫及待辦 S3 `legacy/` 備份。
+產生的 ZIP 只含 Steam 目錄、appmanifest、遊戲目錄、ROM／封裝候選與掃描收據，不讀 ROM／PAK 內容。交付 ZIP 後用 `build_windows_game_inventory.py` 正規化；Git 的 `materials/hero-model-library/source-inventories/windows-game-library.json.gz` 是壓縮後的共編查詢入口，完整未壓縮 JSON、原始 CSV 與 ZIP 留在本機素材庫及 S3 `legacy/` 備份。
 
 目前索引內的 `sourceCoverage` 是實際掃描範圍，不以使用者口述或掛載名稱補數。2026-09-12 第一份收據只涵蓋 `F:\SteamLibrary\steamapps\common` 與 `E:\Game\單機遊戲`；Palworld 本體與 Dedicated Server 已分開建檔，但其他三顆 Steam 硬碟仍要由下方第二階段自動發現掃描補齊。
 
@@ -56,11 +56,11 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 ```sh
 python3 tools/hero-model-library/steam-library-bridge/merge_windows_asset_container_inventory.py \
-  --base-json materials/hero-model-library/source-inventories/windows-game-library.json \
+  --base-json materials/hero-model-library/source-inventories/windows-game-library.json.gz \
   --scan-dir <解壓後目錄> \
   --source-zip <GGD-Asset-Container-Inventory-*.zip> \
   --local-output <GGD-Asset-Library/intake/remote-game-libraries/current> \
-  --git-json materials/hero-model-library/source-inventories/windows-game-library.json \
+  --git-json materials/hero-model-library/source-inventories/windows-game-library.json.gz \
   --git-markdown materials/hero-model-library/source-inventories/windows-game-library.md
 ```
 

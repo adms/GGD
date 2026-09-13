@@ -13,7 +13,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-from build_windows_game_inventory import markdown
+from build_windows_game_inventory import load_json_index, markdown, write_json_index
 
 
 REQUIRED_FILES = (
@@ -255,7 +255,7 @@ def main() -> None:
     parser.add_argument("--git-markdown", type=Path, required=True)
     args = parser.parse_args()
 
-    base_index = json.loads(args.base_json.read_text(encoding="utf-8"))
+    base_index = load_json_index(args.base_json)
     merged, detail = merge(
         base_index,
         args.scan_dir.resolve(),
@@ -263,9 +263,8 @@ def main() -> None:
         args.backup_manifest.resolve() if args.backup_manifest else None,
     )
     args.local_output.mkdir(parents=True, exist_ok=True)
-    args.git_json.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(merged, ensure_ascii=False, indent=2) + "\n"
-    args.git_json.write_text(payload, encoding="utf-8")
+    write_json_index(args.git_json, merged)
     args.git_markdown.write_text(markdown(merged), encoding="utf-8")
     (args.local_output / "game-library-index.json").write_text(payload, encoding="utf-8")
     detail_without_files = {key: value for key, value in detail.items() if key != "candidateFiles"}

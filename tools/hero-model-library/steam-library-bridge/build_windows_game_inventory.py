@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import hashlib
 import json
 import re
@@ -118,6 +119,21 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def load_json_index(path: Path) -> dict:
+    payload = gzip.decompress(path.read_bytes()) if path.suffix == ".gz" else path.read_bytes()
+    return json.loads(payload.decode("utf-8"))
+
+
+def index_bytes(index: dict, path: Path) -> bytes:
+    payload = (json.dumps(index, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    return gzip.compress(payload, compresslevel=9, mtime=0) if path.suffix == ".gz" else payload
+
+
+def write_json_index(path: Path, index: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(index_bytes(index, path))
 
 
 def bool_value(value: object) -> bool:
@@ -375,6 +391,8 @@ def markdown(index: dict) -> str:
         "",
         "> 本索引只證明 Windows 遊戲庫中有對應安裝目錄或 ROM／封裝候選。尚未擷取、轉換、驗收、登記、切換或部署。",
         "",
+        "機器查詢入口：`materials/hero-model-library/source-inventories/windows-game-library.json.gz`。完整未壓縮 JSON、原始 ZIP 與 CSV 留在本機素材庫及 S3 `legacy/`。",
+        "",
         "## 摘要",
         "",
         f"- Steam 安裝：**{summary['steamInstallCount']}**",
@@ -498,17 +516,29 @@ def main() -> None:
     parser.add_argument("--local-output", type=Path, required=True)
     parser.add_argument("--git-json", type=Path, required=True)
     parser.add_argument("--git-markdown", type=Path, required=True)
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     index = normalize(
         args.scan_dir.resolve(),
         args.source_zip.resolve() if args.source_zip else None,
         args.backup_manifest.resolve() if args.backup_manifest else None,
     )
-    args.local_output.mkdir(parents=True, exist_ok=True)
-    args.git_json.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(index, ensure_ascii=False, indent=2) + "\n"
-    args.git_json.write_text(payload, encoding="utf-8")
-    args.git_markdown.write_text(markdown(index), encoding="utf-8")
+    git_json_payload = index_bytes(index, args.git_json)
+    git_markdown_payload = markdown(index).encode("utf-8")
+    if args.check:
+        stale = []
+        if not args.git_json.is_file() or args.git_json.read_bytes() != git_json_payload:
+            stale.append(str(args.git_json))
+        if not args.git_markdown.is_file() or args.git_markdown.read_bytes() != git_markdown_payload:
+            stale.append(str(args.git_markdown))
+        if stale:
+            raise SystemExit("STALE WINDOWS GAME INVENTORY: " + ", ".join(stale))
+        print(json.dumps({"check": True, **index["summary"]}, ensure_ascii=False, indent=2))
+        return
+    args.local_output.mkdir(parents=True, exist_ok=True)
+    write_json_index(args.git_json, index)
+    args.git_markdown.write_bytes(git_markdown_payload)
     (args.local_output / "game-library-index.json").write_text(payload, encoding="utf-8")
     (args.local_output / "game-library-index.md").write_text(markdown(index), encoding="utf-8")
     write_csv(args.local_output / "steam-games.normalized.csv", index["steamGames"])
@@ -520,7 +550,7 @@ def main() -> None:
         "index": str((args.local_output / "game-library-index.json").resolve()),
         "sourceScanGeneratedAt": index["sourceScan"]["receipt"].get("generatedAt"),
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps(index["summary"], ensure_ascii=False, indent=2))
+    print(json.dumps({"check": False, **index["summary"]}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

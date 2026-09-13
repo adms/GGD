@@ -5,14 +5,16 @@ import argparse
 import json
 from pathlib import Path
 
+from build_windows_game_inventory import load_json_index
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("query")
-    parser.add_argument("--index", type=Path, default=Path("materials/hero-model-library/source-inventories/windows-game-library.json"))
+    parser.add_argument("--index", type=Path, default=Path("materials/hero-model-library/source-inventories/windows-game-library.json.gz"))
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
-    data = json.loads(args.index.read_text(encoding="utf-8"))
+    data = load_json_index(args.index)
     needle = args.query.casefold()
     rows = (
         data["steamGames"]
