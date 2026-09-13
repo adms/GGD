@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T20:17:51.756358+00:00",
-  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next",
-  "revision": "9c8783d0e0236d7230bb650dd8b08a81652c5b0b",
+  "generatedAt": "2026-09-13T21:59:27.453136+00:00",
+  "repo": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-jump-sources-batch",
+  "revision": "839077228614aef98f9b47dec4d669b52a303d14",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5567,8 +5567,8 @@
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "bytes": 15170,
-      "sha256": "a2852f999d1bf617aef280260909480aa753b96959abeefa893c55540f046f50"
+      "bytes": 15242,
+      "sha256": "1334199e9ab9b6e41195e49d8206e5ca6474e5f19ba3fbe2906536871bd27114"
     },
     {
       "path": "content/champions/godie-nsjs.json",
@@ -5682,8 +5682,8 @@
     },
     {
       "path": "content/champions/godie-ubal.json",
-      "bytes": 10755,
-      "sha256": "4f4c789b7130e5e68f5400f314248f80a0f5d899bc8efa55562a8c7126d9ab06"
+      "bytes": 10791,
+      "sha256": "09d231c1c50a5461508d6daed10e627b8316e7a88f1dc9ebfd44d4a68aedfcaf"
     },
     {
       "path": "content/champions/godie-ucrl.json",
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "1810daeb0a47f0724a173103bb05fca626d2cddfa3bb2a59189aa9dff8d6aa62",
-      "bytes": 9622291
+      "sha256": "ca812c9664fff6ae190bd3dca67688a87a79fc5ee815669056cf5b5befc1ccbe",
+      "bytes": 9654148
     },
     {
       "path": "package.json",
@@ -14737,8 +14737,8 @@
     }
   ],
   "sourceReport": {
-    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "52ae8213fd9fa5082b6d0760cc485dd670d175074e53eaf6cec2391d76add6ed"
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full-jump-sources.json",
+    "sha256": "1bdef4f029b4c77be8de6dbbf67bf2a2ab24cb25c0916d8bc6253dba5211a432"
   },
   "heroes": [
     {
@@ -28410,8 +28410,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-nbbc.json",
-        "sha256": "a2852f999d1bf617aef280260909480aa753b96959abeefa893c55540f046f50",
-        "bytes": 15170
+        "sha256": "1334199e9ab9b6e41195e49d8206e5ca6474e5f19ba3fbe2906536871bd27114",
+        "bytes": 15242
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",
@@ -31179,8 +31179,8 @@
       "uncertain": [],
       "championFile": {
         "path": "content/champions/godie-ubal.json",
-        "sha256": "4f4c789b7130e5e68f5400f314248f80a0f5d899bc8efa55562a8c7126d9ab06",
-        "bytes": 10755
+        "sha256": "09d231c1c50a5461508d6daed10e627b8316e7a88f1dc9ebfd44d4a68aedfcaf",
+        "bytes": 10791
       },
       "availability": {
         "status": "whitelisted-at-recorded-snapshot",

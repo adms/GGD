@@ -1,0 +1,52 @@
+{
+  "schema": "ggd.jstars-009-chunk-diagnosis@1",
+  "sourceId": "parallel-ps-jstars-sample",
+  "nativeCharacterId": "009",
+  "containers": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jstars-sample/extracted/SAMPLE PAK FILES/character_model_009_i.pak",
+      "bytes": 956000,
+      "sha256": "143dcd6b72ff53e81c2497ab85901f14b051bbe0324a9b2a9ccb1e0fde9aad22",
+      "declaredDecodedBytes": 1429248,
+      "chunkCount": 93,
+      "chunkModes": {
+        "$CL0": 47,
+        "$CLH": 46
+      },
+      "parsedChunkBytes": 955943,
+      "unparsedTailBytes": 25,
+      "requiresUnsupportedCh0Stage": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jstars-sample/extracted/SAMPLE PAK FILES/character_model_009_m.pak",
+      "bytes": 287408,
+      "sha256": "804288516207ee498fed227ddfa0ce1f6ad86754588730b562642760a39f3b43",
+      "declaredDecodedBytes": 671808,
+      "chunkCount": 44,
+      "chunkModes": {
+        "$CL0": 7,
+        "$CLH": 37
+      },
+      "parsedChunkBytes": 287368,
+      "unparsedTailBytes": 8,
+      "requiresUnsupportedCh0Stage": true
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-ps-jstars-sample/extracted/SAMPLE PAK FILES/character_model_009_v.pak",
+      "bytes": 2330800,
+      "sha256": "27775f7255fbc8d7603ad144e2b73b727770e822d329cc09cd879cf1be44d088",
+      "declaredDecodedBytes": 4238976,
+      "chunkCount": 27,
+      "chunkModes": {
+        "$CL0": 6,
+        "$CLH": 21
+      },
+      "parsedChunkBytes": 262190,
+      "unparsedTailBytes": 2068578,
+      "requiresUnsupportedCh0Stage": true
+    }
+  ],
+  "conclusion": "$CLH chunks wrap a $CH0 entropy stage. The public cmp_scz.bms implementation only has the CL0-style decode path, so its partial m output and i/v crashes cannot establish complete native decode.",
+  "completeNativeDecode": false,
+  "standardizedModel": false
+}

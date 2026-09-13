@@ -45667,11 +45667,11 @@
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "cd23ab2091042d93d222126f9dc1556d12ca9e5f0125248ceb1ec59f4a52bbbf"
+      "sha256": "dc64986198050b7ae4f19f36c7a1ffcf9b798970b334ed7cf0c34b618d27058a"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
-      "sha256": "92a49fe5735b60644a2529c0c56921ea07320ea4cd81c9ff10ec708b18c11fa3"
+      "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af"
     },
     {
       "path": "materials/hero-model-library/manifest.json",
@@ -46208,21 +46208,34 @@
       "heroIds": [],
       "ownerEntryIds": [],
       "url": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
-      "checkedAt": "2026-09-10T11:14:03.850446+00:00",
+      "checkedAt": "2026-09-14",
       "accessStatus": "public-catalog",
-      "acquisitionStatus": "remaining-packages-in-progress",
+      "acquisitionStatus": "downloaded-verified-in-five-batches",
       "defaultEligible": false,
       "resourceRole": "audio-supplement",
       "assetKinds": [
         "audio"
       ],
-      "verification": "58 原始包共 424,652,930 bytes；Asta／Dai／Kenshiro 三包已歸檔，其餘 55 包由平行工作流持續下載。後續交付驗證並完成 S3 備份後逐批入共用索引，尚未發布者不計入本批檔數。作者逐包 SHA、大小與下載頁見 console-audio-source-catalogs.json。",
+      "verification": "58 original packages are present as 3+10+10+32+3 distinct archive members across five immutable source batches. Every batch has an S3 readback receipt and per-member SHA-256 in public-source-files.json; the newer four batches also carry explicit full-member readback flags. This reconciles package acquisition only; speaker, language, event binding and per-clip listening review remain pending.",
       "catalogPath": "materials/hero-model-library/console-audio-source-catalogs.json",
       "backendIntegration": {
         "required": true,
-        "state": "not-acquired",
+        "state": "audio-listening-review-and-event-binding-pending",
         "heroIds": [],
         "selectionVerified": false
+      },
+      "readiness": "complete-original-package-catalog-acquired-listening-review-pending",
+      "packageCount": 58,
+      "deliverySourceIds": [
+        "parallel-ps-jumpforce-audio",
+        "parallel-ps-jumpforce-local-10",
+        "parallel-ps-jumpforce-local-second10",
+        "parallel-ps-jumpforce-local-next32",
+        "parallel-ps-jumpforce-local-final3"
+      ],
+      "reconciliationEvidence": {
+        "gitPath": "materials/hero-model-library/source-inventories/jumpforce-public-audio-catalog-reconciliation.json",
+        "sha256": "aa3760bfef2d942ab1d2375083940ed75b186e63e796fc4831c80d407a48e92b"
       }
     },
     {

@@ -3721,6 +3721,224 @@
       "evidence": [
         "Toon Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ]
+    },
+    {
+      "id": "native:jstars-000",
+      "name": "Monkey D. Luffy",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "蒙其·D·魯夫",
+        "Monkey D. Luffy",
+        "魯夫",
+        "路飛",
+        "モンキー・D・ルフィ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:000.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/i/000_luffy_new_01p_PS3.srdi",
+          "bytes": 1050948,
+          "sha256": "c950d9a55b7ed81c02223dfbe8f5d708dba2b1346105f6bac207cf912cfc7f2e",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "000",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/v/000_luffy_new_01p_PS3.srdv",
+            "bytes": 4064232,
+            "sha256": "b20a0f9fd7a17a141afc38b43966d1cdbacabd8dd75e6e650e0779a4667e5c37"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/m/000_luffy_new_01p_PS3.srd",
+            "bytes": 96464,
+            "sha256": "12b291687153860feaa0276cb33235b3c11ee268434c437712c2801b4c28a90a"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "designStatus": "designed",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
+    },
+    {
+      "id": "native:jstars-013",
+      "name": "Toriko",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "阿虜",
+        "Toriko",
+        "特瑞科",
+        "トリコ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:013.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/i/013_toriko_01p_PS3.srdi",
+          "bytes": 1309412,
+          "sha256": "73022b9f1c84ec54dde574e854b9758d81b35fc9d604444c817ada0c626971c1",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "013",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/v/013_toriko_01p_PS3.srdv",
+            "bytes": 4113392,
+            "sha256": "b14f905f7ec268a577b8319e31b2e88fcbc26c62da4f293e40c39d105835a696"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/m/013_toriko_01p_PS3.srd",
+            "bytes": 79504,
+            "sha256": "3a0b37b9df394060a6c1f72bc900b6af6cdfa146da58d3b1e019f7799431d819"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
+    },
+    {
+      "id": "native:jstars-014",
+      "name": "Zebra",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "澤布拉",
+        "Zebra",
+        "傑布拉",
+        "ゼブラ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:014.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/i/014_zebra_01p_PS3.srdi",
+          "bytes": 964250,
+          "sha256": "c042bfeb223ec8d1bbc16d08f809effca576acc05c784d17ae8eb0c6f36225be",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "014",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/v/014_zebra_01p_PS3.srdv",
+            "bytes": 4839920,
+            "sha256": "11acc0fe6dadc8070389eeca038f40bd6c9ad8706f14f7ef0148a4ae85e2d4f9"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/m/014_zebra_01p_PS3.srd",
+            "bytes": 57584,
+            "sha256": "221a93d1ae0d40199b9d3e2357a0f85d250e500f09ae7a87b2d01face9208757"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
+    },
+    {
+      "id": "native:jstars-018",
+      "name": "Killua Zoldyck",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "奇犽·揍敵客",
+        "Killua Zoldyck",
+        "奇犽",
+        "キルア＝ゾルディック"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:018.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+          "bytes": 1342172,
+          "sha256": "47f2970809edd99e5faf964d30e01b02fee8ccf5f498ada064871820e474a805",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "018",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/v/018_killua_01p_PS3.srdv",
+            "bytes": 4687088,
+            "sha256": "cfd1e6d9972a4b709de2e9d5ed217c790b13ec0d83fbe0ffd8fa70ec6e8ae179"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+            "bytes": 67024,
+            "sha256": "7e27a19ff389d81ef0bbb8bd89473bae88455b78ae73598a68f9349f43edc5ce"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed"
+        }
+      ],
+      "identityHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "designStatus": "designed",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ]
     }
   ],
   "policy": "Retain reviewed new acquisitions until the main source scanner explicitly supports and preserves each candidate. ｜ ou99 偶久網付費下載（owner 2026-09-11 授權）：18 顆已轉換入庫並在 GGD 主線 content/models/_index.json 裡，heroBody:true ⇒ 後台與編輯器選單可選。"
