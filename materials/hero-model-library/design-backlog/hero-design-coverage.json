@@ -1,8 +1,8 @@
 {
   "schema": "ggd.hero-design-coverage-compact@1",
-  "generatedAt": "2026-09-13T06:47:41.826612+00:00",
+  "generatedAt": "2026-09-13T07:17:39.099967+00:00",
   "repo": "/private/tmp/ggd-pr1152-merge-audit",
-  "revision": "225e4747597d1886e33ab100d112148a260947d7",
+  "revision": "9cadb4f2e76b32834e96aa4d5cf4782d0d156d88",
   "summary": {
     "heroes": 153,
     "abilityDocumentsAnalyzed": 907,
@@ -5767,8 +5767,8 @@
     },
     {
       "path": "materials/hero-model-library/inventory.json",
-      "sha256": "4b152a70d52832685b6e2eae489413c8e8a834cc6dde8ae84f8c4e22849fd9c9",
-      "bytes": 8023089
+      "sha256": "0ecb1861c469e8499d63ca3f8f79230055c61fdb66407983124fa54ba98ad892",
+      "bytes": 8089270
     },
     {
       "path": "package.json",
@@ -14728,7 +14728,7 @@
   ],
   "sourceReport": {
     "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-full.json",
-    "sha256": "7726272897132bc0cb3f1040a4865c843e058161fa8270a460295ddd19fcad79"
+    "sha256": "b4af70ce907b643c76101b0010a91137c5a668adedb3af084907b76ca2605c1d"
   },
   "heroes": [
     {

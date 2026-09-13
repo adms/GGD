@@ -42732,6 +42732,1322 @@
       "categoryCounts": {
         "voice-source-label-unreviewed": 2687
       }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0060",
+      "name": "Luffy",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 144,
+      "bytes": 32516762,
+      "knownDurationSeconds": 335.96693750000014,
+      "durationMeasuredFiles": 144,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/100060_chr0060_ActSE.awb",
+        "original/130060_chr0060_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 1,
+        "voice-source-label-unreviewed": 143
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0370",
+      "name": "Toguro",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 9,
+      "bytes": 3592790,
+      "knownDurationSeconds": 37.420770833333336,
+      "durationMeasuredFiles": 9,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/100370_chr0370_ActSE.awb",
+        "original/130370_chr0370_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 1,
+        "voice-source-label-unreviewed": 8
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0000",
+      "name": "Goku",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 161,
+      "bytes": 43652242,
+      "knownDurationSeconds": 454.6370624999999,
+      "durationMeasuredFiles": 161,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130000_chr0000_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 161
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0010",
+      "name": "Vegeta",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 33,
+      "bytes": 11510198,
+      "knownDurationSeconds": 119.88277083333334,
+      "durationMeasuredFiles": 33,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130010_chr0010_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 33
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0020",
+      "name": "Trunks",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 68,
+      "bytes": 20888156,
+      "knownDurationSeconds": 217.55379166666665,
+      "durationMeasuredFiles": 68,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130020_chr0020_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 68
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0030",
+      "name": "Frieza",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 60,
+      "bytes": 21823536,
+      "knownDurationSeconds": 227.30100000000002,
+      "durationMeasuredFiles": 60,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130030_chr0030_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 60
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0040",
+      "name": "Piccolo",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 56,
+      "bytes": 13328014,
+      "knownDurationSeconds": 138.8078125,
+      "durationMeasuredFiles": 56,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130040_chr0040_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 56
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0050",
+      "name": "Cell",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 16,
+      "bytes": 11160484,
+      "knownDurationSeconds": 116.24770833333334,
+      "durationMeasuredFiles": 16,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130050_chr0050_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 16
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0070",
+      "name": "Zoro",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 15,
+      "bytes": 4519052,
+      "knownDurationSeconds": 47.066583333333334,
+      "durationMeasuredFiles": 15,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130070_chr0070_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 15
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0080",
+      "name": "Sanji",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 73,
+      "bytes": 21323270,
+      "knownDurationSeconds": 222.08393749999996,
+      "durationMeasuredFiles": 73,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130080_chr0080_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 73
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0090",
+      "name": "Blackbeard",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 30,
+      "bytes": 14384084,
+      "knownDurationSeconds": 149.82045833333333,
+      "durationMeasuredFiles": 30,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130090_chr0090_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 30
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0100",
+      "name": "Hancock",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 15,
+      "bytes": 5951952,
+      "knownDurationSeconds": 61.992625000000004,
+      "durationMeasuredFiles": 15,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130100_chr0100_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 15
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0110",
+      "name": "Sabo",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 20,
+      "bytes": 4910518,
+      "knownDurationSeconds": 51.142062499999994,
+      "durationMeasuredFiles": 20,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130110_chr0110_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 20
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0120",
+      "name": "Naruto",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 119,
+      "bytes": 27899578,
+      "knownDurationSeconds": 290.56606249999993,
+      "durationMeasuredFiles": 119,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130120_chr0120_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 119
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0130",
+      "name": "Sasuke",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 19,
+      "bytes": 4636078,
+      "knownDurationSeconds": 48.28377083333333,
+      "durationMeasuredFiles": 19,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130130_chr0130_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 19
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0140",
+      "name": "Kaguya",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2,
+      "bytes": 1314046,
+      "knownDurationSeconds": 13.6870625,
+      "durationMeasuredFiles": 2,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130140_chr0140_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 2
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0150",
+      "name": "Gaara",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 34,
+      "bytes": 10251070,
+      "knownDurationSeconds": 106.76639583333332,
+      "durationMeasuredFiles": 34,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130150_chr0150_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 34
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0160",
+      "name": "Kakashi",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 7,
+      "bytes": 2022462,
+      "knownDurationSeconds": 21.064104166666667,
+      "durationMeasuredFiles": 7,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130160_chr0160_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 7
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0170",
+      "name": "Boruto",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1,
+      "bytes": 426780,
+      "knownDurationSeconds": 4.445166666666666,
+      "durationMeasuredFiles": 1,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130170_chr0170_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 1
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0240",
+      "name": "Ichigo",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 28,
+      "bytes": 6992980,
+      "knownDurationSeconds": 72.83070833333333,
+      "durationMeasuredFiles": 28,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130240_chr0240_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 28
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0260",
+      "name": "Aizen",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 10,
+      "bytes": 4766326,
+      "knownDurationSeconds": 49.644645833333335,
+      "durationMeasuredFiles": 10,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130260_chr0260_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 10
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0270",
+      "name": "Rukia",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 15,
+      "bytes": 5161884,
+      "knownDurationSeconds": 53.76275,
+      "durationMeasuredFiles": 15,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130270_chr0270_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 15
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300",
+      "name": "Gon",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 25,
+      "bytes": 6579860,
+      "knownDurationSeconds": 68.52875,
+      "durationMeasuredFiles": 25,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130300_chr0300_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 25
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0310",
+      "name": "Killua",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 18,
+      "bytes": 5419748,
+      "knownDurationSeconds": 56.447458333333344,
+      "durationMeasuredFiles": 18,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130310_chr0310_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 18
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0320",
+      "name": "Kurapika",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 17,
+      "bytes": 5764632,
+      "knownDurationSeconds": 60.04045833333334,
+      "durationMeasuredFiles": 17,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130320_chr0320_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 17
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0330",
+      "name": "Hisoka",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 17,
+      "bytes": 6603896,
+      "knownDurationSeconds": 68.78279166666665,
+      "durationMeasuredFiles": 17,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130330_chr0330_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 17
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0360",
+      "name": "Yusuke",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 15,
+      "bytes": 3698398,
+      "knownDurationSeconds": 38.51810416666666,
+      "durationMeasuredFiles": 15,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130360_chr0360_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 15
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0410",
+      "name": "Deku",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 16,
+      "bytes": 3749810,
+      "knownDurationSeconds": 39.0531875,
+      "durationMeasuredFiles": 16,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130410_chr0410_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 16
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0420",
+      "name": "Asta / 亞斯塔",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 6,
+      "bytes": 2193132,
+      "knownDurationSeconds": 22.842375,
+      "durationMeasuredFiles": 6,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130420_chr0420_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 6
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0440",
+      "name": "原生角色 ID chr0440",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 107,
+      "bytes": 44804866,
+      "knownDurationSeconds": 466.66831250000007,
+      "durationMeasuredFiles": 107,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130440_chr0440_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 107
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0450",
+      "name": "Kane",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 143,
+      "bytes": 68044904,
+      "knownDurationSeconds": 708.735541666667,
+      "durationMeasuredFiles": 143,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130450_chr0450_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 143
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0460",
+      "name": "Galena",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 89,
+      "bytes": 37162374,
+      "knownDurationSeconds": 387.0672708333333,
+      "durationMeasuredFiles": 89,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130460_chr0460_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 89
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0470",
+      "name": "Prometheus",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 77,
+      "bytes": 34336650,
+      "knownDurationSeconds": 357.6381458333333,
+      "durationMeasuredFiles": 77,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130470_chr0470_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 77
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0490",
+      "name": "原生角色 ID chr0490",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 65,
+      "bytes": 18882820,
+      "knownDurationSeconds": 196.66625000000008,
+      "durationMeasuredFiles": 65,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130490_chr0490_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 65
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0500",
+      "name": "原生角色 ID chr0500",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 42,
+      "bytes": 13728702,
+      "knownDurationSeconds": 142.9880625,
+      "durationMeasuredFiles": 42,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130500_chr0500_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 42
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0510",
+      "name": "原生角色 ID chr0510",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 220,
+      "bytes": 77374718,
+      "knownDurationSeconds": 805.8858125000003,
+      "durationMeasuredFiles": 220,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/130510_chr0510_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 220
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr7000",
+      "name": "原生角色 ID chr7000",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 4,
+      "bytes": 2032498,
+      "knownDurationSeconds": 21.170020833333336,
+      "durationMeasuredFiles": 4,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/137000_chr7000_EvnVoice.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 4
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:resident-bgm",
+      "name": "Resident BGM／常駐音樂",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 70,
+      "bytes": 1974848860,
+      "knownDurationSeconds": 10285.657354166668,
+      "durationMeasuredFiles": 70,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/900000_ResidentBGM.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "music": 70
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:resident-se",
+      "name": "Resident SE／常駐音效",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 1240,
+      "bytes": 332527388,
+      "knownDurationSeconds": 3463.258624999992,
+      "durationMeasuredFiles": 1240,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/910000_ResidentSE.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 1240
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:battle-res-se",
+      "name": "Battle Resident SE／戰鬥共用音效",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 868,
+      "bytes": 286885888,
+      "knownDurationSeconds": 1945.8455208333303,
+      "durationMeasuredFiles": 868,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/910001_BattleResSE.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 868
+      }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149:event-se",
+      "name": "Event SE／事件音效",
+      "library": "本機遊戲",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 60,
+      "bytes": 14933136,
+      "knownDurationSeconds": 155.52599999999987,
+      "durationMeasuredFiles": 60,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [
+        "original/910003_EventSE.awb"
+      ],
+      "backupIds": [
+        "public:steam-jump-force-streaming-audio-816020-build-8523149"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/816020/",
+      "work": "JUMP FORCE",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "sound-effect": 60
+      }
     }
   ],
   "backups": {
@@ -43477,16 +44793,30 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/kof-2002-um-voice-v1",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:steam-jump-force-streaming-audio-816020-build-8523149": {
+      "type": "zip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-streaming-audio-816020-build-8523149/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.zip",
+      "bytes": 3202524061,
+      "sha256": "1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035",
+      "archiveFormat": "zip",
+      "readbackVerified": true,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
+      "localRoot": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "533f331b8aa1d33935f718963c0dad5844fa4ce10cc5fa4d0d44dad4b655e13a"
+      "sha256": "7e6fe7fdc2e579ef9362dfff6b101a8912269abd53cae407e4064c2aa91cc1fd"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
-      "sha256": "ba29f74db06d3f5613f3133b5afc4a8b4c8bc0cada3f6673eb8860428bf41730"
+      "sha256": "c4a5c2b01afe75c313ca4c2b7264b84f1b3a41c31692578a69ccfb1575979bd9"
     },
     {
       "path": "materials/hero-model-library/manifest.json",
@@ -43899,6 +45229,14 @@
     {
       "path": "GGD-Asset-Library/extracted/kof-2002-um-voice-v1/manifest.json",
       "sha256": "b1cf3a7a0122b83ae2299b8f51665442e9f51fe2cf2a36e1892330957a32eb24"
+    },
+    {
+      "path": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/audio-file-index.json",
+      "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+    },
+    {
+      "path": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/audio-file-index.json",
+      "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
     },
     {
       "path": "materials/hero-model-library/lol-prefetch-resolution.json",
@@ -94593,13 +95931,13 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 989,
-    "audioFiles": 286762,
-    "bytes": 138531167055,
-    "sourceFileRelationshipRows": 286762,
-    "uniqueLocalPaths": 286314,
-    "uniqueSha256Payloads": 254431,
-    "uniqueLocalPathBytes": 137958238339,
+    "groups": 1030,
+    "audioFiles": 290796,
+    "bytes": 141743771597,
+    "sourceFileRelationshipRows": 290796,
+    "uniqueLocalPaths": 290348,
+    "uniqueSha256Payloads": 257936,
+    "uniqueLocalPathBytes": 141170842881,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
@@ -94610,6 +95948,6 @@
     "nativeEventBoundRelationshipRows": 968,
     "nativeEventMappedEvents": 232
   },
-  "sourceFileManifestSha256": "f6fabc647c479725034ffce1c755f99083533c2a7e179334c41fa92eeed5117e",
-  "uncompressedFileManifestSha256": "6a41c352e76c70ca52c4b93e1c60e70fc6c91de0cb535f351489912a86cb0527"
+  "sourceFileManifestSha256": "b228befd9a11abb3c644685c9539a5ef30596f431c0159a171464ea859a8bb60",
+  "uncompressedFileManifestSha256": "7d4bdc50ae62d0070d59baeb5ce0e5fb4168723724acd7d193da086b7621e48e"
 }

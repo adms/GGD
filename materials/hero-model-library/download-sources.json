@@ -51915,6 +51915,1516 @@
         "fullReadbackVerified": true,
         "s3ReadbackVerified": true
       }
+    },
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "target": "JUMP FORCE Steam 原遊戲 Streaming 音訊（43 AWB／4,034 WAV）",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://store.steampowered.com/app/816020/",
+      "uploader": "User-owned local Steam install exposed through read-only SMB",
+      "format": "AFS2/AWB with CRI HCA; decoded PCM WAV",
+      "accessStatus": "local-installed-game",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-decoded-pending-listening-review",
+      "purchaseDecision": "no-purchase-user-owned-install",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+      "sourceGame": "JUMP FORCE",
+      "platform": "Windows (Steam)",
+      "appId": "816020",
+      "buildId": "8523149",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "local-readonly-smb",
+      "assetKinds": [
+        "audio",
+        "voice",
+        "sound-effect",
+        "music"
+      ],
+      "publicationStatus": "s3-readback-verified",
+      "files": [
+        {
+          "path": "original/100060_chr0060_ActSE.awb",
+          "bytes": 86060,
+          "sha256": "45b2d6865550169667e307962ab4bc61994d2101fffff0ad2eea3c5d36a4717a"
+        },
+        {
+          "path": "original/100370_chr0370_ActSE.awb",
+          "bytes": 12745,
+          "sha256": "ce215a3434bbc4a61034eb9279d544080d97cf7e021e6ee6dcd33a862e9cfde5"
+        },
+        {
+          "path": "original/130000_chr0000_EvnVoice.awb",
+          "bytes": 7321440,
+          "sha256": "f1b1321aedc412bd9b063274f9b79fcac3c6e497378b3bcc6b26e5bd65e0433f"
+        },
+        {
+          "path": "original/130010_chr0010_EvnVoice.awb",
+          "bytes": 1927784,
+          "sha256": "92ea9485899ae409275eb9b2bcc76a20a985846694ca1fbeb4b3fa700c90f4b0"
+        },
+        {
+          "path": "original/130020_chr0020_EvnVoice.awb",
+          "bytes": 3500210,
+          "sha256": "1359822a72161ef5ff114e3a89b42ca0f530b14ac4a9b42f5ea0f845188bf9b5"
+        },
+        {
+          "path": "original/130030_chr0030_EvnVoice.awb",
+          "bytes": 3652615,
+          "sha256": "760a2958579c8fb2241ca6c3e009e6ad6c63ec7fe29412cd3c7f1465f9fac9ee"
+        },
+        {
+          "path": "original/130040_chr0040_EvnVoice.awb",
+          "bytes": 2237772,
+          "sha256": "c9be7d51277c99384461f8b5a4b9509507870775ec9a221e404747572ac2235b"
+        },
+        {
+          "path": "original/130050_chr0050_EvnVoice.awb",
+          "bytes": 1864104,
+          "sha256": "0ba225a528d1b8ef16bf28fab77cf66b15923f364b0bf3234e5f01733cd77325"
+        },
+        {
+          "path": "original/130060_chr0060_EvnVoice.awb",
+          "bytes": 5374869,
+          "sha256": "43f1314111957093aec73c3a34002b99cd5d97cf128cdb69eadf7f9096415b19"
+        },
+        {
+          "path": "original/130070_chr0070_EvnVoice.awb",
+          "bytes": 756745,
+          "sha256": "3ddea73a226c6caac8f2072d8e55923e35a14bc24aa6e4ea40b318a3dbc9808e"
+        },
+        {
+          "path": "original/130080_chr0080_EvnVoice.awb",
+          "bytes": 3575003,
+          "sha256": "aede672a77f8e7ee4fa6b9a3ddf092fc6cd3988c2ae4c8b9a152458289c4c6c8"
+        },
+        {
+          "path": "original/130090_chr0090_EvnVoice.awb",
+          "bytes": 2404235,
+          "sha256": "4b7f04720b583b46763dfd00ba04f4a6bbe3aa6b6d4175b14d8f88151d3c47bb"
+        },
+        {
+          "path": "original/130100_chr0100_EvnVoice.awb",
+          "bytes": 995749,
+          "sha256": "943dc311af7d6ef9bc577ff9df053340a726599baf26c930e68c6157524f96ff"
+        },
+        {
+          "path": "original/130110_chr0110_EvnVoice.awb",
+          "bytes": 824272,
+          "sha256": "a5dd4de5c6cd710b85b25f43a8a0f1ad15907eb8f93d1d2847215c15a1a96544"
+        },
+        {
+          "path": "original/130120_chr0120_EvnVoice.awb",
+          "bytes": 4683306,
+          "sha256": "bd8a03dbfbd7a35ac442847dc121c6dab76b4e1ee5ed3249098b5196a07dcf17"
+        },
+        {
+          "path": "original/130130_chr0130_EvnVoice.awb",
+          "bytes": 778055,
+          "sha256": "75b9e5c00dc89943aa9165f797307bf90491c7222672d429d5db41b4ee4108ea"
+        },
+        {
+          "path": "original/130140_chr0140_EvnVoice.awb",
+          "bytes": 219501,
+          "sha256": "b530cf9c462917b0b9144bb89d07f02f03d9c5a3679d4fdd48877094494c2b9e"
+        },
+        {
+          "path": "original/130150_chr0150_EvnVoice.awb",
+          "bytes": 1717920,
+          "sha256": "db85c7c7034b5c23551716dbfdbc757673ab7760499e5506863febdc22d38c22"
+        },
+        {
+          "path": "original/130160_chr0160_EvnVoice.awb",
+          "bytes": 339118,
+          "sha256": "5f8b7941b6e4f0da0ad6dc7a595aa51d770fb32bb800805316a5913c625641b2"
+        },
+        {
+          "path": "original/130170_chr0170_EvnVoice.awb",
+          "bytes": 71397,
+          "sha256": "c522fd41176641dc5209632f29f4f66988db5a886549e94d04d1392bf667b216"
+        },
+        {
+          "path": "original/130240_chr0240_EvnVoice.awb",
+          "bytes": 1173971,
+          "sha256": "a2b6e5b24c23397b0a93f5b2bdf7c88ad9e1c70a2952e4d3c0ef9934f2fe0ed9"
+        },
+        {
+          "path": "original/130260_chr0260_EvnVoice.awb",
+          "bytes": 797074,
+          "sha256": "131172cb56664f833c9f9094bd036afaede09399e2f7aaad5659e8a73454f353"
+        },
+        {
+          "path": "original/130270_chr0270_EvnVoice.awb",
+          "bytes": 864901,
+          "sha256": "53a9565fb02511dfe3b225bec6b8aa7c5a2a0cdf858fc2f0afa04af21009fec5"
+        },
+        {
+          "path": "original/130300_chr0300_EvnVoice.awb",
+          "bytes": 1104083,
+          "sha256": "9fd05c293d6f4c06bcdd8bb3d85862f1fd99ad43a3fe0e178d42da080c7674f8"
+        },
+        {
+          "path": "original/130310_chr0310_EvnVoice.awb",
+          "bytes": 908483,
+          "sha256": "3305f5293cc19666efdb3d4c4ce980f880d939147f7c5a280d9f2a2c5f9f721b"
+        },
+        {
+          "path": "original/130320_chr0320_EvnVoice.awb",
+          "bytes": 964602,
+          "sha256": "8a573aab64704e3cea6dbb55861f1eeabdd10bc99062a3d120b637c0eab33124"
+        },
+        {
+          "path": "original/130330_chr0330_EvnVoice.awb",
+          "bytes": 1105080,
+          "sha256": "730378a60fc634c000cb50231d073e5e1ce828c587ae8b1786839685962d5207"
+        },
+        {
+          "path": "original/130360_chr0360_EvnVoice.awb",
+          "bytes": 621104,
+          "sha256": "c163471666e7cebfc75ca1a7653f708be4850d8e394440049ddd310cb572455c"
+        },
+        {
+          "path": "original/130370_chr0370_EvnVoice.awb",
+          "bytes": 588506,
+          "sha256": "8bc174d74fc5bb85a3ce53f3191d5b787a346c139350c1dcf5b6ce5642234446"
+        },
+        {
+          "path": "original/130410_chr0410_EvnVoice.awb",
+          "bytes": 629714,
+          "sha256": "bc89077fab9e42d1145c7d26bb423c1690cb90bdb3f852bff70a145d19cd7252"
+        },
+        {
+          "path": "original/130420_chr0420_EvnVoice.awb",
+          "bytes": 367306,
+          "sha256": "8c12ec7683004b435996c27e232389b2be7a28cb10b36b2d5706b55d74f5b035"
+        },
+        {
+          "path": "original/130440_chr0440_EvnVoice.awb",
+          "bytes": 7495432,
+          "sha256": "e7ca492ec1be871b3f21868726f7bae586fccbffee6116e676e6c8d593e6cbc5"
+        },
+        {
+          "path": "original/130450_chr0450_EvnVoice.awb",
+          "bytes": 11374898,
+          "sha256": "70d4a7c36157f237b73355de5da2b59afe1c90fdcbe1805b185b74b08de7e8af"
+        },
+        {
+          "path": "original/130460_chr0460_EvnVoice.awb",
+          "bytes": 6215935,
+          "sha256": "ca6736900a5774e9c206fed6bb33b0229a5c7660f7b85f3e38c8304493d1abc0"
+        },
+        {
+          "path": "original/130470_chr0470_EvnVoice.awb",
+          "bytes": 5741498,
+          "sha256": "f77ccc4a730e160950f2d571998c18bd085816a3b6d6d2974119e46dbe17d8af"
+        },
+        {
+          "path": "original/130490_chr0490_EvnVoice.awb",
+          "bytes": 3163068,
+          "sha256": "3da1372c59cd5d4506ca99b49100cb02863ea0d66fc584e5938b581570633ce0"
+        },
+        {
+          "path": "original/130500_chr0500_EvnVoice.awb",
+          "bytes": 2299557,
+          "sha256": "e70aaf0274c32d59237df1b4951989fb66a1f8f91f12c02938f933688060ced7"
+        },
+        {
+          "path": "original/130510_chr0510_EvnVoice.awb",
+          "bytes": 12955958,
+          "sha256": "68514b0ff6775a702657a1913805823ca9fb74873a77f6fed708916c684f22ef"
+        },
+        {
+          "path": "original/137000_chr7000_EvnVoice.awb",
+          "bytes": 339777,
+          "sha256": "bf051a0c5c319a61b2a2b99d364b2ce40af6f2c18a4ae76f8edd378cf0c2d9f1"
+        },
+        {
+          "path": "original/900000_ResidentBGM.awb",
+          "bytes": 328961622,
+          "sha256": "606270d7006ed7f48152d4bef4bf3ae2c4e2898c45ecafa9f766f37c21fa6dbb"
+        },
+        {
+          "path": "original/910000_ResidentSE.awb",
+          "bytes": 55827560,
+          "sha256": "cb789524c4cbea7c9b518e6de091c7cb7251ac4df0509c35308773c887186b6d"
+        },
+        {
+          "path": "original/910001_BattleResSE.awb",
+          "bytes": 48152044,
+          "sha256": "b8c8b61751b827cf3b51200049605f19529f856c6c108f4caaf6d48c35c49b49"
+        },
+        {
+          "path": "original/910003_EventSE.awb",
+          "bytes": 2505084,
+          "sha256": "cbbbc36b12232e5c608fd70886ab4357b4b8fab70969db1954ac8031123997ef"
+        }
+      ],
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-listening-and-character-mapping",
+        "selectionVerified": false
+      },
+      "audioFileIndex": {
+        "reportPath": "audio-file-index.json",
+        "reportSha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+      },
+      "primaryAudioFormats": [
+        ".wav"
+      ],
+      "audioGroups": [
+        {
+          "id": "battle-res-se",
+          "label": "Battle Resident SE／戰鬥共用音效",
+          "name": "Battle Resident SE／戰鬥共用音效",
+          "characterName": null,
+          "nativeCharacterId": null,
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/910001_BattleResSE/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 868,
+          "durationSeconds": 1945.8455208333303,
+          "sourceCategoryCounts": {
+            "sfx": 868
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0000",
+          "label": "Goku",
+          "name": "Goku",
+          "characterName": "Goku",
+          "nativeCharacterId": "chr0000",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130000_chr0000_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 161,
+          "durationSeconds": 454.6370624999999,
+          "sourceCategoryCounts": {
+            "voice": 161
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-goku"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0010",
+          "label": "Vegeta",
+          "name": "Vegeta",
+          "characterName": "Vegeta",
+          "nativeCharacterId": "chr0010",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130010_chr0010_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 33,
+          "durationSeconds": 119.88277083333334,
+          "sourceCategoryCounts": {
+            "voice": 33
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-vegeta"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0020",
+          "label": "Trunks",
+          "name": "Trunks",
+          "characterName": "Trunks",
+          "nativeCharacterId": "chr0020",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130020_chr0020_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 68,
+          "durationSeconds": 217.55379166666665,
+          "sourceCategoryCounts": {
+            "voice": 68
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-trunks"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0030",
+          "label": "Frieza",
+          "name": "Frieza",
+          "characterName": "Frieza",
+          "nativeCharacterId": "chr0030",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130030_chr0030_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 60,
+          "durationSeconds": 227.30100000000002,
+          "sourceCategoryCounts": {
+            "voice": 60
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-frieza"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0040",
+          "label": "Piccolo",
+          "name": "Piccolo",
+          "characterName": "Piccolo",
+          "nativeCharacterId": "chr0040",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130040_chr0040_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 56,
+          "durationSeconds": 138.8078125,
+          "sourceCategoryCounts": {
+            "voice": 56
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-piccolo"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0050",
+          "label": "Cell",
+          "name": "Cell",
+          "characterName": "Cell",
+          "nativeCharacterId": "chr0050",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130050_chr0050_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 16,
+          "durationSeconds": 116.24770833333334,
+          "sourceCategoryCounts": {
+            "voice": 16
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-10:jumpforce-cell"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0060",
+          "label": "Luffy",
+          "name": "Luffy",
+          "characterName": "Luffy",
+          "nativeCharacterId": "chr0060",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/100060_chr0060_ActSE/",
+            "decoded/130060_chr0060_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 144,
+          "durationSeconds": 335.96693750000014,
+          "sourceCategoryCounts": {
+            "sfx": 1,
+            "voice": 143
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-luffy"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0070",
+          "label": "Zoro",
+          "name": "Zoro",
+          "characterName": "Zoro",
+          "nativeCharacterId": "chr0070",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130070_chr0070_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 15,
+          "durationSeconds": 47.066583333333334,
+          "sourceCategoryCounts": {
+            "voice": 15
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-zoro"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0080",
+          "label": "Sanji",
+          "name": "Sanji",
+          "characterName": "Sanji",
+          "nativeCharacterId": "chr0080",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130080_chr0080_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 73,
+          "durationSeconds": 222.08393749999996,
+          "sourceCategoryCounts": {
+            "voice": 73
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-sanji"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0090",
+          "label": "Blackbeard",
+          "name": "Blackbeard",
+          "characterName": "Blackbeard",
+          "nativeCharacterId": "chr0090",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130090_chr0090_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 30,
+          "durationSeconds": 149.82045833333333,
+          "sourceCategoryCounts": {
+            "voice": 30
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-blackbeard"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0100",
+          "label": "Hancock",
+          "name": "Hancock",
+          "characterName": "Hancock",
+          "nativeCharacterId": "chr0100",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130100_chr0100_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 15,
+          "durationSeconds": 61.992625000000004,
+          "sourceCategoryCounts": {
+            "voice": 15
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-hancock"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0110",
+          "label": "Sabo",
+          "name": "Sabo",
+          "characterName": "Sabo",
+          "nativeCharacterId": "chr0110",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130110_chr0110_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 20,
+          "durationSeconds": 51.142062499999994,
+          "sourceCategoryCounts": {
+            "voice": 20
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-sabo"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0120",
+          "label": "Naruto",
+          "name": "Naruto",
+          "characterName": "Naruto",
+          "nativeCharacterId": "chr0120",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130120_chr0120_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 119,
+          "durationSeconds": 290.56606249999993,
+          "sourceCategoryCounts": {
+            "voice": 119
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-naruto"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0130",
+          "label": "Sasuke",
+          "name": "Sasuke",
+          "characterName": "Sasuke",
+          "nativeCharacterId": "chr0130",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130130_chr0130_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 19,
+          "durationSeconds": 48.28377083333333,
+          "sourceCategoryCounts": {
+            "voice": 19
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-sasuke"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0140",
+          "label": "Kaguya",
+          "name": "Kaguya",
+          "characterName": "Kaguya",
+          "nativeCharacterId": "chr0140",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130140_chr0140_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 2,
+          "durationSeconds": 13.6870625,
+          "sourceCategoryCounts": {
+            "voice": 2
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-kaguya"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0150",
+          "label": "Gaara",
+          "name": "Gaara",
+          "characterName": "Gaara",
+          "nativeCharacterId": "chr0150",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130150_chr0150_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 34,
+          "durationSeconds": 106.76639583333332,
+          "sourceCategoryCounts": {
+            "voice": 34
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-gaara"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0160",
+          "label": "Kakashi",
+          "name": "Kakashi",
+          "characterName": "Kakashi",
+          "nativeCharacterId": "chr0160",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130160_chr0160_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 7,
+          "durationSeconds": 21.064104166666667,
+          "sourceCategoryCounts": {
+            "voice": 7
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-kakashi"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0170",
+          "label": "Boruto",
+          "name": "Boruto",
+          "characterName": "Boruto",
+          "nativeCharacterId": "chr0170",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130170_chr0170_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 1,
+          "durationSeconds": 4.445166666666666,
+          "sourceCategoryCounts": {
+            "voice": 1
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-10:jumpforce-boruto"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0240",
+          "label": "Ichigo",
+          "name": "Ichigo",
+          "characterName": "Ichigo",
+          "nativeCharacterId": "chr0240",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130240_chr0240_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 28,
+          "durationSeconds": 72.83070833333333,
+          "sourceCategoryCounts": {
+            "voice": 28
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-10:jumpforce-ichigo"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0260",
+          "label": "Aizen",
+          "name": "Aizen",
+          "characterName": "Aizen",
+          "nativeCharacterId": "chr0260",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130260_chr0260_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 10,
+          "durationSeconds": 49.644645833333335,
+          "sourceCategoryCounts": {
+            "voice": 10
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-10:jumpforce-aizen"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0270",
+          "label": "Rukia",
+          "name": "Rukia",
+          "characterName": "Rukia",
+          "nativeCharacterId": "chr0270",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130270_chr0270_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 15,
+          "durationSeconds": 53.76275,
+          "sourceCategoryCounts": {
+            "voice": 15
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-10:jumpforce-rukia"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0300",
+          "label": "Gon",
+          "name": "Gon",
+          "characterName": "Gon",
+          "nativeCharacterId": "chr0300",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130300_chr0300_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 25,
+          "durationSeconds": 68.52875,
+          "sourceCategoryCounts": {
+            "voice": 25
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-gon"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0310",
+          "label": "Killua",
+          "name": "Killua",
+          "characterName": "Killua",
+          "nativeCharacterId": "chr0310",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130310_chr0310_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 18,
+          "durationSeconds": 56.447458333333344,
+          "sourceCategoryCounts": {
+            "voice": 18
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-killua"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0320",
+          "label": "Kurapika",
+          "name": "Kurapika",
+          "characterName": "Kurapika",
+          "nativeCharacterId": "chr0320",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130320_chr0320_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 17,
+          "durationSeconds": 60.04045833333334,
+          "sourceCategoryCounts": {
+            "voice": 17
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-kurapika"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0330",
+          "label": "Hisoka",
+          "name": "Hisoka",
+          "characterName": "Hisoka",
+          "nativeCharacterId": "chr0330",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130330_chr0330_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 17,
+          "durationSeconds": 68.78279166666665,
+          "sourceCategoryCounts": {
+            "voice": 17
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-second10:jumpforce-hisoka"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0360",
+          "label": "Yusuke",
+          "name": "Yusuke",
+          "characterName": "Yusuke",
+          "nativeCharacterId": "chr0360",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130360_chr0360_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 15,
+          "durationSeconds": 38.51810416666666,
+          "sourceCategoryCounts": {
+            "voice": 15
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-yusuke"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0370",
+          "label": "Toguro",
+          "name": "Toguro",
+          "characterName": "Toguro",
+          "nativeCharacterId": "chr0370",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/100370_chr0370_ActSE/",
+            "decoded/130370_chr0370_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 9,
+          "durationSeconds": 37.420770833333336,
+          "sourceCategoryCounts": {
+            "sfx": 1,
+            "voice": 8
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-toguro"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0410",
+          "label": "Deku",
+          "name": "Deku",
+          "characterName": "Deku",
+          "nativeCharacterId": "chr0410",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130410_chr0410_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 16,
+          "durationSeconds": 39.0531875,
+          "sourceCategoryCounts": {
+            "voice": 16
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-deku"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0420",
+          "label": "Asta / 亞斯塔",
+          "name": "Asta / 亞斯塔",
+          "characterName": "Asta / 亞斯塔",
+          "nativeCharacterId": "chr0420",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130420_chr0420_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 6,
+          "durationSeconds": 22.842375,
+          "sourceCategoryCounts": {
+            "voice": 6
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-audio:JForce_Asta"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0440",
+          "label": "原生角色 ID chr0440",
+          "name": "原生角色 ID chr0440",
+          "characterName": "原生角色 ID chr0440",
+          "nativeCharacterId": "chr0440",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130440_chr0440_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 107,
+          "durationSeconds": 466.66831250000007,
+          "sourceCategoryCounts": {
+            "voice": 107
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0450",
+          "label": "Kane",
+          "name": "Kane",
+          "characterName": "Kane",
+          "nativeCharacterId": "chr0450",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130450_chr0450_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 143,
+          "durationSeconds": 708.735541666667,
+          "sourceCategoryCounts": {
+            "voice": 143
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-final3:jumpforce-kane"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0460",
+          "label": "Galena",
+          "name": "Galena",
+          "characterName": "Galena",
+          "nativeCharacterId": "chr0460",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130460_chr0460_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 89,
+          "durationSeconds": 387.0672708333333,
+          "sourceCategoryCounts": {
+            "voice": 89
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-galena"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0470",
+          "label": "Prometheus",
+          "name": "Prometheus",
+          "characterName": "Prometheus",
+          "nativeCharacterId": "chr0470",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130470_chr0470_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 77,
+          "durationSeconds": 357.6381458333333,
+          "sourceCategoryCounts": {
+            "voice": 77
+          },
+          "relatedExistingGroupIds": [
+            "parallel-ps-jumpforce-local-next32:jumpforce-prometheus"
+          ],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0490",
+          "label": "原生角色 ID chr0490",
+          "name": "原生角色 ID chr0490",
+          "characterName": "原生角色 ID chr0490",
+          "nativeCharacterId": "chr0490",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130490_chr0490_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 65,
+          "durationSeconds": 196.66625000000008,
+          "sourceCategoryCounts": {
+            "voice": 65
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0500",
+          "label": "原生角色 ID chr0500",
+          "name": "原生角色 ID chr0500",
+          "characterName": "原生角色 ID chr0500",
+          "nativeCharacterId": "chr0500",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130500_chr0500_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 42,
+          "durationSeconds": 142.9880625,
+          "sourceCategoryCounts": {
+            "voice": 42
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr0510",
+          "label": "原生角色 ID chr0510",
+          "name": "原生角色 ID chr0510",
+          "characterName": "原生角色 ID chr0510",
+          "nativeCharacterId": "chr0510",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/130510_chr0510_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 220,
+          "durationSeconds": 805.8858125000003,
+          "sourceCategoryCounts": {
+            "voice": 220
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "chr7000",
+          "label": "原生角色 ID chr7000",
+          "name": "原生角色 ID chr7000",
+          "characterName": "原生角色 ID chr7000",
+          "nativeCharacterId": "chr7000",
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/137000_chr7000_EvnVoice/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 4,
+          "durationSeconds": 21.170020833333336,
+          "sourceCategoryCounts": {
+            "voice": 4
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "event-se",
+          "label": "Event SE／事件音效",
+          "name": "Event SE／事件音效",
+          "characterName": null,
+          "nativeCharacterId": null,
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/910003_EventSE/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 60,
+          "durationSeconds": 155.52599999999987,
+          "sourceCategoryCounts": {
+            "sfx": 60
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "resident-bgm",
+          "label": "Resident BGM／常駐音樂",
+          "name": "Resident BGM／常駐音樂",
+          "characterName": null,
+          "nativeCharacterId": null,
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/900000_ResidentBGM/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 70,
+          "durationSeconds": 10285.657354166668,
+          "sourceCategoryCounts": {
+            "music": 70
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        },
+        {
+          "id": "resident-se",
+          "label": "Resident SE／常駐音效",
+          "name": "Resident SE／常駐音效",
+          "characterName": null,
+          "nativeCharacterId": null,
+          "heroIds": [],
+          "pathPrefixes": [
+            "decoded/910000_ResidentSE/"
+          ],
+          "sourceGame": "JUMP FORCE",
+          "sourcePlatform": "Windows (Steam)",
+          "sourceFolder": "JUMP_FORCE/Content/Sound/Streaming",
+          "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+          "sourcePage": "https://store.steampowered.com/app/816020/",
+          "author": "Spike Chunsoft / Bandai Namco Entertainment",
+          "fileCount": 1240,
+          "durationSeconds": 3463.258624999992,
+          "sourceCategoryCounts": {
+            "sfx": 1240
+          },
+          "relatedExistingGroupIds": [],
+          "speakerReviewed": false,
+          "languageReviewed": false,
+          "transcriptReviewed": false,
+          "synthesisReady": false,
+          "note": "Native bank and chrNNNN labels only. Individual EventVoice streams may contain other speakers; language, dialogue, event and skill binding remain unreviewed."
+        }
+      ],
+      "audioAcquisition": {
+        "originalAwbFiles": 43,
+        "originalAwbBytes": 536500157,
+        "decodedFiles": 4034,
+        "decodedBytes": 3212604542,
+        "knownDurationSeconds": 22132.294229165873,
+        "voiceSourceLabelFiles": 1794,
+        "soundEffectFiles": 2170,
+        "musicFiles": 70,
+        "speakerVerifiedFiles": 0,
+        "languageReviewedFiles": 0
+      },
+      "decoder": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/tools/vgmstream-cli",
+        "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e",
+        "version": "r2117"
+      },
+      "verification": "All 43 directly mounted AFS2/AWB banks were copied and SHA-256 verified. vgmstream r2117 decoded all 4,034 CRI HCA subsongs; every WAV has RIFF framing, sample metadata and SHA-256. Bank labels are not per-clip listening proof. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "limitations": [
+        "The six encrypted Unreal PAK indexes remain unavailable without an authorized AES key; this source covers only the unencrypted Streaming directory.",
+        "EvnVoice is a source label, not proof that every stream is single-speaker dialogue.",
+        "Five native character IDs remain unresolved: chr0440, chr0490, chr0500, chr0510 and chr7000.",
+        "No clip is language-, speaker-, transcript-, event- or GGD skill-binding verified.",
+        "Registration in the audio catalog is not a backend character option or production deployment."
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-streaming-audio-816020-build-8523149/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.zip",
+        "bytes": 3202524061,
+        "sha256": "1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      }
     }
   ],
   "publicSourcePolicy": "已取得模型先核對角色與形態以避免重買；音訊補充不算模型取得。模型預設完全依第二守則九級順位；本工作流不執行付費，其他付費工作流依原授權交付並保留全部來源。",
