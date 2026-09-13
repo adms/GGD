@@ -6248,6 +6248,71 @@
     "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md",
     "sha256": "8dfd6076c707c2957f569eb2c24c7fd04491d8ac2b67f78e78178a1d2bb6316c"
   },
+  "legacySmashSourceInventory": {
+    "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/inventory.json",
+    "sha256": "f57c97d05bb0b0cb4018414a945a57447491f77ad12862e15bd06b553089ea5d",
+    "sourceId": "smash-legacy-sources-v1",
+    "status": "N64 metadata-only; Melee and Brawl audio bytes verified; model/motion/VFX source bytes not acquired; Ultimate separate",
+    "summary": {
+      "nintendo64InventoryRows": 4,
+      "nintendo64PayloadFilesRead": 0,
+      "meleeArchivePackages": 51,
+      "meleeVerifiedMemberFiles": 2011,
+      "meleePcmWavFiles": 1766,
+      "brawlArchivePackages": 12,
+      "brawlVerifiedMemberFiles": 462,
+      "brawlPcmWavFiles": 448,
+      "modelFiles": 0,
+      "nativeMotionFiles": 0,
+      "vfxFiles": 0,
+      "convertedFiles": 0,
+      "runtimeBindingsVerified": 0
+    },
+    "ultimateBoundary": {
+      "includedInLegacyTotals": false,
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "platform": "Nintendo Switch",
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json",
+      "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae",
+      "sourceId": "parallel-ns-ultimate14",
+      "status": "separate-current-generation-source; see linked reconciliation",
+      "sourceStageCounts": {
+        "ultimate14CommunityMod": {
+          "verifiedContainerFiles": 1,
+          "verifiedExtractedFiles": 1071,
+          "identifiableFighterGroups": 16,
+          "fullCharacterBodyModels": 0,
+          "nuanmbPaths": 435,
+          "uniqueTransformMotionPayloads": 175,
+          "convertedAndAcceptedCharacters": 0,
+          "backendSelectableCharacters": 0
+        },
+        "worldblenderBodyCandidates": {
+          "identifiableFighterGroups": 16,
+          "bodyCandidateFiles": 128,
+          "freshPayloadHashes": 10,
+          "skeletonValidatedModels": 10,
+          "convertedAndAcceptedModels": 10,
+          "backendSelectableModels": 0
+        },
+        "nsandns2GameContainers": {
+          "inventoryOnlyContainerFiles": 3,
+          "payloadBytesRead": 0,
+          "identifiableFightersFromPayload": 0,
+          "modelFilesIdentified": 0,
+          "motionFilesIdentified": 0,
+          "extractedFiles": 0,
+          "convertedFiles": 0,
+          "acceptedFiles": 0,
+          "backendSelectableModels": 0
+        }
+      }
+    }
+  },
+  "legacySmashSourceDocument": {
+    "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/README.md",
+    "sha256": "aaae96f32a601d9e834efdf4ffb6e03b1977f37db0b52f4028ea88f7a1f3500d"
+  },
   "ultimate14NativeMotionIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
     "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23",

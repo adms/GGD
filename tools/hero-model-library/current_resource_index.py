@@ -179,6 +179,16 @@ def build(git_link_root=ROOT):
         or fate_unlimited_codes_platform.get('summary',{}).get('fateUbwServants')!=14
         or fate_unlimited_codes_platform.get('summary',{}).get('fateUbwConvertedNativeClips')!=127):
         raise ValueError('Fate/unlimited codes platform index is absent, stale or overclaims original payload access')
+    smash_legacy_path=base/'source-inventories/smash-legacy-sources-v1/inventory.json'
+    smash_legacy=read(smash_legacy_path)
+    if (smash_legacy.get('schema')!='ggd.smash-legacy-source-inventory@1'
+        or smash_legacy.get('ultimateBoundary',{}).get('includedInLegacyTotals') is not False
+        or smash_legacy.get('nintendo64',{}).get('payloadFilesRead')!=0
+        or smash_legacy.get('nintendo64',{}).get('payloadSha256Recorded')!=0
+        or smash_legacy.get('melee',{}).get('wavFiles')!=1766
+        or smash_legacy.get('brawl',{}).get('wavFiles')!=448
+        or smash_legacy.get('verification',{}).get('safeNewModelConversionsCompleted')!=0):
+        raise ValueError('Legacy Smash source inventory is absent, stale or overclaims payload/conversion status')
     ultimate14_motion_path=base/'source-inventories/ultimate14-native-motions.json'
     ultimate14_motion=read(ultimate14_motion_path)
     workflow_restoration_path=base/'priority-evidence/asset-workflow-restoration/manifest.json'
@@ -258,6 +268,29 @@ def build(git_link_root=ROOT):
         fateUnlimitedCodesPlatformDocument=dict(
             gitPath='materials/hero-model-library/priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md',
             sha256=hashlib.sha256((base/'priority-evidence/fate-unlimited-codes-platforms-v1/source-index.md').read_bytes()).hexdigest()),
+        legacySmashSourceInventory=dict(
+            gitPath=str(smash_legacy_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(smash_legacy_path.read_bytes()).hexdigest(),
+            sourceId=smash_legacy['sourceId'],
+            status='N64 metadata-only; Melee and Brawl audio bytes verified; model/motion/VFX source bytes not acquired; Ultimate separate',
+            summary=dict(
+                nintendo64InventoryRows=smash_legacy['nintendo64']['inventoryRows'],
+                nintendo64PayloadFilesRead=smash_legacy['nintendo64']['payloadFilesRead'],
+                meleeArchivePackages=smash_legacy['melee']['archivePackages'],
+                meleeVerifiedMemberFiles=smash_legacy['melee']['memberFiles'],
+                meleePcmWavFiles=smash_legacy['melee']['wavFiles'],
+                brawlArchivePackages=smash_legacy['brawl']['archivePackages'],
+                brawlVerifiedMemberFiles=smash_legacy['brawl']['memberFiles'],
+                brawlPcmWavFiles=smash_legacy['brawl']['wavFiles'],
+                modelFiles=0,
+                nativeMotionFiles=0,
+                vfxFiles=0,
+                convertedFiles=0,
+                runtimeBindingsVerified=0),
+            ultimateBoundary=smash_legacy['ultimateBoundary']),
+        legacySmashSourceDocument=dict(
+            gitPath='materials/hero-model-library/source-inventories/smash-legacy-sources-v1/README.md',
+            sha256=hashlib.sha256((base/'source-inventories/smash-legacy-sources-v1/README.md').read_bytes()).hexdigest()),
         ultimate14NativeMotionIndex=dict(
             gitPath=str(ultimate14_motion_path.relative_to(ROOT)),
             sha256=hashlib.sha256(ultimate14_motion_path.read_bytes()).hexdigest(),
@@ -438,6 +471,8 @@ def main():
                 result['windowsGameSourceInventory'],
                 result['fateUnlimitedCodesPlatformIndex'],
                 result['fateUnlimitedCodesPlatformDocument'],
+                result['legacySmashSourceInventory'],
+                result['legacySmashSourceDocument'],
                 result['ultimate14NativeMotionIndex'],
                 result['assetWorkflowRestorationManifest'],
                 {

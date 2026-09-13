@@ -1,0 +1,340 @@
+{
+  "schema": "ggd.smash-legacy-source-inventory@1",
+  "sourceId": "smash-legacy-sources-v1",
+  "asOfDate": "2026-09-14",
+  "scope": {
+    "included": [
+      "Super Smash Bros. / Nintendo 64",
+      "Super Smash Bros. Melee / GameCube",
+      "Super Smash Bros. Brawl / Wii"
+    ],
+    "excluded": [
+      "Super Smash Bros. Ultimate / Nintendo Switch"
+    ],
+    "policy": "A ROM/game name or inventory row is metadata only until payload bytes are locally readable and hashed."
+  },
+  "inputs": [
+    {
+      "location": "materials/hero-model-library/download-sources.json",
+      "bytes": 3067097,
+      "sha256": "3174444d8cc13fbca8f20c40fdaa41f5e00997d380e3950f8e9440a02264b85d"
+    },
+    {
+      "location": "materials/hero-model-library/public-source-files.json",
+      "bytes": 35191631,
+      "sha256": "92a49fe5735b60644a2529c0c56921ea07320ea4cd81c9ff10ec708b18c11fa3"
+    },
+    {
+      "location": "GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
+      "bytes": 266062,
+      "sha256": "2e541e26cb2b5bb2bdc5923398c16332b9313da01476a8a0c0f72f4f76a8ffab",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip"
+    },
+    {
+      "location": "GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-remaining/deliveries/local-audio-delivery-20260910T124607980558Z.json",
+      "bytes": 1288880,
+      "sha256": "20403593240ff85adddfc4846c9c48b2794681aa4cd8500124e4ab6602200121",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-remaining/deliveries/local-audio-delivery-20260910T124607980558Z.json"
+    },
+    {
+      "location": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json",
+      "bytes": 32621,
+      "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae"
+    }
+  ],
+  "nintendo64": {
+    "sourceGame": "Super Smash Bros.",
+    "platform": "Nintendo 64",
+    "sourceId": "windows-inventory-n64-super-smash-bros",
+    "rows": [
+      {
+        "sourceId": "windows-inventory-n64-super-smash-bros",
+        "sourceGame": "Super Smash Bros.",
+        "platform": "Nintendo 64",
+        "versionLabel": "N64 全明星大亂鬥",
+        "fileName": "N64 全明星大亂鬥.7z",
+        "windowsPath": "E:\\Game\\單機遊戲\\模擬器\\N64\\N64 全明星大亂鬥.7z",
+        "bytesReportedByWindows": 41897954,
+        "lastWriteTimeUtc": "2018-01-05T15:22:54.0000000Z",
+        "contentRead": false,
+        "sha256": null,
+        "acquisitionStatus": "inventory-metadata-only",
+        "extractionStatus": "not-started-no-readable-payload",
+        "conversionStatus": "not-started-no-readable-payload"
+      },
+      {
+        "sourceId": "windows-inventory-n64-super-smash-bros",
+        "sourceGame": "Super Smash Bros.",
+        "platform": "Nintendo 64",
+        "versionLabel": "Super Smash Bros. (Australia)",
+        "fileName": "Super Smash Bros. (Australia).zip",
+        "windowsPath": "E:\\Game\\單機遊戲\\模擬器\\N64\\N64 全明星大亂鬥\\Super Smash Bros. (Australia).zip",
+        "bytesReportedByWindows": 12543026,
+        "lastWriteTimeUtc": "2013-06-15T09:47:54.0000000Z",
+        "contentRead": false,
+        "sha256": null,
+        "acquisitionStatus": "inventory-metadata-only",
+        "extractionStatus": "not-started-no-readable-payload",
+        "conversionStatus": "not-started-no-readable-payload"
+      },
+      {
+        "sourceId": "windows-inventory-n64-super-smash-bros",
+        "sourceGame": "Super Smash Bros.",
+        "platform": "Nintendo 64",
+        "versionLabel": "Super Smash Bros. (Europe) (En,Fr,De)",
+        "fileName": "Super Smash Bros. (Europe) (En,Fr,De).zip",
+        "windowsPath": "E:\\Game\\單機遊戲\\模擬器\\N64\\N64 全明星大亂鬥\\Super Smash Bros. (Europe) (En,Fr,De).zip",
+        "bytesReportedByWindows": 16058110,
+        "lastWriteTimeUtc": "2013-06-15T09:45:18.0000000Z",
+        "contentRead": false,
+        "sha256": null,
+        "acquisitionStatus": "inventory-metadata-only",
+        "extractionStatus": "not-started-no-readable-payload",
+        "conversionStatus": "not-started-no-readable-payload"
+      },
+      {
+        "sourceId": "windows-inventory-n64-super-smash-bros",
+        "sourceGame": "Super Smash Bros.",
+        "platform": "Nintendo 64",
+        "versionLabel": "Super Smash Bros. (USA)",
+        "fileName": "Super Smash Bros. (USA).zip",
+        "windowsPath": "E:\\Game\\單機遊戲\\模擬器\\N64\\N64 全明星大亂鬥\\Super Smash Bros. (USA).zip",
+        "bytesReportedByWindows": 12539753,
+        "lastWriteTimeUtc": "2013-06-15T09:47:56.0000000Z",
+        "contentRead": false,
+        "sha256": null,
+        "acquisitionStatus": "inventory-metadata-only",
+        "extractionStatus": "not-started-no-readable-payload",
+        "conversionStatus": "not-started-no-readable-payload"
+      }
+    ],
+    "inventoryRows": 4,
+    "payloadFilesRead": 0,
+    "payloadSha256Recorded": 0,
+    "extractedFiles": 0,
+    "convertedFiles": 0,
+    "status": "inventory-metadata-only; source bytes unavailable on current mounts"
+  },
+  "melee": {
+    "sourceGame": "Super Smash Bros. Melee",
+    "platform": "GameCube",
+    "sourceIds": [
+      "parallel-voice-ssbm-kirby",
+      "parallel-voice-ssbm-pikachu",
+      "parallel-voice-ssbm-marth",
+      "parallel-voice-melee-local-29"
+    ],
+    "sources": [
+      {
+        "sourceId": "parallel-voice-ssbm-kirby",
+        "sourceGame": "Super Smash Bros. Melee",
+        "platform": "GameCube",
+        "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby",
+        "heroIdsExplicitlyMapped": [
+          "community-review-06-20260907"
+        ],
+        "memberFiles": 107,
+        "wavFiles": 101,
+        "audioSeconds": 67.762558,
+        "archivePackages": 1,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbm-kirby/1f8c05f76b48672b1bf730944ceea6bee062aec1e80df61ce019e83542fafea2.zip",
+        "s3ArchiveBytes": 7609594,
+        "s3ArchiveSha256": "1f8c05f76b48672b1bf730944ceea6bee062aec1e80df61ce019e83542fafea2",
+        "s3ReadbackVerified": true,
+        "listeningVerified": false,
+        "eventBindingsVerified": false,
+        "runtimeReady": false
+      },
+      {
+        "sourceId": "parallel-voice-ssbm-pikachu",
+        "sourceGame": "Super Smash Bros. Melee",
+        "platform": "GameCube",
+        "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-pikachu",
+        "heroIdsExplicitlyMapped": [
+          "godie-ofar"
+        ],
+        "memberFiles": 42,
+        "wavFiles": 36,
+        "audioSeconds": 29.324667,
+        "archivePackages": 1,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbm-pikachu/bb546e55885080746767f15f19e848f118c4eff5441fc4dbd21e2e5f27eab413.zip",
+        "s3ArchiveBytes": 3383338,
+        "s3ArchiveSha256": "bb546e55885080746767f15f19e848f118c4eff5441fc4dbd21e2e5f27eab413",
+        "s3ReadbackVerified": true,
+        "listeningVerified": false,
+        "eventBindingsVerified": false,
+        "runtimeReady": false
+      },
+      {
+        "sourceId": "parallel-voice-ssbm-marth",
+        "sourceGame": "Super Smash Bros. Melee",
+        "platform": "GameCube",
+        "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-marth",
+        "heroIdsExplicitlyMapped": [],
+        "memberFiles": 51,
+        "wavFiles": 45,
+        "audioSeconds": 27.051531,
+        "archivePackages": 1,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-ssbm-marth/0eecb7f5c12f44a19c62220d6443df4d40cd43c1e8b69cd6e57c2bb968289820.zip",
+        "s3ArchiveBytes": 3076988,
+        "s3ArchiveSha256": "0eecb7f5c12f44a19c62220d6443df4d40cd43c1e8b69cd6e57c2bb968289820",
+        "s3ReadbackVerified": true,
+        "listeningVerified": false,
+        "eventBindingsVerified": false,
+        "runtimeReady": false
+      },
+      {
+        "sourceId": "parallel-voice-melee-local-29",
+        "sourceGame": "Super Smash Bros. Melee",
+        "platform": "GameCube",
+        "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-remaining",
+        "heroIdsExplicitlyMapped": [],
+        "memberFiles": 1811,
+        "wavFiles": 1584,
+        "audioSeconds": 1679.193443,
+        "archivePackages": 48,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/parallel-voice-melee-local-29/3e21f8aa2118a0b784fb58e543cbe4a7c42eee94850cf5d9490bfdc8b02ad734.zip",
+        "s3ArchiveBytes": 172944091,
+        "s3ArchiveSha256": "3e21f8aa2118a0b784fb58e543cbe4a7c42eee94850cf5d9490bfdc8b02ad734",
+        "s3ReadbackVerified": true,
+        "listeningVerified": false,
+        "eventBindingsVerified": false,
+        "runtimeReady": false
+      }
+    ],
+    "archivePackages": 51,
+    "memberFiles": 2011,
+    "wavFiles": 1766,
+    "audioSeconds": 1803.332199,
+    "modelFiles": 0,
+    "skeletonFiles": 0,
+    "nativeMotionFiles": 0,
+    "vfxFiles": 0,
+    "convertedFiles": 0,
+    "backendBindingsVerified": 0,
+    "status": "audio-source-bytes-acquired-and-sha-verified; model-motion-vfx-source-not-acquired"
+  },
+  "brawl": {
+    "sourceGame": "Super Smash Bros. Brawl",
+    "platform": "Wii",
+    "sourceIds": [
+      "dayjo-ssbb-zelda-audio"
+    ],
+    "sources": [
+      {
+        "sourceId": "dayjo-ssbb-zelda-audio",
+        "sourceGame": "Super Smash Bros. Brawl",
+        "platform": "Wii",
+        "sourceUrl": "https://noproblo.dayjo.org/zeldasounds/ssbb/",
+        "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/dayjo-ssbb-zelda-audio",
+        "heroIdsExplicitlyMapped": [
+          "godie-h00l"
+        ],
+        "memberFiles": 462,
+        "wavFiles": 448,
+        "audioSeconds": 369.191373,
+        "archivePackages": 12,
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/dayjo-ssbb-zelda-audio/cabcf313053304369d1728314f8872c94e86b159c66a8dfa7c73f9b325f29efe.zip",
+        "s3ArchiveBytes": 33253784,
+        "s3ArchiveSha256": "cabcf313053304369d1728314f8872c94e86b159c66a8dfa7c73f9b325f29efe",
+        "s3ReadbackVerified": true,
+        "listeningVerified": false,
+        "eventBindingsVerified": false,
+        "runtimeReady": false
+      }
+    ],
+    "archivePackages": 12,
+    "memberFiles": 462,
+    "wavFiles": 448,
+    "audioSeconds": 369.191373,
+    "modelFiles": 0,
+    "skeletonFiles": 0,
+    "nativeMotionFiles": 0,
+    "vfxFiles": 0,
+    "convertedFiles": 0,
+    "backendBindingsVerified": 0,
+    "status": "audio-source-bytes-acquired-and-sha-verified; model-motion-vfx-source-not-acquired"
+  },
+  "perFileSha256Index": {
+    "gitPath": "materials/hero-model-library/public-source-files.json",
+    "sha256": "92a49fe5735b60644a2529c0c56921ea07320ea4cd81c9ff10ec708b18c11fa3",
+    "sourceIds": [
+      "parallel-voice-ssbm-kirby",
+      "parallel-voice-ssbm-pikachu",
+      "parallel-voice-ssbm-marth",
+      "parallel-voice-melee-local-29",
+      "dayjo-ssbb-zelda-audio"
+    ],
+    "memberRecords": 2473,
+    "note": "The fixed public source manifest retains every relative path, byte size and SHA-256. This inventory verifies those records without duplicating the 2,473-row authority."
+  },
+  "ultimateBoundary": {
+    "includedInLegacyTotals": false,
+    "sourceGame": "Super Smash Bros. Ultimate",
+    "platform": "Nintendo Switch",
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json",
+    "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae",
+    "sourceId": "parallel-ns-ultimate14",
+    "status": "separate-current-generation-source; see linked reconciliation",
+    "sourceStageCounts": {
+      "ultimate14CommunityMod": {
+        "verifiedContainerFiles": 1,
+        "verifiedExtractedFiles": 1071,
+        "identifiableFighterGroups": 16,
+        "fullCharacterBodyModels": 0,
+        "nuanmbPaths": 435,
+        "uniqueTransformMotionPayloads": 175,
+        "convertedAndAcceptedCharacters": 0,
+        "backendSelectableCharacters": 0
+      },
+      "worldblenderBodyCandidates": {
+        "identifiableFighterGroups": 16,
+        "bodyCandidateFiles": 128,
+        "freshPayloadHashes": 10,
+        "skeletonValidatedModels": 10,
+        "convertedAndAcceptedModels": 10,
+        "backendSelectableModels": 0
+      },
+      "nsandns2GameContainers": {
+        "inventoryOnlyContainerFiles": 3,
+        "payloadBytesRead": 0,
+        "identifiableFightersFromPayload": 0,
+        "modelFilesIdentified": 0,
+        "motionFilesIdentified": 0,
+        "extractedFiles": 0,
+        "convertedFiles": 0,
+        "acceptedFiles": 0,
+        "backendSelectableModels": 0
+      }
+    }
+  },
+  "verification": {
+    "localMemberFilesChecked": 2473,
+    "localMemberSha256Verified": 2473,
+    "pcmWavPayloadsOpened": 2214,
+    "allReferencedS3ArchivesReadbackVerified": true,
+    "mountsChecked": [
+      "/Volumes/common",
+      "/Volumes/game",
+      "/Volumes/R"
+    ],
+    "currentReadableOriginalGamePayloads": 0,
+    "safeNewModelConversionsCompleted": 0
+  },
+  "blockers": [
+    "N64: Windows scan has four relevant filenames and sizes, but ContentRead=False and no SHA-256; no ROM payload is currently mounted.",
+    "Melee: acquired material is audio-only; no original model, texture, skeleton, native motion or VFX bytes are present in the indexed source roots.",
+    "Brawl: acquired material is audio-only; no original model, texture, skeleton, native motion or VFX bytes are present in the indexed source root.",
+    "No repository-backed N64/Melee/Brawl asset extractor was found, so no extraction or conversion is claimed.",
+    "Audio groups mix voices and effects and have no complete listening/event review; no runtime binding is claimed."
+  ],
+  "identityNotes": [
+    "Existing explicit mappings are retained only: Melee Kirby -> community-review-06-20260907; Melee Pikachu -> godie-ofar; Brawl SSBB_Link coverage -> godie-h00l.",
+    "Marth and the 48-package Melee reserve remain unmapped. Mario and Mewtwo names in audio groups are not model evidence.",
+    "No new GGD hero ID is inferred or created by this inventory."
+  ]
+}
