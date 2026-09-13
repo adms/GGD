@@ -2,8 +2,8 @@
   "schema": "ggd-assets-manifest@1",
   "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 2873,
-    "totalBytes": 1124220002
+    "entries": 2882,
+    "totalBytes": 1124401258
   },
   "entries": [
     {
@@ -32766,6 +32766,108 @@
         "godie-negi-p0"
       ],
       "moreRefs": 1
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/04b77c0f47df2b449de6afaeba667a7e96fda4c66556a907e1db15e92d47b591.png",
+      "bytes": 41217,
+      "sha256": "c42c9c88db39b5249f50816cc48e151b3c6883a099bc8b0233f463c853e1a39e",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-io-explosive-00.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/10ca29dd3933579d618ac28b75390f404dbf222141dfad0753ee631ee2d3647c.png",
+      "bytes": 9794,
+      "sha256": "9902dac224e1dd5da1cb283b9520aaf886658cccee50eeefa317f48dd8b076cc",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-raidein-charge-core.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/1373eaa81028e020ed40568c22704bae246b8ccf846d2436e3a904dfe7811b9e.png",
+      "bytes": 20525,
+      "sha256": "b724daf1be1d9a498ca50fc9d56538de6fa9be1b40bfe2f8927e2dc510333a99",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-iora-explosive-00.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/74f8ffb643443d366e1d2a90fd0046c2166b047cf641375f3dc99b5b37c5e900.png",
+      "bytes": 1438,
+      "sha256": "ef1e24382fb17adc25696668bbda009758f0867a1c08e7ea309b84fea509c052",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-merami-landing-2.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/aab86a348c5d8ee5fb5dd7bcdacb2aad49f33453d706a2c64d592e7f20b5407b.png",
+      "bytes": 24418,
+      "sha256": "a5b30a3e48c19b3675fcd5e92da3771e665cb366f6e6aef37355cee19073620b",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-merami-core.candidate",
+        "fx.strash.popp.nps-merami-muzzle.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/c7551665603cf40d05a26f8c05b1b9cdad463d712683b2a0312b42d60cad00b3.png",
+      "bytes": 1639,
+      "sha256": "044710f2da438c97bbf5f1b635f979e0364f42104d04d88cf6204b289d05c8b9",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-ionazun-explosive-00.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/d5b0b3aba4b32e8b3fc82d79e20b5d837c348b23c9ee9f45ee1aed1bab922c75.png",
+      "bytes": 28540,
+      "sha256": "7a27baed885c49b6efd022cb028ecbf3553ae06a9dfdbdefd051be6f6e45b39d",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-hyadaruko-core.candidate",
+        "fx.strash.popp.nps-hyadaruko-hit.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/debac801242863be1d68b952378e00a35f0c241542bb8d430f7b18f84d4d5c34.png",
+      "bytes": 9757,
+      "sha256": "118da4bd3d539208e275458391860a04b7c9cb8f1d97a5c1fc332183f53db40c",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-io-bullet-00.candidate"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png",
+      "bytes": 43928,
+      "sha256": "fbb12248f2cf224fa8d7bcf84d0d070e4b6ca221d6d69aad6db1971556e98e43",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "bundle",
+        "fx.strash.popp.nps-mera-firetrail-00.candidate",
+        "fx.strash.popp.nps-merami-firetrail-00.candidate"
+      ]
     },
     {
       "path": "assets/textures/particles/trace_01.png",
