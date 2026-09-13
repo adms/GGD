@@ -13,6 +13,7 @@ REGISTRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-f
 INTEGRATION = ROOT / "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json"
 DROPDOWN = ROOT / "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json"
 HISTORICAL = ROOT / "materials/hero-model-library/priority-evidence/historical-model-recovery/current-lineage-audit.json"
+LOL_RUNTIME = ROOT / "materials/hero-model-library/lol-project-seven/runtime-registration.json"
 
 
 def render() -> str:
@@ -20,10 +21,27 @@ def render() -> str:
     integration = json.loads(INTEGRATION.read_text())
     dropdown = json.loads(DROPDOWN.read_text())
     historical = json.loads(HISTORICAL.read_text())
+    lol_runtime = json.loads(LOL_RUNTIME.read_text())
     by_hero = {row["heroId"]: row for row in integration["integrations"]}
     summary = dropdown["summary"]
+    lol_names = {
+        "lol-karthus": "Karthus", "lol-leesin": "LeeSin", "lol-lux": "Lux",
+        "lol-missfortune": "MissFortune", "lol-warwick": "Warwick",
+        "lol-xerath": "Xerath", "lol-yasuo": "Yasuo",
+    }
+    lol_counts = "、".join(
+        f"{lol_names[hero]} {count}"
+        for hero, count in lol_runtime["summary"]["byHero"].items()
+    )
     lines = REPORT.read_text().splitlines()
     replacements = {
+        "| LOL 七角色語音 |": (
+            f"| LOL 七角色語音 | 使用者逐項聽審 {lol_runtime['summary']['approved']}/"
+            f"{lol_runtime['summary']['approved']} 通過，"
+            f"{lol_runtime['summary']['runtimeRegistered']} 筆已註冊到 runtime manifest；"
+            f"{lol_counts} | "
+            "Main 合併與正式站部署未驗證 |"
+        ),
         "| 歷史四顆 GLB |": (
             f"| 歷史四顆 GLB | {historical['summary']['exactHistoricalGlbsByteIdentical']}/4 原始位元組與 `7bc2fa3f8` 完全一致；"
             f"{historical['summary']['standardizedLineageOptionsRegistered']}/4 標準化血緣候選已註冊為非預設選項 | "
@@ -82,6 +100,10 @@ def render() -> str:
     if historical_evidence not in output:
         position = next(index for index, line in enumerate(output) if line.startswith("- 四顆歷史模型：")) + 1
         output.insert(position, historical_evidence)
+    lol_evidence = "- LOL 七角色 runtime 稽核：`materials/hero-model-library/lol-project-seven/runtime-audit.json`"
+    if lol_evidence not in output:
+        position = next(index for index, line in enumerate(output) if line.startswith("- LOL 七角色：")) + 1
+        output.insert(position, lol_evidence)
     return "\n".join(output) + "\n"
 
 

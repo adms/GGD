@@ -1,0 +1,211 @@
+{
+  "schema": "ggd-lol-seven-approved-runtime-audit@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "scope": {
+    "heroes": [
+      "lol-karthus",
+      "lol-leesin",
+      "lol-lux",
+      "lol-missfortune",
+      "lol-warwick",
+      "lol-xerath",
+      "lol-yasuo"
+    ],
+    "authority": "Only runtimeApproved=true rows in listening-review-decisions.json.",
+    "unapprovedMappingsAdded": 0
+  },
+  "inputs": {
+    "decisions": {
+      "path": "materials/hero-model-library/lol-project-seven/listening-review-decisions.json",
+      "bytes": 173295,
+      "sha256": "1160291a20a906e400fadd21b48783dc386cc4b13f7f0ad7a448fd271be2962f"
+    },
+    "queue": {
+      "path": "materials/hero-model-library/lol-project-seven/listening-review-queue.json",
+      "bytes": 1609180,
+      "sha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf"
+    },
+    "runtimeRegistration": {
+      "path": "materials/hero-model-library/lol-project-seven/runtime-registration.json",
+      "bytes": 333557,
+      "sha256": "7b9a9efb60a2057ab870949d54fc679f4b8a4a3fc5aec318aebd988f294a7719"
+    },
+    "runtimeAuthority": {
+      "path": "content/assets/audio/voices/lines/COMBAT_ORIGINALS.json",
+      "bytes": 807262,
+      "sha256": "117e232b4bf0a58cae900701f5e67cb3a4be104b70b4413ffc45863080824546"
+    },
+    "runtimeManifest": {
+      "path": "content/assets/audio/voices/champions/MANIFEST.json",
+      "bytes": 1673191,
+      "sha256": "e2f5624170fc2a9b363c4b8ba90e7cc5966ea6b7fe6ac8f86511cc5567f81c37"
+    },
+    "centralVoiceIndex": {
+      "path": "materials/hero-model-library/voice-index.json",
+      "bytes": 4297231,
+      "sha256": "11917fc38177b17e46c8299f1ea9ecc97ece34863a48d247b068fa7efa999112"
+    },
+    "centralVoiceFiles": {
+      "path": "materials/hero-model-library/voice-files.jsonl.gz",
+      "bytes": 27882183,
+      "sha256": "d59852bd06fba80c22ec5e877eb3c892ca51667d0294f9986096f92afe52b469"
+    },
+    "localSourceVerification": {
+      "path": "materials/hero-model-library/lol-project-seven/local-file-verification/index.json",
+      "bytes": 10635,
+      "sha256": "53a6da96d82f092be58e6c922878f379f62805d45a865e81c38474cedf8e6ec3"
+    }
+  },
+  "summary": {
+    "approvedSourceWavsVerified": 311,
+    "runtimeMp3sVerified": 311,
+    "runtimeGitBlobsVerified": 311,
+    "runtimeManifestRowsVerified": 311,
+    "runtimeBytes": 12276064,
+    "fullSevenSourceWavsVerified": 4927,
+    "pendingOtherEventBoundWavs": 443,
+    "productionDeployed": false,
+    "byNativeTarget": {
+      "ability-E": 33,
+      "ability-Q": 30,
+      "ability-R": 41,
+      "ability-W": 39,
+      "attack": 133,
+      "death": 35
+    }
+  },
+  "runtimeAudioContract": {
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1
+  },
+  "perHero": [
+    {
+      "heroId": "lol-karthus",
+      "approvedSourceWavs": 52,
+      "runtimeMp3s": 52,
+      "runtimeGitBlobs": 52,
+      "manifestRows": 52,
+      "byNativeTarget": {
+        "ability-E": 7,
+        "ability-R": 9,
+        "ability-W": 7,
+        "attack": 20,
+        "death": 9
+      }
+    },
+    {
+      "heroId": "lol-leesin",
+      "approvedSourceWavs": 64,
+      "runtimeMp3s": 64,
+      "runtimeGitBlobs": 64,
+      "manifestRows": 64,
+      "byNativeTarget": {
+        "ability-E": 8,
+        "ability-Q": 8,
+        "ability-R": 5,
+        "ability-W": 8,
+        "attack": 28,
+        "death": 7
+      }
+    },
+    {
+      "heroId": "lol-lux",
+      "approvedSourceWavs": 48,
+      "runtimeMp3s": 48,
+      "runtimeGitBlobs": 48,
+      "manifestRows": 48,
+      "byNativeTarget": {
+        "ability-E": 6,
+        "ability-Q": 7,
+        "ability-R": 6,
+        "ability-W": 6,
+        "attack": 19,
+        "death": 4
+      }
+    },
+    {
+      "heroId": "lol-missfortune",
+      "approvedSourceWavs": 21,
+      "runtimeMp3s": 21,
+      "runtimeGitBlobs": 21,
+      "manifestRows": 21,
+      "byNativeTarget": {
+        "ability-Q": 4,
+        "ability-R": 3,
+        "ability-W": 4,
+        "attack": 6,
+        "death": 4
+      }
+    },
+    {
+      "heroId": "lol-warwick",
+      "approvedSourceWavs": 59,
+      "runtimeMp3s": 59,
+      "runtimeGitBlobs": 59,
+      "manifestRows": 59,
+      "byNativeTarget": {
+        "ability-E": 4,
+        "ability-Q": 3,
+        "ability-R": 11,
+        "ability-W": 7,
+        "attack": 31,
+        "death": 3
+      }
+    },
+    {
+      "heroId": "lol-xerath",
+      "approvedSourceWavs": 26,
+      "runtimeMp3s": 26,
+      "runtimeGitBlobs": 26,
+      "manifestRows": 26,
+      "byNativeTarget": {
+        "ability-E": 4,
+        "ability-R": 4,
+        "ability-W": 4,
+        "attack": 10,
+        "death": 4
+      }
+    },
+    {
+      "heroId": "lol-yasuo",
+      "approvedSourceWavs": 41,
+      "runtimeMp3s": 41,
+      "runtimeGitBlobs": 41,
+      "manifestRows": 41,
+      "byNativeTarget": {
+        "ability-E": 4,
+        "ability-Q": 8,
+        "ability-R": 3,
+        "ability-W": 3,
+        "attack": 19,
+        "death": 4
+      }
+    }
+  ],
+  "checks": {
+    "approvedKeySetEqualsRegistrationKeySet": true,
+    "sourceWavBytesAndSha256": true,
+    "runtimeMp3BytesAndSha256": true,
+    "runtimeMp3GitIndexBytes": true,
+    "runtimeAudioProbe": true,
+    "runtimeAuthorityBinding": true,
+    "runtimeManifestBinding": true,
+    "centralVoiceIndexBinding": true,
+    "fullSourceReceiptBinding": true
+  },
+  "status": {
+    "acquired": true,
+    "converted": true,
+    "ownerReviewed": true,
+    "runtimeRegistered": true,
+    "branchSelectable": true,
+    "productionDeployed": false
+  },
+  "boundaries": [
+    "The 311 records are the complete fixed battle-review subset, not all 4,927 source WAVs.",
+    "The remaining 443 event-bound WAVs are pending and are not mapped by implication.",
+    "No transcript is asserted by this receipt.",
+    "Git and branch runtime verification does not prove Main merge or production deployment."
+  ]
+}

@@ -55,3 +55,12 @@ python3 materials/hero-model-library/lol-project-seven/tools/apply_approved_batt
 ```
 
 `runtimeApproved=311` 與 `runtimeRegistered=311` 表示核准及本分支 runtime manifest 註冊完成；`productionDeployed=false`，不能把這份本機／Git 交付稱為正式站已部署。
+
+核准後的範圍稽核由 `tools/audit_approved_battle_runtime.py` 重建。它會逐檔核對已核准來源 WAV 與 runtime MP3 的 bytes／SHA-256、MP3 44.1 kHz mono 容器、Git index blob、`COMBAT_ORIGINALS.json`、runtime manifest 與中央語音索引；可重現收據為 `runtime-audit.json`。
+
+```sh
+python3 materials/hero-model-library/lol-project-seven/tools/apply_approved_battle_runtime.py \
+  --asset-workspace "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT" --check
+python3 materials/hero-model-library/lol-project-seven/tools/audit_approved_battle_runtime.py \
+  --asset-workspace "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT"
+```

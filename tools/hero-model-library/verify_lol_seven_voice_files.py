@@ -27,15 +27,17 @@ def markdown(index: dict) -> bytes:
     lines = [
         "# LOL 指定七名日文音訊本機實檔驗證",
         "",
-        "> 這份收據證明本機檔案存在，且大小與 SHA-256 符合中央語音索引。來源 manifest 的 `ja_JP` 只證明套件語系；逐段語言、說話者、台詞、技能事件、合成用途與 runtime 綁定仍待人工聽審。",
+        "> 這份收據證明本機檔案存在，且大小與 SHA-256 符合中央語音索引。來源庫共 4,927 檔，其中固定戰鬥審查範圍 311 檔已由使用者逐項核准並註冊 runtime；其餘來源檔仍不可推定說話者、逐段語言、台詞或事件。",
         "",
-        "| 角色 | 中央群組 | 檔案 | Bytes | 秒數 | 本機驗證 | 聽審 |",
+        "| 角色 | 中央群組 | 來源檔 | Bytes | 秒數 | 本機驗證 | 戰鬥聽審／runtime |",
         "|---|---|---:|---:|---:|---|---|",
     ]
     for row in index["characters"]:
         lines.append(
             f"| {row['name']} | `{row['centralGroupId']}` | {row['files']} | "
-            f"{row['bytes']} | {row['seconds']:.6f} | 通過 | 待完成 |"
+            f"{row['bytes']} | {row['seconds']:.6f} | 通過 | "
+            f"{row['listeningReviewApprovedFiles']}/{row['battleReviewCandidateFiles']} 已核准；"
+            f"{row['runtimeRegisteredFiles']} 已註冊 |"
         )
     summary = index["summary"]
     lines.extend(
@@ -47,7 +49,8 @@ def markdown(index: dict) -> bytes:
             f"- 總位元組：**{summary['bytes']}**",
             f"- 已量測長度：**{summary['knownDurationSeconds']:.6f} 秒**",
             "- 缺檔：**0**；不符：**0**",
-            "- `languageVerified=false`、`speakerVerified=false`、`listeningReviewComplete=false`、`synthesisReady=false`、`runtimeSelectable=false`、`deployed=false`",
+            f"- 固定戰鬥審查範圍：**{summary['listeningReviewApprovedFiles']} / {summary['battleReviewCandidateFiles']}** 已核准；**{summary['runtimeRegisteredFiles']}** 已註冊",
+            "- 完整來源庫仍不是全部聽審或合成輸入；`productionDeployed=false`",
             "",
             "各角色的 `.json.gz` 收據包含每一個 WAV 的本機絕對路徑、相對路徑、bytes、SHA-256、長度、分類與中央 manifest 行號。",
             "",
@@ -105,6 +108,11 @@ def create(output_root: Path) -> tuple[dict, dict[Path, bytes]]:
                 "seconds": summary["knownDurationSeconds"],
                 "categoryCounts": summary["categoryCounts"],
                 "localSourceBytesVerified": True,
+                "battleReviewCandidateFiles": character["battleReviewCandidateFiles"],
+                "listeningReviewApprovedFiles": character["listeningReviewApprovedFiles"],
+                "runtimeRegisteredFiles": character["runtimeRegisteredFiles"],
+                "battleReviewComplete": character["listeningReviewComplete"],
+                "runtimeSelectableBattleSubset": character["runtimeSelectable"],
                 "languageVerified": False,
                 "speakerVerified": False,
                 "listeningReviewComplete": False,
@@ -115,6 +123,9 @@ def create(output_root: Path) -> tuple[dict, dict[Path, bytes]]:
         )
 
     total_seconds = sum(row["seconds"] for row in rows)
+    battle_candidates = sum(row["battleReviewCandidateFiles"] for row in rows)
+    approved_battle = sum(row["listeningReviewApprovedFiles"] for row in rows)
+    runtime_registered = sum(row["runtimeRegisteredFiles"] for row in rows)
     expected = source["totals"]
     if totals["indexedFiles"] != expected["pcmWavCount"]:
         raise ValueError("Seven-group file total differs from seven-voice-index.json")
@@ -136,6 +147,9 @@ def create(output_root: Path) -> tuple[dict, dict[Path, bytes]]:
             "knownDurationSeconds": total_seconds,
             "categoryCounts": dict(sorted(category_counts.items())),
             "characterCount": len(rows),
+            "battleReviewCandidateFiles": battle_candidates,
+            "listeningReviewApprovedFiles": approved_battle,
+            "runtimeRegisteredFiles": runtime_registered,
         },
         "status": {
             "allLocalSourceBytesVerified": True,
@@ -145,12 +159,16 @@ def create(output_root: Path) -> tuple[dict, dict[Path, bytes]]:
             "listeningReviewComplete": False,
             "synthesisReady": False,
             "runtimeSelectable": False,
+            "runtimeSelectableBattleSubset": runtime_registered == battle_candidates,
+            "battleReviewComplete": approved_battle == battle_candidates,
+            "battleReviewScopeOnly": True,
             "deployed": False,
         },
         "boundaries": [
             "Only Karthus, LeeSin, Lux, MissFortune, Warwick, Xerath and Yasuo are included.",
             "Byte verification does not establish per-clip language, speaker, transcript, event semantics, synthesis readiness, runtime binding or deployment.",
             "Audio remains in the local asset library and S3 legacy; Git stores paths, hashes and verification receipts only.",
+            "The 311 approved runtime registrations are exactly the fixed battle-review subset; the remaining source WAVs are not approved by implication.",
         ],
     }
     outputs[output_root / "index.json"] = json_bytes(index)
