@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "c97bad2061b8d896e3a0ec9b1866e890fb240267be3583e6e58d6a86e5dd7605"
+      "sha256": "bf92a0ee0959e14857c031c6f553ff01e7b86b1e927913a3fd487d2270b1ec08"
     }
   },
   "summary": {
@@ -42,8 +42,8 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 35,
-    "readyUnregisteredCharacterOrMotionComponents": 33,
+    "readyUnregisteredIndependentComponents": 36,
+    "readyUnregisteredCharacterOrMotionComponents": 34,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
@@ -1028,6 +1028,31 @@
         "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
         "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
         "Sonic remains at 8,980 triangles, above the 8,000-triangle formal-adoption target; further visual A/B decimation is required before hero adoption."
+      ]
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v2",
+      "character": "索尼克",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "The source and candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
+        "Runtime switching and production deployment were not performed.",
+        "Original-game shader parity remains limited to the source-connected Blender materials."
       ]
     },
     {

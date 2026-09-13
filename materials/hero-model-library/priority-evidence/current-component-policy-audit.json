@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3052967,
-      "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
+      "bytes": 3059656,
+      "sha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 36,
-    "runtimeBudgetPass": 36,
+    "audited": 37,
+    "runtimeBudgetPass": 37,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 23,
+    "heroAdoptionEligible": 24,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -1602,6 +1602,55 @@
       "bytes": 936116,
       "metrics": {
         "triangles": 8980,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 115,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v2",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+      "bytes": 916024,
+      "metrics": {
+        "triangles": 7900,
         "meshes": 5,
         "maxTextureEdge": 256,
         "channelsPerFrame": 0,

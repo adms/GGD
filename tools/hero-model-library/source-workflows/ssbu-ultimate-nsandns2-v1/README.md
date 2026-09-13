@@ -49,7 +49,16 @@ python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/inte
 python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..
 ```
 
-目前有 10 個唯一 c00 來源槽完成靜態蒙皮元件驗收：Kirby、Mario、Link、Sonic、Chrom、Ganondorf、Lucina、Daisy、Peach、Toon Link；Mario v1／v2 都保留但來源槽只計一次。Mario、Link、Sonic、Chrom、Ganondorf、Lucina、Daisy、Peach 與 Toon Link 已重建為黑底修復版：來源的眼睛雙貼圖／雙 UV Mix 烘焙為不透明 Base Color，並通過 alpha audit、Khronos、兩次位元組一致重建與 WebGL 三視圖；Kirby 的來源貼圖全不透明，不需此修正。所有 c00 元件仍是 0 動作、未綁英雄、未成為後台選項、未部署；Sonic 仍為 8,980 面，超過 8,000 面正式採用目標。其餘 118 份 body 仍只有存在與大小證據。Toon Link 的表情 eyelid 排除已列為表情缺口，不能把結構通過寫成原作 shader 完整。
+目前有 10 個唯一 c00 來源槽完成靜態蒙皮元件驗收：Kirby、Mario、Link、Sonic、Chrom、Ganondorf、Lucina、Daisy、Peach、Toon Link；同一來源槽的修訂版都保留但不重複計數。Mario、Link、Sonic、Chrom、Ganondorf、Lucina、Daisy、Peach 與 Toon Link 已重建為黑底修復版：來源的眼睛雙貼圖／雙 UV Mix 烘焙為不透明 Base Color，並通過 alpha audit、Khronos、兩次位元組一致重建與 WebGL 三視圖；Kirby 的來源貼圖全不透明，不需此修正。Sonic 另由固定 material-weighted 流程從 8,980 面減至 7,900 面，兩次輸出 SHA 相同，三視圖 A/B 變化像素 0.85%～1.41%，正式採用幾何門檻與視覺元件驗收均通過；舊 8,980 面版本完整保留。所有 c00 元件仍是 0 動作；Sonic 沒有對應 GGD 英雄定義，未杜撰綁定，後台選項與部署仍為 0。其餘 118 份 body 仍只有存在與大小證據。Toon Link 的表情 eyelid 排除已列為表情缺口，不能把結構通過寫成原作 shader 完整。
+
+Sonic 正式減面可重建與凍結入口：
+
+```sh
+python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/run_sonic_formal_decimation.py \
+  --asset-root '../GGD-Asset-Library'
+python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/integrate_sonic_formal_decimation.py \
+  --asset-root '../GGD-Asset-Library'
+```
 
 JUMP FORCE／J-STARS、KOF、Fate/unlimited codes 與 NSandNS2 的10筆優先來源存取快照可重建及核對：
 

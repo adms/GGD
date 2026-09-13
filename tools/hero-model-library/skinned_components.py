@@ -164,6 +164,7 @@ def validate_component(candidate, repo):
             'ssbu-mario-c00-static-skinned-v2': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-link-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-sonic-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
+            'ssbu-sonic-c00-static-skinned-v2': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-chrom-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-ganondorf-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',
             'ssbu-lucina-c00-static-skinned-v1': 'ggd-worldblender-c00-source-rebuild@1',

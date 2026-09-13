@@ -12374,6 +12374,22 @@
           "backupReceiptGitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/s3-backup-receipt.json",
           "fullGetVerified": true,
           "allMemberSha256Verified": true
+        },
+        {
+          "id": "ssbu-sonic-c00-formal-decimation-v1",
+          "componentId": "ssbu-sonic-c00-static-skinned-v2",
+          "status": "accepted-independent-static-skinned-component-actions-missing",
+          "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1",
+          "outputPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+          "outputSha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+          "nativeAnimationCount": 0,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "backupStatus": "s3-conversion-stage-full-readback-verified",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+          "backupReceiptGitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/s3-backup-receipt.json",
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         }
       ],
       "sourceClass": "original-game-extraction-community-repackage",
@@ -14985,6 +15001,101 @@
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/near-duplicate-material-finalization.json",
             "bytes": 1744,
             "sha256": "fba142ee1a2e251f73a946998b120b74cff390ca85c11afb3ae91fbc8f09d8f3"
+          }
+        },
+        {
+          "id": "ssbu-sonic-c00-static-skinned-v2",
+          "label": "索尼克 SSBU Ultimate c00 正式減面版",
+          "conversionCandidateId": "ssbu-sonic-c00-static-skinned-v2",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceClass": "original-game-extraction-community-repackage",
+          "selectionClass": "canonical-game",
+          "nameZh": "索尼克",
+          "originalName": "Sonic",
+          "workZh": "任天堂明星大亂鬥 特別版",
+          "sourceGame": "Super Smash Bros. Ultimate",
+          "sourceGameReleasedAt": "2018-12-07",
+          "platform": "Nintendo Switch",
+          "nativeId": "fighter/sonic/model/body/c00",
+          "variant": "c00",
+          "resourceRole": "independent-static-skinned-model-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+          "bytes": 916024,
+          "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+          "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+          "componentReady": true,
+          "converted": true,
+          "structuralValidationPassed": true,
+          "visualValidationPassed": true,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "identityIds": [
+            "ssbu-sonic"
+          ],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "triangles": 7900,
+          "drawPrimitives": 5,
+          "skinCount": 1,
+          "jointCount": 115,
+          "textureCount": 5,
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "auditEvidence": "Sonic c00 was reduced from 8,980 to 7,900 triangles; the byte-identical rebuild, Khronos, GGD budget, alpha audit and fixed-camera A/B review passed.",
+          "limitations": [
+            "The source and candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
+            "Runtime switching and production deployment were not performed.",
+            "Original-game shader parity remains limited to the source-connected Blender materials."
+          ],
+          "s3BackupStatus": "uploaded-and-readback-verified",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+          "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.files.json",
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/delivery.json",
+            "bytes": 3024,
+            "sha256": "d1d15c1c1274c92cf0289ed208a6045389e8b2deb0e5a61cd745d57622235b12"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/validation.json",
+            "bytes": 23727,
+            "sha256": "1d1d6cb7a6ed909176f3ff45115f61dbd62746b92c5d509f2e029342f3ecfe6a"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/acceptance.json",
+            "bytes": 408,
+            "sha256": "4cb197b9ecc5091f54e33e2de529dd5f92dd05f9f8aad9b072640f20a0f08107"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-comparison.json",
+            "bytes": 1580,
+            "sha256": "b75da688ac153c7caa20057d2a3f4c86e0e9c6b62bedc78e3bebc651f619c98d"
+          },
+          "sourceRebuildEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-rebuild.json",
+            "bytes": 994,
+            "sha256": "24d3c0aaefc4470e3402ba8436368b54dcca178505766d234f10bd8d69921429"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/alpha-audit.json",
+            "bytes": 1893,
+            "sha256": "41bc342073c93db3b9ceb207059013614fcba595ed4746647de94339f42ce0c3"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/s3-backup-receipt.json",
+            "bytes": 1483,
+            "sha256": "08e8ae9f6be7a303d66118e00ee4c4fd3e19c82258cbce36a6384f007df5f57d"
           }
         }
       ]

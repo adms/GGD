@@ -3235,6 +3235,52 @@
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
             "Sonic remains at 8,980 triangles, above the 8,000-triangle formal-adoption target; further visual A/B decimation is required before hero adoption."
           ]
+        },
+        {
+          "id": "ssbu-sonic-c00-static-skinned-v2",
+          "label": "索尼克 SSBU Ultimate c00 正式減面版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+          "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+          "bytes": 916024,
+          "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/validation.json",
+            "bytes": 23727,
+            "sha256": "1d1d6cb7a6ed909176f3ff45115f61dbd62746b92c5d509f2e029342f3ecfe6a"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-comparison.json",
+            "bytes": 1580,
+            "sha256": "b75da688ac153c7caa20057d2a3f4c86e0e9c6b62bedc78e3bebc651f619c98d"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/s3-backup-receipt.json",
+            "bytes": 1483,
+            "sha256": "08e8ae9f6be7a303d66118e00ee4c4fd3e19c82258cbce36a6384f007df5f57d"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/alpha-audit.json",
+            "bytes": 1893,
+            "sha256": "41bc342073c93db3b9ceb207059013614fcba595ed4746647de94339f42ce0c3"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+          "limitations": [
+            "The source and candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
+            "Runtime switching and production deployment were not performed.",
+            "Original-game shader parity remains limited to the source-connected Blender materials."
+          ]
         }
       ],
       "mappedHeroIds": [],
@@ -3242,7 +3288,8 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Sonic identity.",
       "evidence": [
-        "Sonic c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Sonic c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+        "Sonic c00 was reduced from 8,980 to 7,900 triangles; the byte-identical rebuild, Khronos, GGD budget, alpha audit and fixed-camera A/B review passed."
       ]
     },
     {

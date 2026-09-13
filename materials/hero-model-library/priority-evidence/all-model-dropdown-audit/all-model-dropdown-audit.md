@@ -9,7 +9,7 @@
 - Hero Forge 有 34 名英雄、42 個不同模型選項。
 - 中央索引有 159 筆來源；146 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，4 筆只證明 Git 來源存在，後台導入驗收仍未通過。
 - 中央登記旗標與實際參照不一致：0 筆。
-- `componentReady` 但尚未註冊：角色／動作元件 33 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
+- `componentReady` 但尚未註冊：角色／動作元件 34 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
 - 找到 67 份失去英雄對應的 `version.body.*` 凍結文件；保留位元組，但須先找回原 hero/version 關係。
 - 明確 `prop.*` 且無內容參照的道具文件 4 筆。
 
@@ -69,6 +69,7 @@
 | `ssbu-ryu-c00-procedural-six-state-v1` | 隆／Ryu | independent-skinned-model-motion-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ryu-c00-static-skinned-v1` | 隆／Ryu | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-sonic-c00-static-skinned-v1` | 索尼克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-sonic-c00-static-skinned-v2` | 索尼克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-toonlink-c00-static-skinned-v1` | 卡通林克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-zero-c00-static-skinned-v1` | Zero／傑洛 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `zero-lancer-p1-static-skinned-v1` | Zero Lancer／迪爾姆德 P1 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |

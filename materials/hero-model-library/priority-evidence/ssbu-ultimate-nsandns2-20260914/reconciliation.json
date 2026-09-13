@@ -15,7 +15,7 @@
   },
   "sourceCatalog": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "6870d3a0c7fd037c272eb906154b6d2d09f64ef2781d4ef68ba00c1f3fdda612"
+    "sha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45"
   },
   "motionSummary": {
     "pathCount": 435,
@@ -721,14 +721,14 @@
       }
     },
     {
-      "id": "ssbu-sonic-c00-static-skinned-v1",
+      "id": "ssbu-sonic-c00-static-skinned-v2",
       "nameZh": "索尼克",
       "nativeId": "fighter/sonic/model/body/c00",
       "variant": "c00",
-      "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
-      "bytes": 936116,
-      "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
-      "triangles": 8980,
+      "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+      "bytes": 916024,
+      "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "triangles": 7900,
       "drawPrimitives": 5,
       "skinCount": 1,
       "jointCount": 115,
@@ -738,24 +738,24 @@
       "runtimeSelectable": false,
       "runtimeDropdownRegistered": false,
       "deliveryEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/delivery.json",
-        "bytes": 3384,
-        "sha256": "19e2694acfcf0c158421e25bbc0a19b6725067ae02cb204fb9f82fd536321a58"
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/delivery.json",
+        "bytes": 3024,
+        "sha256": "d1d15c1c1274c92cf0289ed208a6045389e8b2deb0e5a61cd745d57622235b12"
       },
       "validationEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/validation.json",
-        "bytes": 23819,
-        "sha256": "6ed3bbcc86bd131777c1b699ebecd6f4e870db78df69568d517bf7beed3e22d2"
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/validation.json",
+        "bytes": 23727,
+        "sha256": "1d1d6cb7a6ed909176f3ff45115f61dbd62746b92c5d509f2e029342f3ecfe6a"
       },
       "visualEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/visual-review.json",
-        "bytes": 691,
-        "sha256": "e9adfa1a5ed0194a5a30f8d4b5a0c03626b77a20995d5280ff5ee7ab565ba265"
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-comparison.json",
+        "bytes": 1580,
+        "sha256": "b75da688ac153c7caa20057d2a3f4c86e0e9c6b62bedc78e3bebc651f619c98d"
       },
       "sourceRebuildEvidence": {
-        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/source-rebuild.json",
-        "bytes": 1018,
-        "sha256": "43b544c11d2ac8adcefe7fbb159359de4a16e223f0bf13341c0ee2c6f2d476bd"
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-rebuild.json",
+        "bytes": 994,
+        "sha256": "24d3c0aaefc4470e3402ba8436368b54dcca178505766d234f10bd8d69921429"
       }
     },
     {

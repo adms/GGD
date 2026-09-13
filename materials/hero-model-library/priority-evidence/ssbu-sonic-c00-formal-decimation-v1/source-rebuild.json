@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-source-rebuild@1",
+  "componentId": "ssbu-sonic-c00-static-skinned-v2",
+  "sourceSha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+  "outputSha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+  "firstBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+    "bytes": 916024,
+    "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3"
+  },
+  "secondBuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate-rebuild.glb",
+    "bytes": 916024,
+    "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3"
+  },
+  "byteIdenticalRebuild": true,
+  "bothStructuralValidationsPassed": true,
+  "bothValidationsPassed": true
+}
