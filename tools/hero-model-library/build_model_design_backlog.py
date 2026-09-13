@@ -180,7 +180,7 @@ def render(data):
         f"本次逐庫來源身份記錄：尚未建立英雄 **{n['not-defined']}** 筆；已有定義但需補查／實作 **{n['definitions-incomplete']}** 筆；身份待確認 **{n['identity-review']}** 筆。另有 {n['designed']} 筆已對應有機制資料的英雄、{n['source-unavailable']} 筆無可核對本機模型，不列入可用待辦。跨庫同角色及形態未經核准合併前，這些數字不是去重後的新英雄總數。",'',
         f"目前專案有 {data['heroesInProject']} 份英雄定義。技能檔存在與機制可解析，不等於完整設計、平衡或實戰驗收完成；上架狀態只採盤點內既有白名單快照，並非即時正式站檢查。",'',
         '## 維護方式','',
-        '1. 新取得模型先歸檔，更新 `design-backlog/sources-300-mba.json` 、`sources-community.json` 或 `sources-supplemental.json`；每個角色保留全部來源／版本與實際檔案證據。','2. 建立或修改英雄後更新 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. 執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`；一起 commit、push，同步 S3 備份。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
+        '1. 新取得模型先歸檔，更新本機 `design-backlog/sources-300-mba.json`、`sources-community.json` 或 Git 內的精簡補充來源；每個角色保留全部來源／版本與實際檔案證據。大型解析 JSON 留在本機並備份到 S3 `legacy/`。','2. 建立或修改英雄後更新本機 `design-backlog/hero-design-coverage.json` 的技能核對；來源身份以明確角色／作品與映射確認，借用模型不算原角色已實作。','3. 執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同指令加 `--check`；Git 提交同名固定索引、產生器與精簡驗證收據，另將大型輸入與前版快照備份到 S3。不要只手改這份產物。','4. 所有原始、半成品、轉換檔及轉換程式都有 S3 備份；Git 保留成品、程式與索引的共編版本，本機全保留。','']
     lines+=source_overview(data['resourceCoverage'])
     labels=[('not-defined','尚未建立對應英雄'),('definitions-incomplete','已有定義，需補查或實作'),('identity-review','來源身份／英雄對應待確認'),('designed','已有英雄設計：全部來源版本仍保留')]
     for status,label in labels:

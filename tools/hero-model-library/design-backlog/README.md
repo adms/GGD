@@ -8,7 +8,7 @@
 
 中文對照固定維護在 `materials/hero-model-library/design-backlog/localization-zh-TW.json`：`names` 以來源身份 ID 為 key，`works` 以原始作品字串為 key，附翻譯依據。清單以中文優先並保留原文；新增來源時一起補中文，避免其他工作流重新產生清單後退回只有英文。身份不明的檔名以中文描述並標明待確認，不能用翻譯修改角色對應或設計判定。
 
-只修改名稱時執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同一指令加 `--check`。同名 JSON 保留原始 `name`／`work`，並提供 `nameZh`／`workZh` 與 `displayName`／`displayWork` 供其他工作流使用；產生器也會同步工作區及本機素材庫的 MD。
+只修改名稱時執行 `python3 tools/hero-model-library/build_model_design_backlog.py --workspace ..`，再執行同一指令加 `--check`。同名中央索引 JSON 保留原始 `name`／`work`，並提供 `nameZh`／`workZh` 與 `displayName`／`displayWork` 供其他工作流使用；產生器也會同步工作區及本機素材庫的 MD。大型來源盤點與完整技能解析報告留在本機並備份到 S3 `legacy/`，Git 只提交固定中央索引、產生器與精簡驗證收據。
 
 ## 全來源與五類素材
 
@@ -59,7 +59,7 @@ python3 tools/hero-model-library/design-backlog/audit_community.py \
   --repo . --workspace .. --output /private/tmp/ggd-design-sources-community.json
 ```
 
-檢查輸出後更新 `materials/hero-model-library/design-backlog/sources-300-mba.json`／`sources-community.json`。新增來源尚未受來源掃描器支援時，保留完整個別來源收據，透過 `sources-supplemental.json` 登記，避免重掃時消失。隨後重跑上述英雄核對與主清單產生器，將來源索引、生成文件與工具一起提交同一分支／PR。
+檢查輸出後更新本機 `materials/hero-model-library/design-backlog/sources-300-mba.json`／`sources-community.json`，並把大型盤點、完整清單及前版快照備份到 S3 `legacy/`。新增來源尚未受來源掃描器支援時，保留完整個別來源收據，透過 Git 內的精簡 `sources-supplemental.json` 登記，避免重掃時消失。隨後重跑上述英雄核對與主清單產生器；同一分支／PR 提交固定中央索引、產生器與精簡驗證收據，不把大型解析 JSON 再加入 Git。
 
 FateUBW 同步器從 `download-sources.json` 的已驗證標準化嘗試重建 14 名英靈的逐角動作摘要；Heracles 的未被動作命中末端旋轉骨採獨立休息姿勢烘焙及完整逆綁定流程，並保留公式／無時長片段缺口。可用 `sync_backlog_resources.py --workspace .. --check` 驗證，不能用手改摘要把本機／S3 儲備誤寫成後台可選或已部署。
 
