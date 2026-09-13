@@ -42702,6 +42702,36 @@
       "categoryCounts": {
         "unclassified": 5
       }
+    },
+    {
+      "id": "steam-kof2002um-voice-dat-222440-build-8463197",
+      "name": "KOF 2002 UM／voice.dat 全容器語音記錄",
+      "library": "本機遊戲",
+      "sourceId": "steam-kof2002um-voice-dat-222440-build-8463197",
+      "heroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "language": "unreviewed",
+      "speakerVerified": false,
+      "transcriptStatus": "not-transcribed",
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "listeningReviewComplete": false,
+      "fileCount": 2687,
+      "bytes": 130297678,
+      "knownDurationSeconds": 2712.3417419999964,
+      "durationMeasuredFiles": 2687,
+      "voiceFilenameCandidates": 0,
+      "originalBanks": [],
+      "backupIds": [
+        "public:steam-kof2002um-voice-dat-222440-build-8463197"
+      ],
+      "sourceUrl": "https://store.steampowered.com/app/222440/",
+      "work": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+      "languagePreferenceRank": 3,
+      "languagePreferenceBasis": "reported-language-only; listening review still required",
+      "categoryCounts": {
+        "voice-source-label-unreviewed": 2687
+      }
     }
   ],
   "backups": {
@@ -43432,20 +43462,35 @@
       "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1",
       "localUseAvailable": true,
       "publicationStatus": "s3-readback-verified"
+    },
+    "public:steam-kof2002um-voice-dat-222440-build-8463197": {
+      "type": "tar-gzip",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kof2002um-voice-dat-222440-build-8463197/17de9c65c8f3c5d3f7df28932ae68929fa766021d2528d311f26259c614675d2.tar.gz",
+      "bytes": 118547299,
+      "sha256": "17de9c65c8f3c5d3f7df28932ae68929fa766021d2528d311f26259c614675d2",
+      "archiveFormat": "tar-gzip",
+      "archiveMemberRoot": "",
+      "readbackVerified": true,
+      "fullReadbackVerified": true,
+      "s3ReadbackVerified": true,
+      "localRoot": "GGD-Asset-Library/extracted/kof-2002-um-voice-v1",
+      "absoluteLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/kof-2002-um-voice-v1",
+      "localUseAvailable": true,
+      "publicationStatus": "s3-readback-verified"
     }
   },
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "7ec2e14cf8f0a0b34f24f174ee72277fa5b700a87c66b2202978eece232b7b5c"
+      "sha256": "533f331b8aa1d33935f718963c0dad5844fa4ce10cc5fa4d0d44dad4b655e13a"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
-      "sha256": "4c8efa24cd3cc5206eb6c288aa8d380795ef6b7e0b9798154bafe6cd0fa06438"
+      "sha256": "ba29f74db06d3f5613f3133b5afc4a8b4c8bc0cada3f6673eb8860428bf41730"
     },
     {
       "path": "materials/hero-model-library/manifest.json",
-      "sha256": "829d66d59a09f0989b4007f8321002315d44a88b5265f53e4599f2a74606ca4d"
+      "sha256": "b45a9f599f5c3d09420a57b44937d23cd6c77883d975c86f333b1270075c23c3"
     },
     {
       "path": "GGD-Asset-Library/backups/latest.json",
@@ -43846,6 +43891,14 @@
     {
       "path": "GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1/audioFileIndex.json",
       "sha256": "773a70c4ec1527f14890a5ec5727e7273da49c009bb10fee05a5574c4466d77e"
+    },
+    {
+      "path": "GGD-Asset-Library/extracted/kof-2002-um-voice-v1/manifest.json",
+      "sha256": "b1cf3a7a0122b83ae2299b8f51665442e9f51fe2cf2a36e1892330957a32eb24"
+    },
+    {
+      "path": "GGD-Asset-Library/extracted/kof-2002-um-voice-v1/manifest.json",
+      "sha256": "b1cf3a7a0122b83ae2299b8f51665442e9f51fe2cf2a36e1892330957a32eb24"
     },
     {
       "path": "materials/hero-model-library/lol-prefetch-resolution.json",
@@ -94540,13 +94593,13 @@
     "generatedAudioMustBeLabeledSynthetic": true
   },
   "summary": {
-    "groups": 988,
-    "audioFiles": 284075,
-    "bytes": 138400869377,
-    "sourceFileRelationshipRows": 284075,
-    "uniqueLocalPaths": 283627,
-    "uniqueSha256Payloads": 251750,
-    "uniqueLocalPathBytes": 137827940661,
+    "groups": 989,
+    "audioFiles": 286762,
+    "bytes": 138531167055,
+    "sourceFileRelationshipRows": 286762,
+    "uniqueLocalPaths": 286314,
+    "uniqueSha256Payloads": 254431,
+    "uniqueLocalPathBytes": 137958238339,
     "missingOrSizeChanged": 0,
     "confirmedVoiceCount": null,
     "synthesisReadyGroups": 0,
@@ -94557,6 +94610,6 @@
     "nativeEventBoundRelationshipRows": 968,
     "nativeEventMappedEvents": 232
   },
-  "sourceFileManifestSha256": "48541a77ace3e13c2fe784ac0e5c9a7acf9de6a901ccac95a6f5c9a185bca564",
-  "uncompressedFileManifestSha256": "08fe1e8eee11eab18730523080193f320e2375148df2dd45ed74ac28fd6b9ef3"
+  "sourceFileManifestSha256": "f6fabc647c479725034ffce1c755f99083533c2a7e179334c41fa92eeed5117e",
+  "uncompressedFileManifestSha256": "6a41c352e76c70ca52c4b93e1c60e70fc6c91de0cb535f351489912a86cb0527"
 }

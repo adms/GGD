@@ -25,7 +25,7 @@ def candidate_role(candidate):
     if role in {'model-component-or-prop','independent-static-skinned-model-component'} or 'component' in role or 'prop' in role:return 'component'
     return 'other'
 
-CLASSIFIED_ROLES={'character-body','character-body-costume','character-body-mesh-source','model-component-or-prop','shared-source-container','independent-static-skinned-model-component'}
+CLASSIFIED_ROLES={'character-body','character-body-costume','character-body-mesh-source','model-component-or-prop','shared-source-container','independent-static-skinned-model-component','independent-skinned-model-motion-component'}
 
 def has_classified_roles(candidates):return any(candidate.get('resourceRole') in CLASSIFIED_ROLES for candidate in candidates)
 
@@ -161,6 +161,7 @@ def build():
 def friendly_stage(value):
     value=str(value or 'unknown')
     if value=='accepted-independent-static-skinned-component-actions-missing':return '靜態蒙皮元件已驗收；動作、英雄綁定與後台切換仍缺'
+    if value=='accepted-independent-procedural-six-state-fallback-not-hero-bound':return '程序化六態元件已驗收；非原生動作，英雄綁定與後台切換仍缺'
     if value=='native-body-identity-unreviewed':return '原生模型；外觀身份待核'
     if 'backend-standardized-option' in value:return '已登記後台選項；程序化動作另標'
     if 'shared-upload-and-runtime-motion' in value:return '已通過匯入與動作檢查'

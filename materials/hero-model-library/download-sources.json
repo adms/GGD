@@ -11933,6 +11933,58 @@
           "receiptSha256": "a30f0b21ed06d7ab0c90f1c8039bf3edfae3b6e9cc814836f1dfc497ce1b6e6f",
           "manifestSha256": "ecfad69acb8dd475e493dbf7902198a7a09012598249e463cd805b0c3e7150b4",
           "s3Use": "backup-only-not-runtime-entry"
+        },
+        {
+          "id": "ssbu-ryu-c00-procedural-six-state-v1-backup",
+          "sourceId": "gitlab-ssbu-models",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-full-readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.files.json",
+          "bytes": 563221,
+          "sha256": "8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281",
+          "fileCount": 4,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
+          "receiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401",
+          "manifestSha256": "09a7887bdd4ef20c855c589c77ef60cc0794e80419fe368b064a007fc19309ee",
+          "s3Use": "backup-only-not-runtime-entry"
+        },
+        {
+          "id": "ssbu-ryu-c00-procedural-six-state-visual-v1-backup",
+          "sourceId": "gitlab-ssbu-models",
+          "resourceRole": "integration-evidence-backup",
+          "localPath": "GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-visual-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-visual-v1-backup/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-visual-v1-backup/s3-full-readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-visual-v1-backup/2441204c1e67d778849025ee5618ed7df6543596c5493ee09f922b618845ecf4.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-visual-v1-backup/2441204c1e67d778849025ee5618ed7df6543596c5493ee09f922b618845ecf4.files.json",
+          "bytes": 14003851,
+          "sha256": "2441204c1e67d778849025ee5618ed7df6543596c5493ee09f922b618845ecf4",
+          "fileCount": 66,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-visual-v1-backup/s3-verified-receipt.json",
+          "receiptSha256": "8acbed5daf352209ec88d75dab003a015fc18c63f10af8fe5f56086168351f75",
+          "manifestSha256": "652503c446d212c76d3fa2a129d5fcddfea3d1a2fe3800660fb1f64032d682cb",
+          "s3Use": "backup-only-not-runtime-entry"
         }
       ],
       "conversionAttempts": [
@@ -13425,6 +13477,131 @@
             "bytes": 14624,
             "sha256": "d11482b5db3fab50cc4ac74f330c5ce288fe7d36d113254e5d3f0fa577b2d4e9"
           }
+        },
+        {
+          "id": "ssbu-ryu-c00-procedural-six-state-v1",
+          "conversionCandidateId": "ssbu-ryu-c00-static-skinned-v1",
+          "sourceComponentId": "ssbu-ryu-c00-static-skinned-v1",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceIds": [
+            "gitlab-ssbu-models"
+          ],
+          "sourceClass": "original-game-extraction-community-repackage",
+          "selectionClass": "canonical-game",
+          "modelSourceCategory": "canonical-game",
+          "animationSourceCategory": "ggd-procedural-fallback",
+          "nameZh": "隆／Ryu",
+          "originalName": "Ryu",
+          "workZh": "任天堂明星大亂鬥 特別版（原作：Street Fighter）",
+          "sourceGame": "Super Smash Bros. Ultimate",
+          "sourceGameReleasedAt": "2018-12-07",
+          "platform": "Nintendo Switch",
+          "nativeId": "fighter/ryu/body/c00",
+          "variant": "c00",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "animation"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+          "bytes": 1069196,
+          "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+          "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+          "componentReady": true,
+          "converted": true,
+          "structuralValidationPassed": true,
+          "visualValidationPassed": true,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "identityIds": [
+            "ssbu-ryu"
+          ],
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 6,
+          "animationProvenance": "ggd-procedural-fallback",
+          "animationNames": [
+            "GGD_procedural_idle",
+            "GGD_procedural_run",
+            "GGD_procedural_attack",
+            "GGD_procedural_cast",
+            "GGD_procedural_hurt",
+            "GGD_procedural_death"
+          ],
+          "triangles": 14621,
+          "drawPrimitives": 5,
+          "skinCount": 1,
+          "jointCount": 154,
+          "textureCount": 5,
+          "sixStateFallbackComplete": true,
+          "completeGameplayActionSet": false,
+          "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
+          "auditEvidence": "Ryu c00 preserves the accepted SSBU static component and adds six clearly labelled GGD procedural fallback clips. Khronos reports 0 errors/0 warnings, GGD hard budget has 0 errors, 129,228 float values are finite, and 60 front/side WebGL samples were visually accepted. No native action, hero binding, dropdown registration or deployment is claimed.",
+          "limitations": [
+            "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
+            "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
+            "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+            "No source VFX, SFX or voice was created or inferred by this motion conversion.",
+            "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/delivery.json",
+            "bytes": 4327,
+            "sha256": "7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/acceptance.json",
+            "bytes": 1235,
+            "sha256": "44071773a8186a302a8c19d154711351b3acc18adc0fe9e1497f958516f5a912"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/validation.json",
+            "bytes": 6140,
+            "sha256": "6bb0304efa529dd2697792c9ae9702ca2ff8729fb375d24e11173f4d36e3a2eb"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/visual-review.json",
+            "bytes": 2147,
+            "sha256": "c94b4b3fc808735ff1ebe707a4bc77640dc815d9592ef4210f77d8102da543c9"
+          },
+          "webglProofEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/webgl-proof.json",
+            "bytes": 43607,
+            "sha256": "19093285f104fbf2cd263a9033207ef947a3f9f72dc51ce9f454d385437fb5d5"
+          },
+          "sourceRebuildEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/source-rebuild.json",
+            "bytes": 2780,
+            "sha256": "b43d6e924c668e1d76aa4574c284872e777113f0b8cb9e10c0d80c200cbaf4ce"
+          },
+          "preparationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/preparation.receipt.json",
+            "bytes": 5275,
+            "sha256": "4ecc1ba628b2179370ae6bf6fffcb34d438769388e8043b4d8ff1935751b613c"
+          },
+          "backupStatus": "s3-full-readback-verified",
+          "backupLocations": [
+            {
+              "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+              "s3ArchiveMember": "body.glb",
+              "s3Use": "backup-only-not-runtime-entry",
+              "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
+              "backupReceiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401"
+            }
+          ],
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+          "s3ArchiveMember": "body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
+          "backupReceiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401"
         }
       ]
     },
@@ -51673,6 +51850,65 @@
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/historical-model-recovery-7bc2fa3f8/f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d.tar.gz",
         "bytes": 14839286,
         "sha256": "f800694679bbd092b0cf97fc68640f8666c9b52467a10b919566e4ab9a02a90d",
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "readbackVerified": true,
+        "fullReadbackVerified": true,
+        "s3ReadbackVerified": true
+      }
+    },
+    {
+      "id": "steam-kof2002um-voice-dat-222440-build-8463197",
+      "target": "KOF 2002 UM／voice.dat 全容器語音記錄",
+      "heroIds": [],
+      "ownerEntryIds": [],
+      "url": "https://store.steampowered.com/app/222440/",
+      "uploader": "User-owned local Steam install exposed through read-only SMB",
+      "format": "length-prefixed RIFF/WAVE",
+      "accessStatus": "local-installed-game",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-intake-pending-listening-review",
+      "purchaseDecision": "no-purchase-user-owned-install",
+      "defaultEligible": false,
+      "resourceRole": "audio-supplement",
+      "localPath": "GGD-Asset-Library/extracted/kof-2002-um-voice-v1",
+      "sourceGame": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+      "platform": "Windows (Steam)",
+      "appId": "222440",
+      "buildId": "8463197",
+      "selectionClass": "canonical-game",
+      "discoveryChannel": "local-readonly-smb",
+      "assetKinds": [
+        "audio",
+        "voice"
+      ],
+      "publicationStatus": "s3-readback-verified",
+      "files": [],
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-listening-and-character-mapping",
+        "selectionVerified": false
+      },
+      "audioFileIndex": {
+        "reportPath": "manifest.json",
+        "reportSha256": "b1cf3a7a0122b83ae2299b8f51665442e9f51fe2cf2a36e1892330957a32eb24"
+      },
+      "primaryAudioFormats": [
+        ".wav"
+      ],
+      "audioCategory": "voice-source-label-unreviewed",
+      "audioAcquisition": {
+        "sourceContainer": "Data/game/voice.dat",
+        "sourceBytes": 130308832,
+        "sourceSha256": "224dd451b45bc1e2518ec0481e4e0856416bc0e47ecb65057dac0dbfdb4ca725",
+        "riffWavCount": 2687,
+        "extractedBytes": 130297678
+      },
+      "verification": "voice.dat was parsed to its exact end as 2,687 length-prefixed RIFF/WAVE records; every extracted RIFF has a SHA-256 and audio metadata. Language, speaker, dialogue/SFX classification, and gameplay event remain pending listening review.",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kof2002um-voice-dat-222440-build-8463197/17de9c65c8f3c5d3f7df28932ae68929fa766021d2528d311f26259c614675d2.tar.gz",
+        "bytes": 118547299,
+        "sha256": "17de9c65c8f3c5d3f7df28932ae68929fa766021d2528d311f26259c614675d2",
         "archiveFormat": "tar-gzip",
         "archiveMemberRoot": "",
         "readbackVerified": true,

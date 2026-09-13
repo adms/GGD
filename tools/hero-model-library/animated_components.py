@@ -7,6 +7,8 @@ from pathlib import Path
 
 
 ROLE = "independent-skinned-model-motion-component"
+NATIVE_PROVENANCE = "community-mod-native-not-original-game"
+PROCEDURAL_PROVENANCE = "ggd-procedural-fallback"
 
 
 def require(condition, message):
@@ -32,17 +34,23 @@ def validate(candidate, source, repo):
     require(candidate.get("resourceRole") == ROLE, "Unsupported animated component role")
     require(candidate.get("sourceId") == source.get("id"), "Animated component source mismatch")
     require(candidate.get("sourceClass") == source.get("sourceClass"), "Animated component source class mismatch")
-    require(candidate.get("nativeAnimationCount") == 5 and candidate.get("proceduralAnimationCount") == 0,
-            "Unexpected animated component motion counts")
-    require(candidate.get("animationProvenance") == "community-mod-native-not-original-game",
+    provenance = candidate.get("animationProvenance")
+    require(provenance in (NATIVE_PROVENANCE, PROCEDURAL_PROVENANCE),
             "Animated component motion provenance is ambiguous")
+    if provenance == NATIVE_PROVENANCE:
+        require(candidate.get("nativeAnimationCount") == 5 and candidate.get("proceduralAnimationCount") == 0,
+                "Unexpected native animated component motion counts")
+    else:
+        require(candidate.get("nativeAnimationCount") == 0 and candidate.get("proceduralAnimationCount") == 6,
+                "Unexpected procedural animated component motion counts")
     model = verify_pin(candidate, repo)
     require(candidate.get("gitPath") == "content/assets/models/community/" + candidate["sha256"] + ".glb",
             "Noncanonical animated component Git path")
 
     validation = json.loads(verify_pin(candidate["validationEvidence"], repo).read_text())
-    require(validation.get("schema") == "ggd-ssbu-mario-ultimate14-motion-validation@1",
-            "Unexpected animated component validation schema")
+    expected_schema = ("ggd-ssbu-mario-ultimate14-motion-validation@1" if provenance == NATIVE_PROVENANCE
+                       else "ggd-procedural-six-state-validation@1")
+    require(validation.get("schema") == expected_schema, "Unexpected animated component validation schema")
     require((validation.get("glb", {}).get("sha256"), validation.get("glb", {}).get("bytes")) ==
             (candidate["sha256"], candidate["bytes"]), "Animated validation GLB pin mismatch")
     require(validation.get("structuralValidationPassed") is True, "Animated component structural validation failed")
@@ -54,11 +62,19 @@ def validate(candidate, source, repo):
             "Animated component failed direct Khronos validation")
     inspection = validation.get("ggdInspection", {})
     require(inspection.get("budget", {}).get("errors") == [], "Animated component exceeds GGD budget")
-    require(inspection.get("skinCount") == 1 and inspection.get("jointCount") == 98,
+    require(inspection.get("skinCount") == 1 and inspection.get("jointCount") == candidate.get("jointCount"),
             "Unexpected animated component skin")
     clips = inspection.get("clips", [])
-    require(len(clips) == 5 and all(row.get("channels") == 294 for row in clips),
-            "Incomplete animated component clips")
+    if provenance == NATIVE_PROVENANCE:
+        require(len(clips) == 5 and all(row.get("channels") == 294 for row in clips),
+                "Incomplete native animated component clips")
+    else:
+        require([row.get("name") for row in clips] ==
+                ["GGD_procedural_" + state for state in ("idle", "run", "attack", "cast", "hurt", "death")] and
+                all(row.get("channels") == 12 for row in clips), "Incomplete procedural animated component clips")
+        require(validation.get("webglSamplingPassed") is True and
+                validation.get("renderProof", {}).get("sampleCount") == 60,
+                "Procedural component is missing two-view five-time WebGL sampling")
 
     acceptance = json.loads(verify_pin(candidate["acceptanceEvidence"], repo).read_text())
     rows = [row for row in acceptance.get("components", []) if row.get("id") == candidate["id"]]

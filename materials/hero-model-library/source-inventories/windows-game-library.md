@@ -65,6 +65,16 @@
 | palworld | steam-install | Palworld Dedicated Server | Windows (Steam) | 25080279 | `F:\SteamLibrary\steamapps\common\PalServer` |
 | palworld | steam-install | Palworld | Windows (Steam) | 25094871 | `F:\SteamLibrary\steamapps\common\Palworld` |
 
+## 素材容器盤點
+
+- 逐檔掃描遊戲：**3**
+- 對應既有目錄：**3**
+- 素材容器／模型／音訊候選：**282**
+- 掃描錯誤：**0**
+- 實際讀取容器內容：**0 bytes**
+
+> 這一層只列出容器與素材候選的路徑、大小及引擎線索，尚未解包或確認角色身分。
+
 ## Palworld／幻獸帕魯
 
 > 本體與 Dedicated Server 分開建檔。只有本體列為角色素材來源；目前尚未掃描安裝目錄內的 PAK、IoStore 或音訊容器。

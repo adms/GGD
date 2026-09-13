@@ -1,0 +1,107 @@
+{
+  "asset": "ssbu-ryu-c00-static-skinned-v1",
+  "bones": {
+    "pelvis": "Hip",
+    "spine": "Bust",
+    "head": "Head",
+    "upperArmL": "ShoulderL",
+    "upperArmR": "ShoulderR",
+    "forearmL": "ArmL",
+    "forearmR": "ArmR",
+    "thighL": "LegL",
+    "thighR": "LegR",
+    "shinL": "KneeL",
+    "shinR": "KneeR"
+  },
+  "coordinateSpace": "world-rest",
+  "basePoseWorldDegrees": {
+    "ShoulderL": [
+      0,
+      -15,
+      -50
+    ],
+    "ShoulderR": [
+      0,
+      15,
+      50
+    ],
+    "ArmL": [
+      0,
+      0,
+      70
+    ],
+    "ArmR": [
+      0,
+      0,
+      -70
+    ]
+  },
+  "roleSigns": {
+    "upperArmR": [
+      1,
+      1,
+      -1
+    ],
+    "forearmR": [
+      1,
+      1,
+      -1
+    ]
+  },
+  "roleRotationMatrices": {
+    "pelvis": [
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ]
+    ],
+    "upperArmL": [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "upperArmR": [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ]
+  },
+  "unitsPerMeter": 1,
+  "deathDropMeters": 0.6,
+  "yawOffsetDeg": 0
+}

@@ -5722,7 +5722,7 @@
   "projectSevenJapaneseVoiceIndex": "materials/hero-model-library/lol-project-seven/seven-voice-index.json",
   "windowsGameSourceInventory": {
     "gitPath": "materials/hero-model-library/source-inventories/windows-game-library.json.gz",
-    "sha256": "5b2532b8d3ec2a2226ac6293305844a2a02b374d67bfdc14902830da0882afcd",
+    "sha256": "04f1c926eb93a229e7eb502b92fbe2811ee1b27536967701365afd2da891d486",
     "status": "inventory-only",
     "summary": {
       "steamInstallCount": 312,
@@ -5758,7 +5758,10 @@
         "archive-unverified": 422,
         "rom-candidate": 4,
         "rom-high-confidence": 421
-      }
+      },
+      "containerGameRecordCount": 3,
+      "containerMatchedCatalogRecordCount": 3,
+      "assetContainerCandidateCount": 282
     }
   },
   "windowsGameSourceDocument": "materials/hero-model-library/source-inventories/windows-game-library.md",
@@ -8520,6 +8523,132 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb"
     },
     {
+      "id": "ssbu-ryu-c00-procedural-six-state-v1",
+      "conversionCandidateId": "ssbu-ryu-c00-static-skinned-v1",
+      "sourceComponentId": "ssbu-ryu-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "sourceIds": [
+        "gitlab-ssbu-models"
+      ],
+      "sourceClass": "original-game-extraction-community-repackage",
+      "selectionClass": "canonical-game",
+      "modelSourceCategory": "canonical-game",
+      "animationSourceCategory": "ggd-procedural-fallback",
+      "nameZh": "隆／Ryu",
+      "originalName": "Ryu",
+      "workZh": "任天堂明星大亂鬥 特別版（原作：Street Fighter）",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "sourceGameReleasedAt": "2018-12-07",
+      "platform": "Nintendo Switch",
+      "nativeId": "fighter/ryu/body/c00",
+      "variant": "c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model-component",
+        "skeleton",
+        "texture",
+        "animation"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+      "bytes": 1069196,
+      "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+      "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+      "componentReady": true,
+      "converted": true,
+      "structuralValidationPassed": true,
+      "visualValidationPassed": true,
+      "runtimeReady": false,
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "automaticEligible": false,
+      "fullHeroModel": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "identityIds": [
+        "ssbu-ryu"
+      ],
+      "nativeAnimationCount": 0,
+      "proceduralAnimationCount": 6,
+      "animationProvenance": "ggd-procedural-fallback",
+      "animationNames": [
+        "GGD_procedural_idle",
+        "GGD_procedural_run",
+        "GGD_procedural_attack",
+        "GGD_procedural_cast",
+        "GGD_procedural_hurt",
+        "GGD_procedural_death"
+      ],
+      "triangles": 14621,
+      "drawPrimitives": 5,
+      "skinCount": 1,
+      "jointCount": 154,
+      "textureCount": 5,
+      "sixStateFallbackComplete": true,
+      "completeGameplayActionSet": false,
+      "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
+      "auditEvidence": "Ryu c00 preserves the accepted SSBU static component and adds six clearly labelled GGD procedural fallback clips. Khronos reports 0 errors/0 warnings, GGD hard budget has 0 errors, 129,228 float values are finite, and 60 front/side WebGL samples were visually accepted. No native action, hero binding, dropdown registration or deployment is claimed.",
+      "limitations": [
+        "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
+        "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
+        "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+        "No source VFX, SFX or voice was created or inferred by this motion conversion.",
+        "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+      ],
+      "deliveryEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/delivery.json",
+        "bytes": 4327,
+        "sha256": "7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e"
+      },
+      "acceptanceEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/acceptance.json",
+        "bytes": 1235,
+        "sha256": "44071773a8186a302a8c19d154711351b3acc18adc0fe9e1497f958516f5a912"
+      },
+      "validationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/validation.json",
+        "bytes": 6140,
+        "sha256": "6bb0304efa529dd2697792c9ae9702ca2ff8729fb375d24e11173f4d36e3a2eb"
+      },
+      "visualEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/visual-review.json",
+        "bytes": 2147,
+        "sha256": "c94b4b3fc808735ff1ebe707a4bc77640dc815d9592ef4210f77d8102da543c9"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/webgl-proof.json",
+        "bytes": 43607,
+        "sha256": "19093285f104fbf2cd263a9033207ef947a3f9f72dc51ce9f454d385437fb5d5"
+      },
+      "sourceRebuildEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/source-rebuild.json",
+        "bytes": 2780,
+        "sha256": "b43d6e924c668e1d76aa4574c284872e777113f0b8cb9e10c0d80c200cbaf4ce"
+      },
+      "preparationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/preparation.receipt.json",
+        "bytes": 5275,
+        "sha256": "4ecc1ba628b2179370ae6bf6fffcb34d438769388e8043b4d8ff1935751b613c"
+      },
+      "backupStatus": "s3-full-readback-verified",
+      "backupLocations": [
+        {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+          "s3ArchiveMember": "body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
+          "backupReceiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401"
+        }
+      ],
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/ssbu-ryu-c00-procedural-six-state-v1-backup/8d51ebf7dc02afc8af39c61ef23d22506e43cac5dd453427add1c61246b49281.tar.gz",
+      "s3ArchiveMember": "body.glb",
+      "s3Use": "backup-only-not-runtime-entry",
+      "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/scoped/ssbu-ryu-c00-procedural-six-state-v1-backup/s3-verified-receipt.json",
+      "backupReceiptSha256": "1a93dadf09226fe94613143e9a215b83b52516d513ed086ce676767fdd9b2401",
+      "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb"
+    },
+    {
       "id": "historical-astralym-7bc2fa3f8",
       "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
       "sourceClass": "integration-recovery",
@@ -9001,7 +9130,7 @@
       "gitAbsolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb"
     }
   ],
-  "modelComponentCount": 26,
+  "modelComponentCount": 27,
   "historicalModelSourceArtifacts": [
     {
       "id": "historical-kita-kita-7bc2fa3f8:exact-historical-source",
@@ -9103,10 +9232,10 @@
   },
   "modelComponentIndex": {
     "gitPath": "materials/hero-model-library/palworld/帕魯三角色素材索引.json",
-    "sha256": "2d2da0aaa9c92683638a1a75196660451f4c43f2a3a9884f0cb01db90c197c43"
+    "sha256": "ace77cee52ddfc2946e4520cf14e5bd5d9d59828b177182c7ae15bd631f6861d"
   },
   "modelComponentSourceIndex": {
     "gitPath": "materials/hero-model-library/download-sources.json",
-    "sha256": "70f436186d1ea7aa6060a2fba150383c3e7c35e117893290abe9937bbe88f0a4"
+    "sha256": "533f331b8aa1d33935f718963c0dad5844fa4ce10cc5fa4d0d44dad4b655e13a"
   }
 }

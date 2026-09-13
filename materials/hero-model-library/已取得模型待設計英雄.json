@@ -51,11 +51,11 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-community.json",
-      "sha256": "5d83876057eeaacd6ed09a1cbe219f1bb9580236736743809b9732a8a2ee4c73"
+      "sha256": "06cbadbabdcd4760938a482d50f3a941eea21fe12811663289112e2fad2df937"
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "7950b60fd323c5c7af80f7694f14c0e79cf15db82b5d5955975126ee93b515e8"
+      "sha256": "b78794516d83d0eb6456637a5e3a323e3a624dccfda138e8ac40c4e5e2b494f9"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -67,11 +67,11 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "45ba04d41ad86c444a74cac6a3b82a045c89b8f9f5371067ffbd70bcae370f63"
+      "sha256": "265eac87f0863df7c83fb402b3c6e882dfea55bac88b015c4d2c292610764d9c"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "70f436186d1ea7aa6060a2fba150383c3e7c35e117893290abe9937bbe88f0a4"
+      "sha256": "533f331b8aa1d33935f718963c0dad5844fa4ce10cc5fa4d0d44dad4b655e13a"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -179740,13 +179740,67 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/transparent-component-material-normalization-v1/ssbu-ryu-c00-static-skinned-v1/component.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+          "existsLocal": true,
+          "bytes": 1069196,
+          "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+          "sha256Status": "verified-byte-identical-rebuild",
+          "magicHex": "676c5446020000008c501000",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 1,
+            "primitives": 5,
+            "skins": 1,
+            "animationEntries": 6
+          },
+          "id": "ssbu-ryu-c00-procedural-six-state-v1",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "sourceUrl": "https://gitlab.com/Worldblender/smash-ultimate-models-exported",
+          "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
+          "converted": true,
+          "resourceRole": "independent-skinned-model-motion-component",
+          "nativeId": "fighter/ryu/body/c00",
+          "format": "glTF Binary",
+          "gitPath": "content/assets/models/community/97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf.glb",
+          "componentReady": true,
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 6,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "fullHeroModel": false,
+          "limitations": [
+            "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
+            "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
+            "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+            "No source VFX, SFX or voice was created or inferred by this motion conversion.",
+            "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+          ],
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/validation.json",
+            "bytes": 6140,
+            "sha256": "6bb0304efa529dd2697792c9ae9702ca2ff8729fb375d24e11173f4d36e3a2eb"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/visual-review.json",
+            "bytes": 2147,
+            "sha256": "c94b4b3fc808735ff1ebe707a4bc77640dc815d9592ef4210f77d8102da543c9"
+          },
+          "identityReviewRequired": false,
+          "recordedBytes": 1069196,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
       "designStatus": "not-defined",
       "evidence": [
         "Pinned SSBU exported repository df76879171b064570b4e49a608c9f98211b33edb; Blender ME datablock checks establish mesh. nativeGroup=fighter/ryu. Names from native roster IDs; no new visual review. Group may contain accessories or multiple costume identities; not a unique-character count.",
-        "SSBU fighter/ryu c00 was converted with Blender 4.5.13 and GGD normalization to a 1,005,688-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 11 visible source meshes were consolidated only within matching materials to 5 primitives, all are skinned to 154 joints, and 117,948 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions."
+        "SSBU fighter/ryu c00 was converted with Blender 4.5.13 and GGD normalization to a 1,005,688-byte GLB. Two builds are byte-identical; Khronos has zero errors/warnings, 11 visible source meshes were consolidated only within matching materials to 5 primitives, all are skinned to 154 joints, and 117,948 float values are finite. Three WebGL views were accepted only as a static component; source and output have no actions.",
+        "Ryu c00 now also has an independently accepted GGD procedural six-state fallback: 6 generated clips, 60 two-view WebGL samples, and a byte-identical rebuild. It remains non-native, unbound to a hero, unavailable in the backend dropdown, and undeployed."
       ],
       "aliases": [
         "fighter/ryu"
@@ -179767,7 +179821,7 @@
       "candidateBreakdown": {
         "characterBodySources": 8,
         "standaloneCharacterBodies": 8,
-        "componentsOrProps": 2,
+        "componentsOrProps": 3,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -179804,6 +179858,15 @@
             "unconvertedCount": null,
             "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "ssbu-ryu-c00-procedural-six-state-v1",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-procedural-six-state-fallback-not-hero-bound",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],

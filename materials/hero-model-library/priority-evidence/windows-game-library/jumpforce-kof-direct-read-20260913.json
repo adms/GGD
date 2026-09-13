@@ -1,0 +1,178 @@
+{
+  "schema": "ggd-mounted-priority-game-container-receipt@1",
+  "generatedAt": "2026-09-13T06:32:52.780568+00:00",
+  "readOnlySource": true,
+  "scan": {
+    "selectedInstallDirectories": [
+      "JUMP FORCE",
+      "The King of Fighters 2002 Unlimited Match",
+      "THE KING OF FIGHTERS XIV"
+    ],
+    "gameRecordCount": 3,
+    "filesEnumerated": 5012,
+    "logicalFileBytes": 43381165221,
+    "assetContainerCandidateCount": 282,
+    "scanErrorCount": 0,
+    "payloadBytesRead": 0,
+    "sourceFiles": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/jumpforce-kof-selected-container-inventory-v1/asset-container-files.csv",
+        "bytes": 89972,
+        "sha256": "7dc94c2f1e4a5e4ea38137ec7e153d35f2399214b410785a392678c28c948473"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/jumpforce-kof-selected-container-inventory-v1/game-file-summaries.csv",
+        "bytes": 2746,
+        "sha256": "fd4364be7deb47bbc1aadde07444453b7560144ea1527ecebbcfb73072d99cba"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/jumpforce-kof-selected-container-inventory-v1/scan-errors.csv",
+        "bytes": 21,
+        "sha256": "1f0cb933570047258dae6ee2a8e1fb8f4f31f8893a5b6ba4d88330e85c788c6b"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/jumpforce-kof-selected-container-inventory-v1/scan-receipt.json",
+        "bytes": 816,
+        "sha256": "b8830c9b94a5341d22ba3073f5f797b5f9ea3c82d9f39bbdc0dde351841c30f0"
+      }
+    ]
+  },
+  "games": [
+    {
+      "appId": "816020",
+      "buildId": "8523149",
+      "title": "JUMP FORCE",
+      "mountedPath": "/Volumes/common/JUMP FORCE",
+      "fileCount": 3466,
+      "logicalFileBytes": 23856777652,
+      "assetContainerCandidateCount": 240,
+      "engineHints": [
+        "Unreal Engine",
+        "CRIWARE"
+      ],
+      "inventoryStatus": "metadata-only-files-enumerated",
+      "coreContainers": [
+        {
+          "path": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor.pak",
+          "size": 7279219593,
+          "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+          "seconds": 404.838,
+          "bytesPerSecond": 17980560
+        },
+        {
+          "path": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_0_P.pak",
+          "size": 1543894441,
+          "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+          "seconds": 96.336,
+          "bytesPerSecond": 16026211
+        },
+        {
+          "path": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+          "size": 2532409095,
+          "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+          "seconds": 148.472,
+          "bytesPerSecond": 17056479
+        },
+        {
+          "path": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor.pak",
+          "size": 7060715441,
+          "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+          "seconds": 391.448,
+          "bytesPerSecond": 18037434
+        },
+        {
+          "path": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_0_P.pak",
+          "size": 1552635741,
+          "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+          "seconds": 103.623,
+          "bytesPerSecond": 14983493
+        },
+        {
+          "path": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_1_P.pak",
+          "size": 2410586601,
+          "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+          "seconds": 148.962,
+          "bytesPerSecond": 16182596
+        }
+      ],
+      "unrealPackageIndex": {
+        "tool": "repak_cli 0.1.8",
+        "pakVersion": "V4",
+        "status": "blocked-encrypted-index-no-authorized-aes-key",
+        "packageListProduced": false
+      },
+      "accessibleCriwareAudio": {
+        "awbFileCount": 43,
+        "status": "available-for-separate-audio-extraction"
+      },
+      "extractionStatus": "audio-partial-existing-workflow; encrypted-pak-not-extracted"
+    },
+    {
+      "appId": "222440",
+      "buildId": "8463197",
+      "title": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+      "mountedPath": "/Volumes/common/The King of Fighters 2002 Unlimited Match",
+      "fileCount": 1536,
+      "logicalFileBytes": 1631439265,
+      "assetContainerCandidateCount": 41,
+      "engineHints": [],
+      "inventoryStatus": "metadata-only-files-enumerated",
+      "voiceContainer": {
+        "path": "/Volumes/common/The King of Fighters 2002 Unlimited Match/Data/game/voice.dat",
+        "size": 130308832,
+        "sha256": "224dd451b45bc1e2518ec0481e4e0856416bc0e47ecb65057dac0dbfdb4ca725",
+        "seconds": 12.634,
+        "bytesPerSecond": 10314331
+      },
+      "voiceExtraction": {
+        "fileCount": 2687,
+        "bytes": 130297678,
+        "manifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/kof-2002-um-voice-v1/manifest.json",
+        "manifestSha256": "b1cf3a7a0122b83ae2299b8f51665442e9f51fe2cf2a36e1892330957a32eb24",
+        "language": "pending-confirmation",
+        "speaker": "pending-confirmation",
+        "event": "pending-confirmation"
+      },
+      "s3Backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kof2002um-voice-dat-222440-build-8463197/17de9c65c8f3c5d3f7df28932ae68929fa766021d2528d311f26259c614675d2.tar.gz",
+        "bytes": 118547299,
+        "sha256": "17de9c65c8f3c5d3f7df28932ae68929fa766021d2528d311f26259c614675d2",
+        "fileCount": 2688,
+        "fullGetVerified": true,
+        "allArchiveMembersSha256Verified": true
+      },
+      "integrationStatus": "central-source-and-voice-index-registered; character-binding-pending"
+    },
+    {
+      "appId": "571260",
+      "buildId": "3452034",
+      "title": "THE KING OF FIGHTERS XIV STEAM EDITION",
+      "mountedPath": "/Volumes/common/THE KING OF FIGHTERS XIV",
+      "fileCount": 10,
+      "logicalFileBytes": 17892948304,
+      "assetContainerCandidateCount": 1,
+      "engineHints": [],
+      "inventoryStatus": "metadata-only-files-enumerated",
+      "coreContainer": {
+        "path": "/Volumes/common/THE KING OF FIGHTERS XIV/assets.wad",
+        "size": 17873349716,
+        "sha256": "96a14e2b0bd5a4de829e7b468b43909cc96a72d2ae3babcc3ef5d5d6249091f0",
+        "seconds": 419.996,
+        "bytesPerSecond": 42555954
+      },
+      "containerMagic": "AGAR",
+      "containerStatus": "container-hashed; extraction-tool-validation-pending",
+      "extractionStatus": "not-extracted"
+    }
+  ],
+  "statusSemantics": {
+    "doesNotMean": [
+      "all-payloads-extracted",
+      "models-converted",
+      "characters-mapped",
+      "accepted",
+      "switchable",
+      "deployed"
+    ]
+  }
+}
