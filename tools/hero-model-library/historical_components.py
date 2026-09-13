@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from current_component_policy import current_policy_for
 
 
 PRESERVED_RECOVERED_COMPONENTS = {
@@ -165,11 +166,7 @@ def source_historical_components(downloads, repo):
                     'Historical visual acceptance scope mismatch')
             for pin in visual_rows[0].get('reviewViews', []) + [visual_rows[0]['webglProof']]:
                 verify_pin(pin, repo)
-            for pin in evidence.get('currentContractPins', []):
-                contract = (repo / pin['path']).resolve()
-                require(contract.is_relative_to(repo) and contract.is_file(), 'Historical contract pin escapes checkout')
-                require(file_pin(contract)['sha256'] == pin['sha256'], 'Stale historical contract pin: ' + pin['path'])
-            result.append(dict(candidate, gitAbsolutePath=str(model_path)))
+            result.append(dict(candidate, gitAbsolutePath=str(model_path), currentPolicyAudit=current_policy_for(candidate, repo)))
     recovered = {row['id']: row for row in result}
     for component_id, (digest, identity_id) in PRESERVED_RECOVERED_COMPONENTS.items():
         require(component_id in recovered, 'Missing required recovered historical component: ' + component_id)

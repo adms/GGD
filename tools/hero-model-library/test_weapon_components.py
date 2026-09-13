@@ -72,6 +72,14 @@ class WeaponAdmission(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             if not destination.exists():
                 shutil.copyfile(source, destination)
+        candidates = result['publicSources'][0]['componentCandidates']
+        audit = self.repo / 'materials/hero-model-library/priority-evidence/current-component-policy-audit.json'
+        audit.parent.mkdir(parents=True, exist_ok=True)
+        audit.write_text(json.dumps(dict(schema='ggd-current-component-policy-audit@1', generatedFrom=[], records=[dict(
+            id=row['id'], gitPath=row['gitPath'], sha256=row['sha256'], bytes=row['bytes'],
+            resourceRole=row['resourceRole'], runtimeBudget={'pass': True, 'verdict': 'ok', 'blockingAxes': []},
+            formalHeroAdoption=dict(eligible=False, requiresDecimatedCandidate=False),
+        ) for row in candidates])))
         return result
 
     def test_plan_preserves_source_hero_and_original_without_writing(self):

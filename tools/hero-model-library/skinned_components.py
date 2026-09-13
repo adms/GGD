@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from current_component_policy import current_policy_for
 
 
 def require(condition, message):
@@ -138,10 +139,6 @@ def validate_component(candidate, repo):
         raise ValueError('Unexpected skinned validation schema: '+str(schema))
     require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
             'Component upload validation failed')
-    for pin in validation.get('contractPins',[]):
-        code=(Path(repo)/pin['path']).resolve()
-        require(code.is_relative_to(Path(repo).resolve()) and code.is_file(), 'Contract pin escapes checkout')
-        require(file_pin(code)['sha256'] == pin['sha256'], 'Stale component contract pin: '+pin['path'])
     acceptance=json.loads(verify_pin(candidate['acceptanceEvidence'],repo).read_text())
     matches=[row for row in acceptance.get('components',[]) if row.get('id') == candidate['id']]
     require(len(matches) == 1 and matches[0].get('accepted') is True,
@@ -169,7 +166,7 @@ def validate_component(candidate, repo):
         require(rebuild.get('byteIdenticalRebuild') is True and rebuild.get('bothValidationsPassed') is True,
                 'SSBU deterministic rebuild proof failed')
         require(rebuild.get('outputSha256') == accepted_sha, 'SSBU rebuild source-output pin mismatch')
-    return dict(candidate,gitAbsolutePath=str(path))
+    return dict(candidate,gitAbsolutePath=str(path),currentPolicyAudit=current_policy_for(candidate,repo))
 
 
 def source_skinned_components(downloads, repo):

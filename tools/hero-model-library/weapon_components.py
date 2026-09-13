@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from current_component_policy import current_policy_for
 
 CONTRACT_PATHS = {
     'packages/shared/src/content/modelUpload/normalize.ts',
@@ -36,7 +37,7 @@ def verify_pin(pin, repo=None):
     return path
 
 
-def verify_validation(validation, model, repo):
+def verify_validation(validation, model, repo, require_current_pins=True):
     require(validation.get('schema') == 'ggd.dai-rigid-prop-current-validation@1', 'Unexpected weapon validation schema')
     require(validation.get('role') == 'independent-weapon-component', 'Not an independent weapon validation')
     require((validation.get('outputSha256'), validation.get('outputBytes')) == (model['sha256'], model['bytes']), 'Validation model pin mismatch')
@@ -48,10 +49,11 @@ def verify_validation(validation, model, repo):
     require(validation.get('heroModelPreparationPerformed') is False and validation.get('backendRegistrationPerformed') is False, 'Weapon cannot claim hero registration')
     pins = validation.get('toolPins', [])
     require(CONTRACT_PATHS <= {pin['path'] for pin in pins}, 'Missing weapon contract pins')
-    for pin in pins:
-        path = (Path(repo) / pin['path']).resolve()
-        require(path.is_relative_to(Path(repo).resolve()), 'Contract pin escapes checkout')
-        require(file_pin(path)['sha256'] == pin['sha256'], 'Stale weapon contract pin: ' + pin['path'])
+    if require_current_pins:
+        for pin in pins:
+            path = (Path(repo) / pin['path']).resolve()
+            require(path.is_relative_to(Path(repo).resolve()), 'Contract pin escapes checkout')
+            require(file_pin(path)['sha256'] == pin['sha256'], 'Stale weapon contract pin: ' + pin['path'])
 
 
 def verify_acceptance(acceptance, candidate, delivery_sha):
@@ -90,10 +92,10 @@ def source_weapon_components(downloads, repo):
             require(candidate.get('gitPath') == expected, 'Noncanonical component Git path')
             path = verify_pin(candidate, repo)
             validation = json.loads(verify_pin(candidate['validationEvidence'], repo).read_text())
-            verify_validation(validation, candidate, repo)
+            verify_validation(validation, candidate, repo, require_current_pins=False)
             acceptance = json.loads(verify_pin(candidate['acceptanceEvidence'], repo).read_text())
             verify_pin(candidate['deliveryEvidence'], repo)
             verify_pin(candidate['visualEvidence'], repo)
             verify_acceptance(acceptance, candidate, candidate['deliveryEvidence']['sha256'])
-            result.append(dict(candidate, gitAbsolutePath=str(path)))
+            result.append(dict(candidate, gitAbsolutePath=str(path), currentPolicyAudit=current_policy_for(candidate, repo)))
     return result

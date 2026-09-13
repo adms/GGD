@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from current_component_policy import current_policy_for
 
 
 ROLE = "independent-skinned-model-motion-component"
@@ -87,7 +88,7 @@ def validate(candidate, source, repo):
     rebuild = json.loads(verify_pin(candidate["sourceRebuildEvidence"], repo).read_text())
     require(rebuild.get("finalGlbByteIdenticalRebuild") is True and rebuild.get("outputSha256") == candidate["sha256"],
             "Animated component deterministic final rebuild failed")
-    return dict(candidate, gitAbsolutePath=str(model))
+    return dict(candidate, gitAbsolutePath=str(model), currentPolicyAudit=current_policy_for(candidate, repo))
 
 
 def source_animated_components(downloads, repo):
