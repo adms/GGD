@@ -21,7 +21,7 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, files_path: Path) -> dict:
+def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, files_path: Path, existing: dict | None = None) -> dict:
     containers = []
     for row in index["containers"]:
         containers.append({
@@ -44,7 +44,7 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
     for path in (git_manifest, git_files, git_pak_json, git_pak_md, git_visual, git_conversion, git_webgl, *git_images):
         if not path.is_file():
             raise ValueError(f"missing Git evidence: {path}")
-    return {
+    result = {
         "id": SOURCE_ID,
         "target": "JUMP FORCE Steam 原作：小呆／達伊 chr0430 模型、貼圖、骨架、特效、音訊與技能資料",
         "heroIds": ["godie-nbbc", "godie-n01c"],
@@ -150,6 +150,16 @@ def record(workspace: Path, index: dict, manifest: dict, manifest_path: Path, fi
         ],
         "backup": {},
     }
+    if existing:
+        for key in ("pendingBackup", "backup", "supplementalDeliveries"):
+            if key in existing:
+                result[key] = existing[key]
+        if existing.get("backup", {}).get("readbackVerified") is True:
+            result["publicationStatus"] = "s3-readback-verified"
+            result["verification"] += " 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。"
+        elif existing.get("pendingBackup"):
+            result["publicationStatus"] = "local-only-awaiting-s3-upload"
+    return result
 
 
 def main() -> int:
@@ -167,10 +177,10 @@ def main() -> int:
     source_index = json.loads(source_index_path.read_text(encoding="utf-8"))
     pak_index = json.loads(pak_index_path.read_text(encoding="utf-8"))
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    desired = record(workspace, pak_index, manifest, manifest_path, files_path)
     matches = [row for row in source_index["publicSources"] if row.get("id") == SOURCE_ID]
     if len(matches) > 1:
         raise ValueError(f"duplicate source id: {SOURCE_ID}")
+    desired = record(workspace, pak_index, manifest, manifest_path, files_path, matches[0] if matches else None)
     if args.check:
         if matches != [desired]:
             raise ValueError(f"central source record is stale: {SOURCE_ID}")
