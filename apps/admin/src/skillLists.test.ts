@@ -48,7 +48,7 @@ describe("技能清單（GH#682/#683）", () => {
         .map((d) => d["id"]),
     );
     expect(diskOver.size, "磁碟上一支 >門檻 的技能都掃不到 —— 讀取器壞了").toBeGreaterThan(0);
-    const listed = lists.cast.filter((r) => diskOver.has(r.id));
+    const listed = (lists.cast as { id: string }[]).filter((r) => diskOver.has(r.id));
     expect(listed.length, "磁碟上明明有超過門檻的技能，清單卻一支都沒收").toBeGreaterThan(0);
   });
 

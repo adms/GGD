@@ -72,7 +72,10 @@ const TIERS: readonly { readonly kind: PerformKind; readonly re: RegExp }[] = [
   // "Stand Victory" is deliberately NOT listed here — the celebrate tier's
   // /victor/ claims it first, which is the ranking we want.
   { kind: "pose", re: /stand\s*-?\s*[2-9]|stand\s+ready|stand\s+channel/i },
-  { kind: "spell", re: /spell|cast|channel|magic/i },
+  // `skill` —— 300 英雄系的社群骨架把招式動作叫 `single_skill_0N`（⛔ 沒有 spell/cast 字樣）。
+  //   2026-09-14 量到：朝田詩乃（community-review-13）的模型只有 bat_idle／single_run／single_skill_03／dead
+  //   ⇒ 沒有這一格，她在商店裡**一個可以輪播的動作都沒有**。
+  { kind: "spell", re: /spell|cast|channel|magic|skill/i },
   { kind: "attack", re: /attack|slash|punch|strike|swing|kick|shoot|throw|slam|combo|chop|stab/i },
 ];
 

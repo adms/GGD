@@ -20,7 +20,28 @@
 import { useMemo, useState } from "react";
 import { Panel, TextInput } from "./widgets";
 import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
-import lists from "../../../../tools/skill-lists/lists.json";
+import listsJson from "../../../../tools/skill-lists/lists.json";
+
+/**
+ * 詠唱清單的一列 —— 形狀由 `tools/skill-lists/gen.mjs` 的 `buildCastList()` 寫出。
+ * ⚠️ ⛔ 不靠 JSON 推導：PR #1152 之後吟唱改由五級距解析（上界 1.0），清單**合法地清空**，
+ * 而 TS 會把空陣列推成 `never[]` ⇒ 這一頁整個型別壞掉（2026-09-14 typecheck 量到）。
+ */
+interface CastRow {
+  id: string;
+  name: string;
+  champion: string;
+  championName: string;
+  slot: string;
+  castTimeSec: number;
+  effectiveSec: number;
+  deltaSec: number;
+  clamped: boolean;
+  castType: string;
+  interruptOn: string;
+  rootWhileCasting: boolean;
+}
+const lists = listsJson as Omit<typeof listsJson, "cast"> & { cast: CastRow[] };
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace";
 
