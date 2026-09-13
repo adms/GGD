@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3073427,
-      "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155"
+      "bytes": 3081792,
+      "sha256": "b3516c9f406bd1f4b06d9dcf91495198b1ce2e0a4e14c6826aa23c403e3d2eb5"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 37,
-    "runtimeBudgetPass": 37,
+    "audited": 38,
+    "runtimeBudgetPass": 38,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 24,
+    "heroAdoptionEligible": 25,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -1657,6 +1657,55 @@
         "skins": 1,
         "joints": 115,
         "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+      "bytes": 2000388,
+      "metrics": {
+        "triangles": 8980,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 345,
+        "skins": 1,
+        "joints": 115,
+        "clips": 10,
         "embeddedImages": 5
       },
       "runtimeBudget": {

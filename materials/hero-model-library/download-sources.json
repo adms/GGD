@@ -6814,7 +6814,7 @@
       "checkedAt": "2026-09-10T11:14:03.850446+00:00",
       "accessStatus": "public-direct-download",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "pending-standardization",
+      "readiness": "partially-standardized-independent-components-pending-semantic-mapping",
       "purchaseDecision": "supplement-only-continue-model-search",
       "defaultEligible": false,
       "resourceRole": "component-supplement",
@@ -6921,7 +6921,7 @@
         "uniqueTransformMotionPayloadCount": 175,
         "parseErrorPathCount": 0,
         "parseErrorUniquePayloadCount": 0,
-        "convertedToGgdCount": 0,
+        "convertedToGgdCount": 15,
         "runtimeSelectableCount": 0,
         "dependencyReceiptGitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/dependencies.json",
         "dependency": {
@@ -7049,6 +7049,119 @@
           "s3Use": "backup-only-not-runtime-entry",
           "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-ultimate14-motion-v1/87f3253c29af4d6be477a64061b0f408d20dd2ec62430c7cca176c2ef0c1ac42/receipt.json",
           "backupReceiptSha256": "44910d815de4b1d61731d761b39cbf017c1b4755ba34cf992139863bd9fc2a82"
+        },
+        {
+          "id": "ssbu-sonic-c00-ultimate14-motion-v1",
+          "sourceId": "parallel-ns-ultimate14",
+          "sourceIds": [
+            "gitlab-ssbu-models",
+            "parallel-ns-ultimate14"
+          ],
+          "sourceClass": "community-mod",
+          "selectionClass": "community-mod",
+          "nameZh": "Sonic／索尼克",
+          "originalName": "Sonic",
+          "workZh": "任天堂明星大亂鬥 特別版（Ultimate14 社群 MOD）",
+          "sourceGame": "Super Smash Bros. Ultimate",
+          "sourceGameReleasedAt": "2018-12-07",
+          "platform": "Nintendo Switch MOD",
+          "nativeId": "fighter/sonic/body/c00 + fighter/sonic/motion/body/c00",
+          "variant": "c00",
+          "resourceRole": "independent-skinned-model-motion-component",
+          "assetKinds": [
+            "model-component",
+            "skeleton",
+            "texture",
+            "animation"
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/body.glb",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/body.glb",
+          "bytes": 2000388,
+          "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+          "gitPath": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+          "componentReady": true,
+          "converted": true,
+          "structuralValidationPassed": true,
+          "visualValidationPassed": true,
+          "runtimeReady": false,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "automaticEligible": false,
+          "fullHeroModel": false,
+          "runtimeDropdownRegistered": false,
+          "heroIds": [],
+          "relatedHeroIds": [],
+          "identityIds": [
+            "ssbu-sonic"
+          ],
+          "nativeAnimationCount": 10,
+          "proceduralAnimationCount": 0,
+          "animationProvenance": "community-mod-native-not-original-game",
+          "animationNames": [
+            "c04attacklw4",
+            "c04attacklw4charge",
+            "c05attackairf",
+            "c05attackairn",
+            "c05landingairf",
+            "d01specialshold",
+            "d01specialsstart",
+            "d02specialhisquat",
+            "d03speciallwhold",
+            "d03speciallwstart"
+          ],
+          "animationChannelCountPerClip": 345,
+          "triangles": 8980,
+          "drawPrimitives": 5,
+          "skinCount": 1,
+          "jointCount": 115,
+          "textureCount": 5,
+          "sourceAnimationCount": 10,
+          "unconvertedAnimationCount": 0,
+          "readiness": "accepted-independent-native-motion-ten-clips-incomplete-action-set",
+          "auditEvidence": "Sonic c00 plus ten pinned Ultimate14 Transform motions; byte-identical dual GLB export, Khronos 0/0, GGD hard errors 0 and 30 WebGL samples accepted.",
+          "limitations": [
+            "The ten acquired Sonic motions are an incomplete gameplay set; idle, run, hurt, death and semantic GGD state mapping are still missing.",
+            "These Transform motions are native to the acquired Ultimate14 community MOD package, not verified Nintendo-original animations and not retargeted animations.",
+            "The source NUANMB visibility and material tracks were deliberately not imported into this Transform-only component.",
+            "Sonic has no verified GGD hero definition in this integration, so no backend dropdown option, runtime switch or deployment is claimed.",
+            "The model passes hard limits at 8,980 triangles and 256px textures; 5 draw primitives and 345 channels per clip exceed the 3/300 warning thresholds and require runtime load review before adoption."
+          ],
+          "deliveryEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/delivery.json",
+            "bytes": 10255,
+            "sha256": "85fa123c58203c0a0e89a333a58f864f83c257460d2495b30337a34221948d38"
+          },
+          "acceptanceEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/acceptance.json",
+            "bytes": 1282,
+            "sha256": "4f542c9ec4c2397a7cbd1162b2e93deac38270bf3a31c06eb39d3bdda09de84a"
+          },
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/validation.json",
+            "bytes": 10729,
+            "sha256": "d632ce2d99c362c1be63df8ae0c161248835e8213c409c27790cc3695bff1b9a"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/visual-review.json",
+            "bytes": 4923,
+            "sha256": "93dbfd9c44d16df4859d723d9463dfb74e3f92a82023bc3caeba8e2b4fab431e"
+          },
+          "webglProofEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/webgl-proof.json",
+            "bytes": 20652,
+            "sha256": "6de0e80221e0f7b4a33510cfac2f69ef199347eb2d51842ff1d0d8dc12d09b96"
+          },
+          "sourceRebuildEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/source-rebuild.json",
+            "bytes": 3075,
+            "sha256": "c9631a32c1f6d8fb2830bbcb71aa464e430b5a09ed61c5266e9456fb70c66946"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.tar.gz",
+          "s3ArchiveMember": "converted-01/body.glb",
+          "s3Use": "backup-only-not-runtime-entry",
+          "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/receipt.json",
+          "backupReceiptSha256": "d4dd56a6a67525b06c9581dfa513e9b389835d32fc20127c2962afd613f3f33c",
+          "backupStatus": "s3-full-readback-verified"
         }
       ],
       "supplementalDeliveries": [
@@ -7076,6 +7189,29 @@
           "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-ultimate14-motion-v1/87f3253c29af4d6be477a64061b0f408d20dd2ec62430c7cca176c2ef0c1ac42/receipt.json",
           "receiptSha256": "44910d815de4b1d61731d761b39cbf017c1b4755ba34cf992139863bd9fc2a82",
           "manifestSha256": "791280468530b4a26c771b89c8cc57adb503f0837dad192d65b6e83fa1c9f964",
+          "s3Use": "backup-only-not-runtime-entry"
+        },
+        {
+          "id": "ssbu-sonic-c00-ultimate14-motion-v1-backup",
+          "sourceId": "parallel-ns-ultimate14",
+          "resourceRole": "model-conversion-backup",
+          "localPath": "GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-ultimate14-motion-v1/03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f.files.json",
+          "bytes": 18383235,
+          "sha256": "03815d15bcc97c55e886b622689a0c1110c7a4cede08c00a9ad42078753c1e3f",
+          "fileCount": 67,
+          "archiveFormat": "tar-gzip",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-ultimate14-motion-v1/3c125d6f61e625eccba2dfbc76d20612bc4c805e41fe1987699c75611b0c383e/receipt.json",
+          "receiptSha256": "d4dd56a6a67525b06c9581dfa513e9b389835d32fc20127c2962afd613f3f33c",
           "s3Use": "backup-only-not-runtime-entry"
         }
       ]

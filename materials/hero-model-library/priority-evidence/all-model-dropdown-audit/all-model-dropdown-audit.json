@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "a0694d1a029253edb9f9ebbecf8f35ce0ad7c62d7835293d7b007742fd90a5ea"
+      "sha256": "ceab0b74c720c81eeeb7c1d232ae40679a34d0392573cf3d6bcecdf8f27e0060"
     }
   },
   "summary": {
@@ -42,8 +42,8 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 36,
-    "readyUnregisteredCharacterOrMotionComponents": 34,
+    "readyUnregisteredIndependentComponents": 37,
+    "readyUnregisteredCharacterOrMotionComponents": 35,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
@@ -1053,6 +1053,32 @@
         "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
         "Runtime switching and production deployment were not performed.",
         "Original-game shader parity remains limited to the source-connected Blender materials."
+      ]
+    },
+    {
+      "id": "ssbu-sonic-c00-ultimate14-motion-v1",
+      "character": "Sonic／索尼克",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+      "readiness": "accepted-independent-native-motion-ten-clips-incomplete-action-set",
+      "nativeAnimationCount": 10,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "The ten acquired Sonic motions are an incomplete gameplay set; idle, run, hurt, death and semantic GGD state mapping are still missing.",
+        "These Transform motions are native to the acquired Ultimate14 community MOD package, not verified Nintendo-original animations and not retargeted animations.",
+        "The source NUANMB visibility and material tracks were deliberately not imported into this Transform-only component.",
+        "Sonic has no verified GGD hero definition in this integration, so no backend dropdown option, runtime switch or deployment is claimed.",
+        "The model passes hard limits at 8,980 triangles and 256px textures; 5 draw primitives and 345 channels per clip exceed the 3/300 warning thresholds and require runtime load review before adoption."
       ]
     },
     {
@@ -5142,6 +5168,8 @@
         "historicalModelSourceArtifactCount",
         "historicalModelSourceArtifacts",
         "immutableRelease",
+        "legacySmashSourceDocument",
+        "legacySmashSourceInventory",
         "modelComponentCount",
         "modelComponentIndex",
         "modelComponentSourceIndex",

@@ -29,8 +29,18 @@ def render() -> str:
         "所以維持待設計獨立元件，後台選項與部署都是 0。Full S3 轉換階段 28 檔已完整 GET 與逐 member SHA 驗證："
         f"`{candidate['s3Uri']}`；Git 收據：`{receipt}`。"
     )
+    ultimate = next(row for row in data["publicSources"] if row.get("id") == "parallel-ns-ultimate14")
+    motion = next(row for row in ultimate["componentCandidates"] if row.get("id") == "ssbu-sonic-c00-ultimate14-motion-v1")
+    motion_line = (
+        f"- Sonic c00 Ultimate14 原生動作元件：兩次獨立匯入與匯出後的 GLB 均為 `{motion['sha256'][:8]}…`，"
+        f"{motion['triangles']:,} 面、{motion['drawPrimitives']} draw、{motion['jointCount']} joints、{motion['textureCount']} 張最大 256px 貼圖，"
+        f"保留 {motion['nativeAnimationCount']} 段社群 MOD 原生 Transform 動作。Khronos 0/0、GGD hard errors 0，30 張 Babylon WebGL 抽樣已驗收；"
+        "5 draw 與每段 345 channels 超過 3/300 警戒值，繼續列為效能審查項。目前缺 idle、run、hurt、death 及 GGD 語意映射，"
+        "沒有 Sonic 英雄 ID，所以是已驗收獨立元件，後台選項與部署仍為 0。"
+        f"S3 轉換階段 {motion['s3Uri']}已完整讀回驗證。"
+    )
     if not KOF_INDEX.is_file():
-        return sonic
+        return sonic + "\n" + motion_line
     kof = json.loads(KOF_INDEX.read_text())
     xiv = kof["kofXiv"]
     ash = kof["kofXv"]["newBudgetCandidates"]
@@ -47,7 +57,7 @@ def render() -> str:
         f"未進 runtime Git、未設預設或後台選項。Maximum Impact 系列實檔仍為 0；KOF 2002 UM 分開列為 2D。"
         f"Ash 六檔轉換階段已做完整 S3 GET／逐 member SHA：`{s3['s3Uri']}`。"
     )
-    return sonic + "\n" + kof_line
+    return sonic + "\n" + motion_line + "\n" + kof_line
 
 
 def main() -> None:
@@ -58,6 +68,12 @@ def main() -> None:
     start = original.index(START)
     end = original.index(END, start)
     expected = original[:start] + render() + original[end:]
+    old = "Mario 另有一個加入 5 段 Ultimate14 特殊動作的獨立衍生元件，舊 c00 v1 與新 v2 也都保留"
+    new = "Mario 另有加入 5 段 Ultimate14 特殊動作的獨立衍生元件；Sonic 另有 10 段 Ultimate14 原生 Transform 動作的已驗收獨立元件，舊 c00 v1 與新 v2 也都保留"
+    require_count = expected.count(old)
+    if require_count != 1 and new not in expected:
+        raise ValueError(f"Unexpected Ultimate14 overview paragraph count: {require_count}")
+    expected = expected.replace(old, new)
     if args.write:
         REPORT.write_text(expected)
     elif original != expected:

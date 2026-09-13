@@ -1,0 +1,58 @@
+{
+  "schema": "ggd.ssbu-sonic-ultimate14-motion-source-rebuild@1",
+  "componentId": "ssbu-sonic-c00-ultimate14-motion-v1",
+  "firstImport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/import-01/import-receipt.json",
+    "bytes": 9958,
+    "sha256": "895fa38b4a03e8123a42ff9491f0d712d5522e572e58dbd981bb3ed296b85acd"
+  },
+  "secondImport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/import-02/import-receipt.json",
+    "bytes": 9958,
+    "sha256": "c0f0b30534ff003ad8a7974458eaf8b629e3e6a196665c2ec4b93f40f7e42d10"
+  },
+  "intermediateBlendByteIdentical": false,
+  "firstGlb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 2000388,
+    "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9"
+  },
+  "secondGlb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-ultimate14-motion-v1/converted-02/body.glb",
+    "bytes": 2000388,
+    "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9"
+  },
+  "finalGlbByteIdenticalRebuild": true,
+  "outputSha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/import_nuanmb_actions.py",
+      "sha256": "589370d739d4d5f926d9e9f2facfe1d5ca03ef6a76a359e88aa8270db3fab8b9"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/validate_motion_component.mts",
+      "sha256": "58e53fbba549ca2dc7df6f838a426ac79bf3bd2847ce8b9d18cac7fb9eb40e11"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/render_motion_glb.py",
+      "sha256": "8721fa183c09afdf91bfbe9dfc243e1063c770a0634a3bee35dcb2eebf60f5bc"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/render_motion_glb.mjs",
+      "sha256": "ce8260b2dfb09d5a1cd820578bab5ccb8be96819e79eb77ce2657bba7ffe92fc"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/make_contact_sheet.py",
+      "sha256": "3b55911c529d9dd063784651527e9f07bcc382828eca4bbb02440ef5c4d759fe"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-ultimate14-motion-v1/integrate_sonic.py",
+      "sha256": "1e1368c6e0bf1557bab123bad8f0269a34f56502448e3bcdb30fe3f2b4ae59c4"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "1d773f0422883f0caba5d10114c17f99f6eacecc82f7efc7b6413cadb9c532ab"
+    }
+  ],
+  "note": "Blender save metadata makes intermediate .blend hashes differ; the two exported GLBs are byte-identical."
+}

@@ -1,11 +1,11 @@
 {
   "schema": "ggd-acquired-model-design-backlog@1",
-  "sourceIdentityCount": 744,
+  "sourceIdentityCount": 748,
   "counts": {
-    "not-defined": 395,
+    "not-defined": 397,
     "definitions-incomplete": 11,
     "identity-review": 247,
-    "designed": 91,
+    "designed": 93,
     "source-unavailable": 0
   },
   "heroesInProject": 153,
@@ -48,23 +48,23 @@
   "inputs": [
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "31c4ad25fda3d845df0096d7484bc1b5bbb6db7dd0b9181d3053f81895d8ee67"
+      "sha256": "2585cf6cf5152e6337827ac89e7fcb9bce08cef195c7b958907176821a60d523"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
-      "sha256": "0ff158632b1401b8ca09112b703889ceccc2ffc5ffe1c2599272b91611a8d520"
+      "sha256": "0f68b7221423fbbbf35accfe5803e465f0ae37efb1dfc7bca391375ca8abdd52"
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "11917fc38177b17e46c8299f1ea9ecc97ece34863a48d247b068fa7efa999112"
+      "sha256": "ded9d247a2b97fcf514ac96c9c7bcbad30a8627483c82eb7eb835ea539c02ad4"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "3eb4ed85128ce70a6adfda73ce6c1134e228fad5ea3865c35fb8c76a4c1bd155"
+      "sha256": "b3516c9f406bd1f4b06d9dcf91495198b1ce2e0a4e14c6826aa23c403e3d2eb5"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "361cbb5738edf2f2444b9b2b40b8264919e58fc816ba1717130115b49755cc18"
+      "sha256": "a3c0471d03ccff5614a604693c076b8aa57aef0ad3411f92ddbee49e57d4c989"
     },
     {
       "path": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
@@ -528,7 +528,7 @@
     },
     {
       "path": "content/champions/godie-nbbc.json",
-      "sha256": "a2852f999d1bf617aef280260909480aa753b96959abeefa893c55540f046f50"
+      "sha256": "1334199e9ab9b6e41195e49d8206e5ca6474e5f19ba3fbe2906536871bd27114"
     },
     {
       "path": "content/champions/godie-nsjs.json",
@@ -620,7 +620,7 @@
     },
     {
       "path": "content/champions/godie-ubal.json",
-      "sha256": "4f4c789b7130e5e68f5400f314248f80a0f5d899bc8efa55562a8c7126d9ab06"
+      "sha256": "09d231c1c50a5461508d6daed10e627b8316e7a88f1dc9ebfd44d4a68aedfcaf"
     },
     {
       "path": "content/champions/godie-ucrl.json",
@@ -105566,7 +105566,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：kirby: 本體 3檔／2種內容、配件 22檔／22種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：kirby: 本體 3檔／2種內容、配件 22檔／22種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：kirby。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -107989,7 +107989,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：link: 本體 61檔／19種內容、配件 24檔／3種內容；toonlink: 本體 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：link: 本體 61檔／19種內容、配件 24檔／3種內容；toonlink: 本體 3檔／3種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：link、toonlink。",
         "vfx": "另保留 1 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -153241,7 +153241,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：chrom: 本體 9檔／9種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：chrom: 本體 9檔／9種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：chrom。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -154726,7 +154726,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：daisy: 本體 13檔／13種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：daisy: 本體 13檔／13種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：daisy。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -155049,7 +155049,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：pitb: 本體 14檔／14種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：pitb: 本體 14檔／14種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：pitb。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -155671,7 +155671,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：samusd: 本體 60檔／21種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：samusd: 本體 60檔／21種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：samusd。",
         "vfx": "另保留 2 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -158149,7 +158149,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：ganon: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：ganon: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：ganon。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -161979,7 +161979,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：shizue: 本體 4檔／4種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：shizue: 本體 4檔／4種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：shizue。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -165560,7 +165560,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucas: 本體 7檔／7種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucas: 本體 7檔／7種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：lucas。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -165883,7 +165883,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucina: 本體 41檔／13種內容、配件 48檔／6種內容、模型預設無Transform資料 16檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucina: 本體 41檔／13種內容、配件 48檔／6種內容、模型預設無Transform資料 16檔／1種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：lucina。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -176038,7 +176038,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：peach: 本體 1檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：peach: 本體 1檔／1種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：peach。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -179505,7 +179505,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：richter: 本體 2檔／2種內容、配件 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：richter: 本體 2檔／2種內容、配件 3檔／3種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：richter。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -183632,7 +183632,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：simon: 本體 4檔／4種內容、配件 16檔／2種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：simon: 本體 4檔／4種內容、配件 16檔／2種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：simon。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -184631,7 +184631,7 @@
       "workTranslationBasis": "只確認來源遊戲標籤為 Super Smash Bros. Ultimate；未在本次工作核對個別角色原作，依交付規則保留「角色原作待確認」。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：sonic: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：sonic: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段。 已轉成 GGD 並完成骨架／WebGL 播放驗收：sonic 10段；維持獨立元件，尚未完成 GGD 語意動作映射、後台綁定或部署。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -190402,8 +190402,7 @@
       "work": "The King of Fighters",
       "sourceIds": [
         "kof-open3dlab-ash-xv",
-        "kof-open3dlab-ash-xv-material-repair-v2",
-        "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1"
+        "kof-open3dlab-ash-xv-material-repair-v2"
       ],
       "modelCandidates": [
         {
@@ -190539,70 +190538,6 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-open3dlab-ash-xv-material-repair-v2/converted/right-hair/body.glb",
           "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
-          "existsLocal": true,
-          "bytes": 1945824,
-          "sha256": "e54ee27ffca194fd9179481fed260349d93954fad4c48169b37a482d95fb53ee",
-          "sha256Status": "exact-local-sha256-verified",
-          "magicHex": "676c544602000000e0b01d00",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 2,
-            "primitives": 18,
-            "skins": 1,
-            "animationEntries": 0
-          },
-          "id": "kof-xv-ash-crimson-open3dlab-left-hair-material-v2-budget-v1",
-          "library": "community",
-          "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
-          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
-          "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
-          "converted": true,
-          "limitations": [
-            "Both candidates remain at 18 draw calls, above the current 3 draw-call adoption limit.",
-            "The existing atlas stage rejected this source because it found fewer than two mergeable primitives after transform constraints.",
-            "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
-            "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
-          ],
-          "identityReviewRequired": false,
-          "recordedBytes": 1945824,
-          "sizeMatchesManifest": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/left-hair/body.glb",
-          "localSizeMatches": true
-        },
-        {
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
-          "existsLocal": true,
-          "bytes": 1946104,
-          "sha256": "707e3dde8ddd50d71935a079def959399b741aa199a1192eb36343ab337193bf",
-          "sha256Status": "exact-local-sha256-verified",
-          "magicHex": "676c544602000000f8b11d00",
-          "modelProof": {
-            "format": "glTF2-binary",
-            "meshes": 2,
-            "primitives": 18,
-            "skins": 1,
-            "animationEntries": 0
-          },
-          "id": "kof-xv-ash-crimson-open3dlab-right-hair-material-v2-budget-v1",
-          "library": "community",
-          "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
-          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
-          "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
-          "converted": true,
-          "limitations": [
-            "Both candidates remain at 18 draw calls, above the current 3 draw-call adoption limit.",
-            "The existing atlas stage rejected this source because it found fewer than two mergeable primitives after transform constraints.",
-            "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
-            "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
-          ],
-          "identityReviewRequired": false,
-          "recordedBytes": 1946104,
-          "sizeMatchesManifest": true,
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
-          "localSizeMatches": true
         }
       ],
       "mappedHeroIds": [],
@@ -190633,7 +190568,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "原作可播放動作0；3個單幀pose不算動作。6GLB皆0動畫；新減面候選仍待 draw-call 與視覺驗收。",
+        "motion": "原作可播放動作0；3個單幀pose不算動作。4GLB皆0動畫。",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 86 個音訊檔，音效／語音待分型",
         "voice": "已入索引86音訊檔；語音/說話者/逐段語系未全聽審。",
@@ -190684,24 +190619,6 @@
             "provenance": null,
             "readiness": "standard-glb-candidate-material-repaired-runtime-review-pending",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
-          },
-          {
-            "candidateId": "kof-xv-ash-crimson-open3dlab-left-hair-material-v2-budget-v1",
-            "count": 0,
-            "sourceCount": null,
-            "unconvertedCount": null,
-            "provenance": "meshoptimizer-derived-from-material-repair-v2",
-            "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
-            "evidence": "exact local SHA-256, GLB metrics and S3 readback receipt; not runtime acceptance"
-          },
-          {
-            "candidateId": "kof-xv-ash-crimson-open3dlab-right-hair-material-v2-budget-v1",
-            "count": 0,
-            "sourceCount": null,
-            "unconvertedCount": null,
-            "provenance": "meshoptimizer-derived-from-material-repair-v2",
-            "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
-            "evidence": "exact local SHA-256, GLB metrics and S3 readback receipt; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -198644,12 +198561,13 @@
       "modelCandidates": [
         {
           "id": "ssbu-mario-c00-static-skinned-v2",
+          "label": "瑪利歐 SSBU Ultimate c00 黑底修復版",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
-          "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
-          "bytes": 817900,
-          "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/first/body.glb",
+          "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+          "bytes": 865396,
+          "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -198661,26 +198579,37 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/validation.json",
-            "bytes": 27528,
-            "sha256": "d99eefd0e71bf0f1d17d3e36afe8421c4c6ecde16e10eae0291a6418993097ca"
+            "bytes": 28111,
+            "sha256": "81ad2daff3112b8dcc650ce616d8c0c53d8191ed0ee29b54cf2fe1ce50b10fd2"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/visual-review.json",
-            "bytes": 660,
-            "sha256": "cbe691efaa8b42b4467ad6d9814afd9cab261d037d7b38032097837ceaad342a"
+            "bytes": 691,
+            "sha256": "d81894e9157775955db17a5c4e08cdf4654383daac4a6331a071a5b986f520dc"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/s3-backup-receipt.json",
-            "bytes": 1446,
-            "sha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+            "bytes": 1556,
+            "sha256": "017397679572131182969b9677144162bed47abc5e475e487823d40533703f50"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/alpha-audit.json",
+            "bytes": 4305,
+            "sha256": "53eed0cbbb72bd2017237fa8498ac52a9df23a86f90acff1d7d32cd93bae8858"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/material-bake-receipt.json",
+            "bytes": 11477,
+            "sha256": "e9af7058b7b0c8cb6f7be19b5d5ee1d3faae52f0c3b67c2f1cfecbfa2663eaad"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-mario-full-v2/4a6799b3dff7ecaf13f9d84753d64e954135433f7755b40de85c92dcbb6d0686.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/mario/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -198690,7 +198619,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Mario identity.",
       "evidence": [
-        "Mario c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Mario c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -198753,12 +198682,13 @@
       "modelCandidates": [
         {
           "id": "ssbu-link-c00-static-skinned-v1",
+          "label": "林克 SSBU Ultimate c00 黑底修復版",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-link-c00-blender4513-v2/atlas-final.glb",
-          "gitPath": "content/assets/models/community/de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b.glb",
-          "bytes": 981540,
-          "sha256": "de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/first/body.glb",
+          "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+          "bytes": 1035504,
+          "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -198770,27 +198700,43 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/validation.json",
-            "bytes": 18044,
-            "sha256": "7162aa7814ffa829141e7888a0fa33916e73644a9b869f7455044bb07d86c8be"
+            "bytes": 18616,
+            "sha256": "a0822aa62dadefcc86e62e272c99784e1baa1f2c3990120a24a9e12d9ebbc4e1"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/visual-review.json",
-            "bytes": 658,
-            "sha256": "e0fd6c345d704e86ee77201e6858b45014198c345d7b1d6aad2d9c8302d1ffef"
+            "bytes": 689,
+            "sha256": "4ad56fd7bb61071b7cf70e45c69c0180602350aaf7eb07a4ddfabed24f743475"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/s3-backup-receipt.json",
-            "bytes": 1441,
-            "sha256": "5ae9aa501b367889eeffce10cebf3421927a78c99bdf36578b10283f619c8cc0"
+            "bytes": 1551,
+            "sha256": "b1dfe8196d7f7147ab72ecefa887bd9a4006d23c4c4edd768d34d99c2129632c"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-link-c00-blender4513-v2/4f47d8ae3a541c22153a08464df8fdbac30afc22dcb075153a8ac3dad5e1c605.tar.gz",
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/alpha-audit.json",
+            "bytes": 4057,
+            "sha256": "3ff3336e2f242f016a62584bac4e444f80ffe9655c07bb6effdbe50331d4e7c1"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/material-bake-receipt.json",
+            "bytes": 14874,
+            "sha256": "a0f004da06d350625505b91413b5a2e30421be5e6df8443f8115ccfae7fb3be3"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/alpha-atlas-finalization.json",
+            "bytes": 649,
+            "sha256": "906f625085ea7467e76684f676692c7843780a3e1e0e80bae446df8eecbef091"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-link-full-v2/b6529ff2855b5a141c4d62f6db8ddc9f7ae652148365f18820a3758c724538e6.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
             "Link uses the source low LOD, a 7,900-triangle reduction target, and a two-atlas 256px layout measured at 0.40 atlas quality; the retained source and all conversion stages remain local for later A/B review."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-link-c00-blender4513-v2/atlas-final.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/link/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -198804,7 +198750,7 @@
       "designStatus": "designed",
       "noDesignReason": null,
       "evidence": [
-        "Link c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -198877,12 +198823,13 @@
       "modelCandidates": [
         {
           "id": "ssbu-sonic-c00-static-skinned-v1",
+          "label": "索尼克 SSBU Ultimate c00 黑底修復版",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-blender4513-v1/body.glb",
-          "gitPath": "content/assets/models/community/ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40.glb",
-          "bytes": 887140,
-          "sha256": "ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+          "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+          "bytes": 936116,
+          "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -198894,26 +198841,87 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/validation.json",
-            "bytes": 23762,
-            "sha256": "c2abcc40f2b44d219cf02ccaf8e52baba079f49c3deec1a001cb289b824e22ee"
+            "bytes": 23819,
+            "sha256": "6ed3bbcc86bd131777c1b699ebecd6f4e870db78df69568d517bf7beed3e22d2"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/visual-review.json",
-            "bytes": 660,
-            "sha256": "f3de7a4e8fef1f438da627f3cf1629f8b764ec3572ee3bf010b73984f4867605"
+            "bytes": 691,
+            "sha256": "e9adfa1a5ed0194a5a30f8d4b5a0c03626b77a20995d5280ff5ee7ab565ba265"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/s3-backup-receipt.json",
-            "bytes": 1446,
-            "sha256": "4c030a2d15e29b96fc76e2363d8a2c5089f42e81cf8d3d5197d12ce61ccbf210"
+            "bytes": 1556,
+            "sha256": "3745651265a94b6703230c3d2246b816d8d6e648c9f3c29c31eebc4499e664a2"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-blender4513-v1/f895f83591e9013e4e9a4cced14a9ed51d01cd3d36ae60aa3f94ba0c23cbcf4e.tar.gz",
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/alpha-audit.json",
+            "bytes": 3691,
+            "sha256": "645249dad8d101ccce75ce89397f7ad2e411dc04253a45eaf12d7939e67790b9"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/material-bake-receipt.json",
+            "bytes": 14195,
+            "sha256": "956796b480cd2eb2068c99416e33fafc5e19a98630e390aa048e3f982f0a7773"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-sonic-full-v2/f497a9ab31a668d62a45ac011be758ccaa4b798bff5d9d65917a655e9141aac1.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
-            "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
+            "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
+            "Sonic remains at 8,980 triangles, above the 8,000-triangle formal-adoption target; further visual A/B decimation is required before hero adoption."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-blender4513-v1/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch1-v2/sonic/first/body.glb",
+          "existsLocal": true,
+          "localSizeMatches": true
+        },
+        {
+          "id": "ssbu-sonic-c00-static-skinned-v2",
+          "label": "索尼克 SSBU Ultimate c00 正式減面版",
+          "library": "community",
+          "sourceId": "gitlab-ssbu-models",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
+          "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+          "bytes": 916024,
+          "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+          "format": "glTF Binary",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "converted": true,
+          "componentReady": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0,
+          "runtimeSelectable": false,
+          "defaultEligible": false,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/validation.json",
+            "bytes": 23727,
+            "sha256": "1d1d6cb7a6ed909176f3ff45115f61dbd62746b92c5d509f2e029342f3ecfe6a"
+          },
+          "visualEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-comparison.json",
+            "bytes": 1580,
+            "sha256": "b75da688ac153c7caa20057d2a3f4c86e0e9c6b62bedc78e3bebc651f619c98d"
+          },
+          "s3BackupEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/s3-backup-receipt.json",
+            "bytes": 1483,
+            "sha256": "08e8ae9f6be7a303d66118e00ee4c4fd3e19c82258cbce36a6384f007df5f57d"
+          },
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/alpha-audit.json",
+            "bytes": 1893,
+            "sha256": "41bc342073c93db3b9ceb207059013614fcba595ed4746647de94339f42ce0c3"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-formal-decimation-v1/3515ecfb7da518719bc47653c2c93b507d4bf57546416738de20c57b17774e4b.tar.gz",
+          "limitations": [
+            "The source and candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+            "No GGD hero definition currently matches this exact Sonic identity, so no hero or backend dropdown binding was invented.",
+            "Runtime switching and production deployment were not performed.",
+            "Original-game shader parity remains limited to the source-connected Blender materials."
+          ],
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-formal-decimation-v1/candidate.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -198923,12 +198931,13 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Sonic identity.",
       "evidence": [
-        "Sonic c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Sonic c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions.",
+        "Sonic c00 was reduced from 8,980 to 7,900 triangles; the byte-identical rebuild, Khronos, GGD budget, alpha audit and fixed-camera A/B review passed."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
         "standaloneCharacterBodies": 0,
-        "componentsOrProps": 1,
+        "componentsOrProps": 2,
         "sharedContainers": 0,
         "otherCandidateFiles": 0
       },
@@ -198964,6 +198973,15 @@
             "provenance": null,
             "readiness": "accepted-independent-static-skinned-component-actions-missing",
             "evidence": "existing-candidate-metadata; not runtime acceptance"
+          },
+          {
+            "candidateId": "ssbu-sonic-c00-static-skinned-v2",
+            "count": 0,
+            "sourceCount": null,
+            "unconvertedCount": null,
+            "provenance": null,
+            "readiness": "accepted-independent-static-skinned-component-actions-missing",
+            "evidence": "existing-candidate-metadata; not runtime acceptance"
           }
         ],
         "nativeMotionSources": [],
@@ -198986,12 +199004,13 @@
       "modelCandidates": [
         {
           "id": "ssbu-chrom-c00-static-skinned-v1",
+          "label": "庫洛姆 SSBU Ultimate c00 黑底修復版",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/chrom/first/body.glb",
-          "gitPath": "content/assets/models/community/2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527.glb",
-          "bytes": 957288,
-          "sha256": "2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+          "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+          "bytes": 963000,
+          "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -199003,27 +199022,43 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/validation.json",
-            "bytes": 18461,
-            "sha256": "bb3baabd9bbbde5d7e55f3c45c217811cf50b1a395ec69d5ab2f0660698bb0b5"
+            "bytes": 19165,
+            "sha256": "d6f986feaf431a1fe3ed883f5c74ca73c2ca40e847e8157c20118f8e8df9f3e2"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/visual-review.json",
-            "bytes": 676,
-            "sha256": "9791dbf611af9f56e97f1de67016c4a75b7a6af28ef5b15797adb32b374635a3"
+            "bytes": 707,
+            "sha256": "1365de37a0dfc541fd0da4b1e605726ec44a85aaa30e6e29daceb218800a2149"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/s3-backup-receipt.json",
-            "bytes": 1495,
-            "sha256": "67622bdc3255112e000be1a99a58dc7af9b1afab6bd50e538f8662f8ca81065f"
+            "bytes": 1557,
+            "sha256": "6e881dc02a1ff5985114f7dd3a3b33d698f7e8e2f15e4b86740d9b9462816735"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/chrom/68dae159f9f16cfb4a7cc55f44614f6c8b9db1e5a19821fe7edd1cd13cb4845f.tar.gz",
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/alpha-audit.json",
+            "bytes": 4139,
+            "sha256": "a2365eba085551584ef6c7f0866911c75d63466b9fc769bc83a62112e2b091ad"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/alpha-atlas-finalization.json",
+            "bytes": 673,
+            "sha256": "f7409f7230a06979f7cfa17db1ae8910232c190ae2b30a7c767ad25c703db236"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/material-bake-receipt.json",
+            "bytes": 11790,
+            "sha256": "105e779c1a556fd281b97c1f4deb3a7060f02229522bb565a3b8758d700e070e"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-chrom-full-v3/2cbcbf7ee33efc0337b69f99fb91f3f3bdff9489dd5c4e685fa82861c9dc53ee.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/chrom/first/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -199033,7 +199068,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Chrom identity.",
       "evidence": [
-        "Chrom c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Chrom c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -199096,12 +199131,13 @@
       "modelCandidates": [
         {
           "id": "ssbu-ganondorf-c00-static-skinned-v1",
+          "label": "加儂多夫 SSBU Ultimate c00 黑底修復版",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/ganon/first/body.glb",
-          "gitPath": "content/assets/models/community/ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f.glb",
-          "bytes": 1250324,
-          "sha256": "ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/body.glb",
+          "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+          "bytes": 1264104,
+          "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -199113,27 +199149,43 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/validation.json",
-            "bytes": 39301,
-            "sha256": "c1b5eb16186020b1a57660be141200dd0afb310a1e96014e90e45f200a9441bd"
+            "bytes": 36532,
+            "sha256": "cdf9836c8360421b8d8f6f38f484bb596bd397e94aad4c84dc7cda2890d3e2d9"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/visual-review.json",
-            "bytes": 673,
-            "sha256": "d0b4a0c417df4f730b3a79b137b8620ad6d32d9b14ecf0a09aab4134408a9e01"
+            "bytes": 704,
+            "sha256": "b7fdd49912b52726a228ec6a6f604a50dc01d9dd12c800a93afca316f25777d6"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/s3-backup-receipt.json",
-            "bytes": 1495,
-            "sha256": "3e80bdbc2a65e0f405570c1d5a3ce567f30d02059984a6e21eea8c76ea5a6251"
+            "bytes": 1557,
+            "sha256": "c0e10272ec04ea4690e7b2a6d579e08ef50e5e5d16ddcaade30e48a05b0982a5"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/ganon/e7bee74814895cf807cc5321675df138974923bf87b4dad8685d38ed6cfcdd40.tar.gz",
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/alpha-audit.json",
+            "bytes": 4243,
+            "sha256": "26073cc79416113da9725f8ec440c6e5de525e35333c8ee9eeb985ac81e52e29"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/alpha-atlas-finalization.json",
+            "bytes": 348,
+            "sha256": "4e94bae5fe1bb46636433b9026ee446e6b6e4724677cecc8cd9f000890934881"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/material-bake-receipt.json",
+            "bytes": 12790,
+            "sha256": "5f7c72c0f3a86fdda7a08ab81e1389891fef33ea2375310f012d9575cade5903"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-ganon-full-v3/99894cfd1582f4a2eae1fd9dc9853c1d99c28c73950b229f041efb3283906cf8.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/ganon/first/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/ganon/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -199143,7 +199195,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Ganondorf identity.",
       "evidence": [
-        "Ganondorf c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Ganondorf c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -199206,12 +199258,13 @@
       "modelCandidates": [
         {
           "id": "ssbu-lucina-c00-static-skinned-v1",
+          "label": "露琪娜 SSBU Ultimate c00 黑底修復版",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/lucina/first/body.glb",
-          "gitPath": "content/assets/models/community/7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4.glb",
-          "bytes": 838712,
-          "sha256": "7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/lucina/first/body.glb",
+          "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+          "bytes": 895472,
+          "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -199223,28 +199276,44 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/validation.json",
-            "bytes": 18333,
-            "sha256": "a65a131d742f2bdeb1ac7732c6846516afb154aed756ac8f61ad9d4ea40cc497"
+            "bytes": 18883,
+            "sha256": "f180cc21bf286cb85652516f2851f931e8e12d9e05958fdc2827eed32a82ebd0"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/visual-review.json",
-            "bytes": 678,
-            "sha256": "b9a4ab611940d03416a19a33f2e265a7e736efd8e7cb598751e908a6bb05fd1d"
+            "bytes": 709,
+            "sha256": "39b2a6a6b69a618e6accc8c973bd3382e67995e9efa1dfb7854dd10a269100ea"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/s3-backup-receipt.json",
-            "bytes": 1500,
-            "sha256": "7d470397cd207e3e582fcef6f37565396edb2fb64950406c7aa62adcbf47dd95"
+            "bytes": 1562,
+            "sha256": "80ace7a43b4751aaea5f447aa07120e63e66e4e5abc3ab2b068d6f3b936249ff"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/lucina/ff2ee818096417de97d8ba230975db90c9ab931efa5661eeeea7b11b84d1e364.tar.gz",
+          "alphaAuditEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/alpha-audit.json",
+            "bytes": 4065,
+            "sha256": "a76d01452104d8898f79f11983342ecc00eabc53cbf1c2cb85b0c19457c7062d"
+          },
+          "alphaAtlasFinalizationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/alpha-atlas-finalization.json",
+            "bytes": 691,
+            "sha256": "3e0cb146869e1812b5c6e0bb24e1cdfdaf1927933f212d101f7cc1ca3359122a"
+          },
+          "materialBakeEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/material-bake-receipt.json",
+            "bytes": 15742,
+            "sha256": "f676610c8a9a8bef483f60f9b2905401e3c689eaa09af3399dad7b0b5012ef3e"
+          },
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-lucina-full-v3/8342a1ec77d984066d7b7fe4f6e31f8acbae7680a4d3bfb1ab9df86739679605.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
             "The two-atlas 256px layout used measured quality 0.408; WebGL views were reviewed after conversion."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/lucina/first/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/lucina/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -199254,7 +199323,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Lucina identity.",
       "evidence": [
-        "Lucina c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Lucina c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -199319,10 +199388,10 @@
           "id": "ssbu-daisy-c00-static-skinned-v1",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/daisy/first/body.glb",
-          "gitPath": "content/assets/models/community/4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860.glb",
-          "bytes": 840384,
-          "sha256": "4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
+          "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+          "bytes": 846532,
+          "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -199334,28 +199403,29 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/validation.json",
-            "bytes": 18542,
-            "sha256": "8d916a236c675cda30ce9b53ccb503f7ecec08e5794f4a15c108f2316f4c1243"
+            "bytes": 19245,
+            "sha256": "8e1e7eac41df27bff4b8581fe27d97be0d9ecedac5e2182b41ee6b45ccb084d5"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/visual-review.json",
-            "bytes": 669,
-            "sha256": "02f90cb1e504ec7d5548d24951b73170a2c80907a4f772199b7405568b3fd436"
+            "bytes": 700,
+            "sha256": "1a03de2620ca02089f0917cbb1f1e0c416a4d43542270658442592f7d8fd73f8"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/s3-backup-receipt.json",
-            "bytes": 1495,
-            "sha256": "a8b102c21c97d70f982c7743b4e6e0a15af2f9928a3f0abef510b527807fc718"
+            "bytes": 1557,
+            "sha256": "0c3427190f789cc5ee798a49386d4f2325c844990f36a0d38c5dc17840bcb76b"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/daisy/838688afd3e8ec38f7d4f49f8c9c6922be4c7a7ac273f9d58215f13b75d92a56.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-daisy-full-v3/f9b207dd2c4c9b21a008531390ac595b45faf5dc2523bdb71f4122f9d959c154.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented.",
             "The source exposed body_highShape and body_lowShape together; the reproducible candidate excludes body_highShape and retains the low LOD before reduction."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/daisy/first/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/daisy/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -199365,7 +199435,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Daisy identity.",
       "evidence": [
-        "Daisy c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Daisy c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -199430,10 +199500,10 @@
           "id": "ssbu-peach-c00-static-skinned-v1",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/peach/first/body.glb",
-          "gitPath": "content/assets/models/community/6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0.glb",
-          "bytes": 840920,
-          "sha256": "6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
+          "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+          "bytes": 932380,
+          "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -199445,27 +199515,28 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/validation.json",
-            "bytes": 17602,
-            "sha256": "c62f6878dc167ec58fca012d8a9f12b9b5833eace920a20af0fdf677ffa5f60a"
+            "bytes": 18152,
+            "sha256": "7868f36bfcf29c1656d38e2b722673d071dfad66a3222396dd0caf5c4a799412"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/visual-review.json",
-            "bytes": 667,
-            "sha256": "7b54a0218df897ccf26d5b80d05e829043c6974d05951b8f2c0c04d6ff9cbcf2"
+            "bytes": 698,
+            "sha256": "201d74ef29a653a535b6938599d555d7689d70d48c493aef23b84d7bd67a6761"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/s3-backup-receipt.json",
-            "bytes": 1494,
-            "sha256": "4e18b1b181377cafafecfcad50f86e5ab4112a72e09821f26764300e7d908b77"
+            "bytes": 1557,
+            "sha256": "2184a04056589ede1e08bfc3e04faa07ef260641c5439d2ac6dd3fc7484a0355"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/peach/89a31ec976ed8202d3fd6f29b72422b02ba2ef59728ca7e91b8113501559667c.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-peach-full-v3/42e4a800f1445ca5d69a2be7b782ce86d606d5c7e4b6494397e8f18abb217c1e.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
             "Original-game shader parity is incomplete; only source-connected Blender materials are represented."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/peach/first/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/peach/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -199475,7 +199546,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Peach identity.",
       "evidence": [
-        "Peach c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Peach c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -199540,10 +199611,10 @@
           "id": "ssbu-toonlink-c00-static-skinned-v1",
           "library": "community",
           "sourceId": "gitlab-ssbu-models",
-          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/toonlink/first/body.glb",
-          "gitPath": "content/assets/models/community/e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794.glb",
-          "bytes": 968308,
-          "sha256": "e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
+          "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+          "bytes": 993100,
+          "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
           "format": "glTF Binary",
           "readiness": "accepted-independent-static-skinned-component-actions-missing",
           "converted": true,
@@ -199555,21 +199626,22 @@
           "defaultEligible": false,
           "validationEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/validation.json",
-            "bytes": 39151,
-            "sha256": "a278b66b3e2a16788aaa27b650d1da09dbf7c036cd965ee451a7dca9a59e072b"
+            "bytes": 39855,
+            "sha256": "1369ce771dbdd563d98dfcc56bda3f1c3d5640d64adb8de0f11cdb8f7bd26619"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/visual-review.json",
-            "bytes": 713,
-            "sha256": "cbcefd8682cacff90910153a49a2abfd6e2f145809ac4b8bb21aace8015c9cd3"
+            "bytes": 744,
+            "sha256": "e79137d0b6c3b5a14cf0aeb8bb8118cc153de9b6ae08d4566dd0c53c8d3515e7"
           },
           "s3BackupEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/s3-backup-receipt.json",
-            "bytes": 1512,
-            "sha256": "5f23d315cbc3f50e101bfc381ce5652370baa5c482bf4673d9c5f6b045e131e4"
+            "bytes": 1575,
+            "sha256": "dc7fa20563a86684b92af1f2199442dca9f3cdaabd2ecf590e6194ff4a52eac6"
           },
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/toonlink/ae042147a56a75b6f5aa225c24e92aa8edcef414a2069dee453a0028126d6f52.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-alpha-fixed-toonlink-full-v3/e8740bbcc5834c5d0b7d410d382fc52e796f79b14d0e6e1f0629e4cd2126ffc4.tar.gz",
           "limitations": [
+            "Black-background artifacts were repaired by preserving real transparency and baking opaque mixed-eye materials; the alpha audit reports zero OPAQUE-material transparent-texture blockers in both builds.",
             "Source and output contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
             "Ultimate14 transform files are indexed as a separate motion candidate, but are not converted, rig-tested or merged here and do not prove six gameplay states.",
             "No hero binding, backend dropdown registration, runtime switching or deployment was performed in this static-component batch.",
@@ -199577,7 +199649,7 @@
             "The source-connected eye material renders very dark and lacks original-game eye highlights; this was already present in the direct Blender export and needs shader/material polish before default use.",
             "The static neutral candidate excludes the two expression-specific LMabuta/RMabuta eyelid meshes to meet the six-draw limit; the complete source remains preserved."
           ],
-          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/toonlink/first/body.glb",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch3-v3/toonlink/first/body.glb",
           "existsLocal": true,
           "localSizeMatches": true
         }
@@ -199587,7 +199659,7 @@
       "designStatus": "not-defined",
       "noDesignReason": "No current GGD champion definition matches the exact Toon Link identity.",
       "evidence": [
-        "Toon Link c00 rebuilt twice byte-identically; GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
+        "Toon Link c00 alpha-fixed rebuilds are byte-identical; black-background repair, alpha safety, GGD budget, Khronos, finite-accessor and WebGL three-view checks passed. Source and output have zero actions."
       ],
       "candidateBreakdown": {
         "characterBodySources": 0,
@@ -199634,13 +199706,410 @@
         "evidencePaths": [],
         "classificationIsAcquisitionSnapshot": true
       }
+    },
+    {
+      "id": "native:jstars-000",
+      "name": "Monkey D. Luffy",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "蒙其·D·魯夫",
+        "Monkey D. Luffy",
+        "魯夫",
+        "路飛",
+        "モンキー・D・ルフィ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:000.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/i/000_luffy_new_01p_PS3.srdi",
+          "bytes": 1050948,
+          "sha256": "c950d9a55b7ed81c02223dfbe8f5d708dba2b1346105f6bac207cf912cfc7f2e",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "000",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/v/000_luffy_new_01p_PS3.srdv",
+            "bytes": 4064232,
+            "sha256": "b20a0f9fd7a17a141afc38b43966d1cdbacabd8dd75e6e650e0779a4667e5c37"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/m/000_luffy_new_01p_PS3.srd",
+            "bytes": 96464,
+            "sha256": "12b291687153860feaa0276cb33235b3c11ee268434c437712c2801b4c28a90a"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/luffy/i/000_luffy_new_01p_PS3.srdi",
+          "localSizeMatches": true
+        }
+      ],
+      "identityHeroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "designStatus": "designed",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 1,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "mappedHeroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "currentHeroChecks": [
+        {
+          "heroId": "godie-u00n",
+          "name": "草帽小子 - 蒙其.D.魯夫",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "mechanics-defined",
+          "availability": "正式機白名單可選"
+        },
+        {
+          "heroId": "godie-u00o",
+          "name": "草帽小子 - 蒙其.D.魯夫",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "mechanics-defined",
+          "availability": "變身／替代形態；不在白名單"
+        }
+      ],
+      "nameZh": "蒙其·D·魯夫",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "蒙其·D·魯夫（Monkey D. Luffy）",
+      "displayWork": "作品中文名稱待確認（J-Stars Victory VS+）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "尚未逐角色解析／建檔",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "native:jstars-013",
+      "name": "Toriko",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "阿虜",
+        "Toriko",
+        "特瑞科",
+        "トリコ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:013.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/i/013_toriko_01p_PS3.srdi",
+          "bytes": 1309412,
+          "sha256": "73022b9f1c84ec54dde574e854b9758d81b35fc9d604444c817ada0c626971c1",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "013",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/v/013_toriko_01p_PS3.srdv",
+            "bytes": 4113392,
+            "sha256": "b14f905f7ec268a577b8319e31b2e88fcbc26c62da4f293e40c39d105835a696"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/m/013_toriko_01p_PS3.srd",
+            "bytes": 79504,
+            "sha256": "3a0b37b9df394060a6c1f72bc900b6af6cdfa146da58d3b1e019f7799431d819"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/toriko/i/013_toriko_01p_PS3.srdi",
+          "localSizeMatches": true
+        }
+      ],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 1,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "mappedHeroIds": [],
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "阿虜",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "阿虜（Toriko）",
+      "displayWork": "作品中文名稱待確認（J-Stars Victory VS+）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "尚未逐角色解析／建檔",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "native:jstars-014",
+      "name": "Zebra",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "澤布拉",
+        "Zebra",
+        "傑布拉",
+        "ゼブラ"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:014.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/i/014_zebra_01p_PS3.srdi",
+          "bytes": 964250,
+          "sha256": "c042bfeb223ec8d1bbc16d08f809effca576acc05c784d17ae8eb0c6f36225be",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "014",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/v/014_zebra_01p_PS3.srdv",
+            "bytes": 4839920,
+            "sha256": "11acc0fe6dadc8070389eeca038f40bd6c9ad8706f14f7ef0148a4ae85e2d4f9"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/m/014_zebra_01p_PS3.srd",
+            "bytes": 57584,
+            "sha256": "221a93d1ae0d40199b9d3e2357a0f85d250e500f09ae7a87b2d01face9208757"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/zebra/i/014_zebra_01p_PS3.srdi",
+          "localSizeMatches": true
+        }
+      ],
+      "identityHeroIds": [],
+      "designStatus": "not-defined",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 1,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "mappedHeroIds": [],
+      "currentHeroChecks": [],
+      "suggestedHeroIds": [],
+      "nameZh": "澤布拉",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "澤布拉（Zebra）",
+      "displayWork": "作品中文名稱待確認（J-Stars Victory VS+）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "尚未逐角色解析／建檔",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
+    },
+    {
+      "id": "native:jstars-018",
+      "name": "Killua Zoldyck",
+      "work": "J-Stars Victory VS+",
+      "sourceIds": [
+        "zenhax-jstars-pak-stpk-comparison-v1"
+      ],
+      "aliases": [
+        "奇犽·揍敵客",
+        "Killua Zoldyck",
+        "奇犽",
+        "キルア＝ゾルディック"
+      ],
+      "modelCandidates": [
+        {
+          "id": "zenhax-jstars-pak-stpk-comparison-v1:018.srdi",
+          "library": "original-game-research-sample",
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+          "bytes": 1342172,
+          "sha256": "47f2970809edd99e5faf964d30e01b02fee8ccf5f498ada064871820e474a805",
+          "format": "srdi",
+          "readiness": "native-container-member-split-pending-geometry-and-texture-decoding",
+          "existsLocal": true,
+          "resourceRole": "character-body-mesh-source",
+          "sourceClass": "original-game-direct-extraction-research-sample",
+          "sourceId": "zenhax-jstars-pak-stpk-comparison-v1",
+          "sourceUrl": "https://zenhax.com/viewtopic.php@t=13160.html",
+          "nativeCharacterId": "018",
+          "isStandaloneModelCandidate": false,
+          "textureCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/v/018_killua_01p_PS3.srdv",
+            "bytes": 4687088,
+            "sha256": "cfd1e6d9972a4b709de2e9d5ed217c790b13ec0d83fbe0ffd8fa70ec6e8ae179"
+          },
+          "descriptorCompanion": {
+            "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/m/018_killua_01p_PS3.srd",
+            "bytes": 67024,
+            "sha256": "7e27a19ff389d81ef0bbb8bd89473bae88455b78ae73598a68f9349f43edc5ce"
+          },
+          "identityConfidence": "archive-directory-and-internal-member-name-not-visually-confirmed",
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-stpk-research-v1/killua/i/018_killua_01p_PS3.srdi",
+          "localSizeMatches": true
+        }
+      ],
+      "identityHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "designStatus": "designed",
+      "acquisitionNote": "PS3 public research sample STPK member safely split and hashed; still requires geometry/texture decoding and visual identity review.",
+      "limitations": [
+        "not a standardized GLB",
+        "texture remains SRDV",
+        "skeleton and skin not verified",
+        "no native motion/VFX/audio extraction",
+        "not registered as a backend option"
+      ],
+      "candidateBreakdown": {
+        "characterBodySources": 1,
+        "standaloneCharacterBodies": 0,
+        "componentsOrProps": 0,
+        "sharedContainers": 0,
+        "otherCandidateFiles": 0
+      },
+      "mappedHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "currentHeroChecks": [
+        {
+          "heroId": "community-review-24-20260907",
+          "name": "奇犽",
+          "implemented": true,
+          "mechanicsAuditStale": false,
+          "designComplete": null,
+          "missingRefs": [],
+          "status": "mechanics-defined",
+          "availability": "正式機白名單可選"
+        }
+      ],
+      "nameZh": "奇犽·揍敵客",
+      "workZh": "作品中文名稱待確認",
+      "displayName": "奇犽·揍敵客（Killua Zoldyck）",
+      "displayWork": "作品中文名稱待確認（J-Stars Victory VS+）",
+      "nameTranslationBasis": "existing-source-label-or-alias",
+      "workTranslationBasis": "pending-chinese-title",
+      "localizationChangesIdentity": false,
+      "resources": {
+        "motion": "尚未逐角色解析／建檔",
+        "vfx": "尚未建立角色專屬特效對應",
+        "sfx": "尚未建立角色專屬音訊對應",
+        "voice": "尚未建立角色專屬語音對應",
+        "voiceGroupIds": [],
+        "indexedAudioFileCount": 0,
+        "unclassifiedAudioFileCount": 0,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
+        "sourceLabels": [],
+        "voiceIndex": "materials/hero-model-library/voice-index.json",
+        "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
+        "motionCandidateCounts": [],
+        "nativeMotionSources": [],
+        "evidencePaths": [],
+        "classificationIsAcquisitionSnapshot": true
+      }
     }
   ],
   "localization": {
     "locale": "zh-TW",
     "identityUnchanged": true,
     "pendingChineseNames": 0,
-    "pendingChineseWorks": 3
+    "pendingChineseWorks": 7
   },
   "resourceCoverage": {
     "schema": "ggd-design-backlog-resource-coverage@1",
@@ -199921,7 +200390,7 @@
           "parallel-community-lina-ssbu-ceruleancast"
         ],
         "model": "Ultimate14:0本體/33部件；Bowser:0本體；Alucard:1本體+5部件；Goblin:1 body mesh但缺骨架/材質；Lina:6本體候選+8卡比配件。",
-        "motion": "Ultimate14 435 NUANMB 路徑／176 種內容，其中 411 路徑在 motion/、24 路徑是 model/ 預設資料；全部解析成功但尚未轉 GGD。Bowser 38/5；Alucard 112/105。",
+        "motion": "Ultimate14 435 NUANMB 路徑／176 種內容，其中 411 路徑在 motion/、24 路徑是 model/ 預設資料；全部解析成功；已驗收獨立元件 15 段，後台可切換與部署仍為 0。Bowser 38/5；Alucard 112/105。",
         "vfx": "Ultimate14 3 trail貼圖；Alucard8 EFF容器+2 trail貼圖；均未重建 GGD。",
         "sfx": "154 已解碼音訊紀錄；另Ultimate14 56 patch bank/152 entries、Alucard3 bank/134 entries 尚未作可播放音訊索引。",
         "voice": "Lina36角色音檔／83混合播報／1勝利曲分群；哥布林34條目僅2種原始payload。未逐段確認，不把合成播報混作原生莉娜語音。",
@@ -200724,7 +201193,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilgamesh_archer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200746,7 +201220,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medusa_rider/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200773,7 +201252,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/webgl-native-v1/run.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/manual-visual-review.json",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/midpoint-contact-sheet.png"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-native-motion-v1/midpoint-contact-sheet.png",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200798,7 +201282,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-artoria_pendragon_saber/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200883,7 +201372,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-emiya_archer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200905,7 +201399,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-iskander_rider/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200927,7 +201426,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-sasaki_kojiro_assassin/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200949,7 +201453,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-gilles_de_rais_caster/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200971,7 +201480,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-hassan-i-sabbah_assassin/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -200996,7 +201510,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-nero_claudius_saber/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -201018,7 +201537,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-cu_chulainn_lancer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -201040,7 +201564,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-medea_caster/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -201062,7 +201591,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-lancelot_berserker/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -201087,7 +201621,12 @@
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-visual-assessment.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/manual-visual-review.json",
           "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/batch-midpoint-contact-sheet.png",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/webgl-native-v1/run.json"
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-batch-v1/fateubw-diarmuid_ua_duibhne_lancer/webgl-native-v1/run.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+          "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/s3-backup-receipt.json"
         ],
         "scope": "FateUBW source and verified local conversion reserve; no runtime, rights or deployment claim"
       },
@@ -201183,7 +201722,7 @@
         ]
       },
       "kirby": {
-        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：kirby: 本體 3檔／2種內容、配件 22檔／22種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 183 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：kirby: 本體 3檔／2種內容、配件 22檔／22種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：kirby。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 27 群／164 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -201225,7 +201764,7 @@
         ]
       },
       "link": {
-        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：link: 本體 61檔／19種內容、配件 24檔／3種內容；toonlink: 本體 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 49 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：link: 本體 61檔／19種內容、配件 24檔／3種內容；toonlink: 本體 3檔／3種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：link、toonlink。",
         "vfx": "另保留 1 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 4 群／205 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -203559,7 +204098,7 @@
         ]
       },
       "ssbu-chrom": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：chrom: 本體 9檔／9種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：chrom: 本體 9檔／9種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：chrom。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／44 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -203589,7 +204128,7 @@
         ]
       },
       "ssbu-daisy": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：daisy: 本體 13檔／13種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：daisy: 本體 13檔／13種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：daisy。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -203603,7 +204142,7 @@
         ]
       },
       "ssbu-pitb": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：pitb: 本體 14檔／14種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：pitb: 本體 14檔／14種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：pitb。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／40 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -203619,7 +204158,7 @@
         ]
       },
       "ssbu-samusd": {
-        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：samusd: 本體 60檔／21種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 20 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：samusd: 本體 60檔／21種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：samusd。",
         "vfx": "另保留 2 個 MOD 效果容器／貼圖，尚未轉譯 GGD。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -203703,7 +204242,7 @@
         ]
       },
       "ssbu-ganon": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：ganon: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：ganon: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：ganon。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／93 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -203774,7 +204313,7 @@
         ]
       },
       "ssbu-shizue": {
-        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：shizue: 本體 4檔／4種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 26 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：shizue: 本體 4檔／4種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：shizue。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -203899,7 +204438,7 @@
         ]
       },
       "ssbu-lucas": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucas: 本體 7檔／7種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucas: 本體 7檔／7種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：lucas。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "未對應到獨立角色音訊群。",
         "voice": "沒有已逐段確認可作合成輸入的語音；未對應到獨立角色音訊群。",
@@ -203913,7 +204452,7 @@
         ]
       },
       "ssbu-lucina": {
-        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucina: 本體 41檔／13種內容、配件 48檔／6種內容、模型預設無Transform資料 16檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 9 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：lucina: 本體 41檔／13種內容、配件 48檔／6種內容、模型預設無Transform資料 16檔／1種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：lucina。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／36 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -203943,7 +204482,7 @@
         ]
       },
       "ssbu-mario": {
-        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：mario: 本體 40檔／5種內容、配件 16檔／2種內容、模型預設無Transform資料 8檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 25 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：mario: 本體 40檔／5種內容、配件 16檔／2種內容、模型預設無Transform資料 8檔／1種內容；來源是社群 MOD 覆寫片段。 已轉成 GGD 並完成骨架／WebGL 播放驗收：mario 5段；維持獨立元件，尚未完成 GGD 語意動作映射、後台綁定或部署。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 2 群／68 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -204142,7 +204681,7 @@
         ]
       },
       "ssbu-peach": {
-        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：peach: 本體 1檔／1種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 17 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：peach: 本體 1檔／1種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：peach。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／30 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -204248,7 +204787,7 @@
         ]
       },
       "ssbu-richter": {
-        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：richter: 本體 2檔／2種內容、配件 3檔／3種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 14 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：richter: 本體 2檔／2種內容、配件 3檔／3種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：richter。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -204373,7 +204912,7 @@
         ]
       },
       "ssbu-simon": {
-        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：simon: 本體 4檔／4種內容、配件 16檔／2種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 15 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：simon: 本體 4檔／4種內容、配件 16檔／2種內容；來源是社群 MOD 覆寫片段。 尚未轉成 GGD 或完成本體骨架播放驗收：simon。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／39 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
@@ -204403,7 +204942,7 @@
         ]
       },
       "ssbu-sonic": {
-        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：sonic: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段，尚未轉成 GGD 動作，也未與本體骨架完成播放驗收。",
+        "motion": "整庫 11 個 Blender 候選；原檔均無 Action datablock，骨架不等於已取得動作。 Ultimate14 NUANMB 已逐檔解析：sonic: 本體 10檔／10種內容；來源是社群 MOD 覆寫片段。 已轉成 GGD 並完成骨架／WebGL 播放驗收：sonic 10段；維持獨立元件，尚未完成 GGD 語意動作映射、後台綁定或部署。",
         "vfx": "整庫無可直接重建的特效系統；部件模型不算完整 VFX。",
         "sfx": "已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
         "voice": "沒有已逐段確認可作合成輸入的語音；已對應 1 群／32 個檔案紀錄；混合喊聲／音效未逐段聽審，不能全算語音。",
