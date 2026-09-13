@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+  "modelKey": "version.body.f25043a9b56b77ea13ea6399525dd26148e32ef5bbb4b81f",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -112,7 +112,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-21-20260907.q.webp",
       "template": {
@@ -179,7 +179,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-21-20260907.w.webp",
       "template": {
@@ -234,7 +234,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-21-20260907.e.webp",
       "template": {
@@ -297,7 +297,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.7,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-21-20260907.r.webp",
       "template": {
@@ -340,5 +340,61 @@
   "tags": [
     "bow"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.c3528a53b30e5a72d13d68c8c56229beec01dbac844a7d3e",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "modelSha256": "bf1de83ac33602a4db4b94eb6f73a42f31cf4487a89fc74a73f052ff540938c4",
+      "binarySha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "registeredAt": "2026-09-12T23:02:32.455Z",
+      "source": {
+        "kind": "previous",
+        "character": "鹿目圓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.e91a81a53fce84531990758ebfbea7b6654342793792d3e6",
+      "label": "鹿目圆香",
+      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "modelSha256": "c4ed410a914a6f50ffc05e18b896df9ca045a5fa75dfcd85c9b305d583f5cdd7",
+      "binarySha256": "4171d5a997b5e010420a8395f7726b80d03cc84602d58f2f63f90c414505f874",
+      "registeredAt": "2026-09-12T23:02:32.458Z",
+      "source": {
+        "kind": "exact",
+        "character": "鹿目圆香",
+        "work": "魔法少女小圓",
+        "library": "300heroes",
+        "reference": "300heroes:36223c09f16c6648e9508448",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.f25043a9b56b77ea13ea6399525dd26148e32ef5bbb4b81f",
+      "label": "鹿目圆香",
+      "sourceModelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
+      "modelSha256": "94b61b9bca2678f289fcd333d27dcac8c7e8def41cc6ec8b037cbb8c086b1415",
+      "binarySha256": "4171d5a997b5e010420a8395f7726b80d03cc84602d58f2f63f90c414505f874",
+      "registeredAt": "2026-09-13T00:08:48.355Z",
+      "source": {
+        "kind": "exact",
+        "character": "鹿目圆香",
+        "work": "魔法少女小圓",
+        "library": "300heroes",
+        "reference": "300heroes:36223c09f16c6648e9508448",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

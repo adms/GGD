@@ -7,6 +7,7 @@ import { effectiveYawOffsetDeg } from '../../packages/shared/src/content/glbYaw'
 import { createHash } from 'node:crypto';
 import { inspectModelUpload } from '../../packages/shared/src/content/modelUpload/inspect';
 import { prepareUploadedHeroModel, verifyUploadedHeroModel } from '../../packages/shared/src/content/modelUpload/heroModel';
+import { resizeImageWithFfmpeg } from '../../apps/content-api/src/resizeImage.node';
 import type { HeroModelSelections } from '../../packages/shared/src/content/modelUpload/heroModelSchema';
 const {values}=parseArgs({options:{workspace:{type:'string'},out:{type:'string'}}});
 if(!values.workspace||!values.out)throw Error('--workspace and --out required');
@@ -22,6 +23,13 @@ for(const [key,candidate] of selected){
   const path=candidate.model.path,originalBytes=new Uint8Array(readFileSync(path));
   let bytes=originalBytes;
   if(key==='cloud'||key==='bulbasaur'||key==='lux'){ const canonical=join(d,'canonical.glb'); execFileSync('python3',[fileURLToPath(new URL('./normalize-existing-glb.py',import.meta.url)),path,canonical]); bytes=new Uint8Array(readFileSync(canonical)); }
+  if(key==='tram'){
+   const expected='4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443';
+   if(createHash('sha256').update(originalBytes).digest('hex')!==expected)throw Error('Kisaragi tram source changed; review before regenerating');
+   const canonical=join(d,'canonical.glb');
+   execFileSync('python3',[fileURLToPath(new URL('../w3x-import/skin_verified_rigid_hierarchy.py',import.meta.url)),path,canonical,'--expected-sha256',expected,'--receipt',join(d,'rigid-skin.json')]);
+   bytes=new Uint8Array(readFileSync(canonical));
+  }
   const inspection=await inspectModelUpload(bytes);
   const sourceDoc=key==='cloud'||key==='bulbasaur'?read(join(ws,'GGD-hero-model-options/content/models',`imported.${key}.json`)):null;
   let clipMap=sourceDoc?.clipMap;
@@ -31,7 +39,7 @@ for(const [key,candidate] of selected){
    clipMap={idle:pick(/(^|_)(idle|stand)/i),run:pick(/(^|_)(run|walk)/i),attack:pick(/(^|_)attack/i),cast:pick(/(^|_)(spell|cast)/i),hurt:pick(/(^|_)(hurt|hit|idle|stand)/i),death:pick(/(^|_)(death|dead)/i)};
   }
   const selections=Object.fromEntries(Object.entries(clipMap).map(([state,name])=>[state,inspection.clips.findIndex(c=>c.name===name)])) as HeroModelSelections;
-  const body=await prepareUploadedHeroModel(bytes,selections,sourceDoc?effectiveYawOffsetDeg(sourceDoc):0);await verifyUploadedHeroModel(body.model,body.bytes);
+  const body=await prepareUploadedHeroModel(bytes,selections,sourceDoc?effectiveYawOffsetDeg(sourceDoc):0,{resizeImage:resizeImageWithFfmpeg});await verifyUploadedHeroModel(body.model,body.bytes);
   const fp=(bytes:Uint8Array)=>({bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')});
   const receipt={schema:'ggd-library-body-ready@1',preparation:{asset:`existing:${key}`,source:{path,...fp(originalBytes)},limitations:['保留借用模型身形；未重製角色專屬外觀或複合身體。']},model:body.model,document:body.document,selectedClips:body.model.clipMap,metrics:{triangles:body.inspected.triangles,drawPrimitives:body.inspected.meshes,textures:body.inspected.textures},warnings:body.warnings,validator:body.inspected.report};
   for(const [file,value] of [['model.json',body.document],['uploaded-model.json',body.model],['receipt.json',receipt]] as const)writeFileSync(join(d,file),JSON.stringify(value,null,2)+'\n');

@@ -61,18 +61,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 12,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -87,20 +87,20 @@
               "小"
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "burn",
-              "duration": 3
+              "duration": 3.0
             },
             {
               "kind": "dot",
               "damageType": "magic",
               "amountPerTick": {
-                "flat": 1
+                "flat": 1.0
               },
               "resourcePct": {
                 "subject": "target",
@@ -112,8 +112,8 @@
                 ]
               },
               "resourcePctPhase": "onTick",
-              "intervalSec": 1,
-              "durationSec": 3,
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
               "stacking": "refresh"
             }
           ]
@@ -132,20 +132,20 @@
               "小"
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "burn",
-              "duration": 3
+              "duration": 3.0
             },
             {
               "kind": "dot",
               "damageType": "magic",
               "amountPerTick": {
-                "flat": 1
+                "flat": 1.0
               },
               "resourcePct": {
                 "subject": "target",
@@ -157,21 +157,21 @@
                 ]
               },
               "resourcePctPhase": "onTick",
-              "intervalSec": 1,
-              "durationSec": 3,
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
               "stacking": "refresh"
             }
           ],
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-edem.q.webp",
       "vfxKey": "fx.prim.fire.explosion",
       "cooldownTier": "小",
       "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 1.033,
-      "castTimeTier": "極大"
+      "castTimeSec": 1
     },
     "W": {
       "id": "godie-edem.w",
@@ -182,18 +182,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        75,
-        75,
-        75,
-        75
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -209,7 +209,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
@@ -222,14 +222,14 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3,
+              "duration": 3.0,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 3,
+              "duration": 3.0,
               "moveSpeedMult": 0.5
             }
           ]
@@ -249,7 +249,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
@@ -262,26 +262,26 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3,
+              "duration": 3.0,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 3,
+              "duration": 3.0,
               "moveSpeedMult": 0.5
             }
           ],
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "castTimeSec": 0.833,
-      "castTimeTier": "極大"
+      "castTimeTier": "極大",
+      "castTimeSec": 1
     },
     "E": {
       "id": "godie-edem.e",
@@ -292,18 +292,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 12,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -326,12 +326,12 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           },
           "length": 12.83,
-          "width": 12,
+          "width": 12.0,
           "aim": "facing",
           "fromCaster": true,
           "includeOrigin": true
@@ -351,11 +351,11 @@
           "soundKey": "wc3.thunderclapcaster",
           "scale": 3.5,
           "tint": [
-            1,
-            0,
-            0
+            1.0,
+            0.0,
+            0.0
           ],
-          "lifeSec": 1
+          "lifeSec": 1.0
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.e.webp",
@@ -369,9 +369,9 @@
       ],
       "cooldownTier": "小",
       "manaCostTier": "小",
+      "castTimeTier": "小",
       "rangeTier": "極大",
-      "castTimeSec": 0.067,
-      "castTimeTier": "小"
+      "castTimeSec": 0.1
     },
     "R": {
       "id": "godie-edem.r",
@@ -382,16 +382,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -407,15 +407,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 400,
+                      "flat": 400.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -439,15 +439,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 700,
+                      "flat": 700.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -471,15 +471,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1000,
+                      "flat": 1000.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }

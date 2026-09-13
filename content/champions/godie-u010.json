@@ -77,7 +77,7 @@
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -105,7 +105,7 @@
           },
           "damageType": "magic",
           "invulnerableSec": 0.24,
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -138,7 +138,7 @@
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,
@@ -184,7 +184,7 @@
           "damageType": "magic",
           "statusId": "slow40",
           "statusDurationSec": 1.5,
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -277,7 +277,7 @@
       ],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,
@@ -319,7 +319,7 @@
       "effects": [],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.dragonroostwhat1",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,

@@ -455,10 +455,10 @@
     {
       "id": "ou99:465884",
       "modelKey": "ou99.465884-standard",
-      "glbPath": "assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
-      "bytes": 2738508,
-      "documentSha256": "9767d8afdb1c25136ef2994f826c2133e768a6ec04e73bfe4d0c47d9409d13f7",
+      "glbPath": "assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+      "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
+      "bytes": 2738480,
+      "documentSha256": "5273e3a9407df3fd984531c333ff5ad202c0f7062f46800422062ee079119b1a",
       "sourceCharacter": "休闲西装版七夜智贵",
       "sourceWork": "來源作品待核；論壇標題：休闲西装版七夜智贵",
       "sourceAssetId": "https://www.ou99.com/thread-465884-1-1.html",
@@ -476,7 +476,7 @@
       "validation": "backend-prepare-passed",
       "fullCharacterPackage": false,
       "storage": "git",
-      "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+      "gitPath": "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
       "sourceCommit": "50f3d8abd10ad6c9b7044bbc163ed8a52a8a8b0d",
       "identityStatus": "intentional-similar-proxy",
       "originalDelivery": {
@@ -487,7 +487,14 @@
         "gitCommit": "1b1bd17f2"
       },
       "boundsRepaired": true,
-      "standardization": {}
+      "standardization": {
+        "tool": "tools/w3x-import/solid_placeholder_to_factor.py",
+        "inputSha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+        "removedSolidImageSha256": "47c0b232b83e0aaf92d46f39b9066c67528fc4c31fc88bc50d7d8e2291137145",
+        "outputSha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
+        "evidence": "materials/hero-model-library/priority-evidence/matthias-texture-repair-d360/receipt.json",
+        "sourceTextureRecovered": false
+      }
     },
     {
       "id": "ou99:467227",
@@ -3140,8 +3147,8 @@
       "modelKey": "ou99.465884-standard",
       "identityStatus": "intentional-similar-proxy",
       "sourceReference": "https://www.ou99.com/thread-465884-1-1.html",
-      "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06"
+      "gitPath": "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+      "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d"
     },
     {
       "candidateId": "ou99:467227",

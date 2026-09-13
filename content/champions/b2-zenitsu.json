@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -162,7 +162,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -219,7 +219,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -268,7 +268,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -336,7 +336,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -439,7 +439,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-zenitsu",
-  "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+  "modelKey": "version.body.9c4d9c3355065e64f198441f13c422a3d012983f90c8939e",
   "name": "我妻善逸",
   "origin": "法刺",
   "passiveAbility": "b2-zenitsu.passive",
@@ -454,5 +454,61 @@
   "tags": [
     "katana"
   ],
-  "icon": "assets/icons/champions/b2-zenitsu.webp"
+  "icon": "assets/icons/champions/b2-zenitsu.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.90d79f348fe37bfae40f820ba4f79eef742b9c1b0b6eeaf7",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+      "modelSha256": "67742096022d45ce07ad49fea9e9ba29c5ddb4b533474013031bd6b0a09fae69",
+      "binarySha256": "7f1b4ceac21c09818ba23adde6c76fb43425dc9c39ec60162880a60d60a4a892",
+      "registeredAt": "2026-09-12T23:02:37.983Z",
+      "source": {
+        "kind": "previous",
+        "character": "我妻善逸",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.e0c5151596e41ff57fdb138ea399bf55d672922b1a3bc57d",
+      "label": "我妻善逸",
+      "sourceModelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+      "modelSha256": "95f70f5ea816254af1f805bb1c1099a925cf571faa516868b2fce662ed12311a",
+      "binarySha256": "b26016f7a72a30a8a1cfc9d056b3de6b8621c2995d135b3026a912b25a6b88e5",
+      "registeredAt": "2026-09-12T23:02:37.989Z",
+      "source": {
+        "kind": "exact",
+        "character": "我妻善逸",
+        "work": "鬼滅之刃",
+        "library": "300heroes",
+        "reference": "300heroes:c889a7140d6e9fdb88343a0c",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9c4d9c3355065e64f198441f13c422a3d012983f90c8939e",
+      "label": "我妻善逸",
+      "sourceModelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
+      "modelSha256": "1f6c5375ae58963e9172fe0002446f2a4085a4b1ba8263676dbe3ce1fa4cb462",
+      "binarySha256": "b26016f7a72a30a8a1cfc9d056b3de6b8621c2995d135b3026a912b25a6b88e5",
+      "registeredAt": "2026-09-13T00:08:53.843Z",
+      "source": {
+        "kind": "exact",
+        "character": "我妻善逸",
+        "work": "鬼滅之刃",
+        "library": "300heroes",
+        "reference": "300heroes:c889a7140d6e9fdb88343a0c",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

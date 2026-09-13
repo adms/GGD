@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
+  "modelKey": "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -83,7 +83,7 @@
           }
         }
       ],
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-30-20260907.q.webp",
       "template": {
@@ -150,7 +150,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-30-20260907.w.webp",
       "template": {
@@ -226,7 +226,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-30-20260907.e.webp",
       "template": {
@@ -294,7 +294,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 1,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-30-20260907.r.webp",
       "template": {
@@ -420,6 +420,83 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.799894656f162f2c3a59eaf222696fce5bb8381b5a4fd08f",
+      "label": "可爱娃娃（論壇相似模型）",
+      "sourceModelKey": "ou99.498214-standard-v2",
+      "modelSha256": "85f60a773c6f33771e6bd2ff123e0107278ee2d43927dbe2af12120590002937",
+      "binarySha256": "c6a382fc292875f298ec2fb04fe9b10c23e5704adc1a01d0f3c96f6364eaf7c2",
+      "registeredAt": "2026-09-12T23:02:34.435Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱娃娃",
+        "work": "來源作品待核；論壇標題：可爱娃娃",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e06af034a28cc0b3611d61f3278dfb7f1453b017e055645c",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "ddc99830a2dc53b573971100f22a05e663640140f8b7b9d2b019e7077dd9b5fe",
+      "binarySha256": "9aa88eb17c2cd49d04789d716ddeec4ad762b8af63f26de9b482a3552af4bcd8",
+      "registeredAt": "2026-09-12T23:02:34.636Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483",
+      "label": "可爱娃娃（論壇相似模型）",
+      "sourceModelKey": "ou99.498214-standard-v2",
+      "modelSha256": "4727607045f42140beb410c3cd16d38d409f64dace9d405c7cc1953c7641df39",
+      "binarySha256": "c6a382fc292875f298ec2fb04fe9b10c23e5704adc1a01d0f3c96f6364eaf7c2",
+      "registeredAt": "2026-09-13T00:08:50.294Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱娃娃",
+        "work": "來源作品待核；論壇標題：可爱娃娃",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.0274c8c96c88e174248a6f8261a01398b6f1b55d7aa2d0b6",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "3b11037a6abe70e175396230b47447667c038f6f91ef174bc08aad57757fe744",
+      "binarySha256": "9aa88eb17c2cd49d04789d716ddeec4ad762b8af63f26de9b482a3552af4bcd8",
+      "registeredAt": "2026-09-13T00:08:50.472Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

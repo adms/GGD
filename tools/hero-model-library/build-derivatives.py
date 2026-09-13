@@ -40,8 +40,8 @@ def merge_body(doc,binary):
 def attach(doc,binary):
  attachments=[]
  # Evaluate the same idle sample used by visual inspection, then orient each
- # accessory in its hand's local space. Parenting preserves all later motion.
- locals=copy.deepcopy(doc['nodes'])
+ # accessory and bind all of its vertices rigidly to the matching hand joint.
+ rest_nodes=copy.deepcopy(doc['nodes']);locals=copy.deepcopy(doc['nodes'])
  def sample_accessor(i):
   a=doc['accessors'][i];v=doc['bufferViews'][a['bufferView']];width={'SCALAR':1,'VEC3':3,'VEC4':4}[a['type']]
   return np.frombuffer(binary,dtype='<f4',count=a['count']*width,offset=v.get('byteOffset',0)+a.get('byteOffset',0)).reshape(a['count'],width).copy()
@@ -53,16 +53,19 @@ def attach(doc,binary):
   value=a+(b-a)*factor
   if channel['target']['path']=='rotation':value=value/np.linalg.norm(value)
   locals[channel['target']['node']][channel['target']['path']]=value.tolist()
- parents={child:i for i,n in enumerate(locals) for child in n.get('children',[])};world={}
- def matrix(i):
-  if i not in world:
-   n=locals[i];m=np.eye(4);m[:3,:3]=rotation_matrix(n.get('rotation',[0,0,0,1]))@np.diag(n.get('scale',[1,1,1]));m[:3,3]=n.get('translation',[0,0,0]);world[i]=matrix(parents[i])@m if i in parents else m
-  return world[i]
- def acc(values,kind):
-  a=np.asarray(values,dtype='<f4');width={'VEC3':3,'VEC4':4}[kind]
+ def matrices(nodes):
+  parents={child:i for i,n in enumerate(nodes) for child in n.get('children',[])};world={}
+  def matrix(i):
+   if i not in world:
+    n=nodes[i];m=np.eye(4);m[:3,:3]=rotation_matrix(n.get('rotation',[0,0,0,1]))@np.diag(n.get('scale',[1,1,1]));m[:3,3]=n.get('translation',[0,0,0]);world[i]=matrix(parents[i])@m if i in parents else m
+   return world[i]
+  return matrix
+ sampled_matrix=matrices(locals);rest_matrix=matrices(rest_nodes)
+ def acc(values,kind,component=5126):
+  a=np.asarray(values,dtype='<u2' if component==5123 else '<f4');width={'VEC3':3,'VEC4':4}[kind]
   while len(binary)%4:binary.append(0)
   v=len(doc['bufferViews']);doc['bufferViews'].append(dict(buffer=0,byteOffset=len(binary),byteLength=a.nbytes,target=34962));binary.extend(a.tobytes())
-  i=len(doc['accessors']);doc['accessors'].append(dict(bufferView=v,componentType=5126,count=len(a),type=kind,min=a.min(axis=0).tolist(),max=a.max(axis=0).tolist()));return i
+  i=len(doc['accessors']);doc['accessors'].append(dict(bufferView=v,componentType=component,count=len(a),type=kind,min=a.min(axis=0).tolist(),max=a.max(axis=0).tolist()));return i
  def box(lo,hi):
   pts=[];norm=[]
   for axis in range(3):
@@ -80,12 +83,24 @@ def attach(doc,binary):
   positions=[];normals=[];colors=[]
   for lo,hi,color in parts:
    pos,nor=box(lo,hi);positions.extend(pos);normals.extend(nor);colors.extend([color]*len(pos))
+  # Compute the reviewed local orientation at the idle sample, then bake the
+  # attachment into model-space rest coordinates.  This lets the normal glTF
+  # skin formula drive it with the exact hand joint instead of relying on a
+  # rigid child mesh that the upload contract correctly rejects as unskinned.
+  desired=np.eye(4);desired[:3,:3]=rotation_matrix([0,0,-math.sqrt(.5),math.sqrt(.5)]) if 'sword' in name else np.eye(3)
+  alignment=np.eye(4);alignment[:3,:3]=np.linalg.inv(sampled_matrix(parent)[:3,:3])@desired[:3,:3];_,q,_=decompose(alignment)
+  baked=rest_matrix(parent).copy();baked[:3,:3]=rest_matrix(parent)[:3,:3]@rotation_matrix(q)
+  positions=np.asarray(positions,dtype='<f4');positions=(positions@baked[:3,:3].T+baked[:3,3]).astype('<f4')
+  normals=np.asarray(normals,dtype='<f4')@np.linalg.inv(baked[:3,:3]);normals/=np.linalg.norm(normals,axis=1,keepdims=True)
+  matches=[(skin_index,skin['joints'].index(parent)) for skin_index,skin in enumerate(doc['skins']) if parent in skin['joints']]
+  assert len(matches)==1,'Hand joint must belong to exactly one skin';skin_index,joint_slot=matches[0]
+  joints=np.zeros((len(positions),4),dtype='<u2');joints[:,0]=joint_slot
+  weights=np.zeros((len(positions),4),dtype='<f4');weights[:,0]=1
   mat=len(doc['materials']);doc['materials'].append(dict(name=name,pbrMetallicRoughness=dict(baseColorFactor=[1,1,1,1],metallicFactor=0.35,roughnessFactor=0.65)))
-  primitives=[dict(attributes=dict(POSITION=acc(positions,'VEC3'),NORMAL=acc(normals,'VEC3'),COLOR_0=acc(colors,'VEC4')),material=mat,mode=4)]
-  mesh=len(doc['meshes']);doc['meshes'].append(dict(name=name,primitives=primitives));node=len(doc['nodes']);desired=np.eye(4);desired[:3,:3]=rotation_matrix([0,0,-math.sqrt(.5),math.sqrt(.5)]) if 'sword' in name else np.eye(3)
-  alignment=np.eye(4);alignment[:3,:3]=np.linalg.inv(matrix(parent)[:3,:3])@desired[:3,:3];_,q,_=decompose(alignment)
-  doc['nodes'].append(dict(name=name,mesh=mesh,rotation=q.tolist()));doc['nodes'][parent].setdefault('children',[]).append(node)
-  attachments.append(dict(name=name,parentNode=parent,parentName=hand,node=node))
+  primitives=[dict(attributes=dict(POSITION=acc(positions,'VEC3'),NORMAL=acc(normals,'VEC3'),COLOR_0=acc(colors,'VEC4'),JOINTS_0=acc(joints,'VEC4',5123),WEIGHTS_0=acc(weights,'VEC4')),material=mat,mode=4)]
+  mesh=len(doc['meshes']);doc['meshes'].append(dict(name=name,primitives=primitives));node=len(doc['nodes'])
+  doc['nodes'].append(dict(name=name,mesh=mesh,skin=skin_index));doc['scenes'][doc.get('scene',0)]['nodes'].append(node)
+  attachments.append(dict(name=name,parentNode=parent,parentName=hand,node=node,skin=skin_index,jointSlot=joint_slot,binding='100%-rigid-to-hand-joint'))
  # Hand-local +X follows the fingers. Compact 0.42 m blade and 0.30 m shield.
  geometry('goblin-right-small-sword','Bip001 R Hand',[
   ([-.05,-.025,-.025],[.08,.025,.025],[.21,.11,.06,1]),

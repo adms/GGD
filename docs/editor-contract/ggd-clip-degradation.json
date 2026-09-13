@@ -56,14 +56,14 @@
     }
   },
   "population": {
-    "glbFiles": 947,
-    "animatedModels": 786,
+    "glbFiles": 960,
+    "animatedModels": 785,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 674,
-      "pct": 85.8
+      "models": 673,
+      "pct": 85.7
     },
     "cast": {
       "models": 476,
@@ -75,7 +75,7 @@
     },
     "death": {
       "models": 543,
-      "pct": 69.1
+      "pct": 69.2
     },
     "dodge": {
       "models": 472,
@@ -91,11 +91,11 @@
     },
     "idle": {
       "models": 751,
-      "pct": 95.5
+      "pct": 95.7
     },
     "run": {
-      "models": 700,
-      "pct": 89.1
+      "models": 698,
+      "pct": 88.9
     }
   },
   "degradesTo": "idle",
@@ -319,15 +319,6 @@
       "death",
       "dodge",
       "guard"
-    ],
-    "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb": [
-      "cast",
-      "celebrate",
-      "death",
-      "dodge",
-      "guard",
-      "hurt",
-      "idle"
     ],
     "content/assets/models/community/30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1.glb": [
       "cast",
@@ -939,6 +930,17 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb": [
+      "attack",
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt",
+      "idle",
+      "run"
+    ],
     "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb": [
       "cast",
       "celebrate",
@@ -1022,16 +1024,6 @@
       "dodge",
       "guard",
       "hurt"
-    ],
-    "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb": [
-      "attack",
-      "cast",
-      "celebrate",
-      "death",
-      "dodge",
-      "guard",
-      "hurt",
-      "idle"
     ],
     "content/assets/models/community/d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329.glb": [
       "attack",

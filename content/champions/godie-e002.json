@@ -61,18 +61,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -129,18 +129,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -157,7 +157,7 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1
+                "value": 1.0
               },
               {
                 "stat": "critDamage",
@@ -173,7 +173,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10,
+                      "flat": 10.0,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -201,7 +201,7 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1
+                "value": 1.0
               },
               {
                 "stat": "critDamage",
@@ -217,7 +217,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10,
+                      "flat": 10.0,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -245,7 +245,7 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1
+                "value": 1.0
               },
               {
                 "stat": "critDamage",
@@ -261,7 +261,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10,
+                      "flat": 10.0,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -289,12 +289,12 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1
+                "value": 1.0
               },
               {
                 "stat": "critDamage",
                 "op": "override",
-                "value": 2
+                "value": 2.0
               }
             ],
             "hooks": [
@@ -305,7 +305,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10,
+                      "flat": 10.0,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -367,8 +367,8 @@
       "icon": "assets/icons/abilities/godie-e002.w.webp",
       "vfxKey": "fx.prim.wind.tornado",
       "cooldownTier": "中",
-      "castTimeSec": 0.267,
-      "castTimeTier": "中"
+      "castTimeTier": "中",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-e002.e",
@@ -379,18 +379,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        300,
-        300,
-        300,
-        300
+        300.0,
+        300.0,
+        300.0,
+        300.0
       ],
-      "range": 12,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -406,12 +406,12 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           },
           "length": 14,
-          "width": 2,
+          "width": 2.0,
           "aim": "target",
           "fromCaster": true,
           "includeOrigin": true
@@ -426,7 +426,7 @@
             120
           ],
           "sizeScale": 1.4,
-          "riseSpeed": 2,
+          "riseSpeed": 2.0,
           "durationSec": 2.8,
           "applyTo": "self"
         },
@@ -502,9 +502,9 @@
       ],
       "cooldownTier": "極大",
       "manaCostTier": "中",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 1,
-      "castTimeTier": "極大"
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-e002.r",
@@ -515,22 +515,22 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "applyBuff",
           "modifiers": [],
-          "duration": 2,
+          "duration": 2.0,
           "hooks": [
             {
               "on": "onDamageTaken",
@@ -539,19 +539,19 @@
                   "kind": "damage",
                   "damageType": "magic",
                   "amount": {
-                    "flat": 0,
+                    "flat": 0.0,
                     "ratios": [
                       {
                         "stat": "ap",
-                        "coeff": 3
+                        "coeff": 3.0
                       }
                     ]
                   },
                   "incomingPct": {
                     "perRank": [
-                      3,
-                      5,
-                      7
+                      3.0,
+                      5.0,
+                      7.0
                     ],
                     "negateOriginal": true
                   }
@@ -601,7 +601,7 @@
                   "applyTo": "all"
                 }
               ],
-              "internalCooldown": 1,
+              "internalCooldown": 1.0,
               "target": "event"
             }
           ]
@@ -612,12 +612,12 @@
           "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget",
           "anchor": "self",
-          "lifeSec": 2,
-          "scale": 6,
+          "lifeSec": 2.0,
+          "scale": 6.0,
           "tint": [
             0.3922,
-            0,
-            0
+            0.0,
+            0.0
           ]
         }
       ],
@@ -625,8 +625,8 @@
       "vfxKey": "fx.prim.holy.nova-lg",
       "cooldownTier": "極大",
       "manaCostTier": "小",
-      "castTimeSec": 0.667,
-      "castTimeTier": "大"
+      "castTimeTier": "大",
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

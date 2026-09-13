@@ -93,7 +93,7 @@
       },
       "vfxKey": "fx.prim.arcane.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -286,7 +286,7 @@
         }
       ],
       "vfxKey": "fx.prim.blood.nova",
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "icon": "assets/icons/abilities/godie-hvsh.e.webp",
       "cooldownTier": "中",
       "manaCostTier": "極小",
@@ -367,12 +367,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.arcane.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

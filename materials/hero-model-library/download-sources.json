@@ -21675,9 +21675,9 @@
             "sha256": "ef2f05776faf6d207cd8fc2d080ef6c1e748f2e2fa6bfcf31d639ef3feadab51"
           },
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-validation.json",
-            "bytes": 4129,
-            "sha256": "7ceeddce5ce993215dad5b7991b319cf5dd5895cea1421b9fe91209c88ff909d"
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/current-contract-7eca5b1fa95b9aa9/zero-lancer-p1-static-skinned-v1-validation.json",
+            "bytes": 4104,
+            "sha256": "f2ab9670671598c2c4d4db71c04662b30af468293eb34d9959f96291e085cc80"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-webgl-proof.json",
@@ -21788,9 +21788,9 @@
             "sha256": "ef2f05776faf6d207cd8fc2d080ef6c1e748f2e2fa6bfcf31d639ef3feadab51"
           },
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-validation.json",
-            "bytes": 4129,
-            "sha256": "9dfac1a9cdec62a5226a73a72f24aa257a2d42abde02335668e29dc227011d73"
+            "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/current-contract-7eca5b1fa95b9aa9/zero-lancer-p2-static-skinned-v1-validation.json",
+            "bytes": 4104,
+            "sha256": "9692dad176eb0487b23cf7496a3757ac358e84cf793935dc9fa33931c0fd0407"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-webgl-proof.json",
@@ -48774,9 +48774,9 @@
             "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
           },
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-            "bytes": 9632,
-            "sha256": "de246e4b078a222484207701b1f620ff50decc83d5e0f18f1ecfdab88dc2f7ce"
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-aad44e98a1827886/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
+            "bytes": 9408,
+            "sha256": "78b7b4c7f069b1f734f664fce5b184219e7e480f8e481c3bea0d04b2aad55809"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -48858,9 +48858,9 @@
             "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
           },
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-back-256-v1-validation.json",
-            "bytes": 9620,
-            "sha256": "7ec62dfb00d7d2021e49d9698db139f294e13263100d44611e0d711b0ffb6aa7"
+            "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-aad44e98a1827886/dai-shinteo-v2-sword-back-256-v1-validation.json",
+            "bytes": 9396,
+            "sha256": "4a9c362ff9255a56ca90adef74b3fd3c1319f97203b81019117d532a1aaa9f48"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
@@ -51254,9 +51254,9 @@
           "currentReplacementGitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
           "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-            "bytes": 65157,
-            "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+            "bytes": 65778,
+            "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -51361,9 +51361,9 @@
           "currentReplacementGitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
           "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-            "bytes": 65157,
-            "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+            "bytes": 65778,
+            "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -51466,9 +51466,9 @@
           "currentReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
           "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-            "bytes": 65157,
-            "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+            "bytes": 65778,
+            "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -51596,9 +51596,9 @@
           "currentReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
           "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
           "validationEvidence": {
-            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-            "bytes": 65157,
-            "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+            "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+            "bytes": 65778,
+            "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
           },
           "visualEvidence": {
             "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",

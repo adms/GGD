@@ -8,18 +8,18 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    30,
-    30,
-    30,
-    30
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
   "manaCost": [
-    0,
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 8,
+  "range": 8.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -32,16 +32,16 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "flat": 1
+        "flat": 1.0
       },
-      "radius": 3,
+      "radius": 3.0,
       "radiusTier": "極小",
       "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "applyStatus",
           "statusId": "magic-break",
-          "duration": 3
+          "duration": 3.0
         }
       ]
     },
@@ -51,10 +51,10 @@
         {
           "stat": "mr",
           "op": "pctAdd",
-          "value": -1
+          "value": -1.0
         }
       ],
-      "duration": 3,
+      "duration": 3.0,
       "dispellable": true,
       "polarity": "debuff"
     },
@@ -67,8 +67,8 @@
   "icon": "assets/icons/abilities/godie-h01n.q.webp",
   "vfxKey": "fx.prim.void.pulse-sm",
   "cooldownTier": "極小",
+  "castTimeTier": "中",
   "radiusTier": "極小",
   "rangeTier": "大",
-  "castTimeSec": 0.3,
-  "castTimeTier": "中"
+  "castTimeSec": 0.3
 }

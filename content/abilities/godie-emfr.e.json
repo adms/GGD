@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
-    150,
-    150,
-    150,
-    150
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
-  "range": 0,
+  "range": 0.0,
   "targetsEnemies": false,
   "effects": [
     {
@@ -31,7 +31,7 @@
           "value": -0.5
         }
       ],
-      "duration": 12,
+      "duration": 12.0,
       "exclusiveGroup": "emfr-form",
       "hooks": [
         {
@@ -74,7 +74,7 @@
             {
               "kind": "applyStatus",
               "statusId": "burn",
-              "duration": 3
+              "duration": 3.0
             }
           ],
           "target": "event",
@@ -96,19 +96,19 @@
       "modelKey": "w3x.stock.tornadoelemental",
       "clip": "idle",
       "soundKey": "wc3.blademasterwhirlwind",
-      "scale": 3,
+      "scale": 3.0,
       "tint": [
         0.5882,
         0.5882,
-        1
+        1.0
       ],
-      "lifeSec": 2
+      "lifeSec": 2.0
     }
   ],
   "vfxKey": "fx.prim.fire.nova",
   "icon": "assets/icons/abilities/godie-emfr.e.webp",
   "cooldownTier": "小",
   "manaCostTier": "小",
-  "castTimeSec": 0.3,
-  "castTimeTier": "中"
+  "castTimeTier": "中",
+  "castTimeSec": 0.3
 }

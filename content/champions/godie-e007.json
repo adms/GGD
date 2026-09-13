@@ -99,7 +99,7 @@
       "cooldownTier": "極小",
       "manaCostTier": "極小",
       "rangeTier": "小",
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "castTimeTier": "中"
     },
     "W": {
@@ -148,7 +148,7 @@
       "icon": "assets/icons/abilities/godie-e007.w.webp",
       "vfxKey": "fx.prim.nature.pulse",
       "cooldownTier": "極大",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小"
     },
     "E": {
@@ -189,7 +189,7 @@
       "vfxKey": "fx.prim.ki.shockwave",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.e.png",
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",

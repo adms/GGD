@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -56,7 +56,7 @@
       "castTimeTier": "中"
     },
     "Q": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -102,7 +102,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -138,7 +138,7 @@
       "castTimeTier": "極大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -187,7 +187,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -228,7 +228,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -356,7 +356,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-nube",
-  "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
+  "modelKey": "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
   "name": "鵺野鳴介",
   "origin": "硬輔",
   "passiveAbility": "b2-nube.passive",
@@ -452,6 +452,83 @@
         "reference": "300heroes:62413511bf6cb6a428c2821a",
         "tier": "300heroes",
         "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.4387bdae07e49eadb81dff74dfa2da89962fbf353972d5a4",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "9e55cbd1b8264445f1281638ac02e19725ae817663db81b049238068c5a0c515",
+      "binarySha256": "fdaf9dc376538d4f0fcb5ed906e76dd7cb0d65548db66b17bdf528cf7db4812b",
+      "registeredAt": "2026-09-12T23:12:02.302Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "b7ce0e58526376f3add67bc10456fa1319f3930de5063170d41f7852956826ac",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-12T23:12:02.637Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
+      "label": "中洲队潇洒哥（論壇相似模型）",
+      "sourceModelKey": "ou99.487484-standard",
+      "modelSha256": "8981d7a44ddd28ee290c4a2abda09cc44d6c83d5441debd3eb2105f1613ac461",
+      "binarySha256": "fdaf9dc376538d4f0fcb5ed906e76dd7cb0d65548db66b17bdf528cf7db4812b",
+      "registeredAt": "2026-09-13T00:09:06.293Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "中洲队潇洒哥",
+        "work": "來源作品待核；論壇標題：中洲队潇洒哥",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-487484-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "896cde23d4cf3070948518e60ddbe95e3bd6f7939d40f363477e24db79958a99",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-13T00:09:06.618Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
       },
       "automaticEligible": false
     }

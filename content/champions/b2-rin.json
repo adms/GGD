@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -68,7 +68,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -152,7 +152,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 2.433,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -209,7 +209,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -258,7 +258,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -315,7 +315,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -407,7 +407,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-rin",
-  "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+  "modelKey": "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801",
   "name": "遠坂凜",
   "origin": "法師",
   "passiveAbility": "b2-rin.passive",
@@ -422,5 +422,61 @@
   "tags": [
     "magic"
   ],
-  "icon": "assets/icons/champions/b2-rin.webp"
+  "icon": "assets/icons/champions/b2-rin.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.680d8e260e0569abae8a93abf50b72680cd17db3a0bb9613",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+      "modelSha256": "996ebf6c2da10f4607ebe0dab96b2db3a582f89d15f019823312ef2723e7bc08",
+      "binarySha256": "076f91b23c8c5cdceb812ed08ac7aa0b2fa141c78723d42ca6c9fc0f78d4d889",
+      "registeredAt": "2026-09-12T23:02:38.194Z",
+      "source": {
+        "kind": "previous",
+        "character": "遠坂凜",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.6da25c8170febbc247d72e4dfa775aed7430777c3984f896",
+      "label": "远坂凛",
+      "sourceModelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+      "modelSha256": "44a0c0dd3aff1314caf803d90a30864697df1eda7ef342d733aca181abcef1e3",
+      "binarySha256": "ca651989ff9bdb2275b557b9671346544c4e0c0208b683f5a5b16cb2239bf721",
+      "registeredAt": "2026-09-12T23:02:38.198Z",
+      "source": {
+        "kind": "exact",
+        "character": "远坂凛",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:7a9bba24a848388ea5dea661",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801",
+      "label": "远坂凛",
+      "sourceModelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
+      "modelSha256": "712b62541176ced42c1b7d76070462d52973e1e3c6166c25a2f3569443ddc4e9",
+      "binarySha256": "ca651989ff9bdb2275b557b9671346544c4e0c0208b683f5a5b16cb2239bf721",
+      "registeredAt": "2026-09-13T00:08:54.044Z",
+      "source": {
+        "kind": "exact",
+        "character": "远坂凛",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:7a9bba24a848388ea5dea661",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

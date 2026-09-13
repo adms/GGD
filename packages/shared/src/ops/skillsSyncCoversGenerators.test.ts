@@ -80,6 +80,14 @@ const NO_ARTIFACT: Record<string, string> = {
  * 2026-08-23 實測:21 個產生器目錄、11 個沒被涵蓋,逐支分類後 6 支進豁免、2 支補了腳本。
  */
 const GENERATOR_NO_CHECK: Record<string, string> = {
+  "hero-model-library":
+    "⭐ 2026-09-13 —— `import_kisaragi_train_audio.py` 是一次性的外部素材匯入器，" +
+    "⛔ 不是可以從 repo 內來源重建的產生器：它強制要求 `--intake` 指向本機/S3 保存的" +
+    "不可變原始包，逐檔驗 owner 已選定的兩個 SHA-256，再用 ffmpeg 產出 MP3、來源映射與轉換收據。" +
+    "⇒ `skills:sync` 在乾淨 checkout 沒有那份原始包，接進去只會必然失敗；`*:check` 也不能在" +
+    "缺少原始位元組時重算 MP3。出貨端分別由 `assets:manifest:check`（成品雜湊/清單）、" +
+    "`combat:check`（runtime 綁定）與 `externalModelProvenance.test.ts` 同類的來源/收據閘追蹤。" +
+    "反駁方式：哪一天原始音訊成為 repo 內可取得的宣告式輸入，就刪掉本列，補正式 build/check。",
   "asset-cdn":
     "⭐ 2026-09-08（GH#1116）—— 它是**上傳器**，⛔ 不是產生器：`upload.py` 只**讀** " +
     "`content/assets-manifest.json`，把每一筆的 `sha256` 算成內容定址的 S3 key " +
@@ -154,7 +162,7 @@ const SYNC_STEP_NO_CHECK: Record<string, string> = {
   "castderive:build:raw":
     "⭐ 它的新鮮度閘是一條 **vitest**，⛔ 不是 `*:check` 腳本：" +
     "`packages/shared/src/content/castTimeCoverage.test.ts` 逐支比對 " +
-    "`d.castTimeSec !== deriveCastTime(d, cdMult).castTimeSec` ⇒ 內容一漂就紅（＝逐值對帳）。" +
+    "`d.castTimeSec !== resolveCastTimeTier(d.castTimeTier)` ⇒ 內容一漂就紅（＝逐值對帳）。" +
     "另外 `packages/shared/scripts/contentValidate.ts` 的 3d 段做同一件事並印出修法指令，" +
     "而「安靜地跳過一位英雄」那一半由 `deriveCastTimesFailsLoud.test.ts` 守（GH#708）。" +
     "⇒ 到期條件：哪一天那條 vitest 不再逐支比對，這一列當場作廢。",

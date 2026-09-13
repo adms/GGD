@@ -173,7 +173,9 @@ describe("變身對子的技能同步", () => {
     // >  舊 20 階階梯 => **移到 legacy 區不要再被看到了**」
     //
     // ⭐ 全部 907 支技能遷移到**吟唱五級距**（`0 / 0.1 / 0.3 / 0.5 / 1.0`）之後，
-    // ⭐ 同編號的兩個形態必然落在同一格 ⇒ ⭐ **castTimeSec 再也不會被推開**。
+    // ⭐ 同編號、而且兩邊都可施放的技能必然落在同一格 ⇒ ⭐ **castTimeSec 再也不會被推開**。
+    // 永久被動依 runtime 契約不帶 castTimeSec；若另一形態把同編號改成可施放技能，
+    // 這是形態設計差異，不是詠唱級距漂移，仍由上面的完整機制指紋守衛審查。
     //
     // ⛔ 在此之前它們被推開，是因為舊的 20 階階梯把「兇殘分數」映到 0.06–4.00 的
     // 連續值上 —— ⚠️ 兩個形態的分數差一點點，出來的秒數就差一階。
@@ -187,7 +189,12 @@ describe("變身對子的技能同步", () => {
   it("⭐ 兩形態詠唱不同的編號只准變少（⛔ 新的一筆＝又被推開了一支）", () => {
     const now = new Set(
       scanFormPairAbilities(shipped, abilitiesByChampion())
-        .filter((s) => s.driftFields.includes("castTimeSec"))
+        .filter(
+          (s) =>
+            s.driftFields.includes("castTimeSec") &&
+            !s.basePassiveOnly &&
+            !s.alternatePassiveOnly,
+        )
         .map((s) => s.code),
     );
     const known = new Set<string>(CAST_TIME_DRIFT);

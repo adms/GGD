@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -78,7 +78,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -129,7 +129,7 @@
             "contentSha256": "sha256:d08ea1add026b0548f07c7d9d7362263b0e38701f3bb9b6237e963a5f78d1f6f",
             "params": {
               "body": "self",
-              "castTimeSec": 0.467,
+              "castTimeSec": 0.5,
               "cleanse": "none",
               "count": 1,
               "damageMult": 0.3,
@@ -145,7 +145,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.467,
+              "castTimeSec": 0.5,
               "castType": "self",
               "effects": [
                 {
@@ -175,7 +175,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -215,7 +215,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中"
           },
@@ -236,7 +236,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -373,7 +373,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-aladdin",
-  "modelKey": "ou99.473324",
+  "modelKey": "version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931",
   "name": "阿拉丁",
   "origin": "法師",
   "passiveAbility": "b2-aladdin.passive",
@@ -388,5 +388,101 @@
   "tags": [
     "magic"
   ],
-  "icon": "assets/icons/champions/b2-aladdin.webp"
+  "icon": "assets/icons/champions/b2-aladdin.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.99ea4295362547e0f706080ebccbe495bb4edf5cc867eedf",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.473324",
+      "modelSha256": "80dbea0c96918d3fcef33a0d3023b34cea07ae3bf1d89cd88a0758068bc9eb40",
+      "binarySha256": "a1c1362aa0838dd8a54cffd96d6b76568b3b23b656f7c37eeccc57fda797da80",
+      "registeredAt": "2026-09-12T23:12:03.306Z",
+      "source": {
+        "kind": "previous",
+        "character": "阿拉丁",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.473324.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.9fc14ff0a9255a76fa80c060406619ccefb816490d5762e8",
+      "label": "龙族亚瑟王（論壇相似模型）",
+      "sourceModelKey": "ou99.473324-standard-v3",
+      "modelSha256": "b81c9a948bd933159d04330a7a7cbcfcbc0abd6e1106f764122728e85409fccd",
+      "binarySha256": "ae5622c20dbec4745f5ce45f3765b13fb3d8908c012926a67d623dc22461f778",
+      "registeredAt": "2026-09-12T23:12:03.313Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "龙族亚瑟王",
+        "work": "來源作品待核；論壇標題：龙族亚瑟王",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-473324-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.8e3b862f912c0039c21df494b5d93e2ed0576928d083497d",
+      "label": "小悟空",
+      "sourceModelKey": "community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230",
+      "modelSha256": "b1a71d7f3790ff1a0fe9f4bf7be12212e4873f3819a4a9ea00a1e2ef9861a3ef",
+      "binarySha256": "160be454ca1a7413e1b14a0161eb72ef2f42125ac5cb8bd2bad58403d6ae6732",
+      "registeredAt": "2026-09-12T23:12:03.427Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "小悟空",
+        "work": "七龍珠／Dragon Ball 系列",
+        "library": "300heroes",
+        "reference": "300heroes:79b8c441240465551389fecc",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931",
+      "label": "龙族亚瑟王（論壇相似模型）",
+      "sourceModelKey": "ou99.473324-standard-v3",
+      "modelSha256": "e66493d715e52c347da0cbc163fa39e26766e34ed523acb35d72ca6b73d1c330",
+      "binarySha256": "ae5622c20dbec4745f5ce45f3765b13fb3d8908c012926a67d623dc22461f778",
+      "registeredAt": "2026-09-13T00:09:07.299Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "龙族亚瑟王",
+        "work": "來源作品待核；論壇標題：龙族亚瑟王",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-473324-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.4e9e98d88d13f8bdb149f5d4c67befa786f11eacdfbd1b3a",
+      "label": "小悟空",
+      "sourceModelKey": "community.body.bd4e54bc0a226a290cedf33d7baaaf6ae8e5f4e80990b230",
+      "modelSha256": "cea73412728f3c1bd0e5cbc3b6622ecf05d4bc2014aeb710f9373b583ba37c63",
+      "binarySha256": "160be454ca1a7413e1b14a0161eb72ef2f42125ac5cb8bd2bad58403d6ae6732",
+      "registeredAt": "2026-09-13T00:09:07.402Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "小悟空",
+        "work": "七龍珠／Dragon Ball 系列",
+        "library": "300heroes",
+        "reference": "300heroes:79b8c441240465551389fecc",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

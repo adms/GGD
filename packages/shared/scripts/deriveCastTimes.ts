@@ -1,7 +1,8 @@
 #!/usr/bin/env tsx
 /**
- * LANE A — derive `castTimeSec` for every ability from `castTimeFormula.ts`,
- * report the resulting curve, and (with --write) apply it to content/.
+ * Materialise the `castTimeTier` fallback seconds for every ability and, with
+ * `--write`, apply them to content/. The five-tier config is the authoring
+ * source; this script must not reconstruct a tier from damage/cooldown/shape.
  *
  * Reads the REAL post-registration registry (ContentLoader + registerAll, the
  * game-server's boot pair) so the numbers reported are the numbers the match
@@ -26,12 +27,11 @@ import { ContentLoader, registerAll } from "../src/content/index";
 import { FsContentSource } from "../src/content/node/index";
 import { Abilities, Champions } from "../src/sim/content/registry";
 import {
-  CD_CEILING_FRACTION,
-  deriveCastTime,
-  type CastTimeClass,
-  type CastTimeResult,
-} from "../src/content/castTimeFormula";
-import type { AbilityDef } from "../src/sim/content/defs";
+  DEFAULT_CAST_TIME_TIERS,
+  resolveCastTimeTier,
+  type CastTimeTiers,
+} from "../src/content/castTimeTiers";
+import { isPassiveOnly } from "../src/sim/abilities/abilityPassives";
 
 const CONTENT_DIR = process.env.GGD_CONTENT_DIR ?? join(__dirname, "../../../content");
 const WRITE = process.argv.includes("--write");
@@ -59,161 +59,39 @@ if (result.quarantined.length > 0) {
 registerAll(result.store);
 const all = Abilities.all();
 
-const envDoc = result.store.tryGet<{ multipliers: Record<string, number> }>("config", "combat-env");
-const cdMult = envDoc?.multipliers.cooldown ?? 1;
 console.log(`contentVersion ${result.manifest.contentVersion}`);
-console.log(`abilities ${all.length}   combat-env cooldown multiplier x${cdMult}`);
+console.log(`abilities ${all.length}`);
 
-const derived = new Map<string, CastTimeResult>();
-for (const d of all) derived.set(d.id, deriveCastTime(d, cdMult));
-
-// ---- 1. the histogram -----------------------------------------------------
-const hist = new Map<string, number>();
-for (const r of derived.values()) {
-  const k = r.castTimeSec === undefined ? "(instant)" : r.castTimeSec.toFixed(1);
-  hist.set(k, (hist.get(k) ?? 0) + 1);
-}
-console.log("\ncastTimeSec HISTOGRAM (all 554):");
-for (const [k, n] of [...hist.entries()].sort((a, b) =>
-  a[0] === "(instant)" ? -1 : b[0] === "(instant)" ? 1 : Number(a[0]) - Number(b[0]),
-)) {
-  console.log(`  ${k.padStart(9)}  ${String(n).padStart(3)}  ${"#".repeat(Math.round(n / 4))}`);
-}
-
-const withCt = [...derived.values()].filter((r) => r.castTimeSec !== undefined).map((r) => r.castTimeSec!);
-withCt.sort((a, b) => a - b);
-const q = (p: number) => withCt[Math.min(withCt.length - 1, Math.floor(p * withCt.length))]!;
-const mean = withCt.reduce((s, v) => s + v, 0) / withCt.length;
-console.log(
-  `\nof the ${withCt.length} abilities that DO cast: mean ${mean.toFixed(3)}s  MEDIAN ${q(0.5).toFixed(1)}s  p25 ${q(0.25).toFixed(1)}  p75 ${q(0.75).toFixed(1)}  p90 ${q(0.9).toFixed(1)}  max ${withCt[withCt.length - 1]!.toFixed(1)}`,
-);
-
-// ---- 2. class breakdown ---------------------------------------------------
-const byClass = new Map<CastTimeClass, AbilityDef[]>();
+const tiers =
+  result.store.tryGet<CastTimeTiers>("config", "cast-time-tiers") ?? DEFAULT_CAST_TIME_TIERS;
+const derived = new Map<string, { castTimeSec: number | undefined }>();
+const missingTier: string[] = [];
 for (const d of all) {
-  const c = derived.get(d.id)!.cls;
-  (byClass.get(c) ?? byClass.set(c, []).get(c)!).push(d);
-}
-console.log("\nCLASS BREAKDOWN:");
-for (const [c, list] of byClass) console.log(`  ${c.padEnd(13)} ${String(list.length).padStart(3)}`);
-
-for (const c of ["passive-only", "mobility", "defensive", "rapid-fire"] as const) {
-  const list = byClass.get(c) ?? [];
-  if (!list.length) continue;
-  console.log(`\n  -- ${c} (${list.length}) --`);
-  for (const d of list) {
-    const r = derived.get(d.id)!;
-    console.log(
-      `     ${d.id.padEnd(16)} [${d.slot.padEnd(2)}] cd ${String(r.features.minCooldown).padStart(5)} x${cdMult}=${(r.features.minCooldown * cdMult).toFixed(2)}s -> ${r.castTimeSec ?? "instant"}   ${d.name}`,
-    );
-  }
-}
-
-// ---- 3. what the ceilings actually clipped --------------------------------
-const clippedCd = all.filter((d) => {
-  const r = derived.get(d.id)!;
-  return r.cls === "scored" && r.castTimeSec! < r.rawLadder && r.cooldownCeiling < r.rawLadder;
-});
-const clippedDur = all.filter((d) => {
-  const r = derived.get(d.id)!;
-  return r.cls === "scored" && r.castTimeSec! < r.rawLadder && r.durationCeiling < r.rawLadder;
-});
-console.log(`\nCOOLDOWN CEILING clipped ${clippedCd.length} abilities:`);
-for (const d of clippedCd.slice(0, 20)) {
-  const r = derived.get(d.id)!;
-  console.log(
-    `  ${d.id.padEnd(16)} ladder ${r.rawLadder.toFixed(1)} -> ${r.castTimeSec!.toFixed(1)}  (cd ${r.features.minCooldown}s x${cdMult} x${CD_CEILING_FRACTION} = ${r.cooldownCeiling.toFixed(2)})`,
-  );
-}
-console.log(`DURATION CEILING clipped ${clippedDur.length} abilities:`);
-for (const d of clippedDur) {
-  const r = derived.get(d.id)!;
-  console.log(`  ${d.id.padEnd(16)} ladder ${r.rawLadder.toFixed(1)} -> ${r.castTimeSec!.toFixed(1)}  (effect lasts ${r.features.effectDuration}s)`);
-}
-
-// ---- 4. the top of the curve ---------------------------------------------
-const heaviest = all
-  .filter((d) => (derived.get(d.id)!.castTimeSec ?? 0) >= 0.8)
-  .sort((a, b) => derived.get(b.id)!.score - derived.get(a.id)!.score);
-console.log(`\n>= 0.8s (${heaviest.length}) — the ones that must feel scary:`);
-for (const d of heaviest.slice(0, 25)) {
-  const r = derived.get(d.id)!;
-  console.log(
-    `  ${r.castTimeSec!.toFixed(1)}  ${d.id.padEnd(16)} [${d.slot.padEnd(2)}] dmg ${String(r.features.damage).padStart(5)} cc ${r.features.hardCc ? "STUN" : r.features.root ? "root" : "   -"} r ${r.features.radius.toFixed(1).padStart(4)}  ${d.name}`,
-  );
-}
-
-// ---- 5. the pre-lane authored 10 -----------------------------------------
-const PRE_LANE: Record<string, number> = {
-  "godie-emfr.ex": 0.35,
-  "godie-h02s.ex": 0.35,
-  "godie-h02z.ex": 0.35,
-  "godie-osam.ex": 0.35,
-  "godie-ubal.ex": 0.35,
-  "godie-h01u.e": 0.6,
-  "godie-u010.ex": 0.6,
-  "godie-uvng.ex": 0.6,
-  "sela.r": 0.5,
-  "thorne.r": 0.4,
-};
-console.log("\nTHE 10 PRE-LANE AUTHORED VALUES vs the formula:");
-for (const [id, before] of Object.entries(PRE_LANE)) {
-  const r = derived.get(id);
-  if (!r) {
-    console.log(`  ${id.padEnd(16)} MISSING`);
+  const seconds = resolveCastTimeTier(d.castTimeTier, tiers);
+  if (seconds === null) {
+    missingTier.push(d.id);
     continue;
   }
-  const now = r.castTimeSec;
-  const delta = now === undefined ? "instant" : `${now > before ? "+" : now < before ? "-" : "="}${Math.abs(now - before).toFixed(2)}`;
-  console.log(`  ${id.padEnd(16)} ${String(before).padStart(4)} -> ${String(now ?? "instant").padStart(7)}  ${delta.padStart(7)}  [${r.cls}] score ${r.score.toFixed(3)}`);
+  // A passive-only document never reaches the cast branch. Its raw fallback
+  // stays absent; the tier still resolves to zero in the runtime registry.
+  derived.set(d.id, { castTimeSec: isPassiveOnly(d) ? undefined : seconds });
+}
+if (missingTier.length > 0) {
+  throw new Error(
+    `castTimeTier missing or invalid on ${missingTier.length}/${all.length}: ${missingTier.slice(0, 20).join(", ")}`,
+  );
 }
 
-// ---- 6. HUMAN ROOT DUTY (the metric the flat rule failed) -----------------
-interface Duty {
-  id: string;
-  name: string;
-  duty: number;
-  detail: string;
+const hist = new Map<string, number>();
+for (const d of all) {
+  const seconds = derived.get(d.id)!.castTimeSec;
+  const key = seconds === undefined ? "(passive-only)" : seconds.toFixed(1);
+  hist.set(key, (hist.get(key) ?? 0) + 1);
 }
-const duties: Duty[] = [];
-for (const c of Champions.all()) {
-  let duty = 0;
-  const parts: string[] = [];
-  for (const s of ["Q", "W", "E", "R"] as const) {
-    const emb = c.abilities[s];
-    const def = Abilities.tryGet(emb.id);
-    if (!def) continue;
-    const r = derived.get(def.id)!;
-    if (r.cls === "passive-only") continue;
-    const ct = r.castTimeSec ?? 0;
-    const cd = Math.min(...def.cooldown) * cdMult;
-    if (cd <= 0) continue;
-    const f = Math.min(1, ct / cd);
-    duty += f;
-    parts.push(`${s} ${ct}/${cd.toFixed(2)}=${(100 * f).toFixed(0)}%`);
-  }
-  duties.push({ id: c.id, name: c.name, duty: Math.min(1, duty), detail: parts.join(" ") });
+console.log("\ncastTimeTier materialisation:");
+for (const [key, count] of [...hist].sort((a, b) => a[0].localeCompare(b[0]))) {
+  console.log(`  ${key.padStart(14)}  ${String(count).padStart(3)}`);
 }
-duties.sort((a, b) => b.duty - a.duty);
-const dutyMean = duties.reduce((s, r) => s + r.duty, 0) / duties.length;
-console.log("\nHUMAN ROOT DUTY (player casts every slot the moment it is up):");
-console.log(
-  `  champions ${duties.length}  mean ${(100 * dutyMean).toFixed(1)}%  median ${(100 * duties[Math.floor(duties.length / 2)]!.duty).toFixed(1)}%`,
-);
-console.log(`  >=100% (STATUES): ${duties.filter((r) => r.duty >= 0.999).length}`);
-console.log(`  >= 50%:           ${duties.filter((r) => r.duty >= 0.5).length}`);
-console.log(`  >= 25%:           ${duties.filter((r) => r.duty >= 0.25).length}`);
-console.log("  worst 8:");
-for (const r of duties.slice(0, 8)) console.log(`    ${(100 * r.duty).toFixed(0).padStart(3)}%  ${r.id.padEnd(13)} ${r.detail}`);
-
-// ---- 7. per-ability self-lock invariant -----------------------------------
-const selfLock = all.filter((d) => {
-  const r = derived.get(d.id)!;
-  const cd = Math.min(...d.cooldown) * cdMult;
-  return (r.castTimeSec ?? 0) > 0 && cd > 0 && cd < (r.castTimeSec ?? 0);
-});
-console.log(`\nabilities whose cast time exceeds their own real cooldown: ${selfLock.length} (must be 0)`);
-for (const d of selfLock) console.log(`  ! ${d.id}`);
 
 // ---- 8. write -------------------------------------------------------------
 if (!WRITE) {

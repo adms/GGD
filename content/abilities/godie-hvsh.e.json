@@ -118,7 +118,7 @@
     }
   ],
   "vfxKey": "fx.prim.blood.nova",
-  "castTimeSec": 1.0,
+  "castTimeSec": 1,
   "icon": "assets/icons/abilities/godie-hvsh.e.webp",
   "schema": "ability@1",
   "castTimeTier": "極大"

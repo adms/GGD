@@ -29,6 +29,7 @@
 import { describe, expect, it, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 import { ContentLoader } from "./loader";
 import { shippedContentSource } from "./__fixtures__/shippedContent";
 import { registerAll } from "./registries";
@@ -37,10 +38,10 @@ import { Abilities } from "../sim/content/registry";
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..", "content");
 
 /**
- * ⭐ 2026-09-12 量到的遷移進度：**185 / 907**。
- * ⛔ 這個數字**只能往上**。⚠️ 它不是目標，是**地板**。
+ * ⭐ 2026-09-12 完成值：**907 / 907**。
+ * 這裡從遷移棘輪升級成完成閘：任何一支退回自由秒數都必須失敗。
  */
-const MIGRATED_FLOOR = 185;
+const COMPLETED_COUNT = 907;
 
 let tiered = 0;
 let total = 0;
@@ -55,32 +56,26 @@ beforeAll(async () => {
 });
 
 describe("吟唱五級距的遷移只能往前（GH#943 / GH#1243）", () => {
-  it("⭐ 量尺自證：真的掃到技能，而且**不是**全部都遷移了（⛔ 否則這條閘沒在問任何事）", () => {
+  it("⭐ 每一支出貨技能都已遷移", () => {
     expect(total, "⛔ 一支技能都沒掃到 —— 偵測壞了").toBeGreaterThan(500);
     expect(tiered, "⛔ 零支有 castTimeTier ⇒ 欄位名或載入路徑錯了").toBeGreaterThan(0);
-    expect(
-      tiered,
-      "⭐ 全部都遷移完了 —— ⭐ 那是好事！⇒ 把這條改成「全部都要有」，" +
-        "並把 `castTimeFormula.ts` 那條 20 階階梯**退場**（GH#1243 第 4 步）。",
-    ).toBeLessThan(total);
+    expect(total, "出貨技能數意外改變；先確認索引與載入範圍").toBe(COMPLETED_COUNT);
+    expect(tiered, "有技能退回自由 castTimeSec；補回 castTimeTier").toBe(total);
   });
 
-  it("⛔ 已經遷移的不可以退回手寫秒數", () => {
+  it("⛔ 執行中的工具不可重新匯入舊公式", () => {
+    const active = [
+      join(CONTENT, "..", "packages/shared/scripts/deriveCastTimes.ts"),
+      join(CONTENT, "..", "packages/shared/scripts/contentValidate.ts"),
+      join(CONTENT, "..", "packages/shared/scripts/probeCastTelegraph.ts"),
+      join(CONTENT, "..", "packages/shared/scripts/probePassiveSlot.ts"),
+    ];
+    const offenders = active
+      .filter((path) => /from\s+["'][^"']*castTimeFormula["']/.test(readFileSync(path, "utf8")))
+      .map((path) => path.slice(CONTENT.length + 1));
     expect(
-      tiered,
-      `⛔⛔ 帶 \`castTimeTier\` 的技能從 ${MIGRATED_FLOOR} 掉到 ${tiered} ——\n` +
-        "⭐ 有人把級別拿掉換回了手寫的 `castTimeSec`。\n" +
-        "⚠️ 而那會讓它回到**被取代的 20 階階梯**那個空間（`castTimeFormula.ts`），\n" +
-        "⛔ 也就是 2026-09-12 誤導出兩個假缺陷的那條路。\n" +
-        "⇒ 填回 `castTimeTier`，⛔ 不要改這個地板。",
-    ).toBeGreaterThanOrEqual(MIGRATED_FLOOR);
-  });
-
-  it("⭐ 遷移前進了就要把地板跟上（⛔ 否則棘輪會與世界脫節）", () => {
-    expect(
-      tiered,
-      `⭐ 已經遷移 ${tiered} 支（地板還寫著 ${MIGRATED_FLOOR}）—— 把 \`MIGRATED_FLOOR\` 調到 ${tiered}。\n` +
-        "⛔ 不調的話，這張棘輪會慢慢放行真的退步。",
-    ).toBeLessThanOrEqual(MIGRATED_FLOOR);
+      offenders,
+      "五級距已是唯一作者來源；不要再由傷害、冷卻、半徑反推吟唱秒數",
+    ).toEqual([]);
   });
 });

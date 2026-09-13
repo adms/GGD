@@ -12,6 +12,7 @@ import { MODEL_UPLOAD_LIMITS } from "../../packages/shared/src/content/modelUplo
 import { HERO_MODEL_STATES } from "../../packages/shared/src/content/modelUpload/heroModelSchema";
 import { inspectModelUpload } from "../../packages/shared/src/content/modelUpload/inspect";
 import { prepareUploadedHeroModel, verifyUploadedHeroModel } from "../../packages/shared/src/content/modelUpload/heroModel";
+import { resizeImageWithFfmpeg } from "../../apps/content-api/src/resizeImage.node";
 
 const { values } = parseArgs({ options: { receipt: { type: "string" }, clips: { type: "string" }, out: { type: "string" } } });
 if (!values.receipt || !values.out) {
@@ -48,7 +49,10 @@ try {
   const inspection = await inspectModelUpload(bytes);
   assert.equal(new Set(original.json.animations.map((clip: { name: string }) => clip.name)).size, original.json.animations.length, "Source clip names must be unique");
   const selections = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, inspection.clips.findIndex((clip) => clip.name === names[state])])) as Record<(typeof HERO_MODEL_STATES)[number], number>;
-  const body = await prepareUploadedHeroModel(bytes, selections, preparation.yawOffsetDeg ?? 0);
+  // This CLI is a Node host, so it must use the same injected texture resizer
+  // as the content API.  Without it a valid oversized source is rejected here
+  // even though backend registration would normalize it to the 256px contract.
+  const body = await prepareUploadedHeroModel(bytes, selections, preparation.yawOffsetDeg ?? 0, { resizeImage: resizeImageWithFfmpeg });
   const verified = await verifyUploadedHeroModel(body.model, body.bytes);
   assert.deepEqual(verified.document, body.document);
   const receipt = {

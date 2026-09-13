@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-13T05:22:39+08:00",
-  "inputsSha256": "01337ceade9abc9fa1022271b372eab2c9e864772ab69d0289a6d39416c80e3b",
+  "generatedAt": "2026-09-13T08:10:43+08:00",
+  "inputsSha256": "aa0a5f7df47e133f864b81131437eb1896919fde23b286077f081c4775aaa463",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -42504,9 +42504,9 @@
                 "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
               },
               "validationEvidence": {
-                "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-                "bytes": 9632,
-                "sha256": "de246e4b078a222484207701b1f620ff50decc83d5e0f18f1ecfdab88dc2f7ce"
+                "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-aad44e98a1827886/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
+                "bytes": 9408,
+                "sha256": "78b7b4c7f069b1f734f664fce5b184219e7e480f8e481c3bea0d04b2aad55809"
               },
               "visualEvidence": {
                 "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -42588,9 +42588,9 @@
                 "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
               },
               "validationEvidence": {
-                "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-back-256-v1-validation.json",
-                "bytes": 9620,
-                "sha256": "7ec62dfb00d7d2021e49d9698db139f294e13263100d44611e0d711b0ffb6aa7"
+                "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-aad44e98a1827886/dai-shinteo-v2-sword-back-256-v1-validation.json",
+                "bytes": 9396,
+                "sha256": "4a9c362ff9255a56ca90adef74b3fd3c1319f97203b81019117d532a1aaa9f48"
               },
               "visualEvidence": {
                 "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
@@ -46478,8 +46478,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270",
-        "mode": "auto"
+        "modelKey": "version.body.d96fb8c8e76139503a1b32cbbd7ea13f09c3ef20b3961f34",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -46637,7 +46637,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+        "modelKey": "version.body.b47a423ca2a25a83e403c00fbbd131cc669368665eb63d61",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -47314,8 +47314,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
-        "mode": "auto"
+        "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -49157,8 +49157,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
-        "mode": "auto"
+        "modelKey": "version.body.83f01042a132f529913ae4590a0b506ca5837604bcf41e47",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-032"
@@ -49318,7 +49318,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+        "modelKey": "version.body.94f8cbedbfe252d18277d8b57b4e580362de4b262490af53",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -49397,8 +49397,8 @@
         "selectionClass": "manual",
         "asset": {
           "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
-          "glbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
-          "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+          "glbPath": "assets/models/community/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+          "sha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
           "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
           "limitations": [
@@ -49420,8 +49420,8 @@
         "selectionClass": "manual",
         "asset": {
           "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
-          "glbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
-          "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+          "glbPath": "assets/models/community/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+          "sha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
           "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
           "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
           "limitations": [
@@ -49455,8 +49455,8 @@
           "selectionClass": "manual",
           "asset": {
             "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
-            "glbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
-            "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+            "glbPath": "assets/models/community/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+            "sha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
             "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.ea975386405e8702b6fde096/5524ea16cfcb02b1/content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
             "limitations": [
@@ -49478,8 +49478,8 @@
           "selectionClass": "similar-proxy",
           "asset": {
             "modelKey": "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7",
-            "glbPath": "assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
-            "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+            "glbPath": "assets/models/community/d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8.glb",
+            "sha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.013312636edf7503d23eb32a/bc0b28e7ebfefe32/content/assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
             "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.013312636edf7503d23eb32a/bc0b28e7ebfefe32/content/assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
             "limitations": []
@@ -49505,8 +49505,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
-        "mode": "auto"
+        "modelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -49797,7 +49797,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
+        "modelKey": "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -49963,8 +49963,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
-        "mode": "auto"
+        "modelKey": "version.body.5717cbb93bdda101452dbeb038bad9e482806acd06bfebf5",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -50121,7 +50121,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.fe8c333b0815885733b3d405a9122009c6fe51883bd80b7d",
+        "modelKey": "version.body.2343b24bd3c6c12ff41437575b7a8c56f14dfb75e45c7b52",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -50405,8 +50405,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
-        "mode": "auto"
+        "modelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-067"
@@ -50565,7 +50565,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
+        "modelKey": "version.body.de07eb4d2080d69ca2438240aa358f37615fab1d4738d7b4",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -50757,8 +50757,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
-        "mode": "auto"
+        "modelKey": "version.body.6bc5b102e7e229b28612694c4c838637da5a87c9da9d1f62",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -51451,8 +51451,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
-        "mode": "auto"
+        "modelKey": "version.body.7164669136e4906c9c2c897034171f6c2bf14990b24c604f",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -51565,8 +51565,8 @@
           "selectionClass": "similar-proxy",
           "asset": {
             "modelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
-            "glbPath": "assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
-            "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+            "glbPath": "assets/models/community/d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985.glb",
+            "sha256": "d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985",
             "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.f06b631406f8efcc631f0578/c0ec39f12abd1644/content/assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
             "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.f06b631406f8efcc631f0578/c0ec39f12abd1644/content/assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
             "limitations": []
@@ -51610,7 +51610,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.06f8858879d90ce332398c5c93a80f0415630e7beb3a7b62",
+        "modelKey": "version.body.d0dc70e5443939df78aefa8d675b42099b02d517a3ae1b6e",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -51818,7 +51818,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+        "modelKey": "version.body.f41861e9ba552a2fb6b8702cf7c0b171a67b5fd32508e345",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -51985,8 +51985,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
-        "mode": "auto"
+        "modelKey": "version.body.1a27f5b34036e0d626f666116c6b43133f8eebef20c711f1",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -52102,8 +52102,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
-        "mode": "auto"
+        "modelKey": "version.body.a2517c2e9cc3e09d66f8a4186195f4fc2b61cd7ed7766586",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -52219,8 +52219,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
-        "mode": "auto"
+        "modelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-070"
@@ -56691,8 +56691,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
-        "mode": "auto"
+        "modelKey": "version.body.e5f1ccacdc408d8fbd0e3958a8ac0e871fe6c828a991c558",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -56808,8 +56808,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
-        "mode": "auto"
+        "modelKey": "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-063"
@@ -56927,8 +56927,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5",
-        "mode": "auto"
+        "modelKey": "version.body.f25043a9b56b77ea13ea6399525dd26148e32ef5bbb4b81f",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -57086,7 +57086,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+        "modelKey": "version.body.e9ad359ba08df5be99538a43207527153580435ced64a2cd",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -58198,8 +58198,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
-        "mode": "auto"
+        "modelKey": "version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -58315,8 +58315,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
-        "mode": "auto"
+        "modelKey": "version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-069"
@@ -58434,8 +58434,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
-        "mode": "auto"
+        "modelKey": "version.body.a53e1d01b4bf47aa8794bb3ca64cefd57ff8c5b63116fd94",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -58551,8 +58551,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
-        "mode": "auto"
+        "modelKey": "version.body.75b0f70143afadc8a37a785e0706d60ad24c8b41159ff03c",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -58662,8 +58662,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
-        "mode": "auto"
+        "modelKey": "version.body.f8311299c86c82ff2d915d0b144092596f21827e4d7bb33a",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -58779,8 +58779,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
-        "mode": "auto"
+        "modelKey": "version.body.c5f7c4c80e1920406ade7e578458ffd8d9721f3313de4ab8",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -58896,8 +58896,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6",
-        "mode": "auto"
+        "modelKey": "version.body.584c8cd6112253d1b1f936db2cb3958aa58ad895f7859da8",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-031"
@@ -59056,7 +59056,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
+        "modelKey": "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -59201,8 +59201,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
-        "mode": "auto"
+        "modelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -59344,8 +59344,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
-        "mode": "auto"
+        "modelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -59502,7 +59502,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
+        "modelKey": "version.body.cefec22fb50f901f84f6dfa34b597f8d841c3656f69213d5",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -59701,7 +59701,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
+        "modelKey": "version.body.5acbcbb1ec33508f1648011f74264f8b52f8293e99b57e89",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -59931,8 +59931,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2",
-        "mode": "auto"
+        "modelKey": "version.body.bd2331fe597877fb1cc1eccabb74caa5c1ec33080af02fa4",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-016"
@@ -60092,7 +60092,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
+        "modelKey": "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -60253,7 +60253,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
+        "modelKey": "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -61025,8 +61025,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
-        "mode": "auto"
+        "modelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -61361,8 +61361,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
-        "mode": "auto"
+        "modelKey": "version.body.6144e87f910f8aa85aecb3a5bcf9fdef606f24c5184a27fe",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -61461,8 +61461,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.767145fe5fc4dc658f12221900b295b4f29a1cc388619786",
-        "mode": "auto"
+        "modelKey": "version.body.9c4d9c3355065e64f198441f13c422a3d012983f90c8939e",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-015"
@@ -61563,8 +61563,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.52b8af04b53c50e9c0824bd278ccf2f054338cf9a1c4d345",
-        "mode": "auto"
+        "modelKey": "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-065"
@@ -62143,7 +62143,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
+        "modelKey": "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -62298,7 +62298,7 @@
         }
       ],
       "checkoutSelection": {
-        "modelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
+        "modelKey": "version.body.71c301c8921460768d1bcf29863ce903bc588aa0cc5efdf8",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -62459,7 +62459,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
+        "modelKey": "version.body.ae9b304d0fccdf328681e449ae98f9989d07665dca98db12",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -62644,8 +62644,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
-        "mode": "auto"
+        "modelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -62824,8 +62824,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
-        "mode": "auto"
+        "modelKey": "version.body.a43aeca84d4fa764aa989d0a5c2300c86ac4807b7336dd88",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-011"
@@ -63032,7 +63032,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.d01b869b45b264aa7f43b3025a8c47363003290c792df741",
+        "modelKey": "version.body.2d3806f7cccee53c5a2e13d310cd187e75cb5062a1dca667",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -63160,8 +63160,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
-        "mode": "auto"
+        "modelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -63177,7 +63177,7 @@
       "section": "第二批 37 名",
       "status": "正式機白名單可選",
       "default": {
-        "key": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+        "key": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
         "id": "derivative:goblin",
         "name": "哥布林殺手（獨立副本／尤吉欧）",
         "work": "刀劍神域 Sword Art Online",
@@ -63189,19 +63189,21 @@
         "defaultEligible": true,
         "selectionClass": "manual",
         "asset": {
-          "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-          "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-          "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+          "modelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+          "glbPath": "assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+          "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
           "limitations": [
             "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+            "劍與盾已各自以 100% 權重綁定右手／左手骨；舊衍生 GLB 保留。",
+            "既有尤吉歐原劍仍保留，新增的小劍與盾為簡單方塊幾何；本次未宣稱原作哥布林殺手外觀。",
             "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
           ]
         }
       },
       "automaticDefault": {
-        "key": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+        "key": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
         "id": "derivative:goblin",
         "name": "哥布林殺手（獨立副本／尤吉欧）",
         "work": "刀劍神域 Sword Art Online",
@@ -63213,13 +63215,15 @@
         "defaultEligible": true,
         "selectionClass": "manual",
         "asset": {
-          "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-          "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-          "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+          "modelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+          "glbPath": "assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+          "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
           "limitations": [
             "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+            "劍與盾已各自以 100% 權重綁定右手／左手骨；舊衍生 GLB 保留。",
+            "既有尤吉歐原劍仍保留，新增的小劍與盾為簡單方塊幾何；本次未宣稱原作哥布林殺手外觀。",
             "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
           ]
         }
@@ -63227,9 +63231,9 @@
       "defaultSelectionMode": "automatic",
       "current": {
         "key": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-        "id": "derivative:goblin",
-        "name": "哥布林殺手（獨立副本／尤吉欧）",
-        "work": "刀劍神域 Sword Art Online",
+        "id": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+        "name": "51176a90cab594af1cd86ce98ace7062887568ae0a76d33c（模型檔名）",
+        "work": "GGD 模型預設",
         "tier": "original",
         "kind": "previous",
         "ready": true,
@@ -63237,7 +63241,7 @@
       },
       "options": [
         {
-          "key": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+          "key": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
           "id": "derivative:goblin",
           "name": "哥布林殺手（獨立副本／尤吉欧）",
           "work": "刀劍神域 Sword Art Online",
@@ -63249,13 +63253,15 @@
           "defaultEligible": true,
           "selectionClass": "manual",
           "asset": {
-            "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-            "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-            "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
-            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.9cdd717b3f778bf285181952/9367c93bafc05648/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+            "modelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+            "glbPath": "assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+            "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+            "s3Uri": null,
+            "gitPath": "content/assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
             "limitations": [
               "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+              "劍與盾已各自以 100% 權重綁定右手／左手骨；舊衍生 GLB 保留。",
+              "既有尤吉歐原劍仍保留，新增的小劍與盾為簡單方塊幾何；本次未宣稱原作哥布林殺手外觀。",
               "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
             ]
           }
@@ -63282,12 +63288,30 @@
               "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
             ]
           }
+        },
+        {
+          "key": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+          "id": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+          "name": "51176a90cab594af1cd86ce98ace7062887568ae0a76d33c（模型檔名）",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "original",
+          "asset": {
+            "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
         }
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-        "mode": "auto"
+        "modelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [
@@ -63508,7 +63532,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.516a9ba13596bee68805d424a072ff349c62ab532e8b0070",
+        "modelKey": "version.body.8e9a3c68ca92cb24f5e23b5f7462ef354e20aac42ec810e7",
         "mode": "automatic"
       },
       "downloadSources": [],
@@ -63696,8 +63720,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
-        "mode": "auto"
+        "modelKey": "version.body.1e3c7caed18f4e9f6cad2da54bdcefcdc5e2749dce334744",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-035"
@@ -63906,7 +63930,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.1658fe832754e7719e19011038369d9578f2143d59828350",
+        "modelKey": "version.body.d15fb416b6164035ea35d7702f572e6c76fff6dae22b14f5",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -64091,7 +64115,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.697b1d6e6689c28e722161e3789cbc77a49bde86c9ad461b",
+        "modelKey": "version.body.e09a5f5694bac4755857a324e2aca325164f40d65b387bf4",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -64252,7 +64276,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
+        "modelKey": "version.body.27ca9ab535eab2e0a5004f08937ea938a8221a7eb3bef181",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -64439,7 +64463,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+        "modelKey": "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -64639,8 +64663,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
-        "mode": "auto"
+        "modelKey": "version.body.25f498ed0c7fb2f75164d585c89eb24a73fd7b9e52dbb5ad",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-021"
@@ -64813,12 +64837,13 @@
           "id": "ou99:458777:original",
           "name": "假面绅士（原交付版本）",
           "work": "來源作品待核；論壇標題：假面绅士",
-          "tier": "w3x",
+          "tier": "original",
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
-          "selectionClass": "w3x",
+          "selectionClass": "original",
           "asset": {
             "modelKey": "ou99.458777",
             "location": "existing-project-model",
@@ -64828,8 +64853,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "ou99.458777",
-        "mode": "auto"
+        "modelKey": "version.body.10009b090c7d3728ebd4464f2941b23927408d67e5b11334",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-055"
@@ -64989,7 +65014,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
+        "modelKey": "version.body.6240633d06d78d57bd168d8a6775e42915f3477448b0fbd5",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -65021,10 +65046,10 @@
         "defaultEligible": true,
         "asset": {
           "modelKey": "ou99.465884-standard",
-          "glbPath": "assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-          "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+          "glbPath": "assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+          "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
           "s3Uri": null,
-          "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+          "gitPath": "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
           "limitations": [
             "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
           ]
@@ -65044,10 +65069,10 @@
         "defaultEligible": true,
         "asset": {
           "modelKey": "ou99.465884-standard",
-          "glbPath": "assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-          "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+          "glbPath": "assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+          "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
           "s3Uri": null,
-          "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+          "gitPath": "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
           "limitations": [
             "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
           ]
@@ -65102,10 +65127,10 @@
           "defaultEligible": true,
           "asset": {
             "modelKey": "ou99.465884-standard",
-            "glbPath": "assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
-            "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+            "glbPath": "assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
+            "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
             "s3Uri": null,
-            "gitPath": "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb",
+            "gitPath": "content/assets/models/community/d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d.glb",
             "limitations": [
               "動作來源及共用片段以來源清單和 clipMap 為準；不代表六段獨立原生動作。"
             ]
@@ -65150,7 +65175,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
+        "modelKey": "version.body.f91fa769b197ce0120c73d5fa5184710f67af9b05f1b1ecd",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -65340,7 +65365,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
+        "modelKey": "version.body.3f9cdcb4f0a29ad12e19d5506a02f38ff10e862948a1f534",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -65543,8 +65568,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.7138bd8e788b1b90c87ac4bb7e42d0141eadd1769f98d1f5",
-        "mode": "auto"
+        "modelKey": "version.body.60820e7ce0d81eebe5d8e5d8b4d790e4447e6f9ecc898f90",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-014"
@@ -65671,8 +65696,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.525ec1f072e99921b99b05dd1add2cede8bf8e3c4b314f82",
-        "mode": "auto"
+        "modelKey": "version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -65868,8 +65893,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
-        "mode": "auto"
+        "modelKey": "version.body.90e1d0ec0bf4829a0d3ea279eead5fc5f8bf5627eaddea95",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-058"
@@ -66222,7 +66247,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
+        "modelKey": "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -66383,7 +66408,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5abf9ec53fc14ad4e39811385acbce35771cecb10869d810",
+        "modelKey": "version.body.656e3f92200ed4f935ce9a93cba9a1d7995ee51bdd61d0c1",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -66567,7 +66592,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.96a2831657ca63fde8c35729d776d058253366c75c5a68d9",
+        "modelKey": "version.body.ab9d5c54fb910d8a7ba267b1078f811979824d9df1b14184",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -66675,8 +66700,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.6b765de7d410b89699c5a2e322a5998c72373d0e0822314a",
-        "mode": "auto"
+        "modelKey": "version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -66834,7 +66859,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
+        "modelKey": "version.body.58e636bc24dc82f29b5d6d0bf706ba3cfd4c61b1e8df71e1",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -66962,8 +66987,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
-        "mode": "auto"
+        "modelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -67121,7 +67146,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a273d6c13351d76eec262e18bac017eb149f5f4937adf165",
+        "modelKey": "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -67319,8 +67344,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.944c2bec39f5c9b97ccbcf6b495da2e9be771c7f38805f94",
-        "mode": "auto"
+        "modelKey": "version.body.7b795f169f6491619c9410c3a158fc23b48dcee19fb59f55",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-060"
@@ -67545,12 +67570,13 @@
           "id": "ou99:473324:original",
           "name": "龙族亚瑟王（原交付版本）",
           "work": "來源作品待核；論壇標題：龙族亚瑟王",
-          "tier": "w3x",
+          "tier": "original",
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
-          "selectionClass": "w3x",
+          "selectionClass": "original",
           "asset": {
             "modelKey": "ou99.473324",
             "location": "existing-project-model",
@@ -67560,8 +67586,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "ou99.473324",
-        "mode": "auto"
+        "modelKey": "version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-033"
@@ -67722,7 +67748,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
+        "modelKey": "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db",
         "mode": "automatic"
       },
       "downloadSources": [
@@ -67741,7 +67767,7 @@
       "section": "第二批 37 名",
       "status": "正式機白名單可選",
       "default": {
-        "key": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+        "key": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
         "id": "existing:tram",
         "name": "GGD 原創如月電車",
         "work": "GGD 原創",
@@ -67753,18 +67779,21 @@
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
-          "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
-          "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-          "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+          "modelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+          "glbPath": "assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+          "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
           "limitations": [
-            "保留借用模型身形；未重製角色專屬外觀或複合身體。"
+            "GGD 原創如月電車；不是原作遊戲直接擷取模型。",
+            "六段既有 GGD 節點動畫完整保留；五個車體元件改為 100% 剛性蒙皮，沒有新增骨骼變形動作。",
+            "無貼圖；外觀由原始頂點色材質構成。",
+            "5 個 draw primitive 高於警戒值 3，但未超過硬上限 6。"
           ]
         }
       },
       "automaticDefault": {
-        "key": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+        "key": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
         "id": "existing:tram",
         "name": "GGD 原創如月電車",
         "work": "GGD 原創",
@@ -67776,22 +67805,25 @@
         "defaultEligible": true,
         "selectionClass": "original",
         "asset": {
-          "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
-          "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-          "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+          "modelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+          "glbPath": "assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+          "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+          "s3Uri": null,
+          "gitPath": "content/assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
           "limitations": [
-            "保留借用模型身形；未重製角色專屬外觀或複合身體。"
+            "GGD 原創如月電車；不是原作遊戲直接擷取模型。",
+            "六段既有 GGD 節點動畫完整保留；五個車體元件改為 100% 剛性蒙皮，沒有新增骨骼變形動作。",
+            "無貼圖；外觀由原始頂點色材質構成。",
+            "5 個 draw primitive 高於警戒值 3，但未超過硬上限 6。"
           ]
         }
       },
       "defaultSelectionMode": "automatic",
       "current": {
         "key": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
-        "id": "existing:tram",
-        "name": "GGD 原創如月電車",
-        "work": "GGD 原創",
+        "id": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+        "name": "0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c（模型檔名）",
+        "work": "GGD 模型預設",
         "tier": "original",
         "kind": "previous",
         "ready": true,
@@ -67799,7 +67831,7 @@
       },
       "options": [
         {
-          "key": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+          "key": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
           "id": "existing:tram",
           "name": "GGD 原創如月電車",
           "work": "GGD 原創",
@@ -67811,21 +67843,42 @@
           "defaultEligible": true,
           "selectionClass": "original",
           "asset": {
-            "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
-            "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-            "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
-            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.b77c61d90930191a6c246fc9/cbe643952a09b47f/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+            "modelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+            "glbPath": "assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+            "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+            "s3Uri": null,
+            "gitPath": "content/assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
             "limitations": [
-              "保留借用模型身形；未重製角色專屬外觀或複合身體。"
+              "GGD 原創如月電車；不是原作遊戲直接擷取模型。",
+              "六段既有 GGD 節點動畫完整保留；五個車體元件改為 100% 剛性蒙皮，沒有新增骨骼變形動作。",
+              "無貼圖；外觀由原始頂點色材質構成。",
+              "5 個 draw primitive 高於警戒值 3，但未超過硬上限 6。"
             ]
+          }
+        },
+        {
+          "key": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+          "id": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+          "name": "0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c（模型檔名）",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "original",
+          "asset": {
+            "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+            "location": "existing-project-model",
+            "s3Uri": null
           }
         }
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
-        "mode": "auto"
+        "modelKey": "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -67947,7 +68000,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.c7d8c416ee24ef7532f51deda99df79e73c0609cee1f6100",
+        "modelKey": "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
         "mode": "automatic"
       },
       "downloadSources": [],
@@ -69525,7 +69578,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.c69dcf0c70845d97d8fbd2e60822783f13136a9969d7cfcf",
+        "modelKey": "version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b",
         "mode": "automatic"
       },
       "downloadSources": [],
@@ -71126,7 +71179,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
+        "modelKey": "version.body.c55acb04a86281e81f22da8dfc65e01ef5ac8607d751f690",
         "mode": "automatic"
       },
       "downloadSources": [],
@@ -72727,7 +72780,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.1ad5f12b5d0bb1dd56fa32dc62c0b3e276b535ede1416373",
+        "modelKey": "version.body.69e09156dc9e456409f4c887b5a5f75f9d7b743f436c3c07",
         "mode": "automatic"
       },
       "downloadSources": [],
@@ -74305,8 +74358,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
-        "mode": "auto"
+        "modelKey": "version.body.889963a0992be9908ae8b739ff529da6223519deee3d5aa4",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -75906,7 +75959,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.cf0570347305b3e13535d2b411bc17a0f9964f818c308554",
+        "modelKey": "version.body.f89f3e6d586e2e9052126517d3ef6935bb42634a94255856",
         "mode": "automatic"
       },
       "downloadSources": [],
@@ -77484,8 +77537,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
-        "mode": "auto"
+        "modelKey": "version.body.c88ba26c97973dd9b226b267f1cbcaec6a18bc8758a9f54f",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -102794,9 +102847,9 @@
               "sha256": "ef2f05776faf6d207cd8fc2d080ef6c1e748f2e2fa6bfcf31d639ef3feadab51"
             },
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-validation.json",
-              "bytes": 4129,
-              "sha256": "7ceeddce5ce993215dad5b7991b319cf5dd5895cea1421b9fe91209c88ff909d"
+              "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/current-contract-7eca5b1fa95b9aa9/zero-lancer-p1-static-skinned-v1-validation.json",
+              "bytes": 4104,
+              "sha256": "f2ab9670671598c2c4d4db71c04662b30af468293eb34d9959f96291e085cc80"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p1-static-skinned-v1-webgl-proof.json",
@@ -102907,9 +102960,9 @@
               "sha256": "ef2f05776faf6d207cd8fc2d080ef6c1e748f2e2fa6bfcf31d639ef3feadab51"
             },
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-validation.json",
-              "bytes": 4129,
-              "sha256": "9dfac1a9cdec62a5226a73a72f24aa257a2d42abde02335668e29dc227011d73"
+              "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/current-contract-7eca5b1fa95b9aa9/zero-lancer-p2-static-skinned-v1-validation.json",
+              "bytes": 4104,
+              "sha256": "9692dad176eb0487b23cf7496a3757ac358e84cf793935dc9fa33931c0fd0407"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/zero-lancer/4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3/zero-lancer-p2-static-skinned-v1-webgl-proof.json",
@@ -129893,9 +129946,9 @@
               "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
             },
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
-              "bytes": 9632,
-              "sha256": "de246e4b078a222484207701b1f620ff50decc83d5e0f18f1ecfdab88dc2f7ce"
+              "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-aad44e98a1827886/dai-shinteo-v2-sword-handheld-256-v1-validation.json",
+              "bytes": 9408,
+              "sha256": "78b7b4c7f069b1f734f664fce5b184219e7e480f8e481c3bea0d04b2aad55809"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-handheld-256-v1-visual-proof.json",
@@ -129977,9 +130030,9 @@
               "sha256": "4970c036b856c3830a0d5523260c1af1ee5df23c7ebe3da26c1f825ad3efc623"
             },
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-7b404bcd2f050dbe/dai-shinteo-v2-sword-back-256-v1-validation.json",
-              "bytes": 9620,
-              "sha256": "7ec62dfb00d7d2021e49d9698db139f294e13263100d44611e0d711b0ffb6aa7"
+              "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/contract-aad44e98a1827886/dai-shinteo-v2-sword-back-256-v1-validation.json",
+              "bytes": 9396,
+              "sha256": "4a9c362ff9255a56ca90adef74b3fd3c1319f97203b81019117d532a1aaa9f48"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/dai-rigid-props/6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b/dai-shinteo-v2-sword-back-256-v1-visual-proof.json",
@@ -132373,9 +132426,9 @@
             "currentReplacementGitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
             "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-              "bytes": 65157,
-              "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+              "bytes": 65778,
+              "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -132480,9 +132533,9 @@
             "currentReplacementGitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
             "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-              "bytes": 65157,
-              "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+              "bytes": 65778,
+              "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -132585,9 +132638,9 @@
             "currentReplacementGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
             "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-              "bytes": 65157,
-              "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+              "bytes": 65778,
+              "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",
@@ -132715,9 +132768,9 @@
             "currentReplacementGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
             "readiness": "accepted-historical-body-component-pending-real-hero-definition-and-option-registration",
             "validationEvidence": {
-              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
-              "bytes": 65157,
-              "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+              "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-current-contract-4268bde67a3f9a4f.json",
+              "bytes": 65778,
+              "sha256": "e16bde58ac43be6a55b452d9194b3b116933cf30ab457eeda6182c4d8dca5dc6"
             },
             "visualEvidence": {
               "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/visual-acceptance.json",

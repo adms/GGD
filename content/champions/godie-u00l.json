@@ -77,7 +77,7 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.peondeath",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "小",
@@ -192,7 +192,7 @@
       "vfxKey": "fx.prim.physical.swarm",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "中",
@@ -212,7 +212,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -267,7 +267,7 @@
       "vfxKey": "fx.prim.physical.pulse-lg",
       "sfxKey": "wc3.nocute",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

@@ -28,7 +28,7 @@
       "heroId": "community-review-06-20260907",
       "sourceId": "derivative:kirby",
       "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
-      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "sha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
       "name": "卡比",
       "source": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
       "changes": "完整複製 pink-round 程序化替身"
@@ -72,8 +72,8 @@
     {
       "heroId": "b2-goblin",
       "sourceId": "derivative:goblin",
-      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "modelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+      "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
       "name": "哥布林殺手",
       "source": "哥布林殺手（獨立副本／尤吉欧）",
       "changes": "完整複製尤吉歐，右手小劍、左手小盾"
@@ -206,7 +206,7 @@
       "heroId": "b2-matthias",
       "sourceId": "ou99:465884",
       "modelKey": "ou99.465884-standard",
-      "sha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+      "sha256": "d3609a9975660fd8e5dc0c6a676c6113f3aef05e928f931110280a8d6004718d",
       "name": "馬提亞斯",
       "approval": "使用者確認其他工作流已補上替代相似模型；保留原身分標記與來源類別。"
     },

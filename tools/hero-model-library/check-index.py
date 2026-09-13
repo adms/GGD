@@ -21,7 +21,14 @@ for m in models.values():
     path=repo/'content/models'/(m['modelKey']+'.json')
     assert hashlib.sha256(path.read_bytes()).hexdigest()==m['documentSha256'],str(path)
     assert read(path)['glbPath']==m['glbPath']
-    assert release['model_locations'][m['modelKey']].startswith('ready/')
+    glb=repo/'content'/m['glbPath']
+    assert glb.is_file() and hashlib.sha256(glb.read_bytes()).hexdigest()==m['sha256'],str(glb)
+    location=release['model_locations'].get(m['modelKey'])
+    # The S3 publication receipt is immutable. New accepted models are shipped
+    # directly in Git and receive a commit-pinned S3 backup after commit; they
+    # must not be forged into an older published release's location map.
+    if location is not None:
+        assert location.startswith('ready/')
 heroes={h['id']:h for h in manifest['heroes']}
 for h in heroes.values():
     ranks=[((selection_rank(policy,h['id'],o['sourceId'],o['sourceModelKey'],o['source']) if manifest['priority']==policy['priority'] else manifest['priority'].index(o['source']['tier'])),0 if o['sourceId']==h.get('preferredDerivative') else 1,['exact','alternate','style-proxy','previous'].index(o['source']['kind'])) for o in h['options']]
@@ -40,7 +47,16 @@ for e in derivatives:
     key='derivative:'+e['id'];h=heroes[e['heroId']];m=models[key];copy=next(x for x in copies if x['derivativeId']==key)
     assert h['options'][0]['sourceId']==key
     assert m['sha256']==copy['sha256'] and copy['sha256']!=copy['sourceSha256']
-    assert copy['physicalCopy'] and copy['embeddedResources'] and copy['skinAndAnimationPayloadUnchanged']
+    assert copy['physicalCopy'] and copy['embeddedResources']
+    if copy['skinAndAnimationPayloadUnchanged'] is not True:
+        assert key=='derivative:goblin'
+        assert copy['sourceBodySkinAndAnimationPayloadUnchanged'] is True
+        assert copy['accessorySkinPayloadAdded'] is True
+        acceptance=read(repo/copy['evidence'])
+        assert acceptance['schema']=='ggd-goblin-rigid-attachment-skin-acceptance@1'
+        assert acceptance['acceptedSource']['sha256']==copy['sha256']
+        assert acceptance['validation']['equivalence']['passed'] is True
+        assert acceptance['status']['registered'] is True and acceptance['status']['selectable'] is True
     assert m['derivation']['sourceId']==e['sourceId']
 proof=read(root/'spider-identity.json')
 assert proof['evidence'][0]['fields']['10']==proof['evidence'][1]['fields']['1']==45029

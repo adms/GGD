@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+  "modelKey": "version.body.c88ba26c97973dd9b226b267f1cbcaec6a18bc8758a9f54f",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
@@ -161,7 +161,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
@@ -229,7 +229,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
@@ -338,7 +338,7 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.9,
+      "castTimeSec": 0.5,
       "icon": "assets/icons/abilities/lol-yasuo.r.webp"
     }
   },
@@ -355,5 +355,63 @@
     "katana"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-yasuo.webp"
+  "icon": "assets/icons/champions/lol-yasuo.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.94ace3ac3ea8da708363cf83848e1023783438f26dd23e99",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "modelSha256": "12573e982bca2287f28a8a97a49fc83f9a171fdd9fc6df5bb213545a422034ef",
+      "binarySha256": "87197c94cc040192717ca794ac6aa6d6c6eaaaab2fcbb636149b62cf1864ad6b",
+      "registeredAt": "2026-09-12T23:12:05.338Z",
+      "source": {
+        "kind": "previous",
+        "character": "犽宿",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.66334ed54e1b51fc1a11ba23e1257fbaa5a53e9eae4b4461",
+      "label": "犽宿（LOL 原生模型）",
+      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "modelSha256": "cfb8368a526508798a63af9b400abcff6e47ceb7029cd060a9c41feedb2e5d82",
+      "binarySha256": "1107a042a6dee7b30bde83f92e9fce7b62b1cb5ea153e10c64f52add2137145b",
+      "registeredAt": "2026-09-12T23:12:05.345Z",
+      "source": {
+        "kind": "exact",
+        "character": "犽宿",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-yasuo.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.c88ba26c97973dd9b226b267f1cbcaec6a18bc8758a9f54f",
+      "label": "犽宿（LOL 原生模型）",
+      "sourceModelKey": "community.body.3aef08fbb92b7f6b3c5831589b4ff8fb0d5affed559ce540",
+      "modelSha256": "18934f814c129be33b91d7f8aa3368c9d3e70a39689ccff621babe5852eab8fa",
+      "binarySha256": "1107a042a6dee7b30bde83f92e9fce7b62b1cb5ea153e10c64f52add2137145b",
+      "registeredAt": "2026-09-13T00:09:09.433Z",
+      "source": {
+        "kind": "exact",
+        "character": "犽宿",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-yasuo.json",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

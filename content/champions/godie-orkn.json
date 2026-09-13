@@ -79,7 +79,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "cooldownTier": "小",
       "rangeTier": "中",
       "targetsEnemies": true,
@@ -120,7 +120,7 @@
       "effects": [],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -143,7 +143,7 @@
             "duration": 8,
             "moveSpeedMult": 0.9
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -172,7 +172,7 @@
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -186,7 +186,7 @@
           "intervalSec": 1,
           "durationSec": 7,
           "stacking": "refresh",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -212,7 +212,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -230,7 +230,7 @@
             "duration": 1.2,
             "stun": true
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

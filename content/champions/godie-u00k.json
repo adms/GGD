@@ -87,13 +87,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 1.433,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -141,7 +141,7 @@
       },
       "vfxKey": "fx.prim.void.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -183,13 +183,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.void.swarm",
       "sfxKey": "wc3.parasite",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -229,13 +229,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

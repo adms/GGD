@@ -62,18 +62,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        6,
-        6,
-        6,
-        6
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -87,7 +87,7 @@
                   {
                     "kind": "devour",
                     "shape": "circle",
-                    "radius": 12,
+                    "radius": 12.0,
                     "radiusTier": "極大",
                     "side": "enemies",
                     "maxTargets": 1,
@@ -97,7 +97,7 @@
                       0.07,
                       0.09
                     ],
-                    "healPct": 1,
+                    "healPct": 1.0,
                     "victim": "any",
                     "throughShields": true,
                     "onDevour": [
@@ -138,7 +138,7 @@
                   {
                     "kind": "devour",
                     "shape": "circle",
-                    "radius": 12,
+                    "radius": 12.0,
                     "radiusTier": "極大",
                     "side": "enemies",
                     "maxTargets": 1,
@@ -148,7 +148,7 @@
                       0.14,
                       0.18
                     ],
-                    "healPct": 1,
+                    "healPct": 1.0,
                     "victim": "any",
                     "throughShields": true,
                     "onDevour": [
@@ -200,18 +200,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -316,18 +316,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -341,13 +341,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 150
+                      "flat": 150.0
                     },
-                    "duration": 8,
+                    "duration": 8.0,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8,
+                "internalCooldown": 8.0,
                 "target": "self"
               }
             ],
@@ -374,13 +374,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 250
+                      "flat": 250.0
                     },
-                    "duration": 8,
+                    "duration": 8.0,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8,
+                "internalCooldown": 8.0,
                 "target": "self"
               }
             ],
@@ -407,13 +407,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 350
+                      "flat": 350.0
                     },
-                    "duration": 8,
+                    "duration": 8.0,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8,
+                "internalCooldown": 8.0,
                 "target": "self"
               }
             ],
@@ -440,13 +440,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 450
+                      "flat": 450.0
                     },
-                    "duration": 8,
+                    "duration": 8.0,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8,
+                "internalCooldown": 8.0,
                 "target": "self"
               }
             ],
@@ -478,7 +478,7 @@
         "flashColor": [
           0.7,
           0.85,
-          1.0
+          1
         ],
         "flashMs": 120,
         "camKick": 0.3
@@ -494,16 +494,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        300,
-        300,
-        300
+        300.0,
+        300.0,
+        300.0
       ],
-      "range": 8,
+      "range": 8.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -569,9 +569,9 @@
       ],
       "cooldownTier": "極大",
       "manaCostTier": "中",
+      "castTimeTier": "極大",
       "rangeTier": "大",
-      "castTimeSec": 0.833,
-      "castTimeTier": "極大"
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

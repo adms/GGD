@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -50,7 +50,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -106,7 +106,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -221,7 +221,7 @@
       "castTimeTier": "小"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -332,7 +332,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-albus",
-  "modelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+  "modelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
   "name": "阿爾巴斯",
   "origin": "鬥士",
   "passiveAbility": "b2-albus.passive",
@@ -347,5 +347,100 @@
   "tags": [
     "magic"
   ],
-  "icon": "assets/icons/champions/b2-albus.webp"
+  "icon": "assets/icons/champions/b2-albus.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.9007ef7a0fdf821b51fad194e34bb04119dd244b59efe049",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "modelSha256": "b17410681b77a6d39039bcafae26abd89e4120688b3e2b9f034703613b4a80f8",
+      "binarySha256": "eb9de32d14a7d5422295b1f1b0ea30becee83d8319df1586841ec0a89ef7a019",
+      "registeredAt": "2026-09-12T23:02:41.225Z",
+      "source": {
+        "kind": "previous",
+        "character": "阿爾巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a6090dacea2b30b85a82ef2e533d85f2df9efb5710d8f92a",
+      "label": "尤吉欧",
+      "sourceModelKey": "community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54",
+      "modelSha256": "c9d4149b94b1af0a2309340e200122a62d64b436c4159c5d37053c9b4c8e5e07",
+      "binarySha256": "c53f5fe99ca07344af0b861febca612b5558bf2298ef53d5d73696aef69d479a",
+      "registeredAt": "2026-09-12T23:02:41.230Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "尤吉欧",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:8c19c91adaebbcc55755a5ef",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.016519986db42a2d57b33fabb49f22f86212d71830a710fe",
+      "label": "阿爾巴斯（獨立副本／尤吉欧）",
+      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "modelSha256": "2916f063da3d364a448c0a0c65a638de4b2139dee5afb409abbc168e9b44a278",
+      "binarySha256": "fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93",
+      "registeredAt": "2026-09-12T23:02:41.601Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿爾巴斯（獨立副本／尤吉欧）",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "derivative:albus",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7bfd1e424d3da7a7f0c346589222b64b1ecb9c9ff1eaf260",
+      "label": "尤吉欧",
+      "sourceModelKey": "community.body.66426c6dafe6c2e3f5cfdc246739f850e5c44550cd540b54",
+      "modelSha256": "62bdda28c8567d39ec15edc1ca8ee27cfc663f1296aa2dbdc2efbbc576774ba8",
+      "binarySha256": "c53f5fe99ca07344af0b861febca612b5558bf2298ef53d5d73696aef69d479a",
+      "registeredAt": "2026-09-13T00:08:57.091Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "尤吉欧",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:8c19c91adaebbcc55755a5ef",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
+      "label": "阿爾巴斯（獨立副本／尤吉欧）",
+      "sourceModelKey": "community.body.f7bd39b6bde5de14f8bf7066ffe666ebd6956a77c8278216",
+      "modelSha256": "4b4d944aa41bc578c50f10addbace47cfc9d6e7d6852a39d3b89804eb490eec3",
+      "binarySha256": "fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93",
+      "registeredAt": "2026-09-13T00:08:57.446Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿爾巴斯（獨立副本／尤吉欧）",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "derivative:albus",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

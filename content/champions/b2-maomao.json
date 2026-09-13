@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -95,7 +95,7 @@
       "castTimeTier": "小"
     },
     "Q": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -144,7 +144,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -184,7 +184,7 @@
       "castTimeTier": "極大"
     },
     "R": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -245,7 +245,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -299,7 +299,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -354,7 +354,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.067,
+              "castTimeSec": 0.1,
               "castType": "self",
               "effects": [
                 {
@@ -387,7 +387,7 @@
                   180
                 ]
               },
-              "castTimeSec": 0.067,
+              "castTimeSec": 0.1,
               "target": "self"
             },
             "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -452,7 +452,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-maomao",
-  "modelKey": "version.body.5d1243c1eba039c6fb73ada10b9614588e8e547479243618",
+  "modelKey": "version.body.a43aeca84d4fa764aa989d0a5c2300c86ac4807b7336dd88",
   "name": "貓貓",
   "origin": "軟輔",
   "passiveAbility": "b2-maomao.passive",
@@ -498,6 +498,85 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-467165-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.6e0ddd230684614143aaecc4d88410e6575fed615101e489",
+      "label": "少司命",
+      "sourceModelKey": "community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5",
+      "modelSha256": "5ce61a80960e8bc588035196284f27dc5ee90d4cb2c03b251156efc52910cb96",
+      "binarySha256": "4f34e3aae9db53bb108a14fae936029e0b285e99b644285bb0c5c494b07566c3",
+      "registeredAt": "2026-09-12T23:02:40.021Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "少司命",
+        "work": "秦時明月",
+        "library": "300heroes",
+        "reference": "300heroes:bb25f176065469beefe7dd86",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.77364283e3f5f4af3dad688ca1040b74af62ddf1eb6dd8ad",
+      "label": "貓貓｜中性表情／小步幅（GGD 程序化動作）",
+      "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+      "modelSha256": "c4ca50648a2105dd5524597ffabd0a262bd8c9fdb51061557cbdd22c786e3f28",
+      "binarySha256": "1bf500cb324cfa320d89abe6e14ad366bf4bf2756d7b2240d9396305e4905839",
+      "registeredAt": "2026-09-12T23:02:40.168Z",
+      "source": {
+        "kind": "exact",
+        "character": "貓貓｜中性表情／小步幅",
+        "work": "藥師少女的獨語",
+        "library": "Lethal Company MOD／GrogCompany",
+        "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.85a1ee3e47b81bc31ab3b0f498624692ae16e6200cc2882a",
+      "label": "少司命",
+      "sourceModelKey": "community.body.62cf0c7dda3705cb2889da0829718b8453d62826efa51cf5",
+      "modelSha256": "4ca46a70d2d936c822d7cfed411fe7afd12b1acde6b178d344c55307100b4b91",
+      "binarySha256": "4f34e3aae9db53bb108a14fae936029e0b285e99b644285bb0c5c494b07566c3",
+      "registeredAt": "2026-09-13T00:08:55.882Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "少司命",
+        "work": "秦時明月",
+        "library": "300heroes",
+        "reference": "300heroes:bb25f176065469beefe7dd86",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.a43aeca84d4fa764aa989d0a5c2300c86ac4807b7336dd88",
+      "label": "貓貓｜中性表情／小步幅（GGD 程序化動作）",
+      "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+      "modelSha256": "221d1c67ca75cb9080c439516ed310155041dee15ff8220f2e560a0681b439a0",
+      "binarySha256": "1bf500cb324cfa320d89abe6e14ad366bf4bf2756d7b2240d9396305e4905839",
+      "registeredAt": "2026-09-13T00:08:56.033Z",
+      "source": {
+        "kind": "exact",
+        "character": "貓貓｜中性表情／小步幅",
+        "work": "藥師少女的獨語",
+        "library": "Lethal Company MOD／GrogCompany",
+        "reference": "https://thunderstore.io/c/lethal-company/p/GrogCompany/MaomaoModel/",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Lethal Company",
+        "sourcePlatform": "Windows",
+        "sourceGameReleasedAt": "2023-10-23",
+        "sourceGameReleaseReference": "https://store.steampowered.com/app/1966720/Lethal_Company/"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

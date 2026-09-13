@@ -8,16 +8,16 @@
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    60,
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    75,
-    75,
-    75,
-    75
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "range": 4.5,
   "targetsEnemies": true,
@@ -64,7 +64,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1
+                      "coeff": 1.0
                     }
                   ]
                 }
@@ -88,7 +88,7 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 2
+                      "coeff": 2.0
                     }
                   ]
                 }
@@ -109,7 +109,7 @@
   "vfxKey": "fx.prim.physical.slash",
   "cooldownTier": "極大",
   "manaCostTier": "極小",
+  "castTimeTier": "大",
   "rangeTier": "小",
-  "castTimeSec": 0.5,
-  "castTimeTier": "大"
+  "castTimeSec": 0.5
 }

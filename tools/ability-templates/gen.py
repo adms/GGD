@@ -49,7 +49,10 @@ def build() -> tuple[str, str]:
     rows = classify_templates.build_rows()
     score_gap.score(rows)
     buf = io.StringIO(newline="")
-    writer = csv.DictWriter(buf, fieldnames=list(rows[0].keys()))
+    # Keep generated CSV stable across platforms and compatible with
+    # `git diff --check`; csv's default CRLF makes every changed row look like
+    # trailing whitespace even on macOS/Linux worktrees.
+    writer = csv.DictWriter(buf, fieldnames=list(rows[0].keys()), lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     return buf.getvalue(), emit_templates_md.render(rows)

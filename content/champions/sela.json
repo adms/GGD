@@ -73,7 +73,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.ember-bolt-cast",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.1,
       "provenance": "w3x-import",
       "rangeTier": "極大",
       "range": 12,
@@ -159,7 +159,7 @@
         }
       ],
       "vfxKey": "fx.cinder-ward",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "provenance": "w3x-import",
       "castTimeTier": "小"
     },
@@ -242,7 +242,7 @@
       "targetsEnemies": true,
       "effects": [],
       "vfxKey": "fx.firestorm",
-      "castTimeSec": 0.767,
+      "castTimeSec": 1,
       "provenance": "w3x-import",
       "rangeTier": "大",
       "range": 8,
@@ -267,7 +267,7 @@
           "damageType": "magic",
           "statusId": "burnstun",
           "statusDurationSec": 0.75,
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

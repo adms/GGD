@@ -39,6 +39,26 @@
       "path": "materials/community-hero-forge/supplements/workspace-assets-20260908/inventory.json",
       "bytes": 5505405,
       "why": "既有（2026-09-11 基準線）—— ⛔ 只准變少；要留要寫得出它為什麼屬於 git"
+    },
+    {
+      "path": "materials/hero-model-library/inventory.json",
+      "bytes": 7206371,
+      "why": "素材庫固定中央索引；其他工作流以此查詢本機、Git、S3、雜湊與驗收狀態"
+    },
+    {
+      "path": "materials/hero-model-library/public-source-files.json",
+      "bytes": 30058389,
+      "why": "素材庫固定公開來源逐檔索引；保留來源與版本關係及 SHA-256，供共編查詢"
+    },
+    {
+      "path": "materials/hero-model-library/voice-files.jsonl.gz",
+      "bytes": 27295931,
+      "why": "素材庫固定語音逐檔壓縮索引；供聽審、轉錄與角色事件查詢，不含音訊母檔"
+    },
+    {
+      "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+      "bytes": 11237910,
+      "why": "素材庫固定待設計英雄索引；保存未綁定原生角色 ID、來源版本與缺口狀態"
     }
   ],
   "legacyPerFileBytes": 1048576,

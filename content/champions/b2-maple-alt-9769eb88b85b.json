@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -69,7 +69,7 @@
       "castTimeTier": "中"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -151,7 +151,7 @@
       "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 2.433,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -214,7 +214,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -269,7 +269,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,

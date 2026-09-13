@@ -27,6 +27,21 @@ const DIFF_READABLE_DATA = /\.(json|csv|tsv|ya?ml|toml)$/;
 /** 結構化資料超過這個大小就算**傾印**（讀不動 diff）⇒ 仍然是材料。 */
 export const DIFF_READABLE_DATA_MAX_BYTES = 256 * 1024;
 
+/**
+ * 素材庫的固定中央索引。這些檔案是後台與其他工作流的正式查詢入口，
+ * 即使超過一般 diff 可讀上限，仍依素材庫契約保存在 Git；原始包、解析傾印與
+ * 中間產物不在此清單內，仍由 materials 棘輪攔截並送往 S3 legacy/。
+ */
+export const REQUIRED_ASSET_LIBRARY_INDEXES = new Set([
+  "materials/asset-library/current-resources.json",
+  "materials/hero-model-library/download-sources.json",
+  "materials/hero-model-library/inventory.json",
+  "materials/hero-model-library/public-source-files.json",
+  "materials/hero-model-library/voice-files.jsonl.gz",
+  "materials/hero-model-library/voice-index.json",
+  "materials/hero-model-library/已取得模型待設計英雄.json",
+]);
+
 /** 這個路徑是不是「靠 diff 讀得動的來源」⇒ ⛔ 不算準備材料。`bytes` 省略時只認腳本。 */
 export function isDiffReadableSource(path: string, bytes?: number): boolean {
   if (DIFF_READABLE_SOURCE.test(path)) return true;
@@ -35,6 +50,7 @@ export function isDiffReadableSource(path: string, bytes?: number): boolean {
 }
 
 export function categoryOf(path: string, bytes?: number): HygieneCat | null {
+  if (REQUIRED_ASSET_LIBRARY_INDEXES.has(path)) return null;
   if (path.startsWith("materials/")) return isDiffReadableSource(path, bytes) ? null : "materials";
   if (path.startsWith("docs/legacy/_overwrites/")) return "legacy-overwrites";
   if (/\.(tar|tgz|gz|zip|7z|rar|part\d*)$/.test(path)) return "archives";
@@ -48,9 +64,11 @@ export function isFinishedAssetPath(path: string): boolean {
 }
 
 export function treeBlobs(rev = "HEAD"): Array<{ bytes: number; path: string }> {
-  const out = execFileSync("git", ["ls-tree", "-r", "-l", rev], { cwd: REPO_ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  // `-z` preserves non-ASCII paths verbatim. Without it Git quotes Chinese filenames,
+  // so policy sets and baseline entries cannot match the actual path.
+  const out = execFileSync("git", ["ls-tree", "-r", "-l", "-z", rev], { cwd: REPO_ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   const rows: Array<{ bytes: number; path: string }> = [];
-  for (const l of out.split("\n")) {
+  for (const l of out.split("\0")) {
     if (!l) continue;
     const tab = l.indexOf("\t");
     if (tab < 0) continue;

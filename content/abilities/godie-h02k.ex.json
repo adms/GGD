@@ -8,12 +8,12 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    6
+    6.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 6,
+  "range": 6.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -37,14 +37,14 @@
               },
               "damageType": "true",
               "amount": {
-                "flat": 0
+                "flat": 0.0
               },
               "resourcePct": {
                 "subject": "target",
                 "resource": "health",
                 "basis": "max",
                 "perRank": [
-                  1
+                  1.0
                 ]
               }
             }
@@ -58,14 +58,14 @@
               "applyTo": "self",
               "damageType": "true",
               "amount": {
-                "flat": 0
+                "flat": 0.0
               },
               "resourcePct": {
                 "subject": "self",
                 "resource": "health",
                 "basis": "max",
                 "perRank": [
-                  1
+                  1.0
                 ]
               }
             }
@@ -77,7 +77,7 @@
             {
               "kind": "applyStatus",
               "statusId": "fear",
-              "duration": 2,
+              "duration": 2.0,
               "feared": true
             }
           ]
@@ -116,14 +116,14 @@
               },
               "damageType": "true",
               "amount": {
-                "flat": 0
+                "flat": 0.0
               },
               "resourcePct": {
                 "subject": "target",
                 "resource": "health",
                 "basis": "max",
                 "perRank": [
-                  1
+                  1.0
                 ]
               }
             }
@@ -137,14 +137,14 @@
               "applyTo": "self",
               "damageType": "true",
               "amount": {
-                "flat": 0
+                "flat": 0.0
               },
               "resourcePct": {
                 "subject": "self",
                 "resource": "health",
                 "basis": "max",
                 "perRank": [
-                  1
+                  1.0
                 ]
               }
             }
@@ -156,7 +156,7 @@
             {
               "kind": "applyStatus",
               "statusId": "fear",
-              "duration": 2,
+              "duration": 2.0,
               "feared": true
             }
           ]
@@ -195,14 +195,14 @@
               },
               "damageType": "true",
               "amount": {
-                "flat": 0
+                "flat": 0.0
               },
               "resourcePct": {
                 "subject": "target",
                 "resource": "health",
                 "basis": "max",
                 "perRank": [
-                  1
+                  1.0
                 ]
               }
             }
@@ -216,14 +216,14 @@
               "applyTo": "self",
               "damageType": "true",
               "amount": {
-                "flat": 0
+                "flat": 0.0
               },
               "resourcePct": {
                 "subject": "self",
                 "resource": "health",
                 "basis": "max",
                 "perRank": [
-                  1
+                  1.0
                 ]
               }
             }
@@ -235,7 +235,7 @@
             {
               "kind": "applyStatus",
               "statusId": "fear",
-              "duration": 2,
+              "duration": 2.0,
               "feared": true
             }
           ]
@@ -247,7 +247,7 @@
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.mortarimpact",
   "cooldownTier": "極小",
+  "castTimeTier": "中",
   "rangeTier": "中",
-  "castTimeSec": 0.3,
-  "castTimeTier": "中"
+  "castTimeSec": 0.3
 }

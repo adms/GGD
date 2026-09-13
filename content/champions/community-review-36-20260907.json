@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
+  "modelKey": "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-36-20260907.q.webp",
       "template": {
@@ -166,7 +166,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-36-20260907.w.webp",
       "template": {
@@ -240,7 +240,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-36-20260907.e.webp",
       "template": {
@@ -322,7 +322,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-36-20260907.r.webp",
       "template": {
@@ -444,6 +444,83 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.77aa08f7b5debb706f1d44556974924d1cb04d4efff10468",
+      "label": "篮球小男孩（論壇相似模型）",
+      "sourceModelKey": "ou99.493578-standard-v2",
+      "modelSha256": "c8382cf51f9c41c1ff93d3c3b217c1d9dc1388975e057c0669e4eca70e7e1866",
+      "binarySha256": "69ee9104640e87d008606b8b74644bebe8ce34a10610e6c5cc898016d8ba2da8",
+      "registeredAt": "2026-09-12T23:02:36.969Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "篮球小男孩",
+        "work": "來源作品待核；論壇標題：篮球小男孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9b545a0ff890ef77c626ce682339493288669ae2fd848a32",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "b5b244ba525e36d8291f681e69af5f78897c1f17eb52934a6c2f22dfed6ddd1b",
+      "binarySha256": "98b43eaad4af1554e7b000e7672f3dc2dcec42380bbe1e711c3320cd80b454fd",
+      "registeredAt": "2026-09-12T23:02:37.141Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd",
+      "label": "篮球小男孩（論壇相似模型）",
+      "sourceModelKey": "ou99.493578-standard-v2",
+      "modelSha256": "72dae5ca41e840f037acf7135dc20a82be582a9d6786fe8dd74c51b9ffebd33a",
+      "binarySha256": "69ee9104640e87d008606b8b74644bebe8ce34a10610e6c5cc898016d8ba2da8",
+      "registeredAt": "2026-09-13T00:08:52.778Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "篮球小男孩",
+        "work": "來源作品待核；論壇標題：篮球小男孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.fbca128c845b5c438b833713193b95d469cdcca31abba0d4",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "63f9495686ba8234b8cc01631a14231ea454a15508ca37f8e091647a64180bf2",
+      "binarySha256": "98b43eaad4af1554e7b000e7672f3dc2dcec42380bbe1e711c3320cd80b454fd",
+      "registeredAt": "2026-09-13T00:08:52.951Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

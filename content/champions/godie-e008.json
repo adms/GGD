@@ -135,7 +135,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.fire.nova",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "cooldownTier": "中",
       "template": {
         "ref": "tpl-buff-self",
@@ -301,7 +301,7 @@
       },
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.soulpreservation",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大"
     }
   },

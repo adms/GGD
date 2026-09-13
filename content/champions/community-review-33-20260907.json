@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.989def223f27b756a4c07ee8ea03be8bc3d6ff0e03ecdd1c",
+  "modelKey": "version.body.cefec22fb50f901f84f6dfa34b597f8d841c3656f69213d5",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-33-20260907.q.webp",
       "template": {
@@ -160,7 +160,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-33-20260907.w.webp",
       "template": {
@@ -240,7 +240,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-33-20260907.e.webp",
       "template": {
@@ -306,7 +306,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-33-20260907.r.webp",
       "template": {
@@ -423,6 +423,83 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e11ddabb9ba00211f9056f1004a0163792566920f5c43a0a",
+      "label": "蓝瞳靓仔版远野志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.470087-standard-v2",
+      "modelSha256": "d85e479fcf23d147568d0bca989373f0d54c74d3f4882c7bebda23bd3a28bed2",
+      "binarySha256": "f9dc9cae5335d6348a05eb2c51e532f324657d8542e98b58eaad5493c0e8d44b",
+      "registeredAt": "2026-09-12T23:02:35.563Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蓝瞳靓仔版远野志贵",
+        "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-470087-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.0d143acac04986ba45298355c926aeed946b2e6e18464def",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "0d88c84e26e20f3ce7b5ea64c4d70582bbea533661c44185882e6b02aeb3611d",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-12T23:02:35.808Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.cefec22fb50f901f84f6dfa34b597f8d841c3656f69213d5",
+      "label": "蓝瞳靓仔版远野志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.470087-standard-v2",
+      "modelSha256": "85c77450682200d88e28ec6fad8fd46fc752b817aae2c42c945c985c3de5b368",
+      "binarySha256": "f9dc9cae5335d6348a05eb2c51e532f324657d8542e98b58eaad5493c0e8d44b",
+      "registeredAt": "2026-09-13T00:08:51.357Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蓝瞳靓仔版远野志贵",
+        "work": "來源作品待核；論壇標題：蓝瞳靓仔版远野志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-470087-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.99c137bf0513caf89bf712bbd959e6867e8ec67b41360a8a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "51e2bf1d70462122e69f801d827557d4fe1af1fc7bba492afe8f8a6bfe3893e8",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-13T00:08:51.602Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

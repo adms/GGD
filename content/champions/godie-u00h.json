@@ -79,7 +79,7 @@
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
@@ -142,14 +142,14 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.fire.slash",
       "targetsEnemies": true,
       "radius": 3,
       "icon": "assets/icons/abilities/godie-u00h.w.png",
-      "castTimeSec": 1.433,
+      "castTimeSec": 1,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
@@ -181,7 +181,7 @@
       "effects": [],
       "vfxKey": "fx.prim.ice.beam",
       "sfxKey": "wc3.flaretarget2",
-      "castTimeSec": 1.2,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -205,7 +205,7 @@
             "duration": 1.2,
             "stun": true
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -235,7 +235,7 @@
       "sfxKey": "wc3.dragonyes2",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -251,7 +251,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }

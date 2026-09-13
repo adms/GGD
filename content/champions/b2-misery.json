@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -50,7 +50,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -115,7 +115,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -154,7 +154,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -187,7 +187,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -313,7 +313,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-misery",
-  "modelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+  "modelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
   "name": "米瑟利",
   "origin": "法師",
   "passiveAbility": "b2-misery.passive",
@@ -328,5 +328,100 @@
   "tags": [
     "magic"
   ],
-  "icon": "assets/icons/champions/b2-misery.webp"
+  "icon": "assets/icons/champions/b2-misery.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.aa11905147f1bbf47ba18be0dc2c1127f123e60ca4409bed",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "modelSha256": "72f75c5edce321accfb4395a7e2ab10130129de0bf546c9f3cdee256bb384ec7",
+      "binarySha256": "28fe31e942415e1a2b8f93963f31fb77d06a464d9fee7bf37db23df981dae48b",
+      "registeredAt": "2026-09-12T23:12:02.004Z",
+      "source": {
+        "kind": "previous",
+        "character": "米瑟利",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.87700bcf92deec74403a96e45fbcba6aa3b1ab6f5474d2ba",
+      "label": "优克莉伍德",
+      "sourceModelKey": "community.body.7e715d64546a03a955ff8a6530120071081ea7eafac09239",
+      "modelSha256": "bc23b8af9db333273725f4ba130ca6c93d5280fcdf6009df0182d1e0ad6069af",
+      "binarySha256": "4703d695908ad925d9c973119a6a7fc319f7602cadbbc85c7f1ca75c79df4232",
+      "registeredAt": "2026-09-12T23:12:02.010Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "优克莉伍德",
+        "work": "這樣算是殭屍嗎？",
+        "library": "300heroes",
+        "reference": "300heroes:cce0d9c46d77319ecef36c85",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.d2cb9fb11dd900c39c141bd5a9391fd9e34e336ec19ea4ab",
+      "label": "米瑟利（獨立副本／优克莉伍德）",
+      "sourceModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "modelSha256": "524ca0cd662dde14da499e866e9fe429f30b90c1c53f83fd6123c689478527ae",
+      "binarySha256": "97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1",
+      "registeredAt": "2026-09-12T23:12:02.134Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "米瑟利（獨立副本／优克莉伍德）",
+        "work": "這樣算是殭屍嗎？",
+        "library": "300heroes",
+        "reference": "derivative:misery",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.02657a0c68f1e22529eab7f9bfd8bdf7c18cfd4725b8e3a8",
+      "label": "优克莉伍德",
+      "sourceModelKey": "community.body.7e715d64546a03a955ff8a6530120071081ea7eafac09239",
+      "modelSha256": "94917a80d795f8755b6d10cd6a4437d699336b23253e823235c09216ae5a9d26",
+      "binarySha256": "4703d695908ad925d9c973119a6a7fc319f7602cadbbc85c7f1ca75c79df4232",
+      "registeredAt": "2026-09-13T00:09:06.001Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "优克莉伍德",
+        "work": "這樣算是殭屍嗎？",
+        "library": "300heroes",
+        "reference": "300heroes:cce0d9c46d77319ecef36c85",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
+      "label": "米瑟利（獨立副本／优克莉伍德）",
+      "sourceModelKey": "community.body.e1d5cdc515bc0b1c0e8515ceed1eced551b8c57ffa715eee",
+      "modelSha256": "fcd5f887910ce0da6b718362cb2f84b2fc2158019924dc82fd76579d35706044",
+      "binarySha256": "97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1",
+      "registeredAt": "2026-09-13T00:09:06.126Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "米瑟利（獨立副本／优克莉伍德）",
+        "work": "這樣算是殭屍嗎？",
+        "library": "300heroes",
+        "reference": "derivative:misery",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

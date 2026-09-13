@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+  "modelKey": "version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-23-20260907.q.webp",
       "template": {
@@ -163,7 +163,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-23-20260907.w.webp",
       "template": {
@@ -224,7 +224,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-23-20260907.e.webp",
       "template": {
@@ -282,7 +282,7 @@
           "duration": 4
         }
       ],
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-23-20260907.r.webp",
       "template": {
@@ -327,5 +327,99 @@
   "tags": [
     "katana"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0155d8f06cfe3efcc4f8bc7771582e36544e8ace895851a3",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "0c7faa88c7db9c95a997ecc5b4212028daaf3818d2554e2b9a7e3e277d3cf38d",
+      "binarySha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+      "registeredAt": "2026-09-12T23:02:32.987Z",
+      "source": {
+        "kind": "previous",
+        "character": "坂田銀時",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.0edd91f8aa5d1479ee2a4d08e37ee5ce1e187ca03637e477",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "52f3fac9a931c3985a3d1c899afe04e5364742ddba594b1d41ce83d2ed5144a6",
+      "binarySha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "registeredAt": "2026-09-12T23:02:32.991Z",
+      "source": {
+        "kind": "exact",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2b07186d8f75a563d460c1caa2cc33ff08e69884b0380fa7",
+      "label": "奴良陆生",
+      "sourceModelKey": "community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63",
+      "modelSha256": "c6e30c53302112ba6b75838c8f1b87a6d028718eb243b859d1c3afe4866ac24d",
+      "binarySha256": "6cd1fb530e7c7d63f02561b533f9444a93332ad14a1282f26baf57ccf9bde47f",
+      "registeredAt": "2026-09-12T23:02:33.292Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "奴良陆生",
+        "work": "妖怪少爺／滑頭鬼之孫",
+        "library": "300heroes",
+        "reference": "300heroes:3afc0ea6519ff5a221a230b7",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "72afb578c7c5af98a0b3ad0340296da276bad1e9434ce93bbe20494a26fc8b37",
+      "binarySha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "registeredAt": "2026-09-13T00:08:48.888Z",
+      "source": {
+        "kind": "exact",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.8ef72ce0e4abf5a3e0a038766326ecad025dd8098077c811",
+      "label": "奴良陆生",
+      "sourceModelKey": "community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63",
+      "modelSha256": "e776578904d73d5250caf265bc0030ce33d163bb8ff8e6e57df9a935514b113c",
+      "binarySha256": "6cd1fb530e7c7d63f02561b533f9444a93332ad14a1282f26baf57ccf9bde47f",
+      "registeredAt": "2026-09-13T00:08:49.176Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "奴良陆生",
+        "work": "妖怪少爺／滑頭鬼之孫",
+        "library": "300heroes",
+        "reference": "300heroes:3afc0ea6519ff5a221a230b7",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

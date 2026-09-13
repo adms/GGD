@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.66f374a8dd7ceef65416ea30c40dccb25cc214c54a72142c",
+  "modelKey": "version.body.5acbcbb1ec33508f1648011f74264f8b52f8293e99b57e89",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -101,7 +101,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-34-20260907.q.webp",
       "template": {
@@ -178,7 +178,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-34-20260907.w.webp",
       "template": {
@@ -248,7 +248,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-34-20260907.e.webp",
       "template": {
@@ -303,7 +303,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-34-20260907.r.webp",
       "template": {
@@ -442,6 +442,123 @@
         "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
         "tier": "original",
         "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.13ed4511521d3822338a2e8bfd1d2f4ceb3fa8b14b5dff91",
+      "label": "人妖喜乐（論壇相似模型）",
+      "sourceModelKey": "ou99.458013-standard",
+      "modelSha256": "320e5294a1563267dcffee118df7a1cffd35c3f1e3027ddfb045e72c2cc6f63e",
+      "binarySha256": "99d5ec9ba07cc454c47e1e85d8c9045f1ed5daa09baa2501ab98e07a0a5d6a17",
+      "registeredAt": "2026-09-12T23:02:35.994Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "人妖喜乐",
+        "work": "來源作品待核；論壇標題：人妖喜乐",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-458013-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.08942a1021b73b3b2b8cbb2e4fcb0614e873c85740b3d117",
+      "label": "八云紫",
+      "sourceModelKey": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+      "modelSha256": "b7174288537c41b0bfbee56f0012050d0c90f29420ebf8b4f9c69067d92a429b",
+      "binarySha256": "6366819222e94aafad8f76fa73a8f12c48b726aa8464fb0c92344e1779ee5b1b",
+      "registeredAt": "2026-09-12T23:02:36.115Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "八云紫",
+        "work": "東方 Project",
+        "library": "300heroes",
+        "reference": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.1ca70b87d4973b5e24f7f10f4b411a32276844d3281739c8",
+      "label": "高速婆婆｜招財貓形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
+      "modelSha256": "7aa41cc8419c255b0654a241d1d95fd7360e22c1cd922bf4be327926e5d487e5",
+      "binarySha256": "44e26dc2f25abaa22bd584364c06c4e3e7f9aa44dedc9bf079a9d7ba452c6ba0",
+      "registeredAt": "2026-09-12T23:02:36.592Z",
+      "source": {
+        "kind": "exact",
+        "character": "高速婆婆｜招財貓形態",
+        "work": "膽大黨 Dandadan",
+        "library": "Lethal Company MOD／inkiidonut",
+        "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.dd03856cb24d978c654cacbcf0a1895df06c0a026dae6b2a",
+      "label": "人妖喜乐（論壇相似模型）",
+      "sourceModelKey": "ou99.458013-standard",
+      "modelSha256": "afd7fb1cb96b8dc1176d106822453992727ec3daddf3308e6b17bbb7ff13773b",
+      "binarySha256": "99d5ec9ba07cc454c47e1e85d8c9045f1ed5daa09baa2501ab98e07a0a5d6a17",
+      "registeredAt": "2026-09-13T00:08:51.809Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "人妖喜乐",
+        "work": "來源作品待核；論壇標題：人妖喜乐",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-458013-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.c14a09c6193f8382e82c0858f02452a52073020b943826de",
+      "label": "八云紫",
+      "sourceModelKey": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+      "modelSha256": "efe8035dd0427ab47b1755733610248f48b1efb21e79db8408acfb2b64e93727",
+      "binarySha256": "6366819222e94aafad8f76fa73a8f12c48b726aa8464fb0c92344e1779ee5b1b",
+      "registeredAt": "2026-09-13T00:08:51.931Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "八云紫",
+        "work": "東方 Project",
+        "library": "300heroes",
+        "reference": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.5acbcbb1ec33508f1648011f74264f8b52f8293e99b57e89",
+      "label": "高速婆婆｜招財貓形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.e9e17e3b1e07968fd5e9b7d6cf7b1b9222286271cd29ff8e",
+      "modelSha256": "c4f93fdff3f58a30b47fab8195cfc356be7ab5be79fae75c0d6f239fc1708219",
+      "binarySha256": "44e26dc2f25abaa22bd584364c06c4e3e7f9aa44dedc9bf079a9d7ba452c6ba0",
+      "registeredAt": "2026-09-13T00:08:52.395Z",
+      "source": {
+        "kind": "exact",
+        "character": "高速婆婆｜招財貓形態",
+        "work": "膽大黨 Dandadan",
+        "library": "Lethal Company MOD／inkiidonut",
+        "reference": "https://thunderstore.io/c/lethal-company/p/inkiidonut/Granny_Suit/",
+        "tier": "original",
+        "selectionClass": "manual",
+        "sourceGame": "Lethal Company",
+        "sourcePlatform": "Windows",
+        "sourceGameReleasedAt": "2023-10-23",
+        "sourceGameReleaseReference": "https://store.steampowered.com/app/1966720/Lethal_Company/"
       },
       "automaticEligible": true
     }

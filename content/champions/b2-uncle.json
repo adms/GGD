@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -95,7 +95,7 @@
       "castTimeTier": "小"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -174,7 +174,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -222,7 +222,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -394,7 +394,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-uncle",
-  "modelKey": "version.body.17eba4aed3947bd8e58067b3d1c87632d64cda76d0a4620a",
+  "modelKey": "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d",
   "name": "異世界舅舅",
   "origin": "法師",
   "passiveAbility": "b2-uncle.passive",
@@ -492,6 +492,83 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7746382d498189e79235a1a5aeac79a232dcd1bfa70bc353",
+      "label": "光刀女剑二次元（論壇相似模型）",
+      "sourceModelKey": "ou99.454482-standard-v2",
+      "modelSha256": "b3eb00fdf182687ab040114055247403887a732f23cc9b14fbd58c5505da9345",
+      "binarySha256": "3f0238178247ba08f0c9e1bbef6388c73d115a38505247a41551ba1bdb57f9a6",
+      "registeredAt": "2026-09-12T23:02:38.450Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "光刀女剑二次元",
+        "work": "來源作品待核；論壇標題：光刀女剑二次元",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-454482-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "b7ce0e58526376f3add67bc10456fa1319f3930de5063170d41f7852956826ac",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-12T23:02:38.790Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d",
+      "label": "光刀女剑二次元（論壇相似模型）",
+      "sourceModelKey": "ou99.454482-standard-v2",
+      "modelSha256": "d4840ff9beb9022698236c246314c47ccb10546e4bfbf58a05d888c94e01c197",
+      "binarySha256": "3f0238178247ba08f0c9e1bbef6388c73d115a38505247a41551ba1bdb57f9a6",
+      "registeredAt": "2026-09-13T00:08:54.292Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "光刀女剑二次元",
+        "work": "來源作品待核；論壇標題：光刀女剑二次元",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-454482-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "896cde23d4cf3070948518e60ddbe95e3bd6f7939d40f363477e24db79958a99",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-13T00:08:54.630Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

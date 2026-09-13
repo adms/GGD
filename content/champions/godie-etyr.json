@@ -85,7 +85,7 @@
         }
       ],
       "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "小",
       "template": {
         "ref": "tpl-heal",
@@ -222,7 +222,7 @@
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-orbit-array",
         "params": {
@@ -239,7 +239,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "cooldownTier": "極小",
@@ -301,7 +301,7 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "manaCostTier": "極小",
       "castTimeTier": "大"
     }

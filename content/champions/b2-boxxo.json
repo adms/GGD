@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -58,7 +58,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -117,7 +117,7 @@
                   180
                 ]
               },
-              "castTimeSec": 0.067,
+              "castTimeSec": 0.1,
               "target": "ally"
             },
             "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -125,7 +125,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.067,
+              "castTimeSec": 0.1,
               "castType": "targeted",
               "effects": [
                 {
@@ -155,7 +155,7 @@
       "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -216,7 +216,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -270,7 +270,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -416,7 +416,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-boxxo",
-  "modelKey": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",
+  "modelKey": "version.body.71c301c8921460768d1bcf29863ce903bc588aa0cc5efdf8",
   "name": "阿箱＋拉蜜絲",
   "origin": "硬輔",
   "passiveAbility": "b2-boxxo.passive",
@@ -514,6 +514,47 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.71c301c8921460768d1bcf29863ce903bc588aa0cc5efdf8",
+      "label": "逃亡的盗墓女孩（論壇相似模型）",
+      "sourceModelKey": "ou99.491448-standard-v3",
+      "modelSha256": "d1224cb5edf2aa7406bac820bf7bef717c4225d5a6f20fe70fed1a3bceef2c01",
+      "binarySha256": "9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3",
+      "registeredAt": "2026-09-13T00:08:54.757Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "逃亡的盗墓女孩",
+        "work": "來源作品待核；論壇標題：逃亡的盗墓女孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-491448-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.60920f9d196cefcbf6c0f67bf9a9931afd5094981cf9a933",
+      "label": "POD 機械寵物 06_pod",
+      "sourceModelKey": "community.body.4d64263f3044235d7aecedf3642860c37d061a06d95e0bc5",
+      "modelSha256": "f05385e6fe06c125da08d573236de1ae7f518437e67a15e54d08640e12a4ea4e",
+      "binarySha256": "bb5a2e8a52c30ecd4b0917bdcaa8d22ff2a847d05f5a11fc5febb444a9deac2f",
+      "registeredAt": "2026-09-13T00:08:54.767Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "POD 機械寵物 06_pod",
+        "work": "来源遊戲 300英雄；外觀近 NieR POD，出處未獨立確認",
+        "library": "300heroes",
+        "reference": "300heroes:15becf8ae6a0265a94b514f3",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

@@ -79,7 +79,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -123,7 +123,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -181,7 +181,7 @@
       },
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -230,7 +230,7 @@
       },
       "vfxKey": "fx.prim.ki.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",

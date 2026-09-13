@@ -76,7 +76,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.prim.void.beam",
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -95,7 +95,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -136,13 +136,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 3,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -197,7 +197,7 @@
       "sfxKey": "wc3.waygatewhat1",
       "targetsEnemies": false,
       "radius": 8,
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "極小",
       "radiusTier": "大",
       "castTimeTier": "小"
@@ -238,13 +238,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 2.433,
+      "castTimeSec": 1,
       "range": 0,
       "cooldownTier": "極大",
       "manaCostTier": "小",

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "castType": "self",
       "cooldown": [
         15.0,
@@ -62,7 +62,7 @@
       "castTimeTier": "中"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -133,7 +133,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -179,7 +179,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中",
             "ratios": [
@@ -206,7 +206,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -343,7 +343,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-shadow",
-  "modelKey": "version.body.4d79d387f376554e5fd801bd48c69c538e014b39afebb4b0",
+  "modelKey": "version.body.ae9b304d0fccdf328681e449ae98f9989d07665dca98db12",
   "name": "闇影",
   "origin": "法刺",
   "passiveAbility": "b2-shadow.passive",
@@ -441,6 +441,83 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b37070253255f468d97382e61bd2e187c5b88ef42f9072eb",
+      "label": "202511z13（論壇相似模型）",
+      "sourceModelKey": "ou99.481732-standard-v2",
+      "modelSha256": "13e320ec00d24684e8d013145fb996d3efef45f5586696bdd0b3609764fc93c3",
+      "binarySha256": "b4592d8d0946b427f2a7b5659c199d290a0e95e1f6b20212f4bc833276660caf",
+      "registeredAt": "2026-09-12T23:02:39.230Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "202511z13",
+        "work": "來源作品待核；論壇標題：202511z13",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-481732-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.0d143acac04986ba45298355c926aeed946b2e6e18464def",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "0d88c84e26e20f3ce7b5ea64c4d70582bbea533661c44185882e6b02aeb3611d",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-12T23:02:39.474Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.ae9b304d0fccdf328681e449ae98f9989d07665dca98db12",
+      "label": "202511z13（論壇相似模型）",
+      "sourceModelKey": "ou99.481732-standard-v2",
+      "modelSha256": "d4bcb4facf3dfc98dc2e8b022fbf1edc7331cfd8d5fd2b920c7974389d9d10d2",
+      "binarySha256": "b4592d8d0946b427f2a7b5659c199d290a0e95e1f6b20212f4bc833276660caf",
+      "registeredAt": "2026-09-13T00:08:55.093Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "202511z13",
+        "work": "來源作品待核；論壇標題：202511z13",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-481732-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.99c137bf0513caf89bf712bbd959e6867e8ec67b41360a8a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "51e2bf1d70462122e69f801d827557d4fe1af1fc7bba492afe8f8a6bfe3893e8",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-13T00:08:55.333Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

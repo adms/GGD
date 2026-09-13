@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0
+    0.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -29,11 +29,11 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 0
+                  "flat": 0.0
                 },
                 "incomingPct": {
                   "perRank": [
-                    1
+                    1.0
                   ],
                   "negateOriginal": true
                 }
@@ -49,6 +49,5 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-edem.passive.webp",
-  "castTimeTier": "極小",
-  "castTimeSec": 0
+  "castTimeTier": "極小"
 }

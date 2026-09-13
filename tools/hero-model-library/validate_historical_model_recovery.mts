@@ -20,6 +20,11 @@ const digest = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest(
 const gitShow = (spec: string) => execFileSync('git', ['show', spec], {cwd: repo, maxBuffer: 32 * 1024 * 1024});
 const deliveryBytes = gitShow(`${historicalCommit}:${deliveryPath}`);
 const delivery = JSON.parse(deliveryBytes.toString('utf8'));
+const downloads = JSON.parse(readFileSync(join(repo, 'materials/hero-model-library/download-sources.json'), 'utf8'));
+const historicalSource = [...downloads.publicSources, ...(downloads.paidSources ?? [])]
+  .find((source: {id: string}) => source.id === 'ggd-historical-model-recovery-7bc2fa3f8');
+assert(historicalSource, 'Historical recovery source is missing from download-sources.json');
+const candidates = new Map(historicalSource.componentCandidates.map((candidate: {id: string}) => [candidate.id, candidate]));
 const require = createRequire(join(repo, 'packages/shared/package.json'));
 const validator = require('gltf-validator');
 const {inspectModelUpload} = await import(join(repo, 'packages/shared/src/content/modelUpload/inspect.ts'));
@@ -40,7 +45,13 @@ for (const historical of delivery.heroes) {
   const file = historical.files.find((row: {gitPath: string}) => row.gitPath.endsWith('.glb'));
   assert(file, `${historical.hero}: historical GLB missing from delivery report`);
   assert.equal(file.sha256, target.expectedSha256);
-  const bytes = readFileSync(join(repo, file.gitPath));
+  const candidate = candidates.get(target.id) as {
+    gitPath: string;
+    sourceArtifact?: {gitArchivePath?: string};
+  } | undefined;
+  assert(candidate, `${historical.hero}: current historical component record missing`);
+  const recoveredGitPath = candidate.sourceArtifact?.gitArchivePath ?? candidate.gitPath;
+  const bytes = readFileSync(join(repo, recoveredGitPath));
   assert.equal(digest(bytes), file.sha256, `${historical.hero}: recovered bytes changed`);
   assert.equal(bytes.length, file.bytes, `${historical.hero}: recovered size changed`);
   assert.deepEqual(gitShow(`${historicalCommit}:${file.gitPath}`), bytes, `${historical.hero}: not byte-identical to Git history`);
@@ -68,6 +79,7 @@ for (const historical of delivery.heroes) {
     historicalAcceptanceId: `acquired-${historical.hero === 'lord-of-nightmares' ? 'lord-nightmares' : historical.hero === 'oyaji' ? 'kita-kita' : historical.hero}`,
     historicalModelKey: historical.defaultModelKey,
     gitPath: file.gitPath,
+    recoveredGitPath,
     sha256: file.sha256,
     bytes: file.bytes,
     byteIdenticalToHistoricalGitBlob: true,

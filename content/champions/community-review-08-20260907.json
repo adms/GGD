@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+  "modelKey": "version.body.5717cbb93bdda101452dbeb038bad9e482806acd06bfebf5",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -126,7 +126,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.1,
       "vfxKey": "fx.prim.physical.slash",
       "vfxLayers": [
         {
@@ -180,7 +180,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-08-20260907.w.webp",
       "template": {
@@ -237,7 +237,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-08-20260907.e.webp",
       "template": {
@@ -294,7 +294,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-08-20260907.r.webp",
       "template": {
@@ -337,5 +337,61 @@
   "tags": [
     "sword"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.95becb4fc895bfcd39d73435c0188347223dbe58bfd2f4a8",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "modelSha256": "18caab8c03a2b7f3c9f3815d1d7298dabeb44fc5af62390dab48e91b36aebc8e",
+      "binarySha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "registeredAt": "2026-09-12T23:02:29.486Z",
+      "source": {
+        "kind": "previous",
+        "character": "米卡莎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.c0264fef8242538c5cc011d340882b0154a9588653f4c3a7",
+      "label": "笠笠笠",
+      "sourceModelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "modelSha256": "8bf08a480850d53f29717353cd38b8040177607abe68d64a535df2440f8538bc",
+      "binarySha256": "53d1306e08bd3b1cecc9b19f6f87233a1f3ff0a25bcb2471b96237002a0e3774",
+      "registeredAt": "2026-09-12T23:02:29.491Z",
+      "source": {
+        "kind": "exact",
+        "character": "笠笠笠",
+        "work": "進擊的巨人",
+        "library": "300heroes",
+        "reference": "300heroes:2b730a6724d72692c2c95046",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.5717cbb93bdda101452dbeb038bad9e482806acd06bfebf5",
+      "label": "笠笠笠",
+      "sourceModelKey": "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c",
+      "modelSha256": "a631503d5890b3477784756ec478c8064a6d92479a6c59827adcb4e3f68f90fa",
+      "binarySha256": "53d1306e08bd3b1cecc9b19f6f87233a1f3ff0a25bcb2471b96237002a0e3774",
+      "registeredAt": "2026-09-13T00:08:45.596Z",
+      "source": {
+        "kind": "exact",
+        "character": "笠笠笠",
+        "work": "進擊的巨人",
+        "library": "300heroes",
+        "reference": "300heroes:2b730a6724d72692c2c95046",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

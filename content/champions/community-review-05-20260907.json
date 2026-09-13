@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "version.body.9c2a11988b21a582652ea7a3869ea2a9cf44524ece794608",
+  "modelKey": "version.body.94f8cbedbfe252d18277d8b57b4e580362de4b262490af53",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-05-20260907.q.webp",
       "template": {
@@ -190,7 +190,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-05-20260907.w.webp",
       "template": {
@@ -257,7 +257,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-05-20260907.e.webp",
       "template": {
@@ -314,7 +314,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 1.767,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-05-20260907.r.webp",
       "template": {
@@ -438,6 +438,83 @@
         "reference": "https://www.ou99.com/thread-287871-1-1.html",
         "tier": "w3x",
         "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.4a3ccde827e51ceec18863fe4df482ac8cf26121d88340cc",
+      "label": "刑天",
+      "sourceModelKey": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+      "modelSha256": "9be3740c87ce6fa2068138a9a346c2e5cedcfa4767a6aabf154a9359852e9826",
+      "binarySha256": "124a160e7f29720612ba28baec23d4e494e77708656e5fb33cb77ba3c63c83a7",
+      "registeredAt": "2026-09-12T23:02:28.321Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "刑天",
+        "work": "鎧甲勇士刑天",
+        "library": "300heroes",
+        "reference": "300heroes:ad8377d942a4909779a1b20c",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.4c8815e5e713f3a259028ea9d1489de9fc5866c161d06e85",
+      "label": "洛克人（論壇模型）",
+      "sourceModelKey": "ou99.287871-standard",
+      "modelSha256": "6bd85ee067369d99299641789d10e0ac2378acb3c24ce8a328569365ef19080d",
+      "binarySha256": "1a17c7fc9c89bde158bd6f9d70c3a98761e7e02225f57a09b6c7ffc7e799f137",
+      "registeredAt": "2026-09-12T23:02:28.352Z",
+      "source": {
+        "kind": "exact",
+        "character": "洛克人",
+        "work": "Mega Man",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-287871-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d96f57bc2cfb6145296ae50b67be51f41a818720bc3336a6",
+      "label": "刑天",
+      "sourceModelKey": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+      "modelSha256": "e60de031be6a8c73328629e8ee0594bfca9da12cde83441b9cb0afce45b8d07e",
+      "binarySha256": "124a160e7f29720612ba28baec23d4e494e77708656e5fb33cb77ba3c63c83a7",
+      "registeredAt": "2026-09-13T00:08:44.429Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "刑天",
+        "work": "鎧甲勇士刑天",
+        "library": "300heroes",
+        "reference": "300heroes:ad8377d942a4909779a1b20c",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.94f8cbedbfe252d18277d8b57b4e580362de4b262490af53",
+      "label": "洛克人（論壇模型）",
+      "sourceModelKey": "ou99.287871-standard",
+      "modelSha256": "3a283d57787174953aae52206087b38d8d275a44e6ed1de805053372b4343fc0",
+      "binarySha256": "1a17c7fc9c89bde158bd6f9d70c3a98761e7e02225f57a09b6c7ffc7e799f137",
+      "registeredAt": "2026-09-13T00:08:44.457Z",
+      "source": {
+        "kind": "exact",
+        "character": "洛克人",
+        "work": "Mega Man",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-287871-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
       },
       "automaticEligible": true
     }

@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.c69dcf0c70845d97d8fbd2e60822783f13136a9969d7cfcf",
+  "modelKey": "version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -151,7 +151,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
@@ -207,7 +207,7 @@
           }
         }
       ],
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68",
@@ -278,7 +278,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.833,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
@@ -350,6 +350,45 @@
         "reference": "content/champions/lol-leesin.json",
         "tier": "original",
         "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9c7c450b965c55663a424d63a5b951053ab3d93453f41473",
+      "label": "李星（LOL 原生模型）",
+      "sourceModelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+      "modelSha256": "72103bbca0b699094a7ec465dc9cefef1164767d4fbd753296b7974f3aca133f",
+      "binarySha256": "326cedac0d487cf4e711da2f294f7770f884f40e5a69237289ee2aaab90356e1",
+      "registeredAt": "2026-09-12T23:12:04.074Z",
+      "source": {
+        "kind": "exact",
+        "character": "李星",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-leesin.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b",
+      "label": "李星（LOL 原生模型）",
+      "sourceModelKey": "community.body.6e9d1f1f32778f3736de930cdda91e5df41edf79ae566fe4",
+      "modelSha256": "da6313e642bb5df577eb033ee44a4bce734a660d44482f5c121ec7f902ea7e7a",
+      "binarySha256": "326cedac0d487cf4e711da2f294f7770f884f40e5a69237289ee2aaab90356e1",
+      "registeredAt": "2026-09-13T00:09:08.100Z",
+      "source": {
+        "kind": "exact",
+        "character": "李星",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-leesin.json",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
       },
       "automaticEligible": true
     }

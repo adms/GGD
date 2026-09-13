@@ -61,28 +61,28 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 12,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "applyStatus",
           "statusId": "curse",
           "duration": [
-            6,
-            12,
-            18,
-            24
+            6.0,
+            12.0,
+            18.0,
+            24.0
           ],
           "missChance": 0.5
         }
@@ -91,9 +91,9 @@
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.gruntyesattack1",
       "cooldownTier": "中",
+      "castTimeTier": "中",
       "rangeTier": "極大",
-      "castTimeSec": 0.267,
-      "castTimeTier": "中"
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-emns.w",
@@ -104,18 +104,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -156,18 +156,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 12,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -193,7 +193,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true
         }
@@ -217,7 +217,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "condition": {
@@ -225,7 +225,7 @@
             "subject": "target",
             "statusId": "curse"
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-emns.e.webp",
@@ -233,9 +233,9 @@
       "sfxKey": "wc3.rokhanwhat2",
       "cooldownTier": "極小",
       "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 0.833,
-      "castTimeTier": "極大"
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-emns.r",
@@ -246,16 +246,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 12,
+      "range": 12.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -293,7 +293,7 @@
             "statusId": "curse"
           },
           "statusId": "slow50",
-          "duration": 5,
+          "duration": 5.0,
           "moveSpeedMult": 0.5
         }
       ],
@@ -302,9 +302,9 @@
       "sfxKey": "wc3.gruntyesattack3",
       "cooldownTier": "中",
       "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 1.033,
-      "castTimeTier": "極大"
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

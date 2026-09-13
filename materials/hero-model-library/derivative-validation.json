@@ -46,8 +46,8 @@
       "id": "community-review-06-20260907",
       "derivativeId": "derivative:kirby",
       "sourceId": "community:community-review-06-20260907",
-      "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
-      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "sourceSha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
+      "sha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
       "physicalCopy": true,
       "embeddedResources": true,
       "skinAndAnimationPayloadUnchanged": true,
@@ -56,13 +56,14 @@
       "textures": [
         {
           "index": 0,
-          "sha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
-          "sourceSha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+          "sha256": "1696ab48a3a9f8142aeea4219a8b9063ddc51cdf118067f5375e416850804b0a",
+          "sourceSha256": "1696ab48a3a9f8142aeea4219a8b9063ddc51cdf118067f5375e416850804b0a",
           "edited": false
         }
       ],
       "attachments": [],
-      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/kirby/runtime"
+      "runtime": "outputs/hero-model-derivatives-20260910/copies-v1/kirby/runtime",
+      "evidence": "materials/hero-model-library/priority-evidence/procedural-palette-repair/receipt.json"
     },
     {
       "id": "community-review-31-20260907",
@@ -187,36 +188,40 @@
       "derivativeId": "derivative:goblin",
       "sourceId": "300heroes:269",
       "sourceSha256": "697882f891704d14de157f487eb25976764401c1dd04300c1c95c73364aa02cb",
-      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
       "physicalCopy": true,
       "embeddedResources": true,
-      "skinAndAnimationPayloadUnchanged": true,
+      "skinAndAnimationPayloadUnchanged": false,
       "geometryPayloadUnchanged": false,
-      "geometryNote": "Identical body vertices merged by material; two added hand attachments",
+      "geometryNote": "Original body geometry retained; existing two hand attachments converted from rigid child meshes to fully skinned model-space primitives",
       "textures": [
         {
           "index": 0,
-          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae",
           "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
-          "edited": false
+          "edited": false,
+          "normalizedToMaxEdge": 256
         },
         {
           "index": 1,
-          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae",
           "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
-          "edited": false
+          "edited": false,
+          "normalizedToMaxEdge": 256
         },
         {
           "index": 2,
-          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae",
           "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
-          "edited": false
+          "edited": false,
+          "normalizedToMaxEdge": 256
         },
         {
           "index": 3,
-          "sha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
+          "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae",
           "sourceSha256": "e647de0a9f51d21962ca54d5dcdf6d15ed40eb311cfd6ba46b491c847d8cacbb",
-          "edited": false
+          "edited": false,
+          "normalizedToMaxEdge": 256
         }
       ],
       "attachments": [
@@ -224,16 +229,27 @@
           "name": "goblin-right-small-sword",
           "parentNode": 34,
           "parentName": "Bip001 R Hand",
-          "node": 67
+          "node": 67,
+          "skin": 0,
+          "jointSlot": 34,
+          "vertices": 108,
+          "binding": "100%-rigid-to-hand-joint"
         },
         {
           "name": "goblin-left-small-shield",
           "parentNode": 15,
           "parentName": "Bip001 L Hand",
-          "node": 68
+          "node": 68,
+          "skin": 0,
+          "jointSlot": 15,
+          "vertices": 72,
+          "binding": "100%-rigid-to-hand-joint"
         }
       ],
-      "runtime": "outputs/hero-model-derivatives-20260910/copies-v4/goblin/runtime"
+      "runtime": "content/assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+      "sourceBodySkinAndAnimationPayloadUnchanged": true,
+      "accessorySkinPayloadAdded": true,
+      "evidence": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/receipt.json"
     },
     {
       "id": "b2-yogiri",

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -91,7 +91,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -156,7 +156,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -274,7 +274,7 @@
       "castTimeTier": "小"
     },
     "W": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -326,7 +326,7 @@
           {
             "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
             "params": {
-              "castTimeSec": 1.233,
+              "castTimeSec": 1,
               "damage": {
                 "damageTier": "小"
               },
@@ -337,7 +337,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 1.233,
+              "castTimeSec": 1,
               "castType": "targeted",
               "effects": [
                 {
@@ -418,7 +418,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-rem",
-  "modelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+  "modelKey": "version.body.6144e87f910f8aa85aecb3a5bcf9fdef606f24c5184a27fe",
   "name": "蕾姆",
   "origin": "狂戰",
   "passiveAbility": "b2-rem.passive",
@@ -433,5 +433,61 @@
   "tags": [
     "thrown"
   ],
-  "icon": "assets/icons/champions/b2-rem.webp"
+  "icon": "assets/icons/champions/b2-rem.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.3eb60f520e1dc0b1c3c388b618b3c7a3ab53465669e795cb",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+      "modelSha256": "0aafae8b91e441cad215b34de2c64deb188bc42befc45bed78740b1b3618ad89",
+      "binarySha256": "2766406116640635dc332f44b45449d7119a87a1da2aa3ce1799de1e003a198e",
+      "registeredAt": "2026-09-12T23:02:37.833Z",
+      "source": {
+        "kind": "previous",
+        "character": "蕾姆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.b30102050d398bf404b515acf00e50c110109e1a376fe039",
+      "label": "蕾姆",
+      "sourceModelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+      "modelSha256": "dcee6eb3429704cf345ac5c4577efdddc5f58e9d79b483a63704def5658af00b",
+      "binarySha256": "3734d48d4f190483fce8e45e809641f9325b7b0b77a1ba82f4c9a32a12a22189",
+      "registeredAt": "2026-09-12T23:02:37.839Z",
+      "source": {
+        "kind": "exact",
+        "character": "蕾姆",
+        "work": "Re:從零開始的異世界生活",
+        "library": "300heroes",
+        "reference": "300heroes:81b284ecdb9d20cddd22624e",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.6144e87f910f8aa85aecb3a5bcf9fdef606f24c5184a27fe",
+      "label": "蕾姆",
+      "sourceModelKey": "community.body.9c6ed90d679f17906e90896b743064fcc3fa49552469c905",
+      "modelSha256": "2ac7cbc448fe010d5f891bc544b4884bb60758f4a074ec1e889820c94babf1ad",
+      "binarySha256": "3734d48d4f190483fce8e45e809641f9325b7b0b77a1ba82f4c9a32a12a22189",
+      "registeredAt": "2026-09-13T00:08:53.697Z",
+      "source": {
+        "kind": "exact",
+        "character": "蕾姆",
+        "work": "Re:從零開始的異世界生活",
+        "library": "300heroes",
+        "reference": "300heroes:81b284ecdb9d20cddd22624e",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

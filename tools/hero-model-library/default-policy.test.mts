@@ -60,3 +60,20 @@ test('owner order is shared; direct original-game evidence never comes from iden
     assert.equal(selectionSource(approval.heroId,option).tier, option.source.tier);
   }
 });
+test('new registrations carry explicit source game, platform, release evidence and selection class', () => {
+  const base = {sourceId:'runtime:guts-community-procedural-ready-20260910', sourceModelKey:'body.guts', source:{
+    kind:'exact', character:'Guts', work:'Berserk', library:'Lethal Company MOD／RRoD', tier:'original', selectionClass:'community-mod', reference:'https://thunderstore.io/example',
+  }};
+  const source = selectionSource('b2-guts', base);
+  assert.equal(source.selectionClass, 'community-mod');
+  assert.equal(source.sourceGame, 'Lethal Company');
+  assert.equal(source.sourcePlatform, 'Windows');
+  assert.equal(source.sourceGameReleasedAt, '2023-10-23');
+  assert.match(source.sourceGameReleaseReference, /^https:\/\/store\.steampowered\.com\//);
+  const legacy = selectionSource('hero', {sourceId:'300heroes:1', sourceModelKey:'body.300', source:{
+    kind:'exact', character:'Hero', work:'Work', library:'300heroes', tier:'300heroes', reference:'300heroes:test',
+  }});
+  assert.equal(legacy.selectionClass, '300heroes');
+  assert.equal(legacy.sourceGame, '300英雄');
+  assert.equal(legacy.sourcePlatform, 'Windows');
+});

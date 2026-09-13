@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.7a808321a825da1deac3e7208e0f14f4ebee171c201206f7",
+  "modelKey": "version.body.b47a423ca2a25a83e403c00fbbd131cc669368665eb63d61",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -112,7 +112,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-02-20260907.q.webp",
       "template": {
@@ -184,7 +184,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-02-20260907.w.webp",
       "template": {
@@ -291,7 +291,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.533,
+      "castTimeSec": 0.1,
       "vfxKey": "fx.prim.fire.slash",
       "vfxLayers": [
         {
@@ -376,7 +376,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.5,
       "vfxKey": "fx.prim.fire.slash",
       "vfxLayers": [
         {
@@ -479,6 +479,83 @@
         "reference": "https://www.ou99.com/thread-313646-1-1.html",
         "tier": "w3x",
         "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d6d95727a4aa2700a44cbed333c5157cc87d44b63c1c3dad",
+      "label": "周防尊",
+      "sourceModelKey": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+      "modelSha256": "6abae2be04903298e24d89384d7a8eda4c29dd5f9344d8d041b407595e0bd85f",
+      "binarySha256": "454edfb5fda8b97abec4055bdd447a3b25d32e540eb0095409933f7334bf522e",
+      "registeredAt": "2026-09-12T23:02:27.222Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "周防尊",
+        "work": "K",
+        "library": "300heroes",
+        "reference": "300heroes:8bb741c66037340e2f7efec7",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b522f2df1f9872a8f48405de807430229230bf934fe4d345",
+      "label": "八神庵（論壇模型）",
+      "sourceModelKey": "ou99.313646-standard-v2",
+      "modelSha256": "b3e96c9fdfda11e0037c380daf95d314f814f40fdbeb61547e1935bc9e5c7049",
+      "binarySha256": "8a8a5e0176f40b6a0a745cba9db5e2db092eda7c41a616cc7278804d7ad2664f",
+      "registeredAt": "2026-09-12T23:02:27.428Z",
+      "source": {
+        "kind": "exact",
+        "character": "八神庵",
+        "work": "THE KING OF FIGHTERS",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-313646-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.59f82e72371db5474efebde944b5c7e5fb15a88fdc46b021",
+      "label": "周防尊",
+      "sourceModelKey": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+      "modelSha256": "b60e62e70e83187f290e80e21a4d17ebe3365c1e710123406d8e26a0018dd241",
+      "binarySha256": "454edfb5fda8b97abec4055bdd447a3b25d32e540eb0095409933f7334bf522e",
+      "registeredAt": "2026-09-13T00:08:43.341Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "周防尊",
+        "work": "K",
+        "library": "300heroes",
+        "reference": "300heroes:8bb741c66037340e2f7efec7",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b47a423ca2a25a83e403c00fbbd131cc669368665eb63d61",
+      "label": "八神庵（論壇模型）",
+      "sourceModelKey": "ou99.313646-standard-v2",
+      "modelSha256": "e31a5eeb571ee5f92c89b9ab2b35fcbc46f7fe435327650f691932f8c86afd69",
+      "binarySha256": "8a8a5e0176f40b6a0a745cba9db5e2db092eda7c41a616cc7278804d7ad2664f",
+      "registeredAt": "2026-09-13T00:08:43.548Z",
+      "source": {
+        "kind": "exact",
+        "character": "八神庵",
+        "work": "THE KING OF FIGHTERS",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-313646-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
       },
       "automaticEligible": true
     }

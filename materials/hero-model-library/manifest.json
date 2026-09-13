@@ -1123,11 +1123,11 @@
     },
     {
       "id": "existing:tram",
-      "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
-      "glbPath": "assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
-      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
-      "bytes": 78876,
-      "documentSha256": "b77c61d90930191a6c246fc9be54860d0ba21dc382d6c00310237d33270320fc",
+      "modelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+      "glbPath": "assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+      "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+      "bytes": 129044,
+      "documentSha256": "a35601726f9ec613b5aa68e75db0e2bc32ae9b40145ab32f28c8875cbd7f956d",
       "sourceCharacter": "GGD 原創如月電車",
       "sourceWork": "GGD 原創",
       "sourceAssetId": "existing:tram",
@@ -1141,11 +1141,26 @@
         "death": "death"
       },
       "limitations": [
-        "保留借用模型身形；未重製角色專屬外觀或複合身體。"
+        "GGD 原創如月電車；不是原作遊戲直接擷取模型。",
+        "六段既有 GGD 節點動畫完整保留；五個車體元件改為 100% 剛性蒙皮，沒有新增骨骼變形動作。",
+        "無貼圖；外觀由原始頂點色材質構成。",
+        "5 個 draw primitive 高於警戒值 3，但未超過硬上限 6。"
       ],
-      "validation": "shared-upload-and-runtime-motion",
+      "validation": "shared-upload-runtime-motion-khronos-webgl",
       "fullCharacterPackage": false,
-      "bundleId": "ggd.model.b77c61d90930191a6c246fc9"
+      "bundleId": "ggd.model.a35601726f9ec613b5aa68e7",
+      "standardization": {
+        "tools": [
+          "tools/w3x-import/skin_verified_rigid_hierarchy.py",
+          "tools/community-hero-forge/finalize-library-body.mts"
+        ],
+        "evidence": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/receipt.json",
+        "sourceSha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+        "preFinalSha256": "c15d1f6b76c8d74134970d7130f75ea5dad0243027586e28978e4af4e2e771b6",
+        "animationDefinitionsUnchanged": true,
+        "binding": "five-mesh-components-rigid-to-original-animated-nodes"
+      },
+      "gitPath": "content/assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb"
     },
     {
       "id": "300heroes:137",
@@ -1330,10 +1345,10 @@
     {
       "id": "community:community-review-06-20260907",
       "modelKey": "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7",
-      "glbPath": "assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
-      "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
-      "bytes": 199556,
-      "documentSha256": "013312636edf7503d23eb32afed3417a6807cf0868d7a6b7d463efb8bb00d9f8",
+      "glbPath": "assets/models/community/d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8.glb",
+      "sha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
+      "bytes": 199612,
+      "documentSha256": "9512b4a2ad4e9b7142a818aa0e511c82a6897161dd9f592ee7fd7a09059df035",
       "sourceCharacter": "GGD 圓滾滾粉紅替身",
       "sourceWork": "GGD 自製程序化卡通替身",
       "sourceAssetId": "generated:ggd-cartoon-proxy-pink-round",
@@ -1349,7 +1364,21 @@
       "limitations": [],
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
-      "bundleId": "ggd.model.013312636edf7503d23eb32a"
+      "bundleId": "ggd.model.9512b4a2ad4e9b7142a818aa",
+      "standardization": {
+        "tool": "tools/w3x-import/expand_verified_palette.py",
+        "evidence": "materials/hero-model-library/priority-evidence/procedural-palette-repair/receipt.json",
+        "paletteInputSize": [
+          4,
+          2
+        ],
+        "paletteOutputSize": [
+          16,
+          8
+        ],
+        "resampling": "nearest",
+        "originalSourceTextureRecovered": false
+      }
     },
     {
       "id": "community:community-review-07-20260907",
@@ -1536,10 +1565,10 @@
     {
       "id": "community:community-review-14-20260907",
       "modelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
-      "glbPath": "assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
-      "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
-      "bytes": 311956,
-      "documentSha256": "f06b631406f8efcc631f0578ff92b351ff72e5ed11dc65e40698ed15050d004e",
+      "glbPath": "assets/models/community/d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985.glb",
+      "sha256": "d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985",
+      "bytes": 312016,
+      "documentSha256": "fc27900d81367670b8a304a6a5889631046eee8380e3bd4ce9b8bc7e464ad099",
       "sourceCharacter": "GGD 黃色觸手教師替身",
       "sourceWork": "GGD 自製程序化卡通替身",
       "sourceAssetId": "generated:ggd-cartoon-proxy-yellow-teacher",
@@ -1555,7 +1584,21 @@
       "limitations": [],
       "validation": "shared-upload-and-runtime-motion",
       "fullCharacterPackage": false,
-      "bundleId": "ggd.model.f06b631406f8efcc631f0578"
+      "bundleId": "ggd.model.fc27900d81367670b8a304a6",
+      "standardization": {
+        "tool": "tools/w3x-import/expand_verified_palette.py",
+        "evidence": "materials/hero-model-library/priority-evidence/procedural-palette-repair/receipt.json",
+        "paletteInputSize": [
+          4,
+          2
+        ],
+        "paletteOutputSize": [
+          16,
+          8
+        ],
+        "resampling": "nearest",
+        "originalSourceTextureRecovered": false
+      }
     },
     {
       "id": "community:community-review-15-20260907",
@@ -2168,14 +2211,14 @@
     {
       "id": "derivative:kirby",
       "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
-      "glbPath": "assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
-      "sha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
-      "bytes": 199860,
-      "documentSha256": "ea975386405e8702b6fde096968313acee2c3c4e9dcae07c114f35bcef8587c0",
+      "glbPath": "assets/models/community/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+      "sha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "bytes": 199920,
+      "documentSha256": "2dc41180e7c4f3f3ba0ff1f19e80266136e2e0b51a8d534e6b1c4c8bff2eb603",
       "sourceCharacter": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
       "sourceWork": "GGD 自製程序化卡通替身",
       "sourceAssetId": "derivative:kirby",
-      "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+      "sourceSha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
       "clipMap": {
         "idle": "idle",
         "run": "run",
@@ -2194,11 +2237,25 @@
         "targetName": "卡比",
         "targetWork": "星之卡比",
         "sourceId": "community:community-review-06-20260907",
-        "sourceSha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+        "sourceSha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
         "copyMode": "independent-embedded-copy",
         "changes": "完整複製 pink-round 程序化替身"
       },
-      "bundleId": "ggd.model.ea975386405e8702b6fde096"
+      "bundleId": "ggd.model.2dc41180e7c4f3f3ba0ff1f1",
+      "standardization": {
+        "tool": "tools/w3x-import/expand_verified_palette.py",
+        "evidence": "materials/hero-model-library/priority-evidence/procedural-palette-repair/receipt.json",
+        "paletteInputSize": [
+          4,
+          2
+        ],
+        "paletteOutputSize": [
+          16,
+          8
+        ],
+        "resampling": "nearest",
+        "originalSourceTextureRecovered": false
+      }
     },
     {
       "id": "derivative:sunraku",
@@ -2346,11 +2403,11 @@
     },
     {
       "id": "derivative:goblin",
-      "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
-      "glbPath": "assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
-      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
-      "bytes": 2361292,
-      "documentSha256": "9cdd717b3f778bf2851819528f12950712c7bb3703b7e19197e9008fe82eed09",
+      "modelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+      "glbPath": "assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+      "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+      "bytes": 1008048,
+      "documentSha256": "0866e1a9e3fb8b76a000f882f4bece550ea7c19ebd29517deecb61a0d41b2940",
       "sourceCharacter": "哥布林殺手（獨立副本／尤吉欧）",
       "sourceWork": "刀劍神域 Sword Art Online",
       "sourceAssetId": "derivative:goblin",
@@ -2365,9 +2422,11 @@
       },
       "limitations": [
         "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
+        "劍與盾已各自以 100% 權重綁定右手／左手骨；舊衍生 GLB 保留。",
+        "既有尤吉歐原劍仍保留，新增的小劍與盾為簡單方塊幾何；本次未宣稱原作哥布林殺手外觀。",
         "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
       ],
-      "validation": "shared-upload-and-runtime-motion",
+      "validation": "shared-upload-runtime-motion-khronos-webgl",
       "fullCharacterPackage": false,
       "derivation": {
         "heroId": "b2-goblin",
@@ -2378,7 +2437,19 @@
         "copyMode": "independent-embedded-copy",
         "changes": "完整複製尤吉歐，右手小劍、左手小盾"
       },
-      "bundleId": "ggd.model.9cdd717b3f778bf285181952"
+      "bundleId": "ggd.model.0866e1a9e3fb8b76a000f882",
+      "standardization": {
+        "tools": [
+          "tools/w3x-import/skin_verified_rigid_attachments.py",
+          "tools/community-hero-forge/finalize-library-body.mts"
+        ],
+        "evidence": "materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/receipt.json",
+        "sourceSha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+        "preNormalizationSha256": "7d9906f451e2e6a0b64797b0c1a52ebd4bfe97f974d23071f25c6d4bd29a773d",
+        "texturesResizedToMaxEdge": 256,
+        "accessoryBinding": "100%-rigid-to-corresponding-hand-joint"
+      },
+      "gitPath": "content/assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb"
     },
     {
       "id": "derivative:yogiri",
@@ -4712,7 +4783,7 @@
       "options": [
         {
           "sourceId": "derivative:goblin",
-          "sourceModelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+          "sourceModelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
           "label": "哥布林殺手（獨立副本／尤吉欧）",
           "source": {
             "kind": "style-proxy",
@@ -5307,7 +5378,7 @@
       "options": [
         {
           "sourceId": "existing:tram",
-          "sourceModelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+          "sourceModelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
           "label": "GGD 原創如月電車",
           "source": {
             "kind": "exact",

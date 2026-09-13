@@ -1,0 +1,20 @@
+{
+  "id": "version.body.1c285b4d672c8f7a369c2752163c93483ff1bbebc110c1ab",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/3638a0a5830a5b4d0f776d508a42592976239b555850030fa585c90d6dd161ea.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "lux_idle1",
+    "run": "lux_run",
+    "attack": "lux_attack1",
+    "cast": "lux_spell1",
+    "hurt": "lux_idle1",
+    "death": "lux_death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

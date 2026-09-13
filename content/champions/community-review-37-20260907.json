@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
+  "modelKey": "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-37-20260907.q.webp",
       "template": {
@@ -158,7 +158,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-37-20260907.w.webp",
       "template": {
@@ -227,7 +227,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-37-20260907.e.webp",
       "template": {
@@ -324,7 +324,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.533,
+      "castTimeSec": 0.5,
       "vfxKey": "fx.prim.holy.slash",
       "vfxLayers": [
         {
@@ -427,6 +427,83 @@
         "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
         "tier": "300heroes",
         "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.61eee78779266fe60d8dcda510345093f25a3ed5c378720c",
+      "label": "可爱小宠物chii吉伊（論壇相似模型）",
+      "sourceModelKey": "ou99.459617-standard",
+      "modelSha256": "efe3356fcc982ad653efb4167185ea3278c8842f16736ff6f99c4b92467a26dc",
+      "binarySha256": "6ed4db99307c164bc9fcc7d24df6f11b4135e698ec244e58ddf8690c8e44d3be",
+      "registeredAt": "2026-09-12T23:02:37.346Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9e6e074251ce5a123abe1923b89800d395c97015007a83f4",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "a99bbb9843af7ec2437b1845b64205c55c9b12ef2234929495b8f34cde11008b",
+      "binarySha256": "ae89f7f129203e2964934c508571318b5a81c877dd172cbbe6369c652ba85d3a",
+      "registeredAt": "2026-09-12T23:02:37.442Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda",
+      "label": "可爱小宠物chii吉伊（論壇相似模型）",
+      "sourceModelKey": "ou99.459617-standard",
+      "modelSha256": "c16f92e254ac726b8ef595c6049650c24809d09907726891557739ed62856c55",
+      "binarySha256": "6ed4db99307c164bc9fcc7d24df6f11b4135e698ec244e58ddf8690c8e44d3be",
+      "registeredAt": "2026-09-13T00:08:53.155Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.fa4d88f2a0f6e6ec59eb106438c3c1647a08f38dcb07a16f",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "45b474dd62ebf04ffef06af4ef8561d2872b106e0a86960f09ce5680433f88d5",
+      "binarySha256": "ae89f7f129203e2964934c508571318b5a81c877dd172cbbe6369c652ba85d3a",
+      "registeredAt": "2026-09-13T00:08:53.266Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
       },
       "automaticEligible": false
     }

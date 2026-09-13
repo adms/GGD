@@ -122,10 +122,10 @@ describe("卡面的吟唱秒數 = 引擎真的吟唱那幾秒（GH#792）", () =
   /**
    * ⭐⭐ **兩個方向都要驗**（第一守則：一把只驗過單邊的尺，不算自證過）。
    * 一個寫死「吟唱1秒」的卡面在今天與 `{{cast}}` **量起來一模一樣** ——
-   * 分得出來的唯一辦法是**轉動那一格**：`castTimeMaxSec` 拉到 8（＝ owner 的止血閥、
-   * 一支都夾不到）⇒ 真的佔位符會跟著回到規格值，寫死的字面值不會動。
+   * 分得出來的辦法是**轉動那一格**：先把 `castTimeMaxSec` 暫時收緊，再放回
+   * 出貨上限。真的佔位符會跟著從暫時上限回到規格值，寫死的字面值不會動。
    */
-  it("③ 佔位真的是佔位：castTimeMaxSec 拉到 8 ⇒ 卡面跟著回到規格值", () => {
+  it("③ 佔位真的是佔位：暫時收緊 castTimeMaxSec ⇒ 卡面跟著夾住並能回到規格值", () => {
     const src = "吟唱{{cast}}秒";
     const shipped = castTimeRulesFromDoc(
       (Configs.all() as unknown as { schema?: string }[]).find(
@@ -137,23 +137,25 @@ describe("卡面的吟唱秒數 = 引擎真的吟唱那幾秒（GH#792）", () =
     //   `castTimeSec` 重算成 **1**＝上限本身 ⇒ ⭐ **夾具在出貨的世界裡不再成立**，
     //   而這一條會用「expected 1 to be greater than 1」紅 —— ⛔ 一句與真相無關的訊息。
     //   ⚠️ 這正是 CLAUDE.md 記的失敗形態⑩：**守衛是靠夾具的某個極端值才綠的**。
-    // ⇒ 找**任何一支**真的被夾住的技能；一支都沒有 ⇒ 明說「這條無事可守」而不是假裝綠。
+    // ⭐ 2026-09-12 五級距遷移後，出貨規格值本來就不會超過出貨上限。
+    // 因此用比出貨上限更小的暫時上限校準同一條關係；這仍會讓真的佔位符變動，
+    // 而寫死的字面值保持不動。
+    const tightenedMax = shipped.castTimeMaxSec / 2;
     const clamped = Abilities.ids()
       .map((id) => Abilities.get(id) as unknown as { castTimeSec?: number })
-      .find((d) => typeof d.castTimeSec === "number" && d.castTimeSec > shipped.castTimeMaxSec);
+      .find((d) => typeof d.castTimeSec === "number" && d.castTimeSec > tightenedMax);
     expect(
       clamped,
-      "⛔ 出貨內容裡沒有任何一支技能的規格吟唱**超過**上限 —— " +
-        "這一條證明不了「佔位真的是佔位」（沒被夾到的技能證明不了任何事）。\n" +
-        "   ⇒ 要嘛上限被調高了（那就改看新的上限），要嘛規格值全被重算過。",
+      "⛔ 出貨內容裡沒有任何一支技能能被暫時收緊的上限夾住 —— " +
+        "這一條證明不了「佔位真的是佔位」（沒被夾到的技能證明不了任何事）。",
     ).toBeDefined();
     const def = clamped!;
     const spec = def.castTimeSec!;
     const render = (maxSec: number): string =>
       renderAbilityText(src, abilityQuantities(def, { ...DEFAULT_PROSE_TABLES, castTime: { ...shipped, castTimeMaxSec: maxSec } }));
-    expect(spec).toBeGreaterThan(shipped.castTimeMaxSec); // ⛔ 沒被夾到的技能證明不了任何事
-    expect(render(shipped.castTimeMaxSec)).toBe(`吟唱${shown(shipped.castTimeMaxSec)}秒`);
+    expect(spec).toBeGreaterThan(tightenedMax); // ⛔ 沒被夾到的技能證明不了任何事
+    expect(render(tightenedMax)).toBe(`吟唱${shown(tightenedMax)}秒`);
     // ⚠️ 同 ①：比的是**算繪器會印什麼**，⛔ 不是全精度浮點數（1.033 印出來是 1.03）。
-    expect(render(8)).toBe(`吟唱${shown(spec)}秒`);
+    expect(render(shipped.castTimeMaxSec)).toBe(`吟唱${shown(spec)}秒`);
   });
 });

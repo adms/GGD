@@ -74,7 +74,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 4,
@@ -132,7 +132,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "radius": 3,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1,
       "cooldownTier": "小",
       "manaCostTier": "極小",
       "radiusTier": "極小",
@@ -155,7 +155,7 @@
             "duration": 0.8,
             "stun": true
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -325,7 +325,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.slash-lg",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "castTimeTier": "大"
     }

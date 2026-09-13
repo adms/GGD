@@ -2052,11 +2052,6 @@
     "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）",
     "why": "⭐ PR 1118 —— `hooks[].oncePerCast` 在**道具被動**那一側的同一格。⛔ 出貨 77 件零採用,理由與技能那一側逐字相同：既有被動全部是逐發計數（原作就是那樣）⇒ 沒有一件需要去重。⚠️ 兩格**刻意成對**（同一個 `HookDef`）—— ⛔ 只在一邊開,道具與技能對同一句「一次施放只給一次」會給出不同答案。"
   },
-  "enum:abilities.castTimeTier=極小": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
-  },
   "enum:abilities.effects[]#consumeStatus.shape=circle": {
     "status": "landing",
     "since": "2026-09-11",
@@ -2113,11 +2108,6 @@
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
   "enum:abilities.template|0.onConflict=lastWins": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
-  },
-  "enum:champions.modelVersions[].source.kind=alternate": {
     "status": "landing",
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
@@ -2335,5 +2325,13 @@
     "status": "landing",
     "since": "2026-09-11",
     "why": "GH#1190／#1211 —— 同上：`spawnObstacle`（技能生得出**真的擋路**的暫時柱）由 `fdd1a25d3` 落地，⭐ 而它的第一份內容是 **鄂爾 Q**，仍在 GH#1185 的待上架 11 名裡。⚠️ ⭐ 這一格特別值得留 30 天的計時器：機制已經**出貨**（registry 認得、編輯器列得出來），⛔ 而一個出貨了卻沒有任何內容用的 effect kind，正是 S8「做了但玩家拿不到」的定義。⭐ 反駁法同上：#1185 上架後仍為 0 ⇒ 接線斷了。"
+  },
+  "enum:champions.modelVersions[].source.selectionClass=retextured-proxy": {
+    "status": "debt",
+    "why": "2026-09-13 模型來源欄位遷移後仍為 0。現有 11 組使用者指定加工副本依既有 default-policy 明示歸類為 manual，其他 style-proxy 都是 similar-proxy；目前沒有一個可誠實標成 retextured-proxy 的非手動候選。保留此順位供日後真正的貼圖加工候選，不能為通過普查改寫既有授權分類。"
+  },
+  "enum:champions.modelVersions[].source.selectionClass=w3x": {
+    "status": "debt",
+    "why": "2026-09-13 模型來源欄位遷移後仍為 0。現有 W3X 位元來源是舊的 previous 版本或跨角色 style-proxy，後者依規則歸類 similar-proxy；不可原地改寫不可變歷史版本，也不能把相似模型冒稱為純 W3X 順位。下一個真正的 W3X 原版候選註冊時應採用此類別。"
   }
 }

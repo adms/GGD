@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -66,7 +66,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -131,7 +131,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -184,7 +184,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -230,7 +230,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -352,7 +352,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-haga",
-  "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+  "modelKey": "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
   "name": "羽賀",
   "origin": "軟輔",
   "passiveAbility": "b2-haga.passive",
@@ -468,6 +468,122 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.821dec405756f44c8448d28aaba5b74534c9f8e39a152ae8",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "d14145fe98d1062e4833eeacc9c61c1ba29cb8fb5a43a01357fa0d384f7a517f",
+      "binarySha256": "226f31c83d149dc843be270fb79116e4ab8067516bd74139c0c0558e7b3faffb",
+      "registeredAt": "2026-09-12T23:08:08.111Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.62bf4fc6be4e5be8c9f9d050d3cca3dacee6b3449fbabe1a",
+      "label": "海星动画人（論壇相似模型）",
+      "sourceModelKey": "ou99.495015-standard",
+      "modelSha256": "248f8add658188888e4e20c298c6062043bc67a00949aa68b96110fdd757a33c",
+      "binarySha256": "4c4c6b29b0a10ee3f95c2855c8417c318495a1a22ab9e924b61647d46d830702",
+      "registeredAt": "2026-09-12T23:08:08.146Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "b7ce0e58526376f3add67bc10456fa1319f3930de5063170d41f7852956826ac",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-12T23:08:08.519Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b69a76d67bde479201fb1082753b71c102634a883af5cbb2",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "b22dee034ac0b81c69cbe891fd899e240ca738cba01e9597c2f79c1cfb0823b7",
+      "binarySha256": "226f31c83d149dc843be270fb79116e4ab8067516bd74139c0c0558e7b3faffb",
+      "registeredAt": "2026-09-13T00:09:00.412Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
+      "label": "海星动画人（論壇相似模型）",
+      "sourceModelKey": "ou99.495015-standard",
+      "modelSha256": "48992a7702a040e4d74603960e2abe313050877da8138a9b6d3624e48db960fa",
+      "binarySha256": "4c4c6b29b0a10ee3f95c2855c8417c318495a1a22ab9e924b61647d46d830702",
+      "registeredAt": "2026-09-13T00:09:00.444Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "896cde23d4cf3070948518e60ddbe95e3bd6f7939d40f363477e24db79958a99",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-13T00:09:00.772Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

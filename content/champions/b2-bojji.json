@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -50,7 +50,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -114,7 +114,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -166,7 +166,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -210,7 +210,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -324,7 +324,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-bojji",
-  "modelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+  "modelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
   "name": "波吉",
   "origin": "鬥士",
   "passiveAbility": "b2-bojji.passive",
@@ -339,5 +339,100 @@
   "tags": [
     "sword"
   ],
-  "icon": "assets/icons/champions/b2-bojji.webp"
+  "icon": "assets/icons/champions/b2-bojji.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.1fd3871777dddc0d1b3a797ffe2c048a5afbd40d41065e37",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "modelSha256": "39b75416476435a69c5c138d0f02e1415208fd40ae6bda2fdf543e3381228b56",
+      "binarySha256": "d637360355919ae5253a6467d4c9ef3bf110084b5a7bce3200db6578279d9329",
+      "registeredAt": "2026-09-12T23:02:39.713Z",
+      "source": {
+        "kind": "previous",
+        "character": "波吉",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.587a970891bb54dac6c4e7103fe361631acf9025b5fc8797",
+      "label": "小桐人寵物",
+      "sourceModelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
+      "modelSha256": "7269501ae8f96597104726d65a70a616ede1d56e9eb2a800e26e3b6417a00089",
+      "binarySha256": "fbef5afebc8c71a76eeb3caa7e546d6557874430c3015f6063269e70f35c377a",
+      "registeredAt": "2026-09-12T23:02:39.717Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "小桐人寵物",
+        "work": "刀劍神域；依檔名與外觀推定",
+        "library": "300heroes",
+        "reference": "300heroes:752d81a9fe2da27b368dadee",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.3a3c88a115192d672c15843a6401c45ab6c00c5942924b2a",
+      "label": "波吉（獨立副本／小桐人寵物）",
+      "sourceModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "modelSha256": "2c1e1048084381035925e6de34dc4105101082b35e95cab87d217b9c9b50d091",
+      "binarySha256": "745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581",
+      "registeredAt": "2026-09-12T23:02:39.894Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "波吉（獨立副本／小桐人寵物）",
+        "work": "刀劍神域；依檔名與外觀推定",
+        "library": "300heroes",
+        "reference": "derivative:bojji",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.43e6ed5f2cd3eda153f310f13967f27c67bcd5f0579c9c89",
+      "label": "小桐人寵物",
+      "sourceModelKey": "community.body.8d231294da617cd9218bf85d1e7437eaabdc6a69b3ae96e6",
+      "modelSha256": "dd64e4a211c66fee51bbb6054b392fb9acca035f83c5c42141387836527da208",
+      "binarySha256": "fbef5afebc8c71a76eeb3caa7e546d6557874430c3015f6063269e70f35c377a",
+      "registeredAt": "2026-09-13T00:08:55.569Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "小桐人寵物",
+        "work": "刀劍神域；依檔名與外觀推定",
+        "library": "300heroes",
+        "reference": "300heroes:752d81a9fe2da27b368dadee",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
+      "label": "波吉（獨立副本／小桐人寵物）",
+      "sourceModelKey": "community.body.a700023cb2a1b6902236ed03f61296d23ce3e64203233d3a",
+      "modelSha256": "7380f46f058dcc9c2f9f8b57616762b5a93375c9c5e3ebf9514266cf17ad959d",
+      "binarySha256": "745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581",
+      "registeredAt": "2026-09-13T00:08:55.747Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "波吉（獨立副本／小桐人寵物）",
+        "work": "刀劍神域；依檔名與外觀推定",
+        "library": "300heroes",
+        "reference": "derivative:bojji",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

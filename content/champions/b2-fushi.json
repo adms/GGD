@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -120,7 +120,7 @@
       "castTimeTier": "小"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -218,7 +218,7 @@
       "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -287,7 +287,7 @@
       "castTimeTier": "大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -426,7 +426,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-fushi",
-  "modelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
+  "modelKey": "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
   "name": "不死",
   "origin": "硬輔",
   "passiveAbility": "b2-fushi.passive",
@@ -522,6 +522,83 @@
         "reference": "300heroes:4a4c507abbd6a236e206dd15",
         "tier": "300heroes",
         "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.75ba2633b331165aa31ed04fb63b7dfe082e4d95e73a1bb3",
+      "label": "天使可爱小女孩派蒙（論壇相似模型）",
+      "sourceModelKey": "ou99.467227-standard",
+      "modelSha256": "b5220d8f9638d018348046c46432c0249fde602a3f60262bc581c7a13da27d78",
+      "binarySha256": "fafbc4478af888660ffaf25e67cc620e107943ea0a21e056b144e1f5f2960618",
+      "registeredAt": "2026-09-12T23:12:00.652Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "天使可爱小女孩派蒙",
+        "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.354364bf35caacfd883adc74a39dcfe9871048c9353aa745",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "1e8e85363f93e9b5710ee988bc4301b17176eb21757d7efb5cf9e96aa45d9ee8",
+      "binarySha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "registeredAt": "2026-09-12T23:12:00.764Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
+      "label": "天使可爱小女孩派蒙（論壇相似模型）",
+      "sourceModelKey": "ou99.467227-standard",
+      "modelSha256": "3d99607994e00f09f368636c3f10c94e8adba453cfb8908974eedfa24b5fbbab",
+      "binarySha256": "fafbc4478af888660ffaf25e67cc620e107943ea0a21e056b144e1f5f2960618",
+      "registeredAt": "2026-09-13T00:09:04.665Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "天使可爱小女孩派蒙",
+        "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a4910d30bc08f391094d52fe51dcbfa96ef6279776874fd7",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "55672333668f725f1b9500a9c5488b3d1dcaf86d90807dca001118299fc849eb",
+      "binarySha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "registeredAt": "2026-09-13T00:09:04.773Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
       },
       "automaticEligible": false
     }

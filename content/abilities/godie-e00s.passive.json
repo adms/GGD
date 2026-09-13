@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    30
+    30.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "innateKind": "active",
   "innateActivePassive": "attach",
   "targetsEnemies": false,
@@ -36,6 +36,6 @@
   },
   "icon": "assets/icons/abilities/godie-e00s.passive.webp",
   "cooldownTier": "極小",
-  "castTimeSec": 0.3,
-  "castTimeTier": "中"
+  "castTimeTier": "中",
+  "castTimeSec": 0.3
 }

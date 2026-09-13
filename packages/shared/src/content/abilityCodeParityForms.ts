@@ -51,6 +51,9 @@ export interface FormPairAbilityState {
   readonly code: string;
   readonly base: SideFingerprint;
   readonly alternate: SideFingerprint;
+  /** Whether each side is a permanent passive and therefore intentionally has no castTimeSec. */
+  readonly basePassiveOnly: boolean;
+  readonly alternatePassiveOnly: boolean;
   /** 目前兩邊**值不同**的機制欄位（給訊息用；⛔ 不進基準線）。 */
   readonly driftFields: readonly string[];
 }
@@ -91,6 +94,11 @@ function driftBetween(a: Record<string, unknown>, b: Record<string, unknown>): s
   return [...fields].sort().filter((f) => canonicalJson(a[f]) !== canonicalJson(b[f]));
 }
 
+/** Keep this structural check aligned with abilityPassives.isPassiveOnly without importing the sim graph. */
+function isPassiveOnlyDoc(doc: Record<string, unknown> | undefined): boolean {
+  return doc?.passive !== undefined && Array.isArray(doc.effects) && doc.effects.length === 0;
+}
+
 /**
  * 掃出每一組出貨中的變身對子、每一個編號、兩邊各自的指紋。
  *
@@ -123,6 +131,8 @@ export function scanFormPairAbilities(
         code,
         base: db ? mechanicsFingerprint(db) : null,
         alternate: da ? mechanicsFingerprint(da) : null,
+        basePassiveOnly: isPassiveOnlyDoc(db),
+        alternatePassiveOnly: isPassiveOnlyDoc(da),
         driftFields: db && da ? driftBetween(db, da) : [],
       });
     }
@@ -167,6 +177,8 @@ export function diffAgainstBaseline(
         code,
         base: null,
         alternate: null,
+        basePassiveOnly: false,
+        alternatePassiveOnly: false,
         driftFields: [],
       },
       kind: "removed",

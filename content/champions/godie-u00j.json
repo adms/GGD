@@ -107,7 +107,7 @@
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,
@@ -182,7 +182,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.snapdragonmissilelaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "rangeTier": "極大",
       "range": 12,
       "radiusTier": "小",
@@ -224,13 +224,13 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.void.pulse",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
@@ -281,12 +281,12 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",

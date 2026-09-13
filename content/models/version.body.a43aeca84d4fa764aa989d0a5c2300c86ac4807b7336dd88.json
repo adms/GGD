@@ -1,0 +1,20 @@
+{
+  "id": "version.body.a43aeca84d4fa764aa989d0a5c2300c86ac4807b7336dd88",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/1bf500cb324cfa320d89abe6e14ad366bf4bf2756d7b2240d9396305e4905839.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "GGD_procedural_idle",
+    "run": "GGD_procedural_run",
+    "attack": "GGD_procedural_attack",
+    "cast": "GGD_procedural_cast",
+    "hurt": "GGD_procedural_hurt",
+    "death": "GGD_procedural_death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.630cb77949fffeb99071efbc5285fdc721f31f31bf46eb42",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

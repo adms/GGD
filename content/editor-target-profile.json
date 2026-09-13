@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_798b77ffb6e5",
+    "contentVersion": "cv_4ed66816b70a",
     "collections": {
       "champions": {
-        "hash": "633c9d35211b",
+        "hash": "12dc0c85d492",
         "count": 153
       },
       "abilities": {
-        "hash": "cf444f10e5e7",
+        "hash": "c009a73f2489",
         "count": 907
       },
       "items": {
@@ -46,8 +46,8 @@
         "count": 104
       },
       "models": {
-        "hash": "91e74f3d8aa0",
-        "count": 735
+        "hash": "61f21918a5b8",
+        "count": 984
       },
       "vfx": {
         "hash": "7df129081586",
@@ -8397,11 +8397,11 @@
       }
     ]
   },
-  "assetManifestDigest": "bafc3c0b0277",
+  "assetManifestDigest": "fa94605e9f6a",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 2732,
-    "totalBytes": 941511830
+    "entries": 2848,
+    "totalBytes": 1063557674
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8419,11 +8419,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "604cb97fec7f",
+    "fingerprint": "b39579190878",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "a135b492245e"
+        "digest": "3073ce3f2c52"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -8489,5 +8489,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "a9bb625765e0"
+  "profileDigest": "89c350bf6738"
 }

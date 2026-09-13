@@ -76,7 +76,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.holy.beam",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -118,7 +118,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse",
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -170,7 +170,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -187,7 +187,7 @@
       ],
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-hvwd.e.png",
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -233,7 +233,7 @@
       ],
       "vfxKey": "fx.prim.void.swarm-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -251,7 +251,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

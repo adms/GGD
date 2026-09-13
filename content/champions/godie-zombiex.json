@@ -97,7 +97,7 @@
       },
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "極小",
@@ -151,7 +151,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.dash",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "極小",
@@ -252,7 +252,7 @@
       ],
       "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.5,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -268,7 +268,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }

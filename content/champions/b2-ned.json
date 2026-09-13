@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -47,7 +47,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -83,7 +83,7 @@
       "castTimeTier": "極大"
     },
     "Q": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -133,7 +133,7 @@
         "params": {
           "apexHeight": 250,
           "applyTo": "self",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "極小"
           },
@@ -155,7 +155,7 @@
       "castTimeTier": "極大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -195,7 +195,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中"
           },
@@ -216,7 +216,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 1.7,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -259,7 +259,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -337,7 +337,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-ned",
-  "modelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
+  "modelKey": "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db",
   "name": "青蛙劍士 Ned",
   "origin": "鬥士",
   "passiveAbility": "b2-ned.passive",
@@ -435,6 +435,66 @@
         "selectionClass": "similar-proxy"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b1601b8f09f29d061dc213b11c973da4f408216fc5b8c32e",
+      "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+      "sourceModelKey": "ou99.456917-standard-v2",
+      "modelSha256": "c4bdd64a68fbf8b3a7678d0bb18fe70f851f4db41dbbba86d7897f2940387767",
+      "binarySha256": "a0ba6020b24e79da91c6f34d13c08095de0306df7efc4733577e0f4fb74fd20e",
+      "registeredAt": "2026-09-12T23:12:03.559Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蛤蟆蘸酱柯松剑客",
+        "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-456917-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db",
+      "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+      "sourceModelKey": "ou99.456917-standard-v2",
+      "modelSha256": "9762423e55d3d47de865d9c82c7e047689891c60aa186f0a9de9c2adb4d6d130",
+      "binarySha256": "a0ba6020b24e79da91c6f34d13c08095de0306df7efc4733577e0f4fb74fd20e",
+      "registeredAt": "2026-09-13T00:09:07.537Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蛤蟆蘸酱柯松剑客",
+        "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-456917-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.f23a2b06a901277dc9eceed7d3fbebe1d5db784bab74640d",
+      "label": "妙蛙種子模型",
+      "sourceModelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+      "modelSha256": "7d8841e6927e6d58c12f52169baa9fee5279bc04e90d919c4d8430f8d4811059",
+      "binarySha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+      "registeredAt": "2026-09-13T00:09:07.551Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "妙蛙種子模型",
+        "work": "Pokémon；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:bulbasaur",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": false
     }
   ],
   "modelSelectionMode": "automatic"

@@ -121,7 +121,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
@@ -178,7 +178,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "manaCostTier": "極小",
       "passive": {
@@ -304,7 +304,7 @@
       ],
       "vfxKey": "fx.prim.void.dash",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -345,7 +345,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.pulse-lg",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "castTimeTier": "大"
     }

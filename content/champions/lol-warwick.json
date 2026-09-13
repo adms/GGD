@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+  "modelKey": "version.body.889963a0992be9908ae8b739ff529da6223519deee3d5aa4",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -116,7 +116,7 @@
           "stacking": "refresh"
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
@@ -174,7 +174,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
@@ -241,7 +241,7 @@
           "feared": true
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -342,7 +342,7 @@
         "inheritDefaults": true,
         "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
-      "castTimeSec": 0.9,
+      "castTimeSec": 0.5,
       "icon": "assets/icons/abilities/lol-warwick.r.webp"
     }
   },
@@ -359,5 +359,63 @@
     "claw"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-warwick.webp"
+  "icon": "assets/icons/champions/lol-warwick.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.1ca03c78617904bb46d42e88cf4cde3cd60449a35456da3e",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+      "modelSha256": "3659f7a78bc25c04c3f8d21f0aa9d1a389cafa526b41bbd9398473e688647969",
+      "binarySha256": "11c877bf43488f89664d180cb70b7fa6cd75c10e8f5c92016020a00410b12975",
+      "registeredAt": "2026-09-12T23:12:04.819Z",
+      "source": {
+        "kind": "previous",
+        "character": "沃維克",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.241a15a5e1646054d2ed001a09138861c94d03bd59f8d1d6",
+      "label": "沃維克（LOL 原生模型）",
+      "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+      "modelSha256": "20adb0a20ddc02d2a816fb904444a3dfa6dc9ec85f4d0cb2a9c9f760e2e193b7",
+      "binarySha256": "8b90fd472ee157c0ceb9ac9a2fb3cc20d0b7fc68f46a67748b18f308a1ada6e6",
+      "registeredAt": "2026-09-12T23:12:04.827Z",
+      "source": {
+        "kind": "exact",
+        "character": "沃維克",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-warwick.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.889963a0992be9908ae8b739ff529da6223519deee3d5aa4",
+      "label": "沃維克（LOL 原生模型）",
+      "sourceModelKey": "community.body.bad3c4c64cdff8febe062cbc1adce2bd02f2a32ce8ca524f",
+      "modelSha256": "d73f317cef6c9bae009ec3cf96457f5814ae43ebf02d0f040be8b7d72e07c9fe",
+      "binarySha256": "8b90fd472ee157c0ceb9ac9a2fb3cc20d0b7fc68f46a67748b18f308a1ada6e6",
+      "registeredAt": "2026-09-13T00:09:08.913Z",
+      "source": {
+        "kind": "exact",
+        "character": "沃維克",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-warwick.json",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

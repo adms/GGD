@@ -74,7 +74,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-buff-self",
@@ -203,7 +203,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
@@ -253,7 +253,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-lg",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-buff-self",

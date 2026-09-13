@@ -74,7 +74,7 @@
       "effects": [],
       "vfxKey": "fx.prim.fire.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -125,7 +125,7 @@
       "effects": [],
       "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 1,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
@@ -146,7 +146,7 @@
           },
           "damageType": "physical",
           "arriveVfxId": "fx.prim.lightning.slash",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -194,7 +194,7 @@
       ],
       "vfxKey": "fx.prim.fire.beam",
       "sfxKey": "wc3.thunderclapcaster",
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -207,7 +207,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -311,7 +311,7 @@
       ],
       "vfxKey": "fx.prim.physical.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
