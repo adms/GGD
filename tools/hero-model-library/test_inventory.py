@@ -26,6 +26,19 @@ class InventoryHandoff(unittest.TestCase):
         link=next(h for h in inventory['heroes'] if h['id']=='godie-h00l')
         self.assertIn('dayjo-ssbb-zelda-audio', [s['id'] for s in link['audioSources']])
         self.assertNotIn('dayjo-ssbb-zelda-audio', [s['id'] for s in link['publicCandidates']])
+        # A multi-character audio archive can map each directory group to its
+        # own hero even when the source-level IDs only describe another group.
+        heroes={h['id']:h for h in inventory['heroes']}
+        logical_ids={runtime_id:logical_id for logical_id,runtime_id in inventory['aliases'].items()}
+        sources=json.loads((DATA/'download-sources.json').read_text())
+        for source in sources['publicSources'] + sources.get('paidSources',[]):
+            if source.get('resourceRole') != 'audio-supplement':
+                continue
+            for group in source.get('audioGroups',[]):
+                for runtime_or_logical_id in group.get('heroIds',[]):
+                    hero_id=logical_ids.get(runtime_or_logical_id,runtime_or_logical_id)
+                    with self.subTest(source=source['id'], group=group['id'], hero=hero_id):
+                        self.assertIn(source['id'], [s['id'] for s in heroes[hero_id]['audioSources']])
 
     def test_source_release_priority_uses_verified_calendar_dates(self):
         from default_policy import source_release_rank

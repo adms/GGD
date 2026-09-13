@@ -6551,6 +6551,7 @@
       "id": "parallel-ps-jumpforce-audio",
       "target": "JUMP FORCE：亞斯塔 Asta／達伊 Dai／拳四郎 Kenshiro",
       "heroIds": [
+        "godie-nbbc",
         "godie-umal"
       ],
       "ownerEntryIds": [],
@@ -6571,6 +6572,7 @@
         "required": true,
         "state": "pending-standardization",
         "heroIds": [
+          "godie-nbbc",
           "godie-umal"
         ],
         "selectionVerified": false,

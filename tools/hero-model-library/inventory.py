@@ -8,6 +8,12 @@ parser.add_argument('--workspace',type=Path,help='Optionally mirror the generate
 parser.add_argument('--check',action='store_true',help='Check freshness without writing any files.')
 args=parser.parse_args()
 def read(p):return json.loads(p.read_text())
+def mapped_hero_ids(source, alias_map):
+ """Return every explicit hero relationship, including per-audio-group mappings."""
+ ids=set(source.get('heroIds',[]))
+ for group in source.get('audioGroups',[]):ids.update(group.get('heroIds',[]))
+ logical_ids={runtime_id:logical_id for logical_id,runtime_id in alias_map.items()}
+ return {logical_ids.get(hero_id,hero_id) for hero_id in ids}
 policy=read(repo/'materials/hero-model-library/default-policy.json')
 channel_limit=read(repo/'content/config/model-lod.json')['championChannelLimit']
 context=read(repo/'materials/hero-model-library/inventory-context.json');main=context['main'];prod=context['production'];manifest=read(repo/'materials/hero-model-library/manifest.json');release=read(repo/'materials/hero-model-library/release.json');live=context['live-overlay'];community=context['live-community']
@@ -249,7 +255,7 @@ for r in rows:
  r['downloadSources']=[e['id'] for e in download_plan['entries'] if r['id'] in e['heroIds']]
  r['publicCandidates']=[s for s in download_plan.get('publicSources',[]) if r['id'] in s['heroIds'] and is_model_source(s)]
  r['paidCandidates']=[s for s in download_plan.get('paidSources',[]) if r['id'] in s['heroIds'] and is_model_source(s)]
- r['supplementSources']=[s for s in acquired_sources(download_plan) if r['id'] in s['heroIds'] and not is_model_source(s)]
+ r['supplementSources']=[s for s in acquired_sources(download_plan) if r['id'] in mapped_hero_ids(s,aliases) and not is_model_source(s)]
  r['audioSources']=[s for s in r['supplementSources'] if s.get('resourceRole')=='audio-supplement']
  for option in r['options']:
   m=by_key.get(option['key'])
