@@ -7,7 +7,7 @@
  "voiceIndex": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
  "componentIndex": {
   "path": "materials/asset-library/current-resources.json",
-  "modelComponents": 27,
+  "modelComponents": 29,
   "historicalModelSourceArtifacts": 2,
   "referencedComponents": 12
  },
@@ -33,7 +33,7 @@
   "independentComponents": 12,
   "modelCompletelyMissing": 0
  },
- "digest": "1f1f91be7c941aa15b8416ad0c0930d4974a09e8e7d0e80801c11be1b761bce0",
+ "digest": "51e5e72100934ec4cd38012e43fa305964202b23f773d5870181ea2ec7ef68d7",
  "heroes": [
   {
    "id": "acquired-jetragon",
@@ -56,15 +56,15 @@
     },
     "deliveryStatus": "converted-shared-contract-and-motion-verified",
     "files": 2,
-    "filesInRepo": 2,
-    "filesAtDeclaredGitPath": 2,
+    "filesInRepo": 1,
+    "filesAtDeclaredGitPath": 1,
     "filesArchivedInRepo": 0,
     "archivedFiles": [],
     "filesAtSource": 2,
     "filesAtSourceWorktree": 1,
     "filesOnlyInSourceHistory": 0,
     "filesGone": 0,
-    "gap": "模型已交付且 2 個檔都在 —— ⛔ 只差 champion 文件還沒進 content",
+    "gap": "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在（其中 1 個在別的分支／S3），但 1/2 個檔還沒進這個 repo",
     "severity": "warning"
    },
    "icon": {
@@ -111,7 +111,7 @@
    },
    "blockers": [],
    "warnings": [
-    "模型已交付且 2 個檔都在 —— ⛔ 只差 champion 文件還沒進 content",
+    "模型已交付（已轉檔並驗過動作），來源 repo 2/2 個檔在（其中 1 個在別的分支／S3），但 1/2 個檔還沒進這個 repo",
     "等 champion 文件進 content 才產得了圖示",
     "還沒有語音包（英雄也還沒進 content）；全庫有 1 個候選來源"
    ],
