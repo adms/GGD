@@ -6313,6 +6313,84 @@
     "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/README.md",
     "sha256": "aaae96f32a601d9e834efdf4ffb6e03b1977f37db0b52f4028ea88f7a1f3500d"
   },
+  "playstationPlatformSourceInventory": {
+    "gitPath": "materials/hero-model-library/source-inventories/playstation-platform-sources-v1/inventory.json",
+    "sha256": "84f0e48e2ab140f3b6b37f7d2bafce45a16d3ff98a9425e08b979e413cc90055",
+    "documentGitPath": "materials/hero-model-library/source-inventories/playstation-platform-sources-v1/README.md",
+    "documentSha256": "e6e352f68cf13f5c71642ce2a6276505a053d2288b70cbedb964dabd07abdf49",
+    "cloudPolicyAuditGitPath": "materials/hero-model-library/source-inventories/playstation-platform-sources-v1/cloud-policy-audit.json",
+    "cloudPolicyAuditSha256": "20c2648534cedc8da460d4cdb1602d0d2c2fb993b56b62f63631f92fc5c5ce92",
+    "sourceId": "playstation-platform-sources-v1",
+    "status": "85 Windows game-container rows metadata-only; 3 independent local source IDs byte/SHA/S3-verified; runtime/deployment unverified",
+    "summary": {
+      "platformSummary": {
+        "PlayStation": {
+          "metadataRows": 18,
+          "logicalSourceIds": 18,
+          "reportedBytes": 4395842796,
+          "payloadFilesRead": 0,
+          "payloadSha256Recorded": 0,
+          "extractedFiles": 0,
+          "convertedFiles": 0,
+          "status": "inventory-metadata-only"
+        },
+        "PlayStation 2": {
+          "metadataRows": 1,
+          "logicalSourceIds": 1,
+          "reportedBytes": 1244856320,
+          "payloadFilesRead": 0,
+          "payloadSha256Recorded": 0,
+          "extractedFiles": 0,
+          "convertedFiles": 0,
+          "status": "inventory-metadata-only"
+        },
+        "PlayStation 3": {
+          "metadataRows": 2,
+          "logicalSourceIds": 1,
+          "reportedBytes": 4656171149,
+          "payloadFilesRead": 0,
+          "payloadSha256Recorded": 0,
+          "extractedFiles": 0,
+          "convertedFiles": 0,
+          "status": "inventory-metadata-only"
+        },
+        "PSP": {
+          "metadataRows": 64,
+          "logicalSourceIds": 51,
+          "reportedBytes": 37972055005,
+          "payloadFilesRead": 0,
+          "payloadSha256Recorded": 0,
+          "extractedFiles": 0,
+          "convertedFiles": 0,
+          "status": "inventory-metadata-only"
+        },
+        "PS Vita": {
+          "metadataRows": 0,
+          "logicalSourceIds": 0,
+          "reportedBytes": 0,
+          "payloadFilesRead": 0,
+          "payloadSha256Recorded": 0,
+          "extractedFiles": 0,
+          "convertedFiles": 0,
+          "status": "no-source-found-in-current-local-evidence"
+        }
+      },
+      "locallyVerifiedSourceIds": [
+        "github-neztypezero-psp-gmo-loader-f346daec",
+        "psp-cloud-native-motion-batch4",
+        "gamebanana-cloud-english-voice"
+      ],
+      "locallyVerifiedMemberFiles": 649,
+      "pspNativeGmoFiles": 21,
+      "pspNativeMotionBlocks": 258,
+      "pspCloudConvertedClips": 13,
+      "ps4CloudDecodedWavFiles": 49,
+      "newDownloads": 0,
+      "newConversions": 0,
+      "runtimeBindingsVerified": 0,
+      "productionDeploymentVerified": false
+    }
+  },
   "ultimate14NativeMotionIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
     "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23",
