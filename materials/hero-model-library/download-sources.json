@@ -53513,7 +53513,7 @@
           "originalName": "MystVearn",
           "heroIds": [],
           "packageCount": 790,
-          "formState": "EN653-01-static-skinned-component-accepted-actions-and-hero-binding-missing"
+          "formState": "separate-character-pending-hero-design-and-binding"
         }
       ],
       "backendIntegration": {
@@ -53529,16 +53529,16 @@
           "productionDeployed": false
         }
       },
-      "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
+      "verification": "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and zero direct PN010/EN801/EN653 path matches. A full 193,558-entry audit of both primary PAK indexes found one EN801 body, and the serialized EN801 character blueprint references only that same old-Vearn body. A pinned patched macOS UEViewer build now exports skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL review and are registered in this checkout; production remains unverified.",
       "limitations": [
         "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
-        "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
+        "EN801 is visually confirmed as old, pre-transformation Vearn. The full two-PAK index and serialized-blueprint audit found exactly one EN801 body reference and no post-transformation Vearn full body.",
+        "Square Enix describes the shipped story mode as covering the Sovereign Rock Castle arc; this corroborates the package result but does not replace local binary evidence.",
         "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
         "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
         "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
         "Dai uses the one-frame native down pose for both hurt and death because no distinct Dai death sequence was acquired.",
-        "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton.",
-        "EN653/01 MystVearn static skinned component passed deterministic conversion, current GGD/Khronos checks and three-view WebGL review; it remains separate from Vearn and Baran."
+        "Vearn Kaizer Phoenix stays in the preserved conversion set because its PSA references 100 effect/helper bones absent from the body skeleton."
       ],
       "backup": {
         "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-priority-original-assets-build-local-20240328/57aedc7de2a4abc601475b582711cb8b3bad603c687a8b1df190113d74676229.zip",
@@ -53765,7 +53765,29 @@
           "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
           "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
         }
-      ]
+      ],
+      "formAuditEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/report.json",
+        "sha256": "d9d8d78a98d16978d5f74683e0f275fe25458f1a84d3765bc8f8b48355db5973",
+        "primaryPakIndexedEntries": 193558,
+        "en801BodyAssetCount": 1,
+        "en801BlueprintBodyReferenceCount": 1,
+        "postTransformationVearnFullBodyLocated": false,
+        "officialStoryScopeUrl": "https://www.square-enix-games.com/en_US/home/infinity-strash-dragon-quest-adventure-dai-out-now",
+        "backup": {
+          "sourceId": "infinity-strash-vearn-form-audit-v1",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-form-audit-v1/62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-form-audit-v1/62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4.files.json",
+          "archiveBytes": 700071,
+          "archiveSha256": "62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4",
+          "fileCount": 8,
+          "manifestSha256": "b4a72a08514147b986b5d0e5f91e3ebc1a04bc4a18899c23512b7b67dabaeac4",
+          "readbackVerified": true,
+          "allArchiveMembersSha256Verified": true,
+          "receiptPath": "materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/s3-backup-receipt.json",
+          "receiptSha256": "ec40ad278fb7bb12cd243107564845deb2aec558b2fb6833427d7447f5e3fa53"
+        }
+      }
     },
     {
       "id": "steam-infinity-strash-primary-paks-build-local-20240328",
@@ -53904,6 +53926,34 @@
         "Baran",
         "巴蘭",
         "バラン"
+      ],
+      "supplementalDeliveries": [
+        {
+          "id": "infinity-strash-vearn-form-audit-v1",
+          "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
+          "resourceRole": "integration-evidence-backup",
+          "localPath": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-vearn-form-audit-v2",
+          "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1/source.tar.gz",
+          "readbackPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1/s3-full-readback.tar.gz",
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-form-audit-v1/62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4.tar.gz",
+          "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-form-audit-v1/62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4.files.json",
+          "bytes": 700071,
+          "sha256": "62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4",
+          "fileCount": 8,
+          "archiveFormat": "tar-gzip",
+          "archiveMemberRoot": "",
+          "readbackVerified": true,
+          "fullReadbackVerified": true,
+          "s3ReadbackVerified": true,
+          "localPreserved": true,
+          "acquiredAssetPayloadCount": 0,
+          "snapshotScope": "manifest-listed-files-only",
+          "unlistedLocalFiles": "not-enumerated-or-claimed-backed-up",
+          "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1/s3-verified-receipt.json",
+          "receiptSha256": "ec40ad278fb7bb12cd243107564845deb2aec558b2fb6833427d7447f5e3fa53",
+          "manifestSha256": "b4a72a08514147b986b5d0e5f91e3ebc1a04bc4a18899c23512b7b67dabaeac4",
+          "s3Use": "backup-only-not-runtime-entry"
+        }
       ]
     },
     {

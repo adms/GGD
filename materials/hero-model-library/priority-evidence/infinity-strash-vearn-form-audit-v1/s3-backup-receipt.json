@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-scoped-tar-s3-receipt@1",
+  "id": "infinity-strash-vearn-form-audit-v1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-form-audit-v1/62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-vearn-form-audit-v1/62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4.files.json",
+  "sha256": "62945414c6952b610ff54ba5f372f712ed305c94b0d5af3df0040786d528cbc4",
+  "bytes": 700071,
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "fileCount": 8,
+  "manifestSha256": "b4a72a08514147b986b5d0e5f91e3ebc1a04bc4a18899c23512b7b67dabaeac4",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1/s3-full-readback.tar.gz",
+  "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1/scoped-manifest.json",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true
+}

@@ -22,6 +22,8 @@ EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/infinity-stras
 S3_EVIDENCE = EVIDENCE.with_name("s3-backup-receipt.json")
 MAC_EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export"
 RUNTIME_EVIDENCE = MAC_EVIDENCE / "runtime-candidates-v1/acceptance-summary.json"
+FORM_AUDIT_EVIDENCE = REPO / "materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/report.json"
+FORM_AUDIT_S3_EVIDENCE = FORM_AUDIT_EVIDENCE.with_name("s3-backup-receipt.json")
 BACKUP_STAGES = {
     "umodelTool": ("umodel-tool", "infinity-strash-umodel-macos-v1"),
     "meshComponents": ("mesh-components", "infinity-strash-priority-mesh-components-v1"),
@@ -219,6 +221,34 @@ def main() -> int:
     if {key: row["runtime"]["sha256"] for key, row in runtime_candidates.items()} != expected_runtime:
         raise ValueError("runtime candidate identities or SHA-256 values differ")
 
+    form_audit = json.loads(FORM_AUDIT_EVIDENCE.read_text())
+    if form_audit.get("schema") != "ggd.infinity-strash-vearn-form-audit@1":
+        raise ValueError("unexpected Infinity Strash Vearn form audit schema")
+    expected_paks = {
+        "pakchunk0": (8332792957, "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee", 181304),
+        "pakchunk1": (4382548320, "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095", 12254),
+    }
+    actual_paks = {
+        row["label"]: (row["bytes"], row["sha256"], row["indexedEntries"])
+        for row in form_audit.get("primaryPaks", [])
+    }
+    if actual_paks != expected_paks:
+        raise ValueError("Vearn form audit does not cover the frozen primary PAK pair")
+    form_result = form_audit.get("result", {})
+    if (
+        form_result.get("preTransformationOldVearnBodyLocated") is not True
+        or form_result.get("postTransformationVearnFullBodyLocated") is not False
+        or form_audit.get("en801", {}).get("blueprintBodyReferences")
+        != ["/Game/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body"]
+    ):
+        raise ValueError("Vearn form audit result or EN801 body reference differs")
+    form_audit_backup_root = workspace / "GGD-Asset-Library/backups/infinity-strash-vearn-form-audit-v1"
+    form_audit_backup = validate_scoped_backup(
+        form_audit_backup_root,
+        "infinity-strash-vearn-form-audit-v1",
+    )
+    shutil.copy2(form_audit_backup_root / "s3-verified-receipt.json", FORM_AUDIT_S3_EVIDENCE)
+
     prepared_root = conversion_root / "prepared-components-v1"
     vearn_receipt_path = prepared_root / "vearn-en801-pre-transformation-body/receipt.json"
     vearn_receipt = json.loads(vearn_receipt_path.read_text())
@@ -350,17 +380,34 @@ def main() -> int:
             "texturePngCount": texture_count,
             "nativePsaAnimationCount": animation_count,
         },
+        "formAuditEvidence": {
+            "gitPath": str(FORM_AUDIT_EVIDENCE.relative_to(REPO)),
+            "sha256": sha256(FORM_AUDIT_EVIDENCE),
+            "primaryPakIndexedEntries": form_audit["index"]["totalEntries"],
+            "en801BodyAssetCount": len(form_audit["en801"]["bodyAssets"]),
+            "en801BlueprintBodyReferenceCount": len(form_audit["en801"]["blueprintBodyReferences"]),
+            "postTransformationVearnFullBodyLocated": False,
+            "officialStoryScopeUrl": form_audit["officialStoryScope"]["url"],
+            "backup": {
+                **form_audit_backup,
+                "receiptPath": str(FORM_AUDIT_S3_EVIDENCE.relative_to(REPO)),
+                "receiptSha256": sha256(FORM_AUDIT_S3_EVIDENCE),
+            },
+        },
         "verification": (
             "pakchunk0 index is readable and unencrypted. Exact native-ID selection extracted 5,530 packages "
             "and verified every local byte count and SHA-256. pakchunk1 contains 12,254 indexed entries and "
-            "zero direct PN010/EN801/EN653 path matches. A pinned patched macOS UEViewer build now exports "
+            "zero direct PN010/EN801/EN653 path matches. A full 193,558-entry audit of both primary PAK indexes "
+            "found one EN801 body, and the serialized EN801 character blueprint references only that same old-Vearn body. "
+            "A pinned patched macOS UEViewer build now exports "
             "skeletal meshes, lossless textures and native PSA animations with SHA-256 manifests. Dai PN010-02 "
             "and old Vearn EN801 pass GGD preparation, verification, Khronos and 18-state-sample Babylon WebGL "
             "review and are registered in this checkout; production remains unverified."
         ),
         "limitations": [
             "The stock public UModel build misreads Infinity Strash skeletal section data; this workflow uses a pinned source patch that consumes the game's additional uint64 base-vertex field.",
-            "EN801 is visually confirmed as old, pre-transformation Vearn. No separate post-transformation Vearn mesh was located in either primary PAK index.",
+            "EN801 is visually confirmed as old, pre-transformation Vearn. The full two-PAK index and serialized-blueprint audit found exactly one EN801 body reference and no post-transformation Vearn full body.",
+            "Square Enix describes the shipped story mode as covering the Sovereign Rock Castle arc; this corroborates the package result but does not replace local binary evidence.",
             "EN653 is MystVearn and must remain separate from Vearn. EN680 and EN681 are Baran forms and are not part of this extraction.",
             "Wwise event packages do not identify or decode the numeric Media containers by themselves.",
             "Dai PN010-02 and pre-transformation Vearn EN801 have textured multipart runtime GLBs and local backend dropdown registrations; this does not prove production deployment.",
@@ -381,10 +428,18 @@ def main() -> int:
         if "identityRecords" not in existing:
             existing["identityRecords"] = source["identityRecords"]
             existing["notAliases"] = source["notAliases"]
-        mutable = {"publicationStatus", "pendingBackup", "backup", "readiness", "identities", "backendIntegration", "conversionEvidence", "verification", "limitations"}
-        if {k: v for k, v in existing.items() if k not in mutable} != {k: v for k, v in source.items() if k not in mutable}:
-            raise ValueError("existing source differs; refusing to overwrite another workflow")
-        for key in ("readiness", "identities", "backendIntegration", "conversionEvidence", "verification", "limitations"):
+        mutable = {"publicationStatus", "pendingBackup", "backup", "readiness", "identities", "backendIntegration", "conversionEvidence", "formAuditEvidence", "verification", "limitations"}
+        core_differences = {
+            key: {"existing": existing.get(key), "expected": value}
+            for key, value in source.items()
+            if key not in mutable and existing.get(key) != value
+        }
+        if core_differences:
+            raise ValueError(
+                "existing source core differs; refusing to overwrite another workflow: "
+                + ", ".join(sorted(core_differences))
+            )
+        for key in ("readiness", "identities", "backendIntegration", "conversionEvidence", "formAuditEvidence", "verification", "limitations"):
             existing[key] = source[key]
         status = "already-integrated"
     else:
@@ -457,6 +512,7 @@ def main() -> int:
         "states": index["states"],
         "limitations": source["limitations"],
         "conversionEvidence": source["conversionEvidence"],
+        "formAuditEvidence": source["formAuditEvidence"],
     }
     if s3_backup:
         compact["s3Backup"] = s3_backup
