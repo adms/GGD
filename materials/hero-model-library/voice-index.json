@@ -44066,8 +44066,8 @@
       "listeningReviewComplete": false,
       "fileCount": 154,
       "bytes": 3300044,
-      "knownDurationSeconds": 0.0,
-      "durationMeasuredFiles": 0,
+      "knownDurationSeconds": 347.73272916666673,
+      "durationMeasuredFiles": 154,
       "voiceFilenameCandidates": 0,
       "originalBanks": [],
       "backupIds": [
@@ -44078,7 +44078,8 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "unclassified": 154
+        "sound-effect": 22,
+        "voice-source-label-unreviewed": 132
       }
     },
     {
@@ -44096,8 +44097,8 @@
       "listeningReviewComplete": false,
       "fileCount": 170,
       "bytes": 3590745,
-      "knownDurationSeconds": 0.0,
-      "durationMeasuredFiles": 0,
+      "knownDurationSeconds": 363.61618749999997,
+      "durationMeasuredFiles": 170,
       "voiceFilenameCandidates": 0,
       "originalBanks": [],
       "backupIds": [
@@ -44108,7 +44109,8 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "unclassified": 170
+        "sound-effect": 33,
+        "voice-source-label-unreviewed": 137
       }
     },
     {
@@ -44128,8 +44130,8 @@
       "listeningReviewComplete": false,
       "fileCount": 150,
       "bytes": 3699097,
-      "knownDurationSeconds": 0.0,
-      "durationMeasuredFiles": 0,
+      "knownDurationSeconds": 346.22243749999996,
+      "durationMeasuredFiles": 150,
       "voiceFilenameCandidates": 0,
       "originalBanks": [],
       "backupIds": [
@@ -44140,7 +44142,8 @@
       "languagePreferenceRank": 3,
       "languagePreferenceBasis": "reported-language-only; listening review still required",
       "categoryCounts": {
-        "unclassified": 150
+        "sound-effect": 27,
+        "voice-source-label-unreviewed": 123
       }
     },
     {
@@ -45619,7 +45622,7 @@
   "inputs": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "a8944ec09e9784c4384aeec188f3dc8ebc4acbe0dbf0bd6848dfeabf00d2e6ae"
+      "sha256": "cd23ab2091042d93d222126f9dc1556d12ca9e5f0125248ceb1ec59f4a52bbbf"
     },
     {
       "path": "materials/hero-model-library/public-source-files.json",
@@ -46046,12 +46049,12 @@
       "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
     },
     {
-      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-file-index.json",
-      "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-analysis-v2.json",
+      "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2"
     },
     {
-      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-file-index.json",
-      "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+      "path": "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/audio-analysis-v2.json",
+      "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2"
     },
     {
       "path": "GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/audio-file-index.json",
@@ -96771,6 +96774,6 @@
     "nativeEventBoundRelationshipRows": 968,
     "nativeEventMappedEvents": 232
   },
-  "sourceFileManifestSha256": "8d310de8ddea62d94cce74210f8d2686661e421d9ac623a16ab797c2bb82e6ac",
-  "uncompressedFileManifestSha256": "68fa855abc4f7f87616e753332b2b568c09c75bb263b0fcd38b89a4a03a2e6f3"
+  "sourceFileManifestSha256": "7f305f6fcd106840db8827ea1ecbb1a62eda70e8f72617fa0d58e07bad5e5ef1",
+  "uncompressedFileManifestSha256": "037fda8c441fe514d55a87ea8534ed5aa414e271b27c240069e3884ad67a47f0"
 }

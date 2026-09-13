@@ -53991,15 +53991,15 @@
       "files": [],
       "filesManifest": {
         "path": "source-manifest.json",
-        "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+        "sha256": "3b379bd1dec8715c230d56c92a2741665febcbdb956a028f6b0c6b482d9e6f3d"
       },
       "extractedFilesIndex": {
         "path": "files.jsonl.gz",
         "sha256": "74fc1979c0b7ef154aae1a4672ac7da45b3bff9434c74c1c77199e6995d87237"
       },
       "audioFileIndex": {
-        "reportPath": "audio-file-index.json",
-        "reportSha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+        "reportPath": "audio-analysis-v2.json",
+        "reportSha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2"
       },
       "audioCount": 474,
       "primaryAudioFormats": [
@@ -54017,11 +54017,18 @@
           "pathPrefixes": [
             "extracted/Chara/IOR/Sound/"
           ],
-          "classification": "native-character-directory-audio-pending-listening-review",
+          "classification": "native-directory-voice-and-sfx-labels-decoded-listening-pending",
           "languageReviewed": false,
           "speakerReviewed": false,
           "eventReviewed": false,
-          "synthesisReady": false
+          "synthesisReady": false,
+          "fileCount": 154,
+          "totalBytes": 3300044,
+          "totalDurationSeconds": 347.73272916666673,
+          "sourceCategoryCounts": {
+            "sfx": 22,
+            "voice": 132
+          }
         },
         {
           "id": "kofxiv-kyo-native-audio",
@@ -54032,11 +54039,18 @@
           "pathPrefixes": [
             "extracted/Chara/KYO/Sound/"
           ],
-          "classification": "native-character-directory-audio-pending-listening-review",
+          "classification": "native-directory-voice-and-sfx-labels-decoded-listening-pending",
           "languageReviewed": false,
           "speakerReviewed": false,
           "eventReviewed": false,
-          "synthesisReady": false
+          "synthesisReady": false,
+          "fileCount": 170,
+          "totalBytes": 3590745,
+          "totalDurationSeconds": 363.61618749999997,
+          "sourceCategoryCounts": {
+            "sfx": 33,
+            "voice": 137
+          }
         },
         {
           "id": "kofxiv-mai-native-audio",
@@ -54049,18 +54063,37 @@
           "pathPrefixes": [
             "extracted/Chara/MAI/Sound/"
           ],
-          "classification": "native-character-directory-audio-pending-listening-review",
+          "classification": "native-directory-voice-and-sfx-labels-decoded-listening-pending",
           "languageReviewed": false,
           "speakerReviewed": false,
           "eventReviewed": false,
-          "synthesisReady": false
+          "synthesisReady": false,
+          "fileCount": 150,
+          "totalBytes": 3699097,
+          "totalDurationSeconds": 346.22243749999996,
+          "sourceCategoryCounts": {
+            "sfx": 27,
+            "voice": 123
+          }
         }
       ],
+      "audioAnalysis": {
+        "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-analysis-v2.json",
+        "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2",
+        "fileCount": 474,
+        "totalDurationSeconds": 1057.5713541666669,
+        "sourceCategoryCounts": {
+          "sfx": 82,
+          "voice": 392
+        },
+        "decodeToNullPassed": true,
+        "classificationEvidence": "Sound/voice and Sound/se are native WAD directory labels. Voice-labelled files remain unreviewed for language, speaker, transcript and event; no filename-only listening claim is made."
+      },
       "gitEvidence": [
         {
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
-          "bytes": 4686,
-          "sha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+          "bytes": 5088,
+          "sha256": "3b379bd1dec8715c230d56c92a2741665febcbdb956a028f6b0c6b482d9e6f3d"
         },
         {
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/files.jsonl.gz",
@@ -54076,6 +54109,11 @@
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
           "bytes": 273693,
           "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856"
+        },
+        {
+          "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-analysis-v2.json",
+          "bytes": 455383,
+          "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2"
         }
       ],
       "modelCandidates": [
@@ -54106,7 +54144,7 @@
           "modelState": "native-obac-extracted-pending-conversion",
           "animationState": "native-otra-extracted-pending-conversion",
           "vfxState": "native-effect-records-extracted-pending-conversion",
-          "audioState": "ogg-extracted-pending-listening-review",
+          "audioState": "ogg-decoded-source-directory-role-classified-pending-listening-and-event-review",
           "designStatus": "existing-ggd-hero-definition",
           "defaultEligible": false,
           "backendSelectable": false,
@@ -54139,7 +54177,7 @@
           "modelState": "native-obac-extracted-pending-conversion",
           "animationState": "native-otra-extracted-pending-conversion",
           "vfxState": "native-effect-records-extracted-pending-conversion",
-          "audioState": "ogg-extracted-pending-listening-review",
+          "audioState": "ogg-decoded-source-directory-role-classified-pending-listening-and-event-review",
           "designStatus": "existing-ggd-hero-definition",
           "defaultEligible": false,
           "backendSelectable": false,
@@ -54170,7 +54208,7 @@
           "modelState": "native-obac-extracted-pending-conversion",
           "animationState": "native-otra-extracted-pending-conversion",
           "vfxState": "native-effect-records-extracted-pending-conversion",
-          "audioState": "ogg-extracted-pending-listening-review",
+          "audioState": "ogg-decoded-source-directory-role-classified-pending-listening-and-event-review",
           "designStatus": "acquired-model-awaiting-hero-design",
           "defaultEligible": false,
           "backendSelectable": false,
@@ -54191,10 +54229,10 @@
         "state": "pending-conversion-validation-and-binding",
         "selectionVerified": false
       },
-      "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
+      "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index. All 474 OGG files pass full FFmpeg decode; native Sound/voice and Sound/se directory labels are retained without asserting language, speaker, transcript or skill event. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
       "limitations": [
         "OBAC/OMIR/OSEC/OTRA and native effect records remain proprietary KOF XIV formats and are not yet converted to GGD runtime formats.",
-        "OGG files are extracted and hashed, but speaker, dialogue/SFX role, language and skill-event binding remain pending listening review.",
+        "All OGG files are extracted, hashed and FFmpeg-decoded. Native Sound/voice versus Sound/se directory roles are retained; language, speaker, transcript and skill-event binding remain pending listening review.",
         "MAI, IOR and KYO directory identity is exact; individual alternate costume/form semantics remain unreviewed.",
         "This extraction is source preservation and does not establish a backend model option or deployment."
       ],

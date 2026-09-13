@@ -48,10 +48,19 @@ def main() -> int:
         row = manifest[index_key]
         if sha256(local_root / row["path"]) != row["sha256"]:
             raise ValueError("frozen extraction index changed: " + row["path"])
+    audio_analysis_path = local_root / "audio-analysis-v2.json"
+    audio_analysis = json.loads(audio_analysis_path.read_text(encoding="utf-8"))
+    if (
+        audio_analysis.get("schema") != "ggd-kofxiv-audio-analysis@2"
+        or audio_analysis.get("fileCount") != 474
+        or audio_analysis.get("decodeToNullPassed") is not True
+        or audio_analysis.get("sourceCategoryCounts") != {"sfx": 82, "voice": 392}
+    ):
+        raise ValueError("KOF XIV audio analysis differs")
 
     GIT_EVIDENCE.mkdir(parents=True, exist_ok=True)
     copied = []
-    for name in ("source-manifest.json", "files.jsonl.gz", "audio-files.jsonl.gz", "audio-file-index.json"):
+    for name in ("source-manifest.json", "files.jsonl.gz", "audio-files.jsonl.gz", "audio-file-index.json", "audio-analysis-v2.json"):
         source_path = local_root / name
         target_path = GIT_EVIDENCE / name
         shutil.copyfile(source_path, target_path)
@@ -80,7 +89,7 @@ def main() -> int:
             "modelState": "native-obac-extracted-pending-conversion",
             "animationState": "native-otra-extracted-pending-conversion",
             "vfxState": "native-effect-records-extracted-pending-conversion",
-            "audioState": "ogg-extracted-pending-listening-review",
+            "audioState": "ogg-decoded-source-directory-role-classified-pending-listening-and-event-review",
             "designStatus": row["designStatus"],
             "defaultEligible": False,
             "backendSelectable": False,
@@ -134,10 +143,24 @@ def main() -> int:
         },
     }
     supplemental = json.loads(SUPPLEMENTAL.read_text(encoding="utf-8"))
-    supplemental_matches = [row for row in supplemental["characters"] if row.get("id") == supplemental_record["id"]]
-    if supplemental_matches and supplemental_matches != [supplemental_record]:
-        raise ValueError("existing KYO supplemental design record differs")
-    if not supplemental_matches:
+    supplemental_match_indexes = [
+        index for index, row in enumerate(supplemental["characters"])
+        if row.get("id") == supplemental_record["id"]
+    ]
+    if len(supplemental_match_indexes) > 1:
+        raise ValueError("KYO supplemental design record is duplicated")
+    if supplemental_match_indexes:
+        index = supplemental_match_indexes[0]
+        existing_record = supplemental["characters"][index]
+        existing_stable = json.loads(json.dumps(existing_record))
+        expected_stable = json.loads(json.dumps(supplemental_record))
+        existing_stable["evidence"].pop("sourceManifestSha256", None)
+        expected_stable["evidence"].pop("sourceManifestSha256", None)
+        if existing_stable != expected_stable:
+            raise ValueError("existing KYO supplemental design record differs outside regenerated manifest hash")
+        supplemental["characters"][index] = supplemental_record
+        SUPPLEMENTAL.write_text(json.dumps(supplemental, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    else:
         supplemental["characters"].append(supplemental_record)
         SUPPLEMENTAL.write_text(json.dumps(supplemental, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     source = {
@@ -170,7 +193,16 @@ def main() -> int:
         },
         "audioCount": manifest["audioFileIndex"]["fileCount"],
         "primaryAudioFormats": [".ogg"],
-        "audioGroups": json.loads((local_root / manifest["audioFileIndex"]["path"]).read_text(encoding="utf-8"))["audioGroups"],
+        "audioGroups": audio_analysis["audioGroups"],
+        "audioAnalysis": {
+            "gitPath": copied[-1]["gitPath"],
+            "sha256": copied[-1]["sha256"],
+            "fileCount": audio_analysis["fileCount"],
+            "totalDurationSeconds": audio_analysis["totalDurationSeconds"],
+            "sourceCategoryCounts": audio_analysis["sourceCategoryCounts"],
+            "decodeToNullPassed": audio_analysis["decodeToNullPassed"],
+            "classificationEvidence": audio_analysis["classificationEvidence"],
+        },
         "gitEvidence": copied,
         "modelCandidates": candidates,
         "unboundNativeCharacters": [{
@@ -181,7 +213,7 @@ def main() -> int:
             "reason": "No verified GGD hero definition was found; no hero ID was invented.",
         }],
         "backendIntegration": {"required": True, "state": "pending-conversion-validation-and-binding", "selectionVerified": False},
-        "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index.",
+        "verification": "QuickBMS 0.12.0 with the pinned official kofxiv.bms 0.2 script listed 39,889 safe WAD paths and extracted the exact 1,088 MAI/IOR/KYO entries. Every extracted file has an absolute path, byte count and SHA-256 in the frozen index. All 474 OGG files pass full FFmpeg decode; native Sound/voice and Sound/se directory labels are retained without asserting language, speaker, transcript or skill event. 已完成固定 ZIP 的 S3 完整讀回與逐成員 SHA-256 驗證。",
         "limitations": manifest["limitations"],
     }
     document = json.loads(DOWNLOADS.read_text(encoding="utf-8"))
@@ -189,7 +221,10 @@ def main() -> int:
     if matches:
         if len(matches) != 1:
             raise ValueError("source ID is duplicated")
-        mutable = {"publicationStatus", "pendingBackup", "backup", "verification"}
+        regenerated = {
+            "publicationStatus", "pendingBackup", "backup", "verification", "filesManifest",
+            "audioFileIndex", "audioGroups", "audioAnalysis", "gitEvidence", "limitations", "modelCandidates",
+        }
         existing = matches[0]
         # One pre-publication schema correction from the same workflow renamed
         # candidates and normalized acquisitionStatus to the central contract.
@@ -197,9 +232,13 @@ def main() -> int:
             existing["modelCandidates"] = existing.pop("candidates")
         if existing.get("acquisitionStatus") == "downloaded-extracted-verified":
             existing["acquisitionStatus"] = "downloaded-verified"
-        if {k: v for k, v in existing.items() if k not in mutable} != {k: v for k, v in source.items() if k not in mutable}:
+        if {k: v for k, v in existing.items() if k not in regenerated} != {k: v for k, v in source.items() if k not in regenerated}:
             raise ValueError("existing source differs; refusing to overwrite another workflow")
-        preserved = {key: existing[key] for key in mutable if key in existing}
+        preserved = {
+            key: existing[key]
+            for key in ("publicationStatus", "pendingBackup", "backup")
+            if key in existing
+        }
         existing.clear()
         existing.update(source)
         existing.update(preserved)

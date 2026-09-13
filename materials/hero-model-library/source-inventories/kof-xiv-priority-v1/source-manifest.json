@@ -129,8 +129,8 @@
     "fileCount": 474
   },
   "audioFileIndex": {
-    "path": "audio-file-index.json",
-    "sha256": "a00a54b7305ee1b9f6c357b5df0f59326d4ce923e73f18b63ca03666bd323856",
+    "path": "audio-analysis-v2.json",
+    "sha256": "871c985e98fd02acaad2feb9114d357e3b8a5cd330857e6187f489063ffb08d2",
     "fileCount": 474
   },
   "states": {
@@ -142,12 +142,25 @@
     "visuallyAccepted": false,
     "registeredAsBackendOption": false,
     "backendSelectable": false,
-    "deployed": false
+    "deployed": false,
+    "audioDecodeVerified": true
   },
   "limitations": [
     "OBAC/OMIR/OSEC/OTRA and native effect records remain proprietary KOF XIV formats and are not yet converted to GGD runtime formats.",
-    "OGG files are extracted and hashed, but speaker, dialogue/SFX role, language and skill-event binding remain pending listening review.",
+    "All OGG files are extracted, hashed and FFmpeg-decoded. Native Sound/voice versus Sound/se directory roles are retained; language, speaker, transcript and skill-event binding remain pending listening review.",
     "MAI, IOR and KYO directory identity is exact; individual alternate costume/form semantics remain unreviewed.",
     "This extraction is source preservation and does not establish a backend model option or deployment."
-  ]
+  ],
+  "audioValidation": {
+    "decodedFiles": 474,
+    "totalDurationSeconds": 1057.5713541666669,
+    "sourceCategoryCounts": {
+      "sfx": 82,
+      "voice": 392
+    },
+    "decodeToNullPassed": true,
+    "languageReviewed": false,
+    "speakerReviewed": false,
+    "eventReviewed": false
+  }
 }

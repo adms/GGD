@@ -55,7 +55,7 @@
     },
     {
       "path": "materials/hero-model-library/design-backlog/hero-design-coverage.json",
-      "sha256": "de00a993822bc88b50cbd3974c85758fd5ed75f5a35ff02d66582bedc99955be"
+      "sha256": "ebfcc08cfc091094e9a1b48946ee00a72759ff1bff4b71d7d43b76b837ee1960"
     },
     {
       "path": "materials/hero-model-library/design-backlog/localization-zh-TW.json",
@@ -67,15 +67,15 @@
     },
     {
       "path": "materials/hero-model-library/voice-index.json",
-      "sha256": "3d89f656982786e1e1e0a677ce32ff03cba96eb87d610711c57a053f3ea869f7"
+      "sha256": "d701ded6393976ae3b35a7592c2a08fc6fe697658ab75485f315ae011611ee8f"
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "086eefcc17798d6f62a2ea8eba01f14021dbc68f49ad3da09cbc52e565c76f28"
+      "sha256": "cd23ab2091042d93d222126f9dc1556d12ca9e5f0125248ceb1ec59f4a52bbbf"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "42686e51e150911cf7d605b6cd51db74c580bcbc671058f1c0abb7c19114687f"
+      "sha256": "06ef41abecf60c627e0c82949db7a8319a43662b57a0f5d07a88ecbe81adef3a"
     },
     {
       "path": "content/champions/b2-aladdin.json",
@@ -196684,7 +196684,7 @@
         "nativeCharacterId": "KYO",
         "identityConfidence": "native-character-directory-exact",
         "sourceManifestGitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
-        "sourceManifestSha256": "8542d805a0c37ca81a3fa377912ad9a07e3cb0f5e1a9cf677c7e73630bc0e061"
+        "sourceManifestSha256": "3b379bd1dec8715c230d56c92a2741665febcbdb956a028f6b0c6b482d9e6f3d"
       },
       "candidateBreakdown": {
         "characterBodySources": 1,
