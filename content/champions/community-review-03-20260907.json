@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+  "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -484,6 +484,26 @@
       "source": {
         "kind": "style-proxy",
         "character": "不知火舞（獨立副本／真田幸村）",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "derivative:mai",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+      "label": "不知火舞（獨立副本／真田幸村，7,994 面正式版）",
+      "sourceModelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+      "modelSha256": "20e159f741e8e7b647d82e295bdbad488a52f4fa15a43cfa134c506151db57f3",
+      "binarySha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
+      "registeredAt": "2026-09-13T23:08:05.225Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "不知火舞（獨立副本／真田幸村，7,994 面正式版）",
         "work": "百花繚亂 SAMURAI GIRLS",
         "library": "300heroes",
         "reference": "derivative:mai",

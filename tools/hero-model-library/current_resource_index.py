@@ -665,6 +665,16 @@ def build(git_link_root=ROOT):
             productionDeploymentVerified=False),
         modelComponentSourceIndex=dict(gitPath=str(component_source_path.relative_to(ROOT)),
             sha256=hashlib.sha256(component_source_path.read_bytes()).hexdigest()))
+    approved_derivative_audit_path=base/'priority-evidence/approved-derivatives-v1/audit.json'
+    if approved_derivative_audit_path.exists():
+        approved_derivative_audit=read(approved_derivative_audit_path)
+        if approved_derivative_audit.get('summary',{}).get('count')!=11 or approved_derivative_audit.get('summary',{}).get('hardPolicyPass')!=11:
+            raise ValueError('Approved derivative audit is absent or incomplete')
+        result['approvedDerivativeAudit']=dict(
+            gitPath=str(approved_derivative_audit_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(approved_derivative_audit_path.read_bytes()).hexdigest(),
+            approvedCount=11,hardPolicyPass=11,registeredAndSelectable=approved_derivative_audit['summary']['registeredAndSelectable'],
+            productionDeploymentVerified=False)
     return rebase_git_absolute_paths(result,ROOT,git_link_root)
 
 

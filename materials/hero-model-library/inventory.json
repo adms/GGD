@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-14T06:41:27+08:00",
-  "inputsSha256": "a60239461951a1e524de3286918910db2b126e182875db982651c883f1e52d53",
+  "generatedAt": "2026-09-14T07:15:06+08:00",
+  "inputsSha256": "885fc4a654e5dd40b795f38cdb49f0b7ea2e4d19d5c350cf8aadda30fd9fecf2",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -62333,9 +62333,9 @@
       "section": "第一批 37 名",
       "status": "正式機白名單可選",
       "default": {
-        "key": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+        "key": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
         "id": "derivative:mai",
-        "name": "不知火舞（獨立副本／真田幸村）",
+        "name": "不知火舞（獨立副本／真田幸村，7,994 面正式版）",
         "work": "百花繚亂 SAMURAI GIRLS",
         "tier": "300heroes",
         "library": "300heroes",
@@ -62345,24 +62345,25 @@
         "defaultEligible": true,
         "selectionClass": "manual",
         "asset": {
-          "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
-          "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
-          "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+          "modelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+          "glbPath": "assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+          "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
           "localRuntimeRoot": null,
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+          "s3Uri": null,
           "s3ManifestUri": null,
           "s3ReadbackVerified": null,
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+          "gitPath": "content/assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
           "limitations": [
             "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
-            "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            "部分狀態共用原生動作，非六段獨立的專屬角色動作。",
+            "舊 13,796 面改色副本保留；本模型是 7,994 面獨立完整副本，已通過現行正式採用規則、骨架保留與固定鏡頭三視圖 A/B。"
           ]
         }
       },
       "automaticDefault": {
-        "key": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+        "key": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
         "id": "derivative:mai",
-        "name": "不知火舞（獨立副本／真田幸村）",
+        "name": "不知火舞（獨立副本／真田幸村，7,994 面正式版）",
         "work": "百花繚亂 SAMURAI GIRLS",
         "tier": "300heroes",
         "library": "300heroes",
@@ -62372,26 +62373,27 @@
         "defaultEligible": true,
         "selectionClass": "manual",
         "asset": {
-          "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
-          "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
-          "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+          "modelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+          "glbPath": "assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+          "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
           "localRuntimeRoot": null,
-          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+          "s3Uri": null,
           "s3ManifestUri": null,
           "s3ReadbackVerified": null,
-          "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+          "gitPath": "content/assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
           "limitations": [
             "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
-            "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+            "部分狀態共用原生動作，非六段獨立的專屬角色動作。",
+            "舊 13,796 面改色副本保留；本模型是 7,994 面獨立完整副本，已通過現行正式採用規則、骨架保留與固定鏡頭三視圖 A/B。"
           ]
         }
       },
       "defaultSelectionMode": "automatic",
       "current": {
         "key": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
-        "id": "derivative:mai",
-        "name": "不知火舞（獨立副本／真田幸村）",
-        "work": "百花繚亂 SAMURAI GIRLS",
+        "id": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+        "name": "0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c（模型檔名）",
+        "work": "GGD 模型預設",
         "tier": "original",
         "kind": "previous",
         "ready": true,
@@ -62399,9 +62401,9 @@
       },
       "options": [
         {
-          "key": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+          "key": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
           "id": "derivative:mai",
-          "name": "不知火舞（獨立副本／真田幸村）",
+          "name": "不知火舞（獨立副本／真田幸村，7,994 面正式版）",
           "work": "百花繚亂 SAMURAI GIRLS",
           "tier": "300heroes",
           "library": "300heroes",
@@ -62411,17 +62413,18 @@
           "defaultEligible": true,
           "selectionClass": "manual",
           "asset": {
-            "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
-            "glbPath": "assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
-            "sha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+            "modelKey": "community.body.ffe3f545227e0a4727971ad13d694776ee67a00a44edb945",
+            "glbPath": "assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+            "sha256": "227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4",
             "localRuntimeRoot": null,
-            "s3Uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+            "s3Uri": null,
             "s3ManifestUri": null,
             "s3ReadbackVerified": null,
-            "gitPath": "materials/asset-library/releases/7b6ec0c8c5bd75fc173c5f2d/ready/ggd.model.3efeb4dc4c0a6bf25fd8bab6/a4dd2df9a324eb4f/content/assets/models/community/7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d.glb",
+            "gitPath": "content/assets/models/community/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
             "limitations": [
               "衍生外觀代理；完整複製來源已標準化的骨架、幾何、材質與動作。來源原始素材不變。",
-              "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+              "部分狀態共用原生動作，非六段獨立的專屬角色動作。",
+              "舊 13,796 面改色副本保留；本模型是 7,994 面獨立完整副本，已通過現行正式採用規則、骨架保留與固定鏡頭三視圖 A/B。"
             ]
           }
         },
@@ -62452,6 +62455,24 @@
           }
         },
         {
+          "key": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+          "id": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+          "name": "0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c（模型檔名）",
+          "work": "GGD 模型預設",
+          "tier": "original",
+          "kind": "previous",
+          "ready": true,
+          "old": true,
+          "library": "GGD",
+          "defaultEligible": true,
+          "selectionClass": "original",
+          "asset": {
+            "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+            "location": "existing-project-model",
+            "s3Uri": null
+          }
+        },
+        {
           "key": "champ.thorne",
           "id": "champ.thorne",
           "name": "Thorne／方塊騎士",
@@ -62471,7 +62492,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+        "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
         "mode": "automatic"
       },
       "downloadSources": [],

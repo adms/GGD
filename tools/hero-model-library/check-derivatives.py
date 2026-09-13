@@ -48,4 +48,34 @@ for e in read(repo/'materials/hero-model-library/derivatives.json')['entries']:
   assert {x['parentName'] for x in prep['attachments']}=={'Bip001 L Hand','Bip001 R Hand'}
  motion=read(runtime/'motion.json');assert motion['modelSha256']==sha(out)
  proof.append(dict(id=e['heroId'],derivativeId=r['characterId'],sourceId=e['sourceId'],sourceSha256=sha(source),sha256=sha(out),physicalCopy=True,embeddedResources=True,skinAndAnimationPayloadUnchanged=True,geometryPayloadUnchanged=e['id']!='goblin',geometryNote='Identical body vertices merged by material; two added hand attachments' if e['id']=='goblin' else 'Complete source geometry retained',textures=[dict(index=t['index'],sha256=t['copy']['sha256'],sourceSha256=t['source']['sha256'],edited=t['edited']) for t in prep['textures']],attachments=prep['attachments'],runtime=str(runtime.relative_to(ws))))
+
+# Two derivatives received later, separately accepted repairs.  The base copies-vN
+# receipts remain useful provenance, but must not overwrite these accepted bytes
+# when this generated index is rebuilt.
+kirby_receipt_path=repo/'materials/hero-model-library/priority-evidence/procedural-palette-repair/receipt.json'
+kirby_receipt=read(kirby_receipt_path)
+kirby_model=next(x for x in kirby_receipt['models'] if x['id']=='kirby-derivative')
+kirby_source_model=next(x for x in kirby_receipt['models'] if x['id']=='kirby-source')
+kirby_glb=repo/kirby_model['newGlbPath'];kirby_source_glb=repo/kirby_source_model['newGlbPath']
+assert sha(kirby_glb)==kirby_model['new'] and sha(kirby_source_glb)==kirby_source_model['new']
+kirby=next(x for x in proof if x['derivativeId']=='derivative:kirby')
+kirby.update(sourceSha256=kirby_source_model['new'],sha256=kirby_model['new'],textures=[dict(index=0,sha256=kirby_receipt['outputImage']['sha256'],sourceSha256=kirby_receipt['outputImage']['sha256'],edited=False)],evidence=str(kirby_receipt_path.relative_to(repo)))
+
+mai_receipt_path=repo/'materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-acceptance.json'
+mai_receipt=read(mai_receipt_path);mai_candidate=mai_receipt['candidate'];mai_glb=repo/mai_candidate['gitPath']
+assert sha(mai_glb)==mai_candidate['sha256'] and mai_receipt['validation']['hardPolicy']['passed']
+mai=next(x for x in proof if x['derivativeId']=='derivative:mai')
+mai.update(sha256=mai_candidate['sha256'],geometryPayloadUnchanged=False,geometryNote=f"Complete edited source reduced from {mai_receipt['source']['triangles']} to {mai_candidate['triangles']} triangles; accepted source remains a separate dropdown option",runtime=mai_candidate['gitPath'],sourceBodySkinAndAnimationPayloadUnchanged=True,evidence=str(mai_receipt_path.relative_to(repo)))
+
+goblin_receipt_path=repo/'materials/hero-model-library/priority-evidence/goblin-rigid-attachment-skin-v2/receipt.json'
+goblin_receipt=read(goblin_receipt_path);accepted=goblin_receipt['acceptedSource'];goblin_glb=repo/accepted['glbPath']
+assert sha(goblin_glb)==accepted['sha256']
+goblin=next(x for x in proof if x['derivativeId']=='derivative:goblin')
+old_attachments={x['name']:x for x in goblin['attachments']}
+attachments=[]
+for binding in goblin_receipt['bindings']:
+ old=old_attachments[binding['mesh']]
+ attachments.append(dict(name=binding['mesh'],parentNode=old['parentNode'],parentName=binding['joint'],node=old['node'],skin=0,jointSlot=binding['jointSlot'],vertices=binding['vertices'],binding='100%-rigid-to-hand-joint'))
+texture=accepted['textures'][0]
+goblin.update(sha256=accepted['sha256'],skinAndAnimationPayloadUnchanged=False,geometryPayloadUnchanged=False,geometryNote='Original body geometry retained; existing two hand attachments converted from rigid child meshes to fully skinned model-space primitives',textures=[dict(index=i,sha256=texture['sha256'],sourceSha256=t['sourceSha256'],edited=False,normalizedToMaxEdge=texture['width']) for i,t in enumerate(goblin['textures'])],attachments=attachments,runtime=accepted['glbPath'],sourceBodySkinAndAnimationPayloadUnchanged=True,accessorySkinPayloadAdded=True,evidence=str(goblin_receipt_path.relative_to(repo)))
 dest=repo/'materials/hero-model-library/derivative-validation.json';dest.write_text(json.dumps(dict(schema='ggd-independent-derivative-validation@1',count=11,entries=proof,visualScope='Local Babylon preview; not production deployment or gameplay acceptance'),ensure_ascii=False,indent=2)+'\n');print('Verified 11 independent full model copies, unchanged source bytes, embedded textures, preserved rigs and clips')
