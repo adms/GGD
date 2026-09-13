@@ -1,0 +1,1559 @@
+{
+  "schema": "ggd.kof-xiv-vfx-texture-candidates@1",
+  "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+  "conversionId": "kof-xiv-priority-vfx-textures-20260914-v1",
+  "sourceGame": "THE KING OF FIGHTERS XIV",
+  "platform": "Windows (Steam)",
+  "tool": "macOS sips; every DDS converted twice and byte-compared",
+  "selection": "All acquired DDS files directly under MAI/IOR/KYO Effect directories; existing PNGs and proprietary EFF/OBAC/ONC containers remain separate.",
+  "outputRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1",
+  "summary": {
+    "characters": 3,
+    "sourceDdsFiles": 55,
+    "convertedPngFiles": 55,
+    "outputBytes": 3563069,
+    "maxOutputEdge": 256,
+    "overTextureLimit": 0
+  },
+  "perCharacter": {
+    "MAI": {
+      "characterNameZh": "不知火舞",
+      "sourceFiles": 15,
+      "outputFiles": 15,
+      "outputBytes": 634336
+    },
+    "IOR": {
+      "characterNameZh": "八神庵",
+      "sourceFiles": 22,
+      "outputFiles": 22,
+      "outputBytes": 1532143
+    },
+    "KYO": {
+      "characterNameZh": "草薙京",
+      "sourceFiles": 18,
+      "outputFiles": 18,
+      "outputBytes": 1396590
+    }
+  },
+  "files": [
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/ESK_Screen_Name_022MAI.dds",
+      "sourceBytes": 22180,
+      "sourceSha256": "e8e3c2fa41ce57d5f8fe0fabf9747fb9cd8d09034857c6d0c120ce486537ce01",
+      "sourceFormat": {
+        "width": 512,
+        "height": 32,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/ESK_Screen_Name_022MAI.png",
+      "outputBytes": 5502,
+      "outputSha256": "a9f1fd65a55d10cfb983ce4fab29fdb9d1831fb13676af7a474cc29155f36be2",
+      "outputFormat": {
+        "width": 256,
+        "height": 16,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/ESK_Screen_Pic_022MAI.dds",
+      "sourceBytes": 174948,
+      "sourceSha256": "59fad8eba3033a70897bc327d93942b4eb239a9376209d50a28671a8ec517fa5",
+      "sourceFormat": {
+        "width": 512,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/ESK_Screen_Pic_022MAI.png",
+      "outputBytes": 53462,
+      "outputSha256": "edae0f6edfcb91392aab4233b94744af54704fefab8e0f21d7378a0bdc9d9f41",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/ESK_Screen_Pic_022MAI_CN.dds",
+      "sourceBytes": 174948,
+      "sourceSha256": "e319e01174eb1befa0d85d1e75e21b6f76aa154be120aacd52689aad9c827184",
+      "sourceFormat": {
+        "width": 512,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/ESK_Screen_Pic_022MAI_CN.png",
+      "outputBytes": 53476,
+      "outputSha256": "9d02c2c6664dd24cdc92c45799d481d9a12ff9045387f09138183b258b63bbca",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Afterimage1.dds",
+      "sourceBytes": 11108,
+      "sourceSha256": "45f48aa0169b187e094aadc351cfa34f5490d63b9f956a7ea39ab69b6fc9ac7d",
+      "sourceFormat": {
+        "width": 64,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Afterimage1.png",
+      "outputBytes": 20317,
+      "outputSha256": "550291006dbde54e99fa880a10b0b51ae8057266c56419da60efb55ce111575d",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Afterimage2.dds",
+      "sourceBytes": 11108,
+      "sourceSha256": "6ef910a3ad59bc7022ad68ea4dcf8ef585d9ba67a2363fa92dc4f0f88369c3fd",
+      "sourceFormat": {
+        "width": 64,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Afterimage2.png",
+      "outputBytes": 24934,
+      "outputSha256": "150658c513672c7b18c33379b352fe45e8d62a375ec918315894fe31e968f74b",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Blur1.dds",
+      "sourceBytes": 11108,
+      "sourceSha256": "62d59c88316d5712aded0d841c0a9c85126d4cd760942134d2d2fe6c8994c70a",
+      "sourceFormat": {
+        "width": 64,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Blur1.png",
+      "outputBytes": 25830,
+      "outputSha256": "0f87e68411a55d6496ae1d52c5d4c3bd917f20ea11645192ba861b45abde9d22",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Blur3.dds",
+      "sourceBytes": 11108,
+      "sourceSha256": "dfc31877a03e2ecfa2e7c0f3f2f9b4e1b8a07bab9a2b8d910b79bdd2f218c8bd",
+      "sourceFormat": {
+        "width": 64,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Blur3.png",
+      "outputBytes": 17508,
+      "outputSha256": "65f5c92912400f4efd49a4988a608945ec25938860a0e1cb21e57acd52477a9c",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Blur_Col.dds",
+      "sourceBytes": 1540,
+      "sourceSha256": "9b4fa7e2bf16e0af63eb173464cc9ec802f3ac887a9c84f080afba074d0c0914",
+      "sourceFormat": {
+        "width": 32,
+        "height": 32,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Blur_Col.png",
+      "outputBytes": 1763,
+      "outputSha256": "cd608bb34230e0f354672ef6b153b7c09f01bd76a13d83e58985647ba1720853",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Distortion2.dds",
+      "sourceBytes": 22180,
+      "sourceSha256": "030209e441fd2e9ab722eab8586e9f2ab5f198d0308ee5a0808d3a4f618abe40",
+      "sourceFormat": {
+        "width": 512,
+        "height": 32,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Distortion2.png",
+      "outputBytes": 1155,
+      "outputSha256": "4e0a243361ee7a5bf01427f1674c690d48b444f487458038c510db1c9518dd90",
+      "outputFormat": {
+        "width": 256,
+        "height": 16,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Fire_Surface.dds",
+      "sourceBytes": 2796388,
+      "sourceSha256": "fa03054ad02ada7fe69a781c63ed2fee7e4cb493709d8aa3458316f852e8431b",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Fire_Surface.png",
+      "outputBytes": 102098,
+      "outputSha256": "ef2787e06056598b90e33193f3913906ddd3f63509baaafcd930c8ad2197d4bb",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Hit.dds",
+      "sourceBytes": 43876,
+      "sourceSha256": "2ba05a026d9860c6d609187aa7a6dcd696420e3e9eacc1c55aefa686b0bc9997",
+      "sourceFormat": {
+        "width": 256,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Hit.png",
+      "outputBytes": 60197,
+      "outputSha256": "b66a63944ea7d00e25f425f3a0b1da3a96aa6154661a5a00d91c2ca651f72486",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Kacyou_Blur.dds",
+      "sourceBytes": 87556,
+      "sourceSha256": "9a2690540a10d5b6a75d30c871f90d27ce534291c9cf6ceaca9b48b46e384fa2",
+      "sourceFormat": {
+        "width": 256,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Kacyou_Blur.png",
+      "outputBytes": 68635,
+      "outputSha256": "ebf230aaf97b5b9539fcfbb0bdd05bd1dad379c4234c1f297e4cf992091ed863",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Kacyou_Paper.dds",
+      "sourceBytes": 87556,
+      "sourceSha256": "65ed5f99259680f832fd4b8ca276a2adb071c6014516ee241d540d883e961a15",
+      "sourceFormat": {
+        "width": 256,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Kacyou_Paper.png",
+      "outputBytes": 77024,
+      "outputSha256": "4da5db493f45a0f51e2ad682cc09a41c1f0967fc002f3d988221b8a7a203f945",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Light.dds",
+      "sourceBytes": 349700,
+      "sourceSha256": "6490cc2d830e2f4cb4052ec04090b3e107410ce2c1a5f77847bcc07e1fe86a11",
+      "sourceFormat": {
+        "width": 512,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Light.png",
+      "outputBytes": 93518,
+      "outputSha256": "e91ca2f3d94fdf1aad4ada2b3a5b2c2a7dc8cf7fdca95b2e07cdc5e088a66104",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "MAI",
+      "characterNameZh": "不知火舞",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/MAI/Effect/MAI_Shockwave_Ring.dds",
+      "sourceBytes": 87588,
+      "sourceSha256": "082b53dd7eff1c218b0022b875b44a1574b0fb40fa561f2561e37af6589960bf",
+      "sourceFormat": {
+        "width": 512,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/MAI/MAI_Shockwave_Ring.png",
+      "outputBytes": 28917,
+      "outputSha256": "ca127a8fffdd8c5b829993bcdc421ab2ba108a5f5fa3e9f36fb29f7104c89b2c",
+      "outputFormat": {
+        "width": 256,
+        "height": 64,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/ESK_Screen_Name_012IOR.dds",
+      "sourceBytes": 22180,
+      "sourceSha256": "944185c80229f20fb6e1d901bedaf9e1a4db25aabc2b6320c7a59f3866a44152",
+      "sourceFormat": {
+        "width": 512,
+        "height": 32,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/ESK_Screen_Name_012IOR.png",
+      "outputBytes": 4736,
+      "outputSha256": "12ff5813ce5d0dcd00d614747051c4ea510d9c0c9ddb31a711970e6274ec1757",
+      "outputFormat": {
+        "width": 256,
+        "height": 16,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/ESK_Screen_Pic_012IOR.dds",
+      "sourceBytes": 174948,
+      "sourceSha256": "45d35d7da886ee7a325a9c997b174d764f73c262866d8eff5e89ce7f9c24b86a",
+      "sourceFormat": {
+        "width": 512,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/ESK_Screen_Pic_012IOR.png",
+      "outputBytes": 48395,
+      "outputSha256": "4393202c8f07d72af61c0cae1b630d468d09c79865e07f0d6ccd4ed974aa755d",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Claw.dds",
+      "sourceBytes": 43940,
+      "sourceSha256": "c29a244bcb77805432ba5bf0d773ea74247e0e91da050f43f559e6b849e56a76",
+      "sourceFormat": {
+        "width": 512,
+        "height": 64,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Claw.png",
+      "outputBytes": 10115,
+      "outputSha256": "effba0bdeb139d178364543664af8cc9bdc0fccc1c05b023d5d59ef2098d13ba",
+      "outputFormat": {
+        "width": 256,
+        "height": 32,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Core.dds",
+      "sourceBytes": 43876,
+      "sourceSha256": "3ecdda465dc751ebdd3ef5a3094408fb91660d3b2b2a9276c6ed8b2bc436885b",
+      "sourceFormat": {
+        "width": 128,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Core.png",
+      "outputBytes": 36269,
+      "outputSha256": "95d25527345f28d6627cece7217485f2aa1ec83e1fbaaee94064731a379f2cb8",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Explosion1.dds",
+      "sourceBytes": 437108,
+      "sourceSha256": "8bded1476c85d18d1da067413aecf36a991be11aa001e6d505e26b13a2e6db01",
+      "sourceFormat": {
+        "width": 512,
+        "height": 640,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Explosion1.png",
+      "outputBytes": 127687,
+      "outputSha256": "02b691ddc1c4ab106a7f66d6fcc6f0423d5c7f37b8b5277edd0443923b5bc516",
+      "outputFormat": {
+        "width": 205,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Explosion2.dds",
+      "sourceBytes": 349700,
+      "sourceSha256": "4868bf5e3a1c6edca72f2a640f2e6b643e7248b9bd03bd7a89bb596bf5185be8",
+      "sourceFormat": {
+        "width": 512,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Explosion2.png",
+      "outputBytes": 164452,
+      "outputSha256": "48033d2b00c21bb4fefc05db55591100b05f2036523f360fd32e3afbbd27cfa3",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Fire1.dds",
+      "sourceBytes": 699236,
+      "sourceSha256": "10068ad88a72ad28473ae2dad4e682250d5828235eab96b3cafa4810f2114b65",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Fire1.png",
+      "outputBytes": 48475,
+      "outputSha256": "8abf05844f38d5f260f2a61190320cb6519485d62bda5be6cc14306792922906",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Fire2.dds",
+      "sourceBytes": 2796452,
+      "sourceSha256": "ee9b14890ae6354616b7a20e118f1d96fd850a495a7e22c7649d7da3941f8994",
+      "sourceFormat": {
+        "width": 4096,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Fire2.png",
+      "outputBytes": 24612,
+      "outputSha256": "77cd088a5ff841926ca4acbc1567ea7314cf84c46f70011dbf902b20c0435f69",
+      "outputFormat": {
+        "width": 256,
+        "height": 32,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Fire_Surface1.dds",
+      "sourceBytes": 5592580,
+      "sourceSha256": "716bce6dc1b52f02d0b85c0e1b02a8955917a644427933c9c42a6c9a0733dc9b",
+      "sourceFormat": {
+        "width": 2048,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Fire_Surface1.png",
+      "outputBytes": 190120,
+      "outputSha256": "ed4ae3186495eaca5a22cbc040220e19d515d4d149d7d42f249bf13a49bb953b",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Fire_Surface2.dds",
+      "sourceBytes": 5592580,
+      "sourceSha256": "88bb0cf27fd5cb528450eb7a86e46c38e46e36ff6c8ff709afe9d6c7d567a986",
+      "sourceFormat": {
+        "width": 2048,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Fire_Surface2.png",
+      "outputBytes": 211026,
+      "outputSha256": "1506bd28bbdf1ac916c32182508e2156dfcd2b3053f86659681e9f87a1109040",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Glare.dds",
+      "sourceBytes": 22020,
+      "sourceSha256": "b56bf7f0bb2131d4e49c97ea221b18f73cbfcc5ca3fbb12bdc6d01adcce702fa",
+      "sourceFormat": {
+        "width": 128,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Glare.png",
+      "outputBytes": 49699,
+      "outputSha256": "d43d89431bdec805a729de5455fc45634cd2a46cef4cdccb8fb998b951874137",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Grain.dds",
+      "sourceBytes": 5636,
+      "sourceSha256": "70e21b259a5bef4f2aae9aa39abc9e5c7298e1589ce0cad9146cfea7124fee11",
+      "sourceFormat": {
+        "width": 64,
+        "height": 64,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Grain.png",
+      "outputBytes": 33943,
+      "outputSha256": "6bd92734deb6861179ea5263a7ed7a6a58d09c381923aada56a105c11276f587",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Lensflare1.dds",
+      "sourceBytes": 699236,
+      "sourceSha256": "86dc02ce95568240a6b08dba87d2c29c8e0ec04acb0c53e4eec65cd60ec30821",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Lensflare1.png",
+      "outputBytes": 22253,
+      "outputSha256": "fd96e5a5fc2617f7aaa9fb16d3a1845b4653fd6bb2a4caca859b51797772e0a8",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Light1.dds",
+      "sourceBytes": 349700,
+      "sourceSha256": "42a4b43a8b4dba47beaf8c2960f7b542df506b2d992aa1317e713c622226e34d",
+      "sourceFormat": {
+        "width": 512,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Light1.png",
+      "outputBytes": 93359,
+      "outputSha256": "c80ac40c7432f466e246a9e6eecd610becc54b800464e7f67a436e48b483677c",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Light2.dds",
+      "sourceBytes": 349700,
+      "sourceSha256": "6708cac989cdb165a927d6fa217460c03e25f97fbd19a7a506b5a5e90b611b45",
+      "sourceFormat": {
+        "width": 512,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Light2.png",
+      "outputBytes": 91973,
+      "outputSha256": "40c0531200a8167bf555e334e3c07c7bc60e8a518004235f7b278530cbab3624",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Saika_Hand.dds",
+      "sourceBytes": 43876,
+      "sourceSha256": "67bea13c50b4a0d0b481e1c05b9d0afe1db53a05a43c7674195551a140c43c0d",
+      "sourceFormat": {
+        "width": 256,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Saika_Hand.png",
+      "outputBytes": 27790,
+      "outputSha256": "9365324b32d5e86e717bfc74354cbb1279abf6fc378875fcb301ea7ac69042f5",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Saika_Impact.dds",
+      "sourceBytes": 43876,
+      "sourceSha256": "86d7abab1f31014800ca923feeb4d5fd5c82a5094e36a77e0e847750ab7f6a70",
+      "sourceFormat": {
+        "width": 128,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Saika_Impact.png",
+      "outputBytes": 32572,
+      "outputSha256": "3fc5a5a2b3a6840ac0338ac687f13ba323abd9aebd315d2b640fce66b95c338a",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Shell.dds",
+      "sourceBytes": 1398308,
+      "sourceSha256": "2e4d459da3dd0b66b2af68d1f6fec1fac51be7cd7a33c7499dccae90be3614ee",
+      "sourceFormat": {
+        "width": 512,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Shell.png",
+      "outputBytes": 51519,
+      "outputSha256": "6dbc1069111560600aaf51b30cf56fe779c485927ebe708712388c442962817f",
+      "outputFormat": {
+        "width": 64,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Shockwave1.dds",
+      "sourceBytes": 87588,
+      "sourceSha256": "2a4168494e99595dcf426771ec6331a0d44c1035682586b955c8bcd06e5491d7",
+      "sourceFormat": {
+        "width": 512,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Shockwave1.png",
+      "outputBytes": 12932,
+      "outputSha256": "4c17cb76ebeaba29119b61fa6c30d865f486efc27c63a986ed4bf8b6eeb068e1",
+      "outputFormat": {
+        "width": 256,
+        "height": 64,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Shockwave2.dds",
+      "sourceBytes": 174948,
+      "sourceSha256": "c6b54e31ad69ae67b0dd55f68a7e19a9515b7fe6b66642f2448d4d79326fd6f1",
+      "sourceFormat": {
+        "width": 256,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Shockwave2.png",
+      "outputBytes": 65201,
+      "outputSha256": "946de9cb64c084b705035ab150ebf3b94e664270051c9d3d39f689a7af59a344",
+      "outputFormat": {
+        "width": 128,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Smoke2.dds",
+      "sourceBytes": 1398276,
+      "sourceSha256": "335985b6e95fc38593bc66279c95b94e7012df61bc447562999685b06b9b9e30",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 1024,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Smoke2.png",
+      "outputBytes": 84322,
+      "outputSha256": "2cde4e0917c899bf281526676def2244d001f097bdcff58e8bd8d9cbc60a2e17",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "IOR",
+      "characterNameZh": "八神庵",
+      "heroIds": [
+        "community-review-02-20260907"
+      ],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/IOR/Effect/IOR_Spark1.dds",
+      "sourceBytes": 1398276,
+      "sourceSha256": "f8f7e74e0fd5b525f440d0fbe69463a1baf421edfe8a2e27060a06cc1da57072",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 1024,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/IOR/IOR_Spark1.png",
+      "outputBytes": 100693,
+      "outputSha256": "be1b19a4584794f0f81856789a132f27399e5013bb3042d01c8c6a8e68d8777a",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/ESK_Screen_Name_000KYO.dds",
+      "sourceBytes": 22180,
+      "sourceSha256": "df2a0c58c71cd65283ed40b9758b2871eca379516845bb8cb6f6c01f95aab46e",
+      "sourceFormat": {
+        "width": 512,
+        "height": 32,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/ESK_Screen_Name_000KYO.png",
+      "outputBytes": 5717,
+      "outputSha256": "2bed4f5674412405e78fad87ae9328a1762c84ccd731f4d48f80d1a7fa620e23",
+      "outputFormat": {
+        "width": 256,
+        "height": 16,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/ESK_Screen_Pic_000KYO.dds",
+      "sourceBytes": 174948,
+      "sourceSha256": "035f708cfc1d42415b183439297cd5df8820f5c542dd66316d7ac822772594d8",
+      "sourceFormat": {
+        "width": 512,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/ESK_Screen_Pic_000KYO.png",
+      "outputBytes": 42468,
+      "outputSha256": "66c1b3896bd71f5b772382f9a896400e0388142d50904d9de61a2ec3a42704a6",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Aura.dds",
+      "sourceBytes": 349732,
+      "sourceSha256": "06c03d7dafbfcb7426a6480fdc87a46e235e885fe95cc543402bc48275bc1f01",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 256,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Aura.png",
+      "outputBytes": 25618,
+      "outputSha256": "efcb375a48bff8f0cc0365a399855b49e436d783156c90ad96e85f8479020ccb",
+      "outputFormat": {
+        "width": 256,
+        "height": 64,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Explosion1.dds",
+      "sourceBytes": 437108,
+      "sourceSha256": "cab8f329af947e22e735c383c850daa15242453a22bd3db7279b6554b335613c",
+      "sourceFormat": {
+        "width": 512,
+        "height": 640,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Explosion1.png",
+      "outputBytes": 131163,
+      "outputSha256": "862a908331d1286b4a07f29d9f67ccd54a6c0a2d5567840972d9f6e58ce793d4",
+      "outputFormat": {
+        "width": 205,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Explosion2.dds",
+      "sourceBytes": 349700,
+      "sourceSha256": "d006126f32d1c3f18c4aea7d97558ffca81fa72512e1cb28c8adf403a03316ae",
+      "sourceFormat": {
+        "width": 512,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Explosion2.png",
+      "outputBytes": 160256,
+      "outputSha256": "bff23e7a1b1ddb0da8d8fe872ac1dc5b4189f1f82c5b2708b80da0c85b725bc0",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Fire1.dds",
+      "sourceBytes": 2796388,
+      "sourceSha256": "dae89c9e9edebf344b5b2270a7235e33dcb8d91ffbdcf818cfeb2192ba9d0ba0",
+      "sourceFormat": {
+        "width": 2048,
+        "height": 1024,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Fire1.png",
+      "outputBytes": 37391,
+      "outputSha256": "888fabfc144563df2f23af64cf02bbf2a824867162f7278df81adf7684f4b32c",
+      "outputFormat": {
+        "width": 256,
+        "height": 128,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Fire2.dds",
+      "sourceBytes": 2097572,
+      "sourceSha256": "84f3765494ca0d02f272f563c138c08205db478edc8f607c857298196bdc8248",
+      "sourceFormat": {
+        "width": 4096,
+        "height": 384,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Fire2.png",
+      "outputBytes": 14094,
+      "outputSha256": "2f1645eaec6437c37028d9d13d8f0ea49ecab311c925d2ab3916f0e17c84061b",
+      "outputFormat": {
+        "width": 256,
+        "height": 24,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Fire_Surface1.dds",
+      "sourceBytes": 5592580,
+      "sourceSha256": "8962387b96bb0b7ec3f109bf021326cb963c15ce64592d8306d7337996149ac4",
+      "sourceFormat": {
+        "width": 2048,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Fire_Surface1.png",
+      "outputBytes": 201194,
+      "outputSha256": "4ca16cf50dcdbdca8d50920ab30819917ebc9bd289c8f338a75019c96f291602",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Fire_Surface2.dds",
+      "sourceBytes": 5592580,
+      "sourceSha256": "b2250883778416786a7417f9ff7d44e670219aaa0d303bc3c46f373ef7806570",
+      "sourceFormat": {
+        "width": 2048,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Fire_Surface2.png",
+      "outputBytes": 215596,
+      "outputSha256": "7c5fa0a191811bc427b789ccea614e1df7e0ebbc3aed5369f93037a2977947bc",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Glare.dds",
+      "sourceBytes": 22020,
+      "sourceSha256": "3380712c861b60165a59db08404d3e6cf6bfc59df470366e6187c93551392f54",
+      "sourceFormat": {
+        "width": 128,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Glare.png",
+      "outputBytes": 39201,
+      "outputSha256": "553d1cae58a496d4d60c0c2b64eddc7a97661c0f645b4c3b979137362b72a7b2",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Grain.dds",
+      "sourceBytes": 5636,
+      "sourceSha256": "67998cc87043fa8d1636be64d8ceefd705075c91542af5c7e15985619ae8b14f",
+      "sourceFormat": {
+        "width": 64,
+        "height": 64,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Grain.png",
+      "outputBytes": 19818,
+      "outputSha256": "66445a81cae0c89a371b63c4003e23b18182dbd65f2f0b0d2f823cfff229d662",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Light1.dds",
+      "sourceBytes": 349700,
+      "sourceSha256": "c352eebce609905e23089d8ef80c4d3c48d20675018d7926e7b47dda9d1f17b2",
+      "sourceFormat": {
+        "width": 512,
+        "height": 512,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Light1.png",
+      "outputBytes": 98299,
+      "outputSha256": "9b02069ca4cd49f6828dfe69b5038620996344a021adbc012e8ffde86fd457c5",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Light2.dds",
+      "sourceBytes": 5592580,
+      "sourceSha256": "f49ef8eefc3a8a760705b08af619b3086a0c7080bcca8493dd547571957720f4",
+      "sourceFormat": {
+        "width": 2048,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Light2.png",
+      "outputBytes": 112363,
+      "outputSha256": "12f14b127c4efa0db603ae98f64478d38b94044ec02d1ce71302c191472dd445",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Shell.dds",
+      "sourceBytes": 1398308,
+      "sourceSha256": "8c3cba42a5b39fa5d5e8c9f0fa42b43aa946c23d80a6cccebff79225a5392dc7",
+      "sourceFormat": {
+        "width": 512,
+        "height": 2048,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Shell.png",
+      "outputBytes": 51485,
+      "outputSha256": "52fe43c0d0679e59a9528c3df422bb6748810d012e4a56332cb89b4a123d3675",
+      "outputFormat": {
+        "width": 64,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Shockwave_Ring.dds",
+      "sourceBytes": 87588,
+      "sourceSha256": "724109ac4418a579f974b554f19ec08e4ef1b856d05603c5a6061452c1c5140a",
+      "sourceFormat": {
+        "width": 512,
+        "height": 128,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Shockwave_Ring.png",
+      "outputBytes": 17656,
+      "outputSha256": "b172d2ce5bb39a4fceab8840d964c951ea7f0d92d8a91e48dd05153ae27b3cf2",
+      "outputFormat": {
+        "width": 256,
+        "height": 64,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Smoke.dds",
+      "sourceBytes": 1398276,
+      "sourceSha256": "7e01e75403f564e68d99632a7eb3ec95df0d1e0e613b68b199c2f5423b0f11f4",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 1024,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Smoke.png",
+      "outputBytes": 77135,
+      "outputSha256": "7b84e4aecb69a82d9dfd5ac974ee92ad186e43c00ad25bc71d23802994c0020e",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Smoke_Alpha.dds",
+      "sourceBytes": 1398276,
+      "sourceSha256": "973b3f074dfff1fbb9309890b2ec85b9bce337d3831004fc2adbab644bd6b442",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 1024,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Smoke_Alpha.png",
+      "outputBytes": 55287,
+      "outputSha256": "50e9d49f6838fad9345009f8e670137e94942aa6c66f100b420b93327ce54c1e",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    },
+    {
+      "nativeCharacterId": "KYO",
+      "characterNameZh": "草薙京",
+      "heroIds": [],
+      "sourceAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1/extracted/Chara/KYO/Effect/KYO_Spark1.dds",
+      "sourceBytes": 1398276,
+      "sourceSha256": "f9cf903a7f5e68fb6bd2c6a28c4a0343ffa89730e16ab8420c0b119c4096fae3",
+      "sourceFormat": {
+        "width": 1024,
+        "height": 1024,
+        "fourCC": "DX10",
+        "dxgiFormat": 98
+      },
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xiv-priority-vfx-textures-20260914-v1/KYO/KYO_Spark1.png",
+      "outputBytes": 91849,
+      "outputSha256": "2cf16fdd37715db55f428efc2ce7437cbc999dfaa0d89b2731260177413ceddf",
+      "outputFormat": {
+        "width": 256,
+        "height": 256,
+        "channels": 4
+      },
+      "acquisition": "extracted-and-sha256-verified",
+      "extraction": "native-dds-present",
+      "conversion": "decoded-256px-png",
+      "readiness": "review-candidate-not-bound-to-vfx-runtime"
+    }
+  ],
+  "automaticEventBindings": 0,
+  "runtimeVfxDocuments": 0,
+  "backendSelectable": false,
+  "productionDeploymentVerified": false,
+  "backup": {
+    "state": "pending-local-conversion-archive-and-s3-readback",
+    "s3Uri": null,
+    "readbackVerified": false
+  },
+  "blockers": [
+    "proprietary EFF/OBAC/ONC relationships are not decoded",
+    "texture role, blend mode, timing and attachment point are not validated",
+    "no GGD VFX document or skill binding has been generated",
+    "visual review has not been performed"
+  ]
+}

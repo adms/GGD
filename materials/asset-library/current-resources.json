@@ -6476,6 +6476,22 @@
     "runtimeSelectable": false,
     "productionDeploymentVerified": false
   },
+  "kofJumpContainerCoverage": {
+    "gitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json",
+    "sha256": "cf6a5927f7fd54510eb938ea9aa20dfb08e93fa978062e6d0d5e997da42f301b",
+    "documentGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/README.md",
+    "documentSha256": "279d477d577ea9ef55942e8c199461942f5b709f1e73c620d29b93970df6d88a",
+    "vfxTextureCandidateGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json",
+    "vfxTextureCandidateSha256": "1aec4dda9e34ed6529b9e49244b5548dc07241575034cf76a00ecaa02e13b591",
+    "queryToolGitPath": "tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/query.py",
+    "queryToolSha256": "f7b07594e0e8e46799045fda89a9476719faf7cce20e584f79d23e8066e97134",
+    "jumpForceNativeIdTokens": 224,
+    "kofXivNativeDirectoryTokens": 80,
+    "kofXivVfxTextureCandidates": 55,
+    "automaticAudioBindings": 0,
+    "runtimeSelectableAssetsAdded": 0,
+    "productionDeploymentVerified": false
+  },
   "ssbuUltimateLocalRoster": {
     "gitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
     "sha256": "324027a053067991cb5bc64e4c2adda842f805ba8e4b62d8d8c0acd686ce79c2",

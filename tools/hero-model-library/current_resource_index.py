@@ -337,6 +337,23 @@ def build(git_link_root=ROOT):
         or not kof3d_inventory.get('kofXiv',{}).get('selectedExtraction',{}).get('verification',{}).get('allFilesSha256Verified')
         or kof3d_inventory.get('kofXv',{}).get('hardPolicyProbe',{}).get('result')!='hard-policy-failed-draw-calls'):
         raise ValueError('KOF 3D source/conversion inventory is absent, stale or overclaims readiness')
+    kof_jump_coverage_path=base/'source-inventories/kof-jump-container-coverage-v1/inventory.json'
+    kof_jump_coverage_doc_path=base/'source-inventories/kof-jump-container-coverage-v1/README.md'
+    kof_xiv_vfx_textures_path=base/'source-inventories/kof-jump-container-coverage-v1/vfx-texture-candidates.json'
+    kof_jump_query_path=ROOT/'tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/query.py'
+    kof_jump_coverage=read(kof_jump_coverage_path)
+    kof_xiv_vfx_textures=read(kof_xiv_vfx_textures_path)
+    if (kof_jump_coverage.get('schema')!='ggd.kof-jump-container-coverage@1'
+        or kof_jump_coverage.get('jumpForce',{}).get('inferredNativeCharacterIdTokens')!=224
+        or kof_jump_coverage.get('kofXiv',{}).get('nativeDirectoryTokens')!=80
+        or kof_jump_coverage.get('automaticAudioBindings')!=0
+        or kof_jump_coverage.get('runtimeSelectableAssetsAdded')!=0
+        or kof_xiv_vfx_textures.get('schema')!='ggd.kof-xiv-vfx-texture-candidates@1'
+        or kof_xiv_vfx_textures.get('summary',{}).get('convertedPngFiles')!=55
+        or kof_xiv_vfx_textures.get('summary',{}).get('overTextureLimit')!=0
+        or kof_xiv_vfx_textures.get('runtimeVfxDocuments')!=0
+        or kof_xiv_vfx_textures.get('backendSelectable') is not False):
+        raise ValueError('KOF/JUMP container coverage is absent, stale or overclaims runtime readiness')
     ssbu_ultimate_roster_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/inventory.json'
     ssbu_ultimate_roster_doc_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/README.md'
     ssbu_ultimate_roster=read(ssbu_ultimate_roster_path)
@@ -498,6 +515,21 @@ def build(git_link_root=ROOT):
             textureBackup=kof3d_inventory['kofXiv']['textureCandidates']['backup'],
             ashGuardResult=kof3d_inventory['kofXv']['hardPolicyProbe']['result'],
             runtimeSelectable=False,
+            productionDeploymentVerified=False),
+        kofJumpContainerCoverage=dict(
+            gitPath=str(kof_jump_coverage_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(kof_jump_coverage_path.read_bytes()).hexdigest(),
+            documentGitPath=str(kof_jump_coverage_doc_path.relative_to(ROOT)),
+            documentSha256=hashlib.sha256(kof_jump_coverage_doc_path.read_bytes()).hexdigest(),
+            vfxTextureCandidateGitPath=str(kof_xiv_vfx_textures_path.relative_to(ROOT)),
+            vfxTextureCandidateSha256=hashlib.sha256(kof_xiv_vfx_textures_path.read_bytes()).hexdigest(),
+            queryToolGitPath=str(kof_jump_query_path.relative_to(ROOT)),
+            queryToolSha256=hashlib.sha256(kof_jump_query_path.read_bytes()).hexdigest(),
+            jumpForceNativeIdTokens=224,
+            kofXivNativeDirectoryTokens=80,
+            kofXivVfxTextureCandidates=55,
+            automaticAudioBindings=0,
+            runtimeSelectableAssetsAdded=0,
             productionDeploymentVerified=False),
         ssbuUltimateLocalRoster=dict(
             gitPath=str(ssbu_ultimate_roster_path.relative_to(ROOT)),
@@ -798,6 +830,22 @@ def main():
                 },
                 result['ultimate14NativeMotionIndex'],
                 result['kof3dSourceInventory'],
+                {
+                    'gitPath': result['kofJumpContainerCoverage']['gitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['sha256'],
+                },
+                {
+                    'gitPath': result['kofJumpContainerCoverage']['documentGitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['documentSha256'],
+                },
+                {
+                    'gitPath': result['kofJumpContainerCoverage']['vfxTextureCandidateGitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['vfxTextureCandidateSha256'],
+                },
+                {
+                    'gitPath': result['kofJumpContainerCoverage']['queryToolGitPath'],
+                    'sha256': result['kofJumpContainerCoverage']['queryToolSha256'],
+                },
                 {
                     'gitPath': result['ssbuUltimateLocalRoster']['gitPath'],
                     'sha256': result['ssbuUltimateLocalRoster']['sha256'],
