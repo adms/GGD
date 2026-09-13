@@ -188,6 +188,37 @@ const SYNC_STEP_NO_CHECK: Record<string, string> = {
  * 理由要能被反駁：⭐ 說得出**為什麼那份產物不會因為聚合重生成而變**。
  */
 const CHECK_STEP_NO_SYNC: Record<string, string> = {
+  // ⭐ PR #1152 合併準備（2026-09-14）：六支都**會寫產物**，⛔ 不是「沒有產物」那一族 —— 缺的是鏈上的位置，理由逐列寫明。
+  "modelpolicy:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/asset-library/模型動作特效上架限制.md），照規矩 `modelpolicy:build` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm modelpolicy:build`。反駁法：鏈上出現 `modelpolicy:build` 之後這一列就是幽靈，刪掉。",
+  "modelpolicy:priority-audit:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/hero-model-library/priority-model-policy-audit.{json,md}），照規矩 `modelpolicy:priority-audit` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm modelpolicy:priority-audit`。反駁法：鏈上出現 `modelpolicy:priority-audit` 之後這一列就是幽靈，刪掉。",
+  "modelpolicy:component-audit:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/hero-model-library/priority-evidence/current-component-policy-audit.json），照規矩 `modelpolicy:component-audit` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm modelpolicy:component-audit`。反駁法：鏈上出現 `modelpolicy:component-audit` 之後這一列就是幽靈，刪掉。",
+  "models:historical-options:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（historical-model-recovery/model-option-registration.json 與四份 model@1 選項），照規矩 `models:historical-options` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm models:historical-options`。反駁法：鏈上出現 `models:historical-options` 之後這一列就是幽靈，刪掉。",
+  "hero:intake:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（docs/_review/material/hero-intake/ship*.json），照規矩 `hero:intake` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm hero:intake`。反駁法：鏈上出現 `hero:intake` 之後這一列就是幽靈，刪掉。",
+  "handoff:check":
+    "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（docs/素材缺口交接單.md），照規矩 `handoff:build` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，對不上整條拒跑），" +
+    "要重跑 3-pass trace（GH#710），而那一步全域只能由一條工作流跑。" +
+    "⇒ 接上之前：`skills:check` 照樣驗它（過期看得到），修法是單獨跑 `pnpm handoff:build`。反駁法：鏈上出現 `handoff:build` 之後這一列就是幽靈，刪掉。",
   "echoloop:check":
     "⭐ 它**不寫任何檔** —— `tools/balance-alert/echoLoop.ts` 全檔零個 `writeFileSync`（2026-09-03 實查）," +
     "而 `echoloop` 與 `echoloop:check` 是**同一支腳本**,`--check` 只改嚴格度。" +
@@ -245,6 +276,17 @@ const EXEMPT: Record<string, string> = {
   "scenerycc0:check": "把 CC0 資產的 bbox 最低點推到 y=0 —— 讀 GLB 位元組，不讀技能",
   "map:check": "競技場**幾何**產生器 —— 讀地圖模板與圖論規則，不讀 abilities/vfx/級距",
   "budget:check": "模型多邊形**預算**閘 —— 它不是新鮮度閘（超標才紅，不是過期才紅）",
+  // ⭐ PR #1152（2026-09-14 合併準備）帶進來的模型政策腳本 —— ⛔ 三列都**不是**漏接：
+  "modelbudget:check":
+    "同 `budget:check` 的 root 包裝（`pnpm --filter @ggd/model-budget budget:check` 遞迴到同一支 `emit_report.ts --check`）" +
+    "—— 它不是新鮮度閘（超標才紅，不是過期才紅）。反駁法：哪天 emit_report 開始寫會過期的產物，就改接進 skills:check。",
+  "budget:policy-doc:check":
+    "⭐ 它就是 skills:check 裡 `pnpm modelpolicy:check` 經 `pnpm --filter @ggd/model-budget` **遞迴**呼叫的那一支" +
+    "（同一支 `generate_policy_doc.ts --check`）；這張掃描只比對 root 腳本名，看不見 --filter 那一跳。" +
+    "反駁法：root 的 `modelpolicy:check` 被拿出 skills:check，這一列就要刪。",
+  "budget:priority-audit:check":
+    "⭐ 它就是 skills:check 裡 `pnpm modelpolicy:priority-audit:check` 經 `pnpm --filter @ggd/model-budget` **遞迴**呼叫的那一支" +
+    "（同一支 `audit_priority_release.ts --check`）。反駁法同上一列。",
   // ⭐ GH#621 —— `ship:check` 是**聚合指令自己**（它跑 content:build + skills:sync
   // + skills:check + typecheck + 每一包 vitest）。把它放進 `skills:check` 會變成
   // ⛔ **無窮遞迴**（skills:check → ship:check → skills:check）。

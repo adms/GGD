@@ -66,7 +66,7 @@ const HAS_ROLLBACK: readonly string[] = [
   "godie-e00l", "godie-e00s", "godie-e010", "godie-edem",
   "godie-efur", "godie-h01n", "godie-h01o", "godie-h020",
   "godie-hapm", "godie-hjai", "godie-hvsh", "godie-n003",
-  "godie-n00b", "godie-o030", "godie-ogld", "godie-orkn",
+  "godie-n00b", "godie-nbbc", "godie-o030", "godie-ogld", "godie-orkn",
   "godie-osam", "godie-u00k", "godie-u00n", "godie-u00o",
   "godie-u01u", "godie-ubal", "godie-udea", "godie-udre",
   "lol-karthus", "lol-leesin", "lol-lux", "lol-missfortune",

@@ -3,7 +3,7 @@
   "note": "⭐ 「宣告的欄位」對「實際的結構／卡面」（GH#948）—— ⛔ 產物，改 `tools/declared-shape/gen.ts`，⛔ 不要手改。⚠️ 卡面比對前**剝掉 `「…」`**（第〇·六守則細則②：那是角色對白，⛔ 不是效果）。",
   "counts": {
     "abilities": 907,
-    "passiveWithCastTime": 35,
+    "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
     "cooldownArrayAlongsideTier": 739,
     "basicAttackHookNotOnCard": 29
@@ -20,10 +20,6 @@
     {
       "id": "godie-e00s.passive",
       "castTimeSec": 0.3
-    },
-    {
-      "id": "godie-e00w.passive",
-      "castTimeSec": 0.5
     },
     {
       "id": "godie-e00x.passive",

@@ -173,7 +173,19 @@ export function scanAbilityCodeDrift(docs: readonly Record<string, unknown>[]): 
     for (const doc of members) for (const f of Object.keys(doc)) if (!COSMETIC_FIELDS.has(f)) fields.add(f);
 
     for (const field of [...fields].sort()) {
-      const values = members.map((doc) => ({
+      // ⭐⭐ 【被動限定（passive-only）的那一份**本來就沒有** `castTimeSec`】
+      // `packages/shared/scripts/deriveCastTimes.ts`：`castTimeSec: isPassiveOnly(d) ? undefined : seconds`
+      //（判準同 `sim/abilities/abilityPassives.ts` 的 `isPassiveOnly`：有 `passive` 且 `effects` 為空）——
+      // 被動限定的文件走不到施法分支，吟唱秒數對它不成立。
+      // ⇒ 同編號兩份、一份被動限定一份會施法時，「一邊有吟唱、一邊沒有」是**推導的結果**；
+      //   它們真正的結構差（`effects`／`passive`）照樣逐格在比。⛔ 只把被動限定的那幾份拿出**這一格**，
+      //   會施法的彼此之間吟唱不同照樣紅。
+      const compared =
+        field === "castTimeSec"
+          ? members.filter((d) => !(d.passive !== undefined && (Array.isArray(d.effects) ? d.effects.length : 0) === 0))
+          : members;
+      if (compared.length < 2) continue;
+      const values = compared.map((doc) => ({
         id: String(doc.id),
         // ⭐ 自我參照摺疊:doc id 是 `<heroId>.<slot>`,英雄 id 是第一段。
         // ⭐ 省略值先套預設再比（見 {@link OMITTED_DEFAULTS}）。

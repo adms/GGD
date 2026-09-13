@@ -12,7 +12,7 @@ from voice_index import (
 
 class VoiceRelationships(unittest.TestCase):
     def test_git_inputs_are_portable_from_an_isolated_worktree(self):
-        repo = Path("/private/tmp/ggd-feature-worktree")
+        repo = Path("/tmp/ggd-feature-worktree")  # 純字串夾具（不碰檔案系統）
         workspace = Path("/Users/example/ABxVFX_EDIT")
         self.assertEqual(
             "materials/hero-model-library/download-sources.json",

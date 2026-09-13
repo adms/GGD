@@ -66,7 +66,7 @@ case "$cmd" in
     while IFS= read -r f; do
       [[ -n "$f" ]] || continue
       p=$(perm "$f")
-      [[ "$p" == 444 ]] || { echo "⛔ 材料沒鎖：$f（${p}，該是 444）—— 手滑的 Edit 會直接寫進去。修：bash scripts/review-access.sh lock"; fail=1; }
+      [[ "$p" == 444 ]] || { echo "⛔ 材料沒鎖：${f}（${p}，該是 444）—— 手滑的 Edit 會直接寫進去。修：bash scripts/review-access.sh lock"; fail=1; }
       # ⭐ 欄位不相交：材料檔裡出現裁決欄位 = 分署漏了
       # ⚠️ `verdict` 這個字會出現在材料的**說明文字**裡，所以只認「JSON 欄位」的樣子（冒號緊跟著）
       if grep -qE '"(verdict|verdictAt|verdictHash)"[[:space:]]*:' "$f"; then
