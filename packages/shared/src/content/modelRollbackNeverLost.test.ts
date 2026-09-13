@@ -37,7 +37,7 @@ import { fileURLToPath } from "node:url";
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..", "content");
 
 /**
- * ⭐ 今天**有**後台 rollback 選項的英雄（2026-09-13 量到 107 隻）。
+ * ⭐ 今天**有**後台 rollback 選項的英雄（2026-09-14 量到 108 隻）。
  *
  * ⛔ 這張名單**只能變長**。少掉任何一個都代表有人拿走了一個 owner 的開關。
  * ⭐ `b2-keyaru` 與 `b2-aladdin` 已透過 `ModelVersions.prepare({action:"register"})` 補回，
@@ -66,7 +66,7 @@ const HAS_ROLLBACK: readonly string[] = [
   "godie-e00l", "godie-e00s", "godie-e010", "godie-edem",
   "godie-efur", "godie-h01n", "godie-h01o", "godie-h020",
   "godie-hapm", "godie-hjai", "godie-hvsh", "godie-n003",
-  "godie-n00b", "godie-o030", "godie-ogld", "godie-orkn",
+  "godie-n00b", "godie-nbbc", "godie-o030", "godie-ogld", "godie-orkn",
   "godie-osam", "godie-u00k", "godie-u00n", "godie-u00o",
   "godie-u01u", "godie-ubal", "godie-udea", "godie-udre",
   "lol-karthus", "lol-leesin", "lol-lux", "lol-missfortune",

@@ -1,0 +1,424 @@
+{
+  "schema": "ggd.infinity-strash-dai-vearn-release-audit@1",
+  "scope": {
+    "heroes": [
+      "godie-nbbc",
+      "godie-ubal"
+    ],
+    "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+    "poppReadOnly": true
+  },
+  "generatedFrom": [
+    {
+      "path": "materials/asset-library/current-resources.json",
+      "bytes": 637308,
+      "sha256": "190142cf08ac9afecefbe3ff356aa4e91952acf50b9374d7390cd73f8c3f896e"
+    },
+    {
+      "path": "content/assets/model-budget/report.json",
+      "bytes": 1135350,
+      "sha256": "31ad3615afa36d56d8c2e265fd1643187d43a2408da70eb4b1814c483d417603"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/validation.json",
+      "bytes": 22560,
+      "sha256": "472e0a4fd0bfa864e6b2f2b6b3809dc683bb5066defe7ea04c3f6e0ace3c5169"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/report.json",
+      "bytes": 7150,
+      "sha256": "d9d8d78a98d16978d5f74683e0f275fe25458f1a84d3765bc8f8b48355db5973"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/bowlroll-vearn-mmd-v087/acquisition.json",
+      "bytes": 2784,
+      "sha256": "85caaf9eee5b70b6b6e254f3a10221a30a9aac2a2848802c54e97f508918dd6c"
+    }
+  ],
+  "releaseCandidates": [
+    {
+      "candidateId": "dai-pn010-02",
+      "heroId": "godie-nbbc",
+      "runtimeId": "runtime:infinity-strash-dai-pn010-02-backdrop-decimated-v1",
+      "retainedRuntimeId": "runtime:infinity-strash-dai-pn010-02-native-v1",
+      "identity": "Dai PN010/02",
+      "sourceCharacter": "小呆／達伊（PN010/02）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+      "gitAsset": {
+        "path": "content/assets/models/community/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "bytes": 1880364,
+        "sha256": "bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6"
+      },
+      "modelDocument": {
+        "path": "content/models/community.body.bdf77de4789523c132c4e620f49ead67d70fd8374a9ed561.json",
+        "bytes": 484,
+        "sha256": "d31b69dc516c1b42210d44f79089bb425469921bc7ad41ec7b64084f0e4fce08"
+      },
+      "metrics": {
+        "triangles": 7917,
+        "drawPrimitives": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 429,
+        "animationCount": 5,
+        "maxAnimationChannels": 266
+      },
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "animationProvenance": {
+        "native": 5,
+        "procedural": 0,
+        "names": [
+          "GGD_native_idle",
+          "GGD_native_run",
+          "GGD_native_attack",
+          "GGD_native_special02",
+          "GGD_native_down"
+        ]
+      },
+      "budgetVerdicts": {},
+      "formalAdoption": {
+        "eligible": true,
+        "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+        "visualGatePassed": true,
+        "humanVisualReview": "accepted",
+        "evidence": [
+          {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/all-states-contact-sheet.png",
+            "bytes": 982680,
+            "sha256": "cd58934d1b3ef69a5c4e39165efc471b8100caa7031558058f887bdc46f9a1bf"
+          },
+          {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/worst-difference-overview.png",
+            "bytes": 446319,
+            "sha256": "c4b5c5ea63040b706e2cbd10363f416d4ab33a43a8b4466832a4dad3497ac163"
+          }
+        ]
+      },
+      "registration": {
+        "heroId": "godie-nbbc",
+        "modelSelectionMode": "automatic",
+        "runtimeDropdownRegistered": true,
+        "modelVersionPresent": true,
+        "activeDefault": false,
+        "retainedHighPolyOptionPresent": true,
+        "retainedLabel": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）（背景修復高面數保留版）"
+      },
+      "s3Backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "dai-pn010-02/final/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      },
+      "gaps": [
+        "原作模型、貼圖、骨架與動作；GGD hurt/death 共用來源的一幀 down 姿勢，未取得獨立達伊死亡動作。",
+        "來源 Special01 完整保留在本機與 S3 轉換備份，最終 GGD 六狀態選用 Special02 作 cast。",
+        "尚未還原遊戲 toon shader、武器切換、動畫事件、專屬特效與完整實戰時序；正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "deployment": {
+        "gitCheckoutVerified": true,
+        "productionDeploymentVerifiedThisRun": false
+      }
+    },
+    {
+      "candidateId": "dai-pn010-05-daino-tsurugi",
+      "heroId": "godie-nbbc",
+      "runtimeId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-backdrop-decimated-v1",
+      "retainedRuntimeId": "runtime:infinity-strash-dai-pn010-05-daino-tsurugi-native-v1",
+      "identity": "Dai PN010/05 with Dai no Tsurugi",
+      "sourceCharacter": "小呆／達伊（PN010/05，達伊之劍）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+      "gitAsset": {
+        "path": "content/assets/models/community/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "bytes": 2081176,
+        "sha256": "5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540"
+      },
+      "modelDocument": {
+        "path": "content/models/community.body.5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81.json",
+        "bytes": 484,
+        "sha256": "a4c2e9098e58cf23385a9a9a51454a92c7a4b41b6ff68f6b204af6914a9bb905"
+      },
+      "metrics": {
+        "triangles": 7918,
+        "drawPrimitives": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 429,
+        "animationCount": 5,
+        "maxAnimationChannels": 266
+      },
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "animationProvenance": {
+        "native": 5,
+        "procedural": 0,
+        "names": [
+          "GGD_native_idle",
+          "GGD_native_run",
+          "GGD_native_attack",
+          "GGD_native_special02",
+          "GGD_native_down"
+        ]
+      },
+      "budgetVerdicts": {
+        "triangles": "ok",
+        "drawCalls": "warn",
+        "maxTextureEdge": "ok",
+        "animChannels": "ok"
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+        "visualGatePassed": true,
+        "humanVisualReview": "accepted",
+        "evidence": [
+          {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/all-states-contact-sheet.png",
+            "bytes": 1021772,
+            "sha256": "1471fdb2fee763aaaeec7ef716da440989b29b5d8c52bd41ec784d275bb6b699"
+          },
+          {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/worst-difference-overview.png",
+            "bytes": 418892,
+            "sha256": "b203d19dc54971d54d266b0795452d58919ad76e1f0b08fef41edff0014a68f1"
+          }
+        ]
+      },
+      "registration": {
+        "heroId": "godie-nbbc",
+        "modelSelectionMode": "automatic",
+        "runtimeDropdownRegistered": true,
+        "modelVersionPresent": true,
+        "activeDefault": true,
+        "retainedHighPolyOptionPresent": true,
+        "retainedLabel": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）（背景修復高面數保留版）"
+      },
+      "s3Backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "dai-pn010-05-daino-tsurugi/final/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      },
+      "gaps": [
+        "原作 PN010/05 身體、Hair/01、貼圖、429 骨與達伊之劍；CB_PN010_05 同時證明角色部件、武器與 Weapon1_R，劍依該來源設定剛性綁定右手，劍鞘保留在身體。",
+        "為遵守 GGD 六個繪製網格上限，達伊之劍與劍鞘使用可重建的水平貼圖 atlas 並合併為同一蒙皮 primitive；未放寬驗收限制。",
+        "來源共匯出六段原生動作，執行版保留五段獨立原生動作；GGD hurt/death 共用原生 down 姿勢，未取得獨立死亡 AnimSequence。",
+        "已完成 18 張 WebGL 六狀態抽查；三角面與 draw call 高於警戒值但未超過上限，特效、動畫事件、toon shader、完整實戰與正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "deployment": {
+        "gitCheckoutVerified": true,
+        "productionDeploymentVerifiedThisRun": false
+      }
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "heroId": "godie-ubal",
+      "runtimeId": "runtime:infinity-strash-vearn-en801-pre-transformation-backdrop-decimated-v1",
+      "retainedRuntimeId": "runtime:infinity-strash-vearn-en801-pre-transformation-native-v1",
+      "identity": "Vearn EN801 pre-transformation / old Vearn",
+      "sourceCharacter": "巴恩大魔王（EN801，變身前／老巴恩）",
+      "sourceWork": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+      "sourceAssetId": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
+      "gitAsset": {
+        "path": "content/assets/models/community/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "bytes": 2899468,
+        "sha256": "97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00"
+      },
+      "modelDocument": {
+        "path": "content/models/community.body.97d9fb78fec6abbf162a75223132e92485e51958306a2563.json",
+        "bytes": 486,
+        "sha256": "0fcdc24f250ce4b1b70af73d1529ab1a6c5f8d4e64e0d1ce47bc31111e6667b3"
+      },
+      "metrics": {
+        "triangles": 7998,
+        "drawPrimitives": 6,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "joints": 292,
+        "animationCount": 5,
+        "maxAnimationChannels": 281
+      },
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special01",
+        "hurt": "GGD_native_death",
+        "death": "GGD_native_death"
+      },
+      "animationProvenance": {
+        "native": 5,
+        "procedural": 0,
+        "names": [
+          "GGD_native_idle",
+          "GGD_native_run",
+          "GGD_native_attack",
+          "GGD_native_special01",
+          "GGD_native_death"
+        ]
+      },
+      "budgetVerdicts": {
+        "triangles": "ok",
+        "drawCalls": "warn",
+        "maxTextureEdge": "ok",
+        "animChannels": "ok"
+      },
+      "formalAdoption": {
+        "eligible": true,
+        "validation": "formal-adoption-budget-khronos-rig-preservation-and-six-state-ab-visual-review-passed",
+        "visualGatePassed": true,
+        "humanVisualReview": "accepted",
+        "evidence": [
+          {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/all-states-contact-sheet.png",
+            "bytes": 1676278,
+            "sha256": "f9682b1d32b3a2f3e64b01aad4a3dd4ccc2a3068467f3bde48172d01b36924a2"
+          },
+          {
+            "path": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/worst-difference-overview.png",
+            "bytes": 411795,
+            "sha256": "cba3ffcf2950fd8ddb5ad06fab5c01cd10d9e51539fc5464069a892b28341f94"
+          }
+        ]
+      },
+      "registration": {
+        "heroId": "godie-ubal",
+        "modelSelectionMode": "automatic",
+        "runtimeDropdownRegistered": true,
+        "modelVersionPresent": true,
+        "activeDefault": true,
+        "retainedHighPolyOptionPresent": true,
+        "retainedLabel": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）（背景修復高面數保留版）"
+      },
+      "s3Backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-texture-backdrop-decimation-v1/c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b.files.json",
+        "sha256": "c35967f17f4918c73d8110cef5c702b628caa40da24428b2ef2faabefd6a431b",
+        "bytes": 93874421,
+        "fileCount": 277,
+        "readbackVerified": true,
+        "allMemberSha256Verified": true,
+        "archiveMember": "vearn-en801-pre-transformation/final/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+        "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/s3-backup-receipt.json"
+      },
+      "gaps": [
+        "EN801 是變身前老巴恩；兩個主要 PAK 都未找到變身後巴恩完整身體，不能代替變身後形態。",
+        "GGD hurt/death 共用原生死亡序列。",
+        "Kaizer Phoenix 來源動作與資料保留在本機與 S3，但來源 PSA 引用模型不存在的 100 顆特效／輔助骨，因此未放進遊戲執行版。",
+        "尚未還原原作特效系統、toon shader、動畫事件與完整實戰時序；正式站部署另驗。",
+        "背景透明像素 RGB 已由可重建修復階段處理；低多邊形候選已通過 <=8,000 面正式採用門檻與六狀態 A/B 視覺驗收。",
+        "舊候選仍保留在同一角色的版本清單與 S3 封存；本選項登記不代表 Main 合併或正式站部署。"
+      ],
+      "deployment": {
+        "gitCheckoutVerified": true,
+        "productionDeploymentVerifiedThisRun": false
+      }
+    }
+  ],
+  "summary": {
+    "acceptedAndDropdownRegistered": 3,
+    "activeDefaults": 2,
+    "nativeRuntimeClips": 15,
+    "productionDeploymentVerifiedThisRun": false
+  },
+  "vearnForms": {
+    "preTransformation": {
+      "nativeId": "EN801",
+      "status": "accepted-dropdown-registered-local-checkout",
+      "bodyAssets": [
+        "strash/Content/Strash/Chara/Monster/EN801/00/SK_EN801_00_Body.uasset"
+      ]
+    },
+    "postTransformation": {
+      "status": "post-transformation-full-body-absent-from-both-primary-pak-indexes",
+      "fullBodyLocated": false,
+      "nextAction": "retain the gap and acquire a separately licensed post-transformation Vearn source",
+      "candidatePayloadCount": 0
+    },
+    "identityExclusions": [
+      {
+        "nativeId": "EN653",
+        "identity": "MystVearn",
+        "isVearnForm": false
+      },
+      {
+        "nativeId": "EN680",
+        "identity": "Baran",
+        "isVearnForm": false
+      },
+      {
+        "nativeId": "EN681",
+        "identity": "Baran form",
+        "isVearnForm": false
+      }
+    ],
+    "communityReserve": {
+      "sourceId": "bowlroll-sabakan359-vearn-mmd-v087",
+      "form": "elderly-pre-transformation",
+      "identityFinding": "Package is the elderly/pre-transformation Vearn MMD model family. It does not contain young true-body/post-transformation Vearn.",
+      "conversionStatus": "not-started-license-blocked",
+      "runtimeReady": false,
+      "licenseBlock": {
+        "commercialUseAllowed": false,
+        "redistributionAllowed": false,
+        "authorPermissionRequired": true
+      }
+    }
+  },
+  "sourceAvailability": {
+    "localPrimaryPakMirrorIndexed": true,
+    "localPrimaryPaks": [
+      {
+        "label": "pakchunk0",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk0-WindowsClient.pak",
+        "bytes": 8332792957,
+        "priorVerifiedSha256": "192069367059ef2a258c6c3f1e12908a16a05bcf5cfdb32e252cb676f766b5ee",
+        "indexedEntries": 181304,
+        "present": true,
+        "sizeVerifiedThisRun": true,
+        "sha256RecomputedThisRun": false
+      },
+      {
+        "label": "pakchunk1",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/original/pakchunk1-WindowsClient.pak",
+        "bytes": 4382548320,
+        "priorVerifiedSha256": "78edc35c624dbab88a378cf3d2b20ed48c43c05d844ec342a00a868771733095",
+        "indexedEntries": 12254,
+        "present": true,
+        "sizeVerifiedThisRun": true,
+        "sha256RecomputedThisRun": false
+      }
+    ],
+    "liveSmbMountCheckedSeparately": true,
+    "liveSmbMountAvailableAtAuditTime": false,
+    "note": "This report verifies the checked-in candidates and preserved local evidence. It does not claim a fresh SMB read or production deployment."
+  }
+}
