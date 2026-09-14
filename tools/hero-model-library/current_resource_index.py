@@ -694,6 +694,33 @@ def build(git_link_root=ROOT):
         or kof_xiv_effect_mapping.get('summary',{}).get('skillBindingsCreated')!=0
         or kof_xiv_effect_mapping.get('policy',{}).get('materialBlendTimingAttachmentValidated') is not False):
         raise ValueError('KOF/JUMP container coverage is absent, stale or overclaims runtime readiness')
+    jumpforce_full_roster_s3=jumpforce_full_roster_mirror_evidence.get('s3',{})
+    jumpforce_full_roster_s3_status=jumpforce_full_roster_s3.get('status')
+    if jumpforce_full_roster_s3_status=='pending':
+        jumpforce_full_roster_s3_valid=(
+            jumpforce_full_roster_mirror_evidence.get('status')=='verified-local'
+            and jumpforce_full_roster_s3.get('uri') is None
+        )
+    elif jumpforce_full_roster_s3_status=='s3-readback-verified':
+        jumpforce_full_roster_s3_valid=(
+            jumpforce_full_roster_mirror_evidence.get('status')=='verified-local-and-s3-readback-verified'
+            and isinstance(jumpforce_full_roster_s3.get('uri'),str)
+            and isinstance(jumpforce_full_roster_s3.get('archiveSha256'),str)
+            and len(jumpforce_full_roster_s3['archiveSha256'])==64
+            and jumpforce_full_roster_s3['uri'].startswith('s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/jump-force-steam-full-build-8523149/')
+            and jumpforce_full_roster_s3['uri'].endswith('/'+str(jumpforce_full_roster_s3.get('archiveSha256'))+'.tar.gz')
+            and jumpforce_full_roster_s3.get('manifestUri')==jumpforce_full_roster_s3['uri'].removesuffix('.tar.gz')+'.files.json'
+            and jumpforce_full_roster_s3.get('fileCount')==3466
+            and jumpforce_full_roster_s3.get('fullGetVerified') is True
+            and jumpforce_full_roster_s3.get('allMemberSha256Verified') is True
+            and jumpforce_full_roster_s3.get('localUnchanged') is True
+            and isinstance(jumpforce_full_roster_s3.get('manifest'),dict)
+            and isinstance(jumpforce_full_roster_s3['manifest'].get('sha256'),str)
+            and isinstance(jumpforce_full_roster_s3.get('receipt'),dict)
+            and isinstance(jumpforce_full_roster_s3['receipt'].get('sha256'),str)
+        )
+    else:
+        jumpforce_full_roster_s3_valid=False
     if (jumpforce_full_roster_entry.get('schema')!='ggd.jumpforce-full-roster-current-resource@1'
         or jumpforce_full_roster_plan.get('schema')!='ggd.jumpforce-full-roster-plan@1'
         or jumpforce_full_roster_plan.get('summary',{}).get('characters')!=63
@@ -707,13 +734,13 @@ def build(git_link_root=ROOT):
         or jumpforce_full_roster_entry.get('runtimeSelectable') is not False
         or jumpforce_full_roster_entry.get('productionDeploymentVerified') is not False
         or jumpforce_full_roster_mirror_evidence.get('schema')!='ggd.jumpforce-local-mirror-evidence@1'
-        or jumpforce_full_roster_mirror_evidence.get('status')!='verified-local'
         or jumpforce_full_roster_mirror_evidence.get('localMirror',{}).get('fileCount')!=3466
         or jumpforce_full_roster_mirror_evidence.get('localMirror',{}).get('bytes')!=23856777652
         or jumpforce_full_roster_mirror_evidence.get('filesIndex',{}).get('sha256')!='6ee6b4c2a17c886f2ddf675a4a6028c40ec3e5fd59abfc8df0aa2414495f0d06'
         or jumpforce_full_roster_mirror_evidence.get('verification',{}).get('verifiedContainers')!=6
         or jumpforce_full_roster_mirror_evidence.get('verification',{}).get('allSha256Verified') is not True
-        or jumpforce_full_roster_mirror_evidence.get('s3',{}).get('status')!='pending'
+        or not jumpforce_full_roster_s3_valid
+        or jumpforce_full_roster_entry.get('s3Status')!=jumpforce_full_roster_s3_status
         or jumpforce_full_roster_mirror_evidence.get('scope',{}).get('lv99ShareRequiredForExtraction') is not False):
         raise ValueError('JUMP FORCE full-roster plan is absent, stale or overclaims readiness')
     for path,key in ((jumpforce_full_roster_plan_path,'planSha256'),

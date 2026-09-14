@@ -48,6 +48,13 @@ def load_plan(path: Path = PLAN) -> dict:
 def block(plan: dict) -> str:
     summary = plan["summary"]
     mirror = plan["localMirrorTarget"]
+    s3_status = mirror["s3Status"]
+    if s3_status == "pending":
+        s3_note = "尚未有 `backup_intake.py` 的完整讀回 receipt，不能算作 S3 已備份"
+    elif s3_status == "s3-readback-verified":
+        s3_note = "完整 archive 已讀回且逐成員 SHA-256 已驗證；仍不代表已抽取或上架"
+    else:
+        raise ValueError("JUMP FORCE full-roster plan has an unrecognized S3 status")
     lines = [
         START,
         "",
@@ -55,7 +62,7 @@ def block(plan: dict) -> str:
         "",
         f"現有完整 path index 已產生 **{summary['characters']} 個高信度 `chr####` 角色 family**，分 **{plan['scope']['batchCount']} 批**，共 **{summary['selectedMemberRelations']:,} 筆** patch-winner member 關係。這份數字包含六類主素材與 {summary['assetClasses']['metadata']['memberRelations']:,} 筆角色設定 member；不需要再掃描 LV99 的 Steam 目錄。",
         "",
-        f"本機 mirror 已固定在 `{mirror['rawGameRoot']}`：**{mirror['fileCount']:,} 檔／{mirror['bytes']:,} bytes**，六顆 authority PAK 的檔名、bytes 與 SHA-256 已 **{mirror['verifiedPakCount']}/6** 逐檔通過。完整索引與收據見 `{mirror['evidenceGitPath']}`；S3 狀態為 `{mirror['s3Status']}`。後續抽取不再需要 LV99 分享。",
+        f"本機 mirror 已固定在 `{mirror['rawGameRoot']}`：**{mirror['fileCount']:,} 檔／{mirror['bytes']:,} bytes**，六顆 authority PAK 的檔名、bytes 與 SHA-256 已 **{mirror['verifiedPakCount']}/6** 逐檔通過。完整索引與收據見 `{mirror['evidenceGitPath']}`；S3 狀態為 `{s3_status}`（{s3_note}）。後續抽取不再需要 LV99 分享。",
         "",
         "| 主素材類別 | 有候選角色 | 套件 | member 關係 | 狀態 |",
         "|---|---:|---:|---:|---|",

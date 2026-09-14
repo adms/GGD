@@ -202,6 +202,7 @@ def build(
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/query.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/record_local_mirror.py",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
     ]
     conversion_references = [
@@ -232,7 +233,7 @@ def build(
             "rawGameRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
             "paksRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks",
             "completionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/mirror-complete.json",
-            "stateAtPlanGeneration": "verified-local" if mirror_evidence else "copy-in-progress; completion receipt absent; no payload completeness claim",
+            "stateAtPlanGeneration": mirror_evidence["status"] if mirror_evidence else "copy-in-progress; completion receipt absent; no payload completeness claim",
             "evidenceGitPath": f"{PLAN_GIT_ROOT}/{MIRROR_EVIDENCE_NAME}" if mirror_evidence else None,
             "evidenceSha256": sha256(mirror_evidence_path) if mirror_evidence else None,
             "fileCount": mirror_evidence["localMirror"]["fileCount"] if mirror_evidence else 0,

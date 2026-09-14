@@ -83,6 +83,31 @@ python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/reco
 
 Git evidence 為 `materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json`；它不包含 23 GB payload。
 
+## 2.1 封存完整 mirror 後才整合 S3 收據
+
+完整原始 mirror 使用 Git 以外的 `legacy/` 備份；此步驟不會建立模型選項或讓任何角色可切換。先由 `backup_intake.py` 上傳、完整讀回並逐成員驗證；它完成以前，Git evidence 的 S3 狀態必須維持 `pending`：
+
+```bash
+python3 tools/hero-model-library/backup_intake.py \
+  --source ../GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game \
+  --prefix legacy/game-intakes/jump-force-steam-full-build-8523149 \
+  --output ../GGD-Asset-Library/backups/jump-force-steam-full-build-8523149
+```
+
+只有上述命令成功寫出 `latest-receipt.json` 後，才可執行以下整合器。它不呼叫 AWS、不上傳，並會拒絕 schema、bucket/prefix、archive/readback SHA、member manifest、`fullGetVerified`、`allMemberSha256Verified`、`localUnchanged`、來源路徑、3,466 檔或 23,856,777,652 bytes 任一不一致的收據。通過時才會將 S3 狀態提升為 `s3-readback-verified`，並重建 plan、中央資源 entry 及五日清單：
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py \
+  --write \
+  --receipt ../GGD-Asset-Library/backups/jump-force-steam-full-build-8523149/latest-receipt.json
+
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py \
+  --check \
+  --receipt ../GGD-Asset-Library/backups/jump-force-steam-full-build-8523149/latest-receipt.json
+```
+
+`s3-readback-verified` 只代表完整原始鏡像的封存可還原；它不代表解密、已抽取、已轉換、已驗收、已註冊、可切換或已部署。
+
 ## 3. 按 native ID／批次抽取
 
 此遊戲的 PAK index 加密。腳本不搜尋、推導、保存或輸出金鑰；只接受使用者有權使用且明確放入 `UNREAL_PAK_AES_KEY` 的 32-byte hexadecimal key，並只比對既有 authority 的 key SHA-256。缺 key、key identity 不符、PAK SHA 不符或 repak 拒絕時，該批停止。

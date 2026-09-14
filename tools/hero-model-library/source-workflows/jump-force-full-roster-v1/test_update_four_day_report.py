@@ -1,4 +1,5 @@
 import importlib.util
+import copy
 import tempfile
 import unittest
 from pathlib import Path
@@ -38,6 +39,11 @@ class UpdateFourDayReportTest(unittest.TestCase):
             MOD.update(report, write=False)
             MOD.update(report, write=True)
             self.assertEqual(first, report.read_bytes())
+
+    def test_s3_readback_status_is_rendered_from_regenerated_plan(self):
+        plan = copy.deepcopy(MOD.load_plan())
+        plan["localMirrorTarget"]["s3Status"] = "s3-readback-verified"
+        self.assertIn("S3 狀態為 `s3-readback-verified`", MOD.block(plan))
 
     def test_repository_report_is_current(self):
         MOD.update(write=False)

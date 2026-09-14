@@ -20,6 +20,12 @@ DEFAULT_RECEIPT_ROOT = Path(
 EXPECTED_FILES = 3466
 EXPECTED_BYTES = 23856777652
 EXPECTED_INDEX_SHA256 = "6ee6b4c2a17c886f2ddf675a4a6028c40ec3e5fd59abfc8df0aa2414495f0d06"
+S3_PENDING = "pending"
+S3_READBACK_VERIFIED = "s3-readback-verified"
+S3_ARCHIVE_PREFIX = (
+    "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/"
+    "jump-force-steam-full-build-8523149/"
+)
 
 
 def input_receipt(path: Path) -> dict:
@@ -33,8 +39,8 @@ def input_receipt(path: Path) -> dict:
 def validate_evidence(evidence: dict, authority: dict) -> None:
     if evidence.get("schema") != "ggd.jumpforce-local-mirror-evidence@1":
         raise ValueError("unexpected local mirror evidence schema")
-    if evidence.get("sourceId") != SOURCE_ID or evidence.get("status") != "verified-local":
-        raise ValueError("JUMP FORCE local mirror evidence is not verified-local")
+    if evidence.get("sourceId") != SOURCE_ID:
+        raise ValueError("JUMP FORCE local mirror source identity differs")
     local = evidence.get("localMirror", {})
     if local.get("fileCount") != EXPECTED_FILES or local.get("bytes") != EXPECTED_BYTES:
         raise ValueError("local mirror file or byte count differs from the frozen receipt")
@@ -53,8 +59,47 @@ def validate_evidence(evidence: dict, authority: dict) -> None:
     verification = evidence.get("verification", {})
     if verification.get("verifiedContainers") != 6 or verification.get("allSha256Verified") is not True:
         raise ValueError("local mirror authority verification is incomplete")
-    if evidence.get("s3", {}).get("status") != "pending":
-        raise ValueError("this receipt must not claim an S3 upload")
+    s3 = evidence.get("s3", {})
+    s3_status = s3.get("status")
+    if s3_status == S3_PENDING:
+        if evidence.get("status") != "verified-local" or s3.get("uri") is not None:
+            raise ValueError("pending S3 evidence must remain local-only")
+    elif s3_status == S3_READBACK_VERIFIED:
+        if evidence.get("status") != "verified-local-and-s3-readback-verified":
+            raise ValueError("S3-verified mirror has an unexpected overall status")
+        required = {
+            "uri", "manifestUri", "archiveSha256", "archiveBytes", "fileCount",
+            "fullGetVerified", "allMemberSha256Verified", "localUnchanged", "manifest", "receipt",
+        }
+        if not required.issubset(s3):
+            raise ValueError("S3-verified mirror lacks a complete backup receipt summary")
+        archive_sha = s3["archiveSha256"]
+        if (
+            not isinstance(archive_sha, str)
+            or len(archive_sha) != 64
+            or any(char not in "0123456789abcdef" for char in archive_sha)
+            or s3["uri"] != S3_ARCHIVE_PREFIX + archive_sha + ".tar.gz"
+            or s3["manifestUri"] != S3_ARCHIVE_PREFIX + archive_sha + ".files.json"
+            or s3["fileCount"] != EXPECTED_FILES
+            or not isinstance(s3["archiveBytes"], int)
+            or s3["archiveBytes"] <= 0
+            or s3["fullGetVerified"] is not True
+            or s3["allMemberSha256Verified"] is not True
+            or s3["localUnchanged"] is not True
+        ):
+            raise ValueError("S3-verified mirror receipt fields are incomplete or inconsistent")
+        for label in ("manifest", "receipt"):
+            metadata = s3[label]
+            if (
+                not isinstance(metadata, dict)
+                or not isinstance(metadata.get("sha256"), str)
+                or len(metadata["sha256"]) != 64
+                or not isinstance(metadata.get("bytes"), int)
+                or metadata["bytes"] <= 0
+            ):
+                raise ValueError("S3-verified mirror " + label + " identity is incomplete")
+    else:
+        raise ValueError("JUMP FORCE local mirror S3 status is not recognized")
     scope = evidence.get("scope", {})
     if scope.get("lv99ShareRequiredForExtraction") is not False:
         raise ValueError("verified local mirror must be independent from LV99")
