@@ -595,10 +595,21 @@ console.log(
     `\n   ⭐ 時間帳本: docs/_data/deploy-timings.json（與 tools/deploy-timing 同一份）`,
 );
 
+// ⭐ GH#1166：一張「幾乎什麼都沒跑」的綠燈，限定詞要寫在**結論旁邊**（⛔ 不是只在開頭那行 why 裡）。
+//   0 個改動路徑 vs base ⇒ vitest 裁到 0 包、產生器裁到 0 支 ⇒ 綠燈只證明「自 base 起沒有改動」，
+//   ⛔ 不證明 base 本身被全跑驗過（例：合併進 main 而從沒全跑過的東西）。
+const emptyGate = [
+  ...(!onlySync && wantSuites.length === 0 ? [`本次沒有跑任何 vitest 包（0/${ALL_SUITES.length}；只剩 tools/deploy-timing 那一格）`] : []),
+  ...(!noSync && syncTrim.steps?.length === 0 ? ["本次沒有跑任何 skills:sync 產生器（只跑了 content:build）"] : []),
+];
+const emptyNote = emptyGate.length
+  ? `\n⚠️ ${emptyGate.join("、")} —— base ${syncBase.label ?? "(無)"} · ${syncPaths?.length ?? "?"} 個改動路徑 ⇒ 這張綠燈⛔ 不證明 base 本身被全跑驗過（要驗它：換一個更早的 --sync-base）`
+  : "";
 if (failed.length === 0) {
-  console.log("\n✅ 四閘全綠。");
+  console.log(`\n✅ 四閘全綠。${emptyNote}`);
   process.exit(0);
 }
+if (emptyNote) console.error(emptyNote);
 // ⭐ 一次列完（⛔ 不是「修一個再跑一次」）—— 而且指名 log 檔,不截斷。
 console.error(`\n⛔ ${failed.length} 支紅了 —— ⭐ 一次列完:`);
 for (const f of failed) console.error(`   ✗ ${f.name}（exit ${f.code}） → ${f.log}`);
