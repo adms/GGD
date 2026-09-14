@@ -6,14 +6,15 @@
     python3 scripts/claude_project_dir.py --start <dir>      # 從別的樹推（預設：這支腳本所在的樹）
 
 ⛔ 在此之前同一件事有**兩種寫法、五個住處**：
-  · `backup-rules.sh` 用**腳本位置**推 slug ⇒ 在 worktree（`/private/tmp/ggd-merge`）推成
+  · `backup-rules.sh` 用**腳本位置**推 slug ⇒ 在 worktree（例：`ggd-merge`）推成
     `-private-tmp-ggd-merge` ⇒ 那個目錄不存在 ⇒ `set -euo pipefail` 下 `find` 失敗 ⇒
     ⭐ **exit 1、一個字都沒印、記憶沒存**（09-12～14 三份快照只有 CLAUDE.md）。
   · `asked-before.sh`／`memory-temp.sh`／`message-ledger.sh`／`preserve-before-overwrite.py`
     **寫死** `-Users-Takuro-GGD` ⇒ 換一台機器或換 clone 路徑就錯。
-
 ⭐ 規則：slug 由 git 的**主工作樹**推（`--git-common-dir` 的上一層），⛔ 不是 cwd、⛔ 不是腳本位置 ——
-   Claude Code 在 worktree 裡開的 session 仍然把記憶與 transcript 寫在**主樹**的 slug 底下。
+   記憶只住主樹的 slug（實測 `~/.claude/projects/-Users-Takuro-GGD/memory`；worktree 的 slug 底下沒有 memory）。
+   ⚠️ 在 worktree **裡面起的** session，transcript 住**它自己的** slug（實測 `-Users-Takuro-GGD--claude-worktrees-*`
+   各有一份 jsonl）—— 這一支回答的是「主樹那一份」，⛔ 不涵蓋那些（GH#1255 報告另列）。
 ⭐ slug ＝ 路徑裡每一個非英數字元換成 `-`（實測：`/Users/Takuro/GGD/.claude/worktrees/x`
    ⇒ `-Users-Takuro-GGD--claude-worktrees-x`，`.` 也變 `-`）。
 
