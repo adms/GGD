@@ -240,7 +240,7 @@ export function RosterPage(): JSX.Element {
         <span style={{ color: TEXT_MAIN, fontSize: 13 }}>殭屍/小兵可以穿隱藏英雄的皮</span>
         <span style={{ color: TEXT_DIM, fontSize: 11 }}>
           ⛔ 出貨關（GH#348）。打開的話，玩家在自己抽到彩蛋英雄之前就會在雜兵臉上看到他。
-          ⚠️ 與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到。
+          ⚠️ 與伺服器替沒鎖英雄的座位隨機配角（逾時／bot）無關 —— 那條路一律抽得到（玩家自己按的 🎲 本來就抽不到）。
         </span>
       </label>
 
@@ -256,8 +256,8 @@ export function RosterPage(): JSX.Element {
         />
         <span style={{ color: TEXT_MAIN, fontSize: 13 }}>大廳英靈殿展示隱藏英雄</span>
         <span style={{ color: TEXT_DIM, fontSize: 11 }}>
-          ⭐ 出貨開（GH#1251，owner 2026-09-14「隱藏角色要顯示」）。取消勾選＝英靈殿不再輪播隱藏英雄（回到舊行為）。
-          ⛔ 只管英靈殿 —— 選人畫面、🎲、商店照舊看不到隱藏英雄。
+          ⭐ 出貨開（GH#1251，owner 2026-09-14「隱藏角色要顯示」，節錄）。取消勾選＝英靈殿不再輪播隱藏英雄（回到舊行為）。
+          ⛔ 只管英靈殿 —— 選人格子、玩家自己按的 🎲、商店照舊看不到；伺服器替沒鎖英雄的座位隨機配角（逾時／bot）照舊抽得到。
         </span>
       </label>
 
