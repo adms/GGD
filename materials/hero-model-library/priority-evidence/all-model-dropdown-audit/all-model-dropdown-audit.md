@@ -9,7 +9,7 @@
 - Hero Forge 有 34 名英雄、46 個不同模型選項。
 - 中央索引有 159 筆來源；146 筆已被 champion／Hero Forge 直接或透過 frozen version 表示。未註冊中，9 筆已有通過資格證據，4 筆只證明 Git 來源存在，後台導入驗收仍未通過。
 - 中央登記旗標與實際參照不一致：0 筆。
-- `componentReady` 但尚未註冊：角色／動作元件 36 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
+- `componentReady` 但尚未註冊：角色／動作元件 40 筆、武器元件 2 筆。它們不是完整英雄，不能自動塞入下拉。
 - 找到 67 份失去英雄對應的 `version.body.*` 凍結文件；保留位元組，但須先找回原 hero/version 關係。
 - 明確 `prop.*` 且無內容參照的道具文件 4 筆。
 
@@ -42,11 +42,14 @@
 |---|---|---|---:|---|
 | `historical-astralym-7bc2fa3f8` | 枯星龍 | independent-historical-model-body-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `infinity-strash-mystvearn-en653-01-static-skinned-v1` | 密斯特巴恩 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `kof-xv-ash-crimson-left-hair-universal-atlas-static-v1` | 阿修・克里姆森 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `kof-xv-ash-crimson-right-hair-universal-atlas-static-v1` | 阿修・克里姆森 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `opgg-palworld-astralym-2026081102.idle-walk-256` | 枯星龍 | character-body | 2 | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-beatrice-thunderstore-0.1.1-static-skinned-v1` | 碧翠絲 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-emilia-thunderstore-0.1.1-static-skinned-v1` | 愛蜜莉雅 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-felix-thunderstore-0.1.1-static-skinned-v1` | 菲利克斯／菲莉絲 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-ram-thunderstore-0.1.1-static-skinned-v1` | 拉姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `rezero-rem-thunderstore-0.1.1-formal-decimated-v1` | 蕾姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-rem-thunderstore-0.1.1-static-skinned-v1` | 蕾姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `rezero-subaru-thunderstore-0.1.1-static-skinned-v1` | 菜月昴 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-chrom-c00-static-skinned-v1` | 庫洛姆 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
@@ -68,6 +71,7 @@
 | `ssbu-ptrainer-female-c01-static-skinned-v1` | 寶可夢訓練家（女） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ptrainer-male-c00-formal-decimated-v1` | 寶可夢訓練家（男） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ptrainer-male-c00-static-skinned-v1` | 寶可夢訓練家（男） | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
+| `ssbu-ryu-c00-static-decimated-v1` | 隆／Ryu | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-ryu-c00-static-skinned-v1` | 隆／Ryu | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-sonic-c00-static-skinned-v1` | 索尼克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |
 | `ssbu-sonic-c00-static-skinned-v2` | 索尼克 | independent-static-skinned-model-component | — | no-ggd-hero-id-or-target-binding; no-runtime-model-at-1-document; component-is-not-runtime-selectable |

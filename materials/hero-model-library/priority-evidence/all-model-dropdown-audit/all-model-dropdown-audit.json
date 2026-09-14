@@ -14,7 +14,7 @@
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "0bba2c053ca1fa1116857a94585f995d8bbeadf2aac405fc4e2e796a03e6982a",
+      "sha256": "e98a2d36fe1506b6e146811ad659558167a8f9e7cfdaae3efd5ebe8dbeb01178",
       "fileCount": 154
     },
     "heroForgeOptions": {
@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "a4b1eb98be7beb4851172909536e6a6362839dbed8c91fdbab6cfaef483cc121"
+      "sha256": "bd4113d1483c56249d820d3b1a4d42ef8bc4168baeff60c18f7d5f9620069717"
     }
   },
   "summary": {
@@ -42,8 +42,8 @@
     "centralUnregisteredQualifiedRows": 9,
     "centralUnregisteredPendingQualificationRows": 4,
     "centralRegistrationFlagMismatches": 0,
-    "readyUnregisteredIndependentComponents": 38,
-    "readyUnregisteredCharacterOrMotionComponents": 36,
+    "readyUnregisteredIndependentComponents": 42,
+    "readyUnregisteredCharacterOrMotionComponents": 40,
     "readyUnregisteredWeaponComponents": 2,
     "nonReadyHistoricalSourceArtifacts": 2,
     "orphanFrozenVersionDocuments": 67,
@@ -322,6 +322,58 @@
       ]
     },
     {
+      "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+      "character": "阿修・克里姆森",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+      "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+      "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "No existing GGD hero ID is asserted for Ash Crimson; this is an independently reusable component only.",
+        "The source contains zero native clips. Idle, run, attack, cast, hurt and death remain missing.",
+        "Five draws pass the current hard ceiling of six but remain above the warning value of three.",
+        "Fixed Blender source-versus-candidate images were captured before removing unsupported optional KHR_materials_ior; the final rerender is pending because Blender 5.2.1 background mode aborts on this host. The final GLB differs only by removing that unsupported optional material extension, and does not claim final visual acceptance.",
+        "No backend dropdown registration, runtime switch, default selection or production deployment was performed."
+      ]
+    },
+    {
+      "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+      "character": "阿修・克里姆森",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+      "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+      "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "No existing GGD hero ID is asserted for Ash Crimson; this is an independently reusable component only.",
+        "The source contains zero native clips. Idle, run, attack, cast, hurt and death remain missing.",
+        "Five draws pass the current hard ceiling of six but remain above the warning value of three.",
+        "Fixed Blender source-versus-candidate images were captured before removing unsupported optional KHR_materials_ior; the final rerender is pending because Blender 5.2.1 background mode aborts on this host. The final GLB differs only by removing that unsupported optional material extension, and does not claim final visual acceptance.",
+        "No backend dropdown registration, runtime switch, default selection or production deployment was performed."
+      ]
+    },
+    {
       "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
       "character": "枯星龍",
       "resourceRole": "character-body",
@@ -452,6 +504,30 @@
         "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
         "Unity custom shader behavior is represented only by a portable base-color PBR material.",
         "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ]
+    },
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+      "character": "蕾姆",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+      "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death remain missing.",
+        "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+        "Unity custom shader behavior remains reduced to portable base-color PBR material."
       ]
     },
     {
@@ -1009,6 +1085,31 @@
         "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
         "25 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
         "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    },
+    {
+      "id": "ssbu-ryu-c00-static-decimated-v1",
+      "character": "隆／Ryu",
+      "resourceRole": "independent-static-skinned-model-component",
+      "componentReady": true,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "heroIds": [],
+      "gitPath": "content/assets/models/community/abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d.glb",
+      "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+      "readiness": "accepted-independent-static-skinned-component-actions-missing",
+      "nativeAnimationCount": 0,
+      "animationClipCount": null,
+      "blockers": [
+        "no-ggd-hero-id-or-target-binding",
+        "no-runtime-model-at-1-document",
+        "component-is-not-runtime-selectable"
+      ],
+      "limitations": [
+        "Source Blender contains zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Ryu identity.",
+        "No backend dropdown registration, runtime switch, default selection or production deployment was performed.",
+        "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed."
       ]
     },
     {
@@ -5212,11 +5313,15 @@
         "infinityStrashDaiVfxComponents",
         "infinityStrashWeaponReview",
         "jumpForceAssetInventory",
+        "jumpForceFullRosterPlan",
         "kof3dSourceInventory",
         "kofJumpContainerCoverage",
+        "kofLocalPipeline",
         "kofXivTerryPathIndex",
         "legacySmashSourceDocument",
         "legacySmashSourceInventory",
+        "mbaUnusedModelBatch2",
+        "mbaUnusedModelPilot",
         "modelComponentCount",
         "modelComponentIndex",
         "modelComponentSourceIndex",
@@ -5227,6 +5332,7 @@
         "modelSourceCount",
         "models",
         "note",
+        "palworldApprovedComponentIntegration",
         "palworldHeroIntegrationReceipt",
         "palworldResourceDocument",
         "palworldResourceIndex",
