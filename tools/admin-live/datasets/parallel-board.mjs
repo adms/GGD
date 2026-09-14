@@ -83,6 +83,20 @@ function fetchOpenIssues(repoRoot) {
   });
 }
 
+/**
+ * 帳本列原話格尾的**身分標記**（GH#1255）—— 定義住 `scripts/ledger_table.py` 的 `_ID_MARK`／`with_id`，
+ * 這裡只為了**不渲染**它（React 會把它當字面文字印出來）。
+ *
+ * ⚠️ 這一行是那份格式的**第二個住處**（JS 讀不到 Python 的正則；這支資料集只讀檔與 `gh`，⛔ 沒有為了一條正則多一個 python3 相依）。
+ * ⛔ 在此之前（b8b1009bd）守著它的只有一句「那邊改格式要連這一行一起改」＝判準。
+ * ⭐ 現在是閘：`packages/shared/src/ops/ledgerIdMarkParity.test.ts` 叫**真的** `with_id`／`strip_id`
+ *   產生標記，再拿下面這支 `stripLedgerIdMark` 剝 —— 兩邊結果不同就紅（兩個方向：該剝的沒剝、不該剝的剝了）。
+ */
+const ID_MARK = /\s*<!-- id:[0-9a-f]{8} -->/g;
+
+/** 剝掉帳本列的身分標記（守衛直接驗這一支，⛔ 不是驗一份抄出來的正則）。 */
+export const stripLedgerIdMark = (text) => (text ?? "").replace(ID_MARK, "");
+
 /** 一份日期帳本 md → 逐則對票 rows。 */
 function parseDailyFile(repoRoot, file) {
   const year = file.slice(0, 4);
@@ -118,7 +132,7 @@ function parseDailyFile(repoRoot, file) {
     rows.push({
       date,
       time,
-      quote: clamp(quote, QUOTE_MAX),
+      quote: clamp(stripLedgerIdMark(quote), QUOTE_MAX),
       tickets,
       note: clamp(ticketCell, NOTE_MAX),
     });

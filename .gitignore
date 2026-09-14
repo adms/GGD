@@ -1,5 +1,6 @@
 # deps
 node_modules/
+node_modules
 .pnpm-store/
 
 # local AI image generation (tools/icon-gen/local): python venv + multi-GB model

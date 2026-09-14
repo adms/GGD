@@ -74,10 +74,26 @@ from pathlib import Path
 
 sys.path.insert(0, "scripts")
 import ledger_table as LT
+import claude_project_dir as CPD
 
 TZ = datetime.timezone(datetime.timedelta(hours=8))          # owner 的本地時區
-PROJ = Path(os.environ.get(                                    # 測試用;出貨一律讀真的 transcript
-    "GGD_TRANSCRIPT_DIR", os.path.expanduser("~/.claude/projects/-Users-Takuro-GGD")))
+
+
+def _transcript_dir() -> Path:
+    """`GGD_TRANSCRIPT_DIR`（測試用）＞ 主工作樹 slug（GH#1254，⛔ 不寫死一台機器的路徑）。
+
+    推不出來（不是 git 樹）⇒ 說出來，回一個不存在的路徑 ⇒ 走已版控存檔那條來源（本來就是 CI 的路）。
+    """
+    if os.environ.get("GGD_TRANSCRIPT_DIR"):
+        return Path(os.environ["GGD_TRANSCRIPT_DIR"])
+    try:
+        return CPD.project_dir(Path.cwd())
+    except LookupError as e:
+        print(f"⚠️ 推不出 transcript 目錄（{e}）—— 只能讀已版控的存檔", file=sys.stderr)
+        return Path("/nonexistent-claude-project-dir")
+
+
+PROJ = _transcript_dir()
 MAXLEN = int(os.environ.get("GGD_LEDGER_MAXLEN", "300"))
 WINDOW = 24                                                   # 判定「已經有列」的比對窗
 
@@ -114,8 +130,45 @@ def transcript_files() -> list:
         if PROJ.is_dir() else []
 
 
+#: ⭐ GH#1255 的回頭開關（開發閘，住環境變數）：`GGD_LEDGER_COLLECT_QUEUED=0` ⇒ 不收 `queued_command`。
+COLLECT_QUEUED = os.environ.get("GGD_LEDGER_COLLECT_QUEUED", "1").strip() not in ("0", "false")
+
+
+def _text_of(c) -> str:
+    return (c if isinstance(c, str) else "\n".join(
+        b.get("text", "") for b in c or [] if isinstance(b, dict) and b.get("type") == "text")).strip()
+
+
+def owner_message(d: dict):
+    """transcript 的一筆紀錄 → `(timestamp, 原話, uuid)`；不是 owner 打的字就回 None。
+
+    ⭐ **兩條路**，⛔ 不是一條（GH#1255）：
+      · `"type": "user"` —— owner 在助手**閒著**時打的字；身分＝`uuid`。
+      · `"type": "attachment"`，其 attachment 的 `"type": "queued_command"`、`"commandMode": "prompt"`、`origin` 的 `"kind": "human"`
+        —— owner 在助手**忙碌**時打進來、被吸收進當輪的字；身分＝`source_uuid`，時間＝`attachment.timestamp`。
+        ⛔ 在此之前只收第一條 ⇒ 這一整類**不在分母裡** ⇒ `--check` 永遠綠（09-11～14 量到 55 則不在帳本，
+        例：owner 2026-09-12 11:13 的合併原則那一則）。
+    ⛔ 排除：`"commandMode": "task-notification"`（背景任務通知，⛔ 不是 owner 的話）、`"kind": "peer"`（別的 agent 傳來的）。
+    """
+    if d.get("type") == "user":
+        if d.get("toolUseResult") is not None or d.get("isMeta"):
+            return None
+        ts, t, uid = d.get("timestamp", ""), _text_of((d.get("message") or {}).get("content")), d.get("uuid")
+    elif d.get("type") == "attachment" and COLLECT_QUEUED:
+        a = d.get("attachment") or {}
+        if a.get("type") != "queued_command" or a.get("commandMode") != "prompt" \
+                or (a.get("origin") or {}).get("kind") != "human":
+            return None
+        ts, t, uid = a.get("timestamp") or d.get("timestamp", ""), _text_of(a.get("prompt")), a.get("source_uuid")
+    else:
+        return None
+    if not ts or not t or t.startswith(SKIP):
+        return None
+    return ts, t, uid
+
+
 def from_transcript(days, files=None) -> dict:
-    """最新的 session jsonl → 這幾天各自的 owner 真人訊息。濾法照 CLAUDE.md 部署協定第 1 步。
+    """最新的 session jsonl → 這幾天各自的 owner 真人訊息 `(HH:MM, 原話, 身分)`。濾法照 CLAUDE.md 部署協定第 1 步。
 
     ⭐ **一趟掃完全部要的日子**,⛔ 不是每天掃一次 —— 出貨那份 transcript 是 **14GB**,
     實測掃一趟 ≈ 26 秒。一天一趟的寫法會讓「今天 + 昨天」變成 52 秒(GH#876 量的)。
@@ -126,6 +179,7 @@ def from_transcript(days, files=None) -> dict:
     # UTC 前綴一起要(GMT+8 的 01:12 是 UTC 的前一天 17:12)。
     probe = days | {yesterday(d) for d in days}
     want = tuple(f'"{d}T'.encode() for d in sorted(probe))
+    kinds = (b'"type":"user"', b'"queued_command"') if COLLECT_QUEUED else (b'"type":"user"',)
     files = transcript_files() if files is None else list(files)
     out = {d: [] for d in days}
     seen = set()
@@ -133,34 +187,33 @@ def from_transcript(days, files=None) -> dict:
     for src in files:
         with src.open("rb") as f:
             for raw in f:
-                if b'"type":"user"' not in raw or not any(w in raw for w in want):
+                if not any(k in raw for k in kinds) or not any(w in raw for w in want):
                     continue
                 try:
-                    d = json.loads(raw.decode("utf-8", "replace"))
+                    msg = owner_message(json.loads(raw.decode("utf-8", "replace")))
                 except Exception:
                     continue
-                if d.get("type") != "user" or d.get("toolUseResult") is not None or d.get("isMeta"):
+                if not msg:
                     continue
-                c = (d.get("message") or {}).get("content")
-                t = c if isinstance(c, str) else "\n".join(
-                    b.get("text", "") for b in c or []
-                    if isinstance(b, dict) and b.get("type") == "text")
-                t = t.strip()
-                if not t or t.startswith(SKIP):
-                    continue
-                ts = d.get("timestamp", "")
-                if not ts:
-                    continue
+                ts, t, uid = msg
                 lo = datetime.datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(TZ)
                 day = lo.strftime("%Y-%m-%d")
                 if day not in days:
                     continue
-                key = (day, lo.strftime("%H:%M"), t[:80])
+                # ⭐ 去重鍵＝**身分**（同一則被 resume 複製進另一份 transcript 時 uuid 不變 —— 實測 258 例）；
+                #   ⛔ 不再是 `(day, HH:MM, t[:80])`：那會把同一分鐘逐字相同、uuid 不同的兩則塌成一則
+                #   （owner 2026-09-12「詳實記錄不會合併」）。
+                mid = LT.short_id(uid)
+                key = mid or (day, lo.isoformat(), t)
                 if key in seen:
                     continue
                 seen.add(key)
-                out[day].append((lo.strftime("%H:%M"), t))
-    return {d: sorted(v) for d, v in out.items()}
+                out[day].append((lo.isoformat(), lo.strftime("%H:%M"), t, mid))
+    return {d: [(hm, t, mid) for _, hm, t, mid in sorted(v)] for d, v in out.items()}
+
+
+#: 全文存檔的段落標題：`## HH:MM · <身分>`（GH#1255）；舊存檔的 `## HH:MM` 照讀（CI 走這條來源）。
+ARCHIVE_HEAD = re.compile(r"^## (\d{1,2}:\d{2})(?: · ([0-9a-f]{%d}))?$" % LT.ID_LEN)
 
 
 def from_archive(day: str):
@@ -174,16 +227,16 @@ def from_archive(day: str):
         return []
     out, cur, buf = [], None, []
     for ln in path.read_text(encoding="utf-8").split("\n"):
-        m = re.match(r"^## (\d{1,2}:\d{2})$", ln)
+        m = ARCHIVE_HEAD.match(ln)
         if m:
             if cur:
-                out.append((cur, "\n".join(buf).strip()))
-            cur, buf = m.group(1), []
+                out.append((*cur, "\n".join(buf).strip()))
+            cur, buf = (m.group(1), m.group(2)), []
         elif cur is not None:
             buf.append(ln)
     if cur:
-        out.append((cur, "\n".join(buf).strip()))
-    return out
+        out.append((*cur, "\n".join(buf).strip()))
+    return [(t, m, mid) for t, mid, m in out]
 
 
 def norm(s: str) -> str:
@@ -214,63 +267,94 @@ def unmapped_rows(day: str):
 
 
 def evaluate(day: str, tx: dict):
-    """回傳 (訊息數, 漏掉的, 未對票的, 來源是不是 transcript)。"""
+    """回傳 (訊息, 漏掉的, 未對票的, 來源是不是 transcript, 認領, 認領有歧義的分鐘)。
+
+    認領＝`{帳本行號: 身分}`：**舊列**（沒有身分）認得這一則 ⇒ 建置器把身分蓋上去（`LT.stamp_ids`）。
+    歧義＝`[(HH:MM, 那一分鐘還沒認到列的帶身分訊息數, 那一分鐘還沒有身分的舊列數)]` —— 見第二趟的註解。
+    """
     msgs = tx.get(day) or []
     from_tx = bool(msgs)
     if not from_tx:
         msgs = from_archive(day)
     led = ledger_of(day)
     hay = norm(led.read_text(encoding="utf-8")) if led.exists() else ""
-    # ⭐ 2026-08-21 修：⛔ 只比文字窗會漏掉整則訊息。
-    # `scripts/ruling.sh` 把 owner 的原話**逐字**寫進帳本當「裁決」列 ⇒ 那一則的 24 字窗
-    # 在帳本裡找得到（藏在裁決列裡），於是閘以為「它有列了」——
-    # ⛔ **把「這段文字出現在某處」誤認成「這則訊息有自己的列」。**
-    # 實測漏掉 2026-08-21 的 12:52 / 12:56 / 13:06 / 14:48 四則，而 13:06 是 #486–#490 五張票的來源。
-    # ⇒ 現在**兩個條件都要成立**：文字窗命中，**而且**該時間戳真的有一列。
-    rows = [(c[0].strip(), c[1]) for _, c in LT.canonical_rows(led)]
-    row_times = {t for t, _ in rows}
+    rows = LT.canonical_rows(led)
+    ids = {LT.row_id(c[1]) for _, c in rows} - {None}
+    # ⭐ 2026-08-21 修：⛔ 只比文字窗會漏掉整則訊息 —— `ruling.sh` 把原話逐字寫進別的列時，
+    #   24 字窗在帳本裡找得到而那一則**沒有自己的列**（實測漏 08-21 12:52/12:56/13:06/14:48）。
+    #   ⇒ 文字窗命中**而且**那一分鐘真的有一列（GH#1238：逐字的 `HH:MM`，⛔ 沒有時間窗 ——
+    #   owner 2026-09-12「詳實記錄不會合併」；模糊比對會把 17:45 與 17:56 的重講當成「有了」）。
+    #
+    # ⭐ GH#1255：帶**身分**的訊息先問身分 —— 有一列帶著它 ⇒ 有列。沒有 ⇒ 去認一列**還沒有身分**的舊列，
+    #   每一列**只能被認一次**（同一分鐘逐字相同、uuid 不同的兩則 ⇒ 第二則沒有列可認 ⇒ 漏列 ⇒ 建置器補一列）。
+    #   兩趟：先認「那一列的字就是這一則」的，再認「那一分鐘有一列、字在帳本某處」的（舊判準，改述過的列）
+    #   ⚠️ 第二趟只在「那一分鐘只有一種配法」時才認（見下面那段，GH#1255 審查後補）。
+    free = [(n, c) for n, c in rows if not LT.row_id(c[1])]
+    adopt: dict = {}
+    pending = []
+    for t, m, mid in msgs:
+        if mid and mid in ids:
+            continue
+        hit = next((n for n, c in free if mid and n not in adopt and c[0].strip() == t
+                    and covered(m, norm(LT.strip_id(c[1])))), None)
+        if hit is not None:
+            adopt[hit] = mid
+        else:
+            pending.append((t, m, mid))
+    # ⛔⛔ 第二趟**不看那一列的字**（改述過的列本來就對不上）⇒ 它只能靠「那一分鐘**只有一種**配法」才算數。
+    #   b8b1009bd 寫的是「輪到誰、誰就拿那一分鐘第一列還沒被認的舊列」⇒ 同一分鐘有 A（改述過的列、第一趟沒認到）
+    #   與 B（沒有自己的列，字出現在別列）時，B 先輪到 ⇒ ⭐ **A 的列被蓋上 B 的身分**、A 另補一列（審查者指出；
+    #   09-11～09-15 出貨資料審查者量過 0 例 ⛔ 但舊日子 `--date` 重產會走到這一趟）。
+    #   ⭐ 身分蓋錯之後 `--map <身分>` 改到的就是別人的列 —— 那是**把一把錯的鑰匙寫進資料**
+    #   （第〇·六守則：join key 自己錯的時候，照 key 同步會毀資料）。
+    #   ⇒ 那一分鐘「還沒認到列的帶身分訊息」與「還沒有身分的舊列」**都恰好一個** ⇒ 認；
+    #     否則 ⛔ 不猜：當成漏列補新列（舊列一個位元組都不動、留著沒有身分），並把那一分鐘印出來（⛔ 不靜默）。
+    #   ⭐ 多一列無害、蓋錯身分要人工才救得回來 —— 與 `ledger_table.dedupe` 的「寧可留兩列」同一個方向。
+    #   ⛔ 刻意沒有「退回舊行為」的開關：舊行為就是寫錯身分；要回頭 ⇒ revert 這個 commit。
+    unresolved: dict = {}
+    for t, _m, mid in pending:
+        if mid:
+            unresolved[t] = unresolved.get(t, 0) + 1
+    missing, ambiguous = [], []
+    for t, m, mid in pending:
+        if not covered(m, hay):
+            missing.append((t, m, mid))
+            continue
+        if not mid:                                  # 已版控的舊存檔（沒有身分）⇒ 舊判準
+            if not any(c[0].strip() == t for _, c in rows):
+                missing.append((t, m, mid))
+            continue
+        cand = [n for n, c in free if n not in adopt and c[0].strip() == t]
+        if unresolved[t] == 1 and len(cand) == 1:
+            adopt[cand[0]] = mid
+            continue
+        if cand and (t, unresolved[t], len(cand)) not in ambiguous:
+            ambiguous.append((t, unresolved[t], len(cand)))
+        missing.append((t, m, mid))
+    return msgs, missing, unmapped_rows(day), from_tx, adopt, ambiguous
 
-    def has_row(t: str, m: str) -> bool:
-        """這一則在帳本裡有沒有一列。
 
-        ⭐ 兩支工具必須問**同一個問題**（第〇·四守則：判準只有一個住處）——
-        ⛔ 否則這道閘要求的是一個工具拒絕產生的東西（同 genguard 那次「改產物被擋／改來源沒有來源」）。
-        ⭐ `ledger_table._same_entry` 的鍵含**逐字的 `HH:MM`** ⇒ 這裡問的就是那一格。
-        """
-        # ⭐⭐ 【逐字的 `HH:MM` 就是答案】（GH#1238）
-        #
-        # ⛔ 在此之前這裡還有一條模糊 fallback（`_same_message`，15 分鐘窗）——
-        # ⭐ 它是 2026-09-11 為了打破一個**死結**而加的：
-        #   建置器把 15 分鐘內同一句併成一列 ⇒ 閘要的時間產不出來
-        #   ⇒ 追加 → 被併掉 → 閘照樣說「漏了」→ 再追加…
-        #
-        # ⭐ 而那個死結的**根因已經修掉了**：`ledger_table._find_row` 只認**同一分鐘**
-        # （`_same_entry`；owner 2026-09-12「詳實記錄不會合併」）⇒ 建置器
-        # 對 transcript 來的訊息**逐分鐘各留一列** ⇒ 閘要的時間現在真的產得出來
-        # ⇒ ⛔ 這條 fallback 不但不再需要，⭐ 它還會**遮住真的漏列**：
-        #   owner 17:45 講過一次、17:56 又講一次而帳本只有前者時，
-        #   模糊比對會說「有了」⇒ ⭐ 那一則就此從帳本上消失。
-        #
-        # ⚠️ owner 2026-09-11 同一句話講了三次 —— ⭐ 「他重講了三遍」本身就是資訊
-        # （代表我沒聽懂），⛔ 而那正是這個帳本存在的理由。
-        return t in row_times
-
-    missing = [(t, m) for t, m in msgs if not (covered(m, hay) and has_row(t, m))]
-    return msgs, missing, unmapped_rows(day), from_tx
+def report_ambiguous(day: str, ambiguous) -> None:
+    """第二趟認領不猜的那幾分鐘（見 `evaluate()`）—— 建置與 `--check` 都印，⛔ 不靜默。"""
+    for t, n_msg, n_row in ambiguous:
+        print(f"⚠️ 認領有歧義 {day} {t}：{n_msg} 則帶身分的訊息 × {n_row} 列沒有身分的舊列，字對不上 ⇒ "
+              "⛔ 不猜哪一列是哪一則：補新列（帶身分），舊列不動、留著沒有身分")
 
 
 def report(day: str, missing, bad, prefix: str = "⛔") -> None:
     # ⚠️ 「漏了 <HH:MM>」這個字串是守衛在斷言的（messageLedgerScript.test.ts），
     # ⇒ 日期補在**後面**,⛔ 不是插在中間把它切斷。
-    for t, m in missing:
-        print(f"{prefix} 漏了 {t} · {day}  {re.sub(chr(10), ' ', m)[:70]}…")
+    for t, m, mid in missing:
+        print(f"{prefix} 漏了 {t} · {day}{' · ' + mid if mid else ''}  {re.sub(chr(10), ' ', m)[:70]}…")
     for n, c in bad:
-        print(f"{prefix} 未對票 {ledger_of(day)}:{n}  {c[0]}  {c[1][:60]}…")
+        mid = LT.row_id(c[1])
+        print(f"{prefix} 未對票 {ledger_of(day)}:{n}  {c[0]}{' · ' + mid if mid else ''}  {LT.strip_id(c[1])[:60]}…")
 
 
 HOWTO = (
-    "→ 漏列：跑 `pnpm msgledger:build` 補上（⭐ 它會補**昨天＋今天**；更早的日子用 --date）\n"
-    "→ 未對票：`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> '<票號 或 — 理由>'`\n"
+    "→ 漏列：跑 `pnpm msgledger:build` 補上（⭐ 它會補**昨天＋今天**；更早的日子 `pnpm msgledger:build --date <日>`）\n"
+    "→ 未對票：`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM 或 身分> '<票號 或 — 理由>'`"
+    "（同一分鐘兩列以上 ⇒ 用上面印的身分）\n"
     f"   （⛔ 不要手動 chmod、⛔ 不要直接編那份 444 的帳本；對不到票就寫 `— <為什麼不需要開票>`，"
     f"⛔ 不要留空也不要留 {LT.UNMAPPED}）")
 
@@ -290,7 +374,7 @@ def tickets_in(text: str) -> str:
 # ⭐ 解析 transcript 的程式只有 `from_transcript()` **這一份**;這裡只是把它端出去,
 #   ⛔ 不在 ruling.sh 裡再長一份會漂掉的解析器。
 #   bash scripts/message-ledger.sh --find-time "<逐字原話>" [--date <日>] [--with-text]
-#   ⇒ stdout 印 `YYYY-MM-DD HH:MM`(找到)或空(找不到,呼叫端退回執行時間);永遠 exit 0。
+#   ⇒ stdout 印 `YYYY-MM-DD HH:MM <身分>`(找到;身分 GH#1255,`ruling.sh` 拿它當列的身分)或空(找不到,呼叫端退回執行時間);永遠 exit 0。
 #   ⭐ `--with-text`:第二行起印**那一則在 transcript 裡的逐字原話**。
 #     帳本 owner 2026-09-12 起「詳實記錄不會合併」⇒ 列的鍵是**同一分鐘 ＋ 同一段文字**
 #     (`ledger_table._same_entry`)⇒ `ruling.sh` 只對齊時間而文字仍是**我記的版本**(掉字、接了我的註),
@@ -298,7 +382,7 @@ def tickets_in(text: str) -> str:
 #     ⇒ 鍵的**兩半**都從 transcript 來,⛔ 不是只有時間。
 #   ⚠️ 原話走**參數**⛔ 不是 stdin —— 這支 python 自己就是從 stdin(heredoc)餵進來的。
 def find_message_time(text: str, days):
-    """這句原話在 transcript 裡的 `(日期, HH:MM, 那一則的逐字原話)`;找不到回 None。
+    """這句原話在 transcript 裡的 `(日期, HH:MM, 那一則的逐字原話, 身分)`;找不到回 None。
 
     ⭐ 鑰匙是**文字**(第〇·六守則:時間正是今天漂掉的那把):原話的任一段 24 字窗出現在某則
     訊息裡(與 `covered()` 同一套 `norm`)、或整句互為子字串。`X => Y` 這種「我的問句 => 他的答」
@@ -319,14 +403,14 @@ def find_message_time(text: str, days):
     for src in transcript_files():
         best = None
         for day, msgs in from_transcript(set(days), files=[src]).items():
-            for t, m in msgs:
+            for t, m, mid in msgs:
                 hm = norm(m)
                 for n in keys:
                     w = min(WINDOW, len(n))
                     hit = n in hm or (len(hm) >= 4 and hm in n) or \
                         any(n[i:i + w] in hm for i in range(len(n) - w + 1))
                     if hit and (best is None or (day, t) > best[:2]):
-                        best = (day, t, m)
+                        best = (day, t, m, mid)
                         break
         if best:
             return best
@@ -338,7 +422,7 @@ if "--find-time" in argv:
     _text = argv[_i + 1] if _i + 1 < len(argv) else ""
     _hit = find_message_time(_text, {DAY, yesterday(DAY)}) if _text.strip() else None
     if _hit:
-        print(f"{_hit[0]} {_hit[1]}")
+        print(f"{_hit[0]} {_hit[1]} {_hit[3] or ''}".rstrip())
         if "--with-text" in argv[_i + 2:]:
             print(_hit[2])
     sys.exit(0)
@@ -358,11 +442,12 @@ if CHECK:
 
     failed = False
     for day in hard:
-        msgs, missing, bad, from_tx = evaluate(day, tx)
+        msgs, missing, bad, from_tx, _, amb = evaluate(day, tx)
         if not from_tx and msgs:
             print(f"⚠️ transcript 撈不到 {day} 的訊息 —— 退回已版控的 {archive_of(day)}（{len(msgs)} 則）")
         if missing or bad:
             failed = True
+            report_ambiguous(day, amb)
             report(day, missing, bad)
         else:
             print(f"✓ 逐則對票 {day}：{len(msgs)} 則訊息全部有列、全部對到票")
@@ -380,8 +465,9 @@ if CHECK:
 
     # ⭐ 今天:印出來但**不擋**（失敗形態⑨ —— 見檔頭。⛔ fail-open 但不靜默）。
     if live:
-        _, missing, bad, _ = evaluate(live, tx)
+        _, missing, bad, _, _, amb = evaluate(live, tx)
         if missing or bad:
+            report_ambiguous(live, amb)
             report(live, missing, bad, prefix="⏳")
             print(f"⏳ 上面 {len(missing)} 則漏列 + {len(bad)} 列未對票是**今天（{live}）**的 —— "
                   "這條 session 還在跑,transcript 還在長 ⇒ ⛔ **不擋**。")
@@ -397,9 +483,10 @@ if CHECK:
 
 # ── build ──────────────────────────────────────────────────────────────────
 tx = from_transcript({DAY})
-msgs, missing, _bad, FROM_TX = evaluate(DAY, tx)
+msgs, missing, _bad, FROM_TX, ADOPT, AMBIGUOUS = evaluate(DAY, tx)
 if not FROM_TX and msgs:
     print(f"⚠️ transcript 撈不到 {DAY} 的訊息 —— 退回已版控的 {ARCHIVE}（{len(msgs)} 則）")
+report_ambiguous(DAY, AMBIGUOUS)
 
 
 def _bytes(p: Path) -> bytes:
@@ -410,21 +497,28 @@ before = (_bytes(LEDGER), _bytes(ARCHIVE))   # ⭐ GH#1026 ①:收工要知道�
 
 # ⭐ 全文**另存**,⛔ 不是把原話壓縮取代掉(第一·五守則:撞到字數上限時另存)。
 # ⚠️ 這個檔名 `ledger-source_temp_*` 是 `scripts/asked-before.sh` 已經在 grep 的那個。
+# ⭐ GH#1255：段落標題帶**身分**（`## HH:MM · <身分>`）⇒ CI 走存檔這條來源時一樣分得開同一分鐘的兩則；
+#   寫入點自解鎖（與 `ledger_table._unlock` 同一支）—— 直接跑 `--date` 補舊日子時存檔平時 444。
 if FROM_TX:
     ARCHIVE.parent.mkdir(parents=True, exist_ok=True)
+    if ARCHIVE.exists():
+        LT._unlock(ARCHIVE)
     ARCHIVE.write_text(
         f"# 逐則對票 · owner 原話全文 {DAY}\n\n"
         f"> ⭐ `docs/_daily/{DAY}.md` 的表格那一格是**截斷**過的,全文在這裡。\n"
         f"> 由 `scripts/message-ledger.sh` 從 session transcript 產生 —— ⛔ 不要手改。\n"
         f"> `scripts/asked-before.sh` 會 grep 這一份找 owner 的原話。\n\n"
-        + "\n\n".join(f"## {t}\n\n{m}" for t, m in msgs) + "\n",
+        + "\n\n".join(f"## {t}{' · ' + mid if mid else ''}\n\n{m}" for t, m, mid in msgs) + "\n",
         encoding="utf-8")
 
 # ⭐ `prefer_incoming_text=True`:建置器的字**逐字**來自 transcript ⇒ 逐字命中 `ruling.sh` 已插的**同一則**時,
 #   owner 的原話贏過任何改述。⛔ 不命中就新增一列(owner 2026-09-12「詳實記錄不會合併」)。
-added = LT.insert(LEDGER, [(t, LT.cell(m, MAXLEN), tickets_in(m)) for t, m in missing],
+# ⭐ GH#1255：先把身分蓋到**認得的舊列**上（只動格尾，文字與票號不碰），再補漏列 ——
+#   順序有意義：舊列先帶上身分，同一分鐘逐字相同、uuid 不同的第二則才不會被 `_find_row` 當成同一則。
+stamped = LT.stamp_ids(LEDGER, ADOPT) if LEDGER.exists() else 0
+added = LT.insert(LEDGER, [(t, LT.with_id(LT.cell(m, MAXLEN), mid), tickets_in(m)) for t, m, mid in missing],
                   prefer_incoming_text=True)
-print(f"✓ {DAY}：{len(msgs)} 則訊息,補了 {added} 列（其餘已經有列）")
+print(f"✓ {DAY}：{len(msgs)} 則訊息,補了 {added} 列、舊列補上身分 {stamped} 列（其餘已經有列）")
 if added:
     print(f"⚠️ 新列的票號是**推出來**的;推不出來的是 `{LT.UNMAPPED}` —— 去填掉,"
           f"⛔ 留著 `pnpm msgledger:check` 會紅")

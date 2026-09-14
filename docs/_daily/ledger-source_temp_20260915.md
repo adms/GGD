@@ -4,12 +4,26 @@
 > 由 `scripts/message-ledger.sh` 從 session transcript 產生 —— ⛔ 不要手改。
 > `scripts/asked-before.sh` 會 grep 這一份找 owner 的原話。
 
-## 02:27
+## 02:27 · 3e261538
 
 # 2026-09-11～2026-09-15 新增模型、動作、特效與語音清單
 請你比照最近上架的素材重新比對在後台上架 特別是下拉式選單 要能即時載入御覽
 
-## 02:44
+## 02:38 · f78ddf1a
+
+已推送完成。
+
+* 遠端分支：`codex/hero-model-library-options`
+* 最新 commit：`462a6dd32`
+* 推送範圍：`215f752d3..462a6dd32`
+* PR：[adms/GGD #1152](https://github.com/adms/GGD/pull/1152)
+* 清單檔：[2026-09-11～2026-09-15 新增模型、動作、特效與語音清單](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/近四日新增模型動作特效清單.md)
+
+## 02:41 · 2dd20f56
+
+你記得都要對話開票記錄
+
+## 02:44 · 329a5400
 
 C5	「幾發打死」的算法沒乘 AP 乘數 => 我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示
 
