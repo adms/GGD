@@ -515,10 +515,16 @@ def build(git_link_root=ROOT):
     kof_jump_query_path=ROOT/'tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/query.py'
     jumpforce_identity_builder_path=ROOT/'tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/build_jumpforce_identity_map.py'
     kof_xiv_effect_probe_path=ROOT/'tools/hero-model-library/source-workflows/kof-jump-container-coverage-v1/probe_kof_xiv_effects.py'
+    jumpforce_full_roster_entry_path=base/'source-inventories/jump-force-full-roster-v1/current-resource-entry.json'
+    jumpforce_full_roster_plan_path=base/'source-inventories/jump-force-full-roster-v1/plan.json'
+    jumpforce_full_roster_detail_path=base/'source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz'
+    jumpforce_full_roster_document_path=base/'source-inventories/jump-force-full-roster-v1/README.md'
     kof_jump_coverage=read(kof_jump_coverage_path)
     jumpforce_identity=read(jumpforce_identity_path)
     kof_xiv_vfx_textures=read(kof_xiv_vfx_textures_path)
     kof_xiv_effect_mapping=read(kof_xiv_effect_mapping_path)
+    jumpforce_full_roster_entry=read(jumpforce_full_roster_entry_path)
+    jumpforce_full_roster_plan=read(jumpforce_full_roster_plan_path)
     if (kof_jump_coverage.get('schema')!='ggd.kof-jump-container-coverage@1'
         or kof_jump_coverage.get('jumpForce',{}).get('inferredNativeCharacterIdTokens')!=224
         or kof_jump_coverage.get('jumpForce',{}).get('knownIdentityCrosswalks')!=63
@@ -545,6 +551,23 @@ def build(git_link_root=ROOT):
         or kof_xiv_effect_mapping.get('summary',{}).get('skillBindingsCreated')!=0
         or kof_xiv_effect_mapping.get('policy',{}).get('materialBlendTimingAttachmentValidated') is not False):
         raise ValueError('KOF/JUMP container coverage is absent, stale or overclaims runtime readiness')
+    if (jumpforce_full_roster_entry.get('schema')!='ggd.jumpforce-full-roster-current-resource@1'
+        or jumpforce_full_roster_plan.get('schema')!='ggd.jumpforce-full-roster-plan@1'
+        or jumpforce_full_roster_plan.get('summary',{}).get('characters')!=63
+        or jumpforce_full_roster_plan.get('scope',{}).get('fullSteamLibraryRescanRequired') is not False
+        or jumpforce_full_roster_plan.get('summary',{}).get('payloadFilesExtractedThisRun')!=0
+        or jumpforce_full_roster_plan.get('summary',{}).get('convertedModelsThisRun')!=0
+        or jumpforce_full_roster_plan.get('summary',{}).get('runtimeBindingsAdded')!=0
+        or jumpforce_full_roster_plan.get('summary',{}).get('backendOptionsAdded')!=0
+        or jumpforce_full_roster_plan.get('summary',{}).get('productionDeployments')!=0
+        or jumpforce_full_roster_entry.get('runtimeSelectable') is not False
+        or jumpforce_full_roster_entry.get('productionDeploymentVerified') is not False):
+        raise ValueError('JUMP FORCE full-roster plan is absent, stale or overclaims readiness')
+    for path,key in ((jumpforce_full_roster_plan_path,'planSha256'),
+                     (jumpforce_full_roster_detail_path,'detailIndexSha256'),
+                     (jumpforce_full_roster_document_path,'documentSha256')):
+        if jumpforce_full_roster_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
+            raise ValueError('JUMP FORCE full-roster current-resource pointer is stale: '+str(path))
     ssbu_ultimate_roster_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/inventory.json'
     ssbu_ultimate_roster_doc_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/README.md'
     ssbu_ultimate_roster=read(ssbu_ultimate_roster_path)
@@ -804,6 +827,10 @@ def build(git_link_root=ROOT):
             automaticAudioBindings=0,
             runtimeSelectableAssetsAdded=0,
             productionDeploymentVerified=False),
+        jumpForceFullRosterPlan=dict(
+            **jumpforce_full_roster_entry,
+            entryGitPath=str(jumpforce_full_roster_entry_path.relative_to(ROOT)),
+            entrySha256=hashlib.sha256(jumpforce_full_roster_entry_path.read_bytes()).hexdigest()),
         ssbuUltimateLocalRoster=dict(
             gitPath=str(ssbu_ultimate_roster_path.relative_to(ROOT)),
             sha256=hashlib.sha256(ssbu_ultimate_roster_path.read_bytes()).hexdigest(),
@@ -1239,6 +1266,22 @@ def main():
                 {
                     'gitPath': result['kofJumpContainerCoverage']['effectProbeToolGitPath'],
                     'sha256': result['kofJumpContainerCoverage']['effectProbeToolSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceFullRosterPlan']['planGitPath'],
+                    'sha256': result['jumpForceFullRosterPlan']['planSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceFullRosterPlan']['detailIndexGitPath'],
+                    'sha256': result['jumpForceFullRosterPlan']['detailIndexSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceFullRosterPlan']['documentGitPath'],
+                    'sha256': result['jumpForceFullRosterPlan']['documentSha256'],
+                },
+                {
+                    'gitPath': result['jumpForceFullRosterPlan']['entryGitPath'],
+                    'sha256': result['jumpForceFullRosterPlan']['entrySha256'],
                 },
                 {
                     'gitPath': result['ssbuUltimateLocalRoster']['gitPath'],

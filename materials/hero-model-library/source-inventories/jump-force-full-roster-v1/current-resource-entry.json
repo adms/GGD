@@ -1,0 +1,72 @@
+{
+  "schema": "ggd.jumpforce-full-roster-current-resource@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "status": "63-high-confidence-character-families-path-indexed; one-time PAK mirror pending; extraction/conversion/validation/registration/deployment pending",
+  "planGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json",
+  "planSha256": "5a8053d75befcbf3b3eb5e21c00da75ab5d9c5d7f00e41e4b8021b5b3d7f9ea7",
+  "detailIndexGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
+  "detailIndexSha256": "ddea313700727cf827a1d343607d03ffd587b208eb5bc779e4b583ddab50e815",
+  "documentGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/README.md",
+  "documentSha256": "62b9d51ec71718e359b9277b57ce14903d182e0f44910d2a90e047616282d6aa",
+  "summary": {
+    "characters": 63,
+    "highConfidenceIdentities": 63,
+    "duplicateCharacterFamilyNames": [
+      "Galena",
+      "Giorno",
+      "Kane",
+      "Naruto",
+      "Prometheus",
+      "Yugi"
+    ],
+    "selectedMemberRelations": 86238,
+    "assetClasses": {
+      "model": {
+        "packages": 954,
+        "memberRelations": 1908,
+        "charactersWithCandidates": 63
+      },
+      "texture": {
+        "packages": 1929,
+        "memberRelations": 3868,
+        "charactersWithCandidates": 63
+      },
+      "skeleton": {
+        "packages": 63,
+        "memberRelations": 126,
+        "charactersWithCandidates": 63
+      },
+      "motion": {
+        "packages": 414,
+        "memberRelations": 828,
+        "charactersWithCandidates": 63
+      },
+      "vfx": {
+        "packages": 22515,
+        "memberRelations": 45106,
+        "charactersWithCandidates": 60
+      },
+      "audio": {
+        "packages": 16593,
+        "memberRelations": 33186,
+        "charactersWithCandidates": 63
+      },
+      "metadata": {
+        "packages": 608,
+        "memberRelations": 1216,
+        "charactersWithCandidates": 63
+      }
+    },
+    "paksMirroredThisRun": 0,
+    "payloadFilesExtractedThisRun": 0,
+    "convertedModelsThisRun": 0,
+    "convertedMotionsThisRun": 0,
+    "convertedVfxThisRun": 0,
+    "decodedAudioThisRun": 0,
+    "runtimeBindingsAdded": 0,
+    "backendOptionsAdded": 0,
+    "productionDeployments": 0
+  },
+  "runtimeSelectable": false,
+  "productionDeploymentVerified": false
+}

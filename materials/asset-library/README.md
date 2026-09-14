@@ -47,6 +47,7 @@
 | 查 MOD、工作坊、魔獸地圖、論壇及作者公開分享的未使用模型／動作／特效／道具 | [社群未使用素材索引](../hero-model-library/source-inventories/community-unused-assets-v1/README.md)；`python3 tools/hero-model-library/source-workflows/community-unused-assets-v1/query.py --kind model --stage unused` |
 | 查 Ultimate14／NS 社群 MOD 原生動作 | `materials/hero-model-library/source-inventories/ultimate14-native-motions.json`；`python3 tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py mario` |
 | 查 Ultimate「16 名」與 NSandNS2 容器位置 | [16 個動作角色群與來源核對](../hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/README.md)；機器讀 `reconciliation.json → sourceStageCounts`；128 份 body 候選只核對存在與大小，NSP／ZIP 維持 metadata-only |
+| 查 JUMP FORCE 全角色批次抽取／轉換計畫 | [63 個高信度原生 ID 計畫](../hero-model-library/source-inventories/jump-force-full-roster-v1/README.md)；只需一次鏡像六顆 `Content/Paks`，不重掃 LV99 Steam 目錄 |
 | 把本版模型補進自己的 GGD checkout | 下方的 `sync.py` |
 | 修改角色配對、下載來源、獨立副本需求 | 下方「共編改哪個檔」 |
 | 查原生解析器、舊轉換流程 | [DEPENDENCIES.md](DEPENDENCIES.md) 與 `source/`；這些不是成品取用入口 |
