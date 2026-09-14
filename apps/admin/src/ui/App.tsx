@@ -81,6 +81,8 @@ import { StoreEconomyPage } from "./StoreEconomyPage";
 // 這份文件是 apps/admin/src 全樹零引用的（configDocCoverage 的 KNOWN_GAP 那一列）。
 import { RosterPage } from "./RosterPage";
 import { ConfigDocPage } from "./ConfigDocPage";
+// 🧮 GH#1260 B2 —— 「英雄屬性正規化」頁的唯讀試算（出身表 vs 套現行屬性係數），⛔ 不警示。
+import { OriginTrialPanel } from "./OriginTrialPanel";
 import { IconWorkshopPage } from "./IconWorkshopPage";
 import { MapReportPage } from "./MapReportPage";
 import { ArenaPoolPage } from "./ArenaPoolPage";
@@ -1300,6 +1302,7 @@ export function Console(): React.JSX.Element {
               `specForPage` 回 null，下面這一行就什麼都不畫（而不是畫一個空表單）。
             */}
             {configDocSpec !== null && <ConfigDocPage spec={configDocSpec} />}
+            {page === "statNormalization" && <OriginTrialPanel />}
             {page === "mapReport" && <MapReportPage />}
             {page === "arenaPool" && <ArenaPoolPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
