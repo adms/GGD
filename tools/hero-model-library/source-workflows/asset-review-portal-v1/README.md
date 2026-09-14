@@ -8,6 +8,7 @@
 - 已通過目標 GLB／骨架播放前置驗證的借用、重定向或死亡替代動作；
 - KOF XIV 的 55 張已轉換特效貼圖與 71 組原生 EFF 參照群組；
 - 達伊 PN010 的 18 張合格特效貼圖與 8 顆 mesh 支援元件；
+- 達伊 PN010 的 6 組靜態程序化組合候選，每組固定 0／0.5／1 秒三張 SHA 預覽；
 - 波普 PN020 的 12 個 GGD VFX 靜態重建候選；
 - 尚未符合播放條件的動作線索，僅顯示缺口且沒有核准控制。
 
@@ -36,6 +37,6 @@ pnpm --filter @ggd/client dev --host 127.0.0.1 --port 5173
 python3 tools/hero-model-library/source-workflows/asset-review-portal-v1/serve_review.py --port 8767
 ```
 
-開啟 `http://127.0.0.1:5173/asset-review-portal.html`。動作預覽使用既有 `champion-model-audition.html`，並等待 `__settled`、確認可見三角形後才移除狀態遮罩，避免黑畫面被誤當成成功。每項另有「全頁查看」方便排除 iframe 問題。媒體服務只暴露生成佇列中已核對 bytes 與 SHA-256 的音訊或視覺預覽檔，支援 `HEAD` 和單段 HTTP Range，無法用路徑讀取其他本機檔案。KOF EFF 尚無完整原生 renderer，EFF 卡片顯示其精確引用的轉換貼圖；沒有直接貼圖參照的群組顯示該角色接觸表。達伊 mesh 卡片使用含逐元件線框與 ID 的固定接觸表。
+開啟 `http://127.0.0.1:5173/asset-review-portal.html`。動作預覽使用既有 `champion-model-audition.html`，並等待 `__settled`、確認可見三角形後才移除狀態遮罩，避免黑畫面被誤當成成功。每項另有「全頁查看」方便排除 iframe 問題。媒體服務只暴露生成佇列中已核對 bytes 與 SHA-256 的音訊或視覺預覽檔，支援 `HEAD` 和單段 HTTP Range，無法用路徑讀取其他本機檔案。KOF EFF 尚無完整原生 renderer，EFF 卡片顯示其精確引用的轉換貼圖；沒有直接貼圖參照的群組顯示該角色接觸表。達伊 mesh 卡片使用含逐元件線框與 ID 的固定接觸表；六組達伊組合候選只是靜態程序化視覺裁決，不代表原生 Niagara 時序、技能事件、骨架附著或原作效果一致性已恢復。
 
 新出現的 `hurt-ascend-fade` 候選會播放已驗證的受傷／倒地 clip，再對整個預覽框做半透明升天淡出示意；預覽本身不是原生 Death 或 runtime 世界座標實作證據。波普已有獨立 owner 決定與 runtime 收據，因此不再出現在 pending 佇列。相同作品借用動作同樣必須先有目標 GLB、骨架相容性與播放證據，才可進可裁決清單。

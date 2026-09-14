@@ -20,6 +20,7 @@ BORROWED = LIBRARY / "motion-review/borrowed-motion-review.json"
 JUMPFORCE = LIBRARY / "source-inventories/jumpforce-assets-v2/listening-review-groups.json"
 KOF_EFFECTS = LIBRARY / "source-inventories/kof-jump-container-coverage-v1/effect-mapping.json"
 DAI_VFX = LIBRARY / "priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json"
+DAI_VFX_REVIEW = LIBRARY / "priority-evidence/infinity-strash-dai-vfx-components-v1/review-candidates-v1/review-candidates.json"
 POPP_VFX = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json"
 POPP_VFX_RECIPES = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json"
 OUTPUT_DIR = LIBRARY / "review/asset-review-portal-v1"
@@ -511,6 +512,68 @@ def dai_visual_candidates(document: dict[str, Any]) -> tuple[list[dict[str, Any]
     return texture_rows, mesh_rows
 
 
+def dai_composite_visual_candidates(document: dict[str, Any]) -> list[dict[str, Any]]:
+    if document.get("schema") != "ggd.infinity-strash-dai-vfx-review-candidates@1":
+        raise ValueError("unexpected Dai VFX composite-review schema")
+    summary = document.get("summary", {})
+    boundary = document.get("boundary", {})
+    if (summary.get("reviewCandidatesBuilt") != 6
+            or summary.get("fixedPreviewFrames") != 18
+            or summary.get("ownerApproved") != 0
+            or summary.get("approvedBindings") != 0
+            or summary.get("runtimeMutations") != 0
+            or boundary.get("runtimeMutationAllowed") is not False
+            or boundary.get("skillEventsAssigned") is not False
+            or document.get("approvedBindings") != []):
+        raise ValueError("Dai VFX composite-review inventory is stale or overclaims approval/runtime authority")
+    rows = []
+    for source in document["candidates"]:
+        states = source.get("states", {})
+        if (source.get("ownerDecision") != "pending"
+                or source.get("approvedBindings") != []
+                or states.get("visuallyApproved") is not False
+                or states.get("runtimeBindingCreated") is not False
+                or states.get("runtimeSelectable") is not False
+                or states.get("productionDeployed") is not False):
+            raise ValueError(f"Dai composite candidate is not pending and runtime inert: {source.get('candidateId')}")
+        if [preview["time"] for preview in source["previewEvidence"]] != [0.0, 0.5, 1.0]:
+            raise ValueError(f"Dai composite candidate does not have the fixed three-frame review set: {source['candidateId']}")
+        previews = [git_file(ROOT / preview["gitPath"], preview) for preview in source["previewEvidence"]]
+        row = pending_visual(
+            candidate_id="dai-vfx-composite:" + source["candidateId"],
+            source_kind="infinity-strash-dai-vfx-composite-review",
+            source_id=document["sourceId"],
+            hero_id=(source.get("heroIds") or [None])[0],
+            character_name_zh="小呆／達伊",
+            native_character_id=source["nativeCharacterId"],
+            work_zh="Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            asset_kind="authored-static-procedural-visual-composite",
+            source_label=source["nativePackageStem"],
+            approval_scope="composite-visual-review-only",
+            previews=previews,
+            source_evidence={
+                "sourceCandidateId": source["candidateId"],
+                "heroIds": source["heroIds"],
+                "sourceRoot": source["sourceRoot"],
+                "sourceComponents": source["sourceComponents"],
+                "previewProfile": source["previewProfile"],
+                "previewTimes": [preview["time"] for preview in source["previewEvidence"]],
+                "states": states,
+            },
+            gaps=[
+                "niagara-timing-unrecovered",
+                "skill-event-binding-unreviewed",
+                "skeleton-attachment-unreviewed",
+                "original-effect-parity-unverified",
+            ],
+        )
+        row["approvedBindings"] = []
+        rows.append(row)
+    if len(rows) != 6:
+        raise ValueError("Dai VFX composite-review candidate count changed")
+    return rows
+
+
 def popp_visual_candidates(runtime: dict[str, Any], recipes: dict[str, Any]) -> list[dict[str, Any]]:
     if runtime.get("schema") != "ggd.infinity-strash-popp-vfx-runtime-candidates@1":
         raise ValueError("unexpected Popp VFX runtime-candidate schema")
@@ -555,7 +618,7 @@ def popp_visual_candidates(runtime: dict[str, Any], recipes: dict[str, Any]) -> 
 
 
 def build_contract() -> dict[str, Any]:
-    source_paths = [POPP, PALWORLD, BORROWED, JUMPFORCE, KOF_EFFECTS, DAI_VFX, POPP_VFX, POPP_VFX_RECIPES]
+    source_paths = [POPP, PALWORLD, BORROWED, JUMPFORCE, KOF_EFFECTS, DAI_VFX, POPP_VFX, POPP_VFX_RECIPES, DAI_VFX_REVIEW]
     popp = read_json(POPP)
     palworld = read_json(PALWORLD)
     borrowed = read_json(BORROWED)
@@ -564,14 +627,17 @@ def build_contract() -> dict[str, Any]:
     dai_vfx = read_json(DAI_VFX)
     popp_vfx = read_json(POPP_VFX)
     popp_vfx_recipes = read_json(POPP_VFX_RECIPES)
+    dai_vfx_review = read_json(DAI_VFX_REVIEW)
     pal_audio, pal_motion = palworld_candidates(palworld)
     borrowed_motion, blocked = borrowed_candidates(borrowed)
     kof_textures, kof_groups = kof_visual_candidates(kof_effects)
     dai_textures, dai_meshes = dai_visual_candidates(dai_vfx)
     popp_visual = popp_visual_candidates(popp_vfx, popp_vfx_recipes)
+    dai_composite_visual = dai_composite_visual_candidates(dai_vfx_review)
     audio = popp_candidates(popp) + pal_audio + jumpforce_candidates(jumpforce)
     motions = pal_motion + borrowed_motion
-    visuals = kof_textures + kof_groups + dai_textures + dai_meshes + popp_visual
+    # Append new sources so the original 325 review rows retain their content and order.
+    visuals = kof_textures + kof_groups + dai_textures + dai_meshes + popp_visual + dai_composite_visual
     candidate_ids = [row["candidateId"] for row in audio + motions + visuals]
     if len(candidate_ids) != len(set(candidate_ids)):
         raise ValueError("duplicate review candidate id")
@@ -615,6 +681,7 @@ def build_contract() -> dict[str, Any]:
             "daiVfxTextureComponentCount": len(dai_textures),
             "daiVfxMeshComponentCount": len(dai_meshes),
             "poppVfxCandidateCount": len(popp_visual),
+            "daiVfxCompositeCandidateCount": len(dai_composite_visual),
             "visualPreviewFileCount": sum(len(row["previewFiles"]) for row in visuals),
             "pendingDecisionCount": len(audio) + len(motions) + len(visuals),
             "approvedDecisionCount": 0,
@@ -681,8 +748,8 @@ def build_html(contract: dict[str, Any]) -> str:
 :root{{--bg:#071019;--card:#111d2a;--line:#294158;--fg:#eef6ff;--dim:#a9b8c6;--accent:#66d9ef;--warn:#ffc66d;--ok:#8bd49c;--bad:#ff8b8b}}
 *{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}}header{{position:sticky;top:0;z-index:6;padding:12px 18px;background:#08131ef2;border-bottom:1px solid var(--line)}}main{{max-width:1440px;margin:auto;padding:18px}}h1{{font-size:20px;margin:0}}h2{{margin:28px 0 8px}}.dim{{color:var(--dim)}}.warn{{border:1px solid #8d692e;background:#2c2414;padding:10px 12px;border-radius:8px;color:#ffe2a6}}.toolbar{{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}}input,select,textarea,button,.button-link{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 9px;border-radius:7px}}input[type=search]{{min-width:300px}}button,.button-link{{cursor:pointer;text-decoration:none}}button:hover,.button-link:hover{{border-color:var(--accent)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}}.card{{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:12px;min-width:0}}.card.approve{{border-color:var(--ok)}}.card.reject{{border-color:var(--bad)}}.card.pending{{border-color:#6f7f91}}audio{{width:100%}}code{{font-size:11px;word-break:break-all}}.tags{{display:flex;gap:5px;flex-wrap:wrap}}.tag{{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px}}dl{{display:grid;grid-template-columns:105px 1fr;gap:3px 8px}}dt{{color:var(--dim)}}dd{{margin:0;min-width:0;word-break:break-word}}textarea{{width:100%;min-height:55px}}.buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}}.viewer{{position:relative;height:430px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#05080c}}iframe{{width:100%;height:100%;border:0}}.viewer-status{{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#071019e8;color:var(--dim)}}.viewer-status.error{{color:var(--bad);background:#210d10ee}}.viewer-status[hidden]{{display:none}}.visual-gallery{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin:8px 0}}.visual-gallery a{{display:block;background:#071019;border:1px solid var(--line);border-radius:7px;padding:4px}}.visual-gallery img{{display:block;width:100%;height:180px;object-fit:contain}}details{{margin-top:8px}}li{{margin:4px 0}}.hidden{{display:none!important}}.count{{font-variant-numeric:tabular-nums}}
 </style></head><body><header><h1>GGD 素材逐項審查中心</h1><div class="dim">資料指紋 <code>{fingerprint}</code> · 所有項目預設 pending · 匯出決定不會修改 runtime</div></header>
-<main><div class="warn">音效／語音、動作與視覺素材候選必須逐項核准。KOF EFF、達伊支援元件與波普靜態重建圖的核准只記錄視覺裁決，不授權技能事件或 runtime 綁定。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣。已有 owner 決定與 runtime 收據的項目不會重新排入 pending。</div>
-<div class="toolbar"><input id="search" type="search" placeholder="搜尋角色、來源、事件、SHA"><select id="kind"><option value="">全部來源</option><option value="popp-event-audio">波普音訊</option><option value="palworld-creature-cry">帕魯叫聲</option><option value="palworld-native-motion-semantic">帕魯動作</option><option value="jumpforce-group-identity-sample">JUMP FORCE</option><option value="borrowed-or-death-substitution-motion">借用／死亡替代</option><option value="kofxiv-converted-effect-texture">KOF XIV 特效貼圖</option><option value="kofxiv-native-eff-group">KOF XIV EFF 群組</option><option value="infinity-strash-dai-vfx-texture-component">達伊特效貼圖</option><option value="infinity-strash-dai-vfx-mesh-component">達伊特效 mesh</option><option value="infinity-strash-popp-vfx-runtime-candidate">波普 VFX 候選</option></select><select id="status"><option value="">全部裁決</option><option value="pending">pending</option><option value="approve">approve</option><option value="reject">reject</option></select><span id="visible" class="dim count"></span></div>
+<main><div class="warn">音效／語音、動作與視覺素材候選必須逐項核准。KOF EFF、達伊支援元件、達伊六組靜態程序化組合預覽與波普靜態重建圖的核准只記錄視覺裁決，不授權技能事件或 runtime 綁定。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣。已有 owner 決定與 runtime 收據的項目不會重新排入 pending。</div>
+<div class="toolbar"><input id="search" type="search" placeholder="搜尋角色、來源、事件、SHA"><select id="kind"><option value="">全部來源</option><option value="popp-event-audio">波普音訊</option><option value="palworld-creature-cry">帕魯叫聲</option><option value="palworld-native-motion-semantic">帕魯動作</option><option value="jumpforce-group-identity-sample">JUMP FORCE</option><option value="borrowed-or-death-substitution-motion">借用／死亡替代</option><option value="kofxiv-converted-effect-texture">KOF XIV 特效貼圖</option><option value="kofxiv-native-eff-group">KOF XIV EFF 群組</option><option value="infinity-strash-dai-vfx-texture-component">達伊特效貼圖</option><option value="infinity-strash-dai-vfx-mesh-component">達伊特效 mesh</option><option value="infinity-strash-dai-vfx-composite-review">達伊組合預覽</option><option value="infinity-strash-popp-vfx-runtime-candidate">波普 VFX 候選</option></select><select id="status"><option value="">全部裁決</option><option value="pending">pending</option><option value="approve">approve</option><option value="reject">reject</option></select><span id="visible" class="dim count"></span></div>
 <h2>一、尚未核准音效／語音 <span id="audioCount" class="dim count"></span></h2><div id="audio" class="grid"></div>
 <h2>二、原生／借用／死亡替代動作 <span id="motionCount" class="dim count"></span></h2><div id="motion" class="grid"></div>
 <h2>三、特效貼圖／EFF／支援元件 <span id="visualCount" class="dim count"></span></h2><div id="visual" class="grid"></div>

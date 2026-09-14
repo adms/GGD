@@ -298,14 +298,19 @@ def build(git_link_root=ROOT):
             asset_review_queue.get('summary',{}).get('audioCandidateCount',0)
             + asset_review_queue.get('summary',{}).get('motionCandidateCount',0)
             + asset_review_queue.get('summary',{}).get('visualCandidateCount',0))
-        or asset_review_queue.get('summary',{}).get('visualCandidateCount')!=164
+        or asset_review_queue.get('summary',{}).get('visualCandidateCount')!=170
         or asset_review_queue.get('summary',{}).get('kofXivTextureCandidateCount')!=55
         or asset_review_queue.get('summary',{}).get('kofXivEffGroupCandidateCount')!=71
         or asset_review_queue.get('summary',{}).get('daiVfxTextureComponentCount')!=18
         or asset_review_queue.get('summary',{}).get('daiVfxMeshComponentCount')!=8
         or asset_review_queue.get('summary',{}).get('poppVfxCandidateCount')!=12
+        or asset_review_queue.get('summary',{}).get('daiVfxCompositeCandidateCount')!=6
         or any(row.get('ownerDecision')!='pending' for row in asset_review_queue.get('visualCandidates',[]))
         or any(row.get('runtimeMutationAllowed') is not False for row in asset_review_queue.get('visualCandidates',[]))
+        or any(row.get('approvedBindings')!=[] for row in asset_review_queue.get('visualCandidates',[])
+               if row.get('sourceKind')=='infinity-strash-dai-vfx-composite-review')
+        or any(row.get('eventCandidates')!=[] for row in asset_review_queue.get('visualCandidates',[])
+               if row.get('sourceKind')=='infinity-strash-dai-vfx-composite-review')
         or asset_review_queue.get('summary',{}).get('approvedDecisionCount')!=0
         or asset_review_queue.get('summary',{}).get('runtimeBindingsChanged')!=0
         or asset_review_queue.get('policy',{}).get('runtimeMutationAllowed') is not False):

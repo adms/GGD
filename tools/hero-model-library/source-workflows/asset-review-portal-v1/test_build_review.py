@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import importlib.util
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -30,7 +31,8 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertEqual(summary["daiVfxTextureComponentCount"], 18)
         self.assertEqual(summary["daiVfxMeshComponentCount"], 8)
         self.assertEqual(summary["poppVfxCandidateCount"], 12)
-        self.assertEqual(summary["visualCandidateCount"], 164)
+        self.assertEqual(summary["daiVfxCompositeCandidateCount"], 6)
+        self.assertEqual(summary["visualCandidateCount"], 170)
         self.assertGreaterEqual(summary["blockedMotionLeadCount"], 2)
         self.assertEqual(summary["runtimeBindingsChanged"], 0)
         self.assertEqual(summary["approvedDecisionCount"], 0)
@@ -42,7 +44,7 @@ class AssetReviewBuilderTest(unittest.TestCase):
 
     def test_visual_candidates_are_sha_pinned_owner_pending_and_runtime_inert(self):
         rows = self.contract["visualCandidates"]
-        self.assertEqual(len(rows), 164)
+        self.assertEqual(len(rows), 170)
         self.assertTrue(all(row["ownerDecision"] == "pending" for row in rows))
         self.assertTrue(all(row["runtimeMutationAllowed"] is False for row in rows))
         self.assertTrue(all(row["eventCandidates"] == [] for row in rows))
@@ -51,6 +53,35 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertEqual(len(previews), self.contract["summary"]["visualPreviewFileCount"])
         self.assertTrue(all(Path(row["absolutePath"]).is_file() for row in previews))
         self.assertTrue(all(len(row["sha256"]) == 64 and row["bytes"] > 0 for row in previews))
+
+    def test_original_325_rows_remain_field_equivalent_across_worktrees_and_new_rows_append(self):
+        rows = self.contract["audioCandidates"] + self.contract["motionCandidates"] + self.contract["visualCandidates"]
+        original = rows[:325]
+
+        def normalize_git_root(value):
+            if isinstance(value, list):
+                return [normalize_git_root(row) for row in value]
+            if not isinstance(value, dict):
+                return value
+            result = {key: normalize_git_root(item) for key, item in value.items()}
+            if "gitPath" in result and "absolutePath" in result:
+                result["absolutePath"] = "$GIT_ROOT/" + result["gitPath"]
+            return result
+
+        digest = hashlib.sha256(MODULE.canonical_json(normalize_git_root(original)).encode()).hexdigest()
+        self.assertEqual(digest, "5863ff4fe1bce2368ef40be648ca003d83eea5271a0cf5a7d9c89667a7156790")
+        self.assertTrue(all(row["sourceKind"] == "infinity-strash-dai-vfx-composite-review" for row in rows[325:]))
+
+    def test_dai_composites_are_visual_only_sha_pinned_and_unbound(self):
+        rows = [row for row in self.contract["visualCandidates"] if row["sourceKind"] == "infinity-strash-dai-vfx-composite-review"]
+        self.assertEqual(len(rows), 6)
+        self.assertTrue(all(row["ownerDecision"] == "pending" for row in rows))
+        self.assertTrue(all(row["approvedBindings"] == [] for row in rows))
+        self.assertTrue(all(row["eventCandidates"] == [] for row in rows))
+        self.assertTrue(all(row["runtimeMutationAllowed"] is False for row in rows))
+        self.assertTrue(all(row["runtimeSelectable"] is False and row["runtimeBindingChanged"] is False for row in rows))
+        self.assertTrue(all(len(row["previewFiles"]) == 3 for row in rows))
+        self.assertEqual(sum(len(row["previewFiles"]) for row in rows), 18)
 
     def test_audio_queue_counts_are_unchanged_by_visual_review_addition(self):
         summary = self.contract["summary"]
