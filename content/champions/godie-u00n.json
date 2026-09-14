@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+  "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -332,6 +332,23 @@
         "reference": "300heroes:6831f37192755a6d7bcce1f8",
         "tier": "300heroes"
       }
+    },
+    {
+      "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+      "label": "原上線模型（貼圖 256 正規化）",
+      "sourceModelKey": "imported.luffe",
+      "modelSha256": "033f4ea09a8f6e353a7a012bb41b5d37961c3ce7658affda0fcb08928cfffa86",
+      "binarySha256": "042e582a6e25415c0c5b5e3dce3581749e327b22aa874f078dad7cacefaef56f",
+      "registeredAt": "2026-09-14T22:47:01.306Z",
+      "source": {
+        "kind": "exact",
+        "character": "草帽小子 - 蒙其.D.魯夫",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.luffe.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
     }
   ],
   "modelSelectionMode": "manual"

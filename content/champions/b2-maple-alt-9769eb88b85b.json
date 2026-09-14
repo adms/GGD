@@ -411,7 +411,7 @@
     "mr": 5.279591836734694
   },
   "id": "b2-maple-alt-9769eb88b85b",
-  "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+  "modelKey": "version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3",
   "name": "梅普露（變身）",
   "origin": "坦克",
   "passiveAbility": "b2-maple.passive",
@@ -430,5 +430,41 @@
     "counterpartId": "b2-maple",
     "role": "alternate"
   },
-  "icon": "assets/icons/champions/b2-maple-alt-9769eb88b85b.webp"
+  "icon": "assets/icons/champions/b2-maple-alt-9769eb88b85b.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.80ec4ead881a6b217daeec8cd777baef4500e5095392a70d",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "modelSha256": "73cca000d2733560cc32bda4af1dd89ee6805a5cd144a874e87b0b4a036528bd",
+      "binarySha256": "0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607",
+      "registeredAt": "2026-09-14T22:47:00.419Z",
+      "source": {
+        "kind": "previous",
+        "character": "梅普露（變身）",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3",
+      "label": "原上線模型（貼圖 256 正規化）",
+      "sourceModelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
+      "modelSha256": "e93d8e4f0a0e23e6248ededf0ea1bb8f1f24eab298fd228db08311906e067ee7",
+      "binarySha256": "49ff3a50b773ffa837913ff512cd4fa008c8863c5f93b38b292116b041ee5a46",
+      "registeredAt": "2026-09-14T22:47:00.427Z",
+      "source": {
+        "kind": "exact",
+        "character": "梅普露（變身）",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea.json",
+        "tier": "original"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

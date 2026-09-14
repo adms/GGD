@@ -26,7 +26,7 @@
   "independentComponents": 0,
   "modelCompletelyMissing": 0
  },
- "digest": "25f725e2d4d248234b96bffb3771edd46c1cf7e3ddfd2fb4b08de1995df5fd27",
+ "digest": "e22fb25e81f1a8574be315135de75ec6e701868da3796e1543a5713dcb2618bf",
  "heroes": [
   {
    "id": "b2-aladdin",
@@ -1005,9 +1005,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
-    "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
-    "bytes": 920828,
+    "modelKey": "version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3",
+    "glbPath": "assets/models/community/versions/49ff3a50b773ffa837913ff512cd4fa008c8863c5f93b38b292116b041ee5a46.glb",
+    "bytes": 621412,
     "clipMap": {
      "idle": "bat_idle",
      "run": "single_run",
@@ -5242,9 +5242,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "imported.lubu",
-    "glbPath": "assets/models/imported/lubu.glb",
-    "bytes": 579920,
+    "modelKey": "version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574",
+    "glbPath": "assets/models/imported/versions/bd61796f8fd7512fc674cb6f27958e21cbe65c6ebb7e49f4a27fc41db6de8ff1.glb",
+    "bytes": 398284,
     "clipMap": {
      "idle": "Stand",
      "run": "Walk",
@@ -5929,9 +5929,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "imported.herobuu",
-    "glbPath": "assets/models/imported/herobuu.glb",
-    "bytes": 228584,
+    "modelKey": "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe",
+    "glbPath": "assets/models/imported/versions/6d1911e02127d385eeb87620fd79ddea42e918b95e870220ff6cda21b2aba41e.glb",
+    "bytes": 188804,
     "clipMap": {
      "idle": "Stand",
      "run": "Walk",
@@ -6089,9 +6089,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
-    "glbPath": "assets/models/ou99/versions/fba8d82b18a88930248d5d593191d685f23f919d1b59e7760826685feb844310.glb",
-    "bytes": 2839180,
+    "modelKey": "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b",
+    "glbPath": "assets/models/ou99/versions/becaad1c7979cdf85a472cd61fe33b487c76f458001b49969b24c44fd4a0a3d8.glb",
+    "bytes": 2252104,
     "clipMap": {
      "idle": "Stand",
      "run": "Walk",
@@ -7291,9 +7291,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
-    "glbPath": "assets/models/imported/versions/42995b064505d5d69ac3725e54a6ddb7256d16b9a3450460bd627ed4b294e532.glb",
-    "bytes": 314236,
+    "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+    "glbPath": "assets/models/imported/versions/042e582a6e25415c0c5b5e3dce3581749e327b22aa874f078dad7cacefaef56f.glb",
+    "bytes": 260860,
     "clipMap": {
      "idle": "Stand",
      "run": "Walk",
@@ -7353,9 +7353,9 @@
    "deliveryIdentityIds": [],
    "model": {
     "ok": true,
-    "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
-    "glbPath": "assets/models/imported/versions/42995b064505d5d69ac3725e54a6ddb7256d16b9a3450460bd627ed4b294e532.glb",
-    "bytes": 314236,
+    "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+    "glbPath": "assets/models/imported/versions/042e582a6e25415c0c5b5e3dce3581749e327b22aa874f078dad7cacefaef56f.glb",
+    "bytes": 260860,
     "clipMap": {
      "idle": "Stand",
      "run": "Walk",

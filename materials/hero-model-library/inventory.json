@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T00:32:46+08:00",
-  "inputsSha256": "874fdd02bebf61d09d0f73b58ec89016ada528b8f3052eeb47539ea9301fc479",
+  "generatedAt": "2026-09-15T06:49:31+08:00",
+  "inputsSha256": "2eb9de97d8af907af2eebd44692ec58bb981e7173a263f12e4938a1163c19905",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -11380,6 +11380,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -11397,6 +11398,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -11452,6 +11454,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "w3x",
           "asset": {
@@ -11463,8 +11466,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "imported.lubu",
-        "mode": "auto"
+        "modelKey": "version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-079"
@@ -37113,6 +37116,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -37130,6 +37134,7 @@
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
         "selectionClass": "w3x",
         "asset": {
@@ -37159,6 +37164,7 @@
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
           "selectionClass": "w3x",
           "asset": {
@@ -37170,8 +37176,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "imported.herobuu",
-        "mode": "auto"
+        "modelKey": "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
@@ -41916,8 +41922,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
-        "mode": "auto"
+        "modelKey": "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b",
+        "mode": "automatic"
       },
       "downloadSources": [
         "owner-model-086"
@@ -50161,7 +50167,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+        "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
         "mode": "manual"
       },
       "downloadSources": [
@@ -50282,7 +50288,7 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "version.body.5c472ca70369050fa42ba784d7bbcaaa0dd5b23e00cdb047",
+        "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
         "mode": "manual"
       },
       "downloadSources": [
@@ -115413,12 +115419,13 @@
         "id": "300heroes:272",
         "name": "梅普露",
         "work": "怕痛的我，把防禦力點滿就對了",
-        "tier": "300heroes",
+        "tier": "original",
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
-        "selectionClass": "300heroes",
+        "selectionClass": "original",
         "asset": {
           "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
           "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
@@ -115438,12 +115445,13 @@
         "id": "300heroes:272",
         "name": "梅普露",
         "work": "怕痛的我，把防禦力點滿就對了",
-        "tier": "300heroes",
+        "tier": "original",
         "kind": "previous",
         "ready": true,
         "old": true,
+        "library": "GGD",
         "defaultEligible": true,
-        "selectionClass": "300heroes",
+        "selectionClass": "original",
         "asset": {
           "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
           "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
@@ -115475,12 +115483,13 @@
           "id": "300heroes:272",
           "name": "梅普露",
           "work": "怕痛的我，把防禦力點滿就對了",
-          "tier": "300heroes",
+          "tier": "original",
           "kind": "previous",
           "ready": true,
           "old": true,
+          "library": "GGD",
           "defaultEligible": true,
-          "selectionClass": "300heroes",
+          "selectionClass": "original",
           "asset": {
             "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
             "glbPath": "assets/models/community/0bd00398532b23d9fdc880163eca769eb13edbcc4310143199b6e00d1b6a3607.glb",
@@ -115498,8 +115507,8 @@
       ],
       "pending": [],
       "checkoutSelection": {
-        "modelKey": "community.body.449bf321cc6e46244be6517d6e2cf1e67b9c1c9ef3038aea",
-        "mode": "auto"
+        "modelKey": "version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3",
+        "mode": "automatic"
       },
       "downloadSources": [],
       "publicCandidates": [],
