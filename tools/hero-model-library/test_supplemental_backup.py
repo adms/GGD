@@ -144,6 +144,15 @@ class SupplementalBackup(unittest.TestCase):
         self.run_record()
         self.assertEqual(self.catalogs(), before)
 
+    def test_unlinked_backup_can_be_attached_to_its_source_later(self):
+        self.run_record(linked=False)
+        self.run_record(linked=True)
+        downloads, index = self.decoded()
+        attached = [row for row in index['sources'] if row['id'] == 'conversion-source']
+        self.assertEqual(len(attached), 1)
+        self.assertEqual(attached[0]['sourceId'], 'original-source')
+        self.assertEqual(downloads['publicSources'][0]['supplementalDeliveries'][0]['sourceId'], 'original-source')
+
     def test_pending_then_verified_promotes_only_the_matching_snapshot(self):
         path = self.base / 'public-source-files.json'
         data = json.loads(path.read_text())

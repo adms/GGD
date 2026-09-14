@@ -169,12 +169,17 @@ def main(argv=None, repo=None):
         receiptPath=str(args.receipt.resolve()), receiptSha256=sha(args.receipt),
         manifestSha256=sha(manifest_path), s3Use='backup-only-not-runtime-entry')
     same_id = [row for row in index['sources'] if row['id'] == entry['id']]
-    if any((row.get('resourceRole'), row.get('sourceId'), row.get('s3Use')) !=
-           (entry['resourceRole'], entry['sourceId'], entry['s3Use']) for row in same_id):
+    if any((row.get('resourceRole'), row.get('sourceId'), row.get('s3Use')) not in (
+           (entry['resourceRole'], entry['sourceId'], entry['s3Use']),
+           (entry['resourceRole'], None, entry['s3Use'])) for row in same_id):
         raise ValueError('Supplemental ID would shadow a different original source or backup role')
     prior = [row for row in index['sources'] if (row['id'], row['sha256']) == (entry['id'], entry['sha256'])]
     if prior and prior != [entry]:
-        raise ValueError('Different supplemental record already exists')
+        unlinked = dict(entry, sourceId=None)
+        if args.source_id and prior == [unlinked]:
+            prior[0]['sourceId'] = args.source_id
+        else:
+            raise ValueError('Different supplemental record already exists')
     if not prior:
         index['sources'].append(entry)
     if 'pendingUploads' in index:

@@ -32,6 +32,8 @@ PUBLIC = REPO / "apps/client/public"
 TEXTURE_UMODEL = LIBRARY / "tools/UEViewer/specific-infinity-strash-macos-v1-texture-export-fix/umodel"
 MESH_UMODEL = LIBRARY / "tools/UEViewer/specific-infinity-strash-macos-v2-staticmesh-export/umodel"
 ASSIMP = Path("/usr/local/bin/assimp")
+DOWNLOADS = REPO / "materials/hero-model-library/download-sources.json"
+SOURCE_ID = "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328"
 
 
 def sha256(path: Path) -> str:
@@ -55,6 +57,28 @@ def verify(item: dict) -> Path:
     if not path.is_file() or path.stat().st_size != item["bytes"] or sha256(path) != item["sha256"]:
         raise ValueError(f"byte drift: {path}")
     return path
+
+
+def current_s3_state() -> dict:
+    if not DOWNLOADS.is_file():
+        return {"rawAndConversionBackup": "pending"}
+    catalog = json.loads(DOWNLOADS.read_text())
+    matches = [row for row in catalog.get("publicSources", []) if row.get("id") == SOURCE_ID]
+    if len(matches) != 1:
+        return {"rawAndConversionBackup": "pending"}
+    source = matches[0]
+    deliveries = source.get("supplementalDeliveries", [])
+    by_id = {row.get("id"): row for row in deliveries}
+    required = ["infinity-strash-dai-vfx-components-v1-source-backup", "infinity-strash-dai-vfx-components-v1-conversion-backup"]
+    if any(not all(by_id.get(backup_id, {}).get(key) is True for key in
+                   ("fullReadbackVerified", "s3ReadbackVerified", "localPreserved")) for backup_id in required):
+        return {"rawAndConversionBackup": "pending"}
+    return {
+        "rawAndConversionBackup": "s3-full-readback-and-member-sha256-verified",
+        "source": {key: by_id[required[0]][key] for key in ("s3Uri", "manifestUri", "bytes", "sha256", "fileCount")},
+        "conversion": {key: by_id[required[1]][key] for key in ("s3Uri", "manifestUri", "bytes", "sha256", "fileCount")},
+        "s3Use": "backup-only-not-runtime-entry",
+    }
 
 
 def glb_metrics(path: Path) -> dict:
@@ -316,7 +340,7 @@ def build(args: argparse.Namespace) -> dict:
     }
     report = {
         "schema": "ggd.infinity-strash-dai-vfx-component-candidates@1",
-        "sourceId": "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328",
+        "sourceId": SOURCE_ID,
         "character": {"nativeId": "PN010", "heroIds": ["godie-nbbc", "godie-n01c"], "nameZh": "小呆／達伊", "form": "PN010 source family; skill/form binding pending"},
         "inputs": {"closure": pin(closure_path), "textureUmodel": pin(args.texture_umodel), "meshUmodel": pin(args.mesh_umodel), "assimp": pin(args.assimp), "generator": pin(Path(__file__), REPO)},
         "conversionParameters": {"texture": {"format": "PNG RGBA", "maxEdge": args.max_texture_edge, "maxEdgeSource": "live vfx-model gate supplied by build.mts", "resample": "Pillow LANCZOS", "pillowVersion": PILLOW_VERSION}, "mesh": {"source": "patched UModel glTF", "container": "Assimp glb2"}},
@@ -325,10 +349,12 @@ def build(args: argparse.Namespace) -> dict:
         "textureComponents": textures,
         "meshComponents": mesh_rows,
         "states": {"sourceClosureComplete": True, "supportComponentsConverted": True, "niagaraTimingRecovered": False, "ggdVfxBuilt": False, "visualAcceptance": "pending-owner-review-of-static-components", "skillBindingsCreated": 0, "runtimeSelectable": False, "deployed": False},
-        "s3": {"rawAndConversionBackup": "pending"},
+        "s3": current_s3_state(),
         "blockers": ["Cooked Niagara emitter execution order, burst/spawn timing, lifetime and curve semantics are not decoded.", "Material dynamic parameters and renderer bindings are not reconstructed.", "The six source-native names identify PN010 skill families but do not prove a GGD ability-slot mapping."],
         "claim": "PNG and GLB rows are byte-pinned support-component candidates only. They are not complete VFX and have no skill/runtime binding.",
-        "createdAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "createdAt": (json.loads((EVIDENCE / "candidates.json").read_text()).get("createdAt")
+                      if (EVIDENCE / "candidates.json").is_file()
+                      else datetime.datetime.now(datetime.timezone.utc).isoformat()),
     }
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     report_path = EVIDENCE / "candidates.json"
