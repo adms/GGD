@@ -9,12 +9,12 @@
   "inputs": {
     "contentModels": {
       "path": "content/models/*.json",
-      "sha256": "e2ba70e1545f1577f51e4ce1610f98b24899009dddbab3f11ba888d31846c89e",
-      "fileCount": 1009
+      "sha256": "f2ee7470c560eb3a6dd8970f3ad018e9fb27ca49c7335f61a794168afe6ff8a8",
+      "fileCount": 1017
     },
     "contentChampions": {
       "path": "content/champions/*.json",
-      "sha256": "f10448aa4655a652fb31120aaf803a4b1d7a33106e059d1b9c1d8bcb805f25ed",
+      "sha256": "4cc7fb966e5e9f17e41291112b404d88726c1e2a7759ef09a47023a5848a5f49",
       "fileCount": 154
     },
     "heroForgeOptions": {
@@ -23,18 +23,18 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "22bf319bce6faaa4069badfdb05f969159f64339048270324be86e2c2e2deac8"
+      "sha256": "b18d66aa0c8830a1c1b9280888d4fa43c847cbd1135b30f972288605bfb7fd6f"
     }
   },
   "summary": {
-    "modelAt1Documents": 1004,
+    "modelAt1Documents": 1012,
     "championDocuments": 153,
-    "championPrimaryAndVersionSelectableModelKeys": 510,
-    "championModelVersionRows": 563,
-    "sourceModelsRepresentedByFrozenVersions": 198,
+    "championPrimaryAndVersionSelectableModelKeys": 515,
+    "championModelVersionRows": 572,
+    "sourceModelsRepresentedByFrozenVersions": 200,
     "heroForgeHeroesWithOptions": 34,
     "heroForgeSelectableModelKeys": 42,
-    "allActualSelectableModelKeys": 544,
+    "allActualSelectableModelKeys": 550,
     "centralSourceRows": 156,
     "centralUniqueModelKeys": 149,
     "centralRowsWithQualificationEvidence": 141,
@@ -49,7 +49,7 @@
     "orphanFrozenVersionDocuments": 67,
     "explicitUnusedPropDocuments": 4,
     "unclassifiedOrNonHeroModelDocuments": 184,
-    "modelDocumentsWithoutResourceRole": 1004,
+    "modelDocumentsWithoutResourceRole": 1012,
     "registrationReferencesMissingModelDocument": 0
   },
   "centralUnregisteredQualifiedModels": [
@@ -4900,7 +4900,7 @@
         "windowsGameSourceDocument",
         "windowsGameSourceInventory"
       ],
-      "modelAt1DocumentsWithoutResourceRole": 1004
+      "modelAt1DocumentsWithoutResourceRole": 1012
     },
     "requiredSourceFix": "Add an authoritative resourceRole/assetKinds plus acquisition and validation state for VFX and prop components to the central generated index; then regenerate this audit."
   },

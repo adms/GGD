@@ -42,13 +42,15 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", 
  * ⛔ 這張名單**只能變長**。少掉任何一個都代表有人拿走了一個 owner 的開關。
  * ⭐ `b2-keyaru` 與 `b2-aladdin` 已透過 `ModelVersions.prepare({action:"register"})` 補回，
  *   並納入這份棘輪名單。
+ * ⭐ 2026-09-15：`b2-maple-alt-9769eb88b85b`、`godie-h01u`、`godie-huth` 因貼圖 256 正規化
+ *   （`tools/model-fix/register-texture-256.mts`）第一次有了版本 ⇒ 原上線模型自動保存成可切回的一列，加入名單。
  */
 const HAS_ROLLBACK: readonly string[] = [
   "b2-aladdin", "b2-albus", "b2-bojji", "b2-boxxo",
   "b2-elma", "b2-fushi", "b2-goblin", "b2-guts",
   "b2-haga", "b2-kaede", "b2-kaiji", "b2-keyaru",
   "b2-kisaragi", "b2-klaus", "b2-kumoko", "b2-luckyman",
-  "b2-makoto", "b2-maomao", "b2-maple", "b2-matthias",
+  "b2-makoto", "b2-maomao", "b2-maple", "b2-maple-alt-9769eb88b85b", "b2-matthias",
   "b2-misery", "b2-naofumi", "b2-ned", "b2-noor",
   "b2-nube", "b2-orphen", "b2-popp", "b2-rem",
   "b2-rin", "b2-shadow", "b2-shinchan", "b2-sinbad",
@@ -64,8 +66,8 @@ const HAS_ROLLBACK: readonly string[] = [
   "community-review-32-20260907", "community-review-33-20260907", "community-review-34-20260907", "community-review-35-20260907",
   "community-review-36-20260907", "community-review-37-20260907", "godie-e002", "godie-e008",
   "godie-e00l", "godie-e00s", "godie-e010", "godie-edem",
-  "godie-efur", "godie-h01n", "godie-h01o", "godie-h020",
-  "godie-hapm", "godie-hjai", "godie-hvsh", "godie-n003",
+  "godie-efur", "godie-h01n", "godie-h01o", "godie-h01u", "godie-h020",
+  "godie-hapm", "godie-hjai", "godie-huth", "godie-hvsh", "godie-n003",
   "godie-n00b", "godie-nbbc", "godie-o030", "godie-ogld", "godie-orkn",
   "godie-osam", "godie-u00k", "godie-u00n", "godie-u00o",
   "godie-u01u", "godie-ubal", "godie-udea", "godie-udre",

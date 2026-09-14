@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "d29c2e0f773b",
+  "hash": "6ab6e5735d66",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -2919,6 +2919,12 @@
       "size": 589
     },
     {
+      "id": "version.body.15b9251641e4e58615f86a092f00f34d17f6dcbd015ff28c",
+      "path": "models/version.body.15b9251641e4e58615f86a092f00f34d17f6dcbd015ff28c.json",
+      "hash": "cbe0e06869a8",
+      "size": 1304
+    },
+    {
       "id": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
       "path": "models/version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826.json",
       "hash": "3dbc7251c499",
@@ -3387,6 +3393,12 @@
       "size": 636
     },
     {
+      "id": "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b",
+      "path": "models/version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b.json",
+      "hash": "ab3cdf3c0dc1",
+      "size": 534
+    },
+    {
       "id": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
       "path": "models/version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881.json",
       "hash": "78859bbd397c",
@@ -3831,6 +3843,12 @@
       "size": 611
     },
     {
+      "id": "version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574",
+      "path": "models/version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574.json",
+      "hash": "05d33bf34132",
+      "size": 1305
+    },
+    {
       "id": "version.body.656e3f92200ed4f935ce9a93cba9a1d7995ee51bdd61d0c1",
       "path": "models/version.body.656e3f92200ed4f935ce9a93cba9a1d7995ee51bdd61d0c1.json",
       "hash": "211e17fe84e3",
@@ -4191,6 +4209,12 @@
       "size": 612
     },
     {
+      "id": "version.body.80ec4ead881a6b217daeec8cd777baef4500e5095392a70d",
+      "path": "models/version.body.80ec4ead881a6b217daeec8cd777baef4500e5095392a70d.json",
+      "hash": "73cca000d273",
+      "size": 611
+    },
+    {
       "id": "version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3",
       "path": "models/version.body.816abee9c87fd7c889ee330cbcd247ea1c424f4b96d651a3.json",
       "hash": "b699fba95c85",
@@ -4308,6 +4332,12 @@
       "id": "version.body.898fdcfd172ad004c486fd263a0e9598b740d1dc5af543a7",
       "path": "models/version.body.898fdcfd172ad004c486fd263a0e9598b740d1dc5af543a7.json",
       "hash": "60025ba802ce",
+      "size": 1245
+    },
+    {
+      "id": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+      "path": "models/version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246.json",
+      "hash": "033f4ea09a8f",
       "size": 1245
     },
     {
@@ -4591,6 +4621,12 @@
       "path": "models/version.body.99efcd308140f52bf02376b66f04713065a5939f4fdc5bf9.json",
       "hash": "b8fcd7cdbef3",
       "size": 564
+    },
+    {
+      "id": "version.body.9a69c9c0350229bf4e9d41868bb6deae5ddbd50170586859",
+      "path": "models/version.body.9a69c9c0350229bf4e9d41868bb6deae5ddbd50170586859.json",
+      "hash": "99b246f9a4b7",
+      "size": 1251
     },
     {
       "id": "version.body.9b0127aa10fd9e70d9e92c8151cf30ef2bafb3afdd61bcdf",
@@ -5361,6 +5397,12 @@
       "size": 578
     },
     {
+      "id": "version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3",
+      "path": "models/version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3.json",
+      "hash": "e93d8e4f0a0e",
+      "size": 612
+    },
+    {
       "id": "version.body.d2cb9fb11dd900c39c141bd5a9391fd9e34e336ec19ea4ab",
       "path": "models/version.body.d2cb9fb11dd900c39c141bd5a9391fd9e34e336ec19ea4ab.json",
       "hash": "524ca0cd662d",
@@ -5677,6 +5719,12 @@
       "path": "models/version.body.ec60a738f60e4f2d93ed019dd30d4e8e7cb2a704060c710b.json",
       "hash": "9f2d1462edb5",
       "size": 612
+    },
+    {
+      "id": "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe",
+      "path": "models/version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe.json",
+      "hash": "09f0d0655241",
+      "size": 1252
     },
     {
       "id": "version.body.ecc9abd74c958bee63f23c24281582dfda9019f15483caf6",
