@@ -13,7 +13,9 @@ class MbaUnusedModelPilotTest(unittest.TestCase):
         self.assertEqual(self.report["summary"]["componentsRejected"],1)
         downloads=json.loads((ROOT/"materials/hero-model-library/download-sources.json").read_text())
         source=next(row for row in downloads["publicSources"] if row["id"]==self.report["sourceId"])
-        self.assertEqual(len(source["componentCandidates"]),4)
+        candidate_ids={row["id"] for row in source["componentCandidates"]}
+        self.assertTrue({row["id"] for row in self.report["candidates"]}.issubset(candidate_ids))
+        self.assertEqual(len(candidate_ids),len(source["componentCandidates"]))
         for row in self.report["candidates"]:
             path=ROOT/row["gitPath"]
             self.assertEqual((path.stat().st_size,hashlib.sha256(path.read_bytes()).hexdigest()),(row["bytes"],row["sha256"]))

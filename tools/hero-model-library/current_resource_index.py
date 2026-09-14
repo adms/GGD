@@ -207,6 +207,13 @@ def build(git_link_root=ROOT):
         or mba_pilot.get('summary',{}).get('runtimeSelectable')!=0
         or mba_pilot.get('summary',{}).get('defaultsChanged')!=0):
         raise ValueError('MBA unused model pilot is absent or overclaims readiness')
+    mba_batch2_path=base/'priority-evidence/mba-unused-model-batch2-v1/report.json'
+    mba_batch2=read(mba_batch2_path)
+    if (mba_batch2.get('schema')!='ggd-mba-unused-model-batch2@1'
+        or mba_batch2.get('summary',{}).get('componentsAccepted')!=4
+        or mba_batch2.get('summary',{}).get('runtimeSelectable')!=0
+        or mba_batch2.get('summary',{}).get('defaultsChanged')!=0):
+        raise ValueError('MBA unused model batch 2 is absent or overclaims readiness')
     community_unused_path=base/'source-inventories/community-unused-assets-v1/inventory.json'
     community_unused_doc_path=base/'source-inventories/community-unused-assets-v1/README.md'
     community_unused_receipt_path=base/'source-inventories/community-unused-assets-v1/local-verification.json'
@@ -805,6 +812,17 @@ def build(git_link_root=ROOT):
             rejected=[{'sourceCharacterId':row['sourceCharacterId'],'nameZh':row['nameZh'],'status':row['status'],'reason':row['reason'],'evidence':row['evidence']} for row in mba_pilot['rejected']],
             runtimeSelectable=False,
             productionDeploymentVerified=False),
+        mbaUnusedModelBatch2=dict(
+            gitPath=str(mba_batch2_path.relative_to(ROOT)),
+            sha256=hashlib.sha256(mba_batch2_path.read_bytes()).hexdigest(),
+            documentGitPath=str(mba_batch2_path.with_name('README.md').relative_to(ROOT)),
+            documentSha256=hashlib.sha256(mba_batch2_path.with_name('README.md').read_bytes()).hexdigest(),
+            status=mba_batch2['status'],
+            summary=mba_batch2['summary'],
+            candidates=[{key:row[key] for key in ('id','sourceId','sourceCharacterId','nameZh','workZh','gitPath','bytes','sha256','readiness','runtimeSelectable','runtimeDropdownRegistered','defaultEligible')} for row in mba_batch2['candidates']],
+            conversionStageBackup=mba_batch2.get('conversionStageBackup'),
+            runtimeSelectable=False,
+            productionDeploymentVerified=False),
         communityUnusedAssetIndex=dict(
             gitPath=str(community_unused_path.relative_to(ROOT)),
             sha256=hashlib.sha256(community_unused_path.read_bytes()).hexdigest(),
@@ -1224,6 +1242,15 @@ def main():
                     'sha256': result['mbaUnusedModelPilot']['documentSha256'],
                 },
                 *result['mbaUnusedModelPilot']['candidates'],
+                {
+                    'gitPath': result['mbaUnusedModelBatch2']['gitPath'],
+                    'sha256': result['mbaUnusedModelBatch2']['sha256'],
+                },
+                {
+                    'gitPath': result['mbaUnusedModelBatch2']['documentGitPath'],
+                    'sha256': result['mbaUnusedModelBatch2']['documentSha256'],
+                },
+                *result['mbaUnusedModelBatch2']['candidates'],
                 {
                     'gitPath': result['communityUnusedAssetIndex']['gitPath'],
                     'sha256': result['communityUnusedAssetIndex']['sha256'],

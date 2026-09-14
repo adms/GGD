@@ -1,0 +1,18 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/mba-unused-model-batch2-v1/a0ede46190867cf00503fcf6f5fa8500e900fa8708da6ae5a2a566e18da0917d.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/mba-unused-model-batch2-v1/a0ede46190867cf00503fcf6f5fa8500e900fa8708da6ae5a2a566e18da0917d.files.json",
+  "archiveSha256": "a0ede46190867cf00503fcf6f5fa8500e900fa8708da6ae5a2a566e18da0917d",
+  "archiveBytes": 25131785,
+  "fileCount": 85,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-mba-unused-model-batch2/materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/s3-backup-receipt.json/7c92b818fb75bacdbdc23175b2b1ce168a5cda5529abefd8a4fdea4f5a09e7e0/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-mba-unused-model-batch2/materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/s3-backup-receipt.json/7c92b818fb75bacdbdc23175b2b1ce168a5cda5529abefd8a4fdea4f5a09e7e0/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-mba-unused-model-batch2/materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/s3-backup-receipt.json/7c92b818fb75bacdbdc23175b2b1ce168a5cda5529abefd8a4fdea4f5a09e7e0/manifest.json",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "callerArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789403341"
+}

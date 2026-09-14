@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3296057,
-      "sha256": "4db068e82adb4b3fc97aae21bd2daa4b04399a080810da098150e9a0e3bd5ae5"
+      "bytes": 3336844,
+      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,8 +67,8 @@
     }
   },
   "totals": {
-    "audited": 46,
-    "runtimeBudgetPass": 46,
+    "audited": 50,
+    "runtimeBudgetPass": 50,
     "runtimeBudgetNeedsWork": 0,
     "heroAdoptionEligible": 29,
     "requiresDecimatedCandidate": 11
@@ -457,6 +457,202 @@
         "sourceTriangleTriggerAbove": 10000,
         "decimatedCandidateTargetMax": 8000,
         "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-gajet1-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+      "sha256": "4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407",
+      "bytes": 145472,
+      "metrics": {
+        "triangles": 168,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 24,
+        "skins": 1,
+        "joints": 7,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-kukuri-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+      "sha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e",
+      "bytes": 626792,
+      "metrics": {
+        "triangles": 3239,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 81,
+        "skins": 1,
+        "joints": 25,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-naga-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+      "sha256": "25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6",
+      "bytes": 800640,
+      "metrics": {
+        "triangles": 3587,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 108,
+        "skins": 1,
+        "joints": 33,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-nowel-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+      "sha256": "e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac",
+      "bytes": 642648,
+      "metrics": {
+        "triangles": 3180,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 105,
+        "skins": 1,
+        "joints": 34,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
         "eligible": false
       },
       "catalogSemantics": {
