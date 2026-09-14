@@ -2,6 +2,7 @@ import { afterEach, expect, it } from "vitest";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
+import { execFileSync } from "node:child_process";
 import { rebuildAllIndexes } from "@ggd/shared/content/node";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
 import { heroImportHeaders, HERO_IMPORT_PREFIX } from "@ggd/shared/content/node/heroImportAuth";
@@ -23,17 +24,20 @@ function fixture() {
     const a={...hero.abilities.Q,id:`skill.${slot.toLowerCase()}`,name:slot,slot,effects:[{kind:"damage",damageType:"magic",amount:{flat:20}}],description:"原始技能"}; delete a.icon;delete a.vfxKey;delete a.template;
     hero.abilities[slot]=a;put(`abilities/${a.id}.json`,{...a,schema:"ability@1"});
   }
-  const model={id:"shared-model",schema:"model@1",glbPath:"assets/body.glb",scale:1,collisionRadius:0.6,clipMap:{idle:"Idle",run:"Run",attack:"Attack",cast:"Cast",hurt:"Hurt",death:"Death"}};
+  // ⭐ GH#1178：身體 GLB 是 git 裡「檔名即內容雜湊」的素材 ⇒ 快照只記雜湊，準備實例時要從工作樹換回位元組。
+  const glbPath=`assets/models/${sha256Bytes(new Uint8Array([1,2,3]))}.glb`;
+  const model={id:"shared-model",schema:"model@1",glbPath,scale:1,collisionRadius:0.6,clipMap:{idle:"Idle",run:"Run",attack:"Attack",cast:"Cast",hurt:"Hurt",death:"Death"}};
   put("champions/hero-a.json",hero);put("champions/hero-b.json",{...hero,id:"hero-b",name:"其他英雄"});put("_legacy/champions/archived.json",{...hero,id:"archived"});
-  put("models/shared-model.json",model);put("assets/body.glb",new Uint8Array([1,2,3]));
+  put("models/shared-model.json",model);put(glbPath,new Uint8Array([1,2,3]));
   const arena=JSON.parse(readFileSync(join(repo,"content/config/arena-rules.json"),"utf8"));
   for (const round of Object.values(arena.rounds) as Record<string,unknown>[]) delete round.weaponLootTable;
   // Global arena NPCs must stay in the archive without becoming new playable
   // clones when an unrelated mage is restored.
   const replace=(value:any):any=>typeof value==="string"&&value==="godie-zombiex"?"hero-b":Array.isArray(value)?value.map(replace):value&&typeof value==="object"?Object.fromEntries(Object.entries(value).map(([key,child])=>[key,replace(child)])):value;
   put("config/arena-rules.json",replace(arena));
-  put("assets-manifest.json",{schema:"ggd-assets-manifest@1",entries:[{path:"assets/body.glb",bytes:3,sha256:sha256Bytes(new Uint8Array([1,2,3]))}]});
+  put("assets-manifest.json",{schema:"ggd-assets-manifest@1",entries:[{path:glbPath,bytes:3,sha256:sha256Bytes(new Uint8Array([1,2,3]))}]});
   rebuildAllIndexes(content);
+  for (const args of [["init","-q"],["add","."],["commit","-qm","fixture"]]) execFileSync("git",["-C",root,"-c","user.email=t@example.invalid","-c","user.name=t",...args],{stdio:"pipe"});
   const service=new CatalogOverlayService(content,repo,history,"test");
   const old={generation:1,docs:{"champions/hero-a":{...hero,name:"舊覆蓋名稱",baseStats:{...hero.baseStats,ad:38}}},deleted:{}};
   const now={generation:2,docs:{...old.docs,"champions/hero-a":{...hero,name:"新覆蓋名稱",baseStats:{...hero.baseStats,ad:99}},"models/shared-model":{...model,scale:2}},deleted:{}};

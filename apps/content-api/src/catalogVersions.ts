@@ -3,9 +3,9 @@ import { resolve, sep } from "node:path";
 import { COLLECTION_NAMES } from "@ggd/shared/content/schema/index";
 import { referencedAssetPaths } from "@ggd/shared/content/assetReferences";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
-import { sha256Bytes } from "@ggd/shared/content/sha256";
 import { ImportStore } from "./importStore";
 import { readCatalogGeneratorSources, type CatalogSourceArchive } from "./catalogGeneratorSources";
+import { addressedAssetScanner, catalogSnapshotMode, sha256Hex, type AddressedAssetFact, type CatalogSnapshotMode } from "./catalogAddressedAssets";
 
 export const HERO_CATALOG_WORK_ID = "ggd-existing-hero-catalog";
 
@@ -28,6 +28,9 @@ export const HERO_CATALOG_WORK_ID = "ggd-existing-hero-catalog";
  * 而 `add()` 是按**路徑**擋重複、⛔ 不是按內容 ⇒ 同一份位元組被算兩次。
  * 2026-09-10 量到已經有 13.1 MiB 這種重複，41 顆模型全部版本化會變成約 66 MiB。
  * ⇒ 下一步應該是**讀取時按 sha256 去重**，那會讓這個上限退回成單純的安全閥。
+ *
+ * ⚠️ 2026-09-15（GH#1178）：去重做完之後 PR #1152 仍把去重位元組撐到 851.3 MiB ⇒ 每次存檔 503。
+ * ⇒ git 裡「檔名即內容雜湊」的素材改成**只記雜湊**（`catalogAddressedAssets.ts`），⛔ 這個數字不動。
  */
 const CATALOG_BYTE_CAP = 512 * 1024 * 1024;
 
@@ -47,6 +50,8 @@ export interface CatalogCaptureOptions {
   /** Immutable assets previously instantiated by this server, outside the
    * read-only shipped tree. Never a caller-controlled URL. */
   readArchivedAsset?: (path: string) => Uint8Array | null;
+  /** 預設讀 `GGD_CATALOG_SNAPSHOT_MODE`（見 `catalogAddressedAssets.ts`）。 */
+  snapshotMode?: CatalogSnapshotMode;
 }
 
 export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) {
@@ -56,6 +61,9 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
   const directories = new Map<string, string>();
   const missing: string[] = [], staleAssets: string[] = [];
   const heroes: { id: string; name: string; path: string; catalog: "shipping" | "legacy" | "overlay" }[] = [];
+  // ⭐ GH#1178：git 裡檔名即內容雜湊的大型素材只記雜湊（判準與快取在 catalogAddressedAssets.ts）。
+  const scanner = addressedAssetScanner(root, input.snapshotMode ?? catalogSnapshotMode());
+  const addressed = new Map<string, AddressedAssetFact>();
   let bytes = 0;
   /**
    * ⭐ 同一份**位元組**只算一次、只存一份 —— 判準是**內容雜湊**，⛔ 不是路徑。
@@ -73,7 +81,7 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
    * 下游（`retainHeroTemplates` / 物件庫寫入）全部是唯讀的，⛔ 沒有人改它。
    * ⚠️ 份數上限（20,000）仍然按**路徑**算 —— 那一格擋的是檔案數，⛔ 不是位元組。
    */
-  const unique = new Map<string, Uint8Array>();
+  const unique = new Map<string, Uint8Array>(), digestOf = new Map<Uint8Array, string>();
   // ⚠️ `digest` 是**已經算過**的內容雜湊 —— ⛔ 不傳就在這裡再算一次。
   //    這一格重要:`read()`(記進 `observed`)、素材清單對帳、以及最後那一輪
   //    防競態重讀,本來就各自雜湊一次;⛔ 去重再算第四次會讓整次快照多一倍時間
@@ -81,14 +89,14 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
   const add = (path: string, data: Uint8Array, digest?: string) => {
     if (!/^[a-zA-Z0-9._/-]+$/.test(path) || path.split("/").some((part) => !part || part === "." || part === "..")) throw new Error("完整版本含不安全路徑。");
     if (files.has(path)) throw new Error(`完整版本檔案重複：${path}`);
-    if (files.size >= 20000) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
-    digest ??= sha256Bytes(data);
+    if (files.size + addressed.size >= 20000) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+    digest ??= sha256Hex(data);
     const shared = unique.get(digest);
     if (shared) { files.set(path, shared); return; }
     bytes += data.byteLength;
     if (bytes > CATALOG_BYTE_CAP) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
     const copy = data.slice();
-    unique.set(digest, copy);
+    unique.set(digest, copy); digestOf.set(copy, digest);
     files.set(path, copy);
   };
   const read = (path: string): Uint8Array => {
@@ -96,7 +104,7 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     if (!file.startsWith(root + sep) || !existsSync(file) || !realpathSync(file).startsWith(root + sep)) throw new Error(`完整版本缺少本機檔案或路徑越界：${path}`);
     if (!statSync(file).isFile() || statSync(file).size > 256 * 1024 * 1024) throw new Error(`完整版本檔案類型或大小不合法：${path}`);
     const data = new Uint8Array(readFileSync(file));
-    observed.set(path, sha256Bytes(data));
+    observed.set(path, sha256Hex(data));
     return data;
   };
   const collect = (data: Uint8Array, path: string, catalog: "shipping" | "legacy" | "overlay", digest?: string) => {
@@ -141,8 +149,18 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     if (!path.startsWith("assets/") || !/^[a-zA-Z0-9._/-]+$/.test(path) || path.split("/").some((part) => !part || part === "." || part === "..")) throw new Error("素材路徑不在內容素材目錄。");
     const archived = !existsSync(resolve(root, path)) ? input.readArchivedAsset?.(path) : null;
     if (input.allowIncomplete && !archived && !existsSync(resolve(root, path))) { missing.push(path); continue; }
-    const data = archived ?? read(path), fact = assetFacts.get(path);
-    const digest = observed.get(path) ?? sha256Bytes(data);
+    const hashed = archived ? null : scanner.fact(path), fact = assetFacts.get(path);
+    if (hashed) {
+      if (fact && (hashed.bytes !== fact.bytes || hashed.sha256 !== `sha256:${fact.sha256}`)) {
+        if (!input.allowIncomplete) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
+        staleAssets.push(path);
+      }
+      if (files.size + addressed.size >= 20000) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+      addressed.set(path, hashed);
+      continue;
+    }
+    const data = archived ?? read(path);
+    const digest = observed.get(path) ?? sha256Hex(data);
     if (fact && (data.byteLength !== fact.bytes || digest !== fact.sha256)) {
       if (!input.allowIncomplete) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
       staleAssets.push(path);
@@ -156,7 +174,9 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     sources.verify();
   }
   // Check both inputs and output data after the complete archive has been read.
-  for (const [path, digest] of observed) if (sha256Bytes(read(path)) !== digest) throw new Error(`保存期間內容已更新，請重新取得版本：${path}`);
+  // `read()` 會把重讀的雜湊寫回 `observed` ⇒ 每份檔只雜湊一次（⛔ 不是讀一次、比對時再算一次）。
+  for (const [path, digest] of [...observed]) { read(path); if (observed.get(path) !== digest) throw new Error(`保存期間內容已更新，請重新取得版本：${path}`); }
+  scanner.verifyUnchanged();
   for (const [dir, names] of directories) if ((existsSync(dir) ? readdirSync(dir).filter((name) => name.endsWith(".json")).sort().join("\n") : "<absent>") !== names) throw new Error("保存期間內容目錄已更新，請重新取得版本。");
   for (const path of missing) if (existsSync(resolve(root, path))) throw new Error(`保存期間缺少的素材已出現，請重新取得版本：${path}`);
   const sourceInfo: {generatorSources?: CatalogSourceArchive; generatorSourcesUnavailable?: string} = sources
@@ -165,8 +185,10 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     schema: "ggd-hero-catalog-version@1", gameRevision: input.gameRevision,
     ...sourceInfo,
     ...(missing.length || staleAssets.length ? { incomplete: { missing, staleAssets } } : {}),
+    // ⭐ 不在 `files` 裡、也不在物件庫裡 —— 只有這份清單；回復時由 `readAddressedAsset` 換回位元組。
+    ...(addressed.size ? { contentAddressedAssets: [...addressed.values()].sort((a, b) => a.path.localeCompare(b.path, "en")) } : {}),
     heroes: heroes.sort((a, b) => a.path.localeCompare(b.path, "en")),
-    files: [...files].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, data]) => ({ path, bytes: data.byteLength, sha256: `sha256:${sha256Bytes(data)}` })),
+    files: [...files].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, data]) => ({ path, bytes: data.byteLength, sha256: `sha256:${digestOf.get(data)}` })),
   };
   const versionId = contentSha256(manifest);
   add("catalog-version.json", new TextEncoder().encode(JSON.stringify(manifest)));

@@ -543,9 +543,12 @@ export class ImportStore {
     try {
       mkdirSync(tempDir, { recursive: true });
       for (const fact of facts) if (!storageRefs[fact.path]) writeDurable(join(tempDir, fact.path), files.get(fact.path)!);
+      // ⭐ GH#1178：每份位元組在這一次呼叫裡**驗一次**就夠 —— 沿用的檔剛剛才在 `getWorkVersion(prior)`
+      //   逐檔讀回比對過（`storageRefs` 只收雜湊與大小都相同的），⛔ 不再讀第二次；新寫的照舊讀回。
+      //   （量到：英雄目錄 349 MiB、只改一份文件的保存，這裡與下面的收尾各多讀一整份。）
       for (const fact of facts) {
-        const origin = storageRefs[fact.path];
-        const bytes = readFileSync(join(origin ? this.workVersionPath(identity.workId, origin) : tempDir, fact.path));
+        if (storageRefs[fact.path]) continue;
+        const bytes = readFileSync(join(tempDir, fact.path));
         if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品物件讀回失敗：${fact.path}`);
       }
       // Commit marker is written last; incomplete temporary trees are invisible.
@@ -557,7 +560,8 @@ export class ImportStore {
         return { record: raced, stored: false };
       }
       fsyncDir(dirname(finalDir));
-      return { record: this.getWorkVersion(identity.workId, versionId)!, stored: true };
+      // 提交之後只重驗紀錄本身（身分／雜湊／路徑）；檔案內容上面已經逐份驗過。讀取端（readWorkFiles）仍逐檔驗。
+      return { record: this.readWorkVersionRecord(identity.workId, versionId)!, stored: true };
     } finally { rmSync(tempDir, { recursive: true, force: true }); }
   }
 
