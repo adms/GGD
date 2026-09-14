@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T05:49:08+08:00",
-  "inputsSha256": "1490d13d006e81b4cb5ebace3f12990457efeedf9d0888ff97be2063a210b538",
+  "generatedAt": "2026-09-15T06:28:09+08:00",
+  "inputsSha256": "d95820335b600a51790aebc6fa120f43a0925f0fdb2d982d938f9103fc6afe2a",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -49069,7 +49069,28 @@
               "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
               "s3Use": "backup-only-not-runtime-entry",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
-              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
+              "decimationAttempts": {
+                "status": "conversion-attempts-archived-no-accepted-candidate",
+                "acceptedCandidate": null,
+                "attemptCount": 6,
+                "reason": "No candidate may be registered: two <=8,000-triangle outputs visibly damage the robe; the topology-safe output remains over policy target.",
+                "evidence": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-decimation-v1/rejected-attempts.json",
+                  "bytes": 3606,
+                  "sha256": "fe7fd13d6d3667d263c74a9fd885b9cde898668a489d3a11f4d6162cc79f155a"
+                },
+                "legacyBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.files.json",
+                  "archiveSha256": "aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e",
+                  "archiveBytes": 12783486,
+                  "fileCount": 33,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true
+                }
+              }
             }
           ],
           "conversionAttempts": [
@@ -54094,7 +54115,28 @@
               "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
               "s3Use": "backup-only-not-runtime-entry",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
-              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
+              "decimationAttempts": {
+                "status": "conversion-attempts-archived-no-accepted-candidate",
+                "acceptedCandidate": null,
+                "attemptCount": 6,
+                "reason": "No candidate may be registered: two <=8,000-triangle outputs visibly damage the robe; the topology-safe output remains over policy target.",
+                "evidence": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-decimation-v1/rejected-attempts.json",
+                  "bytes": 3606,
+                  "sha256": "fe7fd13d6d3667d263c74a9fd885b9cde898668a489d3a11f4d6162cc79f155a"
+                },
+                "legacyBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.files.json",
+                  "archiveSha256": "aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e",
+                  "archiveBytes": 12783486,
+                  "fileCount": 33,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true
+                }
+              }
             }
           ],
           "conversionAttempts": [
@@ -61433,7 +61475,28 @@
               "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
               "s3Use": "backup-only-not-runtime-entry",
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
-              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+              "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
+              "decimationAttempts": {
+                "status": "conversion-attempts-archived-no-accepted-candidate",
+                "acceptedCandidate": null,
+                "attemptCount": 6,
+                "reason": "No candidate may be registered: two <=8,000-triangle outputs visibly damage the robe; the topology-safe output remains over policy target.",
+                "evidence": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-decimation-v1/rejected-attempts.json",
+                  "bytes": 3606,
+                  "sha256": "fe7fd13d6d3667d263c74a9fd885b9cde898668a489d3a11f4d6162cc79f155a"
+                },
+                "legacyBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.files.json",
+                  "archiveSha256": "aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e",
+                  "archiveBytes": 12783486,
+                  "fileCount": 33,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true
+                }
+              }
             }
           ],
           "conversionAttempts": [
@@ -188802,7 +188865,28 @@
             "s3ArchiveMember": "stages/normalized-v3/component-ggd-normalized.glb",
             "s3Use": "backup-only-not-runtime-entry",
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/s3-verified-receipt.json",
-            "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e"
+            "backupReceiptSha256": "c5f3dd889be6d28e44dd3c60ad6495d100b382e9f052d6539425bb8dab8dbd7e",
+            "decimationAttempts": {
+              "status": "conversion-attempts-archived-no-accepted-candidate",
+              "acceptedCandidate": null,
+              "attemptCount": 6,
+              "reason": "No candidate may be registered: two <=8,000-triangle outputs visibly damage the robe; the topology-safe output remains over policy target.",
+              "evidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-decimation-v1/rejected-attempts.json",
+                "bytes": 3606,
+                "sha256": "fe7fd13d6d3667d263c74a9fd885b9cde898668a489d3a11f4d6162cc79f155a"
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/mystvearn-en653-decimation-v1/aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e.files.json",
+                "archiveSha256": "aecdeaa5ceeab4f67865ee7139ce7eee5b6a25cd303219815338f3d508f2112e",
+                "archiveBytes": 12783486,
+                "fileCount": 33,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true
+              }
+            }
           }
         ],
         "conversionAttempts": [
