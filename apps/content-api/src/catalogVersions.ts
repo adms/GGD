@@ -64,6 +64,8 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
   // ⭐ GH#1178：git 裡檔名即內容雜湊的大型素材只記雜湊（判準與快取在 catalogAddressedAssets.ts）。
   const scanner = addressedAssetScanner(root, input.snapshotMode ?? catalogSnapshotMode());
   const addressed = new Map<string, AddressedAssetFact>();
+  // 上限（owner 的 512 MiB）⛔ 不動；撞上時說出**為什麼**變成全量複製（切了 full／讀不到 git）—— 2026-09-15 補，更正 0da79d14a 只在註解寫「預期會擋」。
+  const capError = () => new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。${scanner.capHint()}`);
   let bytes = 0;
   /**
    * ⭐ 同一份**位元組**只算一次、只存一份 —— 判準是**內容雜湊**，⛔ 不是路徑。
@@ -89,12 +91,12 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
   const add = (path: string, data: Uint8Array, digest?: string) => {
     if (!/^[a-zA-Z0-9._/-]+$/.test(path) || path.split("/").some((part) => !part || part === "." || part === "..")) throw new Error("完整版本含不安全路徑。");
     if (files.has(path)) throw new Error(`完整版本檔案重複：${path}`);
-    if (files.size + addressed.size >= 20000) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+    if (files.size + addressed.size >= 20000) throw capError();
     digest ??= sha256Hex(data);
     const shared = unique.get(digest);
     if (shared) { files.set(path, shared); return; }
     bytes += data.byteLength;
-    if (bytes > CATALOG_BYTE_CAP) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+    if (bytes > CATALOG_BYTE_CAP) throw capError();
     const copy = data.slice();
     unique.set(digest, copy); digestOf.set(copy, digest);
     files.set(path, copy);
@@ -155,7 +157,7 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
         if (!input.allowIncomplete) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
         staleAssets.push(path);
       }
-      if (files.size + addressed.size >= 20000) throw new Error(`完整初始版本超過 ${CATALOG_BYTE_CAP / 1024 / 1024} MiB 或 20,000 份檔案，未保存不完整版本。`);
+      if (files.size + addressed.size >= 20000) throw capError();
       addressed.set(path, hashed);
       continue;
     }

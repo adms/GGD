@@ -31,11 +31,13 @@ function fixture() {
   write("champions/addr-hero.json", JSON.stringify(hero));
   write("models/addr-body.json", JSON.stringify({ id: "addr-body", schema: "model@1", glbPath: bodyPath, scale: 1, collisionRadius: 0.6, clipMap: { idle: "Idle", run: "Run", attack: "Attack", cast: "Cast", hurt: "Hurt", death: "Death" } }));
   write(bodyPath, body); write(liar, glb(9)); // ⛔ 檔名是 glb(5) 的雜湊，內容卻是 glb(9)
+  const staleBlob = `assets/models/community/${sha256Hex(glb(13))}.glb`; write(staleBlob, glb(15)); // commit 進去的是 glb(15)…
   rebuildAllIndexes(content); git(root, "init", "-q"); git(root, "add", "."); git(root, "commit", "-qm", "fixture");
+  write(staleBlob, glb(13)); // …工作樹換成 glb(13)：判準①檔名＝雜湊、②大小相同都成立，只有③HEAD blob 不符（2026-09-15 補：審查者 MR2 拿掉③仍綠）
   const untracked = `assets/models/community/${sha256Hex(glb(11))}.glb`; write(untracked, glb(11));
-  write("assets-manifest.json", JSON.stringify({ entries: [liar, untracked].map((path) => ({ path, bytes: 512, sha256: sha256Hex(readFileSync(join(content, path))) })) }));
+  write("assets-manifest.json", JSON.stringify({ entries: [liar, staleBlob, untracked].map((path) => ({ path, bytes: 512, sha256: sha256Hex(readFileSync(join(content, path))) })) }));
   const app = buildServer({ contentDir: content, backupDir: join(root, "backups"), repoRoot: repo }); apps.push(app);
-  return { root, content, hero, body, bodyPath, liar, untracked, app, write, store: new ImportStore({ dir: join(root, "backups", "hero-catalog-versions") }) };
+  return { root, content, hero, body, bodyPath, liar, staleBlob, untracked, app, write, store: new ImportStore({ dir: join(root, "backups", "hero-catalog-versions") }) };
 }
 
 it("① 只有「git 追蹤＋大小＋雜湊都對」的才只記雜湊；雜湊按 stat 快取", () => {
@@ -43,7 +45,7 @@ it("① 只有「git 追蹤＋大小＋雜湊都對」的才只記雜湊；雜�
   const first = capture(), afterFirst = addressedDigestReads();
   expect(first.manifest.contentAddressedAssets?.map((fact) => fact.path)).toEqual([f.bodyPath]);
   expect(store.readWorkFile(HERO_CATALOG_WORK_ID, first.record.versionId, f.bodyPath)).toBeNull();
-  for (const path of [f.liar, f.untracked]) expect(store.readWorkFile(HERO_CATALOG_WORK_ID, first.record.versionId, path)).toEqual(readFileSync(join(f.content, path)));
+  for (const path of [f.liar, f.staleBlob, f.untracked]) expect(store.readWorkFile(HERO_CATALOG_WORK_ID, first.record.versionId, path)).toEqual(readFileSync(join(f.content, path)));
   capture(); expect(addressedDigestReads()).toBe(afterFirst);
   f.write(f.bodyPath, f.body); capture(); expect(addressedDigestReads()).toBeGreaterThan(afterFirst);
 });

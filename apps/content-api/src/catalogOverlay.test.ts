@@ -11,7 +11,7 @@ import { buildHeroImportServer } from "./heroImportServer";
 import { readHeroPackageCatalog } from "./heroPackageIO";
 const repo=resolve(__dirname,"../../.."), roots:string[]=[];
 afterEach(()=>{for(const root of roots.splice(0)) rmSync(root,{recursive:true,force:true});});
-function fixture() {
+function fixture(bodyPath?: string) {
   const root=mkdtempSync(join(tmpdir(),"ggd-overlay-catalog-")); roots.push(root);
   const content=join(root,"content"), history=join(root,"history");
   const put=(path:string,data:unknown)=>{const p=join(content,path);mkdirSync(dirname(p),{recursive:true});writeFileSync(p,data instanceof Uint8Array ? data : JSON.stringify(data));};
@@ -25,7 +25,8 @@ function fixture() {
     hero.abilities[slot]=a;put(`abilities/${a.id}.json`,{...a,schema:"ability@1"});
   }
   // ⭐ GH#1178：身體 GLB 是 git 裡「檔名即內容雜湊」的素材 ⇒ 快照只記雜湊，準備實例時要從工作樹換回位元組。
-  const glbPath=`assets/models/${sha256Bytes(new Uint8Array([1,2,3]))}.glb`;
+  //    `bodyPath` 給一個檔名不是雜湊的路徑 ⇒ 走「照舊複製位元組」那條路（2026-09-15 補，審查者指出夾具改掉之後這條路在 overlay 流程沒人驗）。
+  const glbPath=bodyPath ?? `assets/models/${sha256Bytes(new Uint8Array([1,2,3]))}.glb`;
   const model={id:"shared-model",schema:"model@1",glbPath,scale:1,collisionRadius:0.6,clipMap:{idle:"Idle",run:"Run",attack:"Attack",cast:"Cast",hurt:"Hurt",death:"Death"}};
   put("champions/hero-a.json",hero);put("champions/hero-b.json",{...hero,id:"hero-b",name:"其他英雄"});put("_legacy/champions/archived.json",{...hero,id:"archived"});
   put("models/shared-model.json",model);put(glbPath,new Uint8Array([1,2,3]));
@@ -79,4 +80,12 @@ it("keeps archived heroes unshipped and rejects missing dependencies before prep
   await expect(f.service.handle("prepare",{overlay:f.now,command:{...command,expectedCurrentVersion:p.currentVersion,planDigest:p.planDigest}})).rejects.toThrow("未上架");
   f.put("models/shared-model.json",{...f.model,glbPath:"assets/missing.glb"});const missing=f.service.capture({generation:0,docs:{},deleted:{}});
   const bad:any=await f.service.handle("preview",{overlay:f.now,command:{heroPath:"catalog/champions/hero-a.json",versionId:missing.version.versionId}});expect(bad.issues.join(" ")).toContain("missing.glb");
+});
+it("⭐ GH#1178 檔名不是雜湊的素材：overlay 快照照舊複製位元組，prepare 出來的實例拿得到同一份",async()=>{
+  const f=fixture("assets/body.glb"),saved=f.service.capture(f.old),heroPath="catalog/champions/hero-a.json";
+  expect(saved.version.files.some((x)=>x.path==="assets/body.glb")).toBe(true); // 位元組真的進了物件庫（⛔ 不是只記雜湊）
+  const command={heroPath,versionId:saved.version.versionId},p:any=await f.service.handle("preview",{overlay:f.now,command});expect(p.issues).toEqual([]);
+  const plan:any=await f.service.handle("prepare",{overlay:f.now,command:{...command,expectedCurrentVersion:p.currentVersion,planDigest:p.planDigest}});
+  const hero=plan.writes.find((x:any)=>x.key==="champions/hero-a").doc,model=plan.writes.find((x:any)=>x.key===`models/${hero.modelKey}`).doc;
+  expect(new CatalogOverlayService(f.content,repo,f.history,"test").readAsset(model.glbPath)).toEqual(Buffer.from([1,2,3]));
 });
