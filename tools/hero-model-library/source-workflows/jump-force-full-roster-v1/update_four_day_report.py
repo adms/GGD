@@ -33,6 +33,7 @@ def load_plan(path: Path = PLAN) -> dict:
         or summary.get("characters") != 63
         or plan.get("scope", {}).get("batchCount") != 9
         or summary.get("selectedMemberRelations") != 86238
+        or summary.get("paksMirroredThisRun") != 6
         or summary.get("payloadFilesExtractedThisRun") != 0
         or summary.get("convertedModelsThisRun") != 0
         or summary.get("backendOptionsAdded") != 0
@@ -54,7 +55,7 @@ def block(plan: dict) -> str:
         "",
         f"現有完整 path index 已產生 **{summary['characters']} 個高信度 `chr####` 角色 family**，分 **{plan['scope']['batchCount']} 批**，共 **{summary['selectedMemberRelations']:,} 筆** patch-winner member 關係。這份數字包含六類主素材與 {summary['assetClasses']['metadata']['memberRelations']:,} 筆角色設定 member；不需要再掃描 LV99 的 Steam 目錄。",
         "",
-        f"本機 mirror 目標為 `{mirror['paksRoot']}`。生成 plan 時狀態為 **mirror 進行中**（`{mirror['stateAtPlanGeneration']}`）；`mirror-complete.json` 尚未納入本收據，因此本區塊不宣稱六顆 PAK 已完成鏡像。",
+        f"本機 mirror 已固定在 `{mirror['rawGameRoot']}`：**{mirror['fileCount']:,} 檔／{mirror['bytes']:,} bytes**，六顆 authority PAK 的檔名、bytes 與 SHA-256 已 **{mirror['verifiedPakCount']}/6** 逐檔通過。完整索引與收據見 `{mirror['evidenceGitPath']}`；S3 狀態為 `{mirror['s3Status']}`。後續抽取不再需要 LV99 分享。",
         "",
         "| 主素材類別 | 有候選角色 | 套件 | member 關係 | 狀態 |",
         "|---|---:|---:|---:|---|",
@@ -76,7 +77,7 @@ def block(plan: dict) -> str:
         lines.append(f"| {batch} | {'、'.join(characters)} |")
     lines.extend([
         "",
-        f"進度收據：`extracted={summary['payloadFilesExtractedThisRun']}`、`convertedModel={summary['convertedModelsThisRun']}`、`convertedMotion={summary['convertedMotionsThisRun']}`、`convertedVfx={summary['convertedVfxThisRun']}`、`decodedAudio={summary['decodedAudioThisRun']}`、`backend={summary['backendOptionsAdded']}`、`deployed={summary['productionDeployments']}`。現階段只是 `path-indexed/planned`；不得計為已抽取、已轉換、已驗收、已註冊、可切換或已部署。",
+        f"進度收據：`mirrorPak={summary['paksMirroredThisRun']}/6`、`extracted={summary['payloadFilesExtractedThisRun']}`、`convertedModel={summary['convertedModelsThisRun']}`、`convertedMotion={summary['convertedMotionsThisRun']}`、`convertedVfx={summary['convertedVfxThisRun']}`、`decodedAudio={summary['decodedAudioThisRun']}`、`backend={summary['backendOptionsAdded']}`、`deployed={summary['productionDeployments']}`。現階段是 `verified-local/path-indexed/planned`；鏡像完成不得計為已抽取、已轉換、已驗收、已註冊、可切換或已部署。",
         "",
         END,
         "",

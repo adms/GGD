@@ -1,13 +1,21 @@
 {
   "schema": "ggd.jumpforce-full-roster-current-resource@1",
   "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
-  "status": "63-high-confidence-character-families-path-indexed; one-time PAK mirror pending; extraction/conversion/validation/registration/deployment pending",
+  "status": "63-high-confidence-character-families-path-indexed; local mirror verified 3466 files and 6/6 authority PAKs; extraction/conversion/validation/registration/deployment pending",
   "planGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json",
-  "planSha256": "364b12e397abcf705b8f4864d5cda170e48b90e163e2a50eb2b019753618dad1",
+  "planSha256": "e21d4c3aabc94e33c0ab7b3c4d081ad87e736d5d257869f1f9a87c6678c46b42",
   "detailIndexGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
   "detailIndexSha256": "ddea313700727cf827a1d343607d03ffd587b208eb5bc779e4b583ddab50e815",
   "documentGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/README.md",
-  "documentSha256": "62b9d51ec71718e359b9277b57ce14903d182e0f44910d2a90e047616282d6aa",
+  "documentSha256": "240ff9b93b4da81daf1972d15a7e0b03da606790d78038418979dabe9b57d799",
+  "localMirrorEvidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
+  "localMirrorEvidenceSha256": "b63f440fc5fef7e4355f6dd38ab932cb92f8cbdd1eff0c25a1f29d8add2e5754",
+  "localMirrorAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
+  "localMirrorFileCount": 3466,
+  "localMirrorBytes": 23856777652,
+  "verifiedPakCount": 6,
+  "s3Status": "pending",
+  "lv99ShareRequired": false,
   "summary": {
     "characters": 63,
     "highConfidenceIdentities": 63,
@@ -57,7 +65,7 @@
         "charactersWithCandidates": 63
       }
     },
-    "paksMirroredThisRun": 0,
+    "paksMirroredThisRun": 6,
     "payloadFilesExtractedThisRun": 0,
     "convertedModelsThisRun": 0,
     "convertedMotionsThisRun": 0,

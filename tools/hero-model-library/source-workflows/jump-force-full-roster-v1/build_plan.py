@@ -21,9 +21,11 @@ from common import (
     write_json,
     write_jsonl_gz,
 )
+from record_local_mirror import validate_evidence
 
 
 PLAN_GIT_ROOT = "materials/hero-model-library/source-inventories/jump-force-full-roster-v1"
+MIRROR_EVIDENCE_NAME = "local-mirror-evidence.json"
 
 
 def read_selected_relations(path: Path) -> list[dict]:
@@ -38,7 +40,14 @@ def read_selected_relations(path: Path) -> list[dict]:
     return rows
 
 
-def build(identity_path: Path, authority_path: Path, path_index: Path, batch_size: int, repo: Path | None = None) -> tuple[dict, list[dict]]:
+def build(
+    identity_path: Path,
+    authority_path: Path,
+    path_index: Path,
+    batch_size: int,
+    repo: Path | None = None,
+    mirror_evidence_path: Path | None = None,
+) -> tuple[dict, list[dict]]:
     repo = (repo or Path(__file__).resolve().parents[4]).resolve()
 
     def repo_path(path: Path) -> str:
@@ -52,6 +61,10 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
         raise ValueError("JUMP FORCE source identity mismatch")
     if len(authority.get("containers", [])) != 6:
         raise ValueError("JUMP FORCE authority must pin exactly six PAK files")
+    mirror_evidence_path = mirror_evidence_path or (repo / PLAN_GIT_ROOT / MIRROR_EVIDENCE_NAME)
+    mirror_evidence = load_json(mirror_evidence_path) if mirror_evidence_path.is_file() else None
+    if mirror_evidence is not None:
+        validate_evidence(mirror_evidence, authority)
     if identity.get("inputs", {}).get("pakPathIndex", {}).get("sha256") != sha256(path_index):
         raise ValueError("full path index differs from identity-map authority")
     if identity.get("inputs", {}).get("pakAuthority", {}).get("sha256") != sha256(authority_path):
@@ -128,7 +141,7 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
             "assetClasses": class_summaries,
             "stages": {
                 "sourceIdentity": "verified-high-confidence-character-family",
-                "pakMirror": "required-not-part-of-git-plan",
+                "pakMirror": "verified-local-6-of-6-authority-paks" if mirror_evidence else "required-not-part-of-git-plan",
                 "extraction": "planned-not-extracted",
                 "dependencyClosure": "not-started",
                 "conversion": "not-started",
@@ -166,6 +179,7 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/prepare_mirror.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/query.py",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/record_local_mirror.py",
         "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
     ]
     conversion_references = [
@@ -196,7 +210,14 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
             "rawGameRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
             "paksRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks",
             "completionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/mirror-complete.json",
-            "stateAtPlanGeneration": "copy-in-progress; completion receipt absent; no payload completeness claim",
+            "stateAtPlanGeneration": "verified-local" if mirror_evidence else "copy-in-progress; completion receipt absent; no payload completeness claim",
+            "evidenceGitPath": f"{PLAN_GIT_ROOT}/{MIRROR_EVIDENCE_NAME}" if mirror_evidence else None,
+            "evidenceSha256": sha256(mirror_evidence_path) if mirror_evidence else None,
+            "fileCount": mirror_evidence["localMirror"]["fileCount"] if mirror_evidence else 0,
+            "bytes": mirror_evidence["localMirror"]["bytes"] if mirror_evidence else 0,
+            "verifiedPakCount": mirror_evidence["verification"]["verifiedContainers"] if mirror_evidence else 0,
+            "s3Status": mirror_evidence["s3"]["status"] if mirror_evidence else "pending",
+            "lv99ShareRequired": False if mirror_evidence else True,
         },
         "inputs": {
             "identityMap": {"gitPath": repo_path(identity_path), "bytes": identity_path.stat().st_size, "sha256": sha256(identity_path)},
@@ -219,7 +240,7 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
             "duplicateCharacterFamilyNames": duplicate_identity_names,
             "selectedMemberRelations": len(detail_rows),
             "assetClasses": class_totals,
-            "paksMirroredThisRun": 0,
+            "paksMirroredThisRun": mirror_evidence["verification"]["verifiedContainers"] if mirror_evidence else 0,
             "payloadFilesExtractedThisRun": 0,
             "convertedModelsThisRun": 0,
             "convertedMotionsThisRun": 0,
@@ -238,7 +259,7 @@ def build(identity_path: Path, authority_path: Path, path_index: Path, batch_siz
         },
         "states": {
             "source": "path-indexed-and-container-sha-authority-pinned",
-            "mirror": "not-created-by-this-plan",
+            "mirror": "verified-local-6-of-6-authority-paks" if mirror_evidence else "not-created-by-this-plan",
             "extraction": "planned-not-extracted",
             "conversion": "not-started",
             "validation": "not-started",
@@ -256,11 +277,12 @@ def render_markdown(plan: dict, detail_path: Path) -> str:
     lines = [
         "# JUMP FORCE 全角色批次抽取／轉換計畫",
         "",
-        "這份計畫只使用已固定的完整 PAK path index 與 63 個高信度原生角色 ID。LV99 不必再提供整個 Steam 目錄；只需把 `JUMP_FORCE/Content/Paks` 的六顆 authority-pinned PAK 一次鏡像到本機素材庫。",
+        "這份計畫使用已固定的完整 PAK path index 與 63 個高信度原生角色 ID。六顆 authority-pinned PAK 已完整鏡像並驗證留存在本機素材庫，後續抽取不再需要 LV99 分享。",
         "",
         f"- 高信度原生 ID：{summary['characters']} 個，分 {plan['scope']['batchCount']} 批。",
         f"- 選定檔案關係：{summary['selectedMemberRelations']:,} 筆；逐檔計畫在 `{detail_path.name}`。",
-        "- 目前狀態：只有抽取與轉換計畫；本批沒有讀 PAK payload、沒有轉換、沒有後台選項、沒有部署。",
+        f"- 本機留底：{plan['localMirrorTarget']['fileCount']:,} files／{plan['localMirrorTarget']['bytes']:,} bytes；PAK authority {plan['localMirrorTarget']['verifiedPakCount']}/6，S3 {plan['localMirrorTarget']['s3Status']}。",
+        "- 目前狀態：鏡像已驗證；尚未抽取角色 payload、轉換、建立後台選項或部署。",
         "- 身份範圍：已確認角色 family；服裝、形態、NPC 身份仍須在抽取後逐件核對。",
         "- 動作範圍：目前定位的是 `AnimBP`／`*_anim` 依賴入口；不能把它們直接算成已取得原生動作剪輯。",
         "",
@@ -306,6 +328,7 @@ def main() -> int:
     parser.add_argument("--workspace", type=Path, default=Path.cwd().parent)
     parser.add_argument("--path-index", type=Path)
     parser.add_argument("--batch-size", type=int, default=7)
+    parser.add_argument("--mirror-evidence", type=Path)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     if args.batch_size < 1:
@@ -316,11 +339,13 @@ def main() -> int:
     identity = repo / "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json"
     authority = repo / "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json"
     path_index = (args.path_index or (workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/jump-force-pak-index-v1/full-path-index.jsonl.gz")).resolve()
-    plan, details = build(identity, authority, path_index, args.batch_size, repo)
+    mirror_evidence = (args.mirror_evidence or (output / MIRROR_EVIDENCE_NAME)).resolve()
+    plan, details = build(identity, authority, path_index, args.batch_size, repo, mirror_evidence)
     plan_path = output / "plan.json"
     detail_path = output / "selected-paths.jsonl.gz"
     document_path = output / "README.md"
     entry_path = output / "current-resource-entry.json"
+    current_resources_path = repo / "materials/asset-library/current-resources.json"
 
     if args.check:
         expected_plan = json.dumps(plan, ensure_ascii=False, indent=2) + "\n"
@@ -336,6 +361,16 @@ def main() -> int:
         expected_document = render_markdown(plan, detail_path)
         if document_path.read_text(encoding="utf-8") != expected_document:
             raise ValueError(f"refresh generated document: {document_path}")
+        expected_entry = build_current_resource_entry(repo, plan_path, detail_path, document_path, plan)
+        if load_json(entry_path) != expected_entry:
+            raise ValueError(f"refresh generated current-resource entry: {entry_path}")
+        current_resources = load_json(current_resources_path)
+        expected_central = expected_entry | {
+            "entryGitPath": str(entry_path.relative_to(repo)),
+            "entrySha256": sha256(entry_path),
+        }
+        if current_resources.get("jumpForceFullRosterPlan") != expected_central:
+            raise ValueError(f"refresh generated central resource entry: {current_resources_path}")
         print("JUMP FORCE full-roster plan is current")
         return 0
 
@@ -343,23 +378,41 @@ def main() -> int:
     write_jsonl_gz(detail_path, details)
     document_path.parent.mkdir(parents=True, exist_ok=True)
     document_path.write_text(render_markdown(plan, detail_path), encoding="utf-8")
-    entry = {
+    entry = build_current_resource_entry(repo, plan_path, detail_path, document_path, plan)
+    write_json(entry_path, entry)
+    current_resources = load_json(current_resources_path)
+    current_resources["jumpForceFullRosterPlan"] = entry | {
+        "entryGitPath": str(entry_path.relative_to(repo)),
+        "entrySha256": sha256(entry_path),
+    }
+    write_json(current_resources_path, current_resources)
+    print(f"Planned JUMP FORCE characters: {len(plan['characters'])}; member relations: {len(details)}")
+    return 0
+
+
+def build_current_resource_entry(repo: Path, plan_path: Path, detail_path: Path, document_path: Path, plan: dict) -> dict:
+    return {
         "schema": "ggd.jumpforce-full-roster-current-resource@1",
         "sourceId": SOURCE_ID,
-        "status": "63-high-confidence-character-families-path-indexed; one-time PAK mirror pending; extraction/conversion/validation/registration/deployment pending",
+        "status": "63-high-confidence-character-families-path-indexed; local mirror verified 3466 files and 6/6 authority PAKs; extraction/conversion/validation/registration/deployment pending",
         "planGitPath": str(plan_path.relative_to(repo)),
         "planSha256": sha256(plan_path),
         "detailIndexGitPath": str(detail_path.relative_to(repo)),
         "detailIndexSha256": sha256(detail_path),
         "documentGitPath": str(document_path.relative_to(repo)),
         "documentSha256": sha256(document_path),
+        "localMirrorEvidenceGitPath": f"{PLAN_GIT_ROOT}/{MIRROR_EVIDENCE_NAME}",
+        "localMirrorEvidenceSha256": plan["localMirrorTarget"]["evidenceSha256"],
+        "localMirrorAbsolutePath": plan["localMirrorTarget"]["rawGameRoot"],
+        "localMirrorFileCount": plan["localMirrorTarget"]["fileCount"],
+        "localMirrorBytes": plan["localMirrorTarget"]["bytes"],
+        "verifiedPakCount": plan["localMirrorTarget"]["verifiedPakCount"],
+        "s3Status": plan["localMirrorTarget"]["s3Status"],
+        "lv99ShareRequired": plan["localMirrorTarget"]["lv99ShareRequired"],
         "summary": plan["summary"],
         "runtimeSelectable": False,
         "productionDeploymentVerified": False,
     }
-    write_json(entry_path, entry)
-    print(f"Planned JUMP FORCE characters: {len(plan['characters'])}; member relations: {len(details)}")
-    return 0
 
 
 if __name__ == "__main__":

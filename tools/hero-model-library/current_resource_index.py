@@ -585,12 +585,14 @@ def build(git_link_root=ROOT):
     jumpforce_full_roster_plan_path=base/'source-inventories/jump-force-full-roster-v1/plan.json'
     jumpforce_full_roster_detail_path=base/'source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz'
     jumpforce_full_roster_document_path=base/'source-inventories/jump-force-full-roster-v1/README.md'
+    jumpforce_full_roster_mirror_evidence_path=base/'source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json'
     kof_jump_coverage=read(kof_jump_coverage_path)
     jumpforce_identity=read(jumpforce_identity_path)
     kof_xiv_vfx_textures=read(kof_xiv_vfx_textures_path)
     kof_xiv_effect_mapping=read(kof_xiv_effect_mapping_path)
     jumpforce_full_roster_entry=read(jumpforce_full_roster_entry_path)
     jumpforce_full_roster_plan=read(jumpforce_full_roster_plan_path)
+    jumpforce_full_roster_mirror_evidence=read(jumpforce_full_roster_mirror_evidence_path)
     if (kof_jump_coverage.get('schema')!='ggd.kof-jump-container-coverage@1'
         or kof_jump_coverage.get('jumpForce',{}).get('inferredNativeCharacterIdTokens')!=224
         or kof_jump_coverage.get('jumpForce',{}).get('knownIdentityCrosswalks')!=63
@@ -621,19 +623,31 @@ def build(git_link_root=ROOT):
         or jumpforce_full_roster_plan.get('schema')!='ggd.jumpforce-full-roster-plan@1'
         or jumpforce_full_roster_plan.get('summary',{}).get('characters')!=63
         or jumpforce_full_roster_plan.get('scope',{}).get('fullSteamLibraryRescanRequired') is not False
+        or jumpforce_full_roster_plan.get('summary',{}).get('paksMirroredThisRun')!=6
         or jumpforce_full_roster_plan.get('summary',{}).get('payloadFilesExtractedThisRun')!=0
         or jumpforce_full_roster_plan.get('summary',{}).get('convertedModelsThisRun')!=0
         or jumpforce_full_roster_plan.get('summary',{}).get('runtimeBindingsAdded')!=0
         or jumpforce_full_roster_plan.get('summary',{}).get('backendOptionsAdded')!=0
         or jumpforce_full_roster_plan.get('summary',{}).get('productionDeployments')!=0
         or jumpforce_full_roster_entry.get('runtimeSelectable') is not False
-        or jumpforce_full_roster_entry.get('productionDeploymentVerified') is not False):
+        or jumpforce_full_roster_entry.get('productionDeploymentVerified') is not False
+        or jumpforce_full_roster_mirror_evidence.get('schema')!='ggd.jumpforce-local-mirror-evidence@1'
+        or jumpforce_full_roster_mirror_evidence.get('status')!='verified-local'
+        or jumpforce_full_roster_mirror_evidence.get('localMirror',{}).get('fileCount')!=3466
+        or jumpforce_full_roster_mirror_evidence.get('localMirror',{}).get('bytes')!=23856777652
+        or jumpforce_full_roster_mirror_evidence.get('filesIndex',{}).get('sha256')!='6ee6b4c2a17c886f2ddf675a4a6028c40ec3e5fd59abfc8df0aa2414495f0d06'
+        or jumpforce_full_roster_mirror_evidence.get('verification',{}).get('verifiedContainers')!=6
+        or jumpforce_full_roster_mirror_evidence.get('verification',{}).get('allSha256Verified') is not True
+        or jumpforce_full_roster_mirror_evidence.get('s3',{}).get('status')!='pending'
+        or jumpforce_full_roster_mirror_evidence.get('scope',{}).get('lv99ShareRequiredForExtraction') is not False):
         raise ValueError('JUMP FORCE full-roster plan is absent, stale or overclaims readiness')
     for path,key in ((jumpforce_full_roster_plan_path,'planSha256'),
                      (jumpforce_full_roster_detail_path,'detailIndexSha256'),
                      (jumpforce_full_roster_document_path,'documentSha256')):
         if jumpforce_full_roster_entry.get(key)!=hashlib.sha256(path.read_bytes()).hexdigest():
             raise ValueError('JUMP FORCE full-roster current-resource pointer is stale: '+str(path))
+    if jumpforce_full_roster_entry.get('localMirrorEvidenceSha256')!=hashlib.sha256(jumpforce_full_roster_mirror_evidence_path.read_bytes()).hexdigest():
+        raise ValueError('JUMP FORCE local mirror current-resource pointer is stale')
     ssbu_ultimate_roster_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/inventory.json'
     ssbu_ultimate_roster_doc_path=base/'source-inventories/ssbu-ultimate-local-roster-v1/README.md'
     ssbu_ultimate_roster=read(ssbu_ultimate_roster_path)
@@ -1362,6 +1376,10 @@ def main():
                 {
                     'gitPath': result['jumpForceFullRosterPlan']['entryGitPath'],
                     'sha256': result['jumpForceFullRosterPlan']['entrySha256'],
+                },
+                {
+                    'gitPath': result['jumpForceFullRosterPlan']['localMirrorEvidenceGitPath'],
+                    'sha256': result['jumpForceFullRosterPlan']['localMirrorEvidenceSha256'],
                 },
                 {
                     'gitPath': result['ssbuUltimateLocalRoster']['gitPath'],

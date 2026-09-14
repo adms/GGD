@@ -15,7 +15,14 @@
     "rawGameRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
     "paksRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks",
     "completionReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/mirror-complete.json",
-    "stateAtPlanGeneration": "copy-in-progress; completion receipt absent; no payload completeness claim"
+    "stateAtPlanGeneration": "verified-local",
+    "evidenceGitPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json",
+    "evidenceSha256": "b63f440fc5fef7e4355f6dd38ab932cb92f8cbdd1eff0c25a1f29d8add2e5754",
+    "fileCount": 3466,
+    "bytes": 23856777652,
+    "verifiedPakCount": 6,
+    "s3Status": "pending",
+    "lv99ShareRequired": false
   },
   "inputs": {
     "identityMap": {
@@ -79,7 +86,7 @@
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/build_plan.py",
-      "sha256": "ab116ad44d6eaf54fbc045050b1ff51e357f044e3dbc1921a011aed6fbcaf5b6"
+      "sha256": "8fca0ac467556a555b0525bb49db0bea64dc2d21e74ea0af33888f4af8c8edc1"
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/prepare_mirror.py",
@@ -87,15 +94,19 @@
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py",
-      "sha256": "95e433378804ac77b39eef7c80873794b80084d1e6791b3f46dc34a15883d4c2"
+      "sha256": "6c3ba2d7082e7f8f2b374f55a170db373f58919b4c4731e1ac3fe8904ae435f5"
     },
     {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/query.py",
       "sha256": "f1107afccbae868a989151aa4478d30e81480b1c4d6b26e42044f011d8f05203"
     },
     {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/record_local_mirror.py",
+      "sha256": "dee5b8cee5bb7e16269a5fc25d89a0f191655c7dd1c8f7d82e9c91d0b72555c5"
+    },
+    {
       "gitPath": "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
-      "sha256": "2ad3672e4c96f60c251bda488a66e0929cc3592893ba2c63833f9cb032b7fb5f"
+      "sha256": "15eb4aca70e206a49f9c611223ec3ef4c17cb78155c678ae8773f079044080e7"
     }
   ],
   "conversionReferences": [
@@ -173,7 +184,7 @@
         "charactersWithCandidates": 63
       }
     },
-    "paksMirroredThisRun": 0,
+    "paksMirroredThisRun": 6,
     "payloadFilesExtractedThisRun": 0,
     "convertedModelsThisRun": 0,
     "convertedMotionsThisRun": 0,
@@ -192,7 +203,7 @@
   },
   "states": {
     "source": "path-indexed-and-container-sha-authority-pinned",
-    "mirror": "not-created-by-this-plan",
+    "mirror": "verified-local-6-of-6-authority-paks",
     "extraction": "planned-not-extracted",
     "conversion": "not-started",
     "validation": "not-started",
@@ -255,7 +266,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -328,7 +339,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -401,7 +412,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -474,7 +485,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -547,7 +558,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -620,7 +631,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -693,7 +704,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -766,7 +777,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -839,7 +850,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -912,7 +923,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -985,7 +996,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1058,7 +1069,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1131,7 +1142,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1204,7 +1215,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1277,7 +1288,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1350,7 +1361,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1423,7 +1434,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1496,7 +1507,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1569,7 +1580,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1642,7 +1653,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1715,7 +1726,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1790,7 +1801,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1863,7 +1874,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -1936,7 +1947,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2009,7 +2020,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2082,7 +2093,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2155,7 +2166,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2228,7 +2239,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2301,7 +2312,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2374,7 +2385,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2447,7 +2458,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2520,7 +2531,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2593,7 +2604,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2666,7 +2677,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2739,7 +2750,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2812,7 +2823,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2885,7 +2896,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -2958,7 +2969,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3031,7 +3042,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3107,7 +3118,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3180,7 +3191,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3253,7 +3264,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3326,7 +3337,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3399,7 +3410,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3472,7 +3483,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3545,7 +3556,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3618,7 +3629,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3691,7 +3702,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3764,7 +3775,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3837,7 +3848,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3910,7 +3921,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -3983,7 +3994,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4056,7 +4067,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4129,7 +4140,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4202,7 +4213,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4275,7 +4286,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4348,7 +4359,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4421,7 +4432,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4494,7 +4505,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4567,7 +4578,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4640,7 +4651,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4713,7 +4724,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",
@@ -4786,7 +4797,7 @@
       },
       "stages": {
         "sourceIdentity": "verified-high-confidence-character-family",
-        "pakMirror": "required-not-part-of-git-plan",
+        "pakMirror": "verified-local-6-of-6-authority-paks",
         "extraction": "planned-not-extracted",
         "dependencyClosure": "not-started",
         "conversion": "not-started",

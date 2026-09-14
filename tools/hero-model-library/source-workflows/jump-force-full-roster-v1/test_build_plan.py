@@ -85,15 +85,28 @@ class BuildPlanTest(unittest.TestCase):
                     "heroIds": [],
                 } for number in range(63)],
             }))
-            plan, details = build_plan.build(identity, authority, index, 7)
+            plan, details = build_plan.build(identity, authority, index, 7, mirror_evidence_path=root / "absent-evidence.json")
             self.assertEqual(plan["summary"]["characters"], 63)
             self.assertEqual(plan["scope"]["batchCount"], 9)
             self.assertEqual(plan["characters"][-1]["batch"], 9)
             self.assertEqual(plan["summary"]["assetClasses"]["model"]["charactersWithCandidates"], 63)
             self.assertEqual(plan["summary"]["assetClasses"]["motion"]["charactersWithCandidates"], 63)
             self.assertGreater(len(details), 63)
+            self.assertEqual(plan["summary"]["paksMirroredThisRun"], 0)
             self.assertEqual(plan["summary"]["payloadFilesExtractedThisRun"], 0)
+            self.assertEqual(plan["states"]["mirror"], "not-created-by-this-plan")
             self.assertFalse(plan["states"]["runtimeSelectable"])
+
+    def test_repository_plan_records_verified_local_mirror_only(self):
+        plan = json.loads((HERE.parents[3] / "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json").read_text())
+        self.assertEqual(plan["summary"]["paksMirroredThisRun"], 6)
+        self.assertEqual(plan["states"]["mirror"], "verified-local-6-of-6-authority-paks")
+        self.assertEqual(plan["localMirrorTarget"]["fileCount"], 3466)
+        self.assertEqual(plan["localMirrorTarget"]["bytes"], 23856777652)
+        self.assertFalse(plan["localMirrorTarget"]["lv99ShareRequired"])
+        self.assertEqual(plan["summary"]["payloadFilesExtractedThisRun"], 0)
+        self.assertEqual(plan["summary"]["backendOptionsAdded"], 0)
+        self.assertEqual(plan["summary"]["productionDeployments"], 0)
 
 
 if __name__ == "__main__":

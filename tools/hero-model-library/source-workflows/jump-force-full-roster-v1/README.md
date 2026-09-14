@@ -68,7 +68,20 @@ python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/prep
   --receipt ../GGD-Asset-Library/intake/jump-force-full-roster-v1/pak-mirror-receipt.json
 ```
 
-鏡像總量以 authority 為準，約 22.38 GB。既有 path index 已完整，因此鏡像後不必保持 LV99 掛載。
+鏡像已完成為 3,466 檔／23,856,777,652 bytes；其中六顆 authority PAK 共 22,379,460,912 bytes，檔名、大小與 SHA-256 均通過。完整鏡像與 PAK 只留在本機素材庫，Git 只保存收據；S3 仍為 pending。後續抽取不必保持 LV99 掛載。
+
+從本機原始收據重建 Git evidence，並再驗證完整索引：
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/record_local_mirror.py \
+  --write \
+  --verify-local-index
+
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/record_local_mirror.py \
+  --check
+```
+
+Git evidence 為 `materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json`；它不包含 23 GB payload。
 
 ## 3. 按 native ID／批次抽取
 

@@ -1,10 +1,11 @@
 # JUMP FORCE 全角色批次抽取／轉換計畫
 
-這份計畫只使用已固定的完整 PAK path index 與 63 個高信度原生角色 ID。LV99 不必再提供整個 Steam 目錄；只需把 `JUMP_FORCE/Content/Paks` 的六顆 authority-pinned PAK 一次鏡像到本機素材庫。
+這份計畫使用已固定的完整 PAK path index 與 63 個高信度原生角色 ID。六顆 authority-pinned PAK 已完整鏡像並驗證留存在本機素材庫，後續抽取不再需要 LV99 分享。
 
 - 高信度原生 ID：63 個，分 9 批。
 - 選定檔案關係：86,238 筆；逐檔計畫在 `selected-paths.jsonl.gz`。
-- 目前狀態：只有抽取與轉換計畫；本批沒有讀 PAK payload、沒有轉換、沒有後台選項、沒有部署。
+- 本機留底：3,466 files／23,856,777,652 bytes；PAK authority 6/6，S3 pending。
+- 目前狀態：鏡像已驗證；尚未抽取角色 payload、轉換、建立後台選項或部署。
 - 身份範圍：已確認角色 family；服裝、形態、NPC 身份仍須在抽取後逐件核對。
 - 動作範圍：目前定位的是 `AnimBP`／`*_anim` 依賴入口；不能把它們直接算成已取得原生動作剪輯。
 

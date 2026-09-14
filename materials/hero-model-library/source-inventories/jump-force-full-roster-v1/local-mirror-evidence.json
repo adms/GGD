@@ -1,0 +1,119 @@
+{
+  "schema": "ggd.jumpforce-local-mirror-evidence@1",
+  "asOfDate": "2026-09-15",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "status": "verified-local",
+  "source": {
+    "url": "smb://lv99/common/JUMP FORCE",
+    "readOnly": true
+  },
+  "localMirror": {
+    "absoluteRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
+    "paksRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks",
+    "fileCount": 3466,
+    "bytes": 23856777652,
+    "copyMode": "rsync-archive-partial-no-delete",
+    "startedAt": "2026-09-14T18:01:02Z",
+    "finishedAt": "2026-09-14T18:11:25.399744Z",
+    "durationSeconds": 623.399744,
+    "averageBytesPerSecond": 38268828.11809432
+  },
+  "filesIndex": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/files.jsonl.gz",
+    "bytes": 125979,
+    "sha256": "6ee6b4c2a17c886f2ddf675a4a6028c40ec3e5fd59abfc8df0aa2414495f0d06"
+  },
+  "authority": {
+    "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-pak-index.json",
+    "sha256": "6d93e2625b4a5335cec62ed9388a30ab123879afda35d284c64f30caaf8ca964"
+  },
+  "inputReceipts": {
+    "mirrorCompletion": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/mirror-complete.json",
+      "bytes": 938,
+      "sha256": "5635cacc58ef6af68da4f4b3e0a6b823a60d313fc063428c47716d8aa257988f"
+    },
+    "pakAuthorityVerification": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/pak-authority-verification.json",
+      "bytes": 4314,
+      "sha256": "8ee5845342951a175bb11b3d8e64c629656b9981662f656ce79f43916d4f91ea"
+    }
+  },
+  "verification": {
+    "requiredContainers": 6,
+    "verifiedContainers": 6,
+    "verifiedBytes": 22379460912,
+    "allSha256Verified": true
+  },
+  "containers": [
+    {
+      "name": "pakchunk0-WindowsNoEditor.pak",
+      "order": 0,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor.pak",
+      "bytes": 7279219593,
+      "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+      "identityVerified": true
+    },
+    {
+      "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+      "order": 1,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_0_P.pak",
+      "bytes": 1543894441,
+      "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+      "identityVerified": true
+    },
+    {
+      "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+      "order": 2,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks/pakchunk0-WindowsNoEditor_1_P.pak",
+      "bytes": 2532409095,
+      "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+      "identityVerified": true
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor.pak",
+      "order": 3,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor.pak",
+      "bytes": 7060715441,
+      "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+      "identityVerified": true
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+      "order": 4,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_0_P.pak",
+      "bytes": 1552635741,
+      "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+      "identityVerified": true
+    },
+    {
+      "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+      "order": 5,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Paks/pakchunk1-WindowsNoEditor_1_P.pak",
+      "bytes": 2410586601,
+      "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+      "identityVerified": true
+    }
+  ],
+  "s3": {
+    "status": "pending",
+    "uri": null
+  },
+  "scope": {
+    "lv99ShareRequiredForExtraction": false,
+    "steamLibraryRescanRequired": false,
+    "gameDirectoryRescanRequired": false,
+    "payloadCommittedToGit": false,
+    "payloadModified": false
+  },
+  "states": {
+    "mirror": "verified-local-6-of-6-authority-paks",
+    "extractedFiles": 0,
+    "convertedModels": 0,
+    "convertedMotions": 0,
+    "convertedVfx": 0,
+    "decodedAudio": 0,
+    "backendOptions": 0,
+    "deployed": 0
+  }
+}
