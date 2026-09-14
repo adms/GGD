@@ -6517,6 +6517,20 @@
     "kofXivSourceNativeEffectGroups": 71,
     "kofXivEffGroupsWithConvertedTexture": 64,
     "kofXivConvertedTexturesDirectlyReferenced": 48,
+    "textureConversionBackup": {
+      "id": "kof-xiv-priority-vfx-textures-20260914-v1-backup",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-vfx-textures-20260914-v1/64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/kof-xiv-priority-vfx-textures-20260914-v1/64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36.files.json",
+      "archiveBytes": 3571119,
+      "archiveSha256": "64385ec4f82317e98a3e652138b56d2ec83ba89878bd98e0e86819ff7b4fbf36",
+      "fileCount": 56,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true,
+      "localUnchanged": true,
+      "receiptGitPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/s3-backup-receipt.json",
+      "receiptSha256": "cbe113181a58dfe7b562859c7f11491224b7df42300c58c3ff33c1470661a4bb",
+      "s3Use": "backup-only-not-runtime-entry"
+    },
     "kofXivRuntimeVfxCandidates": 0,
     "automaticAudioBindings": 0,
     "runtimeSelectableAssetsAdded": 0,
@@ -6572,16 +6586,19 @@
   },
   "unused300MbaAssetIndex": {
     "gitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
-    "sha256": "1e2f90adb4c4fb5085f8645866e7c4cccf29ca7cd9d238815815926e545b4af4",
+    "sha256": "74491ea536cfdf1e2ab279ef0a6bbc2adb59a0463fd229b58df4f43d52209d54",
     "documentGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.md",
-    "documentSha256": "9f1628628b0dfa91f3ec134fd0719b939badcc490308d7dff10a7840afde703a",
+    "documentSha256": "36f08e1b07bb9e6eb5fae04834d0822fe8343f72474c6ed3e79b6006c399c9cb",
     "filesGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
-    "filesSha256": "82177db2b7cca73320704e77ecfd29104a7351be11c6787f1fbbdb5a5eee5adb",
+    "filesSha256": "c3fc6883512a5e3fd6ee45c2bacc4bbe07a58f6f7e3b52cc7203a37021f132d6",
     "animationClipsGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
-    "animationClipsSha256": "0c70d752d0e21744dfb79387630cf64e07157d3fc04eaabf516955bc23545519",
+    "animationClipsSha256": "191c7d24c3655ca971e784a451414eb701b11ca7d75fc205ff35202c4fec1c34",
     "status": "existing-local-sources-indexed; unused reserves remain pending standardization/acceptance/registration",
     "summary": {
       "physicalFiles": 73852,
+      "contentObjectsBySha256": 68669,
+      "duplicateHashGroups": 3651,
+      "duplicatePathRows": 5183,
       "physicalBytes": 17034245346,
       "unusedPhysicalFiles": 73791,
       "runtimeSourceUsedPhysicalFiles": 61,
@@ -6589,7 +6606,19 @@
       "freshLiveSha256VerifiedCharacterBodies": 311,
       "native300VfxRecords": 58922,
       "sourceCharactersIndexed": 291,
+      "sourceDefinitionsCatalog": 297,
+      "sourceDefinitionsExcludedFromHeroBacklog": 6,
       "missingDeclaredBodyPaths": 5,
+      "pipelineStageCounts": {
+        "acquired": 73852,
+        "extracted": 73852,
+        "convertedCandidate": 223,
+        "ggdAccepted": 0,
+        "runtimeRegisteredAsSourceFile": 0,
+        "runtimeSelectableAsSourceFile": 0,
+        "productionDeployed": 0,
+        "referencedByRuntimeDerivedOption": 61
+      },
       "registryAssetRecords": {
         "300heroes": {
           "model": 34378,
@@ -6637,13 +6666,13 @@
   },
   "communityUnusedAssetIndex": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json",
-    "sha256": "dcdd739ca6153c5c1988f8ac58663b845648e913d66e9dd1c361fa8a9335ff25",
+    "sha256": "fa91826c9a84413293a35d760f04fbeda8b5ce41f6d9f08f92f727e5ea3145f6",
     "documentGitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/README.md",
-    "documentSha256": "e2f83f650d4f63c08a1dd4ca8c28ba9139c145e426ba2d5d04f9b513dc2c0dcc",
+    "documentSha256": "0dcf3663179566423fc7ff3fc68fc9f7969f5903566d15e0b59b1530253e98a6",
     "localVerificationGitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
-    "localVerificationSha256": "d7cd244b6654de9a68ff72428e7f7569ab70685c486e7e6e6abe222c7b649c70",
+    "localVerificationSha256": "5f0591dbd7dc2ce2b352bac0a27f077e5555e1a384451e1983cf75e846438809",
     "sourceRecords": 59,
-    "componentRecords": 37,
+    "componentRecords": 41,
     "unusedForRuntime": 58,
     "runtimeSelectable": 1,
     "productionDeployed": 0,
@@ -6930,6 +6959,47 @@
       "reviewPage": "apps/client/public/infinity-strash-dai-vearn-av-review.html",
       "runtimeBindingsCreated": 0,
       "productionDeploymentVerified": false
+    },
+    "runtimeBindingsCreated": 0,
+    "productionDeploymentVerified": false
+  },
+  "infinityStrashDaiVfxComponents": {
+    "schema": "ggd.infinity-strash-dai-vfx-component-candidates@1",
+    "sourceId": "steam-infinity-strash-dai-vfx-component-candidates-build-local-20240328",
+    "character": {
+      "nativeId": "PN010",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "nameZh": "小呆／達伊",
+      "form": "PN010 source family; skill/form binding pending"
+    },
+    "status": "26 policy-passing support components indexed; Niagara reconstruction, owner review, skill binding and runtime remain pending",
+    "candidatesGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json",
+    "candidatesSha256": "0239ad58543fa7ddea43b8f178b47c99f7a48e36f101456f41dd71eff8e949d7",
+    "policyGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/policy-check.json",
+    "policySha256": "2c00d6e25d4819832aac829d8182102936a5c3810c9ac2b7e78b4b7c92eeae8b",
+    "receiptGitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/receipt.json",
+    "receiptSha256": "f6e298c58bf4eccd8d209176b5a3e4e1c435ddfa565e7162ae3dd11d87dd1ed1",
+    "reviewPageGitPath": "apps/client/public/infinity-strash-dai-vfx-components.html",
+    "reviewPageSha256": "d1cb34610cd9ca0cd1060b59d1654cec03cb16435a24279dda8d430f04242e0c",
+    "contactSheetGitPath": "apps/client/public/infinity-strash-dai-vfx-components.png",
+    "contactSheetSha256": "412202b94549e5ab1cda16fae99fc43a2d6428092be38490ef70ba4ac03557e1",
+    "summary": {
+      "boundedRoots": 6,
+      "sourcePackageReferences": 94,
+      "textureOccurrencesExported": 25,
+      "textureComponents": 18,
+      "textureUtilitiesRetainedLocally": 7,
+      "textureComponentsWithinConfiguredEdge": 18,
+      "staticMeshPackages": 8,
+      "meshComponentsConverted": 8,
+      "niagaraSystemsConverted": 0,
+      "skillBindingsCreated": 0
+    },
+    "s3": {
+      "rawAndConversionBackup": "pending"
     },
     "runtimeBindingsCreated": 0,
     "productionDeploymentVerified": false

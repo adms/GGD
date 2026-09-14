@@ -23,7 +23,7 @@
     },
     "currentResources": {
       "path": "materials/asset-library/current-resources.json",
-      "sha256": "864381d746406dfd6dcc757dddf83e2313cc8b4984cb62bd58018a90003fbffe"
+      "sha256": "3265eab5345aed9f008314aeefebb7514a2cf315b04903dfc0e22d46c26a13b6"
     }
   },
   "summary": {
@@ -5209,6 +5209,7 @@
         "historicalModelSourceArtifacts",
         "immutableRelease",
         "infinityStrashDaiVearnAv",
+        "infinityStrashDaiVfxComponents",
         "infinityStrashWeaponReview",
         "jumpForceAssetInventory",
         "kof3dSourceInventory",
