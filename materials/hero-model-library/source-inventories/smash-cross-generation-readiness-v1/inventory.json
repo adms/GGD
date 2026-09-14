@@ -1,0 +1,212 @@
+{
+  "schema": "ggd.smash-cross-generation-readiness@1",
+  "scope": "Nintendo 64, GameCube, Wii and Nintendo Switch source readiness. Counts stay source-stage-specific and do not represent the official roster.",
+  "sourceRegistration": {
+    "catalogGitPath": "materials/hero-model-library/download-sources.json",
+    "registeredSourceIds": [
+      "dayjo-ssbb-zelda-audio",
+      "gitlab-ssbu-models",
+      "parallel-ns-ultimate14",
+      "parallel-voice-melee-local-29",
+      "parallel-voice-ssbm-kirby",
+      "parallel-voice-ssbm-marth",
+      "parallel-voice-ssbm-pikachu",
+      "windows-game-library-20260912",
+      "windows-inventory-n64-super-smash-bros"
+    ],
+    "centralInventory": "materials/hero-model-library/source-inventories/smash-cross-generation-readiness-v1/inventory.json"
+  },
+  "inputs": {
+    "legacy": {
+      "bytes": 15353,
+      "sha256": "7522234f601816db6710ffc836a05ccf71fb1ccd8deeb0af4d5f617c405233e6",
+      "gitPath": "materials/hero-model-library/source-inventories/smash-legacy-sources-v1/inventory.json"
+    },
+    "ultimate": {
+      "bytes": 262087,
+      "sha256": "324027a053067991cb5bc64e4c2adda842f805ba8e4b62d8d8c0acd686ce79c2",
+      "gitPath": "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json"
+    },
+    "ultimateReconciliation": {
+      "bytes": 32621,
+      "sha256": "67871d52e1151f562da900bd617e9a8a7ded2a015a9320ea546f39d8b3c875ae",
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate-nsandns2-20260914/reconciliation.json"
+    },
+    "downloadSources": {
+      "bytes": 3336844,
+      "sha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+      "gitPath": "materials/hero-model-library/download-sources.json"
+    }
+  },
+  "inputConsistency": {
+    "ultimateReconciliationPinnedDownloadSourcesSha256": "affa37f0950c5f8a272302180bd3a7d59f4d77e3b3594a862f5d02c1cfb87f45",
+    "currentDownloadSourcesSha256": "f96a63bb459a28fa6eec84f0bd8829177142711cc975a566fbda4c453926d840",
+    "ultimateReconciliationMatchesCurrentCatalog": false,
+    "status": "stale-upstream-reconciliation-rebuild-required",
+    "effect": "The cross-generation counts retain the current checked-in reconciliation values, but its source-catalog pin must be rebuilt before treating that reconciliation as a fresh full-pipeline check."
+  },
+  "workspace": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT",
+    "assetLibrary": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library",
+    "assetLibraryPresent": true
+  },
+  "generations": [
+    {
+      "generation": "Nintendo 64",
+      "sourceGame": "Super Smash Bros.",
+      "platform": "Nintendo 64",
+      "sourceIds": [
+        "windows-inventory-n64-super-smash-bros"
+      ],
+      "sourceFilesRegistered": 4,
+      "sourcePayloadsReadableNow": 0,
+      "sourcePayloadBytesRead": 0,
+      "modelsReadyForConversion": 0,
+      "motionsReadyForConversion": 0,
+      "vfxReadyForConversion": 0,
+      "audioSourceFilesVerified": 0,
+      "convertedCandidates": 0,
+      "backendSelectable": 0,
+      "status": "metadata-only",
+      "blocker": "Four Windows ROM archive rows have filenames and sizes only; ContentRead=False and no payload SHA-256 exists."
+    },
+    {
+      "generation": "GameCube",
+      "sourceGame": "Super Smash Bros. Melee",
+      "platform": "GameCube",
+      "sourceIds": [
+        "parallel-voice-ssbm-kirby",
+        "parallel-voice-ssbm-pikachu",
+        "parallel-voice-ssbm-marth",
+        "parallel-voice-melee-local-29"
+      ],
+      "sourceFilesRegistered": 2011,
+      "sourcePayloadsReadableNow": 2011,
+      "sourcePayloadBytesRead": null,
+      "modelsReadyForConversion": 0,
+      "motionsReadyForConversion": 0,
+      "vfxReadyForConversion": 0,
+      "audioSourceFilesVerified": 1766,
+      "convertedCandidates": 0,
+      "backendSelectable": 0,
+      "status": "audio-only-source-bytes-verified",
+      "blocker": "The indexed Melee material contains verified WAV and archive members, but no model, texture, skeleton, native-motion, or VFX source bytes."
+    },
+    {
+      "generation": "Wii",
+      "sourceGame": "Super Smash Bros. Brawl",
+      "platform": "Wii",
+      "sourceIds": [
+        "dayjo-ssbb-zelda-audio"
+      ],
+      "sourceFilesRegistered": 462,
+      "sourcePayloadsReadableNow": 462,
+      "sourcePayloadBytesRead": null,
+      "modelsReadyForConversion": 0,
+      "motionsReadyForConversion": 0,
+      "vfxReadyForConversion": 0,
+      "audioSourceFilesVerified": 448,
+      "convertedCandidates": 0,
+      "backendSelectable": 0,
+      "status": "audio-only-source-bytes-verified",
+      "blocker": "The indexed Brawl material contains verified WAV and archive members, but no model, texture, skeleton, native-motion, or VFX source bytes."
+    },
+    {
+      "generation": "Nintendo Switch community sources",
+      "sourceGame": "Super Smash Bros. Ultimate / Ultimate14 MOD",
+      "platform": "Nintendo Switch",
+      "sourceIds": [
+        "gitlab-ssbu-models",
+        "parallel-ns-ultimate14"
+      ],
+      "sourceFilesRegistered": 29752,
+      "sourcePayloadsReadableNow": 29752,
+      "sourcePayloadBytesRead": 16260656425,
+      "modelsReadyForConversion": 698,
+      "motionsReadyForConversion": 175,
+      "vfxReadyForConversion": 3,
+      "audioSourceFilesVerified": 19,
+      "convertedCandidates": 18,
+      "backendSelectable": 0,
+      "status": "community-model-and-motion-source-present",
+      "blocker": "Worldblender is a community-exported model snapshot and Ultimate14 is a MOD patch. Neither establishes an extracted Nintendo base-game payload or a complete original moveset."
+    },
+    {
+      "generation": "Nintendo Switch game containers",
+      "sourceGame": "Super Smash Bros. Ultimate",
+      "platform": "Nintendo Switch / NSandNS2",
+      "sourceIds": [
+        "windows-game-library-20260912"
+      ],
+      "sourceFilesRegistered": 3,
+      "sourcePayloadsReadableNow": 0,
+      "sourcePayloadBytesRead": 0,
+      "modelsReadyForConversion": 0,
+      "motionsReadyForConversion": 0,
+      "vfxReadyForConversion": 0,
+      "audioSourceFilesVerified": 0,
+      "convertedCandidates": 0,
+      "backendSelectable": 0,
+      "status": "metadata-only-share-unmounted",
+      "blocker": "Three NSandNS2 container metadata rows exist, but this run read 0 payload bytes. Header, member table, title/update/DLC composition, extraction and conversion remain unverified."
+    }
+  ],
+  "tooling": {
+    "controlledConverter": {
+      "bytes": 32669,
+      "sha256": "1d773f0422883f0caba5d10114c17f99f6eacecc82f7efc7b6413cadb9c532ab",
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py"
+    },
+    "smashUltimateBlenderAddon": {
+      "archive": {
+        "bytes": 16816143,
+        "sha256": "813cd5af33b5c74d7bdc88a81095ee09cff3662d0ac50f858d8d6dc596237248",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/smash-ultimate-blender-3_0_4.zip"
+      },
+      "extractedRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/dependencies/smash-ultimate-blender-3.0.4/extracted/smash-ultimate-blender",
+      "extractedRootPresent": true,
+      "purpose": "Blender importer support for local community SMUB assets; do not execute embedded source scripts."
+    },
+    "blender": {
+      "absolutePath": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "exists": true,
+      "readiness": "available-for-controlled-rebuild",
+      "versionFirstLine": "Blender 5.2.1 LTS"
+    },
+    "reproducibilityProbe": {
+      "candidateId": "ssbu-mario-c00-static-skinned-v2-repro-probe-20260915",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/mario/model/body/c00/mario-c00.blend",
+        "exists": true,
+        "sha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d"
+      },
+      "outputRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/smash-cross-generation-readiness-v1/mario-c00-repro-build",
+      "attempted": true,
+      "outcome": "blocked-tool-crash",
+      "tool": {
+        "absolutePath": "/Applications/Blender.app/Contents/MacOS/Blender",
+        "version": "Blender 5.2.1 LTS"
+      },
+      "failure": "Blender background conversion exited from SIGSEGV before emitting a GLB or a conversion receipt. The partial local output root is retained for diagnosis and is not a candidate.",
+      "runtimeSelectable": false
+    }
+  },
+  "summary": {
+    "generationRows": 5,
+    "metadataOnlyGenerationRows": 2,
+    "verifiedLegacyAudioFiles": 2214,
+    "switchCommunityModelCandidates": 698,
+    "switchCommunityMotionPayloads": 175,
+    "switchAcceptedIndependentComponents": 18,
+    "readableOriginalGamePayloads": 0,
+    "newConvertedCandidatesThisAudit": 0,
+    "backendSelectableThisAudit": 0,
+    "productionDeploymentVerified": false
+  },
+  "truthBoundary": [
+    "The GameCube and Wii counts are locally verified audio source members, not full game extractions.",
+    "The Switch model and motion counts are community-source candidates. They are not Nintendo base-game payloads.",
+    "NSandNS2 containers are inventory metadata only until their local bytes, headers and member table are actually read.",
+    "The Mario controlled rebuild probe crashed before a GLB existed; it neither adds a component nor changes any approval, dropdown or deployment state."
+  ]
+}
