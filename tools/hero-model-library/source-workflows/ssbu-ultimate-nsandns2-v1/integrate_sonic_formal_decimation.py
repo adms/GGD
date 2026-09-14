@@ -169,7 +169,10 @@ def main() -> None:
     matched = [row for row in candidates if row.get("id") == COMPONENT_ID]
     require(len(matched) <= 1, "Duplicate Sonic v2 candidate")
     if matched:
+        legacy_versions = matched[0].get("legacyConversionVersions")
         matched[0].clear(); matched[0].update(candidate)
+        if legacy_versions:
+            matched[0]["legacyConversionVersions"] = legacy_versions
     else:
         candidates.append(candidate)
     attempt = {"id": "ssbu-sonic-c00-formal-decimation-v1", "componentId": COMPONENT_ID,

@@ -62,8 +62,11 @@ def main() -> int:
         found = [row for row in target if row.get("id") == candidate["id"]]
         require(len(found) <= 1, "Duplicate component candidate: " + candidate["id"])
         if found:
+            legacy_versions = found[0].get("legacyConversionVersions")
             found[0].clear()
             found[0].update(candidate)
+            if legacy_versions:
+                found[0]["legacyConversionVersions"] = legacy_versions
         else:
             target.append(candidate)
 
