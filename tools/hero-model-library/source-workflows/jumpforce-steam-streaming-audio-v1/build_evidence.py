@@ -9,6 +9,11 @@ from pathlib import Path
 
 SOURCE_ID = "steam-jump-force-streaming-audio-816020-build-8523149"
 REPO = Path(__file__).resolve().parents[4]
+FULL_MIRROR_EVIDENCE = REPO / "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/local-mirror-evidence.json"
+FULL_MIRROR_STREAMING = Path(
+    "GGD-Asset-Library/intake/windows-readonly-20260915/"
+    "jump-force-steam-full-build-8523149/raw-game/JUMP_FORCE/Content/Sound/Streaming"
+)
 
 
 def sha256(path):
@@ -54,6 +59,35 @@ def main():
         raise ValueError("Local frozen archive no longer matches S3 identity")
     if sha256(receipt) != backup["receiptSha256"]:
         raise ValueError("S3 readback receipt changed")
+    mirror = json.loads(FULL_MIRROR_EVIDENCE.read_text())
+    mirror_s3 = mirror.get("s3", {})
+    if (
+        mirror.get("status") != "verified-local-and-s3-readback-verified"
+        or mirror_s3.get("status") != "s3-readback-verified"
+        or mirror_s3.get("fullGetVerified") is not True
+        or mirror_s3.get("allMemberSha256Verified") is not True
+        or mirror_s3.get("manifestS3ReadbackVerified") is not True
+    ):
+        raise ValueError("JUMP FORCE full-game mirror lacks a complete S3 readback verification")
+    raw_streaming = (workspace / FULL_MIRROR_STREAMING).resolve()
+    if not raw_streaming.is_dir() or not raw_streaming.is_relative_to(workspace):
+        raise ValueError("JUMP FORCE full-game Streaming directory is unavailable locally")
+    raw_banks = {path.name: path for path in raw_streaming.glob("*.awb")}
+    if len(raw_banks) != 43 or len(source["files"]) != 43:
+        raise ValueError("JUMP FORCE full-game mirror does not contain the complete 43-bank audio set")
+    for row in source["files"]:
+        name = Path(row["path"]).name
+        local_original = local_root / row["path"]
+        raw = raw_banks.get(name)
+        if raw is None or not local_original.is_file():
+            raise ValueError("Audio original is absent from the full-game mirror or extraction: " + name)
+        if (
+            raw.stat().st_size != row["bytes"]
+            or local_original.stat().st_size != row["bytes"]
+            or sha256(raw) != row["sha256"]
+            or sha256(local_original) != row["sha256"]
+        ):
+            raise ValueError("Audio original differs from its full-game mirror: " + name)
     audio_index = json.loads((local_root / "audio-file-index.json").read_text())
     if sha256(local_root / "audio-file-index.json") != source["audioFileIndex"]["reportSha256"]:
         raise ValueError("Local audio index changed")
@@ -88,6 +122,18 @@ def main():
             "allMemberSha256Verified": True,
             "receiptPath": str(receipt),
             "receiptSha256": backup["receiptSha256"],
+        },
+        "fullGameMirror": {
+            "evidenceGitPath": str(FULL_MIRROR_EVIDENCE.relative_to(REPO)),
+            "evidenceSha256": sha256(FULL_MIRROR_EVIDENCE),
+            "rawStreamingAbsolutePath": str(raw_streaming),
+            "verifiedAwbFiles": len(raw_banks),
+            "archiveUri": mirror_s3["uri"],
+            "archiveSha256": mirror_s3["archiveSha256"],
+            "archiveBytes": mirror_s3["archiveBytes"],
+            "fullGetVerified": True,
+            "allMemberSha256Verified": True,
+            "manifestS3ReadbackVerified": True,
         },
         "classification": {
             "speakerVerifiedFiles": 0,
