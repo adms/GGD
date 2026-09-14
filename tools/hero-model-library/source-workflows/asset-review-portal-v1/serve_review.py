@@ -32,6 +32,7 @@ def media_map(queue_path: Path = QUEUE) -> dict[str, tuple[Path, str]]:
     if schema not in {
         "ggd.asset-review-portal@1",
         "ggd.kof-xv-ash-audio-review-portal@1",
+        "ggd.fate-unlimited-codes-ps2-audio-review-portal@1",
     }:
         raise ValueError("unexpected asset review queue schema")
     if queue["policy"].get("runtimeMutationAllowed") is not False:

@@ -1,0 +1,47 @@
+{
+  "schema": "ggd.fate-unlimited-codes-ps2-audio-review-conversion@1",
+  "conversionId": "fate-unlimited-codes-ps2-audio-review-v1",
+  "sourceGame": "Fate/unlimited codes",
+  "platform": "PS2 (Sprite Database public supplemental WAV collections; not a PS2 disc image)",
+  "scope": "Archer 180 + Shirou 222 + Saber 251 = 653 original WAV files; no transcoding was necessary for local browser review.",
+  "sourceInputs": [
+    {
+      "gitPath": "materials/hero-model-library/voice-index.json",
+      "bytes": 4300287,
+      "sha256": "4a7800931fbb1fa09619e945914fb39929e808b4fe68a7c386ecaadd0ad3d501"
+    },
+    {
+      "gitPath": "materials/hero-model-library/voice-files.jsonl.gz",
+      "bytes": 27888115,
+      "sha256": "79c52618940f062d4ecb741e7708ee889fd91af2f10d55e04328a5220b8800e0"
+    }
+  ],
+  "voiceIndexWorkspace": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT",
+  "fileManifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-ps2-audio-review-v1/files.jsonl.gz",
+    "sha256": "c5425f6862e823ace3a59fb3d58fa0ca97efb99bcbf011e86925a999259286a8",
+    "uncompressedSha256": "cf3a0ddc2380f4779bf97c8d6bd2e69a2b88cfc311e17e9e04bb8685e499d374",
+    "encoding": "gzip-jsonl"
+  },
+  "summary": {
+    "sourceWavFiles": 653,
+    "archerWavFiles": 180,
+    "shirouWavFiles": 222,
+    "saberWavFiles": 251,
+    "sourceBytes": 159959818,
+    "wavHeadersVerified": 653,
+    "perClipLanguageConfirmed": 0,
+    "perClipSpeakerConfirmed": 0,
+    "perClipCategoryConfirmed": 0,
+    "perClipEventConfirmed": 0,
+    "runtimeBindingsCreated": 0,
+    "backendSelectableAssets": 0,
+    "productionDeployments": 0
+  },
+  "status": "verified-original-wavs-review-queue-pending-listening-and-classification",
+  "limitations": [
+    "Source package labels identify a collection; they do not confirm an individual file's speaker.",
+    "Language, speaker, dialogue/cry/SFX category and GGD event are pending confirmation for every file.",
+    "This review manifest is not a runtime registration, backend option, or production deployment."
+  ]
+}
