@@ -42,6 +42,7 @@
  * `pnpm echoloop:checkk` → 「(a)」那條紅並指名 CLAUDE.md 的行號。改回來。
  */
 import { describe, expect, it } from "vitest";
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -108,9 +109,15 @@ const HITS: Record<Kind, Refs> = { pnpm: new Map(), path: new Map(), bare: new M
 for (const f of FILES) extract(readFileSync(join(REPO, f), "utf8"), f, HITS);
 
 // ── 判定 ────────────────────────────────────────────────────────────────────
+// ⭐ 本機專屬檔（scripts/hosts.local.sh）設計上不在乾淨 checkout 裡：`.example` 在＋被 .gitignore 擋 ⇒ ⛔ 不是幽靈。
+// ⚠️ 不用豁免表：existsSync 讀工作樹 ⇒ 填過的機器上那一列變殭屍、CI 上罩得住 ⇒ 棘輪隨機器翻面（GH#1236 合併後補）。
+const isLocalOnlyByDesign = (ref: string): boolean =>
+  existsSync(join(REPO, `${ref}.example`)) &&
+  spawnSync("git", ["check-ignore", "-q", "--", ref], { cwd: REPO }).status === 0;
+
 const isGhost: Record<Kind, (ref: string) => boolean> = {
   pnpm: (ref) => !PKG_SCRIPTS.has(ref),
-  path: (ref) => !existsSync(join(REPO, ref)),
+  path: (ref) => !existsSync(join(REPO, ref)) && !isLocalOnlyByDesign(ref),
   bare: (ref) => !PKG_SCRIPTS.has(ref),
 };
 

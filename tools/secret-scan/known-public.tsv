@@ -1,0 +1,16 @@
+# 已**公開發表**的範例值 —— 它們出現在 repo 裡定義上就不是洩漏。
+# 欄位: 字面值 <TAB> 出處與理由（⭐ 要說得出「它公開在哪」,⛔ 不接受「看起來是假的」）
+# ⚠️ 這是**值**層的豁免（allowlist.tsv 是**路徑**層）—— 用在「同一個公開範例散落各處」時。
+# ⛔ 字面值太短會把整條規則一起關掉,所以最短 12 字元,而且校準會驗
+#    「⛔ 沒有任何規則的檢體被這張表吃掉」。
+AKIA{{}}IOSFODNN7EXAMPLE	AWS 官方文件十餘年來的範例 access key id（IAM/CLI 文件逐字使用）。⭐ 反駁法：AWS 哪天把它變成真帳號,這一列就要刪
+wJalr{{}}XUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY	AWS 官方文件的配對範例 secret access key,同上
+REDACTED_TEST_PASSWORD	字面值就是「已遮蔽」—— 寫的人刻意把真值拿掉了。⭐ 反駁法：它旁邊哪天出現真密碼,抓到的會是那一個
+://user:pass@	RFC 3986 等級的通用佔位（`http://user:pass@host`）,用在 URL 解析測試。⭐ 反駁法：帳密任一邊變成真值就不再符合這個字面
+://name:password@	同型的通用佔位,用在 CDN 網址解析測試
+~/.ssh/id_rsa	OpenSSH 的預設金鑰檔名,全世界一樣 —— ⛔ 寫出它不洩漏任何我們特有的東西。⭐ 反駁法：我們哪天把自訂金鑰取名 id_rsa,刪這一列
+~/.ssh/id_ed25519	同上（ed25519 的預設名）
+~/.ssh/id_ecdsa	同上（ecdsa 的預設名）
+~/.ssh/known_hosts	OpenSSH 的標準檔,⛔ 不是金鑰
+~/.ssh/authorized_keys	OpenSSH 的標準檔,⛔ 不是私鑰
+~/.ssh/config	OpenSSH 的標準設定檔名

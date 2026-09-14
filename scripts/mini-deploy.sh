@@ -8,16 +8,18 @@
 #
 #   GGD_MINI_HOST=…   目標（預設見下）
 #   GGD_MINI_USER=…   使用者名稱（⛔ 沒有預設 —— 猜錯會卡在難懂的錯誤上）
+#   GGD_MINI_CLASH_FAILOPEN=1  逃生口：未追蹤碰撞掃描失敗時照舊 checkout（⛔ 預設是停下來，GH#1156）
 #
 # ═══ ⭐ 為什麼預設用 `.local` 而不是 IP ═══
 # mini 同時有兩個位址（實測 2026-08-29）:
-#   169.254.166.33  ← 直連的網卡（RTT 0.59 ms,100 Mbps 硬上限）
-#   192.168.0.133   ← Wi-Fi（RTT 9.18 ms）
+#   169.254.x.x     ← 直連的網卡（RTT 0.59 ms,100 Mbps 硬上限）
+#   192.168.x.x     ← Wi-Fi（RTT 9.18 ms）
+#   ⛔ 實際位址不寫在這裡 —— 見 scripts/hosts.local.sh（不進 git）
 # ⭐ mDNS 會自己挑當下通的那一條 ⇒ 拔線、換網段、換 DHCP 位址都不會壞。
 # ⛔ 寫死 IP 的話,owner「有時候會把 mini 放在同一個區網」那句話就會變成一個 bug。
 #
 # ═══ ⛔ 這支腳本**永遠不碰正式站** ═══
-# GCP（34.81.104.163 / ggd.adms.ai）走 scripts/host-deploy.sh。
+# GCP 回滾機（$GGD_DEPLOY_SSH / ggd.adms.ai）走 scripts/host-deploy.sh。
 # 這一支只對 mini 說話,而且開頭會拒絕任何看起來像正式站的目標。
 set -uo pipefail
 RED=$'\033[31m'; GRN=$'\033[32m'; YEL=$'\033[33m'; BLD=$'\033[1m'; RST=$'\033[0m'
@@ -29,15 +31,31 @@ info(){ printf '    %s\n' "$*"; }
 FAIL=0; bad(){ printf '  %s✗%s %s\n' "$RED" "$RST" "$*"; FAIL=$((FAIL+1)); }
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
+# ⭐ 主機身分：環境變數 > scripts/hosts.local.sh > 主工作樹那一份（見 _hosts.sh）。
+#   ⚠️ 在此之前這支只讀環境變數 ⇒ CLAUDE.md 部署段那條（已經拿掉 USER/HOST 的）指令直接跑會死在
+#   「請設 GGD_MINI_USER」，而下面的回滾機柵欄也只在 ship-it.sh 幫忙 export 時才生效。
+# shellcheck source=/dev/null
+[ -f "$REPO/scripts/_hosts.sh" ] && . "$REPO/scripts/_hosts.sh"
 HOST="${GGD_MINI_HOST:-GenieAccelerdeMac-mini-2.local}"
 USER_="${GGD_MINI_USER:-}"
+case "$HOST$USER_" in
+  *"<"*) echo "${RED}⛔ GGD_MINI_HOST／GGD_MINI_USER 還是 .example 的 <佔位> —— 填 scripts/hosts.local.sh$RST" >&2; exit 2 ;;
+esac
 REMOTE_REPO="${GGD_MINI_REPO:-\$HOME/GGD}"
 
 # ⛔ 硬柵欄:這支腳本不可以對正式站說話
 case "$HOST" in
-  *ggd.adms.ai*|34.81.104.163|*adms.ai*)
+  *ggd.adms.ai*|*adms.ai*)
     die "⛔ $HOST 看起來是正式站 —— 這支腳本只對 mini 說話。正式站走 scripts/host-deploy.sh" ;;
 esac
+# ⭐ 回滾機的位址住 scripts/hosts.local.sh（⛔ 不進 git,因為這個 repo 是 public 的)。
+#   ⚠️ 沒設就**只剩上面那條網域柵欄** —— 這是刻意的取捨:⛔ 不因為少一個檔就擋下整次部署。
+if [ -n "${GGD_DEPLOY_SSH:-}" ]; then
+  case "$HOST" in
+    *"${GGD_DEPLOY_SSH##*@}"*)
+      die "⛔ $HOST 是回滾機 —— 這支腳本只對 mini 說話。回滾機走 scripts/host-deploy.sh" ;;
+  esac
+fi
 [ -n "$USER_" ] || { echo "${RED}⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
 # ⭐ `-A`（agent 轉發）—— mini 用**我這台的** GitHub 金鑰 clone/fetch,
 #   ⛔ 而 mini 上不需要存放任何憑證。GCP 的 `host-deploy.sh` 也是這樣做的。
@@ -386,13 +404,25 @@ cmd_deploy() {
     #
     # ⭐ 所以在 checkout **之前**先問：目標 commit 會不會蓋到任何未追蹤檔？
     #   會 ⇒ **先備份**（⛔ 不是 `rm`、⛔ 也不是自動搬走：那是同一個動詞的兩個名字）。
-    local clash
-    # ⭐ GH#1156 —— 在此之前這裡對**每一個**追蹤檔各開一支 `git ls-files --error-unmatch`
-    #   ⇒ 26,393 次子行程、每次部署白花 4 分鐘。⭐ 問的其實是集合差：
-    #   「目標 commit 有、而 mini 現在沒追蹤、而磁碟上又存在的檔」⇒ 兩支 git ＋ 一次 comm，
-    #   只對那個（通常是空的）差集逐檔 `[ -f ]`。語意逐位元組相同。
-    clash=$(r "cd $REMOTE_REPO && comm -23 <(git ls-tree -r --name-only $deploy_sha | sort) <(git ls-files | sort) \
-               | while read -r f; do [ -f \"\$f\" ] && printf '%s\n' \"\$f\"; done" 2>/dev/null || true)
+    # ⭐ GH#1156 —— 掃描本體與它的兩個洞（中文路徑、靜默失敗）見 `clash_scan_script` 的註解。
+    local clash clash_raw clash_rc=0 clash_err
+    clash_err=$(mktemp "${TMPDIR:-/tmp}/ggd-clash-err.XXXXXX") || die "建不了暫存檔 —— ⛔ 不往下走"
+    clash_raw=$(clash_scan_script | r "cd $REMOTE_REPO && sh -s -- $deploy_sha $CLASH_SCAN_OK" 2>"$clash_err") \
+      || clash_rc=$?
+    if clash=$(clash_scan_accept "$clash_rc" "$clash_raw"); then
+      :
+    elif [ "${GGD_MINI_CLASH_FAILOPEN:-}" = 1 ]; then
+      clash=$(printf '%s\n' "$clash_raw" | grep -vxF "$CLASH_SCAN_OK" || true)
+      warn "⚠️ 未追蹤碰撞掃描**沒有跑完**（exit ${clash_rc}）而你設了 GGD_MINI_CLASH_FAILOPEN=1 ⇒ 照舊放行。"
+      warn "   ⛔ 只備份收得到的 $(printf '%s\n' "$clash" | grep -c .) 行 —— 其餘未追蹤檔 checkout 時**不會被備份**。"
+    else
+      tail -20 "$clash_err" | sed 's/^/    /'
+      rm -f "$clash_err"
+      die "⛔ 未追蹤碰撞掃描沒有跑完（exit ${clash_rc}，⛔ 沒收到結束哨兵）—— ⛔ **不 checkout**。
+   ⚠️ 在此之前這裡是 \`|| true\` ⇒ 掃描失敗與「沒有碰撞」長得一模一樣，而 checkout -f 會靜靜蓋掉未追蹤檔（GH#884）。
+   ⇒ 先看上面的 stderr；確定 mini 上沒有要保的未追蹤檔才用逃生口：GGD_MINI_CLASH_FAILOPEN=1 bash scripts/mini-deploy.sh deploy"
+    fi
+    rm -f "$clash_err"
     if [ -n "${clash// /}" ]; then
       local n_clash bdir
       n_clash=$(printf '%s\n' "$clash" | grep -c .)
@@ -775,6 +805,47 @@ cmd_tunnel_verify() {
   fi
   echo
   info "⚠️ 這只證明**路徑通**。真的一場比賽還要玩家實際連一次。"
+}
+
+# ⭐⭐ GH#1156 —— **未追蹤碰撞掃描**：目標 commit 有、mini 的索引沒有、而磁碟上是檔案的路徑。
+#   ⭐ 判準與 GH#884 逐字相同（被 .gitignore 的也算撞 —— 集合差用的是**索引**，⛔ 不是 --others）。
+#   ⭐ 只改「怎麼跑」：26,393 次 `git ls-files --error-unmatch` ⇒ 兩支 git ＋ sort ＋ comm。
+#
+# ⛔⛔ 在此之前（b7c8aa8f1 那一版與更早的逐檔版）還有兩個**會印出「0 個碰撞」的洞**：
+#   ① `core.quotePath` 預設 true ⇒ git 把中文路徑印成 `"docs/\345…"` ⇒ `[ -f ]` 永遠假
+#      ⇒ 218+ 個非 ASCII 追蹤路徑上的碰撞**一個都抓不到**（本機設了 quotePath=false 所以本機是綠的）。
+#      ⭐ 修法用 `-z`（⛔ 不是只加 quotePath=false：那樣 `"` `\` tab 仍然被引號包起來）。
+#   ② `2>/dev/null || true` ⇒ 遠端掃描**沒跑完**與「沒有碰撞」長得一模一樣。
+#      ⭐ 修法：腳本最後一行印哨兵，⛔ 收不到（或離開碼非 0）就**不 checkout**。
+#
+# ⭐ 腳本用 quoted heredoc ＋ `ssh … sh -s` 送過去 ⇒ ⛔ 沒有一層跳脫、⛔ 不依賴遠端登入 shell 是 zsh
+#   （`<(…)` 在 dash 上不存在）；miniDeployUntracked.test.ts 抽出這一段**真的在 git repo 上跑**。
+#
+# 🔓 逃生口：`GGD_MINI_CLASH_FAILOPEN=1` ⇒ 掃描失敗時照舊放行（只備份收得到的那幾行）。
+#   ⚠️ 只有部署者會轉 ⇒ 環境變數，⛔ 不進後台。用了要在部署紀錄裡說為什麼。
+CLASH_SCAN_OK="__GGD_CLASH_SCAN_OK__"
+clash_scan_script() {
+  cat <<'SH'
+  set -u
+  sha=$1; ok=$2
+  t=$(mktemp -d) || exit 3
+  trap 'rm -rf "$t"' EXIT
+  git ls-tree -r -z --name-only "$sha" > "$t/tree0" || exit 4
+  git ls-files -z > "$t/index0" || exit 5
+  tr '\000' '\n' < "$t/tree0" | LC_ALL=C sort > "$t/tree" || exit 6
+  tr '\000' '\n' < "$t/index0" | LC_ALL=C sort > "$t/index" || exit 6
+  LC_ALL=C comm -23 "$t/tree" "$t/index" > "$t/untracked" || exit 7
+  while IFS= read -r f; do
+    if [ -f "$f" ]; then printf '%s\n' "$f" || exit 8; fi
+  done < "$t/untracked"
+  printf '%s\n' "$ok"
+SH
+}
+# clash_scan_accept <離開碼> <原始輸出> ⇒ 收得到哨兵才印碰撞清單並回 0；⛔ 否則回 1。
+clash_scan_accept() {
+  local rc=$1 raw=$2
+  [ "$rc" -eq 0 ] && [ "${raw##*$'\n'}" = "$CLASH_SCAN_OK" ] || return 1
+  printf '%s' "${raw%"$CLASH_SCAN_OK"}"
 }
 
 # ⭐ GH#1184 —— **部署目標怎麼算**。⛔ 不是「本機 HEAD」。
