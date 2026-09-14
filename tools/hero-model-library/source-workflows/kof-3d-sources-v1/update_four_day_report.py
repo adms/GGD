@@ -10,6 +10,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[4]
 REPORT = REPO / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 INDEX = REPO / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+NATIVE_PREFLIGHT = REPO / "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json"
 ASH_AUDIO_RECEIPT = REPO / "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json"
 START = "- KOF 3D 來源批次："
 ANCHOR = "\n- SSBU c00 第二批黑底修復版："
@@ -17,16 +18,25 @@ ANCHOR = "\n- SSBU c00 第二批黑底修復版："
 
 def render() -> str:
     data = json.loads(INDEX.read_text(encoding="utf-8"))
+    preflight = json.loads(NATIVE_PREFLIGHT.read_text(encoding="utf-8"))
     ash_audio = json.loads(ASH_AUDIO_RECEIPT.read_text(encoding="utf-8"))
     xiv = data["kofXiv"]
     left, right = data["kofXv"]["newBudgetCandidates"]["candidates"]
     textures = xiv["textureCandidates"]["summary"]
     backup = xiv["textureCandidates"]["backup"]
+    summary = preflight["summary"]
+    if (preflight.get("schema") != "ggd.kof-xiv-native-container-probe@2"
+            or summary.get("completeModelPilots") != 0
+            or summary.get("nativeClipLabelCandidates") != 338):
+        raise ValueError("KOF XIV native preflight is stale or overclaims conversion")
     return (
         f"- KOF 3D 來源批次：KOF XIV MAI、IOR、KYO 已抽取並逐檔 SHA 驗證 "
         f"{xiv['selectedExtraction']['verification']['checkedFiles']:,} 檔／{xiv['selectedExtraction']['verification']['checkedBytes']:,} bytes；"
         "18 個代表 OBAC／OMIR／OSEC／OTRA 容器已固定檔頭、bytes、SHA，Assimp 6.0 實讀 0/18；Blender 5.2.1 background probe 在列舉 importer 前即崩潰，"
         "所以模型、骨架、原生動作與 VFX 仍是已解包／轉換阻塞。"
+        f"新增只讀前導解析已把 MAI／IOR／KYO 的 {summary['verifiedSourceFiles']} 個核心容器再次逐檔對 manifest 驗證，"
+        f"只安全保留骨架名稱及 {summary['nativeClipLabelCandidates']} 個 OTRA 動作標籤；"
+        "OBAC 幾何／權重／bind 與 OTRA transform／時序仍未解碼，完整模型 pilot 仍為 0。"
         f"已額外解碼 {textures['files']} 張 1P COL DDS 為最大 {textures['maxEdge']}px PNG（{textures['bytes']:,} bytes），"
         f"完整 S3 GET／逐 member SHA 通過：`{backup['s3Uri']}`；"
         "但尚未材質綁定與視覺驗收。KOF XV Ash 左／右髮候選為 "

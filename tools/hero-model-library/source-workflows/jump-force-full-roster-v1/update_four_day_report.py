@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 PLAN = ROOT / "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json"
+UNENCRYPTED_AUDIT = ROOT / "materials/hero-model-library/source-inventories/jumpforce-unencrypted-readonly-audit-v1/receipt.json"
 REPORT = ROOT / "materials/hero-model-library/近四日新增模型動作特效清單.md"
 START = "<!-- generated:jump-force-full-roster-v1:start -->"
 END = "<!-- generated:jump-force-full-roster-v1:end -->"
@@ -45,7 +46,23 @@ def load_plan(path: Path = PLAN) -> dict:
     return plan
 
 
-def block(plan: dict) -> str:
+def load_unencrypted_audit(path: Path = UNENCRYPTED_AUDIT) -> dict:
+    audit = json.loads(path.read_text(encoding="utf-8"))
+    audio = audit.get("frozenStreamingAudio", {})
+    if (
+        audit.get("schema") != "ggd.jumpforce-unencrypted-readonly-audit@1"
+        or audit.get("fullMirror", {}).get("fullRawGame", {}).get("fileCount") != 3466
+        or audit.get("fullMirror", {}).get("pakAuthority", {}).get("summary", {}).get("verifiedContainers") != 6
+        or audio.get("decodedWavFiles") != 4034
+        or audio.get("sourceCopyIntegrity", {}).get("allByteIdentical") is not True
+        or audit.get("minimalCompletePilotAssessment", {}).get("result") != "no eligible pilot"
+    ):
+        raise ValueError("JUMP FORCE unencrypted audit is absent, stale or overclaims readiness")
+    return audit
+
+
+def block(plan: dict, audit: dict | None = None) -> str:
+    audit = audit or load_unencrypted_audit()
     summary = plan["summary"]
     mirror = plan["localMirrorTarget"]
     s3_status = mirror["s3Status"]
@@ -63,6 +80,8 @@ def block(plan: dict) -> str:
         f"現有完整 path index 已產生 **{summary['characters']} 個高信度 `chr####` 角色 family**，分 **{plan['scope']['batchCount']} 批**，共 **{summary['selectedMemberRelations']:,} 筆** patch-winner member 關係。這份數字包含六類主素材與 {summary['assetClasses']['metadata']['memberRelations']:,} 筆角色設定 member；不需要再掃描 LV99 的 Steam 目錄。",
         "",
         f"本機 mirror 已固定在 `{mirror['rawGameRoot']}`：**{mirror['fileCount']:,} 檔／{mirror['bytes']:,} bytes**，六顆 authority PAK 的檔名、bytes 與 SHA-256 已 **{mirror['verifiedPakCount']}/6** 逐檔通過。完整索引與收據見 `{mirror['evidenceGitPath']}`；S3 狀態為 `{s3_status}`（{s3_note}）。後續抽取不再需要 LV99 分享。",
+        "",
+        f"另外的未加密唯讀稽核已核對 Streaming {audit['frozenStreamingAudio']['sourceCopyIntegrity']['sourceAwbCount']} 個 AWB 與凍結副本完全相同，現有解碼 WAV {audit['frozenStreamingAudio']['decodedWavFiles']:,} 段；逐段說話者、語言、事件皆未審，因此不能綁英雄或技能。`chr0430` 達伊原始擷取與 VFX 套件仍完整保留；它的目前候選尚未滿足 draw-call 與動作要求。",
         "",
         "| 主素材類別 | 有候選角色 | 套件 | member 關係 | 狀態 |",
         "|---|---:|---:|---:|---|",
@@ -113,7 +132,7 @@ def expected_report(current: str, generated: str) -> str:
 
 def update(report_path: Path = REPORT, *, write: bool) -> None:
     current = report_path.read_text(encoding="utf-8")
-    expected = expected_report(current, block(load_plan()))
+    expected = expected_report(current, block(load_plan(), load_unencrypted_audit()))
     if write:
         report_path.write_text(expected, encoding="utf-8")
     elif current != expected:

@@ -1,0 +1,23 @@
+# JUMP FORCE 未加密素材唯讀稽核
+
+> 由 `build_audit.py` 生成。只讀既有本機鏡像與已擷取副本；沒有讀取或嘗試解密 PAK。
+
+## 保留與驗證
+
+- 完整鏡像：3,466 檔／23,856,777,652 bytes；六個 authority PAK SHA-256 全數通過。
+- Streaming 音訊：43 個 AWB，凍結副本名稱與位元完全相同；已解碼 4,034 WAV。
+- `chr0430` 達伊：已保留原生套件、模型匯出、貼圖與 Unreal 特效套件；模型、VFX 與音訊仍需各自完成技術轉換與身份／事件驗收。
+
+## 不可升級的狀態
+
+- 結論：`no eligible pilot`。
+- 全角色模型、動作、VFX 與設定仍在加密 PAK；本工作流不尋找、猜測、繞過或使用 AES key。
+- 已解碼音訊的角色、語言、台詞與技能事件仍是未審查；不能自動綁英雄或技能。
+- 達伊的既有候選未滿足 draw primitive 和動作要求，不得加入後台下拉。
+
+## 重跑
+
+```sh
+python3 tools/hero-model-library/source-workflows/jumpforce-unencrypted-readonly-audit-v1/build_audit.py --workspace ..
+python3 tools/hero-model-library/source-workflows/jumpforce-unencrypted-readonly-audit-v1/build_audit.py --workspace .. --check
+```

@@ -406,7 +406,8 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
     xiv_selected_root = workspace / "GGD-Asset-Library/intake/windows-readonly-20260913/kof-xiv-priority-mai-ior-kyo-v1"
     conversion_probe_path = repo / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json"
     texture_candidates_path = repo / "materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json"
-    for required in (downloads_path, windows_zip, wad_listing, xiv_selected_root / "files.jsonl.gz", conversion_probe_path, texture_candidates_path):
+    native_preflight_path = repo / "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json"
+    for required in (downloads_path, windows_zip, wad_listing, xiv_selected_root / "files.jsonl.gz", conversion_probe_path, texture_candidates_path, native_preflight_path):
         if not required.exists():
             raise FileNotFoundError(required)
 
@@ -426,6 +427,20 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
     ash_audio_review = validate_ash_audio_review(repo, workspace)
     conversion_probe = json_load(conversion_probe_path)
     texture_candidates = json_load(texture_candidates_path)
+    native_preflight = json_load(native_preflight_path)
+    expected_preflight_summary = {
+        "characters": 3,
+        "verifiedSourceFiles": 12,
+        "allSourceManifestSha256Verified": True,
+        "assimpAcceptedNativeContainers": 0,
+        "nativeClipLabelCandidates": 338,
+        "completeModelPilots": 0,
+        "status": "format-blocked-after-read-only-structural-preflight",
+    }
+    if (native_preflight.get("schema") != "ggd.kof-xiv-native-container-probe@2"
+            or native_preflight.get("sourceId") != KOF_XIV_SOURCE_ID
+            or native_preflight.get("summary") != expected_preflight_summary):
+        raise ValueError("KOF XIV native-container preflight is stale or overclaims readiness")
 
     all_artifacts = [artifact for rows in source_groups.values() for source in rows for artifact in source["modelArtifacts"]]
     claimed_artifacts = [artifact for artifact in all_artifacts if artifact["expectedSha256"]]
@@ -446,6 +461,7 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
             "windowsInventory": {"absolutePath": str(windows_zip.resolve()), "bytes": windows_zip.stat().st_size, "sha256": sha256(windows_zip), "receipt": win["scan-receipt.json"][0]},
             "kofXivWadListing": {"absolutePath": str(wad_listing.resolve()), "bytes": wad_listing.stat().st_size, "sha256": sha256(wad_listing)},
             "conversionProbe": {"path": str(conversion_probe_path.relative_to(repo)), "bytes": conversion_probe_path.stat().st_size, "sha256": sha256(conversion_probe_path)},
+            "nativeContainerPreflight": {"path": str(native_preflight_path.relative_to(repo)), "bytes": native_preflight_path.stat().st_size, "sha256": sha256(native_preflight_path)},
             "textureCandidates": {"path": str(texture_candidates_path.relative_to(repo)), "bytes": texture_candidates_path.stat().st_size, "sha256": sha256(texture_candidates_path)},
             "kofXvAshAudioReview": ash_audio_review["receipt"],
             "kofXvAshAudioReviewFiles": ash_audio_review["fileManifest"],
@@ -471,6 +487,11 @@ def build(repo: Path, workspace: Path) -> dict[str, Any]:
                 "sourceId": KOF_XIV_SOURCE_ID,
                 "nativeCharacterIds": sorted(KNOWN_XIV_IDENTITIES),
                 "verification": extracted_verification,
+            },
+            "nativeContainerPreflight": {
+                "receipt": {"path": str(native_preflight_path.relative_to(repo)), "bytes": native_preflight_path.stat().st_size, "sha256": sha256(native_preflight_path)},
+                "summary": native_preflight["summary"],
+                "conversionReadiness": "format-blocked; names and labels only, no decoded geometry, bind transforms, skin weights or motion keys",
             },
             "registeredSources": source_groups["xiv"],
             "conversionProbe": conversion_probe["kofXiv"],
@@ -553,6 +574,7 @@ def render_markdown(data: dict[str, Any]) -> str:
         f"- 已取得並逐檔重驗：MAI（不知火舞）、IOR（八神庵）、KYO（草薙京），{xiv['selectedExtraction']['verification']['checkedFiles']:,} 檔，{xiv['selectedExtraction']['verification']['checkedBytes']:,} bytes。",
         f"- 逐檔 SHA-256：{'PASS' if xiv['selectedExtraction']['verification']['allFilesSha256Verified'] else 'FAIL'}。",
         f"- 模型／骨架／動作：18 個代表容器已固定檔頭、bytes、SHA 並以 Assimp {xiv['conversionProbe']['assimpAcceptedFiles']}/18 實際讀取；OBAC、OMIR、OSEC、OTRA 仍無可用 reader。Blender 5.2.1 background probe 在列舉 importer 前即崩潰（exit {xiv['conversionProbe']['blenderBackgroundProbe']['exitCode']}），所以沒有把 Blender 安裝當成已可轉換。",
+        f"- 新的只讀前導解析再次對 MAI／IOR／KYO 的 {xiv['nativeContainerPreflight']['summary']['verifiedSourceFiles']} 個核心容器逐檔比對原始 manifest：Assimp 可讀 {xiv['nativeContainerPreflight']['summary']['assimpAcceptedNativeContainers']} 個，安全取得骨架名稱與 {xiv['nativeContainerPreflight']['summary']['nativeClipLabelCandidates']} 個 OTRA 動作標籤候選；OBAC 幾何／權重／bind 與 OTRA transform／時間仍未解碼，完整模型 pilot {xiv['nativeContainerPreflight']['summary']['completeModelPilots']}。",
         f"- 貼圖：已將 1P 根目錄的 {xiv['textureCandidates']['summary']['files']} 張 COL DDS 轉為可重建的 256px PNG（{xiv['textureCandidates']['summary']['bytes']:,} bytes），S3 完整讀回與逐檔 SHA：{'PASS' if xiv['textureCandidates'].get('backup', {}).get('fullGetVerified') and xiv['textureCandidates'].get('backup', {}).get('allMemberSha256Verified') else 'FAIL'}；它們是待材質映射與視覺驗收的獨立候選，不是模型成品。",
         "- 音訊：474 個 OGG 已在既有交付中解碼驗證；逐段說話者、語言和事件綁定待聽審。",
         "- 完整 WAD 當前沒有保留於 Mac 或已驗證 S3；其餘原生 ID 只有列檔資料，不計取得。",

@@ -12,6 +12,7 @@
 - 已取得並逐檔重驗：MAI（不知火舞）、IOR（八神庵）、KYO（草薙京），1,088 檔，424,539,810 bytes。
 - 逐檔 SHA-256：PASS。
 - 模型／骨架／動作：18 個代表容器已固定檔頭、bytes、SHA 並以 Assimp 0/18 實際讀取；OBAC、OMIR、OSEC、OTRA 仍無可用 reader。Blender 5.2.1 background probe 在列舉 importer 前即崩潰（exit -11），所以沒有把 Blender 安裝當成已可轉換。
+- 新的只讀前導解析再次對 MAI／IOR／KYO 的 12 個核心容器逐檔比對原始 manifest：Assimp 可讀 0 個，安全取得骨架名稱與 338 個 OTRA 動作標籤候選；OBAC 幾何／權重／bind 與 OTRA transform／時間仍未解碼，完整模型 pilot 0。
 - 貼圖：已將 1P 根目錄的 14 張 COL DDS 轉為可重建的 256px PNG（1,878,218 bytes），S3 完整讀回與逐檔 SHA：PASS；它們是待材質映射與視覺驗收的獨立候選，不是模型成品。
 - 音訊：474 個 OGG 已在既有交付中解碼驗證；逐段說話者、語言和事件綁定待聽審。
 - 完整 WAD 當前沒有保留於 Mac 或已驗證 S3；其餘原生 ID 只有列檔資料，不計取得。

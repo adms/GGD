@@ -1,0 +1,801 @@
+{
+  "schema": "ggd.jumpforce-unencrypted-readonly-audit@1",
+  "auditBasis": {
+    "mirrorFinishedAt": "2026-09-14T18:11:25.399744Z",
+    "operation": "read-only inventory of preserved local mirror and prior extracted data"
+  },
+  "scope": {
+    "explicitlyNotAttempted": [
+      "download from LV99",
+      "PAK extraction",
+      "AES key discovery, guessing, bypass, or use",
+      "hero definition or dropdown registration",
+      "Git history mutation"
+    ],
+    "allows": [
+      "local hash verification",
+      "unencrypted AWB copy comparison",
+      "existing extracted chr0430 and VFX inventory"
+    ]
+  },
+  "fullMirror": {
+    "mirrorSummary": {
+      "averageBytesPerSecond": 38268828.11809432,
+      "bytes": 23856777652,
+      "complete": true,
+      "copyMode": "rsync-archive-partial-no-delete",
+      "destination": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/raw-game",
+      "durationSeconds": 623.399744,
+      "fileCount": 3466,
+      "filesIndex": {
+        "bytes": 125979,
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260915/jump-force-steam-full-build-8523149/files.jsonl.gz",
+        "sha256": "6ee6b4c2a17c886f2ddf675a4a6028c40ec3e5fd59abfc8df0aa2414495f0d06"
+      },
+      "finishedAt": "2026-09-14T18:11:25.399744Z",
+      "schema": "ggd.local-readonly-game-mirror@1",
+      "source": "smb://lv99/common/JUMP FORCE",
+      "sourceMount": "/Volumes/JUMP FORCE",
+      "sourceReadOnly": true,
+      "startedAt": "2026-09-14T18:01:02Z"
+    },
+    "fullRawGame": {
+      "fileCount": 3466,
+      "bytes": 23856777652,
+      "suffixCounts": {
+        ".archive": 15,
+        ".awb": 43,
+        ".bin": 1,
+        ".brk": 9,
+        ".cer": 1,
+        ".cfg": 18,
+        ".cfu": 1,
+        ".cnv": 2,
+        ".csv": 1,
+        ".dict": 4,
+        ".dll": 20,
+        ".exe": 5,
+        ".glsl": 4,
+        ".hlsl": 3,
+        ".icu": 3,
+        ".ini": 1,
+        ".json": 1,
+        ".locmeta": 1,
+        ".locres": 15,
+        ".manifest": 1,
+        ".mp4": 186,
+        ".nrm": 4,
+        ".pak": 6,
+        ".png": 228,
+        ".res": 2680,
+        ".sig": 6,
+        ".tps": 3,
+        ".ttf": 12,
+        ".uasset": 191,
+        ".vdf": 1
+      }
+    },
+    "pakAuthority": {
+      "summary": {
+        "requiredContainers": 6,
+        "verifiedContainers": 6,
+        "verifiedBytes": 22379460912,
+        "allSha256Verified": true
+      },
+      "containers": [
+        {
+          "name": "pakchunk0-WindowsNoEditor.pak",
+          "bytes": 7279219593,
+          "sha256": "269a387514e350b6ac8f8a682981493b29770cb7037fc05563c01662db6ae7e8",
+          "identityVerified": true
+        },
+        {
+          "name": "pakchunk0-WindowsNoEditor_0_P.pak",
+          "bytes": 1543894441,
+          "sha256": "ccdf19ad139249bcfbbcc5cca8ef686e65b4c1a3e887cb9e2f9a3ccc99a8410d",
+          "identityVerified": true
+        },
+        {
+          "name": "pakchunk0-WindowsNoEditor_1_P.pak",
+          "bytes": 2532409095,
+          "sha256": "7176fd1aece82ed1d03ca90489243b9a99d5c4089755089a12746c2dccd9de11",
+          "identityVerified": true
+        },
+        {
+          "name": "pakchunk1-WindowsNoEditor.pak",
+          "bytes": 7060715441,
+          "sha256": "de69ca61609a8bc063d322862eb87850de7d923cbdd72834a827a330a0f58e74",
+          "identityVerified": true
+        },
+        {
+          "name": "pakchunk1-WindowsNoEditor_0_P.pak",
+          "bytes": 1552635741,
+          "sha256": "1dea8aca28195eca2f0d07c49c6e72e9d234fcebfeeab5d8cfaacdca9409b855",
+          "identityVerified": true
+        },
+        {
+          "name": "pakchunk1-WindowsNoEditor_1_P.pak",
+          "bytes": 2410586601,
+          "sha256": "365a16b2685934769cd1b606b443cbbd6a4ca85a7e9874e7bc222af53db71d09",
+          "identityVerified": true
+        }
+      ]
+    },
+    "unencryptedDirectlyParseable": {
+      "streamingAudio": {
+        "fileCount": 43,
+        "bytes": 536500157,
+        "suffixCounts": {
+          ".awb": 43
+        }
+      },
+      "movies": {
+        "fileCount": 377,
+        "bytes": 758880599,
+        "suffixCounts": {
+          ".mp4": 186,
+          ".uasset": 191
+        }
+      },
+      "note": "Streaming AWB is the directly decoded reusable class. Movies are presentation assets, not character model/action/VFX source."
+    }
+  },
+  "frozenStreamingAudio": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+    "summary": {
+      "schema": "ggd.jumpforce.streaming-audio-delivery.v1",
+      "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "source": "Steam App 816020 / build 8523149 / directly mounted Windows installation",
+      "sourceDirectory": "/Volumes/common/JUMP FORCE/JUMP_FORCE/Content/Sound/Streaming",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+      "decoder": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/tools/vgmstream-cli",
+        "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e",
+        "version": "r2117"
+      },
+      "summary": {
+        "originalAwbFiles": 43,
+        "originalAwbBytes": 536500157,
+        "decodedFiles": 4034,
+        "decodedBytes": 3212604542,
+        "knownDurationSeconds": 22132.294229165873,
+        "voiceSourceLabelFiles": 1794,
+        "soundEffectFiles": 2170,
+        "musicFiles": 70,
+        "speakerVerifiedFiles": 0,
+        "languageReviewedFiles": 0
+      },
+      "audioFileIndex": {
+        "path": "audio-file-index.json",
+        "bytes": 4067040,
+        "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+      },
+      "fileManifest": {
+        "path": "files-sha256.json",
+        "bytes": 920772,
+        "sha256": "44a724dc4cacfedc590b6586f8cdc6ca56d9bf9a7a83b74ca6bb27c74b96700c"
+      },
+      "classification": "EvnVoice/ActSE/BGM/SE are native bank labels only; language, speaker, dialogue, gameplay event and skill bindings remain unreviewed.",
+      "backendSelectable": false,
+      "deployed": false
+    },
+    "sourceCopyIntegrity": {
+      "sourceAwbCount": 43,
+      "frozenOriginalAwbCount": 43,
+      "sameNamedBanks": 43,
+      "allSourceBanksFrozen": true,
+      "allByteIdentical": true
+    },
+    "decodedWavFiles": 4034,
+    "decodedGroups": {
+      "100060_chr0060_ActSE": {
+        "wavFiles": 1,
+        "bytes": 515244
+      },
+      "100370_chr0370_ActSE": {
+        "wavFiles": 1,
+        "bytes": 73644
+      },
+      "130000_chr0000_EvnVoice": {
+        "wavFiles": 161,
+        "bytes": 43652242
+      },
+      "130010_chr0010_EvnVoice": {
+        "wavFiles": 33,
+        "bytes": 11510198
+      },
+      "130020_chr0020_EvnVoice": {
+        "wavFiles": 68,
+        "bytes": 20888156
+      },
+      "130030_chr0030_EvnVoice": {
+        "wavFiles": 60,
+        "bytes": 21823536
+      },
+      "130040_chr0040_EvnVoice": {
+        "wavFiles": 56,
+        "bytes": 13328014
+      },
+      "130050_chr0050_EvnVoice": {
+        "wavFiles": 16,
+        "bytes": 11160484
+      },
+      "130060_chr0060_EvnVoice": {
+        "wavFiles": 143,
+        "bytes": 32001518
+      },
+      "130070_chr0070_EvnVoice": {
+        "wavFiles": 15,
+        "bytes": 4519052
+      },
+      "130080_chr0080_EvnVoice": {
+        "wavFiles": 73,
+        "bytes": 21323270
+      },
+      "130090_chr0090_EvnVoice": {
+        "wavFiles": 30,
+        "bytes": 14384084
+      },
+      "130100_chr0100_EvnVoice": {
+        "wavFiles": 15,
+        "bytes": 5951952
+      },
+      "130110_chr0110_EvnVoice": {
+        "wavFiles": 20,
+        "bytes": 4910518
+      },
+      "130120_chr0120_EvnVoice": {
+        "wavFiles": 119,
+        "bytes": 27899578
+      },
+      "130130_chr0130_EvnVoice": {
+        "wavFiles": 19,
+        "bytes": 4636078
+      },
+      "130140_chr0140_EvnVoice": {
+        "wavFiles": 2,
+        "bytes": 1314046
+      },
+      "130150_chr0150_EvnVoice": {
+        "wavFiles": 34,
+        "bytes": 10251070
+      },
+      "130160_chr0160_EvnVoice": {
+        "wavFiles": 7,
+        "bytes": 2022462
+      },
+      "130170_chr0170_EvnVoice": {
+        "wavFiles": 1,
+        "bytes": 426780
+      },
+      "130240_chr0240_EvnVoice": {
+        "wavFiles": 28,
+        "bytes": 6992980
+      },
+      "130260_chr0260_EvnVoice": {
+        "wavFiles": 10,
+        "bytes": 4766326
+      },
+      "130270_chr0270_EvnVoice": {
+        "wavFiles": 15,
+        "bytes": 5161884
+      },
+      "130300_chr0300_EvnVoice": {
+        "wavFiles": 25,
+        "bytes": 6579860
+      },
+      "130310_chr0310_EvnVoice": {
+        "wavFiles": 18,
+        "bytes": 5419748
+      },
+      "130320_chr0320_EvnVoice": {
+        "wavFiles": 17,
+        "bytes": 5764632
+      },
+      "130330_chr0330_EvnVoice": {
+        "wavFiles": 17,
+        "bytes": 6603896
+      },
+      "130360_chr0360_EvnVoice": {
+        "wavFiles": 15,
+        "bytes": 3698398
+      },
+      "130370_chr0370_EvnVoice": {
+        "wavFiles": 8,
+        "bytes": 3519146
+      },
+      "130410_chr0410_EvnVoice": {
+        "wavFiles": 16,
+        "bytes": 3749810
+      },
+      "130420_chr0420_EvnVoice": {
+        "wavFiles": 6,
+        "bytes": 2193132
+      },
+      "130440_chr0440_EvnVoice": {
+        "wavFiles": 107,
+        "bytes": 44804866
+      },
+      "130450_chr0450_EvnVoice": {
+        "wavFiles": 143,
+        "bytes": 68044904
+      },
+      "130460_chr0460_EvnVoice": {
+        "wavFiles": 89,
+        "bytes": 37162374
+      },
+      "130470_chr0470_EvnVoice": {
+        "wavFiles": 77,
+        "bytes": 34336650
+      },
+      "130490_chr0490_EvnVoice": {
+        "wavFiles": 65,
+        "bytes": 18882820
+      },
+      "130500_chr0500_EvnVoice": {
+        "wavFiles": 42,
+        "bytes": 13728702
+      },
+      "130510_chr0510_EvnVoice": {
+        "wavFiles": 220,
+        "bytes": 77374718
+      },
+      "137000_chr7000_EvnVoice": {
+        "wavFiles": 4,
+        "bytes": 2032498
+      },
+      "900000_ResidentBGM": {
+        "wavFiles": 70,
+        "bytes": 1974848860
+      },
+      "910000_ResidentSE": {
+        "wavFiles": 1240,
+        "bytes": 332527388
+      },
+      "910001_BattleResSE": {
+        "wavFiles": 868,
+        "bytes": 286885888
+      },
+      "910003_EventSE": {
+        "wavFiles": 60,
+        "bytes": 14933136
+      }
+    },
+    "evidence": [
+      {
+        "relativePath": "source-summary.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/source-summary.json",
+        "exists": true,
+        "bytes": 1614,
+        "sha256": "ed3323b69c03d8e0e5307c7a2fc7568b84d5af920d65197e5487cf8289f63641"
+      },
+      {
+        "relativePath": "audio-file-index.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/audio-file-index.json",
+        "exists": true,
+        "bytes": 4067040,
+        "sha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+      },
+      {
+        "relativePath": "files-sha256.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/files-sha256.json",
+        "exists": true,
+        "bytes": 920772,
+        "sha256": "44a724dc4cacfedc590b6586f8cdc6ca56d9bf9a7a83b74ca6bb27c74b96700c"
+      },
+      {
+        "relativePath": "original/130440_chr0440_EvnVoice.awb",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1/original/130440_chr0440_EvnVoice.awb",
+        "exists": true,
+        "bytes": 7495432,
+        "sha256": "e7ca492ec1be871b3f21868726f7bae586fccbffee6116e676e6c8d593e6cbc5"
+      }
+    ]
+  },
+  "frozenChr0430Dai": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+    "sourceManifest": {
+      "schema": "ggd-jump-force-dai-extraction@1",
+      "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+      "sourceGame": "JUMP FORCE",
+      "platform": "Windows (Steam)",
+      "nativeCharacterId": "chr0430",
+      "characterNameZh": "小呆／達伊",
+      "originalName": "Dai",
+      "heroIds": [
+        "godie-nbbc",
+        "godie-n01c"
+      ],
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+      "counts": {
+        "nativePackages": 1942,
+        "modelGltf": 11,
+        "modelFiles": 22,
+        "texturePng": 36,
+        "textureFiles": 36,
+        "allFrozenFiles": 2000
+      },
+      "bytes": {
+        "nativePackages": 217380432,
+        "modelExports": 5811795,
+        "textureExports": 75828502,
+        "allFrozenFiles": 299020729
+      },
+      "extensions": {
+        ".uasset": 971,
+        ".uexp": 971
+      },
+      "modelEvidence": {
+        "modelCount": 11,
+        "allSkinned": true,
+        "jointCounts": [
+          159
+        ],
+        "totalAnimationCount": 0,
+        "models": [
+          {
+            "path": "Character/chr0430/chr0430_damage_A.gltf",
+            "bytes": 31574,
+            "sha256": "6e74c740da690fbe73f57916f40d8e7b3e54bc16637ec0eece0b5f91bd4fdffb",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 2,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 2
+          },
+          {
+            "path": "Character/chr0430/chr0430_damage_AB.gltf",
+            "bytes": 35642,
+            "sha256": "f0fbe85eaa4f5c1b693d713c4575b8f388ab9edd0ced36f70b53ad8ce8ec80ed",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 4,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 4
+          },
+          {
+            "path": "Character/chr0430/chr0430_damage_B.gltf",
+            "bytes": 33607,
+            "sha256": "3148e912e8f991d7b33396530fb33e2890a52efa2e998a8d4b257f76a3dd3d4d",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 3,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 3
+          },
+          {
+            "path": "Character/chr0430/chr0430_damage_C.gltf",
+            "bytes": 39688,
+            "sha256": "5259f98cabc67310b9f1b7dbbfa93a1e3a24f8a7bb1b5b9e9f9e0f3a9bc781c9",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 6,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 6
+          },
+          {
+            "path": "Character/chr0430/chr0430_equipment1.gltf",
+            "bytes": 29612,
+            "sha256": "53cb05562ca8aa1ccef3d405f136359f7ee5643b69e3c47606282636bf9356d6",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 1,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 1
+          },
+          {
+            "path": "Character/chr0430/chr0430_equipment2.gltf",
+            "bytes": 31602,
+            "sha256": "8da573ff4b0d539d07c4d9981d87b2def5b1e69c1ea4f43c20c592ea6300a964",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 2,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 2
+          },
+          {
+            "path": "Character/chr0430/chr0430_form0.gltf",
+            "bytes": 37617,
+            "sha256": "57e1ed285b0d8e6e99d49d9815b357336b98f9fa6dbf8270300a2bca9252e506",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 5,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 5
+          },
+          {
+            "path": "Character/chr0430/chr0430_form0_damage_AB.gltf",
+            "bytes": 33594,
+            "sha256": "8ab795dc0a9d789de1230cc13f414157bd5698fb8f3a4e236d110ea924a7d1df",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 3,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 3
+          },
+          {
+            "path": "Character/chr0430/chr0430_form0_damage_C.gltf",
+            "bytes": 29619,
+            "sha256": "df149c05a4fd9011a30ffe3167257c795d35c7daf1ebd91a9f0cc28b87bd540d",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 1,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 1
+          },
+          {
+            "path": "Character/chr0430/chr0430_form0_head.gltf",
+            "bytes": 37692,
+            "sha256": "ce2eb948fcc5784286ab08acbc545bc7da207e591f4699d8ab2e8d3e0eccd427",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 5,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 5
+          },
+          {
+            "path": "Character/chr0430/chr0430_form1_head.gltf",
+            "bytes": 41724,
+            "sha256": "d0791d00f5fc7a81d44d07cedebf447afb46d60ac8f9849ec623d595afccb0de",
+            "sceneCount": 1,
+            "nodeCount": 160,
+            "meshCount": 1,
+            "primitiveCount": 7,
+            "skinCount": 1,
+            "jointCounts": [
+              159
+            ],
+            "animationCount": 0,
+            "materialCount": 7
+          }
+        ]
+      },
+      "filesIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
+        "bytes": 98644,
+        "sha256": "16eaf9ce10789a454eab83bf7af066f3772e09e699e773292c8df72b610e15f0"
+      },
+      "states": {
+        "sourceFound": true,
+        "downloaded": true,
+        "extracted": true,
+        "gameConfigurationPathsIndexed": true,
+        "gameConfigurationPackagesExtracted": false,
+        "gameConfigurationPackagesParsed": false,
+        "convertedToGgd": false,
+        "visuallyAccepted": false,
+        "registered": false,
+        "backendSelectable": false,
+        "productionDeployed": false
+      },
+      "gaps": [
+        "GGD GLB composition and material binding are not complete.",
+        "No native animation clips are present in the current model export.",
+        "Character and skill configuration paths are indexed separately, but their 40 patch-selected files are absent from this frozen extraction.",
+        "VFX and audio packages are extracted but not decoded or event-bound.",
+        "Backend registration and production switch verification are pending."
+      ]
+    },
+    "nativePackageBreakdown": [
+      {
+        "fileCount": 150,
+        "bytes": 104946928,
+        "suffixCounts": {
+          ".uasset": 75,
+          ".uexp": 75
+        },
+        "kind": "character",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Character/chr0430"
+      },
+      {
+        "fileCount": 524,
+        "bytes": 30593319,
+        "suffixCounts": {
+          ".uasset": 262,
+          ".uexp": 262
+        },
+        "kind": "effects",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Effects/avater/0430"
+      },
+      {
+        "fileCount": 198,
+        "bytes": 18603036,
+        "suffixCounts": {
+          ".uasset": 99,
+          ".uexp": 99
+        },
+        "kind": "effectMaterials",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Effects/avater/0430/Materials"
+      },
+      {
+        "fileCount": 42,
+        "bytes": 472839,
+        "suffixCounts": {
+          ".uasset": 21,
+          ".uexp": 21
+        },
+        "kind": "effectMeshes",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Effects/avater/0430/Meshes"
+      },
+      {
+        "fileCount": 284,
+        "bytes": 11517444,
+        "suffixCounts": {
+          ".uasset": 142,
+          ".uexp": 142
+        },
+        "kind": "effectParticles",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Effects/avater/0430/Particles"
+      }
+    ],
+    "evidence": [
+      {
+        "relativePath": "source-manifest.json",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/source-manifest.json",
+        "exists": true,
+        "bytes": 6783,
+        "sha256": "66e239b2cf9905358d47be1a7b94b284db98f137bf79bdd038204b51e13ec1bb"
+      },
+      {
+        "relativePath": "files.jsonl.gz",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
+        "exists": true,
+        "bytes": 98644,
+        "sha256": "16eaf9ce10789a454eab83bf7af066f3772e09e699e773292c8df72b610e15f0"
+      },
+      {
+        "relativePath": "umodel-character-export-v2/Character/chr0430/chr0430_form0.gltf",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_form0.gltf",
+        "exists": true,
+        "bytes": 37617,
+        "sha256": "57e1ed285b0d8e6e99d49d9815b357336b98f9fa6dbf8270300a2bca9252e506"
+      },
+      {
+        "relativePath": "umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_C.png",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_C.png",
+        "exists": true,
+        "bytes": 3993634,
+        "sha256": "3988e1d91c22c827a70f0c61c6dc910cbfda3efbe5214519eb8fbfb112ef47c8"
+      },
+      {
+        "relativePath": "native-packages/JUMP_FORCE/Content/Character/chr0430/chr0430_Skeleton.uasset",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Character/chr0430/chr0430_Skeleton.uasset",
+        "exists": true,
+        "bytes": 3307,
+        "sha256": "cf5f3c0dfa7dda3e9beeb5d1885ea0f4645ef7f37b3e7a870c53dd6235cf3e3d"
+      },
+      {
+        "relativePath": "native-packages/JUMP_FORCE/Content/Effects/avater/0430/Particles/ava000_ski0430_00_00.uasset",
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/native-packages/JUMP_FORCE/Content/Effects/avater/0430/Particles/ava000_ski0430_00_00.uasset",
+        "exists": true,
+        "bytes": 30409,
+        "sha256": "a44c953b61a27f7ff86f1282219bcdb134a1e4d05592641e7840aabcff21975f"
+      }
+    ]
+  },
+  "centralRegistryReadback": [
+    {
+      "id": "steam-jump-force-streaming-audio-816020-build-8523149",
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "audio-decoded-pending-listening-review",
+      "defaultEligible": false,
+      "publicationStatus": "s3-readback-verified",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-listening-and-character-mapping",
+        "selectionVerified": false
+      },
+      "localPath": "GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-streaming-audio-816020-build-8523149/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.zip",
+        "bytes": 3202524061,
+        "sha256": "1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      }
+    },
+    {
+      "id": "steam-jump-force-priority-original-assets-build-8523149",
+      "acquisitionStatus": "priority-scope-extracted-verified",
+      "readiness": "complete-body-source-textures-webgl-accepted; formal-decimation-geometry-texture-validated-draw-motion-blocked",
+      "defaultEligible": false,
+      "publicationStatus": "s3-readback-verified",
+      "backendIntegration": {
+        "required": true,
+        "state": "pending-standardization-and-validation",
+        "heroIds": [
+          "godie-nbbc",
+          "godie-n01c"
+        ],
+        "registered": false,
+        "selectable": false,
+        "selectionVerified": false,
+        "productionDeployed": false
+      },
+      "localPath": "GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-priority-original-assets-build-8523149/b612750c438b6ffbdd86a9f9b4a849cfde85fecea532a78b3c4c4acd151f679d.zip",
+        "bytes": 168809568,
+        "sha256": "b612750c438b6ffbdd86a9f9b4a849cfde85fecea532a78b3c4c4acd151f679d",
+        "archiveFormat": "zip",
+        "readbackVerified": true,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true
+      }
+    }
+  ],
+  "minimalCompletePilotAssessment": {
+    "result": "no eligible pilot",
+    "closestCandidate": "chr0430 Dai JUMP FORCE original-source bundle",
+    "modelBlockers": [
+      "formal candidate f8f3f1c reduces 59,768 to 7,947 triangles but retains 20 primitives against hard draw limit 6",
+      "current native model export has 0 animation clips",
+      "GGD GLB composition/material binding formal intake remains unverified"
+    ],
+    "vfxBlockers": [
+      "Preserved particle, mesh, texture and material packages have no converted Unreal graph/parameter data or skill-event bindings."
+    ],
+    "audioBlockers": [
+      "All decoded WAVs retain unreviewed speaker, language, dialogue and gameplay-event identity.",
+      "Bank labels cannot attach audio to a hero or skill without per-item review."
+    ],
+    "pakBlocker": "Full-roster character models, animations, VFX and configuration remain in encrypted PAK containers; this workflow never seeks or uses an AES key.",
+    "state": "source retained and indexed; no model, action, VFX, audio or complete hero is newly registered, selectable or deployed"
+  },
+  "reproduction": {
+    "write": "python3 tools/hero-model-library/source-workflows/jumpforce-unencrypted-readonly-audit-v1/build_audit.py --workspace ..",
+    "check": "python3 tools/hero-model-library/source-workflows/jumpforce-unencrypted-readonly-audit-v1/build_audit.py --workspace .. --check"
+  }
+}

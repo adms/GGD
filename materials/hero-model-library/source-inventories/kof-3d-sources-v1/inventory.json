@@ -16,8 +16,8 @@
   "inputs": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3371658,
-      "sha256": "024c1d0a505c7cad3d5babd7b4c16b63b4c8dd41773038d37489acb185ee3fff"
+      "bytes": 3395167,
+      "sha256": "9a5654eee2c06d447a60634dcfeac91f66c32f0989bcffe62e9d98e512d9e0f4"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -53,6 +53,11 @@
       "path": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/conversion-probe.json",
       "bytes": 17614,
       "sha256": "03204b7212c86ec0bce17d644c0774063a5eace3f2dfb2b1b032fe7ee02af424"
+    },
+    "nativeContainerPreflight": {
+      "path": "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+      "bytes": 130240,
+      "sha256": "545b5ee4cd1e7e15c59a36f46af75936bbb085b3686829b83ee1ea6a178536ac"
     },
     "textureCandidates": {
       "path": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/texture-candidates.json",
@@ -3316,6 +3321,23 @@
         "allFilesSha256Verified": true
       }
     },
+    "nativeContainerPreflight": {
+      "receipt": {
+        "path": "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+        "bytes": 130240,
+        "sha256": "545b5ee4cd1e7e15c59a36f46af75936bbb085b3686829b83ee1ea6a178536ac"
+      },
+      "summary": {
+        "characters": 3,
+        "verifiedSourceFiles": 12,
+        "allSourceManifestSha256Verified": true,
+        "assimpAcceptedNativeContainers": 0,
+        "nativeClipLabelCandidates": 338,
+        "completeModelPilots": 0,
+        "status": "format-blocked-after-read-only-structural-preflight"
+      },
+      "conversionReadiness": "format-blocked; names and labels only, no decoded geometry, bind transforms, skin weights or motion keys"
+    },
     "registeredSources": [
       {
         "sourceId": "kof-xiv-mai-audio",
@@ -4940,11 +4962,19 @@
         ],
         "acquisitionStatus": "downloaded-verified",
         "readiness": "audio-intake-pending-listening-review",
-        "publicationStatus": "local-only-not-uploaded",
+        "publicationStatus": "s3-readback-verified",
         "absoluteLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio",
         "existsLocal": true,
         "modelArtifacts": [],
-        "backup": null,
+        "backup": {
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-iori-audio-float32-v1/5da01378e60d7c165ca41dcb76cebf6b3dd75fa8403a883ab2b6900c89e2466f.zip",
+          "bytes": 28678162,
+          "sha256": "5da01378e60d7c165ca41dcb76cebf6b3dd75fa8403a883ab2b6900c89e2466f",
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
+        },
         "backendIntegration": {
           "required": true,
           "state": "pending-audio-review",
@@ -5072,7 +5102,7 @@
         ],
         "acquisitionStatus": "downloaded-verified",
         "readiness": "pending-standardization",
-        "publicationStatus": "local-only-not-uploaded",
+        "publicationStatus": "s3-readback-verified",
         "absoluteLocalPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm",
         "existsLocal": true,
         "modelArtifacts": [
@@ -5106,8 +5136,13 @@
           }
         ],
         "backup": {
-          "status": "not-uploaded",
-          "readbackVerified": false
+          "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/kof-xv-mai-sfmlab-lordscrub-v1/efd7a88fc5405424835ef37b85572047a8d2ff5bd7c00066fee9632f15d3c2d6.zip",
+          "bytes": 181996414,
+          "sha256": "efd7a88fc5405424835ef37b85572047a8d2ff5bd7c00066fee9632f15d3c2d6",
+          "archiveFormat": "zip",
+          "readbackVerified": true,
+          "fullGetVerified": true,
+          "allMemberSha256Verified": true
         },
         "backendIntegration": {
           "required": true,
