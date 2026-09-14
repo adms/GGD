@@ -405,53 +405,10 @@ cmd_deploy() {
     # ⭐ 所以在 checkout **之前**先問：目標 commit 會不會蓋到任何未追蹤檔？
     #   會 ⇒ **先備份**（⛔ 不是 `rm`、⛔ 也不是自動搬走：那是同一個動詞的兩個名字）。
     # ⭐ GH#1156 —— 掃描本體與它的兩個洞（中文路徑、靜默失敗）見 `clash_scan_script` 的註解。
-    local clash clash_raw clash_rc=0 clash_err
-    clash_err=$(mktemp "${TMPDIR:-/tmp}/ggd-clash-err.XXXXXX") || die "建不了暫存檔 —— ⛔ 不往下走"
-    clash_raw=$(clash_scan_script | r "cd $REMOTE_REPO && sh -s -- $deploy_sha $CLASH_SCAN_OK" 2>"$clash_err") \
-      || clash_rc=$?
-    if clash=$(clash_scan_accept "$clash_rc" "$clash_raw"); then
-      :
-    elif [ "${GGD_MINI_CLASH_FAILOPEN:-}" = 1 ]; then
-      clash=$(printf '%s\n' "$clash_raw" | grep -vxF "$CLASH_SCAN_OK" || true)
-      warn "⚠️ 未追蹤碰撞掃描**沒有跑完**（exit ${clash_rc}）而你設了 GGD_MINI_CLASH_FAILOPEN=1 ⇒ 照舊放行。"
-      warn "   ⛔ 只備份收得到的 $(printf '%s\n' "$clash" | grep -c .) 行 —— 其餘未追蹤檔 checkout 時**不會被備份**。"
-    else
-      tail -20 "$clash_err" | sed 's/^/    /'
-      rm -f "$clash_err"
-      die "⛔ 未追蹤碰撞掃描沒有跑完（exit ${clash_rc}，⛔ 沒收到結束哨兵）—— ⛔ **不 checkout**。
-   ⚠️ 在此之前這裡是 \`|| true\` ⇒ 掃描失敗與「沒有碰撞」長得一模一樣，而 checkout -f 會靜靜蓋掉未追蹤檔（GH#884）。
-   ⇒ 先看上面的 stderr；確定 mini 上沒有要保的未追蹤檔才用逃生口：GGD_MINI_CLASH_FAILOPEN=1 bash scripts/mini-deploy.sh deploy"
-    fi
-    rm -f "$clash_err"
-    if [ -n "${clash// /}" ]; then
-      local n_clash bdir
-      n_clash=$(printf '%s\n' "$clash" | grep -c .)
-      bdir="~/host-overwrite-backups/overwrite_temp_$(date +%Y%m%d-%H%M%S)"
-      warn "⚠️ mini 上有 $n_clash 個**未追蹤**檔會被這次 checkout 覆蓋："
-      printf '%s\n' "$clash" | sed 's/^/     · /'
-      # ⭐ 先備份 —— ⛔ 而且用 `cp`，⛔ 不是 `mv`（owner 的規矩：
-      #   「記得要使用 cp 而不是 mv 避免用戶終端後的資料不完整」）。
-      r "mkdir -p $bdir && cd $REMOTE_REPO && printf '%s\n' '$clash' | while read -r f; do
-           [ -n \"\$f\" ] || continue
-           mkdir -p \"$bdir/\$(dirname \"\$f\")\" && cp -p \"\$f\" \"$bdir/\$f\" 2>/dev/null \
-             || printf 'UNREADABLE %s\n' \"\$f\" >> $bdir/_failed.txt
-         done" || die "⛔ 備份失敗 —— ⛔ 不在沒有退路的情況下 checkout"
-      # ⚠️ ⭐ root 所有的檔 `cp` 會失敗 ⇒ **指名它並停下來**，⛔ 不是靜默繼續。
-      local failed
-      failed=$(r "cat $bdir/_failed.txt 2>/dev/null" || true)
-      [ -z "${failed// /}" ] || die "⛔ 這幾份備份不起來（多半是 root 所有，**需要 sudo**）：
-  $failed
-     ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
-      ok "已備份 $n_clash 份到 ${bdir}（⭐ 帳本：`ls $bdir`）"
-    fi
-    r "cd $REMOTE_REPO && git checkout -f -q $deploy_sha" || die "checkout $deploy_sha 失敗"
-    # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
-    if [ -n "${clash// /}" ]; then
-      local kept
-      kept=$(r "find ${bdir} -type f ! -name _failed.txt | wc -l" 2>/dev/null | tr -d ' ')
-      [ "${kept:-0}" -ge 1 ] || die "⛔ checkout 之後備份目錄是空的 —— 那幾份檔**已經沒有了**"
-      ok "備份複驗：$kept 份還在"
-    fi
+    # ⭐ 掃描 → 備份 → checkout → 複驗 住在 `guarded_checkout`（檔尾）——
+    #   ⛔ 在此之前它們寫在 cmd_deploy 中間，測試抽不出來 ⇒ 備份那幾條只能是字串守衛，
+    #   ⇒ 備份落點從 b447128fa（2026-08-31）起就是錯的，而沒有東西紅（見 guarded_checkout 的註解）。
+    guarded_checkout "$deploy_sha"
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$deploy_sha" ] \
     && ok "mini 對到 $(echo "$deploy_sha" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
@@ -846,6 +803,94 @@ clash_scan_accept() {
   local rc=$1 raw=$2
   [ "$rc" -eq 0 ] && [ "${raw##*$'\n'}" = "$CLASH_SCAN_OK" ] || return 1
   printf '%s' "${raw%"$CLASH_SCAN_OK"}"
+}
+
+# ⭐⭐ GH#884 —— **備份段**（在 mini 上跑）：碰撞清單上每一個檔 `cp -p` 到 `$HOME/<相對目錄>/`，
+#   複製不了的寫進 `_failed.txt`。用法：clash_backup_script <清單> | r "cd $REMOTE_REPO && sh -s -- <相對目錄>"
+#
+# ⛔⛔ 在此之前（b447128fa 起，寫在 cmd_deploy 中間）是：
+#     bdir="~/host-overwrite-backups/…"
+#     r "mkdir -p $bdir && cd $REMOTE_REPO && printf '%s\n' '$clash' | while read -r f; do
+#          mkdir -p \"$bdir/…\" && cp -p \"\$f\" \"$bdir/\$f\" … >> $bdir/_failed.txt"
+#   ⇒ ⚠️ **包進雙引號的 `~` 不展開**，而那時已經 `cd $REMOTE_REPO`
+#   ⇒ 備份實際落在 `$REMOTE_REPO/~/host-overwrite-backups/…`（repo 裡一個叫 `~` 的未追蹤目錄）
+#   ⇒ 沒包引號的 `_failed.txt`／checkout 之後的 `find` 看的卻是 `$HOME/…` ⇒ 量到 0
+#   ⇒ ⭐ **在 `git checkout -f` 之後**才 die「那幾份檔已經沒有了」——而檔其實在 repo/~ 底下。
+#   （2026-09-15 審查者用 zsh -c 照原樣模擬抓到。GH#1156 讓中文路徑的碰撞抓得到之後，走進這條分支的部署變多。）
+#   ⚠️ 同一段還有兩個同源的洞：清單塞進 `'$clash'` ⇒ 檔名帶 `'` 整段就斷；成功訊息裡的反引號
+#     `ls $bdir` 是在**本機**執行的。
+#   ⚠️ 更正 b447128fa 訊息裡的兩句：「先備份到 `~/host-overwrite-backups/…`」（實際落在 repo/~）、
+#     「守衛驗的是那個 git 行為，⛔ 不是腳本裡的字串」（備份那三條其實是字串守衛，所以落點錯了沒有東西紅）。
+# ⭐ 修法與 clash_scan_script 同形：quoted heredoc ＋ `sh -s`，位置寫 `$HOME`（到 mini 上才展開），
+#   清單也走 quoted heredoc ⇒ ⛔ 沒有任何一層跳脫。miniDeployUntracked.test.ts 用本機假遠端真的跑。
+clash_backup_script() {
+  local list=$1 end=__GGD_CLASH_LIST_END__
+  case $'\n'"$list"$'\n' in
+    *$'\n'"$end"$'\n'*) echo "⛔ 碰撞清單裡有一行剛好是 $end —— ⛔ 不備份" >&2; return 1 ;;
+  esac
+  cat <<'SH'
+  set -u
+  bdir="$HOME/$1"
+  mkdir -p "$bdir" || exit 3
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    if mkdir -p "$bdir/$(dirname "./$f")" && cp -p "./$f" "$bdir/$f" 2>/dev/null; then :
+    else printf 'UNREADABLE %s\n' "$f" >> "$bdir/_failed.txt" || exit 4
+    fi
+SH
+  printf "  done <<'%s'\n%s\n%s\n" "$end" "$list" "$end"
+}
+
+# ⭐⭐ GH#884／GH#1156 —— checkout **之前**：掃碰撞 → 先備份 → checkout → 複驗備份。
+#   用法：guarded_checkout <deploy_sha>（用 r／REMOTE_REPO／die／warn／ok）。
+#   ⭐ 拆成函式是為了讓測試跑**出貨的這一段**、只換掉 r ——
+#   ⛔ 不是在測試裡另寫一份呼叫點（失敗形態⑤：那樣把下面的 die 改成 `:` 也不會紅）。
+guarded_checkout() {
+  local deploy_sha=$1
+  local clash clash_raw clash_rc=0 clash_err
+  clash_err=$(mktemp "${TMPDIR:-/tmp}/ggd-clash-err.XXXXXX") || die "建不了暫存檔 —— ⛔ 不往下走"
+  clash_raw=$(clash_scan_script | r "cd $REMOTE_REPO && sh -s -- $deploy_sha $CLASH_SCAN_OK" 2>"$clash_err") \
+    || clash_rc=$?
+  if clash=$(clash_scan_accept "$clash_rc" "$clash_raw"); then
+    :
+  elif [ "${GGD_MINI_CLASH_FAILOPEN:-}" = 1 ]; then
+    clash=$(printf '%s\n' "$clash_raw" | grep -vxF "$CLASH_SCAN_OK" || true)
+    warn "⚠️ 未追蹤碰撞掃描**沒有跑完**（exit ${clash_rc}）而你設了 GGD_MINI_CLASH_FAILOPEN=1 ⇒ 照舊放行。"
+    warn "   ⛔ 只備份收得到的 $(printf '%s\n' "$clash" | grep -c .) 行 —— 其餘未追蹤檔 checkout 時**不會被備份**。"
+  else
+    tail -20 "$clash_err" | sed 's/^/    /'
+    rm -f "$clash_err"
+    die "⛔ 未追蹤碰撞掃描沒有跑完（exit ${clash_rc}，⛔ 沒收到結束哨兵）—— ⛔ **不 checkout**。
+   ⚠️ 在此之前這裡是 \`|| true\` ⇒ 掃描失敗與「沒有碰撞」長得一模一樣，而 checkout -f 會靜靜蓋掉未追蹤檔（GH#884）。
+   ⇒ 先看上面的 stderr；確定 mini 上沒有要保的未追蹤檔才用逃生口：GGD_MINI_CLASH_FAILOPEN=1 bash scripts/mini-deploy.sh deploy"
+  fi
+  rm -f "$clash_err"
+  local n_clash=0 bdir_rel
+  bdir_rel="host-overwrite-backups/overwrite_temp_$(date +%Y%m%d-%H%M%S)"
+  if [ -n "${clash// /}" ]; then
+    n_clash=$(printf '%s\n' "$clash" | grep -c .)
+    warn "⚠️ mini 上有 $n_clash 個**未追蹤**檔會被這次 checkout 覆蓋："
+    printf '%s\n' "$clash" | sed 's/^/     · /'
+    # ⭐ 先備份 —— ⛔ 而且用 `cp`，⛔ 不是 `mv`（owner 的規矩：
+    #   「記得要使用 cp 而不是 mv 避免用戶終端後的資料不完整」）。
+    clash_backup_script "$clash" | r "cd $REMOTE_REPO && sh -s -- $bdir_rel" \
+      || die "⛔ 備份失敗 —— ⛔ 不在沒有退路的情況下 checkout"
+    # ⚠️ ⭐ root 所有的檔 `cp` 會失敗 ⇒ **指名它並停下來**，⛔ 不是靜默繼續。
+    local failed
+    failed=$(r "cat \"\$HOME/$bdir_rel/_failed.txt\" 2>/dev/null" || true)
+    [ -z "${failed// /}" ] || die "⛔ 這幾份備份不起來（多半是 root 所有，**需要 sudo**）：
+  $failed
+     ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
+    ok "已備份 $n_clash 份到 mini 的 ~/${bdir_rel}"
+  fi
+  r "cd $REMOTE_REPO && git checkout -f -q $deploy_sha" || die "checkout $deploy_sha 失敗"
+  # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
+  if [ -n "${clash// /}" ]; then
+    local kept
+    kept=$(r "find \"\$HOME/$bdir_rel\" -type f ! -name _failed.txt | wc -l" 2>/dev/null | tr -d ' ')
+    [ "${kept:-0}" -ge "$n_clash" ] || die "⛔ checkout 之後備份只剩 ${kept:-0}/$n_clash 份 —— 其餘那幾份檔**已經沒有了**"
+    ok "備份複驗：$kept/$n_clash 份還在"
+  fi
 }
 
 # ⭐ GH#1184 —— **部署目標怎麼算**。⛔ 不是「本機 HEAD」。
