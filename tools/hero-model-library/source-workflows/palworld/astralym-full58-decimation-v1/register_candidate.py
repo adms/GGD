@@ -12,8 +12,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[4]
 WORKSPACE = ROOT.parent
-LOCAL = WORKSPACE / "GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb"
-LOCAL_GENERATION = Path(str(LOCAL) + ".generation.json")
+LOCAL_RELATIVE = Path("GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb")
+LOCAL = WORKSPACE / LOCAL_RELATIVE
 SHA256 = "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
 BYTES = 17_043_436
 MODEL_KEY = "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f"
@@ -52,7 +52,22 @@ def model_document() -> str:
     return json.dumps(value, ensure_ascii=False, indent=2) + "\n"
 
 
-def candidate() -> dict:
+def resolve_local_candidate(workspace: Path | None = None) -> Path:
+    """Resolve the retained conversion without tying checks to one checkout parent.
+
+    Normal workspace checkouts keep ``GGD-Asset-Library`` beside the Git repo.
+    Isolated worktrees do not, so read-only reproduction may fall back to the
+    already pinned absolute path.  Write mode can pass ``--workspace`` and
+    still verifies the exact bytes before copying anything into Git.
+    """
+    local = (workspace or WORKSPACE) / LOCAL_RELATIVE
+    if workspace is not None or not RECEIPT.is_file():
+        return local
+    pinned = json.loads(RECEIPT.read_text()).get("localCandidate", {}).get("path")
+    return Path(pinned) if pinned else local
+
+
+def candidate(local: Path) -> dict:
     validation = json.loads(VALIDATION.read_text())
     backup = json.loads(S3_RECEIPT.read_text())
     backup_manifest = json.loads(S3_MANIFEST.read_text())
@@ -81,7 +96,7 @@ def candidate() -> dict:
         "label": "枯星龍／7,896面／256px／完整58動作",
         "character": "枯星龍",
         "library": "public-community",
-        "path": str(LOCAL),
+        "path": str(local),
         "bytes": BYTES,
         "sha256": SHA256,
         "format": "glb",
@@ -164,17 +179,19 @@ def update_forge(value: str) -> str:
     return value[:match.start()] + replacement + value[match.end():]
 
 
-def build(write: bool) -> dict:
-    if not LOCAL.is_file() or LOCAL.stat().st_size != BYTES or sha(LOCAL) != SHA256:
+def build(write: bool, workspace: Path | None = None) -> dict:
+    local = resolve_local_candidate(workspace)
+    local_generation = Path(str(local) + ".generation.json")
+    if not local.is_file() or local.stat().st_size != BYTES or sha(local) != SHA256:
         raise ValueError("local candidate is missing or changed")
-    if not LOCAL_GENERATION.is_file():
+    if not local_generation.is_file():
         raise ValueError("local generation receipt is missing")
     if write:
         EVIDENCE.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(LOCAL_GENERATION, GENERATION)
-    elif not GENERATION.is_file() or sha(GENERATION) != sha(LOCAL_GENERATION):
+        shutil.copyfile(local_generation, GENERATION)
+    elif not GENERATION.is_file() or sha(GENERATION) != sha(local_generation):
         raise ValueError("Git generation receipt is missing or changed")
-    row = candidate()
+    row = candidate(local)
     supplemental = json.loads(SUPPLEMENTAL.read_text())
     identity = next(item for item in supplemental["characters"] if item["id"] == "community:palworld-astralym")
     models = [item for item in identity["modelCandidates"] if item["id"] != row["id"]]
@@ -186,7 +203,7 @@ def build(write: bool) -> dict:
     model_value = model_document()
     if write:
         GIT_GLB.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(LOCAL, GIT_GLB)
+        shutil.copyfile(local, GIT_GLB)
         MODEL_DOC.write_text(model_value)
         FORGE.write_text(forge_value)
         SUPPLEMENTAL.write_text(supplemental_value)
@@ -202,7 +219,7 @@ def build(write: bool) -> dict:
         "isDefault": False,
         "modelDocument": {"gitPath": MODEL_DOC.relative_to(ROOT).as_posix(), "bytes": len(model_value.encode()), "sha256": hashlib.sha256(model_value.encode()).hexdigest()},
         "modelGlb": {"gitPath": GIT_GLB.relative_to(ROOT).as_posix(), "bytes": BYTES, "sha256": SHA256},
-        "localCandidate": {"path": str(LOCAL), "bytes": BYTES, "sha256": SHA256},
+        "localCandidate": {"path": str(local), "bytes": BYTES, "sha256": SHA256},
         "measured": {"triangles": 7896, "drawPrimitives": 3, "maxTextureEdge": 256, "maxClipChannels": 435, "clipCount": 58},
         "semanticMap": CLIP_MAP,
         "nativeMotionLibraryPreserved": True,
@@ -225,8 +242,9 @@ def build(write: bool) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--workspace", type=Path, help="ABxVFX_EDIT workspace containing GGD-Asset-Library")
     args = parser.parse_args()
-    receipt = build(args.write)
+    receipt = build(args.write, args.workspace)
     print(json.dumps({"modelKey": receipt["modelKey"], "modelGlb": receipt["modelGlb"], "isDefault": False}, ensure_ascii=False))
 
 
