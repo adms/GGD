@@ -111,8 +111,26 @@ def main() -> int:
         matches = [row for row in supplemental["characters"] if row.get("id") == identity["id"]]
         require(len(matches) <= 1, "Duplicate supplemental identity: " + identity["id"])
         if matches:
-            matches[0].clear()
-            matches[0].update(supplemental_row)
+            # Several later workflows may contribute another accepted version
+            # for the same native identity (for example Sonic's formal
+            # decimation).  This batch owns only its own candidate row; do
+            # not erase a separately validated version when regenerating the
+            # earlier Worldblender batch.
+            existing = matches[0]
+            existing_candidates = existing.get("modelCandidates", [])
+            replacement = supplemental_row["modelCandidates"][0]
+            retained = [
+                row for row in existing_candidates
+                if row.get("id") != replacement["id"]
+            ]
+            retained.append(replacement)
+            supplemental_row["modelCandidates"] = retained
+            supplemental_row["evidence"] = list(dict.fromkeys([
+                *existing.get("evidence", []),
+                *supplemental_row["evidence"],
+            ]))
+            existing.clear()
+            existing.update(supplemental_row)
         else:
             supplemental["characters"].append(supplemental_row)
 

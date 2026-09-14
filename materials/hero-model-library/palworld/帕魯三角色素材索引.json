@@ -11,7 +11,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/design-backlog/sources-supplemental.json",
-      "sha256": "c521b4d9c47a910b4b568f7a5225b40456fc9cdcd524c48a0f471d1533d45a3d"
+      "sha256": "b90164efd9e2e1420fc1f96c0a318486d75f8f931ddb8e91e0f4ac7c1c55f098"
     },
     {
       "gitPath": "materials/hero-model-library/palworld/character-settings.json",
@@ -19,7 +19,7 @@
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-hero-integration/receipt.json",
-      "sha256": "dbc695de66c2256f2212545bf99cdfcfbb2cafc945d70ed7c9d695e20d482658"
+      "sha256": "6379de7bcfec79566fdcd0406e28bf3fba525c472c4dfae46a7681db7db00acd"
     },
     {
       "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
@@ -930,8 +930,8 @@
         "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
         "package": {
           "status": "passed",
-          "digest": "sha256:8249dfc4ed7cd5761d65aa4a646951a05decc9917fc34357bfc2d34644b1d4a9",
-          "zipSha256": "sha256:05d5ec75d99651dfc51160e9b530e1d3a43d9e7dbcf7e9ebaf75af268c43690c",
+          "digest": "sha256:504d46be6a86127cab9c6c85cf6902a9472f108af34182dc7a0ea7f5720c4e0a",
+          "zipSha256": "sha256:fa1c7f4d684fd715aa031f2030b19687d51b1d22b33d7a977c6c6fdaa8bd4374",
           "zipBytes": 6288568,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -2586,8 +2586,8 @@
         "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
         "package": {
           "status": "passed",
-          "digest": "sha256:cff90d0359a7b673e03bde174f4371661be6ac6b0bd0a3248a053bf57114fc77",
-          "zipSha256": "sha256:6300ceaaf4d09ecc30c24e00149421db2e3858d0aaaa8895800fce26fd069d4e",
+          "digest": "sha256:10c400ee6239171887732f37aacfa607fa1f148f76e04a6f265ee88b82cdfd3c",
+          "zipSha256": "sha256:5a1db3f4366ca98f7629c996a85cfba91c12e24820ac740714c8b6673151f697",
           "zipBytes": 6855714,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"
@@ -3795,8 +3795,8 @@
         "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
         "package": {
           "status": "passed",
-          "digest": "sha256:b73a6d1f02f5afe0d9fd54ead8a8463f6d34be881113e80ff7328725bbf828c6",
-          "zipSha256": "sha256:3943d33e22f663d2e291a4986c79a76facaea2ddbafe4e80d83030f7a740b331",
+          "digest": "sha256:20185b1432fd514de4bd9420da83846b4ea7b91d49f4f69f056efe7ef2797797",
+          "zipSha256": "sha256:8c649eaf143027f79fd133fb75cfc00726443496cb406a3dede71e9b21507ada",
           "zipBytes": 4401433,
           "exactSource": true,
           "inspection": "validateHeroImportPackage: passed; no service request"

@@ -14,7 +14,7 @@
     "meaning": "All three are complete local GGD Hero Forge authoring packages with six compiled skill slots and at least one registered model option satisfying the formal-adoption geometry policy. Astralym keeps its existing default and has separately validated 7,996-triangle five-motion and 7,896-triangle full-58-motion non-default candidates. Original Palworld audiovisual fidelity and production deployment are separate unfinished gates."
   },
   "sourceSha256": "sha256:cf94dce8dd1dd5d3c31453b5882a0644e52b96eabdc1e2497bc2f14b9662071c",
-  "catalogSha256": "sha256:dc55e43197937daad55590b0512571e5beae5dc52d8ee533cb1a7727ea5f20d4",
+  "catalogSha256": "sha256:dc744de4c42eb006f74ad3e61057eb3f7b9f7c9b33b0eac284cfce74fa6d2207",
   "modelAdoptionPolicy": {
     "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
     "bytes": 292,
@@ -185,8 +185,8 @@
       "mechanicsSha256": "sha256:fa502e0466feedb3f9ff17d754b0a8628bc7f0f4984c2596db3c84f1fd2b42bb",
       "package": {
         "status": "passed",
-        "digest": "sha256:8249dfc4ed7cd5761d65aa4a646951a05decc9917fc34357bfc2d34644b1d4a9",
-        "zipSha256": "sha256:05d5ec75d99651dfc51160e9b530e1d3a43d9e7dbcf7e9ebaf75af268c43690c",
+        "digest": "sha256:504d46be6a86127cab9c6c85cf6902a9472f108af34182dc7a0ea7f5720c4e0a",
+        "zipSha256": "sha256:fa1c7f4d684fd715aa031f2030b19687d51b1d22b33d7a977c6c6fdaa8bd4374",
         "zipBytes": 6288568,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -321,8 +321,8 @@
       "mechanicsSha256": "sha256:9fc1a7233ed7bf72315e43ce5f09861c23e2498ececbed4a365a3f993406b80e",
       "package": {
         "status": "passed",
-        "digest": "sha256:cff90d0359a7b673e03bde174f4371661be6ac6b0bd0a3248a053bf57114fc77",
-        "zipSha256": "sha256:6300ceaaf4d09ecc30c24e00149421db2e3858d0aaaa8895800fce26fd069d4e",
+        "digest": "sha256:10c400ee6239171887732f37aacfa607fa1f148f76e04a6f265ee88b82cdfd3c",
+        "zipSha256": "sha256:5a1db3f4366ca98f7629c996a85cfba91c12e24820ac740714c8b6673151f697",
         "zipBytes": 6855714,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"
@@ -439,8 +439,8 @@
       "mechanicsSha256": "sha256:fa152e2299b45c102182a47291d568678969aac7fc52381ea0746c8433155037",
       "package": {
         "status": "passed",
-        "digest": "sha256:b73a6d1f02f5afe0d9fd54ead8a8463f6d34be881113e80ff7328725bbf828c6",
-        "zipSha256": "sha256:3943d33e22f663d2e291a4986c79a76facaea2ddbafe4e80d83030f7a740b331",
+        "digest": "sha256:20185b1432fd514de4bd9420da83846b4ea7b91d49f4f69f056efe7ef2797797",
+        "zipSha256": "sha256:8c649eaf143027f79fd133fb75cfc00726443496cb406a3dede71e9b21507ada",
         "zipBytes": 4401433,
         "exactSource": true,
         "inspection": "validateHeroImportPackage: passed; no service request"

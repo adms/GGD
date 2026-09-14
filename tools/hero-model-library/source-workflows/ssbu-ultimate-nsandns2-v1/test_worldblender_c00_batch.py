@@ -23,6 +23,22 @@ def sha(path: Path) -> str:
 
 
 class WorldblenderC00BatchTest(unittest.TestCase):
+    def test_regeneration_preserves_later_sonic_candidate(self) -> None:
+        """The earlier c00 batch cannot erase the later formal Sonic build."""
+        subprocess.run([
+            "python3",
+            str(Path(__file__).with_name("integrate_worldblender_c00_batch.py")),
+        ], cwd=REPO, check=True, capture_output=True, text=True)
+        supplemental = json.loads((
+            REPO / "materials/hero-model-library/design-backlog/sources-supplemental.json"
+        ).read_text())
+        sonic = next(row for row in supplemental["characters"]
+                     if row["id"] == "community:ssbu-sonic-c00-standardized-v1")
+        self.assertEqual(
+            {row["id"] for row in sonic["modelCandidates"]},
+            {"ssbu-sonic-c00-static-skinned-v1", "ssbu-sonic-c00-static-skinned-v2"},
+        )
+
     def test_frozen_batch_is_reproducible_and_honest(self) -> None:
         subprocess.run([
             "python3",
