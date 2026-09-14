@@ -14,11 +14,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 LIBRARY = ROOT / "materials/hero-model-library"
 OUTPUT_JSON = LIBRARY / "infinity-strash/popp-integration-review.json"
+OUTPUT_GAP_LEDGER = LIBRARY / "infinity-strash/popp-integration-gaps.json"
 OUTPUT_HTML = ROOT / "apps/client/public/popp-integration-review.html"
 OUTPUT_ASSET_DIR = ROOT / "apps/client/public/review-assets/popp-pn020"
 DECISION_RECEIPT = LIBRARY / "priority-evidence/infinity-strash-popp-review-decision/receipt.json"
 VFX_RUNTIME_MANIFEST = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json"
 EVENT_AUDIO_QUEUE = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/event-audio-review-queue.json"
+GAP_DEFINITIONS = Path(__file__).resolve().with_name("gap-definitions.json")
+VFX_BINDING_PROPOSALS = Path(__file__).resolve().with_name("vfx-binding-proposals.json")
 HERO_ID = "b2-popp"
 
 STAFFS = (
@@ -181,6 +184,22 @@ def build_contract() -> dict:
     assert event_audio_queue["runtimeSelectable"] is False
     assert len(event_audio_queue["candidates"]) == 36
     assert all(row["reviewDecision"] is None for row in event_audio_queue["candidates"])
+    vfx_binding_proposals = read_json(VFX_BINDING_PROPOSALS)
+    assert vfx_binding_proposals["schema"] == "ggd.popp-vfx-binding-proposals@1"
+    assert vfx_binding_proposals["heroId"] == HERO_ID
+    assert vfx_binding_proposals["policy"]["visuallyApproved"] is False
+    assert vfx_binding_proposals["policy"]["runtimeMutationAllowed"] is False
+    runtime_candidate_ids = {row["candidateId"] for row in vfx_runtime["candidates"]}
+    proposed_candidate_ids = {
+        candidate_id
+        for row in vfx_binding_proposals["abilities"]
+        for candidate_id in row["candidateIds"]
+    }
+    reserve_candidate_ids = set(vfx_binding_proposals["reserveCandidateIds"])
+    assert proposed_candidate_ids.isdisjoint(reserve_candidate_ids)
+    assert proposed_candidate_ids | reserve_candidate_ids == runtime_candidate_ids
+    for row in vfx_binding_proposals["abilities"]:
+        assert (ROOT / "content/abilities" / f"{row['abilityId']}.json").is_file()
     dependencies = dependency_index["externalPackageDependencies"]
     vfx_references = [path for path in dependencies if "/VFX/" in path]
     pn020_event_references = [
@@ -196,7 +215,7 @@ def build_contract() -> dict:
         "pn020EventReferences": pn020_event_references,
     }
 
-    gaps = [
+    gap_states = [
         {
             "id": "distinct-death-presentation",
             "status": "owner-approved-existing-runtime-bound" if applied_decision else "review-candidate-ready-runtime-not-bound",
@@ -245,6 +264,26 @@ def build_contract() -> dict:
             "evidence": "GGD ability definitions exist, while native Special01/Special02 remain unreferenced and original animation timing, hit timing and complete combat playback are not accepted.",
         },
     ]
+    definitions = read_json(GAP_DEFINITIONS)
+    assert definitions["schema"] == "ggd.popp-integration-gap-definitions@1"
+    assert definitions["heroId"] == HERO_ID
+    assert definitions["nativeCharacterId"] == "PN020"
+    definition_by_id = {row["id"]: row for row in definitions["gaps"]}
+    assert len(definition_by_id) == 5
+    assert list(definition_by_id) == [row["id"] for row in gap_states]
+    gaps = []
+    for state in gap_states:
+        definition = definition_by_id[state["id"]]
+        closed = state["status"] == "owner-approved-existing-runtime-bound"
+        gaps.append({
+            **definition,
+            **state,
+            "closed": closed,
+            "remaining": not closed,
+            "ownerReviewRequiredBeforeRuntimeMutation": (
+                state["id"] in {"original-vfx-conversion", "animation-events-and-sfx-binding"}
+            ),
+        })
 
     facts = {
         "heroId": HERO_ID,
@@ -259,6 +298,8 @@ def build_contract() -> dict:
         "dependencyIndexSha256": dependency_evidence["source"]["sha256"],
         "vfxRuntimeManifestSha256": sha256(VFX_RUNTIME_MANIFEST),
         "eventAudioQueueSha256": sha256(EVENT_AUDIO_QUEUE),
+        "gapDefinitionsSha256": sha256(GAP_DEFINITIONS),
+        "vfxBindingProposalsSha256": sha256(VFX_BINDING_PROPOSALS),
     }
     fingerprint = hashlib.sha256(
         json.dumps(facts, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -276,6 +317,8 @@ def build_contract() -> dict:
             file_evidence(champion_path),
             file_evidence(VFX_RUNTIME_MANIFEST),
             file_evidence(EVENT_AUDIO_QUEUE),
+            file_evidence(GAP_DEFINITIONS),
+            file_evidence(VFX_BINDING_PROPOSALS),
         ],
         "currentSelection": {
             "modelKey": champion["modelKey"],
@@ -304,11 +347,55 @@ def build_contract() -> dict:
             "conversionBoundary": vfx_runtime["conversionBoundary"],
             "reviewPage": vfx_runtime["review"]["page"],
         },
+        "vfxBindingReviewProposals": {
+            "source": file_evidence(VFX_BINDING_PROPOSALS),
+            **vfx_binding_proposals,
+            "proposedCandidateCount": len(proposed_candidate_ids),
+            "reserveCandidateCount": len(reserve_candidate_ids),
+            "runtimeBindingsCreated": 0,
+        },
         "sourceDependencyEvidence": dependency_evidence,
         "fiveOpenIntegrationGaps": gaps,
-        "remainingOpenIntegrationGapCount": sum(row["status"] != "owner-approved-existing-runtime-bound" for row in gaps),
+        "remainingOpenIntegrationGapCount": sum(row["remaining"] for row in gaps),
+        "closedIntegrationGapCount": sum(row["closed"] for row in gaps),
         "decisionReceipt": file_evidence(DECISION_RECEIPT) if applied_decision else None,
         "releaseState": "feature-branch-owner-selection-applied-production-unverified" if applied_decision else "feature-branch-options-present-review-pending-production-unverified",
+    }
+
+
+def build_gap_ledger(contract: dict) -> dict:
+    """Publish the five stable definitions with source-derived live state."""
+    return {
+        "schema": "ggd.popp-integration-gap-ledger@1",
+        "heroId": contract["heroId"],
+        "nativeCharacterId": contract["nativeCharacterId"],
+        "sourceFingerprint": contract["sourceFingerprint"],
+        "definitionSource": file_evidence(GAP_DEFINITIONS),
+        "reviewContract": file_evidence(OUTPUT_JSON) if OUTPUT_JSON.is_file() else {
+            "gitPath": OUTPUT_JSON.relative_to(ROOT).as_posix(),
+            "generatedWithSameRun": True,
+        },
+        "weaponDecision": {
+            "selectedCandidateId": contract["weaponReview"]["selectedCandidateId"],
+            "selectionMode": contract["currentSelection"]["selectionMode"],
+            "candidateCount": len(contract["weaponReview"]["candidates"]),
+            "otherCandidatesRetained": True,
+        },
+        "summary": {
+            "defined": len(contract["fiveOpenIntegrationGaps"]),
+            "closed": contract["closedIntegrationGapCount"],
+            "remaining": contract["remainingOpenIntegrationGapCount"],
+            "eventAudioCandidates": contract["eventAudioReviewGate"]["candidateCount"],
+            "eventAudioReviewed": contract["eventAudioReviewGate"]["reviewedCount"],
+            "ggdVfxCandidates": contract["vfxRuntimeCandidates"]["summary"]["ggdVfxDocumentsBuilt"],
+            "vfxVisuallyAccepted": contract["vfxRuntimeCandidates"]["summary"]["visuallyAccepted"],
+            "vfxBindingProposals": contract["vfxBindingReviewProposals"]["proposedCandidateCount"],
+            "vfxReserveCandidates": contract["vfxBindingReviewProposals"]["reserveCandidateCount"],
+            "runtimeBindingsAddedByThisWorkflow": 0,
+            "productionDeploymentVerified": False,
+        },
+        "gaps": contract["fiveOpenIntegrationGaps"],
+        "vfxBindingReviewProposals": contract["vfxBindingReviewProposals"],
     }
 
 
@@ -341,9 +428,10 @@ textarea{{width:100%;min-height:70px;background:#09121b;color:var(--fg);border:1
 <div id="deathStage"><div id="deathFrame" class="review-frame" data-state="hurt" role="img" aria-label="死亡演出三幀預覽"></div></div>
 <div class="frame-status"><b>可見證據圖</b><span>實際 Babylon WebGL：0%／50%／100%</span></div>
 <label class="pick"><input type="radio" name="death" value="popp-native-down-rise-fade-v1" {'checked disabled' if contract['weaponReview']['selectedCandidateId'] else ''}> 已核准 down＋升天淡出</label></div>
-<h2>三、五項整合狀態（剩餘 {contract['remainingOpenIntegrationGapCount']} 項）</h2><ol id="gaps"></ol>
-<p class="note">已建立 {contract['vfxRuntimeCandidates']['summary']['ggdVfxDocumentsBuilt']} 個未綁定 GGD VFX 重建候選，請用 <code>/asset-review.html</code> 現場播放逐項審查；未核准前不綁技能。音效佇列 {contract['eventAudioReviewGate']['candidateCount']} 項目前已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項。</p>
-<h2>四、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
+<h2>三、五項權威整合狀態（已關閉 {contract['closedIntegrationGapCount']}，剩餘 {contract['remainingOpenIntegrationGapCount']}）</h2><ol id="gaps"></ol>
+<p class="note">已建立 {contract['vfxRuntimeCandidates']['summary']['ggdVfxDocumentsBuilt']} 個未綁定 GGD VFX 重建候選；來源關係保存在 <code>materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html</code>，請用 <a href="/asset-review.html">VFX 現場播放頁</a>逐項審查。音效請到 <a href="/asset-review-portal.html">統一播放審查頁</a>選「波普音訊」；{contract['eventAudioReviewGate']['candidateCount']} 項目前已核准 {contract['eventAudioReviewGate']['reviewedCount']} 項。未核准前不綁技能。</p>
+<h2>四、VFX 語意配對候選（只供審查）</h2><div id="vfxProposals" class="grid"></div><p class="note">這些配對只依來源法術名稱與 phase 縮小審查範圍，沒有視覺核准，也沒有修改 runtime。</p>
+<h2>五、匯出裁決</h2><p class="note">匯出 JSON 後交回整合工作流；只有明確核准值才可套用。瀏覽器也會在這台裝置的 localStorage 保存草稿。</p>
 <textarea id="reviewNote" placeholder="選擇理由、要修的顏色或動作問題"></textarea><div class="buttons"><button id="export">下載裁決 JSON</button></div></main>
 <script id="contract" type="application/json">{encoded}</script><script>
 const D=JSON.parse(document.getElementById('contract').textContent), key='ggd-popp-review:'+D.sourceFingerprint;
@@ -354,7 +442,8 @@ for(const c of D.weaponReview.candidates){{const sheet=c.validation.reviewContac
 function renderChosen(){{document.querySelectorAll('#weapons .card').forEach(x=>x.classList.toggle('chosen',x.dataset.id===state.weaponCandidateId));document.querySelectorAll('input[name=weapon]').forEach(x=>x.checked=x.value===state.weaponCandidateId);document.querySelectorAll('input[name=death]').forEach(x=>x.checked=x.value===state.deathCandidateId)}}
 document.querySelectorAll('input[name=weapon]').forEach(x=>x.onchange=()=>{{state.weaponCandidateId=x.value;save()}});document.querySelectorAll('input[name=death]').forEach(x=>x.onchange=()=>{{state.deathCandidateId=x.value;save()}});
 const clearWeapon=document.getElementById('clearWeapon');if(clearWeapon)clearWeapon.onclick=()=>{{state.weaponCandidateId=null;save()}};
-document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>`<li><b>${{g.id}}</b> · <span class="status">${{g.status}}</span><br><span class="note">${{g.evidence}}</span></li>`).join('');
+document.getElementById('gaps').innerHTML=D.fiveOpenIntegrationGaps.map(g=>`<li><b>${{g.nameZh}}</b> <code>${{g.id}}</code> · <span class="status">${{g.closed?'closed':'remaining'}}／${{g.status}}</span><br><span class="note">${{g.evidence}}</span><br><span class="note">關閉條件：${{g.closureCriteria.join('；')}}</span><br><span class="note">審查規則：${{g.ownerReviewPolicy}}</span></li>`).join('');
+document.getElementById('vfxProposals').innerHTML=D.vfxBindingReviewProposals.abilities.map(x=>`<section class="card"><h3>${{x.abilityId}} · ${{x.abilityNameZh}}</h3><p>${{x.semantic}}</p><p>${{x.candidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{x.rationale}}</p><span class="status">medium-unverified／未核准／runtime 0</span></section>`).join('')+`<section class="card"><h3>保留未配對</h3><p>${{D.vfxBindingReviewProposals.reserveCandidateIds.map(id=>`<code>${{id}}</code>`).join('<br>')}}</p><p class="note">${{D.vfxBindingReviewProposals.reserveReason}}</p></section>`;
 const death=document.getElementById('deathFrame'), selected=D.weaponReview.candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)||D.weaponReview.candidates[0],base=selected.validation.reviewContactSheet;death.style.backgroundImage=`url('/${{base.publicPath}}')`;function native(){{death.classList.remove('rise');void death.offsetWidth}}document.getElementById('nativeDeath').onclick=native;document.getElementById('fadeDeath').onclick=()=>{{native();requestAnimationFrame(()=>death.classList.add('rise'))}};native();
 document.getElementById('reviewNote').value=state.note;document.getElementById('reviewNote').oninput=save;renderChosen();
 document.getElementById('export').onclick=()=>{{save();const out={{schema:'ggd.popp-integration-review-decision@1',sourceFingerprint:D.sourceFingerprint,heroId:D.heroId,weaponCandidateId:state.weaponCandidateId,deathCandidateId:state.deathCandidateId,note:state.note}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)+'\\n'],{{type:'application/json'}}));a.download='popp-integration-review-decision.json';a.click();URL.revokeObjectURL(a.href)}};
@@ -367,10 +456,20 @@ def main() -> None:
     args = parser.parse_args()
     contract = build_contract()
     json_payload = json.dumps(contract, ensure_ascii=False, indent=2) + "\n"
+    # The ledger references the exact review bytes. Materialise that payload in
+    # memory first, then compute the same evidence shape used after writing.
+    review_bytes = json_payload.encode("utf-8")
+    ledger = build_gap_ledger(contract)
+    ledger["reviewContract"] = {
+        "gitPath": OUTPUT_JSON.relative_to(ROOT).as_posix(),
+        "bytes": len(review_bytes),
+        "sha256": hashlib.sha256(review_bytes).hexdigest(),
+    }
+    ledger_payload = json.dumps(ledger, ensure_ascii=False, indent=2) + "\n"
     html_payload = build_html(contract)
     if args.check:
         failures = []
-        for path, expected in ((OUTPUT_JSON, json_payload), (OUTPUT_HTML, html_payload)):
+        for path, expected in ((OUTPUT_JSON, json_payload), (OUTPUT_GAP_LEDGER, ledger_payload), (OUTPUT_HTML, html_payload)):
             if not path.is_file() or path.read_text(encoding="utf-8") != expected:
                 failures.append(path.relative_to(ROOT).as_posix())
         for staff, source in CONTACT_SHEETS.items():
@@ -385,6 +484,7 @@ def main() -> None:
     OUTPUT_HTML.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_ASSET_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_JSON.write_text(json_payload, encoding="utf-8")
+    OUTPUT_GAP_LEDGER.write_text(ledger_payload, encoding="utf-8")
     OUTPUT_HTML.write_text(html_payload, encoding="utf-8")
     for staff, source in CONTACT_SHEETS.items():
         shutil.copyfile(source, OUTPUT_ASSET_DIR / f"{staff.lower()}-contact-sheet.png")

@@ -28,6 +28,9 @@ class PoppReviewTest(unittest.TestCase):
     def test_five_gaps_preserve_review_and_readiness_boundaries(self):
         gaps = self.contract["fiveOpenIntegrationGaps"]
         self.assertEqual(len(gaps), 5)
+        self.assertEqual(len({row["id"] for row in gaps}), 5)
+        self.assertTrue(all(row["closureCriteria"] for row in gaps))
+        self.assertTrue(all(row["nameZh"] for row in gaps))
         death = next(row for row in gaps if row["id"] == "distinct-death-presentation")
         self.assertEqual(death["candidate"]["motionProvenance"], "native PN020 down loop")
         self.assertFalse(death["candidate"]["borrowedMotion"])
@@ -35,7 +38,11 @@ class PoppReviewTest(unittest.TestCase):
         self.assertFalse(death["candidate"]["reviewPreview"]["runtimeWorldSpaceCalibrationRequiredAfterApproval"])
         self.assertTrue(death["candidate"]["runtimeImplemented"])
         self.assertEqual(death["status"], "owner-approved-existing-runtime-bound")
+        self.assertTrue(death["closed"])
+        self.assertFalse(death["remaining"])
         self.assertEqual(self.contract["remainingOpenIntegrationGapCount"], 4)
+        self.assertEqual(self.contract["closedIntegrationGapCount"], 1)
+        self.assertTrue(all(row["remaining"] for row in gaps if row is not death))
         events = next(row for row in gaps if row["id"] == "animation-events-and-sfx-binding")
         self.assertEqual(events["status"], "pending-user-listening-review")
         audio = self.contract["audioReviewEvidence"]
@@ -48,11 +55,40 @@ class PoppReviewTest(unittest.TestCase):
         self.assertEqual(vfx["summary"]["ggdVfxDocumentsBuilt"], 12)
         self.assertEqual(vfx["summary"]["identityExcludedRoots"], 2)
         self.assertEqual(vfx["summary"]["skillBindingsCreated"], 0)
+        proposals = self.contract["vfxBindingReviewProposals"]
+        self.assertEqual(proposals["proposedCandidateCount"], 7)
+        self.assertEqual(proposals["reserveCandidateCount"], 5)
+        self.assertFalse(proposals["policy"]["visuallyApproved"])
+        self.assertFalse(proposals["policy"]["runtimeMutationAllowed"])
+        self.assertEqual(proposals["runtimeBindingsCreated"], 0)
         gate = self.contract["eventAudioReviewGate"]
         self.assertEqual(gate["candidateCount"], 36)
         self.assertEqual(gate["reviewedCount"], 0)
         self.assertFalse(gate["automaticBindingAllowed"])
         self.assertFalse(gate["runtimeSelectable"])
+
+    def test_gap_ledger_keeps_owner_gates_and_single_manual_weapon_default(self):
+        ledger = MODULE.build_gap_ledger(self.contract)
+        self.assertEqual(ledger["schema"], "ggd.popp-integration-gap-ledger@1")
+        self.assertEqual(ledger["summary"]["defined"], 5)
+        self.assertEqual(ledger["summary"]["closed"], 1)
+        self.assertEqual(ledger["summary"]["remaining"], 4)
+        self.assertEqual(ledger["summary"]["eventAudioCandidates"], 36)
+        self.assertEqual(ledger["summary"]["eventAudioReviewed"], 0)
+        self.assertEqual(ledger["summary"]["ggdVfxCandidates"], 12)
+        self.assertEqual(ledger["summary"]["vfxVisuallyAccepted"], 0)
+        self.assertEqual(ledger["summary"]["vfxBindingProposals"], 7)
+        self.assertEqual(ledger["summary"]["vfxReserveCandidates"], 5)
+        self.assertEqual(ledger["summary"]["runtimeBindingsAddedByThisWorkflow"], 0)
+        self.assertEqual(ledger["weaponDecision"]["candidateCount"], 3)
+        self.assertEqual(
+            ledger["weaponDecision"]["selectedCandidateId"],
+            "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+        )
+        self.assertEqual(ledger["weaponDecision"]["selectionMode"], "manual")
+        by_id = {row["id"]: row for row in ledger["gaps"]}
+        self.assertTrue(by_id["original-vfx-conversion"]["ownerReviewRequiredBeforeRuntimeMutation"])
+        self.assertTrue(by_id["animation-events-and-sfx-binding"]["ownerReviewRequiredBeforeRuntimeMutation"])
 
     def test_html_has_visible_state_controls_and_applied_owner_receipt(self):
         page = MODULE.build_html(self.contract)
@@ -63,6 +99,10 @@ class PoppReviewTest(unittest.TestCase):
         self.assertIn("weaponCandidateId:D.weaponReview.selectedCandidateId", page)
         self.assertIn("下載裁決 JSON", page)
         self.assertIn("已核准並鎖定", page)
+        self.assertIn("五項權威整合狀態", page)
+        self.assertIn("asset-review-portal.html", page)
+        self.assertIn("VFX 語意配對候選", page)
+        self.assertIn("medium-unverified／未核准／runtime 0", page)
         self.assertIn("candidates.find(x=>x.candidateId===D.weaponReview.selectedCandidateId)", page)
         self.assertNotIn("id=\"clearWeapon\"", page)
 

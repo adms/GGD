@@ -12,6 +12,18 @@ Start the client dev server and open `/popp-integration-review.html`. The page d
 
 The generator never invents a candidate. The current committed receipt preserves the owner's Kagayaki selection and records that the existing global corpse-dissolve runtime supplies the approved rise/fade presentation. It does not bind SFX, claim production deployment, or treat the source down loop as a distinct native death animation.
 
+`gap-definitions.json` is the authority for the five stable integration-gap
+identities, closure criteria and review policy. `build_review.py` joins those
+definitions to current model, VFX, audio, decision and runtime evidence, then
+generates both `materials/hero-model-library/infinity-strash/popp-integration-review.json`
+and the compact `popp-integration-gaps.json` ledger. Do not hand-edit either
+generated output.
+
+`vfx-binding-proposals.json` maps all twelve generated VFX candidates into
+seven source-name proposals for Q/W/R plus five unassigned reserves. These are
+review hints only: confidence remains `medium-unverified`, visual approval is
+false and runtime mutation is forbidden until the owner reviews playback.
+
 Apply an exported owner decision through the checked workflow; do not edit the champion default by hand:
 
 ```sh

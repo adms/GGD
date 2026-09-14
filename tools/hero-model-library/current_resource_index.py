@@ -306,6 +306,48 @@ def build(git_link_root=ROOT):
         or infinity_strash_weapon_review.get('runtimeMutationAllowed') is not False
         or infinity_strash_weapon_review.get('audioOrVoiceBindingChanged') is not False):
         raise ValueError('Infinity Strash weapon review is absent, stale or overclaims selection/runtime binding')
+    popp_gap_ledger_path=base/'infinity-strash/popp-integration-gaps.json'
+    popp_review_contract_path=base/'infinity-strash/popp-integration-review.json'
+    popp_review_page_path=ROOT/'apps/client/public/popp-integration-review.html'
+    popp_gap_definitions_path=ROOT/'tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/gap-definitions.json'
+    popp_vfx_proposals_path=ROOT/'tools/hero-model-library/source-workflows/infinity-strash-popp-review-v1/vfx-binding-proposals.json'
+    popp_gap_ledger=read(popp_gap_ledger_path)
+    popp_gap_summary=popp_gap_ledger.get('summary',{})
+    popp_gap_rows=popp_gap_ledger.get('gaps',[])
+    if (popp_gap_ledger.get('schema')!='ggd.popp-integration-gap-ledger@1'
+        or popp_gap_ledger.get('heroId')!='b2-popp'
+        or popp_gap_summary.get('defined')!=5
+        or popp_gap_summary.get('closed')!=1
+        or popp_gap_summary.get('remaining')!=4
+        or popp_gap_summary.get('eventAudioCandidates')!=36
+        or popp_gap_summary.get('eventAudioReviewed')!=0
+        or popp_gap_summary.get('ggdVfxCandidates')!=12
+        or popp_gap_summary.get('vfxVisuallyAccepted')!=0
+        or popp_gap_summary.get('vfxBindingProposals')!=7
+        or popp_gap_summary.get('vfxReserveCandidates')!=5
+        or popp_gap_summary.get('runtimeBindingsAddedByThisWorkflow')!=0
+        or len(popp_gap_rows)!=5
+        or sum(bool(row.get('closed')) for row in popp_gap_rows)!=1
+        or any(not row.get('closureCriteria') for row in popp_gap_rows)
+        or popp_gap_ledger.get('weaponDecision',{}).get('selectedCandidateId')!='infinity-strash-popp-pn020-02-kagayaki-native-v1'
+        or popp_gap_ledger.get('weaponDecision',{}).get('selectionMode')!='manual'
+        or popp_gap_ledger.get('weaponDecision',{}).get('candidateCount')!=3):
+        raise ValueError('Popp five-gap ledger is absent, stale or overclaims closure/runtime readiness')
+    for item,path in (
+        (popp_gap_ledger.get('definitionSource',{}),popp_gap_definitions_path),
+        (popp_gap_ledger.get('reviewContract',{}),popp_review_contract_path),
+    ):
+        if (item.get('sha256')!=hashlib.sha256(path.read_bytes()).hexdigest()
+            or item.get('bytes')!=path.stat().st_size):
+            raise ValueError('Popp gap ledger evidence is stale: '+str(path))
+    popp_vfx_proposals=popp_gap_ledger.get('vfxBindingReviewProposals',{})
+    if (popp_vfx_proposals.get('source',{}).get('sha256')!=hashlib.sha256(popp_vfx_proposals_path.read_bytes()).hexdigest()
+        or popp_vfx_proposals.get('proposedCandidateCount')!=7
+        or popp_vfx_proposals.get('reserveCandidateCount')!=5
+        or popp_vfx_proposals.get('policy',{}).get('visuallyApproved') is not False
+        or popp_vfx_proposals.get('policy',{}).get('runtimeMutationAllowed') is not False
+        or popp_vfx_proposals.get('runtimeBindingsCreated')!=0):
+        raise ValueError('Popp VFX review proposals are stale or overclaim approval/runtime binding')
     infinity_strash_av_summary_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/summary.json'
     infinity_strash_av_audio_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.json'
     infinity_strash_av_vfx_path=base/'priority-evidence/infinity-strash-dai-vearn-av-v1/vfx-source-index.json'
@@ -676,6 +718,25 @@ def build(git_link_root=ROOT):
             runtimeMutationAllowed=False,
             audioOrVoiceBindingChanged=False,
             productionDeploymentVerified=False),
+        poppIntegrationGapLedger=dict(
+            schema=popp_gap_ledger['schema'],
+            sourceFingerprint=popp_gap_ledger['sourceFingerprint'],
+            gapLedgerGitPath=str(popp_gap_ledger_path.relative_to(ROOT)),
+            gapLedgerSha256=hashlib.sha256(popp_gap_ledger_path.read_bytes()).hexdigest(),
+            definitionSourceGitPath=str(popp_gap_definitions_path.relative_to(ROOT)),
+            definitionSourceSha256=hashlib.sha256(popp_gap_definitions_path.read_bytes()).hexdigest(),
+            vfxBindingProposalGitPath=str(popp_vfx_proposals_path.relative_to(ROOT)),
+            vfxBindingProposalSha256=hashlib.sha256(popp_vfx_proposals_path.read_bytes()).hexdigest(),
+            reviewContractGitPath=str(popp_review_contract_path.relative_to(ROOT)),
+            reviewContractSha256=hashlib.sha256(popp_review_contract_path.read_bytes()).hexdigest(),
+            reviewPageGitPath=str(popp_review_page_path.relative_to(ROOT)),
+            reviewPageSha256=hashlib.sha256(popp_review_page_path.read_bytes()).hexdigest(),
+            weaponDecision=popp_gap_ledger['weaponDecision'],
+            summary=popp_gap_summary,
+            gaps=popp_gap_rows,
+            vfxBindingReviewProposals=popp_vfx_proposals,
+            runtimeMutationAllowed=False,
+            productionDeploymentVerified=False),
         infinityStrashDaiVearnAv=dict(
             schema=infinity_strash_av_summary['schema'],
             sourceIds=infinity_strash_av_summary['sourceIds'],
@@ -1040,6 +1101,26 @@ def main():
                 {
                     'gitPath': result['infinityStrashWeaponReview']['reviewPageGitPath'],
                     'sha256': result['infinityStrashWeaponReview']['reviewPageSha256'],
+                },
+                {
+                    'gitPath': result['poppIntegrationGapLedger']['gapLedgerGitPath'],
+                    'sha256': result['poppIntegrationGapLedger']['gapLedgerSha256'],
+                },
+                {
+                    'gitPath': result['poppIntegrationGapLedger']['definitionSourceGitPath'],
+                    'sha256': result['poppIntegrationGapLedger']['definitionSourceSha256'],
+                },
+                {
+                    'gitPath': result['poppIntegrationGapLedger']['vfxBindingProposalGitPath'],
+                    'sha256': result['poppIntegrationGapLedger']['vfxBindingProposalSha256'],
+                },
+                {
+                    'gitPath': result['poppIntegrationGapLedger']['reviewContractGitPath'],
+                    'sha256': result['poppIntegrationGapLedger']['reviewContractSha256'],
+                },
+                {
+                    'gitPath': result['poppIntegrationGapLedger']['reviewPageGitPath'],
+                    'sha256': result['poppIntegrationGapLedger']['reviewPageSha256'],
                 },
                 {
                     'gitPath': result['infinityStrashDaiVearnAv']['summaryGitPath'],

@@ -1,0 +1,83 @@
+{
+  "schema": "ggd.popp-integration-gap-definitions@1",
+  "heroId": "b2-popp",
+  "nativeCharacterId": "PN020",
+  "gaps": [
+    {
+      "id": "distinct-death-presentation",
+      "nameZh": "獨立死亡演出",
+      "assetKinds": [
+        "motion",
+        "runtime-presentation"
+      ],
+      "closureCriteria": [
+        "死亡狀態使用來源原生動作，或使用者逐項核准的借用／替代動作",
+        "死亡演出已接到角色可用的 runtime 路徑",
+        "決策、動作來源及 runtime 程式均有固定雜湊收據"
+      ],
+      "ownerReviewPolicy": "原生 PN020 down 加既有升天淡出已由 owner 核准；此決策保持有效，除非 owner 另選死亡演出。"
+    },
+    {
+      "id": "source-toon-and-hair-colour-parity",
+      "nameZh": "原作 toon 與髮色一致性",
+      "assetKinds": [
+        "model",
+        "texture",
+        "material"
+      ],
+      "closureCriteria": [
+        "來源 toon、遮罩、陰影及髮色參數已重建為 GGD 可用材質",
+        "修正版通過模型、貼圖及 WebGL 檢查",
+        "三支法杖版本都有可重現視覺驗收證據"
+      ],
+      "ownerReviewPolicy": "材質轉換可先完成；聲稱原作外觀一致前仍需視覺驗收。"
+    },
+    {
+      "id": "original-vfx-conversion",
+      "nameZh": "原作特效轉換與技能綁定",
+      "assetKinds": [
+        "vfx",
+        "texture",
+        "mesh"
+      ],
+      "closureCriteria": [
+        "PN020 身分範圍內的原作特效已轉成通過現行契約的 GGD VFX",
+        "時序、mesh layer、材質及播放畫面已核對",
+        "逐項視覺核准後才可建立技能綁定",
+        "綁定通過 VFX 與技能檢查"
+      ],
+      "ownerReviewPolicy": "候選可以自動產生；視覺核准與技能綁定不可自動通過。"
+    },
+    {
+      "id": "animation-events-and-sfx-binding",
+      "nameZh": "動畫事件、音效與語音綁定",
+      "assetKinds": [
+        "motion-event",
+        "sound-effect",
+        "voice"
+      ],
+      "closureCriteria": [
+        "每個採用檔案的語言、說話者、事件語意及 SHA-256 已核實",
+        "所有採用配對均有 owner 逐項播放決策",
+        "只將核准配對寫入 runtime，並通過音訊與事件檢查"
+      ],
+      "ownerReviewPolicy": "36 個事件音訊候選必須逐項播放審查；沒有 owner 決策不得綁定。"
+    },
+    {
+      "id": "skill-timing-and-full-combat-binding",
+      "nameZh": "技能時序與完整戰鬥驗證",
+      "assetKinds": [
+        "motion",
+        "ability",
+        "vfx",
+        "audio"
+      ],
+      "closureCriteria": [
+        "Q／W／E／R／EX 的施放、命中及結束時點均有明確來源或量測值",
+        "模型動作、VFX、音效與語音依核准時序完成綁定",
+        "完整戰鬥播放與回歸檢查通過"
+      ],
+      "ownerReviewPolicy": "既有內容與自動測試可先完成；未核准的音訊、借用動作或 VFX 不得藉由整體戰鬥驗證繞過逐項審查。"
+    }
+  ]
+}
