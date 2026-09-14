@@ -204,8 +204,8 @@
       ],
       "outputs": [
         {
-          "bytes": 202465,
-          "sha256": "d17048f47c3d4613f53e9eab15fdaba62f6cfb38bb7b1561f85e0d9a02849f3c",
+          "bytes": 204309,
+          "sha256": "798149b0ee5147257120f3b23d3d1530512e0c47c27551c241fae130fb70a1bd",
           "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
         }
       ],
@@ -250,14 +250,14 @@
         },
         {
           "bytes": 10102,
-          "sha256": "ebd025d139000b03be32ea78dfcd9233b77e62927ef4587afd739490bfc59e6f",
+          "sha256": "8ba31a160a52865ba7d56d516bf2b136c28fedab2e2fe3f5880821a987aa7e18",
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
         }
       ],
       "outputs": [
         {
-          "bytes": 3371658,
-          "sha256": "024c1d0a505c7cad3d5babd7b4c16b63b4c8dd41773038d37489acb185ee3fff",
+          "bytes": 3396552,
+          "sha256": "c39dfe905892c05bc0da9752970e64fcd953d09b40f959082abe54e7de25f003",
           "gitPath": "materials/hero-model-library/download-sources.json"
         }
       ],
@@ -272,13 +272,13 @@
       "status": "entry-generated",
       "inputs": [
         {
-          "bytes": 202465,
-          "sha256": "d17048f47c3d4613f53e9eab15fdaba62f6cfb38bb7b1561f85e0d9a02849f3c",
+          "bytes": 204309,
+          "sha256": "798149b0ee5147257120f3b23d3d1530512e0c47c27551c241fae130fb70a1bd",
           "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
         },
         {
           "bytes": 10102,
-          "sha256": "ebd025d139000b03be32ea78dfcd9233b77e62927ef4587afd739490bfc59e6f",
+          "sha256": "8ba31a160a52865ba7d56d516bf2b136c28fedab2e2fe3f5880821a987aa7e18",
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
         }
       ],
