@@ -17,13 +17,23 @@
 #   (b) 可切換、非預設（每條血緣的代表版本 · Forge 備選 · 可挑的英雄身體）⇒ 只能變小
 #   (c) 凍結／歷史血緣／素材 ⇒ 列出不計，**每次都印顆數與理由**
 #   分類本體在 `tools/w3x-import/model_intake.py` 的 `glb_roles()`。
+#   ＋ (a) 裡更嚴的一格 a_body_tex：玩家**預設載入**的身體（英雄 modelKey＋Forge 範例預設）貼圖超過上限的格數。
+#   ⚠️ (c) 不計的理由有兩種：位元組不可改（凍結／release）· 可改但玩家拿不到原樣（版本來源檔／素材元件）。
 #
 #   · 變多 ⇒ ⛔ **紅**（＝這一次帶進了新的壞模型）
 #   · 持平 ⇒ ⚠️ 警告並印出存量，⭐ 放行
 #   · 變少 ⇒ ⛔ 紅並**要求把基準線改小**（否則棘輪會慢慢鬆掉）
 #
-# ⚠️ 基準線住在 `tools/model-budget/intake-ratchet.txt`（`a=` / `b=` 兩行）——
+# ⚠️ 基準線住在 `tools/model-budget/intake-ratchet.txt`（`a=` / `b=` / `a_body_tex=` 三行）——
 #   ⛔ 只能變小。改大要在 commit 訊息裡貼 owner 的原話。
+#
+# ⛔⛔ 誠實說明（2026-09-15，更正 f52ca71eb 訊息裡的「⛔ 解法不是拉線放行」）：
+#   分母改成以關係判定之後，a=265／b=69 是**設在當天現況**，其中含 #1230（52ed534cb）之後新進、
+#   玩家拿得到的 40 顆有問題模型（13 顆貼圖 > 256）⇒ ⭐ 那等於接受了這批存量（Claude 挑的預設，
+#   ⛔ 不是 owner 裁決的拉線）。a_body_tex=10 待 256 轉檔落地後逐格降到 0。
+#
+# ⚠️ 這支**只數、不轉檔**。會把貼圖縮到 256 的只有兩條路：後台註冊版本（`ModelVersions.prepare()`）
+#   與編輯器上傳（`prepareUploadedHeroModel()`）。⛔ 伺服器啟動與後台「切換作用中版本」（activate）都不轉。
 set -uo pipefail
 cd "$(dirname "$0")/.."
 RATCHET_FILE="tools/model-budget/intake-ratchet.txt"
@@ -50,5 +60,6 @@ if [ "$rc" != "0" ]; then
   echo "   ⛔ 不要把 $RATCHET_FILE 的數字調大來讓它變綠。"
   rm -f "$LOG"; exit 1
 fi
-echo "⚠️ 模型入庫：(a)(b) 有問題顆數＝基準線，⭐ 沒有變多 ⇒ 放行。存量債在 GH#1263／#1199／#1198／#1174。"
+echo "⚠️ 模型入庫：(a)(b)／a_body_tex＝基準線，沒有變多 ⇒ 放行。⛔ 基準線是 2026-09-15 現況（含 #1230 之後新進的 40 顆），不是「沒有問題」。"
+echo "   存量債在 GH#1263（預設身體 256 轉檔）／#1199／#1198／#1174。"
 rm -f "$LOG"; exit 0
