@@ -349,6 +349,7 @@ class Builder:
         overlay_path = self.audio_report.parent.parent / "current-branch-audio/overlay.json"
         overlay_evidence = self.evidence(overlay_path)
         overlay, overlay_by_id, overlay_files_by_id = {}, {}, {}
+        overlay_replacements_by_id = {}
         main_synchronized_by_clip = {}
         if overlay_evidence["existsLocal"]:
             overlay = self.read(overlay_path)
@@ -378,6 +379,16 @@ class Builder:
                 if row.get("mainMerged") is not False:
                     raise ValueError("Branch audio additions must not claim Main merged")
                 overlay_files_by_id.setdefault(row["heroId"], []).append(row)
+            for row in overlay.get("approvedBranchReplacementFiles", []):
+                if (row.get("mainMerged") is not False
+                        or row.get("classification") != "owner-reviewed-runtime-registered-replacement"):
+                    raise ValueError("Owner-reviewed branch replacement has invalid publication state")
+                ev = self.evidence(self.repo / "content" / row["clip"])
+                if ev["sha256"] != row["sha256"] or ev["bytes"] != row["bytes"]:
+                    raise ValueError("Owner-reviewed branch replacement differs from overlay: " + row["clip"])
+                if row["clip"] in overlay_replacements_by_id:
+                    raise ValueError("Duplicate owner-reviewed branch replacement: " + row["clip"])
+                overlay_replacements_by_id[row["clip"]] = row
             for row in overlay.get("mainSynchronizedFiles", []):
                 if row.get("mainMerged") is not True:
                     raise ValueError("Current-Main audio replacements must claim Main merged")
@@ -419,7 +430,11 @@ class Builder:
                             or hashlib.sha256(data).hexdigest() != blob["sha256"]):
                         raise ValueError("Current-Main audio Git blob differs from overlay: " + row["clip"])
         current_main_files = overlay.get("currentMainFiles", main_files)
-        current_audio_paths = {f["clip"] for f in current_main_files} | {f["clip"] for f in overlay.get("files", [])}
+        current_audio_paths = (
+            {f["clip"] for f in current_main_files}
+            | {f["clip"] for f in overlay.get("files", [])}
+            | set(overlay_replacements_by_id)
+        )
         if overlay and overlay["summary"]["currentUniqueClipPaths"] != len(current_audio_paths):
             raise ValueError("Audio overlay count does not match distinct current paths")
         derivatives = policy.get("approvedDerivatives", [])
@@ -498,6 +513,19 @@ class Builder:
                                          "speakerVerified": False, "originalCharacterPerformance": False,
                                          "excludedFromSpeechInput": f.get("excludedFromSpeechInput", False),
                                          "originalFile": f["originalFile"], "sourceMetadata": f["sourceMetadata"]})
+            branch_replacements = []
+            for f in overlay_replacements_by_id.values():
+                if f["heroId"] not in {hero_id, runtime_id}:
+                    continue
+                ev = self.evidence(self.repo / "content" / f["clip"])
+                branch_replacements.append({
+                    **ev, "classification": f["classification"], "categories": f["categories"],
+                    "auditSha256": f["sha256"], "currentMatchesAudit": True,
+                    "publicationState": f["publicationState"], "mainMerged": False,
+                    "speakerVerified": True, "originalCharacterPerformance": True,
+                    "runtimeRegistration": f.get("runtimeRegistration"),
+                    "replacedMainSha256": (f.get("currentMainBlob") or {}).get("sha256"),
+                })
             runtime_audio = []
             for p in sorted(audio_paths({"voice": (a or {}).get("runtimeVoice"),
                                          "sfx": (a or {}).get("runtimeSfx")})):
@@ -529,7 +557,8 @@ class Builder:
                           "status": "per-hero-audited" if a else "pending-audit", "data": a,
                           "mainCommittedFiles": finished_audio, "runtimeAudioFiles": runtime_audio,
                           "currentBranchVoice": branch_voice, "currentBranchAdditions": branch_additions,
-                          "currentBranchFiles": finished_audio + branch_additions},
+                          "currentBranchOwnerReviewedReplacements": branch_replacements,
+                          "currentBranchFiles": finished_audio + branch_additions + branch_replacements},
                 "gaps": gaps,
             })
         supplements = self.raw_supplements(heroes, runtime_options)
@@ -562,8 +591,9 @@ class Builder:
                         "perHeroAudioAudits": sum(h["audio"]["status"] == "per-hero-audited" for h in heroes),
                         "heroesWithReportedGaps": sum(bool(h["gaps"]) for h in heroes),
                         "mainBaselineAudioFiles": len({f["clip"] for f in main_files}),
-                        "currentMainAudioFiles": len({f["clip"] for f in current_main_files}),
+                        "currentMainAudioFiles": len({f["clip"] for f in current_main_files}) + len(overlay_replacements_by_id),
                         "currentBranchAudioAdditions": len(overlay.get("files", [])),
+                        "currentBranchOwnerReviewedAudioReplacements": len(overlay_replacements_by_id),
                         "currentMainAudioUpdatesAfterFrozenBaseline": len(overlay.get("mainSynchronizedFiles", [])),
                         "currentMainAudioAddedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainAddedPathsAfterBaseline", 0),
                         "currentMainAudioRemovedAfterFrozenBaseline": overlay.get("summary", {}).get("currentMainRemovedPathsAfterBaseline", 0),
@@ -681,6 +711,8 @@ def render(data):
         audio_label = f"{total}（原{original}／合{synthetic}）"
         if hero["audio"]["currentBranchAdditions"]:
             audio_label += f"；新增{len(hero['audio']['currentBranchAdditions'])}待合併"
+        if hero["audio"].get("currentBranchOwnerReviewedReplacements"):
+            audio_label += f"；已聽審替換{len(hero['audio']['currentBranchOwnerReviewedReplacements'])}待合併"
         if jp_count:
             audio_label += f"；JP {jp_count} 未綁"
         gaps = ["佔位；新來源待轉換" if g == "engine placeholder remains in model provenance" else g
