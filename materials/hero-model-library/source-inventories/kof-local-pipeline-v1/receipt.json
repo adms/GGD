@@ -204,8 +204,8 @@
       ],
       "outputs": [
         {
-          "bytes": 204309,
-          "sha256": "798149b0ee5147257120f3b23d3d1530512e0c47c27551c241fae130fb70a1bd",
+          "bytes": 206507,
+          "sha256": "22ff8da5d857554176d256cffbd2aadff674b67d1167511b5e1540eaa4181c9e",
           "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
         }
       ],
@@ -249,15 +249,15 @@
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json"
         },
         {
-          "bytes": 10102,
-          "sha256": "8ba31a160a52865ba7d56d516bf2b136c28fedab2e2fe3f5880821a987aa7e18",
+          "bytes": 10184,
+          "sha256": "59fd900c1d0c4d8836d4b8d8ce37c13ee7d30eafd1f10b979cfddb3d211e83ca",
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
         }
       ],
       "outputs": [
         {
-          "bytes": 3396552,
-          "sha256": "c39dfe905892c05bc0da9752970e64fcd953d09b40f959082abe54e7de25f003",
+          "bytes": 3412456,
+          "sha256": "ffb9bc8bce2d71843da50b379ac45ab268b3bf972755e8f2cbeabdddd9a23387",
           "gitPath": "materials/hero-model-library/download-sources.json"
         }
       ],
@@ -272,13 +272,13 @@
       "status": "entry-generated",
       "inputs": [
         {
-          "bytes": 204309,
-          "sha256": "798149b0ee5147257120f3b23d3d1530512e0c47c27551c241fae130fb70a1bd",
+          "bytes": 206507,
+          "sha256": "22ff8da5d857554176d256cffbd2aadff674b67d1167511b5e1540eaa4181c9e",
           "gitPath": "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
         },
         {
-          "bytes": 10102,
-          "sha256": "8ba31a160a52865ba7d56d516bf2b136c28fedab2e2fe3f5880821a987aa7e18",
+          "bytes": 10184,
+          "sha256": "59fd900c1d0c4d8836d4b8d8ce37c13ee7d30eafd1f10b979cfddb3d211e83ca",
           "gitPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/inventory.json"
         }
       ],
