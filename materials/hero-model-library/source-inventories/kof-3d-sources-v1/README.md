@@ -30,7 +30,8 @@
 - 中央索引已登記 11 個來源版本，角色為 Ash Crimson、八神庵和不知火舞。
 - 本機找到 6 個索引指定的 GLB 實檔；後台已驗證可選為 0 個。
 - Ash 四個全解析度 GLB 為左／右髮與材質修訂版，零原生遊戲動作，仍待 runtime 與視覺驗收。
-- 新增兩個 Ash 預算候選：7,869／7,868 面，貼圖上限 256，258 joints；現行 guard 實跑均為 `over`：18 draw calls 超過警戒 3／硬上限 6，所以只是「已轉換的待解決候選」。
+- 舊兩個 Ash 預算候選仍保留：7,869／7,868 面，貼圖上限 256，258 joints；它們為 18 draw、超過硬上限 6 的歷史待解決候選。
+- 新兩個 universal-atlas 靜態元件已進 Git：7,869／7,868 面、各 5 draw、258 joints、12 張 256px 貼圖；GGD hard errors 與 Khronos errors 均為 0。最終 Blender rerender、英雄綁定、原生動作及後台切換仍未完成。
 - 兩個候選的 S3 完整讀回：PASS。
 - 8,575 面的首次超標輸出、7,869/7,868 面候選與 atlas 失敗 manifest 均已獨立備份到 S3 `legacy/conversion-stages/`，三筆都通過完整讀回與逐檔 SHA-256。
 - 不知火舞與八神庵的原生 FBX 及貼圖已取得；Assimp 產物因外部貼圖 URI、材質映射和高面數而被拒絕，不是可上架 GLB。

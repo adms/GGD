@@ -60,7 +60,7 @@
     },
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "sha256": "c39dfe905892c05bc0da9752970e64fcd953d09b40f959082abe54e7de25f003"
+      "sha256": "6c156c441bf46f185a41000a7964d68c929491d8f0732515950f6e5638f81b30"
     },
     {
       "path": "materials/hero-model-library/design-backlog/sources-supplemental.json",
@@ -190767,6 +190767,82 @@
           "sizeMatchesManifest": true,
           "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
           "localSizeMatches": true
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+          "existsLocal": true,
+          "bytes": 1486160,
+          "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+          "sha256Status": "exact-local-sha256-verified",
+          "magicHex": "676c54460200000050ad1600",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 2,
+            "primitives": 5,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+          "library": "community",
+          "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+          "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+          "converted": true,
+          "limitations": [
+            "No existing GGD hero ID is asserted for Ash Crimson; this is an independently reusable component only.",
+            "The source contains zero native clips. Idle, run, attack, cast, hurt and death remain missing.",
+            "Five draws pass the current hard ceiling of six but remain above the warning value of three.",
+            "Fixed Blender source-versus-candidate images were captured before removing unsupported optional KHR_materials_ior; the final rerender is pending because Blender 5.2.1 background mode aborts on this host. The final GLB differs only by removing that unsupported optional material extension, and does not claim final visual acceptance.",
+            "No backend dropdown registration, runtime switch, default selection or production deployment was performed."
+          ],
+          "identityReviewRequired": false,
+          "recordedBytes": 1486160,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/left-hair/body.glb",
+          "localSizeMatches": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "finalVisualAcceptance": false
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+          "existsLocal": true,
+          "bytes": 1486476,
+          "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+          "sha256Status": "exact-local-sha256-verified",
+          "magicHex": "676c5446020000008cae1600",
+          "modelProof": {
+            "format": "glTF2-binary",
+            "meshes": 2,
+            "primitives": 5,
+            "skins": 1,
+            "animationEntries": 0
+          },
+          "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+          "library": "community",
+          "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+          "sourceUrl": "https://open3dlab.com/project/21f68f68-b705-46ab-9a72-88b68a9fa246/",
+          "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+          "converted": true,
+          "limitations": [
+            "No existing GGD hero ID is asserted for Ash Crimson; this is an independently reusable component only.",
+            "The source contains zero native clips. Idle, run, attack, cast, hurt and death remain missing.",
+            "Five draws pass the current hard ceiling of six but remain above the warning value of three.",
+            "Fixed Blender source-versus-candidate images were captured before removing unsupported optional KHR_materials_ior; the final rerender is pending because Blender 5.2.1 background mode aborts on this host. The final GLB differs only by removing that unsupported optional material extension, and does not claim final visual acceptance.",
+            "No backend dropdown registration, runtime switch, default selection or production deployment was performed."
+          ],
+          "identityReviewRequired": false,
+          "recordedBytes": 1486476,
+          "sizeMatchesManifest": true,
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+          "localSizeMatches": true,
+          "resourceRole": "independent-static-skinned-model-component",
+          "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+          "componentReady": true,
+          "runtimeSelectable": false,
+          "finalVisualAcceptance": false
         }
       ],
       "mappedHeroIds": [],
@@ -190797,7 +190873,7 @@
       "workTranslationBasis": "採常見繁體中文譯名／通稱供顯示；未逐項驗證地區授權片名，不構成角色身分或資產來源的新認定。",
       "localizationChangesIdentity": false,
       "resources": {
-        "motion": "原作可播放動作0；3個單幀pose不算動作。6GLB皆0動畫；新減面候選仍待 draw-call 與視覺驗收。",
+        "motion": "原作可播放動作0；3個單幀pose不算動作。8GLB皆0動畫；兩個 5 draw 靜態骨架元件已通過結構驗收，最終視覺重渲染、英雄綁定與動作仍缺。",
         "vfx": "尚未建立角色專屬特效對應",
         "sfx": "共 86 個音訊檔，音效／語音待分型",
         "voice": "已入索引86音訊檔；語音/說話者/逐段語系未全聽審。",
@@ -190866,6 +190942,24 @@
             "provenance": "meshoptimizer-derived-from-material-repair-v2",
             "readiness": "converted-partial-budget-pending-drawcall-and-visual-review",
             "evidence": "exact local SHA-256, GLB metrics and S3 readback receipt; not runtime acceptance"
+          },
+          {
+            "candidateId": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+            "count": 0,
+            "sourceCount": 0,
+            "unconvertedCount": 0,
+            "provenance": "universal-multi-channel-atlas-derived-from-material-v2-budget",
+            "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+            "evidence": "Git GLB, S3 full readback, structural validation and byte-identical rebuild; no hero or motion acceptance"
+          },
+          {
+            "candidateId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+            "count": 0,
+            "sourceCount": 0,
+            "unconvertedCount": 0,
+            "provenance": "universal-multi-channel-atlas-derived-from-material-v2-budget",
+            "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing",
+            "evidence": "Git GLB, S3 full readback, structural validation and byte-identical rebuild; no hero or motion acceptance"
           }
         ],
         "nativeMotionSources": [],

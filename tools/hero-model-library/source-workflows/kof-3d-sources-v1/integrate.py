@@ -112,6 +112,16 @@ def upsert(data: dict[str, Any], source: dict[str, Any]) -> bool:
         rows.append(source)
         return True
     index = matches[0]
+    # The universal-atlas component workflow is the authority for its Git
+    # evidence and S3 receipt.  This older budget-candidate refresh only owns
+    # the two 18-draw predecessor rows, so it must not erase the newer
+    # independently reusable components when rebuilding the shared source.
+    for key in ("componentCandidates", "conversionAttempts"):
+        if key in rows[index] and key not in source:
+            source[key] = rows[index][key]
+    for key in ("sourceClass", "publicationStatus"):
+        if key in rows[index] and key not in source:
+            source[key] = rows[index][key]
     if rows[index] == source:
         return False
     rows[index] = source
@@ -203,7 +213,31 @@ def integrate_backlog(data: dict[str, Any], source: dict[str, Any], workspace: P
             row["modelCandidates"].append(candidate)
         else:
             row["modelCandidates"][index] = candidate
-    row["resources"]["motion"] = "原作可播放動作0；3個單幀pose不算動作。6GLB皆0動畫；新減面候選仍待 draw-call 與視覺驗收。"
+    for component in source.get("componentCandidates", []):
+        if component.get("resourceRole") != "independent-static-skinned-model-component":
+            continue
+        path = Path(component["absolutePath"])
+        raw = path.read_bytes()
+        if len(raw) != component["bytes"] or BUILD.sha256(path) != component["sha256"]:
+            raise ValueError("changed Ash universal-atlas component: " + str(path))
+        candidate = {
+            "path": str(path.resolve()), "existsLocal": True, "bytes": len(raw), "sha256": component["sha256"],
+            "sha256Status": "exact-local-sha256-verified", "magicHex": raw[:12].hex(),
+            "modelProof": {"format": "glTF2-binary", "meshes": 2, "primitives": component["drawPrimitives"],
+                           "skins": component["skinCount"], "animationEntries": 0},
+            "id": component["id"], "library": "community", "sourceId": source["id"],
+            "sourceUrl": source["url"], "readiness": component["readiness"], "converted": True,
+            "limitations": component["limitations"], "identityReviewRequired": False,
+            "recordedBytes": len(raw), "sizeMatchesManifest": True, "absolutePath": str(path.resolve()),
+            "localSizeMatches": True, "resourceRole": component["resourceRole"], "gitPath": component["gitPath"],
+            "componentReady": True, "runtimeSelectable": False, "finalVisualAcceptance": False,
+        }
+        index = by_id.get(candidate["id"])
+        if index is None:
+            row["modelCandidates"].append(candidate)
+        else:
+            row["modelCandidates"][index] = candidate
+    row["resources"]["motion"] = "原作可播放動作0；3個單幀pose不算動作。8GLB皆0動畫；兩個 5 draw 靜態骨架元件已通過結構驗收，最終視覺重渲染、英雄綁定與動作仍缺。"
     counts = row["resources"].setdefault("motionCandidateCounts", [])
     counts_by_id = {item.get("candidateId"): index for index, item in enumerate(counts)}
     for candidate in source["modelCandidates"]:
@@ -216,6 +250,18 @@ def integrate_backlog(data: dict[str, Any], source: dict[str, Any], workspace: P
             "readiness": candidate["readyStage"],
             "evidence": "exact local SHA-256, GLB metrics and S3 readback receipt; not runtime acceptance",
         }
+        index = counts_by_id.get(item["candidateId"])
+        if index is None:
+            counts.append(item)
+        else:
+            counts[index] = item
+    for component in source.get("componentCandidates", []):
+        if component.get("resourceRole") != "independent-static-skinned-model-component":
+            continue
+        item = {"candidateId": component["id"], "count": 0, "sourceCount": 0, "unconvertedCount": 0,
+                "provenance": "universal-multi-channel-atlas-derived-from-material-v2-budget",
+                "readiness": component["readiness"],
+                "evidence": "Git GLB, S3 full readback, structural validation and byte-identical rebuild; no hero or motion acceptance"}
         index = counts_by_id.get(item["candidateId"])
         if index is None:
             counts.append(item)

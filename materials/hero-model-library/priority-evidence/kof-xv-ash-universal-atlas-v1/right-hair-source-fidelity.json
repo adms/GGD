@@ -1,0 +1,25 @@
+{
+  "schema": "ggd.kof-xv-ash-universal-atlas-source-fidelity@1",
+  "componentId": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
+    "bytes": 1946104,
+    "sha256": "707e3dde8ddd50d71935a079def959399b741aa199a1192eb36343ab337193bf"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+    "bytes": 1486476,
+    "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647"
+  },
+  "preserved": {
+    "triangles": true,
+    "skinCount": true,
+    "meshNodes": 2,
+    "nativeAnimationCount": 0
+  },
+  "standardization": {
+    "mergedPrimitives": 13,
+    "removedUnsupportedOptionalExtension": "KHR_materials_ior",
+    "reason": "not in current GGD model upload extension allowlist"
+  }
+}

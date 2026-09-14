@@ -16,8 +16,8 @@
   "inputs": {
     "downloadSources": {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3396552,
-      "sha256": "c39dfe905892c05bc0da9752970e64fcd953d09b40f959082abe54e7de25f003"
+      "bytes": 3412370,
+      "sha256": "6c156c441bf46f185a41000a7964d68c929491d8f0732515950f6e5638f81b30"
     },
     "windowsInventory": {
       "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/remote-game-libraries/windows-scan-20260912-030625/source/GGD-Game-Inventory-20260912-030625.zip",
@@ -5713,6 +5713,49 @@
         "Both candidates contain zero native gameplay animation clips and still need rendered source-versus-decimated visual review.",
         "The full-resolution material-repair variants remain preserved as independent predecessor candidates."
       ]
+    },
+    "universalAtlasStaticComponents": {
+      "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+      "components": [
+        {
+          "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+          "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+          "bytes": 1486160,
+          "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+          "triangles": 7869,
+          "drawPrimitives": 5,
+          "jointCount": 258,
+          "textureCount": 12,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-validation.json",
+            "bytes": 12558,
+            "sha256": "83d82c05836fe34e3b041a77dc97ae6288ef78aa8e93dd3614cfed5b245d5a79"
+          },
+          "finalVisualAcceptance": false,
+          "runtimeSelectable": false,
+          "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing"
+        },
+        {
+          "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+          "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+          "bytes": 1486476,
+          "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+          "triangles": 7868,
+          "drawPrimitives": 5,
+          "jointCount": 258,
+          "textureCount": 12,
+          "validationEvidence": {
+            "gitPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-validation.json",
+            "bytes": 12561,
+            "sha256": "a372c9bea56cb8dbb36ee8d1d3becda0be0173ffeafe05bbc534336027360cf9"
+          },
+          "finalVisualAcceptance": false,
+          "runtimeSelectable": false,
+          "readiness": "converted-structural-pass-static-component-visual-rerender-pending-actions-missing"
+        }
+      ],
+      "backendSelectableModels": 0,
+      "status": "Git-catalogued static components; final visual rerender, hero binding, motion and dropdown registration remain pending"
     },
     "audioReviewCandidates": {
       "receipt": {

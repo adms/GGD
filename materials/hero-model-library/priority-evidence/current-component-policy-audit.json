@@ -4,8 +4,8 @@
   "generatedFrom": [
     {
       "path": "materials/hero-model-library/download-sources.json",
-      "bytes": 3396552,
-      "sha256": "c39dfe905892c05bc0da9752970e64fcd953d09b40f959082abe54e7de25f003"
+      "bytes": 3412370,
+      "sha256": "6c156c441bf46f185a41000a7964d68c929491d8f0732515950f6e5638f81b30"
     },
     {
       "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
@@ -67,10 +67,10 @@
     }
   },
   "totals": {
-    "audited": 52,
-    "runtimeBudgetPass": 52,
+    "audited": 54,
+    "runtimeBudgetPass": 54,
     "runtimeBudgetNeedsWork": 0,
-    "heroAdoptionEligible": 31,
+    "heroAdoptionEligible": 33,
     "requiresDecimatedCandidate": 11
   },
   "records": [
@@ -458,6 +458,104 @@
         "decimatedCandidateTargetMax": 8000,
         "requiresDecimatedCandidate": true,
         "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+      "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+      "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+      "bytes": 1486160,
+      "metrics": {
+        "triangles": 7869,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 258,
+        "clips": 0,
+        "embeddedImages": 12
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+      "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+      "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+      "bytes": 1486476,
+      "metrics": {
+        "triangles": 7868,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 258,
+        "clips": 0,
+        "embeddedImages": 12
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
       },
       "catalogSemantics": {
         "componentReady": true,

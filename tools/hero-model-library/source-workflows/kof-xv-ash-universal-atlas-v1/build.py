@@ -276,6 +276,16 @@ def build(source: Path, output: Path, receipt: Path) -> dict:
                for channel, image in zip(("base", "normal", "mr"), atlases)]
         material = copy.deepcopy(data["materials"][REPRESENTATIVE[group]])
         material.pop("name", None)
+        # KHR_materials_ior is not accepted by GGD's deliberately narrow GLB
+        # importer.  These source records use only its default-like IOR value
+        # (1.45), while the portable PBR material is otherwise fully explicit.
+        # Drop this optional, non-required extension instead of broadening the
+        # importer contract or retaining an un-importable candidate.
+        extensions = material.get("extensions")
+        if isinstance(extensions, dict):
+            extensions.pop("KHR_materials_ior", None)
+            if not extensions:
+                material.pop("extensions", None)
         pbr = material.setdefault("pbrMetallicRoughness", {})
         pbr["baseColorTexture"] = {"index": tex[0]}
         pbr["metallicRoughnessTexture"] = {"index": tex[2]}
@@ -292,6 +302,16 @@ def build(source: Path, output: Path, receipt: Path) -> dict:
             replace_uv(data, blob, primitive, group_mapping[group][material_tuple(data, original)])
             primitive["material"] = group_material[group]
     merged = sum(merge_mesh(data, blob, mesh) for mesh in data["meshes"])
+    used = [value for value in data.get("extensionsUsed", []) if value != "KHR_materials_ior"]
+    if used:
+        data["extensionsUsed"] = used
+    else:
+        data.pop("extensionsUsed", None)
+    required = [value for value in data.get("extensionsRequired", []) if value != "KHR_materials_ior"]
+    if required:
+        data["extensionsRequired"] = required
+    else:
+        data.pop("extensionsRequired", None)
     data["buffers"] = [{"byteLength": len(blob)}]
     save(output, data, blob)
     # Reuse the repository's conservative GC. It retains every live skin and

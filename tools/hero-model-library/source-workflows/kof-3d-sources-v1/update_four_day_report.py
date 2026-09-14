@@ -22,6 +22,7 @@ def render() -> str:
     ash_audio = json.loads(ASH_AUDIO_RECEIPT.read_text(encoding="utf-8"))
     xiv = data["kofXiv"]
     left, right = data["kofXv"]["newBudgetCandidates"]["candidates"]
+    universal = data["kofXv"]["universalAtlasStaticComponents"]["components"]
     textures = xiv["textureCandidates"]["summary"]
     backup = xiv["textureCandidates"]["backup"]
     summary = preflight["summary"]
@@ -42,7 +43,10 @@ def render() -> str:
         "但尚未材質綁定與視覺驗收。KOF XV Ash 左／右髮候選為 "
         f"{left['metrics']['triangles']:,}／{right['metrics']['triangles']:,} 面、{left['metrics']['maxSkinJoints']} joints、"
         f"最大 {left['metrics']['maxTextureDimension']}px；現行 hard policy 實跑均因 {left['metrics']['drawCalls']} draw "
-        "超過 6 而失敗，且 0 原生 gameplay clips，未進 runtime Git、後台選項或部署。"
+        "超過 6 而失敗，且 0 原生 gameplay clips，仍作完整歷史候選保存。"
+        f"同來源的 universal-atlas 左／右髮靜態元件已進 Git，為 {universal[0]['triangles']:,}／{universal[1]['triangles']:,} 面、"
+        f"各 {universal[0]['drawPrimitives']} draw、{universal[0]['jointCount']} joints、12 張 256px 貼圖；"
+        "GGD hard errors 與 Khronos errors 均為 0，但最終 Blender rerender、英雄綁定、動作、後台選項與部署仍未完成。"
         f"另有 Ash {ash_audio['summary']['convertedReviewMp3Files']} 段 Float32 WAV 已轉為本機 MP3 聽審候選，"
         "每段均已完整解碼與固定來源／輸出 SHA-256；逐段語言、說話者、類別與事件仍為待確認，"
         f"runtime 綁定 {ash_audio['summary']['runtimeBindingsCreated']}、後台選項 {ash_audio['summary']['backendSelectableAssets']}、"

@@ -175,10 +175,38 @@ def validate_component(candidate, repo):
                 rebuild.get('normalizedGlbByteIdentical') is True and
                 rebuild.get('bothValidationsPassed') is True and
                 rebuild.get('outputSha256') == candidate['sha256'], 'EN653 deterministic rebuild proof failed')
+    elif schema == 'ggd.kof-xv-ash-universal-atlas-component-validation@1':
+        require(validation.get('componentId') == candidate['id'], 'KOF Ash component mismatch')
+        glb=validation.get('glb',{})
+        require((glb.get('sha256'),glb.get('bytes')) == (candidate['sha256'],candidate['bytes']),
+                'KOF Ash validation source-output pin mismatch')
+        inspection=validation.get('ggdInspection',{})
+        require((inspection.get('triangles'),inspection.get('drawPrimitives'),inspection.get('skinnedPrimitives'),
+                 inspection.get('skinCount'),inspection.get('joints'),inspection.get('textureCount'),inspection.get('clipCount')) ==
+                (candidate.get('triangles'),candidate.get('drawPrimitives'),candidate.get('drawPrimitives'),1,[candidate.get('jointCount')],candidate.get('textureCount'),0),
+                'Unexpected KOF Ash skin/mesh/texture shape')
+        require(inspection.get('budget',{}).get('errors') == [], 'KOF Ash component exceeds current hard budget')
+        issues=validation.get('khronosIssues',{})
+        expected={'MESH_PRIMITIVE_GENERATED_TANGENT_SPACE': 5, 'NODE_SKINNED_MESH_NON_ROOT': 2, 'UNUSED_OBJECT': 5}
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 7 and issues.get('truncated') is False and
+                issues.get('issueCodeCounts') == expected, 'KOF Ash Khronos result changed')
+        require(validation.get('structuralValidationPassed') is True and
+                validation.get('finiteFloatAccessors',{}).get('passed') is True,
+                'KOF Ash structural or finite-accessor validation failed')
+        require(validation.get('runtimeReady') is False and validation.get('runtimeSelectable') is False and
+                validation.get('defaultEligible') is False, 'KOF Ash validation cannot claim runtime readiness')
+        rebuild=json.loads(verify_pin(candidate['sourceRebuildEvidence'],repo).read_text())
+        require(rebuild.get('schema') == 'ggd.kof-xv-ash-universal-atlas-source-rebuild@1' and
+                rebuild.get('componentId') == candidate['id'] and rebuild.get('byteIdenticalRebuild') is True and
+                rebuild.get('output',{}).get('sha256') == candidate['sha256'], 'KOF Ash deterministic rebuild proof failed')
     else:
         raise ValueError('Unexpected skinned validation schema: '+str(schema))
-    require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
-            'Component upload validation failed')
+    if schema == 'ggd.kof-xv-ash-universal-atlas-component-validation@1':
+        require(issues.get('numErrors') == 0 and issues.get('truncated') is False,
+                'KOF Ash component upload validation failed')
+    else:
+        require(issues.get('numErrors') == 0 and issues.get('numWarnings') == 0 and issues.get('truncated') is False,
+                'Component upload validation failed')
     acceptance=json.loads(verify_pin(candidate['acceptanceEvidence'],repo).read_text())
     matches=[row for row in acceptance.get('components',[]) if row.get('id') == candidate['id']]
     require(len(matches) == 1 and matches[0].get('accepted') is True,
