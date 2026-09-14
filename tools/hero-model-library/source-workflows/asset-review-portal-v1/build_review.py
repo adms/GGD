@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build one owner-facing queue for pending audio and motion review candidates."""
+"""Build one owner-facing queue for pending audio, motion and visual review."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import html
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -17,6 +18,10 @@ POPP = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/event-aud
 PALWORLD = LIBRARY / "palworld/review/palworld-av-review.json"
 BORROWED = LIBRARY / "motion-review/borrowed-motion-review.json"
 JUMPFORCE = LIBRARY / "source-inventories/jumpforce-assets-v2/listening-review-groups.json"
+KOF_EFFECTS = LIBRARY / "source-inventories/kof-jump-container-coverage-v1/effect-mapping.json"
+DAI_VFX = LIBRARY / "priority-evidence/infinity-strash-dai-vfx-components-v1/candidates.json"
+POPP_VFX = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/runtime-candidates-v1/manifest.json"
+POPP_VFX_RECIPES = LIBRARY / "priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json"
 OUTPUT_DIR = LIBRARY / "review/asset-review-portal-v1"
 OUTPUT_JSON = OUTPUT_DIR / "review-queue.json"
 OUTPUT_SCHEMA = OUTPUT_DIR / "review-decision.schema.json"
@@ -53,9 +58,21 @@ def local_file(path: Path, expected: dict[str, Any] | None = None) -> dict[str, 
         raise ValueError(f"review media is not an existing absolute file: {path}")
     record = {"absolutePath": str(path), "bytes": path.stat().st_size, "sha256": sha256(path)}
     if expected:
-        if record["bytes"] != expected["bytes"] or record["sha256"] != expected["sha256"]:
+        expected_bytes = expected.get("bytes", record["bytes"])
+        expected_sha = expected.get("sha256", record["sha256"])
+        if record["bytes"] != expected_bytes or record["sha256"] != expected_sha:
             raise ValueError(f"review media changed: {path}")
     return record
+
+
+def git_file(path: Path, expected: dict[str, Any] | None = None) -> dict[str, Any]:
+    record = local_file(path, expected)
+    record["gitPath"] = path.relative_to(ROOT).as_posix()
+    return record
+
+
+def preview_file(candidate_id: str, index: int, record: dict[str, Any]) -> dict[str, Any]:
+    return {"mediaId": f"{candidate_id}:preview-{index + 1}", **record}
 
 
 def first_group_sample(directory: Path) -> Path:
@@ -280,26 +297,294 @@ def borrowed_candidates(document: dict[str, Any]) -> tuple[list[dict[str, Any]],
     return candidates, blocked
 
 
+def candidate_slug(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
+
+
+def pending_visual(
+    *,
+    candidate_id: str,
+    source_kind: str,
+    source_id: str,
+    character_name_zh: str,
+    native_character_id: str,
+    asset_kind: str,
+    source_label: str,
+    approval_scope: str,
+    previews: list[dict[str, Any]],
+    source_evidence: dict[str, Any],
+    gaps: list[str],
+    hero_id: str | None = None,
+    work_zh: str,
+) -> dict[str, Any]:
+    if not previews:
+        raise ValueError(f"visual candidate has no preview: {candidate_id}")
+    return {
+        "candidateId": candidate_id,
+        "sourceKind": source_kind,
+        "sourceId": source_id,
+        "heroId": hero_id,
+        "characterNameZh": character_name_zh,
+        "workZh": work_zh,
+        "nativeCharacterId": native_character_id,
+        "assetKind": asset_kind,
+        "sourceLabel": source_label,
+        "eventCandidates": [],
+        "approvalScope": approval_scope,
+        "previewFiles": [preview_file(candidate_id, index, row) for index, row in enumerate(previews)],
+        "sourceEvidence": source_evidence,
+        "gaps": gaps,
+        "decision": "pending",
+        "ownerDecision": "pending",
+        "runtimeSelectable": False,
+        "runtimeBindingChanged": False,
+        "runtimeMutationAllowed": False,
+    }
+
+
+def kof_visual_candidates(document: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if document.get("schema") != "ggd.kof-xiv-eff-reference-mapping@1":
+        raise ValueError("unexpected KOF XIV EFF mapping schema")
+    summary = document["summary"]
+    if (summary.get("sourceNativeEffectGroups") != 71
+            or summary.get("ggdRuntimeVfxCandidates") != 0
+            or summary.get("skillBindingsCreated") != 0
+            or document["policy"].get("materialBlendTimingAttachmentValidated") is not False):
+        raise ValueError("KOF XIV EFF mapping is stale or overclaims runtime readiness")
+    manifest_record = document["textureConversionManifest"]
+    manifest_path = Path(manifest_record["absolutePath"])
+    manifest_evidence = local_file(manifest_path, manifest_record)
+    manifest = read_json(manifest_path)
+    if (manifest.get("summary", {}).get("convertedPngFiles") != 55
+            or manifest.get("summary", {}).get("overTextureLimit") != 0
+            or manifest.get("runtimeVfxDocuments") != 0
+            or manifest.get("backendSelectable") is not False):
+        raise ValueError("KOF XIV texture conversion manifest is stale or overclaims readiness")
+
+    texture_rows = []
+    texture_by_identity: dict[tuple[str, str], dict[str, Any]] = {}
+    for source in manifest["files"]:
+        native_id = source["nativeCharacterId"]
+        source_label = Path(source["outputAbsolutePath"]).stem
+        candidate_id = f"kofxiv-texture:{native_id.lower()}:{candidate_slug(source_label)}"
+        image = local_file(Path(source["outputAbsolutePath"]), {
+            "bytes": source["outputBytes"], "sha256": source["outputSha256"],
+        })
+        texture_by_identity[(native_id, source_label.lower())] = image
+        texture_rows.append(pending_visual(
+            candidate_id=candidate_id,
+            source_kind="kofxiv-converted-effect-texture",
+            source_id=document["sourceId"],
+            hero_id=(source.get("heroIds") or [None])[0],
+            character_name_zh=source["characterNameZh"],
+            native_character_id=native_id,
+            work_zh="THE KING OF FIGHTERS XIV",
+            asset_kind="texture",
+            source_label=source_label,
+            approval_scope="texture-component-visual-review-only",
+            previews=[image],
+            source_evidence={
+                "sourceDds": {
+                    "absolutePath": source["sourceAbsolutePath"],
+                    "bytes": source["sourceBytes"],
+                    "sha256": source["sourceSha256"],
+                    "format": source["sourceFormat"],
+                },
+                "outputFormat": source["outputFormat"],
+                "conversionManifest": manifest_evidence,
+                "readiness": source["readiness"],
+            },
+            gaps=["native-blend-mode-unverified", "native-timing-unverified", "skill-event-binding-unreviewed"],
+        ))
+
+    group_rows = []
+    for native_id, character in document["characters"].items():
+        sheet_path = LIBRARY / f"source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/{native_id}.png"
+        sheet = git_file(sheet_path)
+        for source in character["effectGroups"]:
+            previews = []
+            converted_names = []
+            for reference in source["references"]:
+                if reference["kind"] != "converted-effect-texture":
+                    continue
+                key = (native_id, reference["basename"].lower())
+                image = texture_by_identity.get(key)
+                if image is None:
+                    raise ValueError(f"KOF group references unknown converted texture: {key}")
+                if image["sha256"] not in {row["sha256"] for row in previews}:
+                    previews.append(image)
+                converted_names.append(reference["basename"])
+            if not previews:
+                previews = [sheet]
+            dependency_counts: dict[str, int] = {}
+            for reference in source["references"]:
+                dependency_counts[reference["kind"]] = dependency_counts.get(reference["kind"], 0) + 1
+            group_rows.append(pending_visual(
+                candidate_id="kofxiv-eff:" + source["candidateId"].removeprefix("kofxiv-"),
+                source_kind="kofxiv-native-eff-group",
+                source_id=document["sourceId"],
+                hero_id=(source.get("heroIds") or [None])[0],
+                character_name_zh=source["characterNameZh"],
+                native_character_id=native_id,
+                work_zh="THE KING OF FIGHTERS XIV",
+                asset_kind="native-effect-group",
+                source_label=source["nativeEffectFile"],
+                approval_scope="source-effect-group-reference-review-only",
+                previews=previews,
+                source_evidence={
+                    "effectSource": source["effectSource"],
+                    "convertedTextureNames": sorted(set(converted_names)),
+                    "dependencyCounts": dependency_counts,
+                    "componentLabels": source["componentLabels"],
+                    "materialEvidence": source["materialEvidence"],
+                    "blendEvidence": source["blendEvidence"],
+                    "timingEvidence": source["timingEvidence"],
+                    "attachmentEvidence": source["attachmentEvidence"],
+                },
+                gaps=["proprietary-eff-runtime-decoder-missing", "blend-timing-attachment-unverified", "skill-event-binding-unreviewed"],
+            ))
+    return texture_rows, group_rows
+
+
+def dai_visual_candidates(document: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if document.get("schema") != "ggd.infinity-strash-dai-vfx-component-candidates@1":
+        raise ValueError("unexpected Dai VFX component schema")
+    if (document["summary"].get("textureComponents") != 18
+            or document["summary"].get("meshComponentsConverted") != 8
+            or document["summary"].get("skillBindingsCreated") != 0):
+        raise ValueError("Dai VFX component inventory is stale or overclaims runtime readiness")
+    eligible_textures = [row for row in document["textureComponents"] if row.get("componentEligible")]
+    if len(eligible_textures) != 18:
+        raise ValueError("Dai VFX eligible texture count changed")
+    texture_rows = []
+    for source in eligible_textures:
+        output = git_file(ROOT / source["gitPath"], source["output"])
+        texture_rows.append(pending_visual(
+            candidate_id="dai-vfx-texture:" + source["componentId"],
+            source_kind="infinity-strash-dai-vfx-texture-component",
+            source_id=document["sourceId"],
+            hero_id=(document["character"].get("heroIds") or [None])[0],
+            character_name_zh=document["character"]["nameZh"],
+            native_character_id=document["character"]["nativeId"],
+            work_zh="Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            asset_kind="vfx-support-texture",
+            source_label=source["reference"],
+            approval_scope="support-component-visual-review-only",
+            previews=[output],
+            source_evidence={
+                "componentId": source["componentId"],
+                "classification": source["classification"],
+                "source": source["source"],
+                "output": output,
+                "metrics": source["metrics"],
+            },
+            gaps=["niagara-timing-unrecovered", "material-dynamic-parameters-unrecovered", "skill-event-binding-unreviewed"],
+        ))
+    sheet = git_file(ROOT / "apps/client/public/infinity-strash-dai-vfx-components.png")
+    mesh_rows = []
+    for source in document["meshComponents"]:
+        asset = git_file(ROOT / source["gitPath"], source["converted"])
+        mesh_rows.append(pending_visual(
+            candidate_id="dai-vfx-mesh:" + source["componentId"],
+            source_kind="infinity-strash-dai-vfx-mesh-component",
+            source_id=document["sourceId"],
+            hero_id=(document["character"].get("heroIds") or [None])[0],
+            character_name_zh=document["character"]["nameZh"],
+            native_character_id=document["character"]["nativeId"],
+            work_zh="Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            asset_kind="vfx-support-mesh",
+            source_label=source["reference"],
+            approval_scope="support-component-visual-review-only",
+            previews=[sheet],
+            source_evidence={
+                "componentId": source["componentId"],
+                "source": source["source"],
+                "converted": asset,
+                "metrics": source["metrics"],
+                "policyRole": source["policyRole"],
+                "contactSheetContainsIndividualWireframe": True,
+            },
+            gaps=["niagara-timing-unrecovered", "material-dynamic-parameters-unrecovered", "skill-event-binding-unreviewed"],
+        ))
+    if len(mesh_rows) != 8:
+        raise ValueError("Dai VFX mesh count changed")
+    return texture_rows, mesh_rows
+
+
+def popp_visual_candidates(runtime: dict[str, Any], recipes: dict[str, Any]) -> list[dict[str, Any]]:
+    if runtime.get("schema") != "ggd.infinity-strash-popp-vfx-runtime-candidates@1":
+        raise ValueError("unexpected Popp VFX runtime-candidate schema")
+    if (runtime["summary"].get("ggdVfxDocumentsBuilt") != 12
+            or runtime["summary"].get("identityExcludedRoots") != 2
+            or runtime["summary"].get("visuallyAccepted") != 0
+            or runtime["summary"].get("skillBindingsCreated") != 0):
+        raise ValueError("Popp VFX candidate inventory is stale or overclaims acceptance/binding")
+    recipe_by_id = {row["candidateId"]: row for row in recipes["recipes"]}
+    rows = []
+    for source in runtime["candidates"]:
+        recipe = recipe_by_id[source["candidateId"]]
+        preview_path = POPP_VFX_RECIPES.parent / recipe["preview"]["path"]
+        preview = git_file(preview_path, recipe["preview"])
+        runtime_texture = git_file(ROOT / source["runtimeTexture"]["gitPath"], source["runtimeTexture"])
+        vfx_document = git_file(ROOT / source["vfxDocument"]["gitPath"], source["vfxDocument"])
+        rows.append(pending_visual(
+            candidate_id="popp-vfx:" + source["candidateId"],
+            source_kind="infinity-strash-popp-vfx-runtime-candidate",
+            source_id=runtime["sourceId"],
+            hero_id=runtime["heroId"],
+            character_name_zh="何布／波普",
+            native_character_id="PN020",
+            work_zh="Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+            asset_kind="ggd-vfx-reconstruction-candidate",
+            source_label=source["rootReference"],
+            approval_scope="vfx-visual-acceptance-only",
+            previews=[preview],
+            source_evidence={
+                "candidateId": source["candidateId"],
+                "family": source["family"],
+                "phase": source["phase"],
+                "sourceTexture": source["sourceTexture"],
+                "runtimeTexture": runtime_texture,
+                "vfxDocument": vfx_document,
+                "states": source["states"],
+                "staticPreviewCounts": recipe["counts"],
+            },
+            gaps=["niagara-timing-unrecovered", "mesh-layers-unreconstructed", "skill-event-binding-unreviewed"],
+        ))
+    return rows
+
+
 def build_contract() -> dict[str, Any]:
-    source_paths = [POPP, PALWORLD, BORROWED, JUMPFORCE]
+    source_paths = [POPP, PALWORLD, BORROWED, JUMPFORCE, KOF_EFFECTS, DAI_VFX, POPP_VFX, POPP_VFX_RECIPES]
     popp = read_json(POPP)
     palworld = read_json(PALWORLD)
     borrowed = read_json(BORROWED)
     jumpforce = read_json(JUMPFORCE)
+    kof_effects = read_json(KOF_EFFECTS)
+    dai_vfx = read_json(DAI_VFX)
+    popp_vfx = read_json(POPP_VFX)
+    popp_vfx_recipes = read_json(POPP_VFX_RECIPES)
     pal_audio, pal_motion = palworld_candidates(palworld)
     borrowed_motion, blocked = borrowed_candidates(borrowed)
+    kof_textures, kof_groups = kof_visual_candidates(kof_effects)
+    dai_textures, dai_meshes = dai_visual_candidates(dai_vfx)
+    popp_visual = popp_visual_candidates(popp_vfx, popp_vfx_recipes)
     audio = popp_candidates(popp) + pal_audio + jumpforce_candidates(jumpforce)
     motions = pal_motion + borrowed_motion
-    candidate_ids = [row["candidateId"] for row in audio + motions]
+    visuals = kof_textures + kof_groups + dai_textures + dai_meshes + popp_visual
+    candidate_ids = [row["candidateId"] for row in audio + motions + visuals]
     if len(candidate_ids) != len(set(candidate_ids)):
         raise ValueError("duplicate review candidate id")
-    if any(row["decision"] != "pending" or row["runtimeSelectable"] or row["runtimeBindingChanged"] for row in audio + motions):
+    if any(row["decision"] != "pending" or row["runtimeSelectable"] or row["runtimeBindingChanged"] for row in audio + motions + visuals):
         raise ValueError("generated queue must remain pending and runtime inert")
+    if any(row["ownerDecision"] != "pending" or row["runtimeMutationAllowed"] is not False for row in visuals):
+        raise ValueError("visual review candidates must remain owner-pending and runtime inert")
     source_inputs = [git_evidence(path) for path in source_paths]
     fingerprint = hashlib.sha256(canonical_json({
         "inputs": source_inputs,
         "audio": [(row["candidateId"], row["file"]["sha256"]) for row in audio],
         "motion": [(row["candidateId"], row["modelKey"], row["nativeClip"]) for row in motions],
+        "visual": [(row["candidateId"], [item["sha256"] for item in row["previewFiles"]]) for row in visuals],
         "blocked": [row["candidateId"] for row in blocked],
     }).encode()).hexdigest()
     return {
@@ -312,6 +597,7 @@ def build_contract() -> dict[str, Any]:
             "runtimeMutationAllowed": False,
             "jumpForceGroupSampleApprovalDoesNotAuthorizeEventBinding": True,
             "borrowedAndDeathSubstitutionMotionsRequirePerCandidateApproval": True,
+            "visualApprovalDoesNotAuthorizeSkillOrRuntimeBinding": True,
             "resolvedReceiptCandidatesAreNotRequeued": True,
         },
         "summary": {
@@ -323,7 +609,14 @@ def build_contract() -> dict[str, Any]:
             "palworldMotionCandidateCount": len(pal_motion),
             "borrowedOrDeathSubstitutionCandidateCount": len(borrowed_motion),
             "blockedMotionLeadCount": len(blocked),
-            "pendingDecisionCount": len(audio) + len(motions),
+            "visualCandidateCount": len(visuals),
+            "kofXivTextureCandidateCount": len(kof_textures),
+            "kofXivEffGroupCandidateCount": len(kof_groups),
+            "daiVfxTextureComponentCount": len(dai_textures),
+            "daiVfxMeshComponentCount": len(dai_meshes),
+            "poppVfxCandidateCount": len(popp_visual),
+            "visualPreviewFileCount": sum(len(row["previewFiles"]) for row in visuals),
+            "pendingDecisionCount": len(audio) + len(motions) + len(visuals),
             "approvedDecisionCount": 0,
             "rejectedDecisionCount": 0,
             "runtimeBindingsChanged": 0,
@@ -331,12 +624,14 @@ def build_contract() -> dict[str, Any]:
         },
         "audioCandidates": audio,
         "motionCandidates": motions,
+        "visualCandidates": visuals,
         "blockedMotionLeads": blocked,
     }
 
 
 def decision_schema(contract: dict[str, Any]) -> dict[str, Any]:
-    ids = [row["candidateId"] for row in contract["audioCandidates"] + contract["motionCandidates"]]
+    ids = [row["candidateId"] for row in contract["audioCandidates"] + contract["motionCandidates"] + contract["visualCandidates"]]
+    visual_ids = [row["candidateId"] for row in contract["visualCandidates"]]
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://ggd.local/schema/asset-review-decisions-v1.json",
@@ -362,6 +657,10 @@ def decision_schema(contract: dict[str, Any]) -> dict[str, Any]:
                         "note": {"type": "string"},
                         "runtimeBindingAuthorized": {"const": False},
                     },
+                    "allOf": [{
+                        "if": {"properties": {"candidateId": {"enum": visual_ids}}, "required": ["candidateId"]},
+                        "then": {"properties": {"approvedBindings": {"maxItems": 0}}},
+                    }],
                 },
             },
         },
@@ -380,28 +679,30 @@ def build_html(contract: dict[str, Any]) -> str:
 <meta name="robots" content="noindex"><title>GGD 素材逐項審查中心</title>
 <style>
 :root{{--bg:#071019;--card:#111d2a;--line:#294158;--fg:#eef6ff;--dim:#a9b8c6;--accent:#66d9ef;--warn:#ffc66d;--ok:#8bd49c;--bad:#ff8b8b}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}}header{{position:sticky;top:0;z-index:6;padding:12px 18px;background:#08131ef2;border-bottom:1px solid var(--line)}}main{{max-width:1440px;margin:auto;padding:18px}}h1{{font-size:20px;margin:0}}h2{{margin:28px 0 8px}}.dim{{color:var(--dim)}}.warn{{border:1px solid #8d692e;background:#2c2414;padding:10px 12px;border-radius:8px;color:#ffe2a6}}.toolbar{{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}}input,select,textarea,button,.button-link{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 9px;border-radius:7px}}input[type=search]{{min-width:300px}}button,.button-link{{cursor:pointer;text-decoration:none}}button:hover,.button-link:hover{{border-color:var(--accent)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}}.card{{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:12px;min-width:0}}.card.approve{{border-color:var(--ok)}}.card.reject{{border-color:var(--bad)}}.card.pending{{border-color:#6f7f91}}audio{{width:100%}}code{{font-size:11px;word-break:break-all}}.tags{{display:flex;gap:5px;flex-wrap:wrap}}.tag{{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px}}dl{{display:grid;grid-template-columns:105px 1fr;gap:3px 8px}}dt{{color:var(--dim)}}dd{{margin:0;min-width:0;word-break:break-word}}textarea{{width:100%;min-height:55px}}.buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}}.viewer{{position:relative;height:430px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#05080c}}iframe{{width:100%;height:100%;border:0}}.viewer-status{{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#071019e8;color:var(--dim)}}.viewer-status.error{{color:var(--bad);background:#210d10ee}}.viewer-status[hidden]{{display:none}}details{{margin-top:8px}}li{{margin:4px 0}}.hidden{{display:none!important}}.count{{font-variant-numeric:tabular-nums}}
+*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif}}header{{position:sticky;top:0;z-index:6;padding:12px 18px;background:#08131ef2;border-bottom:1px solid var(--line)}}main{{max-width:1440px;margin:auto;padding:18px}}h1{{font-size:20px;margin:0}}h2{{margin:28px 0 8px}}.dim{{color:var(--dim)}}.warn{{border:1px solid #8d692e;background:#2c2414;padding:10px 12px;border-radius:8px;color:#ffe2a6}}.toolbar{{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}}input,select,textarea,button,.button-link{{border:1px solid var(--line);background:#182a3b;color:var(--fg);padding:7px 9px;border-radius:7px}}input[type=search]{{min-width:300px}}button,.button-link{{cursor:pointer;text-decoration:none}}button:hover,.button-link:hover{{border-color:var(--accent)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}}.card{{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:12px;min-width:0}}.card.approve{{border-color:var(--ok)}}.card.reject{{border-color:var(--bad)}}.card.pending{{border-color:#6f7f91}}audio{{width:100%}}code{{font-size:11px;word-break:break-all}}.tags{{display:flex;gap:5px;flex-wrap:wrap}}.tag{{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px}}dl{{display:grid;grid-template-columns:105px 1fr;gap:3px 8px}}dt{{color:var(--dim)}}dd{{margin:0;min-width:0;word-break:break-word}}textarea{{width:100%;min-height:55px}}.buttons{{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}}.viewer{{position:relative;height:430px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#05080c}}iframe{{width:100%;height:100%;border:0}}.viewer-status{{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#071019e8;color:var(--dim)}}.viewer-status.error{{color:var(--bad);background:#210d10ee}}.viewer-status[hidden]{{display:none}}.visual-gallery{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin:8px 0}}.visual-gallery a{{display:block;background:#071019;border:1px solid var(--line);border-radius:7px;padding:4px}}.visual-gallery img{{display:block;width:100%;height:180px;object-fit:contain}}details{{margin-top:8px}}li{{margin:4px 0}}.hidden{{display:none!important}}.count{{font-variant-numeric:tabular-nums}}
 </style></head><body><header><h1>GGD 素材逐項審查中心</h1><div class="dim">資料指紋 <code>{fingerprint}</code> · 所有項目預設 pending · 匯出決定不會修改 runtime</div></header>
-<main><div class="warn">音效／語音與尚在 pending 的動作候選必須逐項核准。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣，核准只代表群組分類審查，不能授權技能事件綁定。已有 owner 決定與 runtime 收據的項目不會重新排入 pending。</div>
-<div class="toolbar"><input id="search" type="search" placeholder="搜尋角色、來源、事件、SHA"><select id="kind"><option value="">全部來源</option><option value="popp">波普音訊</option><option value="palworld">帕魯</option><option value="jumpforce">JUMP FORCE</option><option value="borrowed">借用／死亡替代</option></select><select id="status"><option value="">全部裁決</option><option value="pending">pending</option><option value="approve">approve</option><option value="reject">reject</option></select><span id="visible" class="dim count"></span></div>
+<main><div class="warn">音效／語音、動作與視覺素材候選必須逐項核准。KOF EFF、達伊支援元件與波普靜態重建圖的核准只記錄視覺裁決，不授權技能事件或 runtime 綁定。JUMP FORCE 現階段只有角色群組身份，所列音檔只是固定抽樣。已有 owner 決定與 runtime 收據的項目不會重新排入 pending。</div>
+<div class="toolbar"><input id="search" type="search" placeholder="搜尋角色、來源、事件、SHA"><select id="kind"><option value="">全部來源</option><option value="popp-event-audio">波普音訊</option><option value="palworld-creature-cry">帕魯叫聲</option><option value="palworld-native-motion-semantic">帕魯動作</option><option value="jumpforce-group-identity-sample">JUMP FORCE</option><option value="borrowed-or-death-substitution-motion">借用／死亡替代</option><option value="kofxiv-converted-effect-texture">KOF XIV 特效貼圖</option><option value="kofxiv-native-eff-group">KOF XIV EFF 群組</option><option value="infinity-strash-dai-vfx-texture-component">達伊特效貼圖</option><option value="infinity-strash-dai-vfx-mesh-component">達伊特效 mesh</option><option value="infinity-strash-popp-vfx-runtime-candidate">波普 VFX 候選</option></select><select id="status"><option value="">全部裁決</option><option value="pending">pending</option><option value="approve">approve</option><option value="reject">reject</option></select><span id="visible" class="dim count"></span></div>
 <h2>一、尚未核准音效／語音 <span id="audioCount" class="dim count"></span></h2><div id="audio" class="grid"></div>
 <h2>二、原生／借用／死亡替代動作 <span id="motionCount" class="dim count"></span></h2><div id="motion" class="grid"></div>
-<h2>三、尚不可播放的動作線索</h2><div id="blocked" class="grid"></div>
-<h2>四、匯出逐項裁決</h2><p id="decisionStatus" class="dim"></p><div class="toolbar"><input id="reviewer" value="owner" placeholder="審查者"><button id="export">下載 asset-review-decisions.json</button><button id="clear">清除本機草稿</button></div></main>
+<h2>三、特效貼圖／EFF／支援元件 <span id="visualCount" class="dim count"></span></h2><div id="visual" class="grid"></div>
+<h2>四、尚不可播放的動作線索</h2><div id="blocked" class="grid"></div>
+<h2>五、匯出逐項裁決</h2><p id="decisionStatus" class="dim"></p><div class="toolbar"><input id="reviewer" value="owner" placeholder="審查者"><button id="export">下載 asset-review-decisions.json</button><button id="clear">清除本機草稿</button></div></main>
 <script id="contract" type="application/json">{data}</script><script>
 const D=JSON.parse(document.getElementById('contract').textContent);const storageKey='ggd.asset-review-portal:'+D.sourceFingerprint;let draft=JSON.parse(localStorage.getItem(storageKey)||'{{"decisions":{{}}}}');draft.decisions??={{}};
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]));const all=[...D.audioCandidates,...D.motionCandidates];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c]));const all=[...D.audioCandidates,...D.motionCandidates,...D.visualCandidates];
 const state=id=>draft.decisions[id]??{{decision:'pending',approvedBindings:[],note:''}};function persist(){{localStorage.setItem(storageKey,JSON.stringify(draft));applyFilters();renderStatus()}}
 function controls(c){{const s=state(c.candidateId),bindings=c.eventCandidates||[];return `<div class="buttons"><select data-decision="${{esc(c.candidateId)}}"><option value="pending" ${{s.decision==='pending'?'selected':''}}>pending</option><option value="approve" ${{s.decision==='approve'?'selected':''}}>approve</option><option value="reject" ${{s.decision==='reject'?'selected':''}}>reject</option></select></div><div class="buttons">${{bindings.map(b=>`<label><input type="checkbox" data-binding="${{esc(c.candidateId)}}" value="${{esc(b)}}" ${{s.approvedBindings.includes(b)?'checked':''}}> ${{esc(b)}}</label>`).join('')||'<span class="dim">沒有事件綁定候選</span>'}}</div><textarea data-note="${{esc(c.candidateId)}}" placeholder="此項備註">${{esc(s.note)}}</textarea>`}}
 function evidence(c){{return `<dl><dt>來源</dt><dd>${{esc(c.sourceId)}}</dd><dt>作品／角色</dt><dd>${{esc(c.workZh)}} · ${{esc(c.characterNameZh)}} · ${{esc(c.heroId||'尚未對應 hero ID')}}</dd><dt>原生 ID</dt><dd>${{esc(c.nativeCharacterId||'待確認')}}</dd>${{c.file?`<dt>本機</dt><dd><code>${{esc(c.file.absolutePath)}}</code></dd><dt>SHA-256</dt><dd><code>${{esc(c.file.sha256)}}</code></dd>`:''}}</dl><details><summary>缺口與來源細節</summary><ul>${{(c.gaps||[]).map(x=>`<li>${{esc(x)}}</li>`).join('')}}</ul><pre><code>${{esc(JSON.stringify(c.sourceEvidence||c.validationEvidence||{{}},null,2))}}</code></pre></details>`}}
-const audio=document.getElementById('audio');for(const c of D.audioCandidates){{const card=document.createElement('article');card.className='card '+state(c.candidateId).decision;card.dataset.candidate=c.candidateId;card.dataset.search=JSON.stringify(c).toLowerCase();card.innerHTML=`<h3>${{esc(c.characterNameZh)}} · ${{esc(c.sourceLabel)}}</h3><div class="tags"><span class="tag">${{esc(c.sourceKind)}}</span><span class="tag">語言 ${{esc(c.languageConfidence)}}</span><span class="tag">說話者 ${{esc(c.speakerConfidence)}}</span><span class="tag">事件 ${{esc(c.eventMeaningConfidence)}}</span></div><audio controls preload="none" src="http://127.0.0.1:8767/media/${{encodeURIComponent(c.candidateId)}}"></audio>${{evidence(c)}}${{controls(c)}}`;audio.append(card)}}
+const audio=document.getElementById('audio');for(const c of D.audioCandidates){{const card=document.createElement('article');card.className='card '+state(c.candidateId).decision;card.dataset.candidate=c.candidateId;card.dataset.kind=c.sourceKind;card.dataset.search=JSON.stringify(c).toLowerCase();card.innerHTML=`<h3>${{esc(c.characterNameZh)}} · ${{esc(c.sourceLabel)}}</h3><div class="tags"><span class="tag">${{esc(c.sourceKind)}}</span><span class="tag">語言 ${{esc(c.languageConfidence)}}</span><span class="tag">說話者 ${{esc(c.speakerConfidence)}}</span><span class="tag">事件 ${{esc(c.eventMeaningConfidence)}}</span></div><audio controls preload="none" src="http://127.0.0.1:8767/media/${{encodeURIComponent(c.candidateId)}}"></audio>${{evidence(c)}}${{controls(c)}}`;audio.append(card)}}
 function audition(c){{return `/champion-model-audition.html?hud=0&cam=combat&live=1&model=${{encodeURIComponent(c.modelKey)}}&champion=${{encodeURIComponent(c.heroId)}}&clip=${{encodeURIComponent(c.semanticState)}}`;}}
-const motion=document.getElementById('motion');for(const c of D.motionCandidates){{const card=document.createElement('article');card.className='card '+state(c.candidateId).decision;card.dataset.candidate=c.candidateId;card.dataset.search=JSON.stringify(c).toLowerCase();const url=audition(c);card.innerHTML=`<h3>${{esc(c.characterNameZh)}} · ${{esc(c.semanticState)}} → <code>${{esc(c.nativeClip)}}</code></h3><div class="tags"><span class="tag">${{esc(c.motionKind)}}</span><span class="tag">${{esc(c.presentation.mode)}}</span><span class="tag">事件 ${{esc(c.eventMeaningConfidence)}}</span></div><div class="viewer"><iframe loading="lazy" title="${{esc(c.characterNameZh)}} ${{esc(c.semanticState)}}"></iframe><div class="viewer-status">載入模型與動作中…</div></div><div class="buttons"><button data-play>重新播放</button>${{c.presentation.mode==='hurt-ascend-fade'?'<button data-rise>播放受傷＋升天淡出</button>':''}}<a class="button-link" href="${{url}}" target="_blank" rel="noopener">全頁查看</a></div>${{evidence(c)}}${{controls(c)}}`;const frame=card.querySelector('iframe'),viewer=card.querySelector('.viewer'),status=card.querySelector('.viewer-status');let generation=0,animation=null;const load=async(reload=false)=>{{const mine=++generation;animation?.cancel();status.hidden=false;status.classList.remove('error');status.textContent='載入模型與動作中…';if(reload||frame.getAttribute('src')!==url)frame.src=url;for(let i=0;i<450;i++){{if(mine!==generation)return false;try{{const child=frame.contentWindow;if(child?.__settled===true){{const p=child.__probe?.()||{{}};if(p.error||!(Number(p.triangles)>0))throw new Error(p.error||'畫面上沒有可見三角形');status.hidden=true;return true}}}}catch(e){{if(String(e).includes('cross-origin')){{status.textContent='請從 Vite 的 127.0.0.1:5173 開啟此頁，以檢查畫面。';status.classList.add('error');return false}}if(i>5){{status.textContent='載入失敗：'+e;status.classList.add('error');return false}}}}await new Promise(r=>setTimeout(r,100))}}status.textContent='載入逾時；請重新播放或全頁查看。';status.classList.add('error');return false}};card.querySelector('[data-play]').onclick=()=>void load(true);const rise=card.querySelector('[data-rise]');if(rise)rise.onclick=async()=>{{if(!await load(true))return;animation=viewer.animate([{{opacity:1,transform:'translateY(0)',offset:0}},{{opacity:1,transform:'translateY(0)',offset:c.presentation.fadeStartRatio}},{{opacity:.08,transform:`translateY(${{c.presentation.translateYPixels}}px)`,offset:1}}],{{duration:c.presentation.durationMs,easing:'ease-in',fill:'forwards'}})}};motion.append(card);void load(false)}}
+const motion=document.getElementById('motion');for(const c of D.motionCandidates){{const card=document.createElement('article');card.className='card '+state(c.candidateId).decision;card.dataset.candidate=c.candidateId;card.dataset.kind=c.sourceKind;card.dataset.search=JSON.stringify(c).toLowerCase();const url=audition(c);card.innerHTML=`<h3>${{esc(c.characterNameZh)}} · ${{esc(c.semanticState)}} → <code>${{esc(c.nativeClip)}}</code></h3><div class="tags"><span class="tag">${{esc(c.motionKind)}}</span><span class="tag">${{esc(c.presentation.mode)}}</span><span class="tag">事件 ${{esc(c.eventMeaningConfidence)}}</span></div><div class="viewer"><iframe loading="lazy" title="${{esc(c.characterNameZh)}} ${{esc(c.semanticState)}}"></iframe><div class="viewer-status">載入模型與動作中…</div></div><div class="buttons"><button data-play>重新播放</button>${{c.presentation.mode==='hurt-ascend-fade'?'<button data-rise>播放受傷＋升天淡出</button>':''}}<a class="button-link" href="${{url}}" target="_blank" rel="noopener">全頁查看</a></div>${{evidence(c)}}${{controls(c)}}`;const frame=card.querySelector('iframe'),viewer=card.querySelector('.viewer'),status=card.querySelector('.viewer-status');let generation=0,animation=null;const load=async(reload=false)=>{{const mine=++generation;animation?.cancel();status.hidden=false;status.classList.remove('error');status.textContent='載入模型與動作中…';if(reload||frame.getAttribute('src')!==url)frame.src=url;for(let i=0;i<450;i++){{if(mine!==generation)return false;try{{const child=frame.contentWindow;if(child?.__settled===true){{const p=child.__probe?.()||{{}};if(p.error||!(Number(p.triangles)>0))throw new Error(p.error||'畫面上沒有可見三角形');status.hidden=true;return true}}}}catch(e){{if(String(e).includes('cross-origin')){{status.textContent='請從 Vite 的 127.0.0.1:5173 開啟此頁，以檢查畫面。';status.classList.add('error');return false}}if(i>5){{status.textContent='載入失敗：'+e;status.classList.add('error');return false}}}}await new Promise(r=>setTimeout(r,100))}}status.textContent='載入逾時；請重新播放或全頁查看。';status.classList.add('error');return false}};card.querySelector('[data-play]').onclick=()=>void load(true);const rise=card.querySelector('[data-rise]');if(rise)rise.onclick=async()=>{{if(!await load(true))return;animation=viewer.animate([{{opacity:1,transform:'translateY(0)',offset:0}},{{opacity:1,transform:'translateY(0)',offset:c.presentation.fadeStartRatio}},{{opacity:.08,transform:`translateY(${{c.presentation.translateYPixels}}px)`,offset:1}}],{{duration:c.presentation.durationMs,easing:'ease-in',fill:'forwards'}})}};motion.append(card);void load(false)}}
+const visual=document.getElementById('visual');for(const c of D.visualCandidates){{const card=document.createElement('article');card.className='card '+state(c.candidateId).decision;card.dataset.candidate=c.candidateId;card.dataset.kind=c.sourceKind;card.dataset.search=JSON.stringify(c).toLowerCase();const gallery=c.previewFiles.map((p,i)=>`<a href="http://127.0.0.1:8767/media/${{encodeURIComponent(p.mediaId)}}" target="_blank" rel="noopener"><img loading="lazy" src="http://127.0.0.1:8767/media/${{encodeURIComponent(p.mediaId)}}" alt="${{esc(c.sourceLabel)}} 預覽 ${{i+1}}"></a>`).join('');card.innerHTML=`<h3>${{esc(c.characterNameZh)}} · <code>${{esc(c.sourceLabel)}}</code></h3><div class="tags"><span class="tag">${{esc(c.sourceKind)}}</span><span class="tag">${{esc(c.assetKind)}}</span><span class="tag">ownerDecision=${{esc(c.ownerDecision)}}</span><span class="tag">僅視覺裁決</span></div><div class="visual-gallery">${{gallery}}</div>${{evidence(c)}}${{controls(c)}}`;visual.append(card)}}
 const blocked=document.getElementById('blocked');for(const c of D.blockedMotionLeads){{const card=document.createElement('article');card.className='card';card.dataset.search=JSON.stringify(c).toLowerCase();card.innerHTML=`<h3>${{esc(c.targetCharacter)}} ← ${{esc(c.sourceCharacter)}}</h3><div class="tags"><span class="tag">${{esc(c.motionKind)}}</span><span class="tag">不可裁決</span></div><p>${{esc(c.clips.join('、'))}}</p><ul>${{c.gaps.map(x=>`<li>${{esc(x)}}</li>`).join('')}}</ul>`;blocked.append(card)}}
 document.addEventListener('change',e=>{{const d=e.target.closest('[data-decision]');if(d){{const id=d.dataset.decision,s=state(id);s.decision=d.value;draft.decisions[id]=s;persist()}}const b=e.target.closest('[data-binding]');if(b){{const id=b.dataset.binding,s=state(id);s.approvedBindings=[...document.querySelectorAll(`[data-binding="${{CSS.escape(id)}}"]:checked`)].map(x=>x.value);draft.decisions[id]=s;persist()}}}});document.addEventListener('input',e=>{{const n=e.target.closest('[data-note]');if(n){{const id=n.dataset.note,s=state(id);s.note=n.value;draft.decisions[id]=s;persist()}}if(e.target.id==='search')applyFilters()}});
-function applyFilters(){{const q=document.getElementById('search').value.toLowerCase(),kind=document.getElementById('kind').value,status=document.getElementById('status').value;let visible=0;for(const card of document.querySelectorAll('[data-candidate]')){{const id=card.dataset.candidate,ok=(!q||card.dataset.search.includes(q))&&(!kind||id.startsWith(kind+':'))&&(!status||state(id).decision===status);card.classList.toggle('hidden',!ok);card.classList.remove('pending','approve','reject');card.classList.add(state(id).decision);if(ok)visible++}}document.getElementById('visible').textContent=`顯示 ${{visible}}/${{all.length}}`;document.getElementById('audioCount').textContent=`(${{D.audioCandidates.length}})`;document.getElementById('motionCount').textContent=`(${{D.motionCandidates.length}})`}}
+function applyFilters(){{const q=document.getElementById('search').value.toLowerCase(),kind=document.getElementById('kind').value,status=document.getElementById('status').value;let visible=0;for(const card of document.querySelectorAll('[data-candidate]')){{const id=card.dataset.candidate,ok=(!q||card.dataset.search.includes(q))&&(!kind||card.dataset.kind===kind)&&(!status||state(id).decision===status);card.classList.toggle('hidden',!ok);card.classList.remove('pending','approve','reject');card.classList.add(state(id).decision);if(ok)visible++}}document.getElementById('visible').textContent=`顯示 ${{visible}}/${{all.length}}`;document.getElementById('audioCount').textContent=`(${{D.audioCandidates.length}})`;document.getElementById('motionCount').textContent=`(${{D.motionCandidates.length}})`;document.getElementById('visualCount').textContent=`(${{D.visualCandidates.length}})`}}
 function renderStatus(){{const counts={{pending:0,approve:0,reject:0}};for(const c of all)counts[state(c.candidateId).decision]++;document.getElementById('decisionStatus').textContent=`pending ${{counts.pending}} · approve ${{counts.approve}} · reject ${{counts.reject}}；所有匯出列的 runtimeBindingAuthorized 都固定為 false。`}}
-document.getElementById('kind').onchange=applyFilters;document.getElementById('status').onchange=applyFilters;document.getElementById('export').onclick=()=>{{const decisions=all.map(c=>{{const s=state(c.candidateId);return {{candidateId:c.candidateId,decision:s.decision,approvedBindings:s.decision==='approve'?s.approvedBindings:[],note:s.note||'',runtimeBindingAuthorized:false}}}});const bad=decisions.find(d=>d.decision==='approve'&&!d.approvedBindings.length&&all.find(c=>c.candidateId===d.candidateId).approvalScope!=='group-sample-classification-only');if(bad)return alert('核准候選必須選擇事件／動作綁定：'+bad.candidateId);const receipt={{schema:'ggd.asset-review-decisions@1',sourceFingerprint:D.sourceFingerprint,reviewer:document.getElementById('reviewer').value.trim()||'owner',reviewedAt:new Date().toISOString(),runtimeMutationAllowed:false,decisions}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\\n'],{{type:'application/json'}}));a.download='asset-review-decisions.json';a.click();URL.revokeObjectURL(a.href)}};document.getElementById('clear').onclick=()=>{{localStorage.removeItem(storageKey);location.reload()}};applyFilters();renderStatus();window.__assetReviewPortal={{contract:D,getDraft:()=>JSON.parse(JSON.stringify(draft))}};
+document.getElementById('kind').onchange=applyFilters;document.getElementById('status').onchange=applyFilters;document.getElementById('export').onclick=()=>{{const needsBinding=c=>['event-binding-proposal','generic-event-suggestion','motion-event-suggestion'].includes(c.approvalScope);const decisions=all.map(c=>{{const s=state(c.candidateId);return {{candidateId:c.candidateId,decision:s.decision,approvedBindings:s.decision==='approve'&&needsBinding(c)?s.approvedBindings:[],note:s.note||'',runtimeBindingAuthorized:false}}}});const bad=decisions.find(d=>d.decision==='approve'&&!d.approvedBindings.length&&needsBinding(all.find(c=>c.candidateId===d.candidateId)));if(bad)return alert('核准候選必須選擇事件／動作綁定：'+bad.candidateId);const receipt={{schema:'ggd.asset-review-decisions@1',sourceFingerprint:D.sourceFingerprint,reviewer:document.getElementById('reviewer').value.trim()||'owner',reviewedAt:new Date().toISOString(),runtimeMutationAllowed:false,decisions}};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\\n'],{{type:'application/json'}}));a.download='asset-review-decisions.json';a.click();URL.revokeObjectURL(a.href)}};document.getElementById('clear').onclick=()=>{{localStorage.removeItem(storageKey);location.reload()}};applyFilters();renderStatus();window.__assetReviewPortal={{contract:D,getDraft:()=>JSON.parse(JSON.stringify(draft))}};
 </script></body></html>'''
 
 

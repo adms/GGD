@@ -289,7 +289,16 @@ def build(git_link_root=ROOT):
         or asset_review_queue.get('summary',{}).get('motionCandidateCount',0)<=0
         or asset_review_queue.get('summary',{}).get('pendingDecisionCount')!=(
             asset_review_queue.get('summary',{}).get('audioCandidateCount',0)
-            + asset_review_queue.get('summary',{}).get('motionCandidateCount',0))
+            + asset_review_queue.get('summary',{}).get('motionCandidateCount',0)
+            + asset_review_queue.get('summary',{}).get('visualCandidateCount',0))
+        or asset_review_queue.get('summary',{}).get('visualCandidateCount')!=164
+        or asset_review_queue.get('summary',{}).get('kofXivTextureCandidateCount')!=55
+        or asset_review_queue.get('summary',{}).get('kofXivEffGroupCandidateCount')!=71
+        or asset_review_queue.get('summary',{}).get('daiVfxTextureComponentCount')!=18
+        or asset_review_queue.get('summary',{}).get('daiVfxMeshComponentCount')!=8
+        or asset_review_queue.get('summary',{}).get('poppVfxCandidateCount')!=12
+        or any(row.get('ownerDecision')!='pending' for row in asset_review_queue.get('visualCandidates',[]))
+        or any(row.get('runtimeMutationAllowed') is not False for row in asset_review_queue.get('visualCandidates',[]))
         or asset_review_queue.get('summary',{}).get('approvedDecisionCount')!=0
         or asset_review_queue.get('summary',{}).get('runtimeBindingsChanged')!=0
         or asset_review_queue.get('policy',{}).get('runtimeMutationAllowed') is not False):

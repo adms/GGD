@@ -25,14 +25,39 @@ class AssetReviewBuilderTest(unittest.TestCase):
         self.assertEqual(summary["jumpForceGroupSampleCount"], 89)
         self.assertEqual(summary["palworldMotionCandidateCount"], 18)
         self.assertEqual(summary["borrowedOrDeathSubstitutionCandidateCount"], 0)
+        self.assertEqual(summary["kofXivTextureCandidateCount"], 55)
+        self.assertEqual(summary["kofXivEffGroupCandidateCount"], 71)
+        self.assertEqual(summary["daiVfxTextureComponentCount"], 18)
+        self.assertEqual(summary["daiVfxMeshComponentCount"], 8)
+        self.assertEqual(summary["poppVfxCandidateCount"], 12)
+        self.assertEqual(summary["visualCandidateCount"], 164)
         self.assertGreaterEqual(summary["blockedMotionLeadCount"], 2)
         self.assertEqual(summary["runtimeBindingsChanged"], 0)
         self.assertEqual(summary["approvedDecisionCount"], 0)
-        rows = self.contract["audioCandidates"] + self.contract["motionCandidates"]
+        rows = self.contract["audioCandidates"] + self.contract["motionCandidates"] + self.contract["visualCandidates"]
         self.assertEqual(summary["pendingDecisionCount"], len(rows))
         self.assertTrue(all(row["decision"] == "pending" for row in rows))
         self.assertTrue(all(row["runtimeSelectable"] is False for row in rows))
         self.assertTrue(all(row["runtimeBindingChanged"] is False for row in rows))
+
+    def test_visual_candidates_are_sha_pinned_owner_pending_and_runtime_inert(self):
+        rows = self.contract["visualCandidates"]
+        self.assertEqual(len(rows), 164)
+        self.assertTrue(all(row["ownerDecision"] == "pending" for row in rows))
+        self.assertTrue(all(row["runtimeMutationAllowed"] is False for row in rows))
+        self.assertTrue(all(row["eventCandidates"] == [] for row in rows))
+        self.assertTrue(all(row["approvalScope"].endswith("-only") for row in rows))
+        previews = [preview for row in rows for preview in row["previewFiles"]]
+        self.assertEqual(len(previews), self.contract["summary"]["visualPreviewFileCount"])
+        self.assertTrue(all(Path(row["absolutePath"]).is_file() for row in previews))
+        self.assertTrue(all(len(row["sha256"]) == 64 and row["bytes"] > 0 for row in previews))
+
+    def test_audio_queue_counts_are_unchanged_by_visual_review_addition(self):
+        summary = self.contract["summary"]
+        self.assertEqual(summary["audioCandidateCount"], 143)
+        self.assertEqual(summary["poppEventAudioCandidateCount"], 36)
+        self.assertEqual(summary["palworldCreatureCryCandidateCount"], 18)
+        self.assertEqual(summary["jumpForceGroupSampleCount"], 89)
 
     def test_playable_audio_has_absolute_path_and_sha(self):
         for row in self.contract["audioCandidates"]:
@@ -70,6 +95,12 @@ class AssetReviewBuilderTest(unittest.TestCase):
         decision_props = props["decisions"]["items"]["properties"]
         self.assertEqual(decision_props["runtimeBindingAuthorized"]["const"], False)
         self.assertEqual(decision_props["decision"]["enum"], ["pending", "approve", "reject"])
+        visual_rule = props["decisions"]["items"]["allOf"][0]
+        self.assertEqual(
+            len(visual_rule["if"]["properties"]["candidateId"]["enum"]),
+            self.contract["summary"]["visualCandidateCount"],
+        )
+        self.assertEqual(visual_rule["then"]["properties"]["approvedBindings"]["maxItems"], 0)
 
 
 if __name__ == "__main__":

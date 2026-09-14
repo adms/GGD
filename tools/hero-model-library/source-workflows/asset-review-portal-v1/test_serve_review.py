@@ -22,7 +22,10 @@ class AssetReviewServerTest(unittest.TestCase):
     def test_current_queue_resolves_every_sha_pinned_media_file(self):
         files = MODULE.media_map()
         queue = json.loads(MODULE.QUEUE.read_text())
-        self.assertEqual(len(files), queue["summary"]["audioCandidateCount"])
+        self.assertEqual(
+            len(files),
+            queue["summary"]["audioCandidateCount"] + queue["summary"]["visualPreviewFileCount"],
+        )
         self.assertTrue(all(path.is_file() for path, _ in files.values()))
 
     def test_byte_ranges_are_bounded(self):

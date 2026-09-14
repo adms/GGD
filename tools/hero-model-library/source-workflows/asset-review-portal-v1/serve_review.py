@@ -44,7 +44,22 @@ def media_map(queue_path: Path = QUEUE) -> dict[str, tuple[Path, str]]:
             raise ValueError(f"duplicate candidate id: {candidate_id}")
         content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
         result[candidate_id] = (path, content_type)
-    if len(result) != queue["summary"]["audioCandidateCount"]:
+    for row in queue.get("visualCandidates", []):
+        for preview in row["previewFiles"]:
+            media_id = preview["mediaId"]
+            path = Path(preview["absolutePath"])
+            if not path.is_absolute() or not path.is_file():
+                raise ValueError(f"missing allowlisted visual media: {path}")
+            if path.stat().st_size != preview["bytes"] or sha256(path) != preview["sha256"]:
+                raise ValueError(f"changed allowlisted visual media: {path}")
+            if media_id in result:
+                raise ValueError(f"duplicate media id: {media_id}")
+            content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+            if not content_type.startswith("image/"):
+                raise ValueError(f"visual preview is not an image: {path}")
+            result[media_id] = (path, content_type)
+    expected_count = queue["summary"]["audioCandidateCount"] + queue["summary"].get("visualPreviewFileCount", 0)
+    if len(result) != expected_count:
         raise ValueError("allowlist size does not match queue summary")
     return result
 
