@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-model-inventory@1",
-  "generatedAt": "2026-09-15T06:52:18+08:00",
-  "inputsSha256": "f65528736e3c2f4a2359db06e8b2a002dacd0eaa10d3b9e294d355a20bf07f53",
+  "generatedAt": "2026-09-15T07:04:59+08:00",
+  "inputsSha256": "31d957b336ed3930922a50c36d6ea9a628e9c4a6507fb2640f632d2bf0781006",
   "release": "7b6ec0c8c5bd75fc173c5f2d",
   "aliases": {
     "example:karthus": "lol-karthus",
@@ -78803,7 +78803,28 @@
               "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
               "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
               "sourceAnimatorComponentCount": 6,
-              "sourceAnimationClipCount": 0
+              "sourceAnimationClipCount": 0,
+              "decimationAttempts": {
+                "status": "conversion-attempts-archived-no-accepted-candidate",
+                "acceptedCandidate": null,
+                "attemptCount": 2,
+                "reason": "Both structurally valid <=8,000-triangle candidates exceed the 5% three-view silhouette continuity gate (maximum 8.3501%).",
+                "evidence": {
+                  "gitPath": "materials/hero-model-library/priority-evidence/rezero-ram-material-preserving-decimation-v1/rejected-attempts.json",
+                  "bytes": 6714,
+                  "sha256": "a7d2d2aa5fc587b88b52e6ec52b5b07c33a171910674df46b5015e10f0eb8ab9"
+                },
+                "legacyBackup": {
+                  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-ram-material-preserving-decimation-v1/c2ff326cf2ea39ca5dd1191f79d3f2be05ea1c48213d70fa606f0e391334cbb3.tar.gz",
+                  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-ram-material-preserving-decimation-v1/c2ff326cf2ea39ca5dd1191f79d3f2be05ea1c48213d70fa606f0e391334cbb3.files.json",
+                  "archiveSha256": "c2ff326cf2ea39ca5dd1191f79d3f2be05ea1c48213d70fa606f0e391334cbb3",
+                  "archiveBytes": 4598168,
+                  "fileCount": 40,
+                  "fullGetVerified": true,
+                  "allMemberSha256Verified": true,
+                  "localUnchanged": true
+                }
+              }
             },
             {
               "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
@@ -134362,7 +134383,28 @@
             "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
             "backupReceiptSha256": "330e208f12e987426ac405148ac1bceef7c1658841e8bfebaebf501bab27ef92",
             "sourceAnimatorComponentCount": 6,
-            "sourceAnimationClipCount": 0
+            "sourceAnimationClipCount": 0,
+            "decimationAttempts": {
+              "status": "conversion-attempts-archived-no-accepted-candidate",
+              "acceptedCandidate": null,
+              "attemptCount": 2,
+              "reason": "Both structurally valid <=8,000-triangle candidates exceed the 5% three-view silhouette continuity gate (maximum 8.3501%).",
+              "evidence": {
+                "gitPath": "materials/hero-model-library/priority-evidence/rezero-ram-material-preserving-decimation-v1/rejected-attempts.json",
+                "bytes": 6714,
+                "sha256": "a7d2d2aa5fc587b88b52e6ec52b5b07c33a171910674df46b5015e10f0eb8ab9"
+              },
+              "legacyBackup": {
+                "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-ram-material-preserving-decimation-v1/c2ff326cf2ea39ca5dd1191f79d3f2be05ea1c48213d70fa606f0e391334cbb3.tar.gz",
+                "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/rezero-ram-material-preserving-decimation-v1/c2ff326cf2ea39ca5dd1191f79d3f2be05ea1c48213d70fa606f0e391334cbb3.files.json",
+                "archiveSha256": "c2ff326cf2ea39ca5dd1191f79d3f2be05ea1c48213d70fa606f0e391334cbb3",
+                "archiveBytes": 4598168,
+                "fileCount": 40,
+                "fullGetVerified": true,
+                "allMemberSha256Verified": true,
+                "localUnchanged": true
+              }
+            }
           },
           {
             "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
