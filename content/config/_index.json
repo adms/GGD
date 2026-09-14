@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c1bd261b4281",
+  "hash": "f057f8bcc755",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -275,7 +275,7 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "c05109a96249",
+      "hash": "4eef1e7c5464",
       "size": 921
     },
     {
@@ -359,8 +359,8 @@
     {
       "id": "one-shot-clamp",
       "path": "config/one-shot-clamp.json",
-      "hash": "18be96faf9c3",
-      "size": 1256
+      "hash": "840256a8643e",
+      "size": 1517
     },
     {
       "id": "origin-routes",
@@ -371,8 +371,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "6d1c98f7bc46",
-      "size": 14705
+      "hash": "02b05e6fd3c1",
+      "size": 14700
     },
     {
       "id": "per-level-bonus",
@@ -431,8 +431,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "b8ee47643f51",
-      "size": 8945
+      "hash": "4e0cf198f7f9",
+      "size": 10056
     },
     {
       "id": "round-grade",
