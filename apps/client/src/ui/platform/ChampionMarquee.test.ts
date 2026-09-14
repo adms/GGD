@@ -16,8 +16,9 @@ import { isShipped } from "../../testkit/contentFixtures";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
+import { registerShippedModelDocs } from "@ggd/shared/testkit/shippedModelDocs";
 import {
   buildMarqueeTiles,
   firstGlyph,
@@ -31,6 +32,12 @@ import {
 } from "./marqueeRoster";
 import { revealedPortraitCount } from "./ChampionMarquee";
 import { isAlternateForm } from "@ggd/shared/content";
+
+// GH#1250：去重排序（`compareCanonical`）的「本人模型 vs 替身」讀模型文件的 glb，⛔ 沒有種子退路
+//   ⇒ 離線也把出貨的模型文件灌進 registry（走跟瀏覽器同一條查法；沒灌就在第一次比較時丟錯）。
+beforeAll(() => {
+  registerShippedModelDocs();
+});
 
 const ICONED: MarqueeChampion = {
   id: "godie-e001",

@@ -22,12 +22,18 @@
  * push them back onto a shared stand-in face — undoing #231 entirely, with
  * every test still green.
  */
-import {
-  BLIZZARD_MODEL_CHAMPIONS,
-  STAND_IN_MODEL_KEYS,
-  defaultPrefersVoxelBody,
-} from "@ggd/shared/content/voxelSkin";
+import { BLIZZARD_MODEL_CHAMPIONS, defaultPrefersVoxelBody } from "@ggd/shared/content/voxelSkin";
 import { counterpartFormId } from "@ggd/shared/content/championForms";
+import { isStandInModel, type StandInModelDocLike } from "@ggd/shared/content/standInBody";
+
+/** modelKey → 那份模型文件（讀不到 ⇒ `null`，交給判準答「沒有證據」）。`voxelSkinSheet` 共用。 */
+export function modelDocOf(
+  modelDocs: ReadonlyMap<string, unknown>,
+  modelKey: string | undefined,
+): StandInModelDocLike | null {
+  const doc = modelDocs.get(modelKey ?? "");
+  return doc !== null && typeof doc === "object" ? (doc as StandInModelDocLike) : null;
+}
 
 /**
  * 這位英雄拿不拿得到真的 WC3 模型 —— 自己在 manifest 裡,**或者**它的變身對半
@@ -124,13 +130,21 @@ export function resolveBody(
   return { effective: defaultPrefersVoxelBody(modelKey, championId), origin: "default" };
 }
 
-/** Build the whole table. Only stand-in champions can meaningfully be toggled. */
+/**
+ * Build the whole table. Only stand-in champions can meaningfully be toggled.
+ *
+ * ⭐ GH#1250（2026-09-15 審查）：「誰是替身」讀 `standInBody`（模型文件的 glb），⛔ 不再讀手寫的
+ * `STAND_IN_MODEL_KEYS`。在此之前 `godie-zombiex`（`champ.godie-zombiex` → 殭屍小怪的 blocky-undead.glb）
+ * 不在這張表上 ⇒ `voxelSkin/types.ts` 寫的「owner 想要體素人時到後台切」那條 rollback 路**在畫面上不存在**。
+ * `modelDocs`：modelKey → 模型文件（頁面用 `loadDocsByIds("models", …)` 讀）；沒讀到的 key ⇒ 不列（沒有證據 ≠ 替身）。
+ */
 export function bodyRows(
   champions: readonly ChampionLite[],
   operator: Record<string, boolean>,
+  modelDocs: ReadonlyMap<string, unknown>,
 ): BodyRow[] {
   return champions
-    .filter((c) => STAND_IN_MODEL_KEYS.includes(c.modelKey ?? ""))
+    .filter((c) => isStandInModel(c.modelKey, modelDocOf(modelDocs, c.modelKey)))
     .map((c) => {
       const r = resolveBody(c.id, c.modelKey, operator);
       return {

@@ -15,10 +15,10 @@
  *   · `modelDocDigest` 改成只 hash `glbPath` → 🔴 ④
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { STAND_IN_MODEL_KEYS } from "../voxelSkin/types";
 import { effectiveYawOffsetDeg } from "../glbYaw";
 
 import {
@@ -179,10 +179,7 @@ describe("resolved-appearance@1", () => {
     // ⛔ 而修好它的**那一次改動**（初號機拿到自己的 satyrtrickster 網格）
     // 就讓這條夾具紅了 —— 失敗形態⑩的形狀：**守衛是靠缺陷才綠的**。
     //
-    // ⇒ ⭐ 改成從**另一個住處**推導，⛔ 不點名任何一位：
-    //   · `isStandInModel()` 用的是**前綴**（`champ.`）
-    //   · `STAND_IN_MODEL_KEYS` 是**逐顆列名**的四具 rig
-    //   兩者是獨立的兩份知識 ⇒ 拿後者驗前者，任一邊漂掉都會紅。
+    // ⇒ ⭐ 改成從**另一個住處**推導，⛔ 不點名任何一位（2026-09-15 那個住處換成位元組，見下）。
     //
     // ⚠️ ⛔ **「共用同一顆 modelKey」不是這條的判準** —— 量到 17 個共用 key，
     // 其中 14 個是 `imported.*`（英雄與它的變體刻意共用**同一顆真的角色模型**，
@@ -200,36 +197,42 @@ describe("resolved-appearance@1", () => {
     //   「這位英雄站在**別人**身上」是兩個名詞的**關係**。
     const ownsIt = (c: { id: string; modelKey?: unknown }): boolean =>
       (String(c.modelKey).split(".").pop() ?? "") === (c.id.split(/[.-]/).pop() ?? "");
-    const onGenericRig = champs.filter(
-      (c) => STAND_IN_MODEL_KEYS.includes(String(c.modelKey)) && !ownsIt(c),
-    );
+    // ⭐⭐ 2026-09-15（GH#1250 審查）—— **獨立依據換成「檔案位元組」**。
+    // ⛔ 這裡以前的正方向用 `STAND_IN_MODEL_KEYS`（手寫 4 顆，漏了 `champ.godie-zombiex`），
+    //   反方向用 `glb.startsWith("assets/models/champions/")` —— ⛔ 那正是實作自己的判準（拿實作驗實作）。
+    //   ⇒ 判準退回手寫表時兩個方向**都不會紅**。
+    // ⭐ 現在兩個方向都問：這位英雄的 glb **位元組**是不是等於某一顆 in-house 通用身體
+    //   `blocky-*.glb`？判準看**路徑**，這裡看**內容** —— 兩份獨立的證據，任一邊漂掉都紅。
+    const BODY_DIR = join(CONTENT, "assets/models/champions");
+    const bodies = readdirSync(BODY_DIR).filter((f) => /^blocky-[a-z]+\.glb$/.test(f));
+    const bodySizes = new Set(bodies.map((f) => statSync(join(BODY_DIR, f)).size));
+    const sha = (abs: string): string => createHash("sha256").update(readFileSync(abs)).digest("hex");
+    const bodyHashes = new Set(bodies.map((f) => sha(join(BODY_DIR, f))));
+    expect(bodyHashes.size, "儀器：通用身體包一顆都沒讀到 ⇒ 下面在量空氣").toBeGreaterThanOrEqual(4);
+    const wearsGenericBytes = (modelKey: unknown): boolean => {
+      const glb = models.get(String(modelKey))?.glbPath;
+      const abs = typeof glb === "string" ? join(CONTENT, glb) : "";
+      return abs !== "" && existsSync(abs) && bodySizes.has(statSync(abs).size) && bodyHashes.has(sha(abs));
+    };
+    const onGenericRig = champs.filter((c) => wearsGenericBytes(c.modelKey) && !ownsIt(c));
 
     expect(
       onGenericRig.length,
-      "⛔ 一位都沒站在四具通用 rig 上 ⇒ 這條在量空氣（或 STAND_IN_MODEL_KEYS 空了）",
+      "⛔ 一位都沒穿著通用身體的位元組 ⇒ 這條在量空氣",
     ).toBeGreaterThan(0);
     for (const c of onGenericRig) {
       expect(
         standIns.some((s) => s.startsWith(`${c.id} `)),
-        `⛔ ${c.id} 站在通用替身 ${String(c.modelKey)} 上卻沒被標出來 ` +
-          "⇒ 外部編輯器會忠實預覽出一個**錯的角色**",
+        `⛔ ${c.id} 穿著通用身體 ${String(c.modelKey)} 的位元組卻沒被標出來 ` +
+          "⇒ 外部編輯器會忠實預覽出一個**錯的角色**（判準退回手寫表時，zombiex 在這裡紅）",
       ).toBe(true);
     }
-    // ⭐⭐ **反方向**（⛔ 一頭不算 —— 形態⑫）：
-    // 上面那個迴圈只走「列名 ⇒ 有標」，所以把一顆 key 從 `STAND_IN_MODEL_KEYS`
-    // 拿掉只會讓迴圈**變短**，⛔ 不可能紅（突變驗過，第一版就是綠的）。
-    // ⇒ ⭐ 反過來再走一次：**被標成替身的，一定要在列名表裡**。
-    //   兩頭都走，兩個住處任一邊漂掉都會紅。
-    // ⚠️ GH#1250（2026-09-15）更正：這一頭以前要求「被標的 key 一定在 STAND_IN_MODEL_KEYS 裡」——
-    //   ⛔ 而那張手寫表漏了 `champ.godie-zombiex`（站在殭屍小怪的 blocky-undead.glb 上），
-    //   於是這條**靠缺陷才綠**（失敗形態⑩）。判準搬到 `standInBody`（看 glb 住在哪）之後，
-    //   反方向改問**磁碟上那份模型文件**的 glb 是不是通用身體包 —— 仍然是從另一頭讀的資料。
+    // ⭐⭐ **反方向**（⛔ 一頭不算 —— 形態⑫）：被標成替身的，glb 位元組一定是通用身體。
     for (const id of standIns) {
       const key = id.slice(id.indexOf("(") + 1, id.lastIndexOf(")"));
-      const glb = String(models.get(key)?.glbPath ?? "");
       expect(
-        glb.startsWith("assets/models/champions/"),
-        `⛔ ${id} 被標成替身，而它的 glb（${glb}）不在通用身體包底下 ⇒ 判準漂了`,
+        wearsGenericBytes(key),
+        `⛔ ${id} 被標成替身，而它的 glb 位元組不是任何一顆通用身體 ⇒ 判準多標了`,
       ).toBe(true);
     }
   });

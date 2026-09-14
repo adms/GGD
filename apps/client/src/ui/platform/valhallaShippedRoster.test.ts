@@ -2,7 +2,7 @@
  * 英靈殿 × 出貨內容 —— 對**出貨的** `valhallaRoster()` 實跑的名單閘（夾具：`valhallaShipped.testkit.ts`）。
  *
  * ── GH#1251 隱藏角色要上英靈殿 ─────────────────────────────────────────────
- * > owner 2026-09-14 02:20（逐字）：「隱藏角色要顯示 黑化Saber可以上架」
+ * > owner 2026-09-14 02:20（逐字，節錄；全句 `docs/_daily/2026-09-14.md:12`）：「隱藏角色要顯示 黑化Saber可以上架」
  * ⭐ 預設 `config.roster@1.hiddenInValhalla = "show"`；⛔ 只測預設那一邊（第〇·六守則）。
  * 突變紀錄（2026-09-15，接線那一行）：`valhalla.ts` 的 `valhallaExcludedHiddenIds()` 改回
  * `hiddenChampionIds()` ⇒ 第一條紅，逐位指名那 4 位隱藏英雄。改回 → 綠。
@@ -32,8 +32,6 @@ import { champSelectSkillSeat } from "../panels/champselect/championProfile";
 import { skillRows } from "../panels/skillDetails";
 import { valhallaBlurb, valhallaPitchLine, valhallaSkillChip } from "./valhallaCard";
 import { Models } from "@ggd/shared/content";
-import { isStockBodyGlbPath } from "@ggd/shared/content/standInBody";
-import { STAND_IN_MODEL_KEYS } from "@ggd/shared/content/voxelSkin";
 import { standInBadgeFor } from "../panels/champselect/standIn";
 import { blizzardOverlayFromDoc, overlayModelDoc } from "../../render/views/blizzardOverlay";
 import { BLIZZARD_LOCAL_GLB_PREFIX } from "../../render/views/glbFacing";
@@ -104,10 +102,6 @@ describe("GH#1250 英靈殿的替身徽章是推導的（出貨 models × 出貨
   /** 棘輪：今天名單上站在通用身體包上的英雄。⛔ 只能變短 —— 換成本人模型的那一位要劃掉。 */
   const KNOWN_STAND_IN_ON_ROSTER = ["godie-h02k", "godie-umal", "godie-zombiex"];
   const glbOf = (id: string): string => String(Models.tryGet(Champions.get(id as ChampionId).modelKey)?.glbPath ?? "");
-
-  it("種子 ⊆ glb 推導（registry 缺模型文件時的退路只會少標、不會多標）", () => {
-    for (const key of STAND_IN_MODEL_KEYS) expect(isStockBodyGlbPath(Models.get(key).glbPath), key).toBe(true);
-  });
 
   it("名單上每一位：徽章亮 ⇔ glb 在通用身體包；亮的只能是棘輪上的，棘輪上沒有幽靈", () => {
     const drift = shipped.roster.filter(

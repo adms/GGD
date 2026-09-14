@@ -64,14 +64,17 @@
  * true — its generated look is procedural, not imported. Retiring the tag would
  * lose the only content-side handle on the population #226 is replacing.
  *
- * Pure + node-testable: it reads a modelKey string, never the render layer.
+ * Node-testable: it reads a modelKey plus that key's MODEL DOC, never the render layer.
  *
- * The set is deliberately EXPLICIT rather than a `champ.` prefix rule: every
- * real per-champion model is `imported.*` (or a runtime-synthesized Blizzard
- * overlay), and pinning the known fallbacks means a champion that later gains
- * its OWN `champ.*` mesh is not mistaken for a stand-in.
+ * ⚠️ CORRECTED (GH#1250, 2026-09-15): this paragraph used to say the rule is an
+ * EXPLICIT four-key set. ⛔ That set missed `champ.godie-zombiex` (the mob's
+ * blocky-undead.glb). The rule now lives in `@ggd/shared/content/standInBody`:
+ * the model doc's `glbPath` sits under the in-house generic body pack — so a
+ * champion that later gains its OWN mesh (imported/community path) is still not
+ * mistaken for a stand-in, which was the reason the explicit set existed.
  */
 import { STAND_IN_MODEL_KEYS as SHARED_STAND_IN_MODEL_KEYS } from "@ggd/shared/content/voxelSkin";
+import { Models } from "@ggd/shared/content";
 import {
   isStandInModel as sharedIsStandInModel,
   isStockBodyGlbPath,
@@ -94,10 +97,14 @@ export const STAND_IN_MODEL_KEYS: ReadonlySet<string> = new Set(SHARED_STAND_IN_
  *
  * ⭐ GH#1250：轉呼叫 `@ggd/shared/content/standInBody`（唯一住處，看 glb 是否在通用身體包底下）。
  * ⛔ 在此之前這裡只查上面那 4 顆 key ⇒ `champ.godie-zombiex`（殭屍小怪的 blocky-undead.glb）沒有徽章。
- * 上面的 `STAND_IN_MODEL_KEYS` 只剩「registry 沒有模型文件時的種子」這個用途。
+ * ⚠️ 上面的 `STAND_IN_MODEL_KEYS` **不是**這裡的判準（它是四具體素 rig 的名單，身體規則在讀）。
+ *
+ * 資料來源＝`Models` registry。查不到那份文件（骨架退路沒有模型文件、內容還沒到）⇒ 明說 `null`
+ * ⇒ 不亮徽章 —— ⛔ 不讓 shared 那一支的「registry 沒載入就丟錯」把大廳整個卡掉
+ * （內容載入失敗在 console 與 /healthz 已經是 fail-loud，徽章不是那個訊號）。
  */
 export function isStandInModel(modelKey: string | null | undefined): boolean {
-  return sharedIsStandInModel(modelKey);
+  return sharedIsStandInModel(modelKey, typeof modelKey === "string" ? (Models.tryGet(modelKey) ?? null) : null);
 }
 
 /**

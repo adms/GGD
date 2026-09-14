@@ -20,14 +20,19 @@
  * 今天沒有任何模型文件引用它們（2026-09-15 量過）；哪天有人引用，它會被判成替身 ——
  * 那與 overlay 的判法一致（overlay 同樣會替它找原作模型）。
  *
- * ── registry 沒有那份模型文件時 ──────────────────────────────────────────
- * 純 Node 的離線場合（讀磁碟的測試、不載 registry 的工具）只拿得到 modelKey。
- * 那時退回 `STAND_IN_MODEL_KEYS` 那 4 顆**種子** —— 它們在出貨內容上**全部**也被 glb 規則標出
- * （`apps/client/src/ui/platform/valhallaShippedRoster.test.ts` 釘住「種子 ⊆ 推導」），
- * 所以退路**只會少標、不會多標**。呼叫端手上有模型文件時請直接傳進來（`resolvedAppearance` 就是）。
+ * ── 資料從哪來（⭐ 規則只有一條，⛔ 不因資料來源而變）──────────────────────
+ * 判準只讀**模型文件的 `glbPath`**。呼叫端三選一：
+ *  · 傳 `doc`（一份模型文件）⇒ 看它（`resolvedAppearance`、讀磁碟的測試）
+ *  · 傳 `null` ⇒ 呼叫端已確認「沒有這份文件」⇒ `false`（沒有證據 ≠ 替身；客戶端骨架退路走這條）
+ *  · 省略 ⇒ 查 `Models` registry；⛔ **registry 一份模型文件都沒有（從沒載入）⇒ 丟錯**
+ *
+ * ⚠️ 2026-09-15 更正（GH#1250 審查）：這一段以前寫「registry 沒有時退回 `STAND_IN_MODEL_KEYS`
+ * 那 4 顆種子，只會少標、不會多標」—— ⛔ 那就是**第二條規則**：同一個 `champ.godie-zombiex`
+ * 在載了 registry 的畫面上是替身、在不載 registry 的棘輪／身分排序裡不是（失敗形態⑤：
+ * 被量的不是出貨的那一條）。⇒ 種子退路拿掉；離線呼叫端要自己把模型文件傳進來，
+ * 忘了傳就在第一次呼叫當場紅，⛔ 不再靜靜換一條規則。
  */
 import { Models } from "./registries";
-import { STAND_IN_MODEL_KEYS } from "./voxelSkin/types";
 
 /** in-house 通用 blocky 身體包的 glb 前綴（overlay 的 `STOCK_CHAMPION_GLB_PREFIX` 就是它）。 */
 export const STOCK_BODY_GLB_PREFIX = "assets/models/champions/";
@@ -37,16 +42,31 @@ export function isStockBodyGlbPath(glbPath: string | null | undefined): boolean 
   return typeof glbPath === "string" && glbPath.startsWith(STOCK_BODY_GLB_PREFIX);
 }
 
+/** 判準只讀這一格。 */
+export interface StandInModelDocLike {
+  readonly glbPath?: unknown;
+}
+
 /**
- * modelKey 指到的是不是替身身體。
- * 手上有模型文件就傳 `doc`（最準）；否則查 `Models` registry；registry 也沒有 ⇒ 種子表。
+ * modelKey 指到的是不是替身身體 —— ⭐ 它的模型文件 glb 在通用身體包底下。
+ * `doc`：一份模型文件／`null`（確認沒有）／省略（查 registry，沒載入就丟錯）。見檔頭。
  */
 export function isStandInModel(
   modelKey: string | null | undefined,
-  doc?: { glbPath?: unknown } | null,
+  doc?: StandInModelDocLike | null,
 ): boolean {
-  if (typeof modelKey !== "string" || modelKey === "") return false;
-  const model = doc ?? Models.tryGet(modelKey);
-  if (model && typeof model.glbPath === "string") return isStockBodyGlbPath(model.glbPath);
-  return STAND_IN_MODEL_KEYS.includes(modelKey);
+  if (typeof modelKey !== "string" || modelKey === "" || doc === null) return false;
+  const model = doc ?? registryModelDoc(modelKey);
+  return typeof model?.glbPath === "string" && isStockBodyGlbPath(model.glbPath);
+}
+
+function registryModelDoc(modelKey: string): StandInModelDocLike | undefined {
+  if (Models.ids().length === 0) {
+    throw new Error(
+      `⛔ standInBody.isStandInModel("${modelKey}")：Models registry 沒有載入任何模型文件 —— ` +
+        "離線呼叫端要把模型文件傳進來（例：packages/shared/testkit/shippedModelDocs.ts），" +
+        "⛔ 不再退回手寫的 4 顆種子（GH#1250）。",
+    );
+  }
+  return Models.tryGet(modelKey);
 }

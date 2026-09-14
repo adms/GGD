@@ -35,15 +35,27 @@ const CHAMPS = [
   { id: "sela", name: "Sela", modelKey: "champ.sela" }, // 沒有:CC0 角色本人
   { id: "thorne", name: "Thorne", modelKey: "champ.thorne" }, // 沒有:CC0 角色本人
   { id: "godie-h01n", name: "黑崎一護", modelKey: "imported.heroichigo" }, // 不是替身
+  // ⭐ GH#1250：modelKey 不在手寫 4 顆 rig 裡，而 glb 是通用身體包 ⇒ 替身（在此之前這一列不會出現）
+  { id: "godie-zombiex", name: "喪標麥可", modelKey: "champ.godie-zombiex" },
 ];
+
+/** 模型文件（判準只讀 glbPath）—— 路徑照出貨內容的形狀。 */
+const MODELS = new Map<string, unknown>([
+  ["champ.thorne", { glbPath: "assets/models/champions/blocky-knight.glb" }],
+  ["champ.sela", { glbPath: "assets/models/champions/blocky-mage.glb" }],
+  ["champ.skin.barbarian", { glbPath: "assets/models/champions/blocky-barbarian.glb" }],
+  ["imported.heroichigo", { glbPath: "assets/models/imported/heroichigo.glb" }],
+  ["champ.godie-zombiex", { glbPath: "assets/models/champions/blocky-undead.glb" }],
+]);
 
 describe("體素身體開關 — 預設", () => {
   it("有暴雪模型的預設走模型,沒有的預設走體素", () => {
-    const rows = bodyRows(CHAMPS, {});
+    const rows = bodyRows(CHAMPS, {}, MODELS);
     expect(rows.map((r) => r.championId)).toEqual([
       "godie-e00s",
       "godie-hapm",
       "godie-u011",
+      "godie-zombiex",
       "sela",
       "thorne",
     ]);
@@ -58,21 +70,22 @@ describe("體素身體開關 — 預設", () => {
   it("不是共用替身的英雄根本不進表 —— 他們沒有可切換的東西", () => {
     // 一個把 godie-h01n 也列進來的表會讓 operator 以為自己能把黑崎一護變體素;
     // 他有自己的 imported 模型,那個開關對他沒有意義。
-    expect(bodyRows(CHAMPS, {}).some((r) => r.championId === "godie-h01n")).toBe(false);
+    expect(bodyRows(CHAMPS, {}, MODELS).some((r) => r.championId === "godie-h01n")).toBe(false);
   });
 
   it("空文件 = 沒有人動過,不是「全部關掉體素」", () => {
     // ⚠️ 這是本檔存在的核心理由。突變:讓 resolveBody 在查不到時回傳
     // `{effective:false, origin:"overlay"}` —— o02n / u011 立刻退回共用替身臉,
     // 而「開關能存能讀」那幾條測試依然全綠。
-    const s = bodySummary(bodyRows(CHAMPS, {}));
+    const s = bodySummary(bodyRows(CHAMPS, {}, MODELS));
     expect(s.touched, "沒有人動過").toBe(0);
     expect(s.voxel, "仍有兩位在體素上").toBe(2);
-    expect(s.noModelAvailable).toBe(2);
+    // godie-zombiex 也沒有暴雪模型（⭐ 但它的預設是自己的 blocky-undead 網格，不是體素 —— 見 voxelSkin/types.ts）
+    expect(s.noModelAvailable).toBe(3);
     // 而且那兩位是 sela / thorne,不是任何一位地圖英雄 —— 一個地圖英雄掉進
     // 這一格,就是 #223 的缺省即繼承壞掉了。
     expect(
-      bodyRows(CHAMPS, {})
+      bodyRows(CHAMPS, {}, MODELS)
         .filter((r) => r.effective)
         .map((r) => r.championId),
     ).toEqual(["sela", "thorne"]);

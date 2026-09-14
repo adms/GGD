@@ -339,7 +339,10 @@ export const RANDOM_HERO_POOL_IDS: ReadonlySet<string> = new Set([
  *      26 pairs, but that is a coincidence of the map's own pick list, not a
  *      rule, and relying on it is what let 妙蛙花 sit on the roster;
  *   1. then the id the map itself plays (the random-hero pool);
- *   2. then a real imported mesh over a CC0 stand-in;
+ *   2. then a real imported mesh over a CC0 stand-in (GH#1250: `standInBody` — the
+ *      model doc's glb, read from the `Models` registry. ⛔ No seed fallback: an
+ *      offline caller that never loaded model docs gets a thrown error on the first
+ *      comparison instead of a silently different ordering);
  *   3. then the lexicographically first id, so the choice is deterministic.
  */
 function canonicalRank(c: IdentityChampion): [number, number, number, string] {
