@@ -7,12 +7,13 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { unchangedHistoricalReceipt } from "./editor-form-receipt-history.mjs";
+import { EDITOR_FORM_RECEIPT_KEY, unchangedHistoricalReceipt } from "./editor-form-receipt-history.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const BRICKS = join(ROOT, "docs/editor-contract/ggd-bricks.json");
 const TYPE_CATALOG = join(ROOT, "docs/editor-contract/ggd-type-catalog.json");
-const OUTPUT = join(ROOT, "docs/editor-contract/coordination/claim.editor-form-receipts-spawn-obstacle-landed.json");
+// ⚠️ 第 2 行的 `ggd:writes` 標頭必須與這個檔名逐字相同（那是量測擁有者表的字面值）。
+const OUTPUT = join(ROOT, "docs/editor-contract/coordination", `${EDITOR_FORM_RECEIPT_KEY}.json`);
 const CHECK = process.argv.includes("--check");
 
 function option(name) {
@@ -87,7 +88,7 @@ const typeCatalogSha256 = sha256(TYPE_CATALOG);
 
 const packet = {
   schema: "ggd-coord-packet@1",
-  dedupeKey: "claim.editor-form-receipts-spawn-obstacle-landed",
+  dedupeKey: EDITOR_FORM_RECEIPT_KEY,
   kind: "claim",
   from: "codex",
   to: "main",
@@ -147,7 +148,7 @@ try {
 const historicalContent = unchangedHistoricalReceipt(mergedReceiptText, packet);
 const content = historicalContent ?? `${JSON.stringify(packet, null, 2)}\n`;
 if (historicalContent !== null) {
-  console.log("Historical editor-form claim retained: actual measurement inputs and receipts unchanged; its capability fingerprint remains historical.");
+  console.log("Historical editor-form claim retained: actual measurement inputs and measured receipt values unchanged; its capability fingerprint and census-copied usedBy remain historical.");
 }
 if (CHECK) {
   if (!existsSync(OUTPUT)) fail(`${relative(ROOT, OUTPUT)} 不存在`);

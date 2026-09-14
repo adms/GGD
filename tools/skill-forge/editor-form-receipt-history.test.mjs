@@ -1,10 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { unchangedHistoricalReceipt } from "./editor-form-receipt-history.mjs";
+import { EDITOR_FORM_RECEIPT_KEY, unchangedHistoricalReceipt } from "./editor-form-receipt-history.mjs";
 
 function fixture() {
   return {
-    schema: "ggd-coord-packet@1", dedupeKey: "claim.editor-form-receipts", kind: "claim",
+    schema: "ggd-coord-packet@1", dedupeKey: EDITOR_FORM_RECEIPT_KEY, kind: "claim",
     baseCommit: "main-base", contractFingerprint: "a".repeat(16),
     claims: [{ commit: "measurement-commit", repro: { command: "node tools/check.mjs", expectedExit: 0 } }],
     source: { bricks: "docs/editor-contract/ggd-bricks.json", brickInputSha256: "b".repeat(64),
