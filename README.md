@@ -709,7 +709,7 @@ client 的一個 hash route，不用登入、不用開對戰，大廳右上「�
 
 **開放名單 vs 全部 78 名。** 能不能被選到，是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供、由 game-server 在**建房當下**執行（5 秒行程快取，並據以過濾可選英雄／RANDOM 池／商店／draft，拒絕非白名單的 `SELECT_CHAMPION`）。所以：
 
-- `content/champions/` 的 78 份是**這個 repo 有的東西**（另有 41 份在 `_legacy/champions/`，**不進出貨 bundle**）。
+- `content/champions/` 裡的卡是**這個 repo 有的東西**；退休卡在 `content/_legacy/champions/`，**不進出貨 bundle**，每一張的狀態（已下架／待重上架／從未開放）與張數由產生器寫在 [`docs/legacy-index.md`](docs/legacy-index.md) —— ⛔ 這裡刻意不抄數字（這一行以前寫「78 份／另有 41 份」，兩個都過期了）。
 - 表格裡「開放名單」那幾名是**這台機器此刻啟用的東西** —— 實際數字看下面產生區塊自己印的那一行，⛔ 不要相信這段散文抄的數字。
 - `/data/**` 是 gitignored（`.gitignore:21`），**fresh clone 的白名單是空的** —— 開放數會是 0，復原步驟見 §4。
 - platform 沒跑時 game-server **fail-safe 成 allow-all**，所以離線 bot 模式永遠是完整 78 名可選，不受白名單影響。
