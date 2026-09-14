@@ -220,12 +220,16 @@ describe("resolved-appearance@1", () => {
     // 拿掉只會讓迴圈**變短**，⛔ 不可能紅（突變驗過，第一版就是綠的）。
     // ⇒ ⭐ 反過來再走一次：**被標成替身的，一定要在列名表裡**。
     //   兩頭都走，兩個住處任一邊漂掉都會紅。
+    // ⚠️ GH#1250（2026-09-15）更正：這一頭以前要求「被標的 key 一定在 STAND_IN_MODEL_KEYS 裡」——
+    //   ⛔ 而那張手寫表漏了 `champ.godie-zombiex`（站在殭屍小怪的 blocky-undead.glb 上），
+    //   於是這條**靠缺陷才綠**（失敗形態⑩）。判準搬到 `standInBody`（看 glb 住在哪）之後，
+    //   反方向改問**磁碟上那份模型文件**的 glb 是不是通用身體包 —— 仍然是從另一頭讀的資料。
     for (const id of standIns) {
       const key = id.slice(id.indexOf("(") + 1, id.lastIndexOf(")"));
+      const glb = String(models.get(key)?.glbPath ?? "");
       expect(
-        STAND_IN_MODEL_KEYS.includes(key),
-        `⛔ ${id} 被標成替身，而 ${key} 不在 STAND_IN_MODEL_KEYS 裡 ` +
-          "⇒ 前綴判斷與列名表漂開了（兩份知識只剩一份是對的）",
+        glb.startsWith("assets/models/champions/"),
+        `⛔ ${id} 被標成替身，而它的 glb（${glb}）不在通用身體包底下 ⇒ 判準漂了`,
       ).toBe(true);
     }
   });

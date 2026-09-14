@@ -100,6 +100,13 @@ export function StorePreviewCanvas(props: {
    */
   minHeight?: number;
   onStatus?: (status: PreviewStatus) => void;
+  /**
+   * GH#1250 —— the model doc ACTUALLY shown, after the blizzard overlay resolved it
+   * (null while loading / on failure). The 🎭 替身 badge must describe THIS doc, not
+   * the shipped `modelKey`: with `VITE_GGD_FULL_ASSETS=1` godie-h02k/umal ship on
+   * `champ.skin.barbarian` but the stage draws their own WC3 mesh.
+   */
+  onModelDoc?: (doc: ModelDoc | null) => void;
   /** whose art colour to paint on this model; absent = leave it untinted */
   championId?: string | null;
   /**
@@ -129,6 +136,8 @@ export function StorePreviewCanvas(props: {
   // passing an inline arrow must not re-create the WebGL context every render)
   const statusRef = useRef(props.onStatus);
   statusRef.current = props.onStatus;
+  const modelDocRef = useRef(props.onModelDoc);
+  modelDocRef.current = props.onModelDoc;
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -173,6 +182,7 @@ export function StorePreviewCanvas(props: {
     }
     let cancelled = false;
     statusRef.current?.("loading");
+    modelDocRef.current?.(null);
     const championId = props.championId ?? null;
     void fetchModelDoc(props.modelKey, championId).then(async (doc) => {
       if (cancelled) return;
@@ -196,6 +206,7 @@ export function StorePreviewCanvas(props: {
       // `show()` never throws: a glb that 404s or fails to parse simply leaves
       // no model node. That is the honest signal — report it rather than
       // pretending a black stage is a loaded champion.
+      modelDocRef.current?.(preview.modelNode ? doc : null);
       statusRef.current?.(preview.modelNode ? "ready" : "failed");
     });
     return () => {

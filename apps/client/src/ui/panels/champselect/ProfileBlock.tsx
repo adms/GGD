@@ -13,7 +13,8 @@
  * This module only OWNS the composition; the selectors and their formatting are
  * shared, so a number here can never disagree with the sim or the codex.
  */
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { ModelDoc } from "@ggd/shared/content";
 import { audioSystem } from "../../../audio";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
@@ -46,7 +47,7 @@ import {
 } from "./championProfile";
 import { playstyleForChampion } from "./playstyle";
 import { originBadgeForChampion, ORIGIN_ACCENT, ORIGIN_CAPTION } from "./originBadge";
-import { isStandInModel, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "./standIn";
+import { standInBadgeFor, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "./standIn";
 
 type Tab = "skills" | "stats" | "play" | "lore";
 
@@ -329,6 +330,42 @@ function QuoteBlock({ entry }: { entry: ChampionQuoteEntry }): React.JSX.Element
   );
 }
 
+/**
+ * 選人畫面的 3D 舞台 ＋ 🎭 替身徽章（GH#1250）。
+ * ⭐ 抽成元件是為了 hooks：徽章要看**舞台真的載入的那份**模型文件（overlay 解析之後），
+ * 而 `ChampionProfile` 在這之前有 early return，state 不能掛在那裡。
+ */
+function ProfileStageModel({ modelKey, championId }: { modelKey: string; championId: string }): React.JSX.Element {
+  const [loadedDoc, setLoadedDoc] = useState<ModelDoc | null>(null);
+  const onModelDoc = useCallback((doc: ModelDoc | null) => setLoadedDoc(doc), []);
+  useEffect(() => setLoadedDoc(null), [modelKey, championId]);
+  const standIn = standInBadgeFor(modelKey, loadedDoc);
+  return (
+    <>
+      <StorePreviewCanvas modelKey={modelKey} championId={championId} onModelDoc={onModelDoc} />
+      {standIn && (
+        <div
+          data-ggd-profile-standin=""
+          title={STAND_IN_NOTE_EN}
+          style={{
+            position: "absolute",
+            left: 10,
+            bottom: 10,
+            padding: "4px 10px",
+            borderRadius: 999,
+            background: "rgba(58, 44, 28, 0.9)",
+            border: "1px solid #e0a878",
+            color: "#f0cfa8",
+            fontSize: 10.5,
+          }}
+        >
+          🎭 {STAND_IN_NOTE_ZH}
+        </div>
+      )}
+    </>
+  );
+}
+
 export function ChampionProfile({
   championId,
   compact = false,
@@ -379,7 +416,6 @@ export function ChampionProfile({
   // #640 — the desktop scroll chain (tab-body floor → stage shrink → column
   // scroll), pure and guard-tested in championProfile.ts.
   const scroll = profileScrollContract(compact);
-  const standIn = isStandInModel(def.modelKey);
   const rows = skillRows(champSelectSkillSeat(def));
   const quote = quoteEntryFor(quotes, def.id);
   // 出身 × 路線 (owner 2026-08-13):文案全部從 `config.origin-routes@1` 讀,
@@ -409,25 +445,7 @@ export function ChampionProfile({
             them share `champ.sela` — without the id this stage shows 黑化Saber
             /貞子/黑人牙膏 in the untinted stand-in palette and only the arena
             turns them dark, which is what the owner saw. */}
-        <StorePreviewCanvas modelKey={def.modelKey} championId={def.id} />
-        {standIn && (
-          <div
-            title={STAND_IN_NOTE_EN}
-            style={{
-              position: "absolute",
-              left: 10,
-              bottom: 10,
-              padding: "4px 10px",
-              borderRadius: 999,
-              background: "rgba(58, 44, 28, 0.9)",
-              border: "1px solid #e0a878",
-              color: "#f0cfa8",
-              fontSize: 10.5,
-            }}
-          >
-            🎭 {STAND_IN_NOTE_ZH}
-          </div>
-        )}
+        <ProfileStageModel modelKey={def.modelKey} championId={def.id} />
       </div>
 
       {/* ── identity header (稱號 / 全名 / 近戰·遠程 · 出身×路線) ──────────────

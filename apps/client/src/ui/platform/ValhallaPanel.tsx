@@ -71,7 +71,8 @@ import { useContentReady } from "./ContentGate";
 import { useWhitelist } from "../panels/whitelist";
 import { championDisplayFor } from "./championDisplay";
 import { champSelectSkillSeat } from "../panels/champselect/championProfile";
-import { isStandInModel, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "../panels/champselect/standIn";
+import { standInBadgeFor, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "../panels/champselect/standIn";
+import type { ModelDoc } from "@ggd/shared/content";
 import { SkillRowView } from "../panels/champselect/ProfileBlock";
 import { skillRows } from "../panels/skillDetails";
 import { StorePreviewCanvas, type PreviewStatus } from "./StorePreviewCanvas";
@@ -253,7 +254,13 @@ function ValhallaStage({
    * holds, because a different champion with a broken model has a different key.
    */
   useEffect(() => setStatus("loading"), [modelKey]);
-  const standIn = isStandInModel(modelKey);
+  // GH#1250 —— 徽章看**舞台真的載入的那份**模型文件（overlay 解析之後），⛔ 不是出貨 modelKey：
+  // FULL_ASSETS 下 godie-h02k/umal 的 `champ.skin.barbarian` 會被換成原作模型，徽章不該再亮。
+  // 重設同時綁 championId：兩位共用同一顆 modelKey 時 overlay 的答案逐位不同，而畫布對 championId 也會重報。
+  const [loadedDoc, setLoadedDoc] = useState<ModelDoc | null>(null);
+  const onModelDoc = useCallback((doc: ModelDoc | null) => setLoadedDoc(doc), []);
+  useEffect(() => setLoadedDoc(null), [modelKey, championId]);
+  const standIn = standInBadgeFor(modelKey, status === "ready" ? loadedDoc : null);
   return (
     <div
       data-ggd-valhalla-stage=""
@@ -285,6 +292,7 @@ function ValhallaStage({
           hideEmptyHint
           minHeight={height}
           onStatus={onStatus}
+          onModelDoc={onModelDoc}
         />
       )}
       {/* NEVER A HOLE. Three states cover the stage with the portrait: no model
@@ -317,6 +325,7 @@ function ValhallaStage({
         // covered the champion's HEAD on this 220px stage — a disclaimer that
         // hides the thing it is disclaiming. The long text moves to the tooltip.
         <div
+          data-ggd-valhalla-standin=""
           title={`${STAND_IN_NOTE_ZH} — ${STAND_IN_NOTE_EN}`}
           style={{
             position: "absolute",

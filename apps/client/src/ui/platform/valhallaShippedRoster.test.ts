@@ -12,6 +12,13 @@
  * 開發流程樣板、技能列不印 `NN-0X` 編號與字面 `PASSIVE`；名單不含骨架與變身態。
  * 突變紀錄（2026-09-15，接線那一行）：`valhallaSkillChip` 的 `name: row.name` 改回
  * `row.rawName` ⇒ 技能那條紅，逐位指名帶編號的 godie-* 英雄。改回 → 綠。
+ *
+ * ── GH#1250 替身判斷是推導的 ─────────────────────────────────────────────────
+ * 名單上每一位：徽章亮 ⇔ 他的模型文件 glb 住在通用身體包底下；站在通用身體上的只能是棘輪上的那幾位。
+ * 徽章看 overlay 解析之後的 doc（夾具：出貨的 `blizzardOverlayFromDoc` ＋ `overlayModelDoc`）。
+ * 突變紀錄（2026-09-15，承重那一行）：`standInBody.isStandInModel` 改回只查 `STAND_IN_MODEL_KEYS`
+ * ⇒ 「名單上徽章 ⇔ glb」那條紅並指名 godie-zombiex。改回 → 綠。
+ * ⚠️ 畫面實拍未做（FULL_ASSETS 的 MANIFEST 不在 git）：鏈路已接上，⛔ 未驗收。
  */
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { Champions } from "@ggd/shared/sim/content/registry";
@@ -24,6 +31,12 @@ import { whitelistedChampionIds } from "../panels/champSelectFilter";
 import { champSelectSkillSeat } from "../panels/champselect/championProfile";
 import { skillRows } from "../panels/skillDetails";
 import { valhallaBlurb, valhallaPitchLine, valhallaSkillChip } from "./valhallaCard";
+import { Models } from "@ggd/shared/content";
+import { isStockBodyGlbPath } from "@ggd/shared/content/standInBody";
+import { STAND_IN_MODEL_KEYS } from "@ggd/shared/content/voxelSkin";
+import { standInBadgeFor } from "../panels/champselect/standIn";
+import { blizzardOverlayFromDoc, overlayModelDoc } from "../../render/views/blizzardOverlay";
+import { BLIZZARD_LOCAL_GLB_PREFIX } from "../../render/views/glbFacing";
 import { loadShippedValhalla, type ValhallaShipped } from "./valhallaShipped.testkit";
 
 let shipped: ValhallaShipped;
@@ -84,5 +97,34 @@ describe("GH#1258 英靈殿介紹完整（出貨內容 × 出貨 valhallaCard）
       (id) => skeleton.has(id) || isTransformedBody(id) || Champions.get(id as ChampionId).transform?.role === "alternate",
     );
     expect(leaked).toEqual([]);
+  });
+});
+
+describe("GH#1250 英靈殿的替身徽章是推導的（出貨 models × 出貨 standInBadgeFor）", () => {
+  /** 棘輪：今天名單上站在通用身體包上的英雄。⛔ 只能變短 —— 換成本人模型的那一位要劃掉。 */
+  const KNOWN_STAND_IN_ON_ROSTER = ["godie-h02k", "godie-umal", "godie-zombiex"];
+  const glbOf = (id: string): string => String(Models.tryGet(Champions.get(id as ChampionId).modelKey)?.glbPath ?? "");
+
+  it("種子 ⊆ glb 推導（registry 缺模型文件時的退路只會少標、不會多標）", () => {
+    for (const key of STAND_IN_MODEL_KEYS) expect(isStockBodyGlbPath(Models.get(key).glbPath), key).toBe(true);
+  });
+
+  it("名單上每一位：徽章亮 ⇔ glb 在通用身體包；亮的只能是棘輪上的，棘輪上沒有幽靈", () => {
+    const drift = shipped.roster.filter(
+      (id) => standInBadgeFor(Champions.get(id as ChampionId).modelKey, null) !== glbOf(id).startsWith("assets/models/champions/"),
+    );
+    expect(drift, "⛔ 徽章與實際 glb 不一致（替身判斷又退回手寫表了？）").toEqual([]);
+    const lit = shipped.roster.filter((id) => standInBadgeFor(Champions.get(id as ChampionId).modelKey, null));
+    expect(lit.filter((id) => !KNOWN_STAND_IN_ON_ROSTER.includes(id)), "⛔ 名單上多了站在通用身體上的英雄").toEqual([]);
+    expect(KNOWN_STAND_IN_ON_ROSTER.filter((id) => !lit.includes(id)), "⭐ 這幾位已經不是替身了 —— 從棘輪劃掉").toEqual([]);
+  });
+
+  it("徽章看 overlay 解析之後的 doc：原作模型蓋上去就熄", () => {
+    const shippedDoc = Models.get(Champions.get("godie-h02k" as ChampionId).modelKey);
+    const unit = blizzardOverlayFromDoc({
+      units: { H02K: { champId: "godie-h02k", glb: `${BLIZZARD_LOCAL_GLB_PREFIX}H02K.glb` } },
+    })!.get("godie-h02k")!;
+    expect(standInBadgeFor(shippedDoc.id, shippedDoc), "夾具前提：出貨的那顆是通用身體").toBe(true);
+    expect(standInBadgeFor(shippedDoc.id, overlayModelDoc(unit))).toBe(false);
   });
 });

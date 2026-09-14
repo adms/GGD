@@ -116,7 +116,10 @@
  * @see ./championForms.ts — the 26 `Eme1`/`Emeu` pairs the exception reads.
  */
 import { baseFormIdOf, isAlternateForm, isW3xFormPair } from "./championForms";
-import { STAND_IN_MODEL_KEYS } from "./voxelSkin/types";
+// ⭐ GH#1250 —— 替身判準的唯一住處搬到 `./standInBody`（看 glb 住在哪，⛔ 不再只查手寫 4 顆 key）。
+//   這裡 re-export，既有 import 端（`content/index.ts`、`resolvedAppearance`）一個都不用改。
+import { isStandInModel } from "./standInBody";
+export { isStandInModel };
 
 /**
  * `NN-0X` / `NN-00X` ability-name prefix (task #11). The trailing `(?!\d)`
@@ -245,11 +248,6 @@ export function nameComponents(name: string): string[] {
 export function sharesNameComponent(a: string, b: string): boolean {
   const left = new Set(nameComponents(a));
   return nameComponents(b).some((part) => left.has(part));
-}
-
-/** True when `modelKey` is one of the four shared CC0 stand-in meshes. */
-export function isStandInModel(modelKey: string | null | undefined): boolean {
-  return typeof modelKey === "string" && STAND_IN_MODEL_KEYS.includes(modelKey);
 }
 
 /**

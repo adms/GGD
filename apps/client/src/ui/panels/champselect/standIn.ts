@@ -72,6 +72,10 @@
  * its OWN `champ.*` mesh is not mistaken for a stand-in.
  */
 import { STAND_IN_MODEL_KEYS as SHARED_STAND_IN_MODEL_KEYS } from "@ggd/shared/content/voxelSkin";
+import {
+  isStandInModel as sharedIsStandInModel,
+  isStockBodyGlbPath,
+} from "@ggd/shared/content/standInBody";
 
 /**
  * The generic meshes used when a champion has no imported model.
@@ -85,9 +89,27 @@ import { STAND_IN_MODEL_KEYS as SHARED_STAND_IN_MODEL_KEYS } from "@ggd/shared/c
  */
 export const STAND_IN_MODEL_KEYS: ReadonlySet<string> = new Set(SHARED_STAND_IN_MODEL_KEYS);
 
-/** True when `modelKey` is one of the generic stand-in meshes (never a real model). */
+/**
+ * True when `modelKey` points at a generic stand-in body (never a real model).
+ *
+ * ⭐ GH#1250：轉呼叫 `@ggd/shared/content/standInBody`（唯一住處，看 glb 是否在通用身體包底下）。
+ * ⛔ 在此之前這裡只查上面那 4 顆 key ⇒ `champ.godie-zombiex`（殭屍小怪的 blocky-undead.glb）沒有徽章。
+ * 上面的 `STAND_IN_MODEL_KEYS` 只剩「registry 沒有模型文件時的種子」這個用途。
+ */
 export function isStandInModel(modelKey: string | null | undefined): boolean {
-  return typeof modelKey === "string" && STAND_IN_MODEL_KEYS.has(modelKey);
+  return sharedIsStandInModel(modelKey);
+}
+
+/**
+ * 🎭 替身徽章要不要亮（GH#1250）。
+ * ⭐ 舞台**已經載入**的模型文件知道了 ⇒ 看它（overlay 可能已經換成原作模型）；
+ * 還不知道（載入中／失敗）⇒ 看出貨的 `modelKey`。
+ */
+export function standInBadgeFor(
+  modelKey: string | null | undefined,
+  loaded: { glbPath: string } | null | undefined,
+): boolean {
+  return loaded ? isStockBodyGlbPath(loaded.glbPath) : isStandInModel(modelKey);
 }
 
 /**

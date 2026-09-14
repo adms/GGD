@@ -434,6 +434,16 @@ export const VOXEL_SKINS_SCHEMA = "voxel-skins@1";
 /**
  * The four generic stand-in meshes (#77/#226). A champion pointing at one of
  * these has no MODEL of its own — 44 heroes sharing 4 faces.
+ *
+ * ⚠️ GH#1250（2026-09-15）—— 這張表**不再是「誰是替身」的答案**。那個答案搬到
+ * `content/standInBody.ts`（看 glb 是否住在 `assets/models/champions/` 通用身體包底下），
+ * 徽章／身分排序／對外 `resolved-appearance` 契約都讀那一支 ⇒ `champ.godie-zombiex`
+ * （殭屍小怪的 blocky-undead.glb）自動被標出來。這張表剩兩個用途：
+ *   ① 離線場合（registry 沒有模型文件）的**種子退路** —— 閘釘住「種子 ⊆ glb 推導」，只會少標不會多標；
+ *   ② {@link defaultPrefersVoxelBody} 的**預設身體規則**。⛔ 刻意**沒有**改成 glb 推導：
+ *      那會把 godie-zombiex 從 blocky-undead 網格翻成程序化體素人（對戰畫面會變）。
+ *      這是 GH#1250 的爭議點，預設＝不改變現有畫面；owner 想要體素人時到後台
+ *      `config.voxel-bodies@1.bodies["godie-zombiex"] = true`（既有的逐英雄開關，雙向都能切）。
  */
 export const STAND_IN_MODEL_KEYS: readonly string[] = Object.freeze([
   "champ.sela",

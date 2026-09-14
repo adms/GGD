@@ -46,6 +46,7 @@ import type { ModelDoc } from "@ggd/shared/content";
 import { BLIZZARD_LOCAL_GLB_PREFIX } from "./glbFacing";
 import { fullAssetsEnabled } from "../../config/fullAssets";
 import { ANIM_STATES } from "@ggd/shared/content/animPulse";
+import { isStockBodyGlbPath, STOCK_BODY_GLB_PREFIX } from "@ggd/shared/content/standInBody";
 
 /** Manifest path relative to the content mount (same doc as championVoice). */
 export const BLIZZARD_OVERLAY_MANIFEST_PATH = "assets/blizzard-local/MANIFEST.json";
@@ -54,11 +55,13 @@ export const BLIZZARD_OVERLAY_MANIFEST_PATH = "assets/blizzard-local/MANIFEST.js
 export const CONTENT_BASE = "/content/";
 
 /**
- * glbPath prefix of the four generic KayKit stand-in characters
- * (mage/rogue/barbarian/knight). A champion pointed at one of these has no
- * model of its own — that is the ONLY case the overlay fills in.
+ * glbPath prefix of the in-house generic blocky bodies. A champion pointed at one
+ * of these has no model of its own — that is the ONLY case the overlay fills in.
+ *
+ * ⭐ GH#1250：值住 `@ggd/shared/content/standInBody`（替身判準的唯一住處，徽章／身分／對外契約
+ * 都讀它）；這裡 re-export 保住既有 import 端。⛔ 不再抄一份字串。
  */
-export const STOCK_CHAMPION_GLB_PREFIX = "assets/models/champions/";
+export const STOCK_CHAMPION_GLB_PREFIX = STOCK_BODY_GLB_PREFIX;
 
 /**
  * Doc `scale` for a synthesized overlay model.
@@ -73,9 +76,11 @@ export const STOCK_CHAMPION_GLB_PREFIX = "assets/models/champions/";
  *
  * The value stays 1 because it is no longer load-bearing: `ChampionView`
  * height-normalizes every adopted glb at load (#150 TARGET_HEIGHT) and only
- * falls back to `doc.scale` for a glb too degenerate to measure, and
- * ChampionView is the ONLY consumer of an overlay doc (GameApp.modelDocFor is
- * the single call site; the champ-select / store previews never see one). So 1
+ * falls back to `doc.scale` for a glb too degenerate to measure. ⚠️ CORRECTED
+ * (GH#1250, 2026-09-15): this used to say ChampionView is the ONLY consumer and
+ * 「the champ-select / store previews never see one」 —— false since GH#31:
+ * `ui/platform/StorePreviewCanvas` resolves the overlay too (英靈殿／選人畫面／商店),
+ * and `StorePreview` height-normalizes what it shows the same way. So 1
  * is the correct "unmeasurable degenerate" fallback — but it must NOT be read
  * as an assertion that the files are pre-normalized. Any future consumer that
  * uses `doc.scale` as an absolute has to measure, exactly as ChampionView does.
@@ -313,7 +318,7 @@ export function blizzardOverlayFromDoc(doc: unknown): BlizzardOverlayIndex | nul
  */
 export function hasDedicatedShippedModel(doc: ModelDoc | null | undefined): boolean {
   if (!doc) return false;
-  return !doc.glbPath.startsWith(STOCK_CHAMPION_GLB_PREFIX);
+  return !isStockBodyGlbPath(doc.glbPath);
 }
 
 /**
