@@ -308,10 +308,13 @@ const EXEMPT: Record<string, string> = {
     "反駁法：哪天 S3 支援讓我們**不下載**就驗得到內容雜湊（例如存 checksum metadata 再 head-object 比對），" +
     "這一列就要刪掉並把它接進 `skills:check`。",
   "model:intake:check":
-    "⭐ **純檢查、0 個產物**（`tools/w3x-import/model_intake.py` 唯一的 write 是 `tempfile.NamedTemporaryFile` 的" +
-    "暫存 gltf-validator 腳本，跑完即丟，實查 2026-09-11）。它驗的是**每一顆匯入 GLB 與 `content/config/model-lod.json` " +
-    "預算的關係**（貼圖 256 上限 · 通道 · 多邊形），⛔ 不是新鮮度閘 —— 沒有東西會因為技能改動而過期。" +
-    "反駁法：哪天 `--merge` 的合併結果寫回 `content/`，這一列就要刪掉並給它一支 `model:intake:build` 接進 skills:sync。",
+    "⭐ **純檢查、0 個產物**：這條指令（`model_intake.py --all --check`，⛔ 不帶 `--merge`／`--roles-json`）唯一的寫入呼叫" +
+    "是 gltf-validator 暫存腳本（`packages/shared/node_modules/.cache/ggd-gltf-validate.mjs`，跑完即刪）。" +
+    "⚠️ 2026-09-15 更正：這裡原本寫「唯一的 write 是 tempfile」—— 落點早已改到 `.cache`，而同一支腳本的 `--merge`（就地改 GLB、先留底）" +
+    "與 `--roles-json <OUT>`（寫呼叫者指定的報表）都會寫檔，只是不在這條指令裡。它驗的是**每一顆 GLB 與 " +
+    "`modelUpload/budget.ts`／`adoptionPolicy.json` 預算的關係**（貼圖 256 上限 · draw call · 三角面 · 骨架），⛔ 不是新鮮度閘 —— " +
+    "沒有東西會因為技能改動而過期。反駁法：哪天這條指令本身帶上會寫 `content/` 的旗標（例如 `--merge`），" +
+    "這一列就要刪掉並給它一支 `model:intake:build` 接進 skills:sync。",
 };
 
 /**

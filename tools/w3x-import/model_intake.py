@@ -25,7 +25,9 @@
 用法：
     python3 tools/w3x-import/model_intake.py <路徑…>            # 只檢查（預設）
     python3 tools/w3x-import/model_intake.py <路徑…> --merge    # 順便合併可合併的
-    python3 tools/w3x-import/model_intake.py --all --check      # 閘：有問題就回非零
+    python3 tools/w3x-import/model_intake.py --all --check      # 全 repo：有問題就回非零（逐檔列出＋角色分帳）
+    python3 tools/w3x-import/model_intake.py --all --ratchet tools/model-budget/intake-ratchet.txt
+                                                                 # 棘輪閘（ship:check 經 scripts/model-intake-or-warn.sh 跑這一條）
 
 ⛔ `--merge` **會就地改檔** ⇒ 它一定先把原檔複製到 `docs/legacy/_overwrites/`。
 """
@@ -76,8 +78,18 @@ def _json_docs(collection: str) -> list:
 # **結構上不可以改**：凍結版本（`ModelVersions.verify()` 拿 binarySha256 比對）、原上線模型、
 # 不可變 release 的認領 ⇒ ⛔ 它們有問題就**永遠**有問題 ⇒ 那條棘輪永遠降不回去（假綠燈⑨）。
 #
-# ⭐ 判準：**棘輪只數修得動的東西** —— 每一顆被數進去的，都存在一條「⛔ 不改任何凍結位元組」
-#   就能讓它消失的路。每顆 GLB 取最高者（a > b > c）：
+# ⭐ 判準：**棘輪只數「玩家拿得到、而且修得動」的東西** —— 每一顆被數進去的，都存在一條
+#   「⛔ 不改任何凍結位元組」就能讓它消失的路。(c) 不計的理由**有兩種，不要混為一談**：
+#   · 位元組**不可以改**：凍結版本、原上線模型、不可變 release、雜湊副本
+#   · 位元組**可以改，但玩家拿不到原樣**：版本的來源檔（再註冊時 `prepare` 先正規化）、未綁英雄的素材元件
+#   每顆 GLB 取最高者（a > b > c）：
+#
+# ⛔⛔ 2026-09-15 更正（f52ca71eb 的 commit 訊息寫「⛔ 解法不是拉線放行」—— 那句不成立）：
+#   分母改對之後，(a)(b) 的基準線是**直接設在當天的現況**（a=265／b=69）。拿 #1230 設基準線的
+#   52ed534cb（641 顆）逐路徑比對，這兩個數字裡有 **40 顆是之後才進 repo、玩家拿得到的有問題模型**
+#   （(a) 23 · (b) 17，其中 **13 顆貼圖 > 256**）⇒ ⭐ 那等於**接受了這批存量**，是 Claude 在
+#   「自己判斷＋留 rollback」常設指令下挑的預設，⛔ 不是 owner 裁決過的拉線。rollback＝revert 回單一分母。
+#   ⇒ 所以另外加一格**更嚴**的：`a_body_tex`（見 `default_body_slots`），只數玩家預設載入的身體。
 #   (a) 玩家預設拿得到 ⇒ **硬棘輪**
 #       英雄 `modelKey` 解析到的檔 · Hero Forge 範例預設 · 內容依 id／路徑在執行期載入的 ·
 #       其餘沒有任何凍結或血緣關係的（新匯入／場景／道具）· 以及上面這些的 `_lod.json` 分級檔
@@ -95,20 +107,20 @@ ROLE_TITLES = {
     "b": "可切換、非預設（只能變小）",
     "c": "凍結／歷史血緣／素材（列出不計）",
 }
-FORGE_KEYS_MTS = os.path.join(ROOT, "tools", "w3x-import", "forge_model_keys.mts")
+SELECTION_MTS = os.path.join(ROOT, "tools", "w3x-import", "model_selection_keys.mts")
 RELEASE_JSON = os.path.join(ROOT, "materials", "hero-model-library", "release.json")
 COMPONENTS_JSON = os.path.join(ROOT, "materials", "asset-library", "current-resources.json")
 #: 執行期引用**不讀**這幾個目錄：模型文件本身、二進位資產、退休內容。
 _REF_SKIP_DIRS = {"models", "assets", "_legacy"}
 
 
-def forge_model_keys():
-    """Hero Forge 範例的 (預設, 備選) modelKey —— 從出貨註冊表讀，⛔ 讀不到就停（⛔ 不當成空集合）。"""
-    out = subprocess.run(["node", "--import", "tsx", FORGE_KEYS_MTS], cwd=ROOT, capture_output=True, text=True)
+def model_selections() -> dict:
+    """Hero Forge 範例的預設／備選 ＋ 可挑的英雄身體 —— 從出貨的 TS 規則讀，⛔ 讀不到就停（⛔ 不當成空集合）。"""
+    out = subprocess.run(["node", "--import", "tsx", SELECTION_MTS, CONTENT], cwd=ROOT, capture_output=True, text=True)
     if out.returncode != 0:
-        raise ValueError(f"讀不到 Hero Forge 的模型選項：{out.stderr.strip()[-300:]}")
+        raise ValueError(f"讀不到模型選項（Hero Forge／heroBodyModelIds）：{out.stderr.strip()[-300:]}")
     doc = json.loads(out.stdout)
-    return set(doc["defaults"]), set(doc["alternatives"])
+    return {k: set(doc[k]) for k in ("defaults", "alternatives", "heroBodies")}
 
 
 def _value_refs() -> set:
@@ -142,11 +154,22 @@ def _value_refs() -> set:
     return out
 
 
-def glb_roles(files, forge=None) -> dict:
-    """每顆 GLB → (角色, 類別, 細節)。⭐ 關係全部從出貨內容推導（每顆取最高者 a > b > c）。"""
-    models = {d["id"]: d for d in _json_docs("models") if d.get("glbPath")}
+def glb_roles(files, sel) -> tuple:
+    """每顆 GLB → (角色, 類別, 細節)。⭐ 關係全部從出貨內容推導（每顆取最高者 a > b > c）。
 
-    def glb(key):
+    回傳 `(roles, default_slots, unresolved)`：
+      · default_slots —— 玩家**預設載入**的身體，一格一個（英雄 modelKey · Forge 範例預設）：`[(標籤, GLB 絕對路徑)]`
+        ⭐ 以**格**數、⛔ 不以檔數：兩位英雄共用一顆檔時，轉掉一位的版本另一位仍在載入原樣。
+      · unresolved —— 英雄 modelKey／Forge 選項指到**不存在的 model 文件** ⇒ 呼叫端要停下來。
+        ⛔ f52ca71eb 版本在這裡靜默跳過（`glb()` 回 None、`put()` 不寫）⇒ 一格解析不到就不留痕跡地少分一顆。
+    """
+    docs = {d["id"]: d for d in _json_docs("models")}
+    models = {k: d for k, d in docs.items() if d.get("glbPath")}
+    unresolved, default_slots = [], []
+
+    def glb(key, label=None):
+        if label and key not in docs:
+            unresolved.append(f"{label} → {key}")
         return os.path.abspath(os.path.join(CONTENT, models[key]["glbPath"])) if key in models else None
 
     buckets = {"a": {}, "b": {}, "c": {}}
@@ -158,7 +181,10 @@ def glb_roles(files, forge=None) -> dict:
     pinned = set()
     for ch in _json_docs("champions"):
         hero, active = ch.get("id"), ch.get("modelKey")
-        put("a", glb(active), "英雄的預設身體", hero)
+        body = glb(active, f"英雄 {hero} 的 modelKey") if active else None
+        put("a", body, "英雄的預設身體", hero)
+        if body:
+            default_slots.append((f"英雄 {hero}", body))
         lineages = {}
         for v in ch.get("modelVersions") or []:
             pinned.add(v["binarySha256"])
@@ -174,11 +200,13 @@ def glb_roles(files, forge=None) -> dict:
                     put("c", glb(v["modelKey"]), "原上線模型" if v["source"]["kind"] == "previous"
                         else "同血緣已有後繼的舊版本", f"{hero}「{v['label']}」")
             put("c", glb(src), "版本的來源檔（歷史血緣）", hero)
-    forge_defaults, forge_alts = forge if forge is not None else forge_model_keys()
-    for k in sorted(forge_defaults):
-        put("a", glb(k), "Hero Forge 範例預設", k)
-    for k in sorted(forge_alts):
-        put("b", glb(k), "Hero Forge 範例備選", k)
+    for k in sorted(sel["defaults"]):
+        body = glb(k, "Hero Forge 範例預設")
+        put("a", body, "Hero Forge 範例預設", k)
+        if body:
+            default_slots.append((f"Hero Forge 範例預設 {k}", body))
+    for k in sorted(sel["alternatives"]):
+        put("b", glb(k, "Hero Forge 範例備選"), "Hero Forge 範例備選", k)
     refs = _value_refs()
     for value in sorted(refs):
         if value.endswith(".glb"):
@@ -186,7 +214,8 @@ def glb_roles(files, forge=None) -> dict:
     for d in models.values():
         if d["id"] in refs:
             put("a", glb(d["id"]), "內容以 id 在執行期載入", d["id"])
-        if d.get("heroBody") is True and not d.get("bodyVersion"):
+        # ⭐ 規則住 TS 的 `heroBodyModelIds()`（經 model_selection_keys.mts 讀），⛔ 不在這裡重寫一份。
+        if d["id"] in sel["heroBodies"]:
             put("b", glb(d["id"]), "編輯器可挑的英雄身體（heroBody）", d["id"])
         if d.get("bodyVersion"):
             put("c", glb(d["id"]), "沒有英雄引用的凍結版本文件", d["id"])
@@ -222,7 +251,7 @@ def glb_roles(files, forge=None) -> dict:
             roles[f] = ("a", "⛔ 檔名是雜湊而位元組對不上（凍結檔被改過）", found[0])
         else:
             roles[f] = ("c", *found)
-    return roles
+    return roles, default_slots, unresolved
 
 
 #: ⭐ (c) 每一類**為什麼不計** —— 一個能被反駁的理由，⛔ 不是「還沒收」。閘每次都印出來。
@@ -231,22 +260,47 @@ C_WHY = {
     "同血緣已有後繼的舊版本": "同一個來源已有較新的版本代表這條血緣；舊版位元組被 `ModelVersions.verify()` 的 binarySha256 釘住，改了就切不回去",
     "沒有英雄引用的凍結版本文件": "`version.body.*` 快照；後台與編輯器都把它濾出可挑清單（`heroBodyModelIds`），誰都挑不到，檔名就是位元組雜湊",
     "版本 binarySha256 釘住的同位元組副本": "與某個凍結版本逐位元組相同（檔名＝雜湊）；改它等於讓那個版本的出處說謊",
-    "版本的來源檔（歷史血緣）": "某個凍結版本由它註冊而來；它自己不是任何英雄／Forge 的預設、也不在任何可挑清單裡",
+    # ⚠️ 下面兩類的位元組**可以改** —— 不計的理由是「玩家拿不到原樣」，⛔ 不是「不可改」。
+    "版本的來源檔（歷史血緣）": "⚠️ 位元組可以改；不計是因為玩家拿不到原樣：它不是任何英雄／Forge 的預設、不在可挑清單，而拿它再註冊時 `prepare` 會先正規化到 256",
     "不可變 release 的認領": "`materials/hero-model-library/release.json` 已讀回 S3 的不可變發行；改位元組＝發行紀錄說謊",
-    "中央素材庫的獨立元件（純素材）": "`current-resources.json` 裡 componentReady 但尚未綁英雄的元件；玩家拿不到",
+    "中央素材庫的獨立元件（純素材）": "⚠️ 位元組可以改；不計是因為玩家拿不到：`current-resources.json` 裡 componentReady 但尚未綁英雄",
 }
+
+#: ratchet 檔的三格。`a_body_tex` 是 (a) 裡更嚴的一格（2026-09-15 補，理由見 `default_body_slots` 與角色分帳的檔頭）。
+RATCHET_KEYS = ("a", "b", "a_body_tex")
+A_BODY_TEX_TITLE = "玩家預設載入的身體（英雄 modelKey＋Forge 範例預設）貼圖超過上限"
 
 
 def read_ratchet(path: str) -> dict:
-    """基準線：一行一個 `角色=顆數`。⛔ 缺一個就停（⛔ 不當成 0，也不當成無限大）。"""
+    """基準線：一行一個 `鍵=數字`。⛔ 缺一個就停（⛔ 不當成 0，也不當成無限大）。"""
     got = {}
     for line in open(path, encoding="utf-8"):
-        m = re.fullmatch(r"\s*([ab])\s*=\s*(\d+)\s*", line)
+        m = re.fullmatch(r"\s*([a-z_]+)\s*=\s*(\d+)\s*", line)
         if m:
             got[m.group(1)] = int(m.group(2))
-    if set(got) != {"a", "b"}:
-        raise ValueError(f"{os.path.relpath(path, ROOT)} 要有 a=… 與 b=… 兩行（讀到 {sorted(got)}）")
+    if set(got) != set(RATCHET_KEYS):
+        raise ValueError(f"{os.path.relpath(path, ROOT)} 要有 {'／'.join(k + '=…' for k in RATCHET_KEYS)} 三行（讀到 {sorted(got)}）")
     return got
+
+
+def default_body_slots_over_cap(slots, stats) -> tuple:
+    """⭐ (a) 裡更嚴的一格：玩家**預設載入**的身體，貼圖超過上限的**格數**。
+
+    為什麼要這一格（2026-09-15）：(a) 的基準線 265 是「任何問題 × 場景／道具／執行期載入 × 身體」的總和，
+    而且設在現況 ⇒ 一顆新的 1024 預設身體只要同時有別顆修好就看不出來。
+    ⇒ 對 owner 說過的那一條（2026-09-10「避免上架到過大的貼圖」）單獨立一格、數得出名字、轉完就該降到 0。
+    """
+    over, missing = [], []
+    for label, path in slots:
+        s = stats.get(path)
+        if s is None:
+            if not os.path.exists(path):
+                missing.append(label)
+                continue
+            s = inspect(path)
+        if s["texEdge"] > tex_cap(path):
+            over.append((label, os.path.relpath(path, CONTENT), s["texEdge"]))
+    return over, missing
 
 def tex_cap(path: str) -> int:
     rel = os.path.relpath(os.path.abspath(path), CONTENT)
@@ -531,21 +585,35 @@ def main() -> int:
     print(f"\n⭐ 掃了 {len(rows)} 顆 · 乾淨 {len(rows) - len(bad)} · ⛔ 有問題 {len(bad)}")
     if codes:
         print(f"   glTF 錯誤代碼分佈：{codes}")
-    if not (a.all or a.ratchet or a.roles_json):
+    # ⭐ 逐檔清單：只有棘輪模式不印（ship:check 要短）。
+    # ⛔ f52ca71eb 把條件寫成 `not (a.all or …)` ⇒ `--all --check`（`pnpm model:intake:check`、CLAUDE.md 第一·四之零的閘）
+    #    從此只剩總數、⛔ 指名不了任何一顆 —— 2026-09-15 還原。
+    if not a.ratchet:
         for rel, _s, iss in bad[:40]:
             print(f"   {rel}")
             for i in iss:
                 print(f"      {i}")
         if len(bad) > 40:
             print(f"   …另外 {len(bad) - 40} 顆")
+    if not (a.all or a.ratchet or a.roles_json):
         return 1 if (a.check and bad) else 0
 
     try:
-        roles = glb_roles(files)
+        sel = model_selections()
+        if a.content:
+            # ⚠️ Forge 註冊表屬於出貨內容；換成假內容樹時它的每一格都解析不到 ⇒ 明說不讀，⛔ 不靜默當成解析失敗或空集合。
+            print("   ⚠️ --content 假內容樹：不套 Hero Forge 註冊表（它屬於出貨內容）")
+            sel["defaults"], sel["alternatives"] = set(), set()
+        roles, slots, unresolved = glb_roles(files, sel)
         base = read_ratchet(a.ratchet) if a.ratchet else None
     except (OSError, ValueError, KeyError) as exc:
         print(f"⛔ 角色分帳跑不起來：{exc}")
         print("   ⇒ ⚠️ 分不出角色就數不出棘輪 ⇒ 刻意回非零，⛔ 不退回全 repo 分母。")
+        return 2
+    if unresolved:
+        print(f"⛔ {len(unresolved)} 格模型選項指到不存在的 model 文件 —— ⛔ 跳過它會讓那顆預設身體不留痕跡地少分一顆：")
+        for u in unresolved[:20]:
+            print(f"   {u}")
         return 2
     table = {r: [] for r in "abc"}
     for f, (rel, _s, iss) in zip(files, rows):
@@ -556,7 +624,7 @@ def main() -> int:
             json.dump({r: [dict(zip(("path", "category", "detail", "issues"), row)) for row in table[r]]
                        for r in "abc"}, fh, ensure_ascii=False, indent=1)
     count = {r: sum(1 for row in table[r] if row[3]) for r in "abc"}
-    print("   角色分帳（GH#1263）—— ⭐ 以關係判定，每顆取最高者 a > b > c；棘輪只數修得動的：")
+    print("   角色分帳（GH#1263）—— ⭐ 以關係判定，每顆取最高者 a > b > c；棘輪只數玩家拿得到且修得動的：")
     for r in "abc":
         print(f"   ({r}) {ROLE_TITLES[r]:<18} {len(table[r]):>4} 顆 · 有問題 {count[r]}")
     cats = {}
@@ -567,14 +635,29 @@ def main() -> int:
     print("   ⭐ (c) 為什麼不計：")
     for category, (n, nbad) in sorted(cats.items(), key=lambda kv: -kv[1][0]):
         print(f"      {n:>4} 顆（有問題 {nbad}）{category} —— {C_WHY.get(category, '⛔ 沒有登記理由')}")
+    over, missing = default_body_slots_over_cap(slots, {f: s for f, (_rel, s, _iss) in zip(files, rows) if s})
+    count["a_body_tex"] = len(over)
+    print(f"   ⭐ (a) 裡更嚴的一格 a_body_tex —— {A_BODY_TEX_TITLE}：{len(slots)} 格裡 {len(over)} 格")
+    for label, rel, edge in over:
+        print(f"      {label} → {rel}（{edge}）")
+    if missing:
+        print(f"   ⚠️ {len(missing)} 格預設身體的 GLB 檔不存在（體素替身，見 /healthz heroModels）：{missing[:8]}")
     if not base:
         return 1 if (a.check and bad) else 0
 
     code = 0
+    if count["a_body_tex"] > base["a_body_tex"]:
+        code = 1
+        print(f"\n⛔⛔ a_body_tex {A_BODY_TEX_TITLE}：{base['a_body_tex']} → {count['a_body_tex']} 格 —— 名單在上面。")
+    elif count["a_body_tex"] < base["a_body_tex"]:
+        code = 1
+        print(f"\n⭐ a_body_tex {base['a_body_tex']} → {count['a_body_tex']} —— ⇒ 把 {os.path.relpath(a.ratchet, ROOT)} 的 a_body_tex= 改成 {count['a_body_tex']} 並 commit。")
     for r in "ab":
         if count[r] > base[r]:
             code = 1
-            print(f"\n⛔⛔ ({r}) {ROLE_TITLES[r]}：有問題 {base[r]} → {count[r]} —— ⭐ 這一次帶進了新的壞模型：")
+            print(f"\n⛔⛔ ({r}) {ROLE_TITLES[r]}：有問題 {base[r]} → {count[r]} —— 這一次帶進了新的壞模型。")
+            print(f"   ⚠️ 棘輪只記顆數、⛔ 分不出哪幾顆是新的 ⇒ 下面是 ({r}) 裡**全部**有問題的前 30 顆；"
+                  "新的那幾顆看這次 diff 加了哪些 GLB／英雄卡：")
             for rel, category, detail, iss in [row for row in table[r] if row[3]][:30]:
                 print(f"   {rel}  [{category} {detail}]")
                 for i in iss:
