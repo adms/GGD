@@ -132,32 +132,20 @@ function no(brick: EditorBrick, reason: string): EditorFormReceipt {
 }
 
 /**
- * ⭐ GH#1024 AC⑦ —— 「沒有編輯器表單」而**帶一個能被反駁的理由**的積木（key＝`layer/id`）。
- * ⛔ 豁免只換掉**理由**，⛔ 不會把 `renderable` 翻成 true。
- * ⭐ 每一列的前提由 `editorFormReceipts.test.ts` 從普查產物逐條驗 —— 前提一消失就紅，表只能變短。
- */
-export const NO_FORM_EXEMPTIONS: Readonly<Record<string, string>> = Object.freeze({
-  "model-preset/tpl-dragon-shockwave":
-    "豁免（GH#1024 AC⑦）：status=draft · 引擎不認得 family=dragon-shockwave（expand.ts 的 FAMILIES 沒有條目；" +
-    "模板自陳缺「沿路生 model@1」的 trailModelKey 機制）· 出貨 0 採用 ⇒ 給它表單＝讓作者挑一個展不開的 preset。" +
-    "三個前提任一不成立（轉 enabled／引擎接上／有人採用）就刪掉這一列",
-});
-
-/**
  * Measure one Main brick against the Editor controls that ship today.
  *
  * This deliberately does not read `brick.editorForm`: that field is the proxy
  * this receipt is meant to replace. Every positive answer comes from the same
  * schema walk or picker decision the UI consumes; an unavailable template is
  * reported false instead of treating a raw JSON escape hatch as a form.
+ *
+ * ⛔ 2026-09-15：不要在這裡加「無表單豁免理由」。d7f993498 加過一張 `NO_FORM_EXEMPTIONS`
+ * （tpl-dragon-shockwave），已撤回 —— 這支模組在出貨路徑上**沒有讀者**（只有自己的測試），
+ * 進 ggd-bricks 的收據由 editorFormInteractions.test.tsx 另外量；作者在編輯器裡看到的理由住
+ * forge/typeCatalog.ts 的 `templateSelectionDecision()`（對每一個 analysedButUnwired 回同一句泛用話，
+ * 而型別目錄其實已帶逐顆的 `expandError`）。
  */
 export function editorFormReceiptFor(brick: EditorBrick): EditorFormReceipt {
-  const receipt = measureEditorForm(brick);
-  const exemption = NO_FORM_EXEMPTIONS[`${brick.layer}/${brick.id}`];
-  return exemption !== undefined && !receipt.renderable ? { ...receipt, reason: exemption } : receipt;
-}
-
-function measureEditorForm(brick: EditorBrick): EditorFormReceipt {
   switch (brick.layer) {
     case "effect":
       return EFFECT_KINDS.has(brick.id)
