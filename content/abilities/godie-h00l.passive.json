@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0
+    0.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -29,7 +29,7 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 0
+                  "flat": 0.0
                 },
                 "resourcePct": {
                   "subject": "target",
@@ -64,6 +64,5 @@
   },
   "icon": "assets/icons/abilities/godie-h00l.passive.webp",
   "vfxKey": "fx.prim.holy.pulse-lg",
-  "castTimeTier": "極小",
-  "castTimeSec": 0
+  "castTimeTier": "極小"
 }

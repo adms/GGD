@@ -1,0 +1,199 @@
+{
+  "schema": "ggd.dai-rigid-prop-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader, right-handed scene",
+  "vertexBounds": {
+    "min": [
+      -0.2124200016260147,
+      -0.03930399939417839,
+      -0.2518639862537384
+    ],
+    "max": [
+      0.21268199384212494,
+      0.0360880009829998,
+      1.2461069822311401
+    ]
+  },
+  "thinAxis": 1,
+  "meshCount": 2,
+  "animationGroups": 0,
+  "skeletons": 0,
+  "materials": [
+    {
+      "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 1,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001 (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "metallicTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001 (Metallic Roughness)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "specularFactor": 0.325037,
+      "specularTexture": null
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 1,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "metallicTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Metallic Roughness)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "specularFactor": 0.325037,
+      "specularTexture": {
+        "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Specular)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001 (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand__0.2_16_16.001 (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16 (Specular)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "face-a",
+      "alpha": 1.5707963267948966,
+      "beta": 0.001
+    },
+    {
+      "name": "face-b",
+      "alpha": 1.5707963267948966,
+      "beta": 3.1405926535897932
+    },
+    {
+      "name": "isometric",
+      "alpha": 1.0471975511965976,
+      "beta": 0.7853981633974483
+    }
+  ],
+  "sourceDazRenderParity": false,
+  "heroAttachmentFitVerified": false,
+  "gameplayAcceptance": false
+}

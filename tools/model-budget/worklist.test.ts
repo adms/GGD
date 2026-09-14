@@ -16,16 +16,21 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { cover } from "../../packages/shared/testkit/cover";
 
+import { GATES as LIVE_GATES } from "./limits";
 import { WORKLIST_SCHEMA, buildWorklist, type BudgetReportLike } from "./worklist";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
 
-const GATES = [
-  { role: "champion", tris: { warn: 16000, limit: 28000 }, meshes: { warn: 3, limit: 5 }, texEdge: { warn: 512, limit: 1024 }, channels: { warn: 35, limit: 55 } },
-  { role: "hero-prop", tris: { warn: 20000, limit: 40000 }, meshes: { warn: 12, limit: 20 }, texEdge: { warn: 1024, limit: 1024 }, channels: { warn: 120, limit: 200 } },
-  { role: "arena-decor", tris: { warn: 4000, limit: 8000 }, meshes: { warn: 1, limit: 2 }, texEdge: { warn: 512, limit: 1024 }, channels: { warn: 0, limit: 0 } },
-];
+const live = (role: string) => structuredClone(LIVE_GATES.find((gate) => gate.role === role)!);
+// Keep the fixture derived from the live contract. The champion texture row is
+// widened by one pixel only to exercise worklist's warning-only branch, which
+// cannot occur when a production gate deliberately has warn === limit.
+const championGate = live("champion");
+championGate.texEdge.limit = championGate.texEdge.warn + 1;
+const propGate = live("hero-prop");
+const decorGate = live("arena-decor");
+const GATES = [championGate, propGate, decorGate];
 
 /** A representative report: a texture-heavy champion, a geometry-heavy prop,
  *  an asset that is over only on axes nothing can auto-fix, a broken emitter,
@@ -39,22 +44,23 @@ const REPORT: BudgetReportLike = {
     { id: "login", label: "登入", verdicts: { triangles: "ok", drawCalls: "warn", vramBytes: "ok" } },
   ],
   models: [
-    // champion: texture at warn (1024→512) AND over on draw calls + anim channels
+    // champion: texture just above warn AND over on draw calls + anim channels
     {
       id: "champ.big", path: "assets/models/champions/big.glb", role: "champion",
-      triangles: 6000, drawCalls: 13, animChannels: 120, maxTextureEdge: 1024, vramBytes: 5_592_405, worstCount: 12,
+      triangles: 6000, drawCalls: championGate.meshes.limit + 1, animChannels: championGate.channels.limit + 1,
+      maxTextureEdge: championGate.texEdge.warn + 1, vramBytes: 5_592_405, worstCount: 12,
       verdicts: { triangles: "ok", drawCalls: "over", maxTextureEdge: "warn", animChannels: "over" },
     },
     // prop: geometry over (needs decimation, #115) — lighter VRAM than the champion
     {
       id: "prop.statue", path: "assets/models/props/statue.glb", role: "hero-prop",
-      triangles: 55000, drawCalls: 4, animChannels: 0, maxTextureEdge: 512, vramBytes: 1_000_000, worstCount: 1,
+      triangles: propGate.tris.limit + 1, drawCalls: 4, animChannels: 0, maxTextureEdge: 256, vramBytes: 1_000_000, worstCount: 1,
       verdicts: { triangles: "over", drawCalls: "ok", maxTextureEdge: "ok", animChannels: "ok" },
     },
     // over ONLY on anim channels — no automated pass fixes this → needsReauthor
     {
       id: "champ.dancer", path: "assets/models/champions/dancer.glb", role: "champion",
-      triangles: 5000, drawCalls: 2, animChannels: 90, maxTextureEdge: 256, vramBytes: 400_000, worstCount: 12,
+      triangles: 5000, drawCalls: 2, animChannels: championGate.channels.limit + 1, maxTextureEdge: 256, vramBytes: 400_000, worstCount: 12,
       verdicts: { triangles: "ok", drawCalls: "ok", maxTextureEdge: "ok", animChannels: "over" },
     },
     // broken emitter — pure overhead, nothing to optimise
@@ -100,21 +106,30 @@ describe("mbudget-worklist", () => {
     const w = buildWorklist(REPORT);
     const champ = w.items.find((i) => i.id === "champ.big")!;
     const tex = champ.actions.find((a) => a.kind === "texture-resize");
-    expect(tex).toMatchObject({ kind: "texture-resize", fromEdge: 1024, targetEdge: 512 });
-    // 1024→512 quarters the image area → ~75% of the model's VRAM is recoverable
+    expect(tex).toMatchObject({
+      kind: "texture-resize",
+      fromEdge: championGate.texEdge.warn + 1,
+      targetEdge: championGate.texEdge.warn,
+    });
     if (tex && tex.kind === "texture-resize") {
-      expect(tex.estVramSavedBytes).toBe(Math.round(5_592_405 * (1 - 0.25)));
+      const ratio = championGate.texEdge.warn / (championGate.texEdge.warn + 1);
+      expect(tex.estVramSavedBytes).toBe(Math.round(5_592_405 * (1 - ratio * ratio)));
     }
     // and the champion still carries its un-fixable breaches as manual work
     expect(champ.manual.sort()).toEqual(["animChannels", "drawCalls"]);
 
     const prop = w.items.find((i) => i.id === "prop.statue")!;
     const geo = prop.actions.find((a) => a.kind === "geometry-decimate");
-    expect(geo).toMatchObject({ kind: "geometry-decimate", fromTris: 55000, targetTris: 20000 });
+    expect(geo).toMatchObject({
+      kind: "geometry-decimate",
+      fromTris: propGate.tris.limit + 1,
+      targetTris: propGate.tris.warn,
+    });
     if (geo && geo.kind === "geometry-decimate") expect(geo.requires).toContain("#115");
 
     // the total VRAM estimate is the sum of the texture savings only
-    expect(w.totals.estVramSavedBytes).toBe(Math.round(5_592_405 * 0.75));
+    const ratio = championGate.texEdge.warn / (championGate.texEdge.warn + 1);
+    expect(w.totals.estVramSavedBytes).toBe(Math.round(5_592_405 * (1 - ratio * ratio)));
     cover("mbudget-worklist");
   });
 

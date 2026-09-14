@@ -1,0 +1,15 @@
+{
+  "id": "ou99.491497-standard",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "walk",
+    "attack": "attack 1",
+    "cast": "spell",
+    "death": "death",
+    "hurt": "stand"
+  }
+}

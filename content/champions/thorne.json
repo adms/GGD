@@ -80,7 +80,7 @@
         }
       ],
       "vfxKey": "fx.thorn-lash",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "provenance": "w3x-import",
       "rangeTier": "中",
       "range": 6,
@@ -142,7 +142,7 @@
         }
       ],
       "vfxKey": "fx.barkskin",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "provenance": "w3x-import",
       "castTimeTier": "小"
     },
@@ -169,7 +169,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.root-snare",
-      "castTimeSec": 0.333,
+      "castTimeSec": 0.3,
       "provenance": "w3x-import",
       "rangeTier": "大",
       "range": 8,
@@ -224,7 +224,7 @@
       "range": 1,
       "radius": 4.5,
       "targetsEnemies": true,
-      "castTimeSec": 1.833,
+      "castTimeSec": 1,
       "effects": [],
       "vfxKey": "fx.bramble-burst",
       "provenance": "w3x-import",
@@ -249,7 +249,7 @@
           "damageType": "physical",
           "statusId": "slow40",
           "statusDurationSec": 2,
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

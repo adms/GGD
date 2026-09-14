@@ -1,0 +1,38 @@
+{
+  "schema": "ggd.bounded-source-search.v1",
+  "checkedAt": "2026-09-10T18:39:50.096084+00:00",
+  "scope": "Infinity Strash first, then Jump Force exact Dai independent body; public author and community sources only",
+  "queries": [
+    "Dai Jump Force model download Shinteo",
+    "Dai Jump Force fbx",
+    "Dai Infinity Strash model download",
+    "Dai Jump Force deviantart model",
+    "Dai Jump Force model download",
+    "Dai Jump Force site:gamemaps.com",
+    "farizf Jump Force Dai",
+    "Dai XPS download model Dragon Quest",
+    "ダイ モデル配布 ジャンプフォース"
+  ],
+  "newIndependentBodyAcquired": false,
+  "newDownloadsThisFollowup": 0,
+  "leads": [
+    {
+      "url": "https://cl.pinterest.com/pin/746190232004766226/",
+      "title": "Jump Force - Dai (Dragon Quest) by farizf on DeviantArt",
+      "status": "image-reference-only",
+      "detail": "Public page identifies an image/artwork. No verified model attachment or public downloadable model found; not counted as a model."
+    },
+    {
+      "url": "https://steamcommunity.com/workshop/filedetails/?id=2437347888",
+      "status": "collection-reference-only",
+      "detail": "Collection refers to DMG Dai Coach port by ĐȺɨsᵾꝁɇ¹⁷³ึ; original item 2298782931 previously removed. No removed item or blocked source retried."
+    },
+    {
+      "url": "https://www.nexusmods.com/infinitystrashdragonquesttheadventureofdai/mods/10?tab=posts",
+      "status": "settings-mod-not-independent-body",
+      "detail": "Prior read found author discussion of lacking model import expertise and UE Viewer compatibility; no independent Dai body obtained."
+    }
+  ],
+  "remainingBlocker": "No complete independent Dai body package verified publicly downloadable during this bounded followup. Shinteo Daz package still lacks Genesis base; not sourced from unofficial reuploads.",
+  "excluded": "No full game mirrors, paywall/login bypass, removed workshop retries, Genesis unofficial reuploads or purchases."
+}

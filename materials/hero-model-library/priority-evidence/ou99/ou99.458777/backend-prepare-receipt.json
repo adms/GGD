@@ -1,0 +1,526 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare against isolated byte copies of current hero, old model versions and candidate; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/backend-prepare-content",
+  "sourceHeroFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/b2-keyaru.json",
+  "sourceHeroSha256": "baf6f5b809357c954af110f669ac214aacc0914b89a74c287ea5509c0cb8083f",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:ff153c5fa11f835428ba67c8c6a9ba9c9e6b104ff057d64802f0de24aea4716d",
+    "sourceModelKey": "ou99.458777-standard-v2",
+    "label": "假面绅士（論壇相似模型）（標準化 v2）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "假面绅士",
+      "work": "來源作品待核；論壇標題：假面绅士",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-458777-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": false
+  },
+  "preparedChampion": {
+    "id": "b2-keyaru",
+    "name": "凱亞爾",
+    "description": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "mage",
+    "attackType": "melee",
+    "archetype": "mage",
+    "origin": "法鬥",
+    "modelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.458777",
+        "modelSha256": "9203bc0f9174350323468ed7912665b72516fbfe0a838c163ce7d8ed7eb36c2a",
+        "binarySha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+        "registeredAt": "2026-09-10T14:37:53.359Z",
+        "source": {
+          "kind": "previous",
+          "character": "凱亞爾",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.458777.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.b5905fd089f9858913636666f1bd7c7db81cf06f6b2612b7",
+        "label": "假面绅士（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.458777-standard-v2",
+        "modelSha256": "98f17e195bad860a58ba7708173baa9d6c3efe0f3859123c8c30479f66ed5428",
+        "binarySha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+        "registeredAt": "2026-09-10T14:37:53.371Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "假面绅士",
+          "work": "來源作品待核；論壇標題：假面绅士",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-458777-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 6,
+      "range": 1.6
+    },
+    "growth": {
+      "ad": 4.289142857142858,
+      "ap": 0,
+      "armor": 0.5280102040816326,
+      "as": 0,
+      "healthRegen": 0.08789387755102042,
+      "manaRegen": 0,
+      "maxHealth": 35.000204081632646,
+      "maxMana": 0.9581632653061187,
+      "mr": 2.1118367346938776
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 18,
+      "agi": 13,
+      "int": 29,
+      "strGrowth": 1.67,
+      "agiGrowth": 1.25,
+      "intGrowth": 2.78,
+      "primary": "INT",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-keyaru.q",
+        "name": "醫生先給自己掛號",
+        "provenance": "w3x-import",
+        "description": "「醫生先給自己掛號！」\n回復自身 120 生命；缺血時的真治療事件會建立病歷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 0,
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "heal",
+            "amount": {
+              "flat": 120,
+              "perRank": [
+                0,
+                60,
+                120,
+                180
+              ]
+            }
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.067,
+        "template": {
+          "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+          "params": {
+            "amount": {
+              "flat": 120,
+              "perRank": [
+                0,
+                60,
+                120,
+                180
+              ]
+            },
+            "castTimeSec": 0.067,
+            "target": "self"
+          },
+          "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+        }
+      },
+      "W": {
+        "id": "b2-keyaru.w",
+        "name": "病歷換職災保險",
+        "provenance": "w3x-import",
+        "description": "「病歷換職災保險！」\n消耗自己全部 rage 病歷，對指定友軍給予 190 點護盾 3 秒。未持有病歷則沒有護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "rage",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 190,
+                  "perRank": [
+                    0,
+                    95,
+                    190,
+                    285
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "targeted",
+            "effects": [
+              {
+                "count": "all",
+                "kind": "consumeStatus",
+                "onConsumed": [
+                  {
+                    "absorbs": "all",
+                    "amount": {
+                      "flat": 190,
+                      "perRank": [
+                        0,
+                        95,
+                        190,
+                        285
+                      ]
+                    },
+                    "duration": 3,
+                    "kind": "shield",
+                    "onExisting": "keepLarger",
+                    "stackKey": "b2-protection"
+                  }
+                ],
+                "shape": "single",
+                "statusId": "rage",
+                "subject": "self"
+              }
+            ],
+            "radius": 3,
+            "side": "allies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-keyaru.e",
+        "name": "麻醉單請勿填錯",
+        "provenance": "w3x-import",
+        "description": "「麻醉單請勿填錯！」\n指定敵人被施加 magic-break，明確帶 silenced 旗標 2.5 秒；不造成麻醉傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "magic-break",
+            "duration": 2.5,
+            "silenced": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.267,
+        "template": {
+          "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+          "params": {
+            "castTimeSec": 0.267,
+            "status": {
+              "duration": 2.5,
+              "silenced": true,
+              "statusId": "magic-break"
+            }
+          },
+          "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+        }
+      },
+      "R": {
+        "id": "b2-keyaru.r",
+        "name": "門診加號先救人",
+        "provenance": "w3x-import",
+        "description": "「門診加號先救人！」\n治療指定友軍 120 生命，並驅散最多 3 筆可驅散負面狀態、DOT 或增益来源。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": false,
+        "effects": [
+          {
+            "kind": "heal",
+            "amount": {
+              "flat": 120,
+              "perRank": [
+                0,
+                90,
+                180
+              ]
+            }
+          },
+          {
+            "kind": "dispel",
+            "shape": "single",
+            "pools": {
+              "status": true,
+              "dot": true,
+              "buffs": true
+            },
+            "polarity": "debuff",
+            "count": 3,
+            "order": "newest"
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.067,
+        "template": {
+          "cards": [
+            {
+              "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+              "params": {
+                "amount": {
+                  "flat": 120,
+                  "perRank": [
+                    0,
+                    90,
+                    180
+                  ]
+                },
+                "castTimeSec": 0.1,
+                "target": "ally"
+              },
+              "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+            },
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "castTimeSec": 0.1,
+                "castType": "targeted",
+                "effects": [
+                  {
+                    "count": 3,
+                    "kind": "dispel",
+                    "order": "newest",
+                    "polarity": "debuff",
+                    "pools": {
+                      "buffs": true,
+                      "dot": true,
+                      "status": true
+                    },
+                    "shape": "single"
+                  }
+                ],
+                "radius": 3,
+                "side": "allies"
+              },
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      }
+    },
+    "exAbility": "b2-keyaru.ex",
+    "passiveAbility": "b2-keyaru.passive",
+    "icon": "assets/icons/champions/b2-keyaru.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
+        "schema": "model@1",
+        "glbPath": "assets/models/ou99/versions/d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell One",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.458777",
+          "legacyAppearance": true
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.b8829067a837a7139124106d57607563822058652f2c1de0",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.458777",
+        "modelSha256": "9203bc0f9174350323468ed7912665b72516fbfe0a838c163ce7d8ed7eb36c2a",
+        "binarySha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f",
+        "registeredAt": "2026-09-10T14:37:53.359Z",
+        "source": {
+          "kind": "previous",
+          "character": "凱亞爾",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.458777.json",
+          "tier": "original"
+        }
+      },
+      "bytes": 2272724,
+      "sha256": "d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f"
+    },
+    {
+      "document": {
+        "id": "version.body.b5905fd089f9858913636666f1bd7c7db81cf06f6b2612b7",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack 1",
+          "cast": "Spell One",
+          "hurt": "Stand",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.458777-standard-v2",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.b5905fd089f9858913636666f1bd7c7db81cf06f6b2612b7",
+        "label": "假面绅士（論壇相似模型）（標準化 v2）",
+        "sourceModelKey": "ou99.458777-standard-v2",
+        "modelSha256": "98f17e195bad860a58ba7708173baa9d6c3efe0f3859123c8c30479f66ed5428",
+        "binarySha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb",
+        "registeredAt": "2026-09-10T14:37:53.371Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "假面绅士",
+          "work": "來源作品待核；論壇標題：假面绅士",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-458777-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      "bytes": 1614000,
+      "sha256": "cfb27b55b4d0d0e9bac378aaf1e09c176112bcfa2f09cd8dff0a5cbffe756feb"
+    }
+  ],
+  "centralWrites": false,
+  "backendWrites": false
+}

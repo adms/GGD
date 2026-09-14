@@ -1,0 +1,355 @@
+{
+  "schema": "ggd-candidate-manifest@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-shinchan-canonical-20260910",
+  "candidates": [
+    {
+      "candidateId": "gta5mod-shinchan-sd2-procedural-six-state-v1",
+      "sourceId": "gta5mod-shinchan-sd2",
+      "heroIds": [
+        "b2-shinchan"
+      ],
+      "displayName": "野原新之助｜GTA V MOD 彩色條紋衣／綠褲＋GGD 程序化六態",
+      "identityMatch": "author-designated Shinchan community model; recognizable modified cartoon rendition, not original-game extraction",
+      "form": "normal outfit 彩色條紋衣／綠褲",
+      "author": "GTA5OPMOD",
+      "sourceUrl": "https://gta5mod.net/gta-5-mods/player/shinchan-mods-sd2-high-quality-add-on-ped-v1-2/",
+      "downloadUrl": "https://gta5mod.net/download-mod/136365",
+      "sourceChannel": "public MOD resource site",
+      "sourceGame": "Grand Theft Auto V community Add-On Ped",
+      "sourcePlatform": "PC GTA V MOD",
+      "sourceModVersion": "v1.2",
+      "gameVersionNotInferredFromWebsiteDate": true,
+      "defaultChangePerformed": false,
+      "defaultRecommendation": false,
+      "modelSourceCategory": "mod-community-model",
+      "animationSourceCategory": "ggd-procedural-fallback",
+      "nativeAnimationCount": 0,
+      "generatedAnimationCount": 6,
+      "nativeAudioCount": 0,
+      "nativeVfxCount": 0,
+      "runtimeModelId": "community.body.4cd197ed169e6412b3dfd13e5c6aa95298c0ed2e355b6597",
+      "glbPath": "sd2-runtime-v2/body.glb",
+      "glbSha256": "9174e81b7460bc5947ea00c5f1a4c6ed7675421dd56c2a2ee8312f56154f025e",
+      "glbBytes": 1459204,
+      "modelDocumentPath": "sd2-runtime-v2/model.json",
+      "modelDocumentSha256": "20f51a6f820bfc182a054630cb186ce23e5546af0998fa51187baf297c34dbc3",
+      "uploadedModelPath": "sd2-runtime-v2/uploaded-model.json",
+      "preparationReceiptPath": "sd2-six-state-v2/preparation.receipt.json",
+      "runtimeReceiptPath": "sd2-runtime-v2/receipt.json",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "clips": [
+        {
+          "state": "idle",
+          "clip": "GGD_procedural_idle",
+          "seconds": 2.4,
+          "sampleKeys": 73,
+          "channels": 12,
+          "varyingChannels": 3,
+          "loopIntent": true,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "run",
+          "clip": "GGD_procedural_run",
+          "seconds": 0.8,
+          "sampleKeys": 25,
+          "channels": 12,
+          "varyingChannels": 10,
+          "loopIntent": true,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "attack",
+          "clip": "GGD_procedural_attack",
+          "seconds": 1.0,
+          "sampleKeys": 31,
+          "channels": 12,
+          "varyingChannels": 5,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "cast",
+          "clip": "GGD_procedural_cast",
+          "seconds": 1.6,
+          "sampleKeys": 49,
+          "channels": 12,
+          "varyingChannels": 6,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "hurt",
+          "clip": "GGD_procedural_hurt",
+          "seconds": 0.55,
+          "sampleKeys": 18,
+          "channels": 12,
+          "varyingChannels": 5,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "death",
+          "clip": "GGD_procedural_death",
+          "seconds": 1.25,
+          "sampleKeys": 39,
+          "channels": 12,
+          "varyingChannels": 6,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        }
+      ],
+      "limits": {
+        "triangles": 25262,
+        "vertices": 14315,
+        "drawPrimitives": 1,
+        "joints": 98,
+        "weightedJoints": 60,
+        "maxBoneInfluences": 7,
+        "largestTextureEdge": 1024
+      },
+      "readiness": {
+        "sourceAcquired": true,
+        "modelConverted": true,
+        "standardRuntimeContractVerified": true,
+        "runtimeMotionSampled": true,
+        "textureRendered": true,
+        "khronos": {
+          "errors": 0,
+          "warnings": 0,
+          "infos": 0,
+          "truncated": false
+        },
+        "visualBasicInspection": "Inspected all six WebGL gestures and original-vs-optimized Cycles front/three-quarter; no missing parts or broken textures observed.",
+        "fullVisualQualityAcceptance": "pending",
+        "backendSelectionVerified": false,
+        "deployed": false
+      },
+      "previews": {
+        "front": "budget-visual-v1/sd2-budget-front.png",
+        "threeQuarter": "budget-visual-v1/sd2-budget-three-quarter.png",
+        "comparison": "visual-review/sd2-front-comparison.png",
+        "sixStates": "visual-review/sd2-six-states-contact.png",
+        "webglProof": "sd2-webgl-v1/render-proof.json"
+      },
+      "preservation": {
+        "originalCopyRoot": "source-preserved/sd2",
+        "completeRawArchive": true,
+        "sourceRigGlb": "conversion-v1/sd2/source-rig.glb",
+        "canonicalRigGlb": "conversion-v1/sd2/canonical-rig.glb",
+        "sourceTriangles": 58752,
+        "sourceVertices": 31393,
+        "nativeTextureCount": 8,
+        "defaultUsedNativeTextureCount": 8,
+        "extraNativeTexturesPreserved": [],
+        "extraTextureStatus": "none",
+        "sourceYddYftYmtIdenticalAcrossTwoPackages": true
+      },
+      "licenseStatus": "source-restrictions-present; no shared/derivative clearance inferred",
+      "rightsEvidencePath": "source-preserved/sd2/extracted/Copyright Notice.txt",
+      "gaps": [
+        "0 source animation/voice/SFX/VFX; six states are generated fallback, not native game choreography.",
+        "Procedural motion has no foot-contact, collision, root-motion or gameplay timing guarantee.",
+        "Original mesh and bone frames preserved; runtime has atlas resampling and decimation plus canonical bone frames.",
+        "Runtime uses all seven post-decimation influences through JOINTS_0/1; no influence dropped.",
+        "Source copyright notice restricts modification/sharing/database inclusion; both packages share byte-identical mesh.",
+        "Source stylized eyes/outfits are retained; resemblance to original manga artwork is not changed.",
+        "Backend publication/default selection left to root integration."
+      ]
+    },
+    {
+      "candidateId": "gta5mod-shinchan-kstamil-procedural-six-state-v1",
+      "sourceId": "gta5mod-shinchan-kstamil",
+      "heroIds": [
+        "b2-shinchan"
+      ],
+      "displayName": "野原新之助｜GTA V MOD 紅衣／黃褲＋GGD 程序化六態",
+      "identityMatch": "author-designated Shinchan community model; recognizable modified cartoon rendition, not original-game extraction",
+      "form": "normal outfit 紅衣／黃褲",
+      "author": "Ksplaytamilyt / KS PLAY TAMIL",
+      "sourceUrl": "https://gta5mod.net/gta-5-mods/player/shinchan-add-on-ped-v1-0/",
+      "downloadUrl": "https://gta5mod.net/download-mod/136392",
+      "sourceChannel": "public MOD resource site",
+      "sourceGame": "Grand Theft Auto V community Add-On Ped",
+      "sourcePlatform": "PC GTA V MOD",
+      "sourceModVersion": "v1.0",
+      "gameVersionNotInferredFromWebsiteDate": true,
+      "defaultChangePerformed": false,
+      "defaultRecommendation": true,
+      "modelSourceCategory": "mod-community-model",
+      "animationSourceCategory": "ggd-procedural-fallback",
+      "nativeAnimationCount": 0,
+      "generatedAnimationCount": 6,
+      "nativeAudioCount": 0,
+      "nativeVfxCount": 0,
+      "runtimeModelId": "community.body.e625b8d3604e6909cde457e5e3f8ae34b5913d6d0147771e",
+      "glbPath": "kstamil-runtime-v2/body.glb",
+      "glbSha256": "faf2d7adf228095c10b19ce7a448e840d024e47a028778151277c0521e63505b",
+      "glbBytes": 1424356,
+      "modelDocumentPath": "kstamil-runtime-v2/model.json",
+      "modelDocumentSha256": "be27bdd44a4c1aecfd8f8f96ba6e4150d0c237af9796b0d07bc7e4c3b8615447",
+      "uploadedModelPath": "kstamil-runtime-v2/uploaded-model.json",
+      "preparationReceiptPath": "kstamil-six-state-v2/preparation.receipt.json",
+      "runtimeReceiptPath": "kstamil-runtime-v2/receipt.json",
+      "clipMap": {
+        "idle": "GGD_procedural_idle",
+        "run": "GGD_procedural_run",
+        "attack": "GGD_procedural_attack",
+        "cast": "GGD_procedural_cast",
+        "hurt": "GGD_procedural_hurt",
+        "death": "GGD_procedural_death"
+      },
+      "clips": [
+        {
+          "state": "idle",
+          "clip": "GGD_procedural_idle",
+          "seconds": 2.4,
+          "sampleKeys": 73,
+          "channels": 12,
+          "varyingChannels": 3,
+          "loopIntent": true,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "run",
+          "clip": "GGD_procedural_run",
+          "seconds": 0.8,
+          "sampleKeys": 25,
+          "channels": 12,
+          "varyingChannels": 10,
+          "loopIntent": true,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "attack",
+          "clip": "GGD_procedural_attack",
+          "seconds": 1.0,
+          "sampleKeys": 31,
+          "channels": 12,
+          "varyingChannels": 5,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "cast",
+          "clip": "GGD_procedural_cast",
+          "seconds": 1.6,
+          "sampleKeys": 49,
+          "channels": 12,
+          "varyingChannels": 6,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "hurt",
+          "clip": "GGD_procedural_hurt",
+          "seconds": 0.55,
+          "sampleKeys": 18,
+          "channels": 12,
+          "varyingChannels": 5,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        },
+        {
+          "state": "death",
+          "clip": "GGD_procedural_death",
+          "seconds": 1.25,
+          "sampleKeys": 39,
+          "channels": 12,
+          "varyingChannels": 6,
+          "loopIntent": false,
+          "origin": "ggd-procedural-fallback",
+          "native": false
+        }
+      ],
+      "limits": {
+        "triangles": 25262,
+        "vertices": 14315,
+        "drawPrimitives": 1,
+        "joints": 98,
+        "weightedJoints": 60,
+        "maxBoneInfluences": 7,
+        "largestTextureEdge": 1024
+      },
+      "readiness": {
+        "sourceAcquired": true,
+        "modelConverted": true,
+        "standardRuntimeContractVerified": true,
+        "runtimeMotionSampled": true,
+        "textureRendered": true,
+        "khronos": {
+          "errors": 0,
+          "warnings": 0,
+          "infos": 0,
+          "truncated": false
+        },
+        "visualBasicInspection": "Inspected all six WebGL gestures and original-vs-optimized Cycles front/three-quarter; no missing parts or broken textures observed.",
+        "fullVisualQualityAcceptance": "pending",
+        "backendSelectionVerified": false,
+        "deployed": false
+      },
+      "previews": {
+        "front": "budget-visual-v1/kstamil-budget-front.png",
+        "threeQuarter": "budget-visual-v1/kstamil-budget-three-quarter.png",
+        "comparison": "visual-review/kstamil-front-comparison.png",
+        "sixStates": "visual-review/kstamil-six-states-contact.png",
+        "webglProof": "kstamil-webgl-v1/render-proof.json"
+      },
+      "preservation": {
+        "originalCopyRoot": "source-preserved/kstamil",
+        "completeRawArchive": true,
+        "sourceRigGlb": "conversion-v1/kstamil/source-rig.glb",
+        "canonicalRigGlb": "conversion-v1/kstamil/canonical-rig.glb",
+        "sourceTriangles": 58752,
+        "sourceVertices": 31393,
+        "nativeTextureCount": 16,
+        "defaultUsedNativeTextureCount": 8,
+        "extraNativeTexturesPreserved": [
+          "feet_diff_000_b_uni",
+          "feet_diff_000_c_uni",
+          "hand_diff_000_b_whi",
+          "head_diff_000_b_whi",
+          "lowr_diff_000_b_whi",
+          "lowr_diff_000_c_whi",
+          "uppr_diff_000_b_uni",
+          "uppr_diff_000_c_uni"
+        ],
+        "extraTextureStatus": "preserved-awaiting-authored-component-variation-combination",
+        "sourceYddYftYmtIdenticalAcrossTwoPackages": true
+      },
+      "licenseStatus": "source-restrictions-present; no shared/derivative clearance inferred",
+      "rightsEvidencePath": "source-preserved/sd2/extracted/Copyright Notice.txt",
+      "gaps": [
+        "0 source animation/voice/SFX/VFX; six states are generated fallback, not native game choreography.",
+        "Procedural motion has no foot-contact, collision, root-motion or gameplay timing guarantee.",
+        "Original mesh and bone frames preserved; runtime has atlas resampling and decimation plus canonical bone frames.",
+        "Runtime uses all seven post-decimation influences through JOINTS_0/1; no influence dropped.",
+        "Source copyright notice restricts modification/sharing/database inclusion; both packages share byte-identical mesh.",
+        "Source stylized eyes/outfits are retained; resemblance to original manga artwork is not changed.",
+        "Backend publication/default selection left to root integration."
+      ]
+    }
+  ],
+  "defaultRecommendation": {
+    "candidateId": "gta5mod-shinchan-kstamil-procedural-six-state-v1",
+    "reason": "Both variants have complete default textures; KS Tamil red shirt/yellow shorts is the closer normal outfit. Recommendation only, no default or source calendar ranking change."
+  }
+}

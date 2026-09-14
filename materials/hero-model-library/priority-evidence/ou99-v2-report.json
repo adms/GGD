@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-ou99-standardization-handoff@2",
+  "frozen": true,
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/manifest.json",
+  "manifestSha256": "2cdf64a4233f1cd6ae33e4d8e37654ab985a73bbd406fc8b91700681d8767afe",
+  "count": 22,
+  "backendPreparePassed": 22,
+  "modelBytes": 43925284,
+  "originalZipCopies": 22,
+  "centralWrites": false,
+  "runtimePaths": "20 rows use runtime/; 497211 and 472112 use runtime-budget-v3/; use exact manifest runtime paths",
+  "limitations": [
+    "Visual transparency sort, atlas mip and two LOD details need separate renderer review.",
+    "Native OU99 model motion is preserved; target character canonical choreography is not inferred."
+  ],
+  "handoffSha256": "f33e463b61b7e4068eb6c9ec0127bec7c61102ca0d00dd101a0c7bee17c6f003",
+  "fileManifestSha256": "9216443e1ad11498db6ada4c1f04154208e2d221bb64ad33db0fd3f548fedea6",
+  "filesIncludingFileManifest": 536,
+  "allFilesVerified": true
+}

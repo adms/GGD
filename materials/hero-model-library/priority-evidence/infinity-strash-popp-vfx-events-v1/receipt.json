@@ -1,0 +1,2178 @@
+{
+  "schema": "ggd.infinity-strash-popp-vfx-events@1",
+  "heroId": "b2-popp",
+  "sourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
+  "sourceAvailability": {
+    "windowsShare": "not-used-by-this-build-local-byte-verified-pak-mirror-is-the-input",
+    "preservedLocalPakMirror": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-primary-paks-v1/source-manifest.json",
+      "bytes": 2003,
+      "sha256": "49bc7cc955443a019bbc3164b51a2708d1c9fbb7684b5f356d16158fd03b02e6"
+    },
+    "directVfxExtractRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content",
+    "directVfxSourceManifest": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/source-manifest.json",
+      "bytes": 18324,
+      "sha256": "7fbec4a051960f896f2e99194bb9a372d69cdcaa5bb1d5d9a997ac6cd546facf"
+    },
+    "dependencyClosureRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1",
+    "dependencyClosureS3Backup": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-closure-s3-backup-receipt.json",
+      "bytes": 1561,
+      "sha256": "54f3a203abceef2d4ebacd388103a44b3ddcc7220907e0a05abc5516417082ec",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.files.json",
+      "archiveSha256": "fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5",
+      "archiveBytes": 19748525,
+      "fileCount": 700,
+      "fullGetVerified": true,
+      "allMemberSha256Verified": true
+    },
+    "eventExtractRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content"
+  },
+  "inputs": {
+    "dependencyIndex": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/infinity-strash/dependency-index.json",
+      "bytes": 5870,
+      "sha256": "c24297f36d6e79b1a878b77ffdb08f0ece6ec1bb41aa83beaf8b26899bff9eb4"
+    },
+    "audioExtractionIndex": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/extraction-index.json",
+      "bytes": 5333911,
+      "sha256": "9093f96e47d595bd0b3b4799c78791a85a23a9c83dbba0ecb33f1c7b4a168711"
+    },
+    "conversionProbe": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/conversion-probe.json",
+      "bytes": 5393,
+      "sha256": "7fdcdc7e5822498d55e48f4053e14f526eecc62246b13f9fe976d764a224553a"
+    },
+    "vfxDependencyClosureManifest": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/source-manifest.json",
+      "bytes": 692023,
+      "sha256": "212e6d01cae541addb44bbeec98513ab5d6d777c3687f46ebe1e1bb5413fc534"
+    },
+    "closureConversionProbe": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/closure-conversion-probe.json",
+      "bytes": 5396,
+      "sha256": "130a09138b2a6675467102f909ef37952c75bdcf154fd699dea818cda7c0052b"
+    }
+  },
+  "summary": {
+    "vfxReferences": 17,
+    "vfxDirectPairsAcquired": 17,
+    "vfxConverted": 0,
+    "vfxFirstLevelDependencyReferenceOccurrences": 229,
+    "vfxFirstLevelUniqueDependencyReferences": 138,
+    "vfxClosurePackageReferencesDiscovered": 309,
+    "vfxClosurePackageReferencesAcquired": 309,
+    "vfxClosurePackageReferencesMissing": 0,
+    "vfxNonScriptPackageDependencyClosureComplete": true,
+    "eventReferences": 41,
+    "eventPairsAcquired": 41,
+    "audioReviewCandidates": 36,
+    "audioReviewApproved": 0,
+    "runtimeBindingsCreated": 0,
+    "otherExternalReferences": 19,
+    "supportingGenericSfxReferences": 10
+  },
+  "vfx": [
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core.uasset",
+        "bytes": 82262,
+        "sha256": "7c0f514a3671c2a035bef8fd755dd1d64f91f76b34452007d3e5561af322a2c2"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core.uexp",
+        "bytes": 722931,
+        "sha256": "98a472907606f4a628a3067e8c278ce5c6bf6c123e78749a5e2b14a7a785a94b"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 45,
+          "NiagaraDataInterfaceCurve": 174,
+          "NiagaraDataInterfaceVectorField": 33,
+          "NiagaraEmitter": 14,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 8,
+          "NiagaraScript": 35,
+          "NiagaraSpriteRendererProperties": 5,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 316,
+        "importCount": 72
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Kira_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_kh_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_07",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_08",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_Gradation_kh_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_Gradation_kh_06",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_05",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_Wind_kh_12",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_wind_kh_14",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 19,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit.uasset",
+        "bytes": 111257,
+        "sha256": "df6b51358a6d8740848bf3f219ec486eb0cf5a2ab176c9154df1e83db789ae8b"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit.uexp",
+        "bytes": 978559,
+        "sha256": "1c0b577b039014d942be8540783eb4e59c5bdabbc67f8203e8d2b13b2188b961"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 63,
+          "NiagaraDataInterfaceCurve": 200,
+          "NiagaraDataInterfaceVector2DCurve": 10,
+          "NiagaraDataInterfaceVectorCurve": 8,
+          "NiagaraDataInterfaceVectorField": 47,
+          "NiagaraEmitter": 19,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 9,
+          "NiagaraScript": 44,
+          "NiagaraSpriteRendererProperties": 9,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 411,
+        "importCount": 91
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_kh_05",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Kira_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_SlashHitLine",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_kh_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_05",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_06",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_09",
+        "/Game/Strash/VFX/Material/MaterialInstance/Shock/MI_Shock_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_07",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_08",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_ef_Smoke_at_07",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Spike_tk_3",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_Wind_kh_07",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 26,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Hyadaruko/NPS_Hyadaruko_Hit",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00.uasset",
+        "bytes": 68274,
+        "sha256": "cf88416783f8377b5f34d758ff8a91ffa8b5bc6601a1855292665b03297fd1a8"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00.uexp",
+        "bytes": 662337,
+        "sha256": "c284768f6d7500480c544f6f0ed93d5d7f8cf7a2f3cb3076afed19610d691791"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 49,
+          "NiagaraDataInterfaceCurve": 75,
+          "NiagaraDataInterfaceVector2DCurve": 6,
+          "NiagaraDataInterfaceVectorCurve": 3,
+          "NiagaraDataInterfaceVectorField": 11,
+          "NiagaraEmitter": 15,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 5,
+          "NiagaraScript": 33,
+          "NiagaraSpriteRendererProperties": 9,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 208,
+        "importCount": 67
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple_2",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowSoft_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF0",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_LightBurst_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_simpleFresnel_inverse",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_simpleFresnel_inverse_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Ring_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_kh_15",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/envShrine/MI_ENV_Thunder_kh_9",
+        "/Game/Strash/VFX/Old/Materials_N/MI_BG",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 15,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Bullet_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00.uasset",
+        "bytes": 110783,
+        "sha256": "470f6b7927a6ec5586fc93015244909d77063e39d9ebb6837da9555fce8d11e4"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00.uexp",
+        "bytes": 1032667,
+        "sha256": "e517f88051b39395c13fc39c6df405849fc834a6764e8356001090a49fb0247d"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 62,
+          "NiagaraDataInterfaceCurve": 185,
+          "NiagaraDataInterfaceVector2DCurve": 15,
+          "NiagaraDataInterfaceVectorCurve": 29,
+          "NiagaraDataInterfaceVectorField": 33,
+          "NiagaraEmitter": 20,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 4,
+          "NiagaraScript": 45,
+          "NiagaraSpriteRendererProperties": 15,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 410,
+        "importCount": 76
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MasterMaterial/M_Explosion_00_Inst_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/MI_wind_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/M_ef_Sen_hf_1",
+        "/Game/Strash/VFX/Material/MaterialInstance/Crack/MI_Crack_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPU_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF0",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF400",
+        "/Game/Strash/VFX/Material/MaterialInstance/Rock/MI_Rock_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Rock/MI_Rock_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Shock/MI_Shock_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_sy_01",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 19,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Io/NPS_Io_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00.uasset",
+        "bytes": 148312,
+        "sha256": "34163b044adf216e48c5326d950931a8f313843511f18a4794d7a0b078769f8e"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00.uexp",
+        "bytes": 1413276,
+        "sha256": "7a1827bdef38fb6ac95be36ebda05cd5803dd7cf0ba13c4e8591632b1c6a7937"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 89,
+          "NiagaraDataInterfaceCurve": 241,
+          "NiagaraDataInterfaceVector2DCurve": 18,
+          "NiagaraDataInterfaceVectorCurve": 30,
+          "NiagaraDataInterfaceVectorField": 18,
+          "NiagaraEmitter": 30,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 9,
+          "NiagaraScript": 67,
+          "NiagaraSpriteRendererProperties": 20,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 524,
+        "importCount": 102
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MasterMaterial/M_Explosion_00_Inst_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/MI_wind_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/M_ef_Sen_hf_1",
+        "/Game/Strash/VFX/Material/MaterialInstance/Crack/MI_Crack_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Fire_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_Core_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPU_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowSoft_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF0",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF400",
+        "/Game/Strash/VFX/Material/MaterialInstance/Refraction/MI_Common_Refraction_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Rock/MI_Rock_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Rock/MI_Rock_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Shock/MI_Shock_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Spike_tk_4",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_kh_15",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_WindRing_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 32,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Iora/NPS_Iora_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00.uasset",
+        "bytes": 14763,
+        "sha256": "00c8e42b941f4f438a9beda4f9890829b1981a29d0ffceffbc002886c2039281"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00.uexp",
+        "bytes": 54213,
+        "sha256": "51a6c3edeedc079bacbf8eb3fbe948c98c3f44aafcf09797b5f19c60b286a27a"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceCurve": 3,
+          "NiagaraDataInterfaceVector2DCurve": 2,
+          "NiagaraDataInterfaceVectorCurve": 6,
+          "NiagaraEmitter": 1,
+          "NiagaraMeshRendererProperties": 1,
+          "NiagaraScript": 4,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 18,
+        "importCount": 33
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_kh_96",
+        "/Game/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02"
+      ],
+      "dependencyCount": 2,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Mera/NPS_Mera_FireTrail_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00.uasset",
+        "bytes": 14793,
+        "sha256": "62a7c0e340ba35da150e38351142197b702557e90e3a9e4abda22f86223c6da9"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00.uexp",
+        "bytes": 54213,
+        "sha256": "51a6c3edeedc079bacbf8eb3fbe948c98c3f44aafcf09797b5f19c60b286a27a"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceCurve": 3,
+          "NiagaraDataInterfaceVector2DCurve": 2,
+          "NiagaraDataInterfaceVectorCurve": 6,
+          "NiagaraEmitter": 1,
+          "NiagaraMeshRendererProperties": 1,
+          "NiagaraScript": 4,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 18,
+        "importCount": 33
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_kh_97",
+        "/Game/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02"
+      ],
+      "dependencyCount": 2,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_FireTrail_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2.uasset",
+        "bytes": 103627,
+        "sha256": "f746b3006c6565f2ea81b384a90bd9a4b6d25c0bf28b049ed42854c37b294582"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2.uexp",
+        "bytes": 1015138,
+        "sha256": "9ffad9ed84f8b90e0c2ddb02858c9e61975589c8787782c346937c0d292909af"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 61,
+          "NiagaraDataInterfaceCurve": 156,
+          "NiagaraDataInterfaceVector2DCurve": 46,
+          "NiagaraDataInterfaceVectorCurve": 35,
+          "NiagaraDataInterfaceVectorField": 33,
+          "NiagaraEmitter": 17,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 5,
+          "NiagaraScript": 44,
+          "NiagaraSpriteRendererProperties": 11,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 410,
+        "importCount": 70
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_ny_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_ny_05",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_ts_08",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flare_ny_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple_3",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_Piller_Core_kh_09",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_Piller_Core_kh_11",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_Piller_Core_kh_13",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Aura_ny_06",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Fire_ny_05",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Spike_ny_03",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01",
+        "/Game/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 16,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Landing_2",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle.uasset",
+        "bytes": 52399,
+        "sha256": "07a5cc8050431fffd87226a943318eca253f62f3fc061b44a3db96d365ec77b7"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle.uexp",
+        "bytes": 455090,
+        "sha256": "e97d8277277c7cfe08de6872f4e8f10ad6c3017f4fed6b70f138e3dd0434bfbc"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 21,
+          "NiagaraDataInterfaceCurve": 89,
+          "NiagaraDataInterfaceVector2DCurve": 18,
+          "NiagaraDataInterfaceVectorCurve": 7,
+          "NiagaraDataInterfaceVectorField": 22,
+          "NiagaraEmitter": 7,
+          "NiagaraMeshRendererProperties": 1,
+          "NiagaraScript": 20,
+          "NiagaraSpriteRendererProperties": 6,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 192,
+        "importCount": 54
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Mera_ts_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Mera_ts_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple_3",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF400",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Aura_ny_08",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Spike_tk_3",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_Wind_ny_01",
+        "/Game/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 9,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_Muzzle",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core.uasset",
+        "bytes": 54629,
+        "sha256": "c2af1b7ac274d92e30e3e9aa98b3a49c5bf208e0d414485a0d1a868811305d13"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core.uexp",
+        "bytes": 464447,
+        "sha256": "b80b71fd63c7e4d37a8fa6b6e0d128426811e045b09050a3317a1f0f3120330b"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 16,
+          "NiagaraDataInterfaceCurve": 86,
+          "NiagaraDataInterfaceVector2DCurve": 10,
+          "NiagaraDataInterfaceVectorCurve": 5,
+          "NiagaraDataInterfaceVectorField": 11,
+          "NiagaraEmitter": 10,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 5,
+          "NiagaraScript": 24,
+          "NiagaraSpriteRendererProperties": 4,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 173,
+        "importCount": 64
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_kh_32",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_ts_14",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Fire_ts_18",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Mera_ts_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Fire/MI_Mera_ts_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple_3",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF400",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_Gradation_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Aura_ny_08",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 13,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Merami/NPS_Merami_core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core.uasset",
+        "bytes": 28945,
+        "sha256": "1b3eb8a57fa85e18f7644b41c419fc9e66668454883bca414af1d8b9d000ac9f"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core.uexp",
+        "bytes": 184340,
+        "sha256": "4d0a21dfd4b1f0957b2e69bcde4d1b670946506d05272e52297538f4d1999937"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceCamera": 4,
+          "NiagaraDataInterfaceColorCurve": 11,
+          "NiagaraDataInterfaceCurve": 47,
+          "NiagaraDataInterfaceVectorCurve": 3,
+          "NiagaraEmitter": 3,
+          "NiagaraMeshRendererProperties": 1,
+          "NiagaraScript": 9,
+          "NiagaraSpriteRendererProperties": 2,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 81,
+        "importCount": 42
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Light_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowDF200",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_kh_14",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00"
+      ],
+      "dependencyCount": 4,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Common/Spel/Raidein/NPS_Raidein_Charge_Core",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00.uasset",
+        "bytes": 160193,
+        "sha256": "4c42addec1bb105723b6e2acd259d7ebf56372cf757c9ff5dd271e711416f42a"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00.uexp",
+        "bytes": 1492978,
+        "sha256": "cd566c6af685909b254cdb8a6f4678471ec42e251330d59131b8f1703f054430"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 91,
+          "NiagaraDataInterfaceCurve": 280,
+          "NiagaraDataInterfaceVector2DCurve": 18,
+          "NiagaraDataInterfaceVectorCurve": 36,
+          "NiagaraDataInterfaceVectorField": 15,
+          "NiagaraEmitter": 31,
+          "NiagaraMeshRendererProperties": 11,
+          "NiagaraScript": 69,
+          "NiagaraSpriteRendererProperties": 20,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 572,
+        "importCount": 100
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MasterMaterial/M_Explosion_00_Inst_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/MI_wind_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/M_ef_Sen_hf_1",
+        "/Game/Strash/VFX/Material/MaterialInstance/Crack/MI_Crack_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Closs_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flare_ny_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_Core_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_Core_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_Core_sy_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_sy_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPU_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowSoft_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowSoft_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF0",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF400",
+        "/Game/Strash/VFX/Material/MaterialInstance/Rock/MI_Rock_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Rock/MI_Rock_tk_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Spike_sy_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_kh_15",
+        "/Game/Strash/VFX/Material/MaterialInstance/Thunder/MI_Thunder_sy_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_WindRing_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_WindRing_sy_01",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1",
+        "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 32,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Enemy_Boss/EN650/ionazun/NPS_Ionazun_Explosive_00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing.uasset",
+        "bytes": 205140,
+        "sha256": "78c7faee9cb485c194618821b31c5e3e457029fe53e51f18e50971e8fb4f7f49"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing.uexp",
+        "bytes": 1883609,
+        "sha256": "48f988f2299cb8d023c42ccba0eb9fbd8209e7daa36c4421df0ebbc63a01624f"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceCamera": 4,
+          "NiagaraDataInterfaceColorCurve": 147,
+          "NiagaraDataInterfaceCurve": 521,
+          "NiagaraDataInterfaceVector2DCurve": 8,
+          "NiagaraDataInterfaceVectorCurve": 9,
+          "NiagaraDataInterfaceVectorField": 106,
+          "NiagaraEmitter": 31,
+          "NiagaraLightRendererProperties": 1,
+          "NiagaraMeshRendererProperties": 14,
+          "NiagaraScript": 78,
+          "NiagaraSpriteRendererProperties": 16,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 936,
+        "importCount": 92
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/CommonAttacks/MI_wind_sy_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Flash_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Kira_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GPUSimple_2",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF0",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_DF400",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_03",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_Ice_kh_05",
+        "/Game/Strash/VFX/Material/MaterialInstance/Ice/MI_ef_IceFloor_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Shock/MI_ShockWave_kt_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_09",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_10",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_12",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_ef_Smoke_at_07",
+        "/Game/Strash/VFX/Material/MaterialInstance/Spike/MI_Spike_tk_1",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_Mist_kh_01",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+        "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06",
+        "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 26,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Landing",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+      "kind": "niagara-system",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle.uasset",
+        "bytes": 60349,
+        "sha256": "3ccce7b1c9b1abd1e7f1f90be3cf769154d034b9108fefefaa685722f2d46d03"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle.uexp",
+        "bytes": 491725,
+        "sha256": "0960d023f1f0f2672edb9a48abfe9b8889ca93081f7fcde088cec51e5c102a03"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "NiagaraDataInterfaceColorCurve": 28,
+          "NiagaraDataInterfaceCurve": 93,
+          "NiagaraDataInterfaceVectorCurve": 14,
+          "NiagaraDataInterfaceVectorField": 22,
+          "NiagaraEmitter": 10,
+          "NiagaraMeshRendererProperties": 3,
+          "NiagaraScript": 24,
+          "NiagaraSpriteRendererProperties": 7,
+          "NiagaraSystem": 1
+        },
+        "exportCount": 202,
+        "importCount": 62
+      },
+      "nonScriptPackageDependencies": [
+        "/Game/Strash/VFX/Material/MaterialInstance/Aura/MI_Aura_kh_37",
+        "/Game/Strash/VFX/Material/MaterialInstance/Flash/MI_Kira_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowSoft_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_GlowSoft_DF_00",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Glow_kh_04",
+        "/Game/Strash/VFX/Material/MaterialInstance/Glow/MI_Line_kh_02",
+        "/Game/Strash/VFX/Material/MaterialInstance/Shock/MI_Shockwave_kh_01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Simple/MI_RingBurst_kh01",
+        "/Game/Strash/VFX/Material/MaterialInstance/Smoke/MI_Smoke_kh_11",
+        "/Game/Strash/VFX/Material/MaterialInstance/Wind/MI_air_kh_02",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00",
+        "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01",
+        "/Niagara/VectorFields/Assets/TilingCurl32"
+      ],
+      "dependencyCount": 14,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/NPS/Player/PN030/Special01/NPS_PN030_Special01_Muzzle",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/Post/Curve/CV_Black00",
+      "kind": "curve-float-support-component",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/Post/Curve/CV_Black00.uasset",
+        "bytes": 720,
+        "sha256": "04f5d9a30f1837a6a092a1831e25a7c85a5a72a8fc20753e3d5fd47bb4da5c78"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/Post/Curve/CV_Black00.uexp",
+        "bytes": 267,
+        "sha256": "2c69491630e0f1d6ed40ce4d32e7b8d05b343c880bfaf5f6f0908d32d35420c4"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "CurveFloat": 1
+        },
+        "exportCount": 1,
+        "importCount": 3
+      },
+      "nonScriptPackageDependencies": [],
+      "dependencyCount": 0,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/Curve/CV_Black00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/Curve/CV_Black00",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/Post/Curve/CV_Black01",
+      "kind": "curve-float-support-component",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/Post/Curve/CV_Black01.uasset",
+        "bytes": 720,
+        "sha256": "9ebdb2b41bccfdec946ce7e9693e89748527215efe364f4cc279bc81c30c33e8"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/Post/Curve/CV_Black01.uexp",
+        "bytes": 267,
+        "sha256": "f4ccc527728545d99d9edcddf6b502e073b0f53caa0d6232cc70fe7b2b1ec26a"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "CurveFloat": 1
+        },
+        "exportCount": 1,
+        "importCount": 3
+      },
+      "nonScriptPackageDependencies": [],
+      "dependencyCount": 0,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/Curve/CV_Black01",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/Curve/CV_Black01",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    },
+    {
+      "reference": "/Game/Strash/VFX/Post/MPC_VFXPost",
+      "kind": "material-parameter-collection-support-component",
+      "directPackageState": "acquired-byte-verified-ue426-table-validated",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/Post/MPC_VFXPost.uasset",
+        "bytes": 1561,
+        "sha256": "f02bd349287e2551508a12404201c58eb4baa931ba1a05750fe805a56fb0bba0"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-direct-packages-v1/raw/strash/Content/Strash/VFX/Post/MPC_VFXPost.uexp",
+        "bytes": 4501,
+        "sha256": "af2622b8996afd5d6f4731463a795ded3c893794f778afc94e1eb29f59a2c611"
+      },
+      "structuralAnalysis": {
+        "exportClassCounts": {
+          "MaterialParameterCollection": 1
+        },
+        "exportCount": 1,
+        "importCount": 3
+      },
+      "nonScriptPackageDependencies": [],
+      "dependencyCount": 0,
+      "dependencyPairsPresentInBoundedExtract": 0,
+      "conversion": {
+        "status": "dependency-closure-acquired-conversion-blocked",
+        "runtimeSelectable": false,
+        "visualAcceptance": false,
+        "preservedUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/MPC_VFXPost",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "preservedClosureUmodelProbe": {
+          "reference": "/Game/Strash/VFX/Post/MPC_VFXPost",
+          "returnCode": 0,
+          "reportedExportedObjects": 0,
+          "reportedExportableObjects": 0,
+          "producedFiles": [],
+          "result": "no-exportable-output"
+        },
+        "blockers": [
+          "The recursively acquired dependency closure is complete at the non-script package-reference table level, but acquisition is not conversion.",
+          "The preserved patched UModel probe still produced zero converted files for this package when run against the closure-backed extract.",
+          "This delivery supplies no deterministic Unreal Niagara-to-GGD conversion output or accepted rendered playback."
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "reference": "/Game/Developers/_old_Cinematics/Player/PN020/LS_PN020_00_B_Skl01/LS_PN020_00_B_Skl01_Master",
+      "kind": "level-sequence",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Developers/_old_Cinematics/Player/PN020/LS_PN020_00_B_Skl01/LS_PN020_00_B_Skl01_Master.uasset",
+        "bytes": 7485,
+        "sha256": "95244df141107ee90603a0c5026cf6135de0abb1e98a523d53cdd933d511567b"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Developers/_old_Cinematics/Player/PN020/LS_PN020_00_B_Skl01/LS_PN020_00_B_Skl01_Master.uexp",
+        "bytes": 32441,
+        "sha256": "8f23fd3f96812dcc6de31e588bb33932a626c6c0f3a2d9207f51c9245af0bc45"
+      },
+      "resolution": "raw-reference-acquired-event-timing-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk01.uasset",
+        "bytes": 7416,
+        "sha256": "ab44b19569ff666b4247326d5f60844b236bf973c329eac2d4e1142c19396d43"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk01.uexp",
+        "bytes": 19300,
+        "sha256": "37c6918d12c95675f81e2b76f198ed685a5c516a975505d5e3c241a0f3031c60"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk02",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk02.uasset",
+        "bytes": 9429,
+        "sha256": "9262f856a43b4aaed6f45c0c3d7fa971ea43ffb5a1bbae044601da6232d455c3"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk02.uexp",
+        "bytes": 29746,
+        "sha256": "af679a652420cdda567f792b230c3abc96522647001d44fca7d3d224bd4176cb"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk03",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk03.uasset",
+        "bytes": 8102,
+        "sha256": "f79208e66881e7ac4908ed44f6a7cf14b86299fa7a810d9de8949fd9e854f925"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Atk03.uexp",
+        "bytes": 19366,
+        "sha256": "9875924e279256d5e33630510592f7743a4892f1871ccafe96fe8dcf8bf22269"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge.uasset",
+        "bytes": 4541,
+        "sha256": "4e92af5f02a77b469f999940dbd7658a21d42bab4c312ce4ac9649db9ad6641c"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge.uexp",
+        "bytes": 6388,
+        "sha256": "025c359e5f74e0115c52d7184e66593f2d072f11ad570bde1bbb75bf7e123bf9"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge2",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge2.uasset",
+        "bytes": 5302,
+        "sha256": "ca9eec9cda4c93ce56cfe331e2d35061790d2c46aa56334753efc0e6fa2d90be"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Charge2.uexp",
+        "bytes": 9872,
+        "sha256": "3050e41286235671169215d46780f32803d6c0d19477b78ac89563da618e9429"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_B",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_B.uasset",
+        "bytes": 8365,
+        "sha256": "d88cf1f5e925cffcf370757c49ab92b3a678884c48f8fbbd22e7a7a22f4a30e2"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_B.uexp",
+        "bytes": 22762,
+        "sha256": "25d33285adf9e7ede0983fe04e7902c5ae85c6541975d3551d67690aa9c4aa53"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_F",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_F.uasset",
+        "bytes": 8653,
+        "sha256": "417689905d4eba4c542a49051790f231438a6471d551c4056b215e5431a6c086"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Dodge01_F.uexp",
+        "bytes": 24015,
+        "sha256": "dddf06e5a2e1130ce93a222399ba4973288b67c6c64dfc606fab5d13bc61f68b"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Entry01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Entry01.uasset",
+        "bytes": 3591,
+        "sha256": "69c126b2f0b7a07c5f81107816d8676c2a25caa4cd9e51fcbc732fd4629b8482"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Entry01.uexp",
+        "bytes": 4500,
+        "sha256": "2ecf7cb34454dfd1c87eeed579983fe9a2d2e210c7cacb3d520862f047c2e6a9"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ExtraAtk01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ExtraAtk01.uasset",
+        "bytes": 7699,
+        "sha256": "cabc27ada3424aa3ce37f9a84bb57a2bb6deda8167c74a45087542039ff33ba1"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ExtraAtk01.uexp",
+        "bytes": 21846,
+        "sha256": "063aedc7293b8b3104bce638ffd0f9918e2e0dbd5be43cb20baae29599c88c00"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01.uasset",
+        "bytes": 6734,
+        "sha256": "2fba8ab72ebd76dbad0d9d363d96c7eefabbf39689078d7bac1c9a2828819980"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01.uexp",
+        "bytes": 15905,
+        "sha256": "c955b18dcbeccb3f8e9552cf1cd010fed4f46177e25363a4d72cd0aa44e92af3"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01_Blink",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01_Blink.uasset",
+        "bytes": 1903,
+        "sha256": "800e9b898caa743a470513ead6b4564f7e46526f4c5b8a631ceee8a0265b5bf4"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Guard01_Blink.uexp",
+        "bytes": 1196,
+        "sha256": "e9d5208c79466e686bbdc781eb531e8eea466ef5fd40e2b0dfbb275b45182613"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ItemUse",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ItemUse.uasset",
+        "bytes": 4367,
+        "sha256": "37209198e418ad48a85fbd04298eb45f069203f4e22ab2c838ec9b714a94567b"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_ItemUse.uexp",
+        "bytes": 7807,
+        "sha256": "a2c92c418f72956808843d7d87566249c8aa92773678c9de15680a7c6e62be0b"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Kugutsu",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Kugutsu.uasset",
+        "bytes": 3270,
+        "sha256": "6264f69a2e29df83c746652eb03bf1dbd6792eb19b7d255f861ccfa2bb30cc38"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Kugutsu.uexp",
+        "bytes": 2904,
+        "sha256": "843ffac406173d814770082460fab6421c62d8adef882146e867d8ce905dd574"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Mistake01_Idle_01_Lp",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Mistake01_Idle_01_Lp.uasset",
+        "bytes": 3747,
+        "sha256": "7d25d44e1682a42ed89cff90ef6a879be3f44fce6f8c054818de2fe89031f16e"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Mistake01_Idle_01_Lp.uexp",
+        "bytes": 4130,
+        "sha256": "ed8c4fff0de7d5579b5abcb8a36fb990144eccbb7454cfe75c59fa2d8910f5ad"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Paralyze",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Paralyze.uasset",
+        "bytes": 3573,
+        "sha256": "c15a658cb2ed997dea5454887db946ec7b9148e7ff19e8de6b4dac23be5cf2f8"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Paralyze.uexp",
+        "bytes": 4034,
+        "sha256": "167b7367d9e2ae4775b7c9fab7fcc31932dfe6fb99fdc772b5994c4443f424de"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Skl01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Skl01.uasset",
+        "bytes": 5586,
+        "sha256": "d831b317f78305b5d06220d9833e9c252e850ee64fe07a3748d2162e09fe84c3"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Skl01.uexp",
+        "bytes": 12269,
+        "sha256": "b813fa6abba3bd604cc027acbe9857db5d0914620a229540975bf4c1e43e56b6"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Begirama",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Begirama.uasset",
+        "bytes": 5656,
+        "sha256": "853f9f380c9db7c20a0ba3432b495198b00b8a127115ac1d6caac26f2bced700"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Begirama.uexp",
+        "bytes": 12356,
+        "sha256": "54a555ba944e4c7bb06b14f768cac79a39823fb132d5ec4f01f19c075df3fd08"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizz",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizz.uasset",
+        "bytes": 1355,
+        "sha256": "2ff5e25b2f44de73aefbf6d6f05336f815a5a44fa119832240776f1de3329ee7"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizz.uexp",
+        "bytes": 543,
+        "sha256": "c9f86a3095ad024920948a134787d0830abb52d050b1cd750726728ad7e79104"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizzle",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizzle.uasset",
+        "bytes": 4385,
+        "sha256": "43cb0d812a73cd39f3b02bb0cd91793a2e2ed7dd550c1e25262d577e8d7ef360"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Frizzle.uexp",
+        "bytes": 9499,
+        "sha256": "2622817540fe382f830c24f3dadca7d03fe8998138a7dbcbcc66d21208ae686d"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Kafrizzle",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Kafrizzle.uasset",
+        "bytes": 1363,
+        "sha256": "8e520221a77c756fd1f9508559bd9798c10bdbbb828bf42d53c134263ac5f8d6"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_SpellTest_Kafrizzle.uexp",
+        "bytes": 543,
+        "sha256": "c9f86a3095ad024920948a134787d0830abb52d050b1cd750726728ad7e79104"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01.uasset",
+        "bytes": 6725,
+        "sha256": "51f9931387adda3fd46773f54f5b86bd7c08ba7963e4104d2422fe8685ee2552"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01.uexp",
+        "bytes": 14890,
+        "sha256": "daafe819f22a76eb340abee4e03392193f6bc6b3edf0bba9af4c27434f3f792e"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl10",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl10.uasset",
+        "bytes": 6897,
+        "sha256": "10a4ed338234099087618304596ac9ce7af441ff5987c57f475619ed0aeb39d1"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl10.uexp",
+        "bytes": 17239,
+        "sha256": "4d806843257867653621b252fe8074063e73173b79cad4236813582ef202cbfa"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01.uasset",
+        "bytes": 3243,
+        "sha256": "7b91e41abb26fdd55cfb4f665a6f6236b9b3ced187b12c15835378fd604bc549"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01.uexp",
+        "bytes": 2818,
+        "sha256": "555e0ef0101153cd97f8cf612459725b79adc04ee25350d9beb64bdb5386e8ba"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01_Idle_01_Lp",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01_Idle_01_Lp.uasset",
+        "bytes": 3071,
+        "sha256": "d3a074f9a35f3a64e4de7a4c31f3b0b494be7ed65d460ea5e03b898e9f7b01f0"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Victory01_Idle_01_Lp.uexp",
+        "bytes": 2240,
+        "sha256": "8344a28ed7eb05907f3dddaa9e44bb7788343153c233e11ca20303659c6670f7"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_00_EX_ExitQuest01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_EX_ExitQuest01.uasset",
+        "bytes": 3830,
+        "sha256": "730ed81e46055eac8dc850391148973f4ab53163a71fd72320db91fdd2ebe734"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_00_EX_ExitQuest01.uexp",
+        "bytes": 5543,
+        "sha256": "68b61676adff4df3d381bab9581f4f8003a4754dd924c5f08afc340d32ee1c61"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AM_PN020_1003_01",
+      "kind": "anim-montage",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_1003_01.uasset",
+        "bytes": 2762,
+        "sha256": "4997344f9cccb60cee3a47ff5d6e6a14d11c771571d831a937f591b1c2c340b8"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AM_PN020_1003_01.uexp",
+        "bytes": 2244,
+        "sha256": "6588d91a2ccf8016d12250f787008b347f8865183dc3b809b25bd54538faa6fb"
+      },
+      "resolution": "raw-montage-acquired-montage-sections-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl02",
+      "kind": "anim-sequence",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl02.uasset",
+        "bytes": 3594,
+        "sha256": "fb6a05d9ac35bc67ad3dfd3929641ad5d2a5f282dbf80528ce13de96eeeb2a18"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl02.uexp",
+        "bytes": 68128,
+        "sha256": "620c13542bb97292b3c795cc15245dd83ecb856e6248cd9cac20a1386c1ee369"
+      },
+      "resolution": "raw-sequence-acquired-animation-and-notify-timing-not-exported-in-this-lane",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Chara/Player/PN020/SK_PN020_Skeleton",
+      "kind": "skeleton",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/SK_PN020_Skeleton.uasset",
+        "bytes": 11367,
+        "sha256": "266a21250725ac1e5d96b5e1eb11f45ac6f349ddef5f98dfa1446dfb2943baf8"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Chara/Player/PN020/SK_PN020_Skeleton.uexp",
+        "bytes": 41589,
+        "sha256": "8fd1b8373ec913f5b69f510abd0d4372cdad778c9b9624ebdcee770272aaa5d7"
+      },
+      "resolution": "raw-reference-acquired-event-timing-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special01/LS_PN020_00_B_Special01_Master",
+      "kind": "level-sequence",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special01/LS_PN020_00_B_Special01_Master.uasset",
+        "bytes": 11739,
+        "sha256": "6a3f765d9d2f0db3091ad496900209cc4dd5dd8ad6edef7c5f86e6db96e5f7b1"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special01/LS_PN020_00_B_Special01_Master.uexp",
+        "bytes": 45690,
+        "sha256": "3663a3ebc14fda07c235563670b3a7f9936eb1ad900789f33fd92d17ed14f08f"
+      },
+      "resolution": "raw-reference-acquired-event-timing-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special02/LS_PN020_00_B_Special02_Master",
+      "kind": "level-sequence",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special02/LS_PN020_00_B_Special02_Master.uasset",
+        "bytes": 11739,
+        "sha256": "2e293309aadebea7d609a2b1d4da2b899c1fdd501ae923e8eaa167e04c12a235"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special02/LS_PN020_00_B_Special02_Master.uexp",
+        "bytes": 62229,
+        "sha256": "1650070513b19920d5852452c724338c8ae85a7d00f88270145325d4f8330dba"
+      },
+      "resolution": "raw-reference-acquired-event-timing-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special03_01/LS_PN020_00_B_Special03_01Master",
+      "kind": "level-sequence",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special03_01/LS_PN020_00_B_Special03_01Master.uasset",
+        "bytes": 11806,
+        "sha256": "0933b4ce8a24bbb9e6b20f04a29e5f465e2364999f0703e8472304373dad53eb"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/Strash/Cinematics/Player/PN020/LS_PN020_00_B_Special03_01/LS_PN020_00_B_Special03_01Master.uexp",
+        "bytes": 58812,
+        "sha256": "dcff83b5a99883f07c75f35f4d416b74b61c2b8867155d25fdaec9c2c0d92209"
+      },
+      "resolution": "raw-reference-acquired-event-timing-not-decoded",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge.uasset",
+        "bytes": 1629,
+        "sha256": "82097760b983557ecf170c01ddc4d55391f3e5da1efd43d5fc7e9e4a77b64175"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge.uexp",
+        "bytes": 706,
+        "sha256": "306e9bab0fe6ac7d9fb284b4c994ebf16fcbc088065e7e6317192181790a18b7"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-f06f9b82e629c1c6012f",
+        "popp-9c850e95b505ee8cc5b2"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2.uasset",
+        "bytes": 1631,
+        "sha256": "6df6766acd8fecdeecae5cdb773456855347491ce09ad85497f1e01688d2018f"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Play_SE_PN020_Charge2.uexp",
+        "bytes": 711,
+        "sha256": "22750d1f3a75be23627717751f9ceb40e71a2da5f9f9956108216bbea81026d5"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-29b51c11b1fa959615e4",
+        "popp-c5d2ff7a566cbdb8b138"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Stop_SE_PN020_Charge",
+      "kind": "wwise-stop-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Stop_SE_PN020_Charge.uasset",
+        "bytes": 1239,
+        "sha256": "09f357fd06d1f727a1fca05e853560508265684311c312c2705716595069b160"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_EFX/Stop_SE_PN020_Charge.uexp",
+        "bytes": 265,
+        "sha256": "9200376192c7c00e57bf6935e28e51c3eb7a8bf0218a56a08a32b85026157d98"
+      },
+      "resolution": "control-event-acquired-no-audio-payload-expected",
+      "resolvedAudioCandidateIds": [],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run.uasset",
+        "bytes": 2001,
+        "sha256": "626cc33873a6b55511b1a7ac7a65dcb79d0e06ac7251e33a0da8f2e649781f79"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Run.uexp",
+        "bytes": 979,
+        "sha256": "bb639facb8b92790138ff0b56324b02fd653eb0d72b9866be284c77ac3280464"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-3b0a078b1d5ff8c324ac",
+        "popp-39650cc4c765f2357731",
+        "popp-36adaa26b62133345b12",
+        "popp-76255e68aa42e48a29bd",
+        "popp-5eda5cd42e69ac2c36eb"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk.uasset",
+        "bytes": 1765,
+        "sha256": "98a6972638d79156ddea8b145609c9ce5fb6bd170f8c6dee164fd984632d5c75"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/PL_Work_Unit/PN020_Motion/Play_SE_PN020_Foot_Walk.uexp",
+        "bytes": 841,
+        "sha256": "d6fa08c41f85eaaaa932d325c35fbf58215d165e22780602cca408ef58752fb5"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-96a63b31206ab2d96ef8",
+        "popp-e1ef7a8fbdcc0e940e9d",
+        "popp-8657c163c1fdac6f0a1d"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA.uasset",
+        "bytes": 1326,
+        "sha256": "aa5c886d042ab73993dde920f28f6c65b1bd7aae9b08c7b1e7eafbacbc63be03"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_BEGIRAMA.uexp",
+        "bytes": 147,
+        "sha256": "b313c1a2decae46af8402a2b9bc55c61def19b0ef80954930491f682b6d2d5ef"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-7aeb07c0c7627bd147f2",
+        "popp-9c7dcfb04a1f509173f5",
+        "popp-7a85adf13416af27f8b3",
+        "popp-9535ef4a60ff2c9ed0fd",
+        "popp-f6f318c4761e931b4460",
+        "popp-9bec14e32356c2b20855"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA.uasset",
+        "bytes": 1294,
+        "sha256": "fd7f301162bad5c5416f38601e65590922e1ad000a3879643476103bb93fffbb"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_GIRA.uexp",
+        "bytes": 147,
+        "sha256": "1b10d0263157d77857001ab074227d897ce41886149ccff7f41b74b55c77cd8d"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-f8291c098176077330d4",
+        "popp-45e9837c9bd7a7383cb4",
+        "popp-765c67b012a46c77d699",
+        "popp-3524b05b6fd6e7b0fc7a",
+        "popp-b2bec339fe432028a48d",
+        "popp-6910d2643d36115f9e23"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO.uasset",
+        "bytes": 1278,
+        "sha256": "5efcc06780aeb37565882ffc84d6089d3987dbbc981fabda27b2f69778696c5a"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IO.uexp",
+        "bytes": 147,
+        "sha256": "f338cf4985dcebd167b06a52bed2250b8e448168b93e0602f10b7032d9a80da5"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-123b37418446cfbffaa2",
+        "popp-0e8e5f4a37128ca0b104",
+        "popp-44a53a904012271e241a",
+        "popp-37f8049ebd4f8f16db6e",
+        "popp-e8119de6e475315f32b0",
+        "popp-64ea6a3380c6fac1b6ff"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    },
+    {
+      "reference": "/Game/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA",
+      "kind": "wwise-play-event",
+      "packageState": "acquired-byte-verified",
+      "uasset": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA.uasset",
+        "bytes": 1294,
+        "sha256": "a078190d2f0fe72535b2f5643a3fb3b028b7f8834949827b4819946c92b948ae"
+      },
+      "uexp": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/raw/strash/Content/WwiseAudio/Events/Voice_Work_Unit/VO_PN020/Play_VO_ING_PN020_Skill_IORA.uexp",
+        "bytes": 147,
+        "sha256": "b03968d31748d73fc3422629a50597c9e47bd90aa6270250e7278a5b08bc6ed6"
+      },
+      "resolution": "decoded-audio-candidates-ready-listening-approval-required",
+      "resolvedAudioCandidateIds": [
+        "popp-6b9e73e83dbc49ea39f0",
+        "popp-9288d586eb28f509f595",
+        "popp-1f93fe06eba3d1c1af42",
+        "popp-dc483e83b48576fa43f5",
+        "popp-bed95cf7aa900c724dd4",
+        "popp-5898b919a7896629ba08"
+      ],
+      "runtimeBinding": null,
+      "runtimeSelectable": false
+    }
+  ],
+  "additionalExternalDependencies": {
+    "references": [
+      "/Game/Developers/_old/P004/Animations/AM_P004_Sleep_Test",
+      "/Game/Strash/Battle/Projectile/BP_StrashProjectile_ScriptRoot",
+      "/Game/Strash/Chara/Common/CameraShake/StrashCamShake_Common",
+      "/Game/Strash/Chara/Common/CameraShake/StrashCamShake_CommonNOPE",
+      "/Game/Strash/Chara/Common/Notify/AnimNotify_Footsteps",
+      "/Game/Strash/Chara/Common/Vibration/FF_Battle_Common_M_01",
+      "/Game/Strash/Chara/Common/Vibration/FF_Battle_Common_S_02",
+      "/Game/Strash/Sound/SE/200041_RengokuGiri_Cue",
+      "/Game/Strash/UI/Decal/MI_DamageDecalCircle002E",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Hyad_02",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Hyad_02_Hit",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Imposition_01",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_01",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_01_hit",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_02",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Mera_02",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Mera_02_Hit",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_Magic_Imposition_fire_01",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_Magic_Imposition_fire_02"
+    ],
+    "supportingGenericSfxReferences": [
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Hyad_02",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Hyad_02_Hit",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Imposition_01",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_01",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_01_hit",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Io_02",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Mera_02",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_EFCT_MG_Mera_02_Hit",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_Magic_Imposition_fire_01",
+      "/Game/WwiseAudio/Events/EFCT_Work_Unit/EFCT_Magic/Play_SE_Magic_Imposition_fire_02"
+    ],
+    "state": "retained-reference-only-not-part-of-the-41-pn020-direct-event-audit"
+  },
+  "runtimeSelectable": false,
+  "productionDeployed": false
+}

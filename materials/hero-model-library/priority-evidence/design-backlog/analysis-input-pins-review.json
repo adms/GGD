@@ -1,0 +1,53 @@
+{
+  "schema": "ggd-analysis-two-stage-pins-review@1",
+  "fixtureRoot": "/private/tmp/ggd-analysis-pin-fixture-j0yedgg1",
+  "scope": "One synthetic ability/template/champion, stub schema/resolver; actual snapshot code and Python verification functions. Full 907-ability run delegated to root.",
+  "runtime": "node --import repo/node_modules/tsx/dist/loader.mjs; tsx CLI IPC is unavailable in sandbox",
+  "tests": [
+    {
+      "case": "Node small-fixture analysis emits verified pre-parse pins",
+      "passed": true,
+      "inputFiles": 10
+    },
+    {
+      "case": "Python start accepts same Node snapshot",
+      "passed": true
+    },
+    {
+      "case": "template changed between Node and Python",
+      "passed": true,
+      "error": "Analysis inputs changed template changed between Node and Python; rerun Node analysis: content/ability-templates/fixture.json"
+    },
+    {
+      "case": "new ability changes input membership",
+      "passed": true,
+      "error": "Analysis input file membership changed new ability changes input membership; rerun Node analysis."
+    },
+    {
+      "case": "schema changed before Python finish",
+      "passed": true,
+      "error": "Analysis inputs changed schema changed before Python finish; rerun Node analysis: packages/shared/src/content/schema/ability.ts"
+    },
+    {
+      "case": "unversioned analysis without pins rejected",
+      "passed": true,
+      "error": "Node analysis must include verified inputFiles and inputScopes; rerun analyze_abilities.mts."
+    },
+    {
+      "case": "Node refuses output when resolver mutates template during analysis",
+      "passed": true,
+      "exitCode": 1
+    }
+  ],
+  "allPassed": true,
+  "files": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/analyze_abilities.mts",
+      "sha256": "0712ceec40b039d452fe09a369ece96488e5ef0b9e37020a57221b8613be32b9"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/hero-model-library/design-backlog/audit_design.py",
+      "sha256": "a4bfe085487078dc14230ccdfeb3c973bd2c017620f1765844317294553d48b2"
+    }
+  ]
+}

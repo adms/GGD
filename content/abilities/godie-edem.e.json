@@ -8,18 +8,18 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
-    150,
-    150,
-    150,
-    150
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
-  "range": 12,
+  "range": 12.0,
   "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
@@ -42,12 +42,12 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1
+            "coeff": 1.0
           }
         ]
       },
       "length": 12.83,
-      "width": 12,
+      "width": 12.0,
       "aim": "facing",
       "fromCaster": true,
       "includeOrigin": true
@@ -67,11 +67,11 @@
       "soundKey": "wc3.thunderclapcaster",
       "scale": 3.5,
       "tint": [
-        1,
-        0,
-        0
+        1.0,
+        0.0,
+        0.0
       ],
-      "lifeSec": 1
+      "lifeSec": 1.0
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.e.webp",
@@ -85,7 +85,7 @@
   ],
   "cooldownTier": "小",
   "manaCostTier": "小",
+  "castTimeTier": "小",
   "rangeTier": "極大",
-  "castTimeSec": 0.1,
-  "castTimeTier": "小"
+  "castTimeSec": 0.1
 }

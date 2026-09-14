@@ -1,0 +1,81 @@
+{
+  "schema": "ggd.frozen-file-manifest@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-81-handoff-20260911/audio-audit",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2809,
+      "sha256": "845d50c9e10cc42d60273536adc6a8a3bc3b049cfe0fe590f850b034ea95ebe2"
+    },
+    {
+      "path": "audit-main-committed.py",
+      "bytes": 9098,
+      "sha256": "e3f09376deb9e5b02703a21c461b76f161ba34c718a307fd0a7f3944d01f670e"
+    },
+    {
+      "path": "audit.py",
+      "bytes": 18185,
+      "sha256": "1085478e3654cb9ca534205d9760efc1c5189d78d2a2e2f5d2850d347c456933"
+    },
+    {
+      "path": "content-audio-files.json",
+      "bytes": 489433,
+      "sha256": "46d1dae463841136630e5817c993652bcbe03aa3ef33cb05716f226899f9f935"
+    },
+    {
+      "path": "freeze.py",
+      "bytes": 5866,
+      "sha256": "0644e4ccaeedc89d6db5226a46bb0c448b91db8fd49ce736199b8963cc7fdd60"
+    },
+    {
+      "path": "group-audit.json",
+      "bytes": 82306,
+      "sha256": "9da4728a14f00b35b7a4ee243c79fbdab0ee3b79cf01f0c630d95197b77ae6dd"
+    },
+    {
+      "path": "input-index-pins.json",
+      "bytes": 260672,
+      "sha256": "f75abe7e2a73e9f48941598a7ac88816ccacc2b5248c67c5953ded8d301c70ff"
+    },
+    {
+      "path": "main-committed-clip-audit.json",
+      "bytes": 1445898,
+      "sha256": "1d29099324ecfa226a4c09e8ce33143f581173c4051571c2df9e20a151629137"
+    },
+    {
+      "path": "main-committed-index-pins.json",
+      "bytes": 38854,
+      "sha256": "36a42acf1fca75e190f50b3decef4f189ea539cb22daf78b0d9fe1a2a3da9d7a"
+    },
+    {
+      "path": "main-committed-per-hero.json",
+      "bytes": 222133,
+      "sha256": "df5ce259546637dcbe1c2c4a6a12029042e2430c4d99c3aecfd798cf6e86a85d"
+    },
+    {
+      "path": "main-committed-summary.json",
+      "bytes": 1675,
+      "sha256": "2417f2e17837756b7dc62c4df8c1bbcde091ebf08f34bb69769b60f45eaeba8a"
+    },
+    {
+      "path": "main-original-source-index-join.json",
+      "bytes": 292983,
+      "sha256": "4a621661af5bdc97f585394d9b8b653381fbf2cdd8c4549dc1211cc527522fc1"
+    },
+    {
+      "path": "main-original-source-mappings.json",
+      "bytes": 230377,
+      "sha256": "932484dac842908a3f7363656465cb8ac7c11523ba1210ebcf99d312040355a5"
+    },
+    {
+      "path": "per-hero.json",
+      "bytes": 710826,
+      "sha256": "46de857cdbfc465d4c46d2b99771df0648effe089ae8e8f5c2fa73e37b2a47f9"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 4525,
+      "sha256": "307322c97dd84b6f54bc3151e24bc8bbe24f8c9a560739e0bf43d8eb37ca85a7"
+    }
+  ]
+}

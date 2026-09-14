@@ -1,0 +1,82 @@
+{
+  "schema": "ggd.rezero-static-component-validation@1",
+  "candidateId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+  "sourceId": "thunderstore-rezero",
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/final/subaru/body.glb",
+    "bytes": 497032,
+    "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+    "triangles": 8122,
+    "drawPrimitives": 3,
+    "skins": 2,
+    "skinnedPrimitives": 3,
+    "joints": [
+      41,
+      1
+    ],
+    "textures": [
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 49494,
+        "sha256": "97b6980610559d975a3ab55dc6f5a0866d5608d3a7067a59ce6354af0640de7c"
+      }
+    ],
+    "clips": []
+  },
+  "conversionReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1/source-conversion/subaru/conversion.json",
+    "sha256": "96bf24b2b79c64689f0b60b15366a4f03e447aecc527a3cf1a3e1eb364690321"
+  },
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 8122,
+    "drawPrimitives": 3,
+    "skinnedPrimitives": 3,
+    "skinCount": 2,
+    "joints": [
+      41,
+      1
+    ],
+    "textureCount": 1,
+    "textures": [
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 49494,
+        "sha256": "97b6980610559d975a3ab55dc6f5a0866d5608d3a7067a59ce6354af0640de7c"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 10,
+    "valueCount": 70968
+  },
+  "allAccessorBytesPreserved": true,
+  "structuralValidationPassed": true,
+  "visualValidationPassed": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "The 2048px source texture is retained separately; the GGD candidate uses a 256px Lanczos PNG.",
+    "The source bundle contains no AnimationClip objects and the candidate has no clips.",
+    "Subaru's source face renderer stores no bones, bind poses, joint indices or weights; it is preserved as a one-joint rigid skin attached to its own face transform below the native head hierarchy.",
+    "Unity custom shader behavior is represented only by portable base-color PBR material data.",
+    "Hero binding, backend dropdown registration, runtime switching and deployment were not performed."
+  ]
+}

@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+  "modelKey": "version.body.1a27f5b34036e0d626f666116c6b43133f8eebef20c711f1",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-16-20260907.q.webp",
       "template": {
@@ -166,7 +166,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-16-20260907.w.webp",
       "template": {
@@ -232,7 +232,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-16-20260907.e.webp",
       "template": {
@@ -298,7 +298,7 @@
           "duration": 4
         }
       ],
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-16-20260907.r.webp",
       "template": {
@@ -343,5 +343,61 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.aae5cf041595b826b208125edbe113fd30680a79c180eb55",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+      "modelSha256": "f8dde9f224eac04b2b97e4637006a227ffb807239c09412684f4d578f3415bb3",
+      "binarySha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "registeredAt": "2026-09-12T23:02:31.650Z",
+      "source": {
+        "kind": "previous",
+        "character": "魔法少女☆伊莉雅",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.4d7bf1d4a136c363ec2b470c6db1ae20a1c8b9b7e7cd776c",
+      "label": "伊莉雅",
+      "sourceModelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+      "modelSha256": "4ae7311638b906ce2553f989bc88563e41a1f95d434ab16029b93ed2c61ce8b8",
+      "binarySha256": "843b7fb65d1e88eaa8b1f0883d4df417b52715d3312badf1081611c7828edfda",
+      "registeredAt": "2026-09-12T23:02:31.654Z",
+      "source": {
+        "kind": "exact",
+        "character": "伊莉雅",
+        "work": "Fate/kaleid liner 魔法少女☆伊莉雅",
+        "library": "300heroes",
+        "reference": "300heroes:3ec592fda559036e3b71758f",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.1a27f5b34036e0d626f666116c6b43133f8eebef20c711f1",
+      "label": "伊莉雅",
+      "sourceModelKey": "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81",
+      "modelSha256": "44e615d0af91223af212b719bb20161f7f6e7690f9c8b434ffcacfa66431e4b1",
+      "binarySha256": "843b7fb65d1e88eaa8b1f0883d4df417b52715d3312badf1081611c7828edfda",
+      "registeredAt": "2026-09-13T00:08:47.585Z",
+      "source": {
+        "kind": "exact",
+        "character": "伊莉雅",
+        "work": "Fate/kaleid liner 魔法少女☆伊莉雅",
+        "library": "300heroes",
+        "reference": "300heroes:3ec592fda559036e3b71758f",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

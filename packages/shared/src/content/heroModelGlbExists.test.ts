@@ -42,60 +42,13 @@ const CONTENT = join(ROOT, "content");
  * ⭐ GH#1181 —— 今天 `modelKey` 指到一顆**不存在的 GLB** 的 45 支英雄。
  *
  * ⚠️ 它們**不會壞掉**，玩家看到的是程序化體素替身 ⇒ ⛔ 沒有人會回報。
- * ⭐ 那些 GLB **從來沒有進過版控** —— `content/assets/models/community/` 這個目錄
- * 根本不存在（⛔ 不是被 `.gitignore` 擋掉，`git check-ignore` 沒有命中）。
+ * ⭐ 2026-09-12 的素材整合批次已把先前缺席的 `b2-*`、
+ * `community-review-*` 與指定七名 LoL GLB 全部放回版控；目前沒有已知缺檔。
  *
- * ⭐ 三群，⛔ 而它們缺席的理由不一樣：
- *   · `b2-*`（14）· `community-review-*`（24）—— 社群投稿的上傳模型，⭐ 檔案沒跟著進 repo
- *   · `lol-*`（7）—— GH#1158 自己的收尾逐字寫過：「⑤ 正式發布 ⛔ **0/7** —— S3 零顆、repo 零引用」
- *
- * ⛔ **這張名單只能變短。** 找回一顆就刪掉那一行（⭐ 沒刪會紅 —— 見第三條測試）。
+ * ⛔ 若日後出現暫時無法修復的新缺口，才可在這裡加入有原因的例外；
+ * 找回檔案後必須立即刪除（第三條測試會防止名單成為過期散文）。
  */
-const KNOWN_MISSING_GLB: readonly string[] = [
-  // ── b2-*（第二批 37 名裡的 14 支）
-  "b2-albus",
-  "b2-bojji",
-  "b2-goblin",
-  "b2-kisaragi",
-  "b2-kumoko",
-  "b2-maple",
-  "b2-maple-alt-9769eb88b85b",
-  "b2-misery",
-  "b2-popp",
-  "b2-rem",
-  "b2-rin",
-  "b2-takopi",
-  "b2-yogiri",
-  "b2-zenitsu",
-  // ── community-review-*（社群 37 名裡的 24 支）
-  "community-review-01-20260907",
-  "community-review-03-20260907",
-  "community-review-04-20260907",
-  "community-review-06-20260907",
-  "community-review-08-20260907",
-  "community-review-10-20260907",
-  "community-review-12-20260907",
-  "community-review-13-20260907",
-  "community-review-16-20260907",
-  "community-review-17-20260907",
-  "community-review-18-20260907",
-  "community-review-19-20260907",
-  "community-review-20-20260907",
-  "community-review-21-20260907",
-  "community-review-23-20260907",
-  "community-review-24-20260907",
-  "community-review-25-20260907",
-  "community-review-26-20260907",
-  "community-review-27-20260907",
-  "community-review-28-20260907",
-  "community-review-29-20260907",
-  "community-review-31-20260907",
-  "community-review-32-20260907",
-  "community-review-35-20260907",
-  // ── lol-* —— ⭐ **2026-09-11 七名全部找回來了**（合併 `codex/community-acquired-heroes`：
-  //   那條分支帶的 34 顆 GLB 裡有 7 顆正好是他們缺的）⇒ ⛔ 這一群已經空了。
-  //   ⭐ 而這條閘**正確地叫了**：它要求修好的那幾支從名單上劃掉，⛔ 不是留著變成過期的散文。
-];
+const KNOWN_MISSING_GLB: readonly string[] = [];
 
 interface HeroModel {
   readonly id: string;

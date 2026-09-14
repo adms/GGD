@@ -1,0 +1,35 @@
+{
+  "schema": "ggd-nus3audio-decoding@1",
+  "decoder": {
+    "name": "vgmstream-cli",
+    "path": "/private/tmp/ggd-vgmstream-r2117/cli/vgmstream-cli",
+    "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e"
+  },
+  "looping": "ignored; each stream decoded once without normalization or appended fade",
+  "originalBanks": [
+    {
+      "path": "extracted/EnglishCloudUMM/sound/bank/fighter_voice/vc_cloud_c00.nus3audio",
+      "sha256": "c9a45425f4f5ba054444ecabc2c065d0981c7486637a44c2aef5252d39fcb872",
+      "bytes": 582800,
+      "streams": 49
+    }
+  ],
+  "decodedWavCount": 49,
+  "audioSeconds": 29.65715625,
+  "listeningVerified": false,
+  "confirmedVoiceCount": null,
+  "synthesisReady": false,
+  "sourceId": "gamebanana-cloud-english-voice",
+  "sourceUrl": "https://gamebanana.com/sounds/44580",
+  "reportPath": "GGD-Asset-Library/intake/public-models-20260910/gamebanana-cloud-english-voice/nus3audio-decoding.json",
+  "reportSha256": "3feac52b01797785ce0a6302dd06569343c78da9dbd601b3d537796de10aa479",
+  "allStreamsDecoded": true,
+  "allPcmPayloadsVerified": true,
+  "originalArchiveSha256": "3af03ad6ba9da291838f0a757b361c47aec16d127e7f4f3df6af55fe23b3f72d",
+  "duplicateBankRegression": {
+    "originalBanks": 2,
+    "uniqueDecodedBanks": 1,
+    "decodedStreams": 49,
+    "allAliasesRetained": true
+  }
+}

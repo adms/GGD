@@ -1,0 +1,49 @@
+{
+  "modelKey": "ou99.497211-standard-v2",
+  "finalGlbSha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+  "nodeHierarchyAndInverseBindMatricesUnchanged": true,
+  "nativeMotion": [
+    {
+      "name": "stand",
+      "channels": 82,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "walk",
+      "channels": 82,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "attack",
+      "channels": 82,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "spell one",
+      "channels": 82,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "death",
+      "channels": 82,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    }
+  ],
+  "allOriginalEmbeddedImageBytesRetainedInFinal": true,
+  "originalImageSha256": [
+    "aac0218292da637f223c1dedae5ea3eba338176ec1fe19196a62e8657448715f",
+    "d6b0a6c68a13c7e875c2a59d1b985782bd7320d2ac1c4d299281748e9e1484e4",
+    "58f32ee4f8469fff438ebe4e75b49feb6ee30b0785801b8351a7e28b7c4d2558",
+    "887d4213be2c14f9762ba2e80a23dd72373919e06869c2a919850203b9e2fa8c",
+    "ec4d03fb569d9eae5a0019733f6d43a32cc992405d7e95f338a75199add12a29"
+  ],
+  "finalImageSha256": [
+    "aac0218292da637f223c1dedae5ea3eba338176ec1fe19196a62e8657448715f",
+    "d6b0a6c68a13c7e875c2a59d1b985782bd7320d2ac1c4d299281748e9e1484e4",
+    "58f32ee4f8469fff438ebe4e75b49feb6ee30b0785801b8351a7e28b7c4d2558",
+    "887d4213be2c14f9762ba2e80a23dd72373919e06869c2a919850203b9e2fa8c",
+    "ec4d03fb569d9eae5a0019733f6d43a32cc992405d7e95f338a75199add12a29"
+  ],
+  "geometryLod": true,
+  "textureLod": false
+}

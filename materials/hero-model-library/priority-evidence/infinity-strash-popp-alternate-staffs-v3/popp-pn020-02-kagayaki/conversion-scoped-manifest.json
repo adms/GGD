@@ -1,0 +1,535 @@
+{
+  "schema": "ggd-deterministic-scoped-stage@1",
+  "sourceId": "infinity-strash-popp-pn020-alternate-staffs-delivery-v3",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-pn020-alternate-staffs-delivery-v3",
+  "absoluteLocalArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/source.tar.gz",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "bytes": 31696021,
+  "sha256": "a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634",
+  "fileCount": 101,
+  "uncompressedFileBytes": 62680456,
+  "files": [
+    {
+      "path": "collection-manifest.json",
+      "bytes": 56031,
+      "sha256": "7ce93812c981850c0a1e79775195b0eeacf7a14569d9e4f6da6f8a0a33871bfb"
+    },
+    {
+      "path": "kagayaki/assembly-v1/popp-pn020-02-kagayaki.blend",
+      "bytes": 4750042,
+      "sha256": "fccbbbe43d8b2a56313a3566976df53009528b11f480ec34d103edcd0dcd8a70"
+    },
+    {
+      "path": "kagayaki/assembly-v1/popp-pn020-02-kagayaki.glb",
+      "bytes": 4222440,
+      "sha256": "013eba93ee4b410c31d91e862666f4869780fb60f666f3749f041b32dbf3f483"
+    },
+    {
+      "path": "kagayaki/assembly-v1/receipt.json",
+      "bytes": 16823,
+      "sha256": "baee0543ca4677053ec7c063a0e8597d98f8a0a9c676fedefcab42515683d64a"
+    },
+    {
+      "path": "kagayaki/material-context-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/SK_PN020_Weapon_Kagayaki.bin",
+      "bytes": 296504,
+      "sha256": "3e3aa90c6ed5595ce3c7062ab593fc73b9c239727dc4edf1790a58fa29473c75"
+    },
+    {
+      "path": "kagayaki/material-context-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/SK_PN020_Weapon_Kagayaki.gltf",
+      "bytes": 10168,
+      "sha256": "8eaa61f15d54fb1ae17671bf6dccf2211e9e7d4a39fb604fb2c18d7d72138206"
+    },
+    {
+      "path": "kagayaki/material-context-v1/Strash__Chara__Player__PN020__Weapon__Kagayaki__SK_PN020_Weapon_Kagayaki.uasset.log",
+      "bytes": 2349,
+      "sha256": "a245e58f27b588f31cf98ce1815b0622efb35bc845950788e2c53207d68c6a29"
+    },
+    {
+      "path": "kagayaki/material-context-v1/export-manifest.json",
+      "bytes": 2584,
+      "sha256": "f4ded5998c5e0bedd6c81f17732510560aa342eb86f65c082a6a22fbd963ae57"
+    },
+    {
+      "path": "kagayaki/mesh-psk-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/SK_PN020_Weapon_Kagayaki.props.txt",
+      "bytes": 1646,
+      "sha256": "7189c39829f942d86478e30573644baef4f547b04be986373d73b74cd4ac1ec7"
+    },
+    {
+      "path": "kagayaki/mesh-psk-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/SK_PN020_Weapon_Kagayaki.psk",
+      "bytes": 206792,
+      "sha256": "3a1934bdf9b28a306e3d3e6532d211d47295c4611adcbe30a8e2f8da91724c4a"
+    },
+    {
+      "path": "kagayaki/mesh-psk-v1/Strash__Chara__Player__PN020__Weapon__Kagayaki__SK_PN020_Weapon_Kagayaki.uasset.log",
+      "bytes": 2277,
+      "sha256": "616ce3a40a79b8dd64a4c4e81761f17ca9bca13d7ede57ff0bd1ea9b69541b19"
+    },
+    {
+      "path": "kagayaki/mesh-psk-v1/export-manifest.json",
+      "bytes": 2564,
+      "sha256": "a552a7f79c62ea27105a82853fd170c31bde02b0a31094deb3f7fa79fca27f46"
+    },
+    {
+      "path": "kagayaki/normalized-v1/babylon-nullengine.json",
+      "bytes": 1158,
+      "sha256": "d17ba061b574dc029b4192a005a9c7b3d32bd997144f5d0647a462f7a3fe5093"
+    },
+    {
+      "path": "kagayaki/normalized-v1/ggd-upload.json",
+      "bytes": 12545,
+      "sha256": "780b860496052eae3b92fe2ad0618dcf42370d4970c99183e4c60f25ac135c90"
+    },
+    {
+      "path": "kagayaki/normalized-v1/khronos-input.json",
+      "bytes": 550136,
+      "sha256": "bcbd60eb5a43bdeb0cab3edac23c1d1a393d937510ed4c2fe9c3828fdc961a32"
+    },
+    {
+      "path": "kagayaki/normalized-v1/popp-pn020-02-kagayaki-ggd-normalized.glb",
+      "bytes": 4109032,
+      "sha256": "5c254b14f0bbc0b8e4244a1a8ae98bd8c97dfff8a805aba240f2afe9333028c6"
+    },
+    {
+      "path": "kagayaki/runtime-v1/body.glb",
+      "bytes": 2485584,
+      "sha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27"
+    },
+    {
+      "path": "kagayaki/runtime-v1/model.json",
+      "bytes": 484,
+      "sha256": "a4df65eba593278c5fb065b86988ab18b329244e46d5b38917f0599316e992c3"
+    },
+    {
+      "path": "kagayaki/runtime-v1/receipt.json",
+      "bytes": 14880,
+      "sha256": "9e6a48f286e76e484744988ec75d2a93c355ffa8a8e608bdf5933a7176ee739e"
+    },
+    {
+      "path": "kagayaki/runtime-v1/uploaded-model.json",
+      "bytes": 381,
+      "sha256": "812247820bd35e2af0cb362c26399a3f1e1b947803bb34b63dfe50f658d15431"
+    },
+    {
+      "path": "kagayaki/textures-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/T_PN020_Weapon_Kagayaki_Bundle_Mask.png",
+      "bytes": 149315,
+      "sha256": "2159e519e9f89542590fe2943a37821fdb1d6f44b3ee27b0031514860112b007"
+    },
+    {
+      "path": "kagayaki/textures-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/T_PN020_Weapon_Kagayaki_D.png",
+      "bytes": 26968,
+      "sha256": "bae84e4cba0fda9393e246b3268723a2f6af3e3606d73e89147372b8cfeb72c1"
+    },
+    {
+      "path": "kagayaki/textures-v1/Strash/Chara/Player/PN020/Weapon/Kagayaki/T_PN020_Weapon_Kagayaki_Shadow.png",
+      "bytes": 26765,
+      "sha256": "d5cc72f19e140f3094508c735656ff95e7a1e052b73a1373f5826164a86f8902"
+    },
+    {
+      "path": "kagayaki/textures-v1/Strash__Chara__Player__PN020__Weapon__Kagayaki__T_PN020_Weapon_Kagayaki_Bundle_Mask.uasset.log",
+      "bytes": 1347,
+      "sha256": "a2c7de574e6afe09ee22a94777c3fe7a40060ea080a1a6132006495b995ef04b"
+    },
+    {
+      "path": "kagayaki/textures-v1/Strash__Chara__Player__PN020__Weapon__Kagayaki__T_PN020_Weapon_Kagayaki_D.uasset.log",
+      "bytes": 1297,
+      "sha256": "241dde6a5ff4601f320b10136432b9ccfadabd987efd2b398c557580fc95b79d"
+    },
+    {
+      "path": "kagayaki/textures-v1/Strash__Chara__Player__PN020__Weapon__Kagayaki__T_PN020_Weapon_Kagayaki_Shadow.uasset.log",
+      "bytes": 1322,
+      "sha256": "18a313ab2a81eda303ee66a14d0732524866e27359e6235554070f6f67d89656"
+    },
+    {
+      "path": "kagayaki/textures-v1/export-manifest.json",
+      "bytes": 5377,
+      "sha256": "5af720ae0efb0fb3ab405df6453e686f0f666b505ff1175c69b8a05749ace0a0"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/bundle.js",
+      "bytes": 11484680,
+      "sha256": "9ea4d41b08113031dd009c9d2c59b0b57d0c28f3b4ed4e1b533acb7bf677d80a"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/chrome.log",
+      "bytes": 4723,
+      "sha256": "f972ce8818b1fb3be32924d53d487381720309fc7cad566052f5a76eeea4dd7c"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/contact-sheet.png",
+      "bytes": 235516,
+      "sha256": "220f08caa997f580f1bd63ed7194fe54033bd47c3f7253fd4ec23e30ac8f1e1d"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-attack-0.png",
+      "bytes": 161593,
+      "sha256": "05a55f9394e999e9204bd924bafeefffd313a3d12f4e32e0480d048093198a7e"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-attack-100.png",
+      "bytes": 161642,
+      "sha256": "da9078b73b9658fc3f11b3108758dcf6bee2aa8db72a7d0e372b1fb85e2714cc"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-attack-50.png",
+      "bytes": 154718,
+      "sha256": "18bb6e1ea492da472126f1470c7c9c9699adab8e3d0b1be6aa0e24e27fa6bd9a"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-cast-0.png",
+      "bytes": 148009,
+      "sha256": "43fe6a0d54da409dd09cd785fa35f6ee582ff013fae5149530393c668d55ea93"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-cast-100.png",
+      "bytes": 172972,
+      "sha256": "8776789fa359d4906203be097f0f446d9ebf65a3e993d6a32b3e97805b977f78"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-cast-50.png",
+      "bytes": 185844,
+      "sha256": "34f173f0c75d7db912d5574e1d7e1dafebe8c51eec553c2f610c4a688539f15c"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-death-0.png",
+      "bytes": 72506,
+      "sha256": "ca80ebe6d4e8b221fad9d9277843d5c98046c9a7b5b67c0ebe782b44772032ad"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-death-100.png",
+      "bytes": 72506,
+      "sha256": "ca80ebe6d4e8b221fad9d9277843d5c98046c9a7b5b67c0ebe782b44772032ad"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-death-50.png",
+      "bytes": 72506,
+      "sha256": "ca80ebe6d4e8b221fad9d9277843d5c98046c9a7b5b67c0ebe782b44772032ad"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-hurt-0.png",
+      "bytes": 72506,
+      "sha256": "ca80ebe6d4e8b221fad9d9277843d5c98046c9a7b5b67c0ebe782b44772032ad"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-hurt-100.png",
+      "bytes": 72506,
+      "sha256": "ca80ebe6d4e8b221fad9d9277843d5c98046c9a7b5b67c0ebe782b44772032ad"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-hurt-50.png",
+      "bytes": 72506,
+      "sha256": "ca80ebe6d4e8b221fad9d9277843d5c98046c9a7b5b67c0ebe782b44772032ad"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-idle-0.png",
+      "bytes": 161334,
+      "sha256": "871240375b42398abde2954f51ca9c97c577b0864c64c877ecbb9e69cf938a22"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-idle-100.png",
+      "bytes": 161334,
+      "sha256": "871240375b42398abde2954f51ca9c97c577b0864c64c877ecbb9e69cf938a22"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-idle-50.png",
+      "bytes": 162863,
+      "sha256": "6830014c72aca6e54cb021a8837ef5169db79a834fa8793d46efed693505f62d"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-run-0.png",
+      "bytes": 165813,
+      "sha256": "8e39c8086c35b0e4028fbdb889124df28bca9dfe7af4f1acfabf282c4f2fed57"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-run-100.png",
+      "bytes": 166025,
+      "sha256": "be53ee0322dc66ddec14516327e0a1a2130bf5ffe52c2e5018bd86b739e9428d"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/ggd-state-run-50.png",
+      "bytes": 145480,
+      "sha256": "cb0575aa32fcbfe2609995da9f1f470bc1cba37a1a4a8d2039c0de2333cef64a"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/proof.json",
+      "bytes": 9711,
+      "sha256": "32fb7a3a568fb8d6ba200d07d429dd9fe00ce6021f0ceb0a1a7ecfa48a8d76c8"
+    },
+    {
+      "path": "kagayaki/webgl-review-v1/run.json",
+      "bytes": 720,
+      "sha256": "ad3cd9f2345fd29d37a8c55427db2521ed565df51bc7600a67389544f5bcc9ab"
+    },
+    {
+      "path": "mahouno/assembly-v1/popp-pn020-01-mahouno.blend",
+      "bytes": 4730663,
+      "sha256": "07ad119020af54810a6e979d9dd0c62551d83fc4784005f86b4c7edbec30cdbb"
+    },
+    {
+      "path": "mahouno/assembly-v1/popp-pn020-01-mahouno.glb",
+      "bytes": 4168724,
+      "sha256": "70761daa15c9501422c06c4e6e6aec165ec0f882886e0aac16c5648c6ac96f78"
+    },
+    {
+      "path": "mahouno/assembly-v1/receipt.json",
+      "bytes": 16801,
+      "sha256": "98b84b30aa91f9f4976bb56a66490834767ac50d6455d9759e89e6f479cf68ce"
+    },
+    {
+      "path": "mahouno/material-context-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/SK_PN020_Weapon_Mahouno.bin",
+      "bytes": 98824,
+      "sha256": "efb1a7a748224ddd0c1bb6a69d93fa2958fa4d3903d5dfbb5463c06ae5db8ec8"
+    },
+    {
+      "path": "mahouno/material-context-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/SK_PN020_Weapon_Mahouno.gltf",
+      "bytes": 10990,
+      "sha256": "fc3b6f4e016d424fdb157a96b1dffcd68072bf041893ae9503c587849f39624c"
+    },
+    {
+      "path": "mahouno/material-context-v1/Strash__Chara__Player__PN020__Weapon__Mahouno__SK_PN020_Weapon_Mahouno.uasset.log",
+      "bytes": 2501,
+      "sha256": "4e7fe01430fa1f1b54c41f418d368a4ff53cf407028154636996dba7a63c1ab1"
+    },
+    {
+      "path": "mahouno/material-context-v1/export-manifest.json",
+      "bytes": 2565,
+      "sha256": "e1065a51b527a046f56bdf70a02bda1e0bc45d99b0167921615b4394266ba20e"
+    },
+    {
+      "path": "mahouno/mesh-psk-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/SK_PN020_Weapon_Mahouno.props.txt",
+      "bytes": 1643,
+      "sha256": "af49549e7f719730780d392a86a8194d5ce933588517a5d428fbe39653d91e99"
+    },
+    {
+      "path": "mahouno/mesh-psk-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/SK_PN020_Weapon_Mahouno.psk",
+      "bytes": 73888,
+      "sha256": "bad1fd5a0eefeadc2f76a0c5bb3aae8780e411d7babc088e270aa1cd2a15ef46"
+    },
+    {
+      "path": "mahouno/mesh-psk-v1/Strash__Chara__Player__PN020__Weapon__Mahouno__SK_PN020_Weapon_Mahouno.uasset.log",
+      "bytes": 2429,
+      "sha256": "c019b5140675fde1c80478f54adb23986b2654e9cded9886f6808415099a09b2"
+    },
+    {
+      "path": "mahouno/mesh-psk-v1/export-manifest.json",
+      "bytes": 2545,
+      "sha256": "18188b957a3dfc2b67a31a51ba0719dfea0709a53cf028f196f200b816130df4"
+    },
+    {
+      "path": "mahouno/normalized-v1/babylon-nullengine.json",
+      "bytes": 1152,
+      "sha256": "ebbe05d300f277a4a1e65252ec5e14b54aa79603ce724b8b90c14c4212b6a308"
+    },
+    {
+      "path": "mahouno/normalized-v1/ggd-upload.json",
+      "bytes": 12545,
+      "sha256": "5448674cf105585dc8a6642cc690e1626bd159ad5d484da4874bd6acc9cb9bed"
+    },
+    {
+      "path": "mahouno/normalized-v1/khronos-input.json",
+      "bytes": 549950,
+      "sha256": "ea77d6f03ccc21073da2a338929d2f8d30371168178d7ca379113b3db36f1ac4"
+    },
+    {
+      "path": "mahouno/normalized-v1/popp-pn020-01-mahouno-ggd-normalized.glb",
+      "bytes": 3967888,
+      "sha256": "761529f871e9350763fff4b77c5f810ee7b58ef13f1a3bdc3d0e4b317e1b4b7f"
+    },
+    {
+      "path": "mahouno/runtime-v1/body.glb",
+      "bytes": 2344376,
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c"
+    },
+    {
+      "path": "mahouno/runtime-v1/model.json",
+      "bytes": 484,
+      "sha256": "55740b6bfdfa9d7e18676729f761dee169fa44eb833984fd299ffa939e539b0e"
+    },
+    {
+      "path": "mahouno/runtime-v1/receipt.json",
+      "bytes": 14673,
+      "sha256": "98a743bcd11b63c66701abc96c5919e5bb2d3ed4170665faf9624577080da6ae"
+    },
+    {
+      "path": "mahouno/runtime-v1/uploaded-model.json",
+      "bytes": 381,
+      "sha256": "ed5b1d1792823a2a2d24e988a35a8a5278c226401df93cf18fca3e8ef0be9f84"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/T_PN020_Weapon_Mahouno_Base.png",
+      "bytes": 140715,
+      "sha256": "0aebeed4aea983de4aac2f7869a0ee5fa4046b51e4a24a6f0169aa3799e1c161"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/T_PN020_Weapon_Mahouno_Bundle.png",
+      "bytes": 772503,
+      "sha256": "fc003f252f273613394eb45fe35fcfceeb8b6f6029353af13f7c3b332ef46f01"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/T_PN020_Weapon_Mahouno_N.png",
+      "bytes": 409067,
+      "sha256": "d87021641820c5d72493feec8ecd7ed330179535dfa17cd116e43fc1109c91a2"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash/Chara/Player/PN020/Weapon/Mahouno/T_PN020_Weapon_Mahouno_Shade.png",
+      "bytes": 140225,
+      "sha256": "e111e29ccdc5eeb635f59548a8ab6e114ba249a008c93fd5dec2f8d74d326d92"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash__Chara__Player__PN020__Weapon__Mahouno__T_PN020_Weapon_Mahouno_Base.uasset.log",
+      "bytes": 1303,
+      "sha256": "c12dde58fb3eb1f9620ab61743b8b1e6f9c588891482b2c20b89b111c0bf6711"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash__Chara__Player__PN020__Weapon__Mahouno__T_PN020_Weapon_Mahouno_Bundle.uasset.log",
+      "bytes": 1313,
+      "sha256": "54903f4150eb7180e313dd65425ef894a1636470d18945deb0df5add25f123e5"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash__Chara__Player__PN020__Weapon__Mahouno__T_PN020_Weapon_Mahouno_N.uasset.log",
+      "bytes": 1288,
+      "sha256": "17f2f84c7a0f8c09158d5dddb409cc136922102cbe3b498b5c22009bece6be9f"
+    },
+    {
+      "path": "mahouno/textures-v1/Strash__Chara__Player__PN020__Weapon__Mahouno__T_PN020_Weapon_Mahouno_Shade.uasset.log",
+      "bytes": 1308,
+      "sha256": "c0931e8f934a027bef2e6217855feaaacd39a0dcb1a91320f143ae40c463c78b"
+    },
+    {
+      "path": "mahouno/textures-v1/export-manifest.json",
+      "bytes": 6828,
+      "sha256": "43c745094fe4860b2685fb1e61606b811c53dc709bf222dea465e5f0be359e03"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/bundle.js",
+      "bytes": 11484680,
+      "sha256": "9ea4d41b08113031dd009c9d2c59b0b57d0c28f3b4ed4e1b533acb7bf677d80a"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/chrome.log",
+      "bytes": 4723,
+      "sha256": "20c136d86ee210896af350134fb7e0237ce6757b843dae08c5c6a0f289a7d1cc"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/contact-sheet.png",
+      "bytes": 233582,
+      "sha256": "94324c82781931d4c295da2fd7ffdd3bbaa8c3936e93ebb9321f59f3745abab9"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-attack-0.png",
+      "bytes": 163474,
+      "sha256": "4a300751d96d154893c5a58e986642ef7ab3c017306ca65bff61984b3d178453"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-attack-100.png",
+      "bytes": 163443,
+      "sha256": "db54abe353c8e1f7c788a960ca7fa4db127a59bdf6b26bde93a5529b7765da23"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-attack-50.png",
+      "bytes": 157817,
+      "sha256": "dfbb981cc5593b16379ebcfe28ea299b47bf0db5cd910fdc81468763e249080b"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-cast-0.png",
+      "bytes": 149160,
+      "sha256": "f14c8c3a1bd4bce7a4b071dd4276ba949cf0074bf2ee7ea8f29819839d9079b9"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-cast-100.png",
+      "bytes": 154366,
+      "sha256": "5bbadfc0c7b96dd8d43dc33555d46e1837f30c3cdfbd9a2c9ecaa4f5ab9fe6ed"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-cast-50.png",
+      "bytes": 181655,
+      "sha256": "e1598eb30b5e8542ff454edea8c0a5bca4e61cb4c12c59783ef053d268c874b3"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-death-0.png",
+      "bytes": 74376,
+      "sha256": "01253e7c4da94028b7dfea6dad110f1f54c292103874acfb0a3b32e70f616f05"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-death-100.png",
+      "bytes": 74376,
+      "sha256": "01253e7c4da94028b7dfea6dad110f1f54c292103874acfb0a3b32e70f616f05"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-death-50.png",
+      "bytes": 74376,
+      "sha256": "01253e7c4da94028b7dfea6dad110f1f54c292103874acfb0a3b32e70f616f05"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-hurt-0.png",
+      "bytes": 74376,
+      "sha256": "01253e7c4da94028b7dfea6dad110f1f54c292103874acfb0a3b32e70f616f05"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-hurt-100.png",
+      "bytes": 74376,
+      "sha256": "01253e7c4da94028b7dfea6dad110f1f54c292103874acfb0a3b32e70f616f05"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-hurt-50.png",
+      "bytes": 74376,
+      "sha256": "01253e7c4da94028b7dfea6dad110f1f54c292103874acfb0a3b32e70f616f05"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-idle-0.png",
+      "bytes": 163955,
+      "sha256": "017a71989d765d5099a1b7246a574e0ef3cbd73a18f847bfafed144a77b02f6e"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-idle-100.png",
+      "bytes": 163955,
+      "sha256": "017a71989d765d5099a1b7246a574e0ef3cbd73a18f847bfafed144a77b02f6e"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-idle-50.png",
+      "bytes": 164992,
+      "sha256": "c0efedee4bca72d6d6a2537aa551cc52741199db37451f825794ca3e494587f9"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-run-0.png",
+      "bytes": 170978,
+      "sha256": "408ab75e19b5f9f888c34f174fac127eaa06069f04abd63dc516289e78d904b1"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-run-100.png",
+      "bytes": 171241,
+      "sha256": "3a8b8d76fee1c7f63c10ee90d7f2e39cec86859cb02acc8fd1cf2adfa05ecb85"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/ggd-state-run-50.png",
+      "bytes": 143360,
+      "sha256": "9c2a4082bf933d1eb6ff5cb08f7b5e6e8bcb240835acd5bf4bf6743999889efc"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/proof.json",
+      "bytes": 9707,
+      "sha256": "880761fb03de55dd464c458bbe27f8fcb0b2f1c87bcc42e5651e285328b6af90"
+    },
+    {
+      "path": "mahouno/webgl-review-v1/run.json",
+      "bytes": 716,
+      "sha256": "d89d9c7cc35020a997cc3f9b71482de6a6dd0399d195129583810bc02626b906"
+    }
+  ],
+  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-alternate-staffs-delivery-v3/a87b92252223ebfc920ccb15332747f2b6fa57393767a912dc4b117a8d67f634.tar.gz",
+  "localPreserved": true,
+  "snapshotScope": "Append-only PN020 Mahouno and Kagayaki model, texture, assembly, native-animation runtime and WebGL review delta over Magikaru v2; local originals retained",
+  "deterministicParameters": {
+    "tarFormat": "PAX",
+    "memberOrder": "lexicographic POSIX path",
+    "mode": "0644",
+    "uid": 0,
+    "gid": 0,
+    "mtime": 0,
+    "uname": "",
+    "gname": "",
+    "gzipMtime": 0,
+    "gzipFilename": "",
+    "gzipCompressLevel": 1
+  }
+}

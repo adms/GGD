@@ -37,7 +37,7 @@
     {
       "kind": "delayed",
       "shape": "single",
-      "delaySec": 0.35,
+      "delaySec": 0.3,
       "effects": [
         {
           "kind": "floatingText",
@@ -58,7 +58,7 @@
     {
       "kind": "delayed",
       "shape": "single",
-      "delaySec": 0.7,
+      "delaySec": 0.6,
       "effects": [
         {
           "kind": "floatingText",
@@ -79,7 +79,7 @@
     {
       "kind": "delayed",
       "shape": "single",
-      "delaySec": 1.05,
+      "delaySec": 0.9,
       "effects": [
         {
           "kind": "floatingText",
@@ -143,18 +143,18 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1
+            "coeff": 1.0
           }
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.0
+      "castTimeSec": 1
     }
   },
   "targetsEnemies": true,
   "vfxKey": "fx.w3x.locust.frostnova.p01",
   "schema": "ability@1",
-  "castTimeSec": 1.0,
+  "castTimeSec": 1,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,

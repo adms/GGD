@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -47,7 +47,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -83,7 +83,7 @@
       "castTimeTier": "極大"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -178,7 +178,7 @@
       "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -319,7 +319,7 @@
       "castTimeTier": "小"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -459,7 +459,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-naofumi",
-  "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
+  "modelKey": "version.body.1e3c7caed18f4e9f6cad2da54bdcefcdc5e2749dce334744",
   "name": "岩谷尚文",
   "origin": "硬輔",
   "passiveAbility": "b2-naofumi.passive",
@@ -495,7 +495,7 @@
       "modelKey": "version.body.5abedf068a9cd08d2bb835f244ee5c695ed5739f02f372e9",
       "label": "ou99 岩谷尚文（本尊／相似造型）",
       "sourceModelKey": "ou99.470782",
-      "modelSha256": "5a61cb266ad38661e492e1272f8f03c595244b9348b7a96ee48a97d010232f70",
+      "modelSha256": "0fa5d6d2ce5b1f03003846f5656cb25b171a76fef3e1f6675557b00a43aa6bb9",
       "binarySha256": "250f873ccdd2a6111cdcd041cd94f9c054a0a598b76cabf5bbb3bbe85be0b160",
       "registeredAt": "2026-09-10T18:20:40.237Z",
       "source": {
@@ -505,6 +505,121 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-470782-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.91ed5c47100dac10d44137ddd322c4fa3fe29f6eac346791",
+      "label": "阿尔冯斯",
+      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+      "modelSha256": "230973e657b523c519e62b6c13ce3604e61fa54020baeaaa6f0df724a15a5bdc",
+      "binarySha256": "bacc98fb83cca034ecce74e6f0e8c6c260a16a5e2c0f6080c2f855fcac50d633",
+      "registeredAt": "2026-09-12T23:02:42.355Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿尔冯斯",
+        "work": "鋼之鍊金術師",
+        "library": "300heroes",
+        "reference": "300heroes:aa89b351426082f8df362c89",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.cd91aee43adf5b4a8872ed6719cf93e087f0520b02eb5476",
+      "label": "骑士娃",
+      "sourceModelKey": "community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa",
+      "modelSha256": "812e095248b701dcfd6ab05c2fcc323e08ef73b3ebb35eb9b256dcb7e7dda736",
+      "binarySha256": "4625c51a9e3f5487199ce661cdf40a775e03c42a2f92867ad921369311add49e",
+      "registeredAt": "2026-09-12T23:02:42.542Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "骑士娃",
+        "work": "葫蘆兄弟／葫蘆娃",
+        "library": "300heroes",
+        "reference": "300heroes:6533778837fecf4a5b811d57",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.5178befc9ffa5c89c311f13d6916bf88a944065d2f0214e6",
+      "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
+      "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+      "modelSha256": "7e2bc3d5ffb3bac040a683f9fb7a2554d0261f7c42bd2a608818c6600c006534",
+      "binarySha256": "a9d2c04742c6c03396c6658b86f711d54a7072e57477f3afb32d892527362597",
+      "registeredAt": "2026-09-12T23:02:42.906Z",
+      "source": {
+        "kind": "exact",
+        "character": "岩谷尚文",
+        "work": "盾之勇者成名錄",
+        "library": "GTA SA 社群 MOD",
+        "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d0cb941e2c944f613c2b3186641bbff462bb6cf87761c86a",
+      "label": "阿尔冯斯",
+      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+      "modelSha256": "d1c35968032510c4af4e594b62465b00a8b71628b69c18b5fad21d9eb5e3009e",
+      "binarySha256": "bacc98fb83cca034ecce74e6f0e8c6c260a16a5e2c0f6080c2f855fcac50d633",
+      "registeredAt": "2026-09-13T00:08:57.878Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿尔冯斯",
+        "work": "鋼之鍊金術師",
+        "library": "300heroes",
+        "reference": "300heroes:aa89b351426082f8df362c89",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.e6681d3f0f03281b561966208f0990b29f16b4c65b0e42c4",
+      "label": "骑士娃",
+      "sourceModelKey": "community.body.bdbb1784cf11107512f0f337ebb6934356b30e752271bffa",
+      "modelSha256": "bbec9531dcbfa15524634ba2e055d755e2d91d8fa877a54e67b8884c25ffd49b",
+      "binarySha256": "4625c51a9e3f5487199ce661cdf40a775e03c42a2f92867ad921369311add49e",
+      "registeredAt": "2026-09-13T00:08:58.069Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "骑士娃",
+        "work": "葫蘆兄弟／葫蘆娃",
+        "library": "300heroes",
+        "reference": "300heroes:6533778837fecf4a5b811d57",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.1e3c7caed18f4e9f6cad2da54bdcefcdc5e2749dce334744",
+      "label": "岩谷尚文｜GTA SA MOD（修復不透明材質／GGD 程序化動作）",
+      "sourceModelKey": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+      "modelSha256": "9e307234956e717f271dbcfefe59bd74c9faa3d51778289e6e5602f616eb7dd8",
+      "binarySha256": "a9d2c04742c6c03396c6658b86f711d54a7072e57477f3afb32d892527362597",
+      "registeredAt": "2026-09-13T00:08:58.437Z",
+      "source": {
+        "kind": "exact",
+        "character": "岩谷尚文",
+        "work": "盾之勇者成名錄",
+        "library": "GTA SA 社群 MOD",
+        "reference": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Grand Theft Auto: San Andreas",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

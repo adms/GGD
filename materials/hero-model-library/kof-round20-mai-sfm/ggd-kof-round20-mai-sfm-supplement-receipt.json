@@ -1,0 +1,17 @@
+{
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm",
+  "entryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm/public-source-entry.json",
+  "entrySha256": "a380e0f5e95073b5a44848721974c3190c485029f266f8feac8e5b5e1b7dc3b2",
+  "deliveryPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm/supplement-delivery-20260910T151139112875Z.json",
+  "deliverySha256": "f76e316a178bbe33b26b324e02a35a87960fa383addbddaa80e64746cc0e1add",
+  "gitEligibleFiles": [
+    "public-source-entry.json",
+    "tools/ggd-kof-round20-extract.py",
+    "tools/ggd-kof-round20-freeze.py",
+    "tools/ggd-kof-drive-download.py",
+    "tools/public-kof-download.mjs",
+    "tools/package-lock.json",
+    "tools/extract_public_sources.py"
+  ],
+  "oldFileShaUnchanged": true
+}

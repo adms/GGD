@@ -27,7 +27,7 @@
     }
    ],
    "text": "（原檔）voice_joke_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0026-267_voice_joke_1.ogg",
    "state": "generated",
@@ -47,7 +47,7 @@
   "quote.2": {
    "takes": [],
    "text": "（原檔）voice_joke_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0053-267_voice_joke_2.ogg",
    "state": "generated",
@@ -67,7 +67,7 @@
   "quote.3": {
    "takes": [],
    "text": "（原檔）voice_joke_3",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0003-267_voice_joke_3.ogg",
    "state": "generated",
@@ -330,7 +330,7 @@
     }
    ],
    "text": "（原檔）voice_death_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0000-267_voice_death_2.ogg",
    "state": "generated",
@@ -350,7 +350,7 @@
   "defeat.2": {
    "takes": [],
    "text": "（原檔）voice_death_3",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0022-267_voice_death_3.ogg",
    "state": "generated",
@@ -370,7 +370,7 @@
   "defeat.3": {
    "takes": [],
    "text": "（原檔）voice_death_4",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0011-267_voice_death_4.ogg",
    "state": "generated",
@@ -507,7 +507,7 @@
   "attack-light": {
    "takes": [],
    "text": "（原檔）voice_attack_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0048-267_voice_attack_1.ogg",
    "state": "generated",
@@ -527,7 +527,7 @@
   "attack-heavy": {
    "takes": [],
    "text": "（原檔）voice_attack_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0045-267_voice_attack_2.ogg",
    "state": "generated",
@@ -547,7 +547,7 @@
   "crit": {
    "takes": [],
    "text": "（原檔）voice_attack_3",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0028-267_voice_attack_3.ogg",
    "state": "generated",
@@ -567,7 +567,7 @@
   "respond.ok": {
    "takes": [],
    "text": "（原檔）voice_move_1",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0055-267_voice_move_1.ogg",
    "state": "generated",
@@ -587,7 +587,7 @@
   "free-move": {
    "takes": [],
    "text": "（原檔）voice_move_2",
-   "lang": "ja",
+   "lang": "und",
    "textSource": "original",
    "origin": "original:300heroes:267/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/267/00-0006-267_voice_move_2.ogg",
    "state": "generated",

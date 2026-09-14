@@ -1,0 +1,65 @@
+{
+  "schema": "ggd.jumpforce.streaming-audio-central-evidence.v1",
+  "sourceId": "steam-jump-force-streaming-audio-816020-build-8523149",
+  "steam": {
+    "appId": "816020",
+    "buildId": "8523149",
+    "platform": "Windows (Steam)"
+  },
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jumpforce-steam-streaming-audio-v1",
+  "audioFileIndex": {
+    "reportPath": "audio-file-index.json",
+    "reportSha256": "5d2c19208edc7990137a5ca7e38dd15311519a566d432a3fa70ac37f43e7b39e"
+  },
+  "decoder": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/alucard-audio-20260911-v1/tools/vgmstream-cli",
+    "sha256": "d1d9f856163023833a4959feacda78275a0d26e0b8163d8cd4bfd6d5e8aa7e8e",
+    "version": "r2117"
+  },
+  "extraction": {
+    "originalAwbFiles": 43,
+    "originalAwbBytes": 536500157,
+    "decodedFiles": 4034,
+    "decodedBytes": 3212604542,
+    "knownDurationSeconds": 22132.294229165873,
+    "voiceSourceLabelFiles": 1794,
+    "soundEffectFiles": 2170,
+    "musicFiles": 70,
+    "speakerVerifiedFiles": 0,
+    "languageReviewedFiles": 0
+  },
+  "centralVoiceGroups": 41,
+  "centralVoiceFiles": 4034,
+  "centralCategoryCounts": {
+    "voice-source-label-unreviewed": 1794,
+    "sound-effect": 2170,
+    "music": 70
+  },
+  "s3": {
+    "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-jump-force-streaming-audio-816020-build-8523149/1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.zip",
+    "bytes": 3202524061,
+    "sha256": "1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035",
+    "archiveMembers": 4123,
+    "readbackVerified": true,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/model-source-backups/steam-jump-force-streaming-audio-816020-build-8523149/verified-receipt-1e46153b797289665dbcba97677ef45a8fa6ff9dc6aebc97caec56a7bf8b5035.json",
+    "receiptSha256": "bfed61dfb67f04aa01e03a3f2711a01311fe7c79cb6852500c27c115a315a82c"
+  },
+  "classification": {
+    "speakerVerifiedFiles": 0,
+    "languageReviewedFiles": 0,
+    "unresolvedNativeCharacterIds": [
+      "chr0440",
+      "chr0490",
+      "chr0500",
+      "chr0510",
+      "chr7000"
+    ],
+    "note": "EvnVoice, ActSE, BGM and SE are native bank labels. Per-clip speaker, language, transcript, event and GGD skill bindings remain pending."
+  },
+  "runtime": {
+    "backendSelectable": false,
+    "deployed": false
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "schema": "ggd-unity-prefab-conversion@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rezero/bundles/ReZeroModelReplacements.mbundle.bundle",
+    "sha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88"
+  },
+  "unityPy": "1.25.3",
+  "rootName": "subaruPrefab",
+  "removedScenePlacement": {
+    "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": 7622540756632516839
+    },
+    "m_LocalRotation": {
+      "x": 0.0,
+      "y": -0.0,
+      "z": -0.0,
+      "w": 1.0
+    },
+    "m_LocalPosition": {
+      "x": 1.0244369506835938,
+      "y": -7.62939453125e-06,
+      "z": -35.33349609375
+    },
+    "m_LocalScale": {
+      "x": 8102.69287109375,
+      "y": 8102.69287109375,
+      "z": 8102.69287109375
+    },
+    "m_Children": [
+      {
+        "m_FileID": 0,
+        "m_PathID": -5239694668524935495
+      }
+    ],
+    "m_Father": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    }
+  },
+  "meshes": [
+    {
+      "meshPathId": "7683418758358137503",
+      "rendererPathId": "4519029996018056272",
+      "name": "ZHS002_Natsuki_Subaru",
+      "vertices": 4098,
+      "triangles": 6048,
+      "bones": 41,
+      "implicitSingleBoneWeight": false,
+      "sourceBoneCount": 41,
+      "skinOrigin": "native-unity-skin",
+      "rigidAttachmentTransformPathId": null,
+      "sourceWeightSumMaxError": 1.2665987014770508e-07,
+      "skinPositionMaxError": 0.0
+    },
+    {
+      "meshPathId": "-4475096866266812769",
+      "rendererPathId": "5568483013375803780",
+      "name": "face",
+      "vertices": 1760,
+      "triangles": 2074,
+      "bones": 1,
+      "implicitSingleBoneWeight": true,
+      "sourceBoneCount": 0,
+      "skinOrigin": "synthesized-rigid-hierarchy-attachment",
+      "rigidAttachmentTransformPathId": "-5033951682656772303",
+      "sourceWeightSumMaxError": 0.0,
+      "skinPositionMaxError": 0.0
+    }
+  ],
+  "sourceUpAxis": "y",
+  "sourceToGltfOrientation": {
+    "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "output": {
+    "path": "body.glb",
+    "sha256": "b2707681949c4c0af23156bbb33962c97d15791bf13e7f918d98779191e88777",
+    "bytes": 990676,
+    "height": 1.8,
+    "materials": 3,
+    "textures": 1,
+    "nodes": 62,
+    "animations": 0
+  },
+  "drawPrimitives": 3,
+  "sourceAnimationClips": 0,
+  "sourceBoundsBeforeOrientation": {
+    "min": [
+      -0.007936174732724822,
+      -0.0004133804207164559,
+      0.0027161483566266486
+    ],
+    "max": [
+      0.008189042912696374,
+      0.017648357435802637,
+      0.006005267627585539
+    ]
+  },
+  "sourceBoundsBeforeNormalization": {
+    "min": [
+      -0.007936174732724822,
+      -0.0004133804207164559,
+      0.0027161483566266486
+    ],
+    "max": [
+      0.008189042912696374,
+      0.017648357435802637,
+      0.006005267627585539
+    ]
+  },
+  "limitations": [
+    "No animation conversion; native clips and Animator remain in the source archive.",
+    "Unity custom shader logic is reduced to base color, metallic and roughness."
+  ],
+  "runtimeReady": false,
+  "backendSelectionVerified": false
+}

@@ -12,7 +12,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
-import { HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 import { cover } from "../../packages/shared/testkit/cover";
 
 import { geometryDiff, readGlb, rebuildGlb, sha256File } from "./glb";
@@ -44,9 +44,26 @@ const hasFfmpeg = (() => {
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "opt-test-"));
 afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
 
+function triangleFixture(triangles: number): string {
+  const source = readGlb(RIGGED);
+  const json = structuredClone(source.json);
+  const primitive = structuredClone(json.meshes[0].primitives[0]);
+  const elementAccessor = typeof primitive.indices === "number" ? primitive.indices : primitive.attributes.POSITION;
+  json.accessors[elementAccessor].count = triangles * 3;
+  json.meshes = [{ ...json.meshes[0], primitives: [primitive] }];
+  json.nodes = [{ name: `policy-${triangles}`, mesh: 0 }];
+  json.scenes = [{ nodes: [0] }];
+  json.scene = 0;
+  json.skins = [];
+  json.animations = [];
+  const out = path.join(tmp, `policy-${triangles}.glb`);
+  fs.writeFileSync(out, rebuildGlb(json, source.bin!, new Map()));
+  return out;
+}
+
 function run(args: string[]): { status: number; stdout: string } {
   try {
-    const stdout = execFileSync("npx", ["tsx", OPT, ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const stdout = execFileSync(process.execPath, ["--import", "tsx", OPT, ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { status: 0, stdout };
   } catch (e: any) {
     return { status: e.status ?? 1, stdout: String(e.stdout ?? "") };
@@ -74,6 +91,24 @@ describe("checkRig is the rig-survival gate", () => {
 });
 
 describe.skipIf(!hasFfmpeg)("the optimiser texture stage", () => {
+  it("uses the dynamic champion adoption target only above the formal threshold", () => {
+    const atThreshold = run([
+      triangleFixture(10_000), "--role", "champion", "--geometry", "--tex-edge", "4096", "--json",
+    ]);
+    const aboveThreshold = run([
+      triangleFixture(10_001), "--role", "champion", "--geometry", "--tex-edge", "4096", "--json",
+    ]);
+    expect(atThreshold.status).toBe(0);
+    expect(aboveThreshold.status).toBe(0);
+    expect(JSON.parse(atThreshold.stdout).plans[0].geometry).toBeNull();
+    expect(JSON.parse(aboveThreshold.stdout).plans[0].geometry).toEqual({
+      fromTris: 10_001,
+      targetTris: HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax,
+      ratio: HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax / 10_001,
+    });
+    expect(HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax).toBe(8_000);
+  });
+
   it("dry run 把超標貼圖規劃縮到出貨上限,而且什麼都不寫", () => {
     const { status, stdout } = run([KNIGHT, "--role", "champion", "--json", "--out", path.join(tmp, "never")]);
     expect(status).toBe(0);

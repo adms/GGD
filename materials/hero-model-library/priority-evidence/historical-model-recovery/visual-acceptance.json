@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-historical-model-visual-acceptance@1",
+  "renderer": "Babylon WebGL headless Chrome; right-handed scene; three views; CPU-skinned bounds",
+  "reviewedContactSheet": {
+    "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/contact-sheet.png",
+    "sha256": "c0670571764bb5402e6a915046d4743bb164b696869dad171cbf9967704f2f85",
+    "bytes": 390994
+  },
+  "records": [
+    {
+      "id": "historical-astralym-7bc2fa3f8",
+      "accepted": true,
+      "scope": "independent-historical-model-body-component-static-visual-integrity",
+      "renderedClip": "Idle",
+      "reviewViews": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-7bc2fa3f8/front.png",
+          "sha256": "942ffa3d7eac21e086df9f7d8b103652cb9e9cb4e1894d4f23649782bd81b643",
+          "bytes": 228638
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-7bc2fa3f8/back.png",
+          "sha256": "6bff7244bcd4844a2c72699006a5ef82c3519d797f6d24daae64ed2cf7cc5e98",
+          "bytes": 205502
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-7bc2fa3f8/isometric.png",
+          "sha256": "deb2fbcb52dac0a4b1006cbb57b71c6bb3544f8070c512b212432918f24db4fd",
+          "bytes": 237968
+        }
+      ],
+      "webglProof": {
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-7bc2fa3f8/proof.json",
+        "sha256": "bc46fc0aa96be4781497323a2d4314fc8adc2cfc2f3e9e566d665dfe73ba0d54",
+        "bytes": 5855
+      },
+      "reviewNote": "Front, back and isometric frames show the complete skeletal dragon silhouette, bound PBR colors and cyan emissive details without missing-texture placeholders or gross detached geometry."
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8",
+      "accepted": true,
+      "scope": "independent-historical-model-body-component-static-visual-integrity",
+      "renderedClip": "Idle",
+      "reviewViews": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-jetragon-7bc2fa3f8/front.png",
+          "sha256": "bce4ddc3122691f36ff73018f2854859a30038c10fbe0e875c00872a3d30dd14",
+          "bytes": 164036
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-jetragon-7bc2fa3f8/back.png",
+          "sha256": "0c9412b20b2713bd70346722e43f20aadb97751b6590773236057b29d49a08f5",
+          "bytes": 143670
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-jetragon-7bc2fa3f8/isometric.png",
+          "sha256": "b1fdb202190d511f9b4b13d863728191e0b5a7ccc99633277c03d1cdbb9d41fb",
+          "bytes": 170348
+        }
+      ],
+      "webglProof": {
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-jetragon-7bc2fa3f8/proof.json",
+        "sha256": "6bf5bf080ac604a580692a3c6e07b097a802da0aa59ca12fef86ab39a76da57e",
+        "bytes": 5719
+      },
+      "reviewNote": "Front, back and isometric frames show the complete body, limbs, tail and crystal wings with bound colors and no missing-texture placeholders or gross detached geometry."
+    },
+    {
+      "id": "historical-kita-kita-7bc2fa3f8",
+      "accepted": true,
+      "scope": "independent-historical-model-body-component-static-visual-integrity",
+      "renderedClip": "wait",
+      "reviewViews": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-kita-kita-7bc2fa3f8/front.png",
+          "sha256": "8c746069a42a41978aca54bdfba4668f6d1dc233b1722b0efb1dc19cb3bfc7ee",
+          "bytes": 212378
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-kita-kita-7bc2fa3f8/back.png",
+          "sha256": "77bbd2016652a09f1b4ac225a82a65caa259f427d03d76e070f272bbcd39377f",
+          "bytes": 187497
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-kita-kita-7bc2fa3f8/isometric.png",
+          "sha256": "e4f116de498ad262a01e85614b1ac574f42e4852b8f2f3c375e7cd606e0f94f2",
+          "bytes": 182733
+        }
+      ],
+      "webglProof": {
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-kita-kita-7bc2fa3f8/proof.json",
+        "sha256": "8bd45832cc52c9b28eaf6767e6a39fe8c41f933e8f8c0d37e27c1566f261a0cf",
+        "bytes": 2707
+      },
+      "reviewNote": "Front, back and isometric frames show the complete head, moustache, leaf ornaments, torso, shorts and limbs with the expected diffuse material and no gross detached geometry."
+    },
+    {
+      "id": "historical-lord-nightmares-7bc2fa3f8",
+      "accepted": true,
+      "scope": "independent-historical-model-body-component-static-visual-integrity",
+      "renderedClip": "wait",
+      "reviewViews": [
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-lord-nightmares-7bc2fa3f8/front.png",
+          "sha256": "0a7e1f9048a19fb679b8fa4227673b343885ed23de46e6724f10375e6f544f9c",
+          "bytes": 147479
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-lord-nightmares-7bc2fa3f8/back.png",
+          "sha256": "54092eb4003d1975a398cc577087ec900d800f5cb22ba4a77224735c5c76360b",
+          "bytes": 118265
+        },
+        {
+          "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-lord-nightmares-7bc2fa3f8/isometric.png",
+          "sha256": "fba58dbb181efc220b58daee40917780d8b7f4f713db65fc858626a8c132e232",
+          "bytes": 168476
+        }
+      ],
+      "webglProof": {
+        "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-lord-nightmares-7bc2fa3f8/proof.json",
+        "sha256": "166a7b2feee288913ca63333900b4ed49865b9db24c4a0f14ed7948a6bbd52e3",
+        "bytes": 2730
+      },
+      "reviewNote": "Front, back and isometric frames show the complete gold character, hair, costume details and cape with no missing-texture placeholders or gross detached geometry."
+    }
+  ],
+  "limitations": [
+    "Static review at 20 percent of the requested idle/native clip only.",
+    "No claim of source-game shader parity, full animation playback, character identity provenance, GGD hero binding, runtime switching or deployment."
+  ]
+}

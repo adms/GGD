@@ -1,0 +1,38 @@
+{
+  "schema": "ggd.rezero-static-component-source-fidelity@1",
+  "sourceId": "thunderstore-rezero",
+  "componentId": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+  "sourceBundleSha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88",
+  "sourceConversionSha256": "b2707681949c4c0af23156bbb33962c97d15791bf13e7f918d98779191e88777",
+  "outputSha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+  "sourceRootName": "subaruPrefab",
+  "sourceUpAxis": "y",
+  "outputUpAxis": "y",
+  "sourceVertexCount": 5858,
+  "outputTriangleCount": 8122,
+  "sourceBoneCounts": [
+    41,
+    0
+  ],
+  "outputJointCounts": [
+    41,
+    1
+  ],
+  "sourceAnimatorComponentCount": 6,
+  "sourceAnimationClipCount": 0,
+  "outputClipCount": 0,
+  "allAccessorBytesPreservedDuringNormalization": true,
+  "sourceWeightSumMaxError": 1.2665987014770508e-07,
+  "skinPositionMaxError": 0.0,
+  "shaderParityVerified": false,
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/unity-conversion.json",
+    "bytes": 3534,
+    "sha256": "0b1cce2bdeb53cf948c637b0354e143e09b699b3d9062c3699b8df91e356b0bc"
+  },
+  "normalizationReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/a8279eaff1a8a71858c200b4fab301b117efcf4967dfdafb03009bdb48428d8a/normalization.json",
+    "bytes": 8766,
+    "sha256": "71a4818f06de2ea16a89d33f111a8199e34e74cefff609a8ef6686ba8e4c11f9"
+  }
+}

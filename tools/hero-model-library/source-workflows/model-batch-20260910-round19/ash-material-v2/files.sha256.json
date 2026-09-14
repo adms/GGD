@@ -1,0 +1,32 @@
+[
+  {
+    "path": "tools/ggd-ash-material-probe-v2.py",
+    "bytes": 4184,
+    "sha256": "ddd2a4474c17ddc533d3599352ff69a464113f9e45619f0a384991d8db7c4188"
+  },
+  {
+    "path": "tools/ggd-ash-material-repair-v2.py",
+    "bytes": 10124,
+    "sha256": "f7352729b351f163a5c70852e95b48319cffa7731f68b1544085c76f5551874e"
+  },
+  {
+    "path": "tools/ggd-ash-render-comparison-v2.py",
+    "bytes": 5729,
+    "sha256": "873c29d084401967512495acf24bfe7773aa4d2349ad53b4cfb72b06dfc697e7"
+  },
+  {
+    "path": "tools/ggd-ash-v2-geometry-probe.py",
+    "bytes": 2371,
+    "sha256": "8ced93bf478dd3de4ab5983d7108e72a94aee39351644c3b45bd6fe08c36f44b"
+  },
+  {
+    "path": "tools/ggd-freeze-ash-material-v2.py",
+    "bytes": 10487,
+    "sha256": "42f0c47de6925a32a83b85522c4c96bb9368aa20dbc02a0861a37d8548f6b6ad"
+  },
+  {
+    "path": "tools/ggd-kof-glb-validate.py",
+    "bytes": 4513,
+    "sha256": "61be0a362d7c2b65490c1925d6d49fb39a4db3697c7a692f7d289f53d7e4cd22"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "sourceId": "github-udienzebeer-fate-uc-hd-c8c2d52b",
+  "sourceCommit": "c8c2d52b60856913d6d81ee0cba5533cc1a098a6",
+  "sourceArchive": {
+    "path": "original/Fate-UC-HD-c8c2d52b60856913d6d81ee0cba5533cc1a098a6.zip",
+    "bytes": 30560970,
+    "sha256": "57ba4a76de840b8c68a592218591dbe0962107f1fe02e05cd390a4d4b9c09450"
+  },
+  "handoff": {
+    "path": "control/handoff.json",
+    "bytes": 2052,
+    "sha256": "2904bb96ebd92af568affe4fcf25f71a5431d8bc84fa16b7606056090e358d81"
+  },
+  "textureGroups": {
+    "character-portrait": 71,
+    "logo": 7,
+    "interface-texture": 4,
+    "static-magic-circle-interface-texture": 3,
+    "mission-portrait-unmapped": 18
+  },
+  "previewSha256": "9a82762ce67894f206bff8c70d58e0c88bfe5ccba9f37f81ffbae6411f9bf038",
+  "runtimeReady": false
+}

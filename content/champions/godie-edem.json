@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法刺",
-  "modelKey": "imported.herosasuke",
+  "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.01,
@@ -61,18 +61,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 12,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -87,20 +87,20 @@
               "小"
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "burn",
-              "duration": 3
+              "duration": 3.0
             },
             {
               "kind": "dot",
               "damageType": "magic",
               "amountPerTick": {
-                "flat": 1
+                "flat": 1.0
               },
               "resourcePct": {
                 "subject": "target",
@@ -112,8 +112,8 @@
                 ]
               },
               "resourcePctPhase": "onTick",
-              "intervalSec": 1,
-              "durationSec": 3,
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
               "stacking": "refresh"
             }
           ]
@@ -132,20 +132,20 @@
               "小"
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "burn",
-              "duration": 3
+              "duration": 3.0
             },
             {
               "kind": "dot",
               "damageType": "magic",
               "amountPerTick": {
-                "flat": 1
+                "flat": 1.0
               },
               "resourcePct": {
                 "subject": "target",
@@ -157,21 +157,21 @@
                 ]
               },
               "resourcePctPhase": "onTick",
-              "intervalSec": 1,
-              "durationSec": 3,
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
               "stacking": "refresh"
             }
           ],
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-edem.q.webp",
       "vfxKey": "fx.prim.fire.explosion",
       "cooldownTier": "小",
       "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 1.033,
-      "castTimeTier": "極大"
+      "castTimeSec": 1
     },
     "W": {
       "id": "godie-edem.w",
@@ -182,18 +182,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        75,
-        75,
-        75,
-        75
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -209,7 +209,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
@@ -222,14 +222,14 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3,
+              "duration": 3.0,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 3,
+              "duration": 3.0,
               "moveSpeedMult": 0.5
             }
           ]
@@ -249,7 +249,7 @@
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true,
           "onHitTargets": [
@@ -262,26 +262,26 @@
                   "value": -0.5
                 }
               ],
-              "duration": 3,
+              "duration": 3.0,
               "dispellable": true,
               "polarity": "debuff"
             },
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 3,
+              "duration": 3.0,
               "moveSpeedMult": 0.5
             }
           ],
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
       "cooldownTier": "小",
       "manaCostTier": "極小",
-      "castTimeSec": 0.833,
-      "castTimeTier": "極大"
+      "castTimeTier": "極大",
+      "castTimeSec": 1
     },
     "E": {
       "id": "godie-edem.e",
@@ -292,18 +292,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 12,
+      "range": 12.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -326,12 +326,12 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           },
           "length": 12.83,
-          "width": 12,
+          "width": 12.0,
           "aim": "facing",
           "fromCaster": true,
           "includeOrigin": true
@@ -351,11 +351,11 @@
           "soundKey": "wc3.thunderclapcaster",
           "scale": 3.5,
           "tint": [
-            1,
-            0,
-            0
+            1.0,
+            0.0,
+            0.0
           ],
-          "lifeSec": 1
+          "lifeSec": 1.0
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.e.webp",
@@ -369,9 +369,9 @@
       ],
       "cooldownTier": "小",
       "manaCostTier": "小",
+      "castTimeTier": "小",
       "rangeTier": "極大",
-      "castTimeSec": 0.067,
-      "castTimeTier": "小"
+      "castTimeSec": 0.1
     },
     "R": {
       "id": "godie-edem.r",
@@ -382,16 +382,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -407,15 +407,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 400,
+                      "flat": 400.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -439,15 +439,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 700,
+                      "flat": 700.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -471,15 +471,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1000,
+                      "flat": 1000.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 3
+                          "coeff": 3.0
                         }
                       ]
                     },
-                    "radius": 3,
+                    "radius": 3.0,
                     "radiusTier": "極小",
                     "includeOrigin": true
                   }
@@ -521,5 +521,40 @@
     "爆發",
     "切後排"
   ],
-  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。"
+  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.herosasuke",
+      "modelSha256": "7de25854b9d7ed36a53ebe431ae6bf44ee45c19603434cffbf6fe8691f4adaa0",
+      "binarySha256": "c5977e07303923cd1df7a10cbecfe5a7ef236fd2cd818d125774e3f4ea9bb939",
+      "registeredAt": "2026-09-09T07:13:26.403Z",
+      "source": {
+        "kind": "previous",
+        "character": "寫輪眼復仇者 - 宇智波佐助",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herosasuke.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.c7c18b4fe781830b000e7fe0c755d9c945f3779ddee8e6d6",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "7891fab95af9fdad28cb5747193fa38fffff9468cd1d6c358fc95a912b0c57e6",
+      "binarySha256": "9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74",
+      "registeredAt": "2026-09-09T07:13:26.416Z",
+      "source": {
+        "kind": "exact",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes"
+      }
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

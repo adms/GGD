@@ -1,0 +1,2530 @@
+{
+  "schema": "ggd-lol-native-event-bindings@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "sourceGame": "League of Legends",
+  "heroId": "example:xerath",
+  "nativeId": "Xerath",
+  "skinId": "skin0",
+  "reportedLocale": "ja_JP",
+  "releaseId": "7CAC3C60C863BF12",
+  "manifestSha256": "0a60e408a3f529e74d4c1475b4febae3b7422cde5c6a7b47cc34e3bbbc4d17ee",
+  "sourcePackage": "DATA/FINAL/Champions/Xerath.wad.client",
+  "sourcePackageCompleteLocally": false,
+  "metadataAcquisitionStatus": "partial-extraction-from-official-release-chunks",
+  "inputs": {
+    "bin": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/event-metadata/Xerath/skin0.bin",
+      "sha256": "a247ab0af082452ea2791760b09127fb4b67bfe775cad634d41086a94c723a94"
+    },
+    "eventsBnk": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Xerath.ja_JP/native/da5e11f0270c8c8c.bnk",
+      "sha256": "4dda426a076a08f2d5da26b0732ee82d3c184b1b51e46275035e0ce65f06228a",
+      "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/xerath/skins/base/xerath_base_vo_events.bnk"
+    },
+    "audioBanks": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Xerath.ja_JP/native/a966309ae406fc2b.wpk",
+        "sha256": "a604afdff0d37304375d9d0c4e5f9fbfabf064c2256790fbc34bb7a316025fa3",
+        "sourcePath": "assets/sounds/wwise2016/vo/en_us/characters/xerath/skins/base/xerath_base_vo_audio.wpk"
+      }
+    ],
+    "extraction": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/packages/Xerath.ja_JP/extraction.json",
+      "sha256": "b3d547b68126932f44abbb09e25c88e16997e412387771378987c50c67b8b4db"
+    },
+    "decoding": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/audio-index.json",
+      "sha256": "a81f3148862f31f51ef167e9f1261f7a1636635bbc1c92e66649c1bd3df31ab3"
+    },
+    "metadataReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/receipts/shared-event-metadata/project-seven-base-six-v1.json",
+      "sha256": "e51bdf3680f8b2c2159f098399121286c5afa3e0fed427ef0e175be558fec5ea"
+    }
+  },
+  "tool": {
+    "name": "league-tools",
+    "commit": "913150dd922e69b18aba519410670fcf017df2ff",
+    "mapping": "BIN event strings -> NativeHIRC event graph -> WEM ID"
+  },
+  "validation": {
+    "binEvents": 64,
+    "hircEvents": 24,
+    "mappedEvents": 24,
+    "mappedWemIds": 79,
+    "exactAudioBankDecodedFiles": 79,
+    "allMappedWemIdsFoundInExactAudioBank": true,
+    "allReferencedWavBytesAndSha256Verified": true,
+    "eventBindingsVerified": true,
+    "speakerVerified": false,
+    "perClipLanguageVerified": false,
+    "ggdSkillSemanticBindingsVerified": false,
+    "categoryCountsByEvent": {
+      "ability-cast": 4,
+      "attack": 4,
+      "death": 1,
+      "emote": 4,
+      "encounter": 8,
+      "move": 3
+    },
+    "abilitySlotCountsByEvent": {
+      "E": 1,
+      "Q": 1,
+      "R": 1,
+      "W": 1
+    }
+  },
+  "events": [
+    {
+      "eventName": "Play_vo_Xerath_Attack2DGeneral",
+      "eventId": 3626043819,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        119434794,
+        198866827,
+        579697071,
+        1509649316,
+        1820967603,
+        1855553040,
+        2050763396,
+        2060333772,
+        2065392894,
+        2120481747
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Dance3DGeneral",
+      "eventId": 1214039915,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        272571793,
+        665098352,
+        1256408249,
+        2039640855
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Death3D",
+      "eventId": 2862981710,
+      "category": "death",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        103636348,
+        111600246,
+        1779825579,
+        1924307479
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_FirstEncounter3DAzir",
+      "eventId": 2515585719,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        65285238,
+        729725351,
+        742488022,
+        837529598
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_FirstEncounter3DNasus",
+      "eventId": 631504579,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        280263353,
+        2075670090
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_FirstEncounter3DShurima",
+      "eventId": 281778082,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1226315561,
+        1242240646,
+        1279589985
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_FirstEncounter3DSyndra",
+      "eventId": 3285152542,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        657453640
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_FirstEncounter3DThresh",
+      "eventId": 4202920945,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1470052631
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_FirstEncounter3DXerath",
+      "eventId": 1979020341,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        19051722,
+        198810733,
+        303773628
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Joke3DGeneral",
+      "eventId": 328235789,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        242675863,
+        1196630098
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Kill3DAscended",
+      "eventId": 593778867,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        17749423
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Kill3DPenta",
+      "eventId": 2538411078,
+      "category": "encounter",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1142370348,
+        2008528634
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Laugh3DGeneral",
+      "eventId": 1882422309,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        70005391,
+        520393080,
+        799464120,
+        1987825749
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Move2DFirstAllyRenekton",
+      "eventId": 2327986948,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        178861230,
+        1512859658
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Move2DFirstEnemyAzir",
+      "eventId": 3593896768,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        1279669127
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Move2DStandard",
+      "eventId": 694398449,
+      "category": "move",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        64178905,
+        97170442,
+        125208467,
+        227397980,
+        349211833,
+        715316767,
+        892624020,
+        954524537,
+        1426366017,
+        1536652717,
+        1573273698,
+        1603454157,
+        1760337771,
+        1878767673,
+        2018337266,
+        2020695840,
+        2096193173
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_Taunt3DGeneral",
+      "eventId": 3138322956,
+      "category": "emote",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        227786409,
+        1311653483
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathArcaneBarrage2_cast3D",
+      "eventId": 1669066080,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "W",
+      "wemIds": [
+        539387195,
+        695531228,
+        1084230652,
+        1328804472
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+      "eventId": 366586445,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "Q",
+      "wemIds": [
+        76986339,
+        820216149,
+        837144372,
+        2053253391
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+      "eventId": 999386420,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        76986339,
+        820216149,
+        837144372,
+        2053253391
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+      "eventId": 2302795652,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        76986339,
+        820216149,
+        837144372,
+        2053253391
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+      "eventId": 4067101772,
+      "category": "attack",
+      "abilitySlotCandidate": null,
+      "wemIds": [
+        76986339,
+        820216149,
+        837144372,
+        2053253391
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathLocusOfPower2_cast3D",
+      "eventId": 2844232756,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "R",
+      "wemIds": [
+        853420469,
+        1084550769,
+        1332381173,
+        1405944977
+      ]
+    },
+    {
+      "eventName": "Play_vo_Xerath_XerathMageSpear_cast3D",
+      "eventId": 286317321,
+      "category": "ability-cast",
+      "abilitySlotCandidate": "E",
+      "wemIds": [
+        47053402,
+        367058298,
+        369309902,
+        2115010494
+      ]
+    }
+  ],
+  "files": [
+    {
+      "wemId": 17749423,
+      "sourceWem": "a966309ae406fc2b/00000-17749423.wem",
+      "sourceWemSha256": "0702a3f8164e39b88e2b12fefd954865af52d2f341ce544509a9fb5978eb34c3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00000-17749423.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00000-17749423.wav",
+      "bytes": 984692,
+      "sha256": "2a6752eac1a0b3a8207d172f5ca940025f83ad78a636e6b39027fbe303ba9cfa",
+      "seconds": 5.581904761904762,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Kill3DAscended",
+          "eventId": 593778867,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 19051722,
+      "sourceWem": "a966309ae406fc2b/00001-19051722.wem",
+      "sourceWemSha256": "54972163d24595f7ee08e8841dd8dd1c53a903f14805a14a487d719af1366631",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00001-19051722.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00001-19051722.wav",
+      "bytes": 754504,
+      "sha256": "b42b6a02e85a478676592bc1b6282a978d37e47954655b38678bebcb1c44b127",
+      "seconds": 4.276984126984127,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DXerath",
+          "eventId": 1979020341,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 47053402,
+      "sourceWem": "a966309ae406fc2b/00002-47053402.wem",
+      "sourceWemSha256": "fee62f0aaf2e40a116fbcc8850f5907dd447b956e4a040598850930911a0b373",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00002-47053402.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00002-47053402.wav",
+      "bytes": 292292,
+      "sha256": "1b1ec173db23b30335c7923e66ba121319ed1fde753c4ac6258c95bd6145548b",
+      "seconds": 1.6567346938775511,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathMageSpear_cast3D",
+          "eventId": 286317321,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 64178905,
+      "sourceWem": "a966309ae406fc2b/00003-64178905.wem",
+      "sourceWemSha256": "55a84c085eb09c42a5cb4f8847756a1857e864eb5a68419f4abccbf1610a2172",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00003-64178905.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00003-64178905.wav",
+      "bytes": 2350244,
+      "sha256": "7d232cc824cc066933c6ef9ae849a82a5a3024b076abb21eed87a19afe5dda2a",
+      "seconds": 6.66156462585034,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 65285238,
+      "sourceWem": "a966309ae406fc2b/00004-65285238.wem",
+      "sourceWemSha256": "daeb256c125e29973989f2338c791ec0ba69092ac719b9e1b1d3b054f469bbab",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00004-65285238.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00004-65285238.wav",
+      "bytes": 1303740,
+      "sha256": "3011e90058a8101b2eab3f83b926781b6b2e78d4260f124f0b67effc55a89841",
+      "seconds": 7.390566893424037,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DAzir",
+          "eventId": 2515585719,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 70005391,
+      "sourceWem": "a966309ae406fc2b/00005-70005391.wem",
+      "sourceWemSha256": "0634eb3235c308467aa13c45b0bc872ac0dc7f294a3634f28ba2a296e83d5608",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00005-70005391.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00005-70005391.wav",
+      "bytes": 838096,
+      "sha256": "4a58b0bd9103267bfb92e80505e250c2c87cbe15c980858da67d199f12592db9",
+      "seconds": 4.750861678004535,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Laugh3DGeneral",
+          "eventId": 1882422309,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 76986339,
+      "sourceWem": "a966309ae406fc2b/00006-76986339.wem",
+      "sourceWemSha256": "3ca23b60bf96b7fc01bcefec5548b53744ef9bd49b4d2401ec4c194020bd82c4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00006-76986339.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00006-76986339.wav",
+      "bytes": 222900,
+      "sha256": "b540d36424cc530eae247d010d7c63ed5c126d6fbd76c81d0318b3740f918a83",
+      "seconds": 1.2633560090702949,
+      "categories": [
+        "ability-cast",
+        "attack"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 97170442,
+      "sourceWem": "a966309ae406fc2b/00007-97170442.wem",
+      "sourceWemSha256": "dc8bfb09349843eb028bcae74d774f9677a14e22820de3720cdc95d4b9bd084f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00007-97170442.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00007-97170442.wav",
+      "bytes": 1942708,
+      "sha256": "c456d18d97e20b50a72eed03d6526ef9d03fb20db7d652635c7374e6570e419f",
+      "seconds": 5.50641723356009,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 103636348,
+      "sourceWem": "a966309ae406fc2b/00008-103636348.wem",
+      "sourceWemSha256": "b92a273ab5751314bd084e9a9f624ff9a51d285ede97953faaea7c592b5a5611",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00008-103636348.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00008-103636348.wav",
+      "bytes": 519384,
+      "sha256": "cd246efe4d9262ed1abd5b87019b9f9ba212d809e0899e2111db48410eb48a9f",
+      "seconds": 2.9441043083900227,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Death3D",
+          "eventId": 2862981710,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 111600246,
+      "sourceWem": "a966309ae406fc2b/00009-111600246.wem",
+      "sourceWemSha256": "cab0c814a1c557a447dc703e42b438d8d55c3c5bd706ee102e2447fa8be3af39",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00009-111600246.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00009-111600246.wav",
+      "bytes": 553836,
+      "sha256": "0f68cfeb5788abfd3cb9410bf0bf40df80f0d79e33e0bf57ba81645f96164547",
+      "seconds": 3.139410430839002,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Death3D",
+          "eventId": 2862981710,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 119434794,
+      "sourceWem": "a966309ae406fc2b/00010-119434794.wem",
+      "sourceWemSha256": "f6903b7ee1bc7aff2587d904e620490cf1649a02182055c4865156a2f14b8d7f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00010-119434794.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00010-119434794.wav",
+      "bytes": 1206580,
+      "sha256": "6e7a77b29794d1a79f17f73237765affaeeb31a61ffe10bff104ac0641adcfb9",
+      "seconds": 3.4198866213151926,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 125208467,
+      "sourceWem": "a966309ae406fc2b/00011-125208467.wem",
+      "sourceWemSha256": "1745e589dadcd3f663138a2ad607b20b6a9de8effdfe4ae90da149715ab6e7af",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00011-125208467.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00011-125208467.wav",
+      "bytes": 1461508,
+      "sha256": "3e6ace177163e6ae81da1f5d6f5ebb8d16f8bbf29e7755221e83ad293a7cb276",
+      "seconds": 4.142471655328798,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 178861230,
+      "sourceWem": "a966309ae406fc2b/00012-178861230.wem",
+      "sourceWemSha256": "0a4c90e87ff0e719d28e9afdf174995f89b45e4031e61ec9caaaf5b52ab2c9e3",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00012-178861230.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00012-178861230.wav",
+      "bytes": 1964228,
+      "sha256": "531973d80fa06b7cedd911ab00372cc0bb0e05ba86817232dec2cfb141a8a69c",
+      "seconds": 5.567414965986394,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DFirstAllyRenekton",
+          "eventId": 2327986948,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 198810733,
+      "sourceWem": "a966309ae406fc2b/00013-198810733.wem",
+      "sourceWemSha256": "388c6bd9c7540e116787aca194ddc71e77ec1d150ca1615019726abcd825a860",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00013-198810733.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00013-198810733.wav",
+      "bytes": 492932,
+      "sha256": "983c0d9d2f78e19b00e23c42904808723af54d965bddf4adc69147995a0d1800",
+      "seconds": 2.7941496598639457,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DXerath",
+          "eventId": 1979020341,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 198866827,
+      "sourceWem": "a966309ae406fc2b/00014-198866827.wem",
+      "sourceWemSha256": "3d63b0bf0b59c008a685c787ea3daa6b1071b0afcf9ed59846fbf0f14336ad3d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00014-198866827.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00014-198866827.wav",
+      "bytes": 1161436,
+      "sha256": "b80430535b01a2e9c87d85a92be0e0dc4ae11f40f16fe206f3f774377c9cd44d",
+      "seconds": 3.2919274376417236,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 227397980,
+      "sourceWem": "a966309ae406fc2b/00015-227397980.wem",
+      "sourceWemSha256": "9c92cce95269d7208f710fccc40d269a241f78fbccf3f9f981c9b51ed78bf53c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00015-227397980.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00015-227397980.wav",
+      "bytes": 1243740,
+      "sha256": "1c0ba7388ea1888080955d791f40efaf290c100c831b8075b744471117ab9926",
+      "seconds": 3.5252154195011336,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 227786409,
+      "sourceWem": "a966309ae406fc2b/00016-227786409.wem",
+      "sourceWemSha256": "04c63f942b05a12bfa12b502c4bb13c51875db118bf8c8717b852cb1bd219664",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00016-227786409.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00016-227786409.wav",
+      "bytes": 1162624,
+      "sha256": "687de5277fa9cafc4af27f36ca2f2e17ae55db51cfde9cf49429dcf2886c8d17",
+      "seconds": 6.590589569160998,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Taunt3DGeneral",
+          "eventId": 3138322956,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 242675863,
+      "sourceWem": "a966309ae406fc2b/00017-242675863.wem",
+      "sourceWemSha256": "7042082f9e972e140b7cce7c00f737fd7e3b8003c1ffc027d563cd04a1b9865f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00017-242675863.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00017-242675863.wav",
+      "bytes": 1253364,
+      "sha256": "88634621691d96ae7bc6f0b70d621faceb0063c6a84d801ea5a28d33088c6ab8",
+      "seconds": 7.104988662131519,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Joke3DGeneral",
+          "eventId": 328235789,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 272571793,
+      "sourceWem": "a966309ae406fc2b/00018-272571793.wem",
+      "sourceWemSha256": "f26dd7d2cd370cc36d6e401a4cad9be063bf7a4803a2ca15b3e39c843c98b291",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00018-272571793.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00018-272571793.wav",
+      "bytes": 1018228,
+      "sha256": "c92d27dfcd82443d195c5cccf1f7371679ab3e4b4594638917f7a6355a9a239e",
+      "seconds": 5.772018140589569,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Dance3DGeneral",
+          "eventId": 1214039915,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 280263353,
+      "sourceWem": "a966309ae406fc2b/00019-280263353.wem",
+      "sourceWemSha256": "8584c4b20dad267725df6c466da5b17889a8d3bab6fc7e9da92671c4ef1930a1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00019-280263353.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00019-280263353.wav",
+      "bytes": 1132592,
+      "sha256": "f537abb0606548bd900334a7623116e7efdd39537536dec6fa7bc64fa511c1ff",
+      "seconds": 6.420340136054421,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DNasus",
+          "eventId": 631504579,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 303773628,
+      "sourceWem": "a966309ae406fc2b/00020-303773628.wem",
+      "sourceWemSha256": "ce8e5d6bacf2c5ac733566c2660697fd6005a69947c9c6acd41a6b2d8e3d7e71",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00020-303773628.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00020-303773628.wav",
+      "bytes": 1110576,
+      "sha256": "3c74b9e9204268ce5531704939828718145dae1c8bb0dd44f682d5a443c56574",
+      "seconds": 6.295532879818594,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DXerath",
+          "eventId": 1979020341,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 349211833,
+      "sourceWem": "a966309ae406fc2b/00021-349211833.wem",
+      "sourceWemSha256": "8064430eee86aec171235193829fcd7a06d129f050a56d0281380102a1ddcc48",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00021-349211833.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00021-349211833.wav",
+      "bytes": 1550476,
+      "sha256": "0905d6a3b5ea4c97c4808cc9da407b6bcc34b84f70b752a167a25546eb86b64e",
+      "seconds": 4.3946485260770976,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 367058298,
+      "sourceWem": "a966309ae406fc2b/00022-367058298.wem",
+      "sourceWemSha256": "64bc068d993a9aa685674846cebb7bdc2c76fc5a763cfea6360dec39a806ff2c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00022-367058298.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00022-367058298.wav",
+      "bytes": 282208,
+      "sha256": "6520258e56636fc1a72502c8b95d1ea2707f8dfa29aecd516facc4f168bba30a",
+      "seconds": 1.5995691609977325,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathMageSpear_cast3D",
+          "eventId": 286317321,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 369309902,
+      "sourceWem": "a966309ae406fc2b/00023-369309902.wem",
+      "sourceWemSha256": "927a19ce0d1233e40ef0bbbbfdc81fed9dd2430524ade60c3be5bf14e53f1f3d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00023-369309902.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00023-369309902.wav",
+      "bytes": 318308,
+      "sha256": "824d25502bb5331db0a7db19b3333cd12e4cf3ab4a69c16f99063e26bb8326b3",
+      "seconds": 1.8042176870748299,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathMageSpear_cast3D",
+          "eventId": 286317321,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 520393080,
+      "sourceWem": "a966309ae406fc2b/00024-520393080.wem",
+      "sourceWemSha256": "b135bc36e6b5ef8d2f54dc274e3d666da7a927c92c563fb91d1de98c120e94fc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00024-520393080.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00024-520393080.wav",
+      "bytes": 850660,
+      "sha256": "8e6c958d17956fef80202e805b223a01e7954249bfffb9a3f314604420aa72dc",
+      "seconds": 4.822086167800453,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Laugh3DGeneral",
+          "eventId": 1882422309,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 539387195,
+      "sourceWem": "a966309ae406fc2b/00025-539387195.wem",
+      "sourceWemSha256": "0483a7cebbce365f1c9e3ec05d01ffb8e976b4870114e759b35f708133e2c85b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00025-539387195.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00025-539387195.wav",
+      "bytes": 257816,
+      "sha256": "b21e56d00caee36e571f3d8305ff1c948abf7da8f7a154984978bd5bafc77d1d",
+      "seconds": 1.4612925170068027,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcaneBarrage2_cast3D",
+          "eventId": 1669066080,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 579697071,
+      "sourceWem": "a966309ae406fc2b/00026-579697071.wem",
+      "sourceWemSha256": "97ed1b6f7777cef111464658e7b8d033185b3ef01e11c71e987df7a4c133fa06",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00026-579697071.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00026-579697071.wav",
+      "bytes": 1724972,
+      "sha256": "ab17648221bc351583dbb921d585e947b295f08ab10b970117dcf7666ec3d5cb",
+      "seconds": 4.889251700680272,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 657453640,
+      "sourceWem": "a966309ae406fc2b/00027-657453640.wem",
+      "sourceWemSha256": "74853306356da940fa9db07c3ff65218a68687005ced7c3ae3329d7a36ab679c",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00027-657453640.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00027-657453640.wav",
+      "bytes": 1479400,
+      "sha256": "d83f7afdce0b8622af1389e133420d8ba8b32f58f6213f904172e7fd0758e7ed",
+      "seconds": 8.386371882086168,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DSyndra",
+          "eventId": 3285152542,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 665098352,
+      "sourceWem": "a966309ae406fc2b/00028-665098352.wem",
+      "sourceWemSha256": "b2f1222d3e8b707944544e32908669904a20f3fed61c36b7feabc0db2804a649",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00028-665098352.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00028-665098352.wav",
+      "bytes": 912076,
+      "sha256": "0004915a62454fc1c18b56e576193cd6f7b85e58263a79cababb5e63a3fcb9c1",
+      "seconds": 5.170249433106576,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Dance3DGeneral",
+          "eventId": 1214039915,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 695531228,
+      "sourceWem": "a966309ae406fc2b/00029-695531228.wem",
+      "sourceWemSha256": "05fe5f299a0569748bd6e69c02d991c0d64fd5ea1b4794dfb2f85864199bc896",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00029-695531228.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00029-695531228.wav",
+      "bytes": 265876,
+      "sha256": "53428674366d8048c2a7214d620a55cdb865c0e64b0d07c41baa8791c829639d",
+      "seconds": 1.506984126984127,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcaneBarrage2_cast3D",
+          "eventId": 1669066080,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 715316767,
+      "sourceWem": "a966309ae406fc2b/00030-715316767.wem",
+      "sourceWemSha256": "c54c33ea804825f3abef91d795b0d443b4fd2193d43c769c037d444264458791",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00030-715316767.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00030-715316767.wav",
+      "bytes": 2253444,
+      "sha256": "c0f1e3ee94ea167c9e8dcf085b3d7b9a5fc4ae84db77498bf0cfc966e173dadc",
+      "seconds": 6.38718820861678,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 729725351,
+      "sourceWem": "a966309ae406fc2b/00031-729725351.wem",
+      "sourceWemSha256": "89149389de44ef7c31fac78d65715f7caba79af68de7f6a1377677b3f93c9adb",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00031-729725351.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00031-729725351.wav",
+      "bytes": 1281464,
+      "sha256": "2bc0cf83606a6bd7910c23a147d1cd60ffdf09ffe545a326d3818f2125cb9e95",
+      "seconds": 7.264285714285714,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DAzir",
+          "eventId": 2515585719,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 742488022,
+      "sourceWem": "a966309ae406fc2b/00032-742488022.wem",
+      "sourceWemSha256": "27faead5e792ae3359bcb0f2cd01a2041ac89bb2bc3b074af25d7049cfa20486",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00032-742488022.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00032-742488022.wav",
+      "bytes": 1285828,
+      "sha256": "47625233c4148b07050500fb7b4d1f53e2050f515aada73543dd0463e72a2434",
+      "seconds": 7.2890249433106575,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DAzir",
+          "eventId": 2515585719,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 799464120,
+      "sourceWem": "a966309ae406fc2b/00033-799464120.wem",
+      "sourceWemSha256": "bb31f919dfde830129e6b9fdc6004118da810eb117663128cdad22e777d1ea2d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00033-799464120.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00033-799464120.wav",
+      "bytes": 1000304,
+      "sha256": "f2994923a59be75562aed6e1c0b045c53d114aad9d16222f3763657abbf1249b",
+      "seconds": 5.670408163265306,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Laugh3DGeneral",
+          "eventId": 1882422309,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 820216149,
+      "sourceWem": "a966309ae406fc2b/00034-820216149.wem",
+      "sourceWemSha256": "5140e39442506f19b11889560042410360dbaa05ae4b8b2c2243f81515c2d53f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00034-820216149.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00034-820216149.wav",
+      "bytes": 263464,
+      "sha256": "b86c544513fedb0cbd54cad712abcdc499ad7b07c744aace55ddff9ba7ebc960",
+      "seconds": 1.493310657596372,
+      "categories": [
+        "ability-cast",
+        "attack"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 837144372,
+      "sourceWem": "a966309ae406fc2b/00035-837144372.wem",
+      "sourceWemSha256": "f48cd2e9c5acbc356ba32f069228839a96aed671eae3300d0238e873107a3659",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00035-837144372.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00035-837144372.wav",
+      "bytes": 225632,
+      "sha256": "e36a23c01fec1b9652a3e69f4e8930df3491a3caa9a049cd9a928b27d6169c8d",
+      "seconds": 1.278843537414966,
+      "categories": [
+        "ability-cast",
+        "attack"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 837529598,
+      "sourceWem": "a966309ae406fc2b/00036-837529598.wem",
+      "sourceWemSha256": "a972e72e315f499a5b11222004f44f339a7d488dcc240df0b7026f776e947ee7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00036-837529598.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00036-837529598.wav",
+      "bytes": 1311348,
+      "sha256": "c39fac52da9584b9579e3f8026ef9457f39f53f7dd8e715c2e608493fdb41d0e",
+      "seconds": 7.433696145124717,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DAzir",
+          "eventId": 2515585719,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 853420469,
+      "sourceWem": "a966309ae406fc2b/00037-853420469.wem",
+      "sourceWemSha256": "9190b70948ccc29c42f9f87f22e7ca85547daaa419df1b8ea0e43419604b8910",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00037-853420469.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00037-853420469.wav",
+      "bytes": 498876,
+      "sha256": "4a9565caea5731ae5176bb57f8a3767961376a7e4cdbf92d0c5b373320c96863",
+      "seconds": 2.8278458049886623,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathLocusOfPower2_cast3D",
+          "eventId": 2844232756,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 892624020,
+      "sourceWem": "a966309ae406fc2b/00038-892624020.wem",
+      "sourceWemSha256": "cff785afd9ccd80b0be6d80aa8dcf1eacafdc905e0253f8f8d120f254df5f365",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00038-892624020.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00038-892624020.wav",
+      "bytes": 1717052,
+      "sha256": "e1572022672074e2d33828182090ef68f953921b19607eb6d713c92fc62c13bc",
+      "seconds": 4.866802721088435,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 954524537,
+      "sourceWem": "a966309ae406fc2b/00039-954524537.wem",
+      "sourceWemSha256": "22939d963719531da1f5ef9d7239e4fa21cef68053daba13349f35e3053f0796",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00039-954524537.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00039-954524537.wav",
+      "bytes": 1728292,
+      "sha256": "e2a64b68e5e281ffa32f8109b270701e23be3c8b43f02dc23112a8b017fe0da6",
+      "seconds": 4.898662131519274,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1084230652,
+      "sourceWem": "a966309ae406fc2b/00040-1084230652.wem",
+      "sourceWemSha256": "68af5bf751d4868c01a456556e9d121f593eade82e3d93f38a40a143eb5bf54b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00040-1084230652.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00040-1084230652.wav",
+      "bytes": 283480,
+      "sha256": "6ec00205310cc9ab83f8bbf98bbd405339739789a637267db51b7e8c7004fc03",
+      "seconds": 1.606780045351474,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcaneBarrage2_cast3D",
+          "eventId": 1669066080,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1084550769,
+      "sourceWem": "a966309ae406fc2b/00041-1084550769.wem",
+      "sourceWemSha256": "257bf233613f1d46b5a47cc6cfd8b6b8e6d81311106e519bd3ca08a2e2238b5f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00041-1084550769.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00041-1084550769.wav",
+      "bytes": 541704,
+      "sha256": "4136b69ca4ddbfd343053a76bf428ff998d87b046ea9ec9ac272c8c5fd6999a8",
+      "seconds": 3.070634920634921,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathLocusOfPower2_cast3D",
+          "eventId": 2844232756,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1142370348,
+      "sourceWem": "a966309ae406fc2b/00042-1142370348.wem",
+      "sourceWemSha256": "7a51eb2eaf7231b9e5bc48a4b5cb5e097d02efa63889a04494f11f04b0b6dac4",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00042-1142370348.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00042-1142370348.wav",
+      "bytes": 659748,
+      "sha256": "53995083c7002dbb214fc24a9adb89bc1afa205e2cfe3ea8001f58602a95da1b",
+      "seconds": 3.7398185941043085,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Kill3DPenta",
+          "eventId": 2538411078,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1196630098,
+      "sourceWem": "a966309ae406fc2b/00043-1196630098.wem",
+      "sourceWemSha256": "829dc54e7b7183e4b4c37176ec901697a6d931aab86a2352a07bbe296d24fddd",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00043-1196630098.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00043-1196630098.wav",
+      "bytes": 1448172,
+      "sha256": "c62ca0737f1301eeb11f9235c11faebe4f0e17f2837c9441053983fc23e1e9d0",
+      "seconds": 8.209342403628117,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Joke3DGeneral",
+          "eventId": 328235789,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1226315561,
+      "sourceWem": "a966309ae406fc2b/00044-1226315561.wem",
+      "sourceWemSha256": "40d44c4a09efba0e8df683044e422c4ab4b4121e7e1361e08b2ea3305915349b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00044-1226315561.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00044-1226315561.wav",
+      "bytes": 1029028,
+      "sha256": "601395f8d204fe542854c93fb25ab716d504d8e7b7ebcdaddcdd8dafdf981449",
+      "seconds": 5.833242630385487,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DShurima",
+          "eventId": 281778082,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1242240646,
+      "sourceWem": "a966309ae406fc2b/00045-1242240646.wem",
+      "sourceWemSha256": "badc13abeaaebb5aa468bfbcc1e7182e550197aaae4c1691ded4095059b1f43b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00045-1242240646.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00045-1242240646.wav",
+      "bytes": 933864,
+      "sha256": "7d8550fefbe4a0b4afd70b686ad926074d8a663dbe63fc400b66be3587c8c924",
+      "seconds": 5.293764172335601,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DShurima",
+          "eventId": 281778082,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1256408249,
+      "sourceWem": "a966309ae406fc2b/00046-1256408249.wem",
+      "sourceWemSha256": "da436d8140cb016fef7c2f1c10c1030726ee97484b6f115926c7406896617521",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00046-1256408249.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00046-1256408249.wav",
+      "bytes": 1076896,
+      "sha256": "a47aea045a5ae7c1be95bc8ad0458e022e20f81e8d24c33798f00cbc45fc1970",
+      "seconds": 6.104603174603175,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Dance3DGeneral",
+          "eventId": 1214039915,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1279589985,
+      "sourceWem": "a966309ae406fc2b/00047-1279589985.wem",
+      "sourceWemSha256": "b83f07d6ecb7ef46a432982d47fe023574252a6637cf21af2afc2952419e450f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00047-1279589985.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00047-1279589985.wav",
+      "bytes": 1022152,
+      "sha256": "2760bc801dd9cf4e4f68d3da2bf3be6aa5f26c7b6a214f5e12ac576279b35679",
+      "seconds": 5.794263038548753,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DShurima",
+          "eventId": 281778082,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1279669127,
+      "sourceWem": "a966309ae406fc2b/00048-1279669127.wem",
+      "sourceWemSha256": "dde1a25265676460a1b71f180e759caa2405b226c79ef1ca5644c271d8311777",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00048-1279669127.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00048-1279669127.wav",
+      "bytes": 1623940,
+      "sha256": "7004f80e9e08cfa9c93f57059704e3cae684d1819d7f8aedb278bc7c2a86575a",
+      "seconds": 4.602879818594104,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DFirstEnemyAzir",
+          "eventId": 3593896768,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1311653483,
+      "sourceWem": "a966309ae406fc2b/00049-1311653483.wem",
+      "sourceWemSha256": "99f50c343f71d9c2864cd6d4a5d60d4d3b23668a69a0048560863fec881ced81",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00049-1311653483.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00049-1311653483.wav",
+      "bytes": 1137868,
+      "sha256": "2c07653088199121a5b099e11ac4c028683b4180345eaea6a36cc4e39199f94e",
+      "seconds": 6.450249433106576,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Taunt3DGeneral",
+          "eventId": 3138322956,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1328804472,
+      "sourceWem": "a966309ae406fc2b/00050-1328804472.wem",
+      "sourceWemSha256": "62b4292dea31c877c839811407cb90326f8557926323e402d7d54de3094140d0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00050-1328804472.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00050-1328804472.wav",
+      "bytes": 255320,
+      "sha256": "1c40e4eaffd390779144630cbf049a97568f52e731c44ddf1a95bb5fc136bfa5",
+      "seconds": 1.447142857142857,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "W"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcaneBarrage2_cast3D",
+          "eventId": 1669066080,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "W"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1332381173,
+      "sourceWem": "a966309ae406fc2b/00051-1332381173.wem",
+      "sourceWemSha256": "08e5064c172f2e0b6ed8efd2d9a5a9f6e3790d00cbaf1c42b8dea336deac1694",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00051-1332381173.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00051-1332381173.wav",
+      "bytes": 680640,
+      "sha256": "601be3f1e11e30ba48bf9ef6f7a808f452e9cf0375ed1202e120a54a01b7bf75",
+      "seconds": 3.858253968253968,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathLocusOfPower2_cast3D",
+          "eventId": 2844232756,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1405944977,
+      "sourceWem": "a966309ae406fc2b/00052-1405944977.wem",
+      "sourceWemSha256": "52962dc91921aa66dc20b4c3c0180b2ebcd3393761446896663888727101ca5e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00052-1405944977.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00052-1405944977.wav",
+      "bytes": 598004,
+      "sha256": "59439026fed8b729938956624cf6e41942e63b539888d7dfe4f865b1fd502275",
+      "seconds": 3.389795918367347,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "R"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathLocusOfPower2_cast3D",
+          "eventId": 2844232756,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "R"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1426366017,
+      "sourceWem": "a966309ae406fc2b/00053-1426366017.wem",
+      "sourceWemSha256": "ab536740c53f9810b2df3f0bfef8a852ead79cdf29148690882e18917a55e172",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00053-1426366017.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00053-1426366017.wav",
+      "bytes": 1435724,
+      "sha256": "5006a7cb0153890727013b4c54885d1dafe454966485cb2bc6a8920b766dd256",
+      "seconds": 4.069387755102041,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1470052631,
+      "sourceWem": "a966309ae406fc2b/00054-1470052631.wem",
+      "sourceWemSha256": "13f9a50936ac38832e1d5572fb7be33205ec190f876ce718fac5c75947de2bca",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00054-1470052631.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00054-1470052631.wav",
+      "bytes": 1245960,
+      "sha256": "54f4c3959c27e993ca1e4917b6b2cc6e935c6fc9c47c4fd1bf287e0e0e2fd309",
+      "seconds": 7.063015873015873,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DThresh",
+          "eventId": 4202920945,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1509649316,
+      "sourceWem": "a966309ae406fc2b/00055-1509649316.wem",
+      "sourceWemSha256": "d20c19a3734c1038e219dc449024b5601776b31fb90229ee89c35328810bb985",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00055-1509649316.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00055-1509649316.wav",
+      "bytes": 2077324,
+      "sha256": "27a7085b598d829ea8ca590fa2a952dab97faff8c68df9e150140a3d99439aa2",
+      "seconds": 5.887981859410431,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1512859658,
+      "sourceWem": "a966309ae406fc2b/00056-1512859658.wem",
+      "sourceWemSha256": "1397f3ce1baf057a3d1a025dfda0c1bc17e128b19fd54b4875f4c9d16e52fafc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00056-1512859658.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00056-1512859658.wav",
+      "bytes": 1994044,
+      "sha256": "de4ceb9f932478003c1035b99856c4e393cc28ed0e14ff7e0d3219509ed1bbc9",
+      "seconds": 5.6519274376417235,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DFirstAllyRenekton",
+          "eventId": 2327986948,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1536652717,
+      "sourceWem": "a966309ae406fc2b/00057-1536652717.wem",
+      "sourceWemSha256": "11ed0a50704742b77c1ced8ba4ae0d80278029b79ccd59e076348dfa99ddfa1d",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00057-1536652717.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00057-1536652717.wav",
+      "bytes": 1515828,
+      "sha256": "dcef47ba8b93791c5fe1b1a3713be95bf309fb645746c596e5cb1eea4e544aa7",
+      "seconds": 4.296439909297052,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1573273698,
+      "sourceWem": "a966309ae406fc2b/00058-1573273698.wem",
+      "sourceWemSha256": "17fe6344dd3a8affc8ac15c4cd50774968c4f3b26dff7bcae3008e2b051bb3d2",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00058-1573273698.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00058-1573273698.wav",
+      "bytes": 2510884,
+      "sha256": "feb033d87ca341f579ad9e6d76a9120bb2ed1b039afa95d833b55932b70df9b0",
+      "seconds": 7.116893424036281,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1603454157,
+      "sourceWem": "a966309ae406fc2b/00059-1603454157.wem",
+      "sourceWemSha256": "5bf891d27d505f069b4ae531eec65e832ff6f939f6e752ea88efe93e26643a04",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00059-1603454157.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00059-1603454157.wav",
+      "bytes": 1905652,
+      "sha256": "52a1f7d678d49d929c2eca61d9776445f998e2af5ba87a81e76946aee582f79d",
+      "seconds": 5.401383219954648,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1760337771,
+      "sourceWem": "a966309ae406fc2b/00060-1760337771.wem",
+      "sourceWemSha256": "e76f266885a0c7a85eb7b86a1aff21e56e7c8f483c016226adc22d2ebbc88333",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00060-1760337771.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00060-1760337771.wav",
+      "bytes": 1224972,
+      "sha256": "211c9283e25104e6ae351288e9310703429f517b83511fedd9e93cf4adbe3c1c",
+      "seconds": 3.472018140589569,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1779825579,
+      "sourceWem": "a966309ae406fc2b/00061-1779825579.wem",
+      "sourceWemSha256": "360da45e0483d2c81e69091abd45f2067827eb93a63f0fb18b7c05d994754e9a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00061-1779825579.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00061-1779825579.wav",
+      "bytes": 451648,
+      "sha256": "6bbc9152adfea815e5f14f58f75c6432894ad32421c040908addf29f45f79ebe",
+      "seconds": 2.5601133786848074,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Death3D",
+          "eventId": 2862981710,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1820967603,
+      "sourceWem": "a966309ae406fc2b/00062-1820967603.wem",
+      "sourceWemSha256": "dccecc90fe71633fe7450eef3f599228d1d58af4c25e2f699ede64b1932a3bf1",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00062-1820967603.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00062-1820967603.wav",
+      "bytes": 1521140,
+      "sha256": "adb0a0b370f077ce9f36d431a6ceccae263e4fe8e8ccd8fb1314ba72141da9ea",
+      "seconds": 4.311496598639456,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1855553040,
+      "sourceWem": "a966309ae406fc2b/00063-1855553040.wem",
+      "sourceWemSha256": "19560f3b123f8e7f3aec523e49c37284768303fd807cb234016a163bffb31d2e",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00063-1855553040.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00063-1855553040.wav",
+      "bytes": 1640740,
+      "sha256": "c6e947b2072352aa0b8556f7c2c5a731132178a236b292a3030929da4e8bad7d",
+      "seconds": 4.650498866213152,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1878767673,
+      "sourceWem": "a966309ae406fc2b/00064-1878767673.wem",
+      "sourceWemSha256": "15d0d1df09dbb571d4ab5693e5699099e6cc6e3f90f76e7036fdd08c4ed3710b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00064-1878767673.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00064-1878767673.wav",
+      "bytes": 1499788,
+      "sha256": "994c4d579e41153215cca7d895fe24894234b40b85d25ef9e4606b671f1fa2a5",
+      "seconds": 4.2509750566893425,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1924307479,
+      "sourceWem": "a966309ae406fc2b/00065-1924307479.wem",
+      "sourceWemSha256": "23741ac00a3112f3b2cc0d198907d78830a2e659e2c45ade6f05caa3d6a8c29f",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00065-1924307479.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00065-1924307479.wav",
+      "bytes": 556840,
+      "sha256": "0ba8d1ad940ca00e3ae9d0660bbdcce74837ab338080c72a5b2b15764fbc73aa",
+      "seconds": 3.156439909297052,
+      "categories": [
+        "death"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Death3D",
+          "eventId": 2862981710,
+          "category": "death",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 1987825749,
+      "sourceWem": "a966309ae406fc2b/00066-1987825749.wem",
+      "sourceWemSha256": "44628166f281fb9ec1ac3849d0b760c306b7b2a4bf590b784aac6f690ed60717",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00066-1987825749.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00066-1987825749.wav",
+      "bytes": 1088632,
+      "sha256": "1d2f2c476c5bc1ddf72eade9c3aa438a1b1bc0fb20057e8117438b36013a768b",
+      "seconds": 6.171133786848072,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Laugh3DGeneral",
+          "eventId": 1882422309,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2008528634,
+      "sourceWem": "a966309ae406fc2b/00067-2008528634.wem",
+      "sourceWemSha256": "fe4f61f721aa53f8d711cac8e1ae6f85b14f1ea01be8cbea280485195d6dc6fc",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00067-2008528634.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00067-2008528634.wav",
+      "bytes": 981212,
+      "sha256": "e32ce38cb53a8a22daa0f57533dd5837cb2940bab706b13375d48b17cc372a1b",
+      "seconds": 5.562176870748299,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Kill3DPenta",
+          "eventId": 2538411078,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2018337266,
+      "sourceWem": "a966309ae406fc2b/00068-2018337266.wem",
+      "sourceWemSha256": "c8b16b51fc2d4f9171efeba468560268c32a9fe8ec42367a2f188a16813839b0",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00068-2018337266.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00068-2018337266.wav",
+      "bytes": 1628148,
+      "sha256": "e9ef7b2ac32fc65e67333577b744c64bd27ca7002e73305f27d4b7f4eb7da129",
+      "seconds": 4.614807256235828,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2020695840,
+      "sourceWem": "a966309ae406fc2b/00069-2020695840.wem",
+      "sourceWemSha256": "748a680d04a07fa90721c516d381a5470fb49f0812bb8114cd37e72859154f41",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00069-2020695840.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00069-2020695840.wav",
+      "bytes": 2132628,
+      "sha256": "39a9295db6e7be8b304c6fa14a6f8b650e64177fe20b97a4ac1fb5ab13beaf65",
+      "seconds": 6.044739229024943,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2039640855,
+      "sourceWem": "a966309ae406fc2b/00070-2039640855.wem",
+      "sourceWemSha256": "7c17bffc6d2ae6882365638c84148518b3db5372ffb78b7e16047c1067c5a354",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00070-2039640855.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00070-2039640855.wav",
+      "bytes": 1098988,
+      "sha256": "227150a2b8b4457e043fbed30e913beb9db08b45e0fdeebd9cd184976398c1f9",
+      "seconds": 6.22984126984127,
+      "categories": [
+        "emote"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Dance3DGeneral",
+          "eventId": 1214039915,
+          "category": "emote",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2050763396,
+      "sourceWem": "a966309ae406fc2b/00071-2050763396.wem",
+      "sourceWemSha256": "e8c760b4c05ad4376f8c8ab29c5da6fe9e1dae9f901cb72c396d973b97b82e59",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00071-2050763396.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00071-2050763396.wav",
+      "bytes": 1007860,
+      "sha256": "09bd6ad8f219264f3533d4a85f44c8fbc266175d6deaba740b8a57b46539323f",
+      "seconds": 2.856621315192744,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2053253391,
+      "sourceWem": "a966309ae406fc2b/00072-2053253391.wem",
+      "sourceWemSha256": "b9aa97a9216a943a793e1e9cae8fc62129147c4cf0f3a3a1d1cf9ad841e9d438",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00072-2053253391.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00072-2053253391.wav",
+      "bytes": 302492,
+      "sha256": "b11038c64e36d27bf44475d856522d994d73b113d50839e56948cf438adac3b8",
+      "seconds": 1.7145578231292518,
+      "categories": [
+        "ability-cast",
+        "attack"
+      ],
+      "abilitySlotCandidates": [
+        "Q"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2060333772,
+      "sourceWem": "a966309ae406fc2b/00073-2060333772.wem",
+      "sourceWemSha256": "afade71fc442a03586aa8723875e2ee02ed4e8272c25ff90d2fecfbfa7e4ba79",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00073-2060333772.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00073-2060333772.wav",
+      "bytes": 1369332,
+      "sha256": "a953012e37b9ea5481c76378ed455f7617b274caffca5b661d9aa3b73050262c",
+      "seconds": 3.881201814058957,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2065392894,
+      "sourceWem": "a966309ae406fc2b/00074-2065392894.wem",
+      "sourceWemSha256": "3bfa85cb9cd79368fb22c4705773cd943d5f493c53a04f748b00f84dee30c9a9",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00074-2065392894.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00074-2065392894.wav",
+      "bytes": 1744908,
+      "sha256": "af31cbdfa41738812b89433ddf8b6fc3ca1fae8eb048f74d992fa3814cd870d7",
+      "seconds": 4.945759637188209,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2075670090,
+      "sourceWem": "a966309ae406fc2b/00075-2075670090.wem",
+      "sourceWemSha256": "a506a873b691a9a3c0b524a1a066776ae552b790d547ed891b2022a4568fd768",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00075-2075670090.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00075-2075670090.wav",
+      "bytes": 1065128,
+      "sha256": "16c2c8efccc6a73ba63e46f3f3089f168fb1bb92306d7f9bd9f05459a2ad3b61",
+      "seconds": 6.037891156462585,
+      "categories": [
+        "encounter"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_FirstEncounter3DNasus",
+          "eventId": 631504579,
+          "category": "encounter",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2096193173,
+      "sourceWem": "a966309ae406fc2b/00076-2096193173.wem",
+      "sourceWemSha256": "1e4f917dcb509ab4e4fbdefe3cae10476d3984415cd96e2de83c05710a425a2b",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00076-2096193173.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00076-2096193173.wav",
+      "bytes": 1710852,
+      "sha256": "5de01ee41877cf614b88ef7030d56a285c5058706c39aa8bcaea02c1bdb5116c",
+      "seconds": 4.849229024943311,
+      "categories": [
+        "move"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Move2DStandard",
+          "eventId": 694398449,
+          "category": "move",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2115010494,
+      "sourceWem": "a966309ae406fc2b/00077-2115010494.wem",
+      "sourceWemSha256": "e785abfa3927e977366cad8c7970e93eb41be44ba4fd4411a380f8f7ce4df78a",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00077-2115010494.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00077-2115010494.wav",
+      "bytes": 290676,
+      "sha256": "bac796d13f2d1792a48318b767296c7649d087656cb58915df77071a288a1693",
+      "seconds": 1.6475736961451246,
+      "categories": [
+        "ability-cast"
+      ],
+      "abilitySlotCandidates": [
+        "E"
+      ],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathMageSpear_cast3D",
+          "eventId": 286317321,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "E"
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    },
+    {
+      "wemId": 2120481747,
+      "sourceWem": "a966309ae406fc2b/00078-2120481747.wem",
+      "sourceWemSha256": "e127c7f527250ac9fb2f6bb6b73aaa970304be680838694209ad5e8ac02727c7",
+      "path": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00078-2120481747.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00078-2120481747.wav",
+      "bytes": 1315668,
+      "sha256": "6a31b5a20ff6f02cbecb170f5198b1f93dc978008b7eb44467c5a6ef9c8deccd",
+      "seconds": 3.729092970521542,
+      "categories": [
+        "attack"
+      ],
+      "abilitySlotCandidates": [],
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_Attack2DGeneral",
+          "eventId": 3626043819,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "eventBindingsVerified": true,
+      "speakerVerified": false,
+      "perClipLanguageVerified": false,
+      "skillSemanticBindingStatus": "native-event-name-only-pending-ggd-audit"
+    }
+  ],
+  "gaps": [
+    "Per-clip listening, speaker, language and transcript review are pending.",
+    "Ability slots are candidates derived from native event-name tokens; GGD runtime binding is pending.",
+    "The complete non-localized champion WAD has not been reconstructed or archived."
+  ]
+}

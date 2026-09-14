@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "version.body.279f1646f87d33f6963e3edcd04d3770fa2cc41c3af7c473",
+  "modelKey": "version.body.de07eb4d2080d69ca2438240aa358f37615fab1d4738d7b4",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -112,7 +112,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-11-20260907.q.webp",
       "template": {
@@ -179,7 +179,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-11-20260907.w.webp",
       "template": {
@@ -234,7 +234,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-11-20260907.e.webp",
       "template": {
@@ -307,7 +307,7 @@
           "targetMode": "reresolve"
         }
       ],
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-11-20260907.r.webp",
       "template": {
@@ -379,6 +379,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457280-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.9dc018e902d47bae413635f604c326742a8dcfba4fe52a56",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457280",
+      "modelSha256": "5497a0a27bd12f95ce5da18926cac0ecc46d8b69274bf6b3a22305a3ba0f0412",
+      "binarySha256": "9cc19189b317670be5438a49bf6b0f529a4d7dc2e7e1730707d98736118b3748",
+      "registeredAt": "2026-09-10T14:45:29.986Z",
+      "source": {
+        "kind": "previous",
+        "character": "利姆路",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457280.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.922d5fed47d6a264169695737cab2f6dc1622104882a048d",
+      "label": "珂朵莉",
+      "sourceModelKey": "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a",
+      "modelSha256": "7c74d2e4cea546640fb582bbf5f7af8b05565eaf70fa4411469f76d91d8cea80",
+      "binarySha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "registeredAt": "2026-09-10T14:45:29.993Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "珂朵莉",
+        "work": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+        "library": "300heroes",
+        "reference": "300heroes:69984f1ef03f84baa007b28d",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.8194b95b37f0deeaaad85dae9f5b86c3db28d03ce914854e",
+      "label": "利姆路（論壇模型）",
+      "sourceModelKey": "ou99.457280-standard-v2",
+      "modelSha256": "72e0ed54bc6ebb8149b070c04ecb799645ff0d907b54a5bf917321a06ef881fe",
+      "binarySha256": "ea6c130fab0b49164f4c8c39a9a1285c9dd833062b09a18d2bc1f1a2eb91bddd",
+      "registeredAt": "2026-09-10T14:48:47.526Z",
+      "source": {
+        "kind": "exact",
+        "character": "利姆路",
+        "work": "關於我轉生變成史萊姆這檔事",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457280-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ba41578f2975cafb4a99321369aaba6e46e64d25fe9abf43",
+      "label": "珂朵莉",
+      "sourceModelKey": "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a",
+      "modelSha256": "6018893f554b0d1b278062985c9c3ca15e2fef9bc6868d023334658457fa2e4a",
+      "binarySha256": "bb74f2bb30872b4014df24975124c76c5b9cb0538e735b12f876fa31f715f18b",
+      "registeredAt": "2026-09-12T23:02:30.476Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "珂朵莉",
+        "work": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+        "library": "300heroes",
+        "reference": "300heroes:69984f1ef03f84baa007b28d",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.d9d8dbfa8ead890dff3d5009b07231e2aee65455e619a061",
+      "label": "利姆路（論壇模型）",
+      "sourceModelKey": "ou99.457280-standard-v2",
+      "modelSha256": "5bf1dc0ce35accbf44eede4097714512fb5aadb302e65f1561a6a6543d3c0d79",
+      "binarySha256": "3cd679350750e51c41adf27072a9801e62476875284741ecdab74230af7f24ff",
+      "registeredAt": "2026-09-12T23:02:30.663Z",
+      "source": {
+        "kind": "exact",
+        "character": "利姆路",
+        "work": "關於我轉生變成史萊姆這檔事",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457280-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.dccfb5eb5165a5a2a8582fdbea05fb63cc7b55b0e85c8899",
+      "label": "珂朵莉",
+      "sourceModelKey": "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a",
+      "modelSha256": "ed362d30f227325a78ea42e7daba9102e4360863fa0eac570300e0b005778f20",
+      "binarySha256": "bb74f2bb30872b4014df24975124c76c5b9cb0538e735b12f876fa31f715f18b",
+      "registeredAt": "2026-09-13T00:08:46.551Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "珂朵莉",
+        "work": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+        "library": "300heroes",
+        "reference": "300heroes:69984f1ef03f84baa007b28d",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.de07eb4d2080d69ca2438240aa358f37615fab1d4738d7b4",
+      "label": "利姆路（論壇模型）",
+      "sourceModelKey": "ou99.457280-standard-v2",
+      "modelSha256": "8c98005c8e7cfaa805a3a3f053e6362dab72da66b534022faf7ca61e7424681a",
+      "binarySha256": "3cd679350750e51c41adf27072a9801e62476875284741ecdab74230af7f24ff",
+      "registeredAt": "2026-09-13T00:08:46.738Z",
+      "source": {
+        "kind": "exact",
+        "character": "利姆路",
+        "work": "關於我轉生變成史萊姆這檔事",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457280-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -8,16 +8,16 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    300,
-    300,
-    300
+    300.0,
+    300.0,
+    300.0
   ],
-  "range": 8,
+  "range": 8.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -83,7 +83,7 @@
   ],
   "cooldownTier": "極大",
   "manaCostTier": "中",
+  "castTimeTier": "極大",
   "rangeTier": "大",
-  "castTimeSec": 1.0,
-  "castTimeTier": "極大"
+  "castTimeSec": 1
 }

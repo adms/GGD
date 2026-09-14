@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0
+    0.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -77,11 +77,11 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 0
+                      "flat": 0.0
                     },
                     "incomingPct": {
                       "perRank": [
-                        7
+                        7.0
                       ],
                       "maxChainDepth": 1,
                       "negateOriginal": true
@@ -115,12 +115,12 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 7
+                          "coeff": 7.0
                         }
                       ]
                     },
                     "length": 14,
-                    "width": 2,
+                    "width": 2.0,
                     "aim": "target",
                     "fromCaster": true,
                     "includeOrigin": true,
@@ -129,7 +129,7 @@
                       "resource": "mana",
                       "basis": "current",
                       "perRank": [
-                        7
+                        7.0
                       ]
                     }
                   },
@@ -160,7 +160,7 @@
                 ]
               }
             ],
-            "internalCooldown": 1,
+            "internalCooldown": 1.0,
             "target": "event"
           }
         ]
@@ -175,6 +175,5 @@
       "attachTo": "point"
     }
   ],
-  "castTimeTier": "極小",
-  "castTimeSec": 0
+  "castTimeTier": "極小"
 }

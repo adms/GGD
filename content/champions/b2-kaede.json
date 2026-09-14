@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -75,7 +75,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         15.0,
@@ -145,7 +145,7 @@
       "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 1.433,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         90.0,
@@ -197,7 +197,7 @@
         "params": {
           "anchor": "point",
           "applyTo": "enemies",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damageTier": "中",
           "damageType": "magic",
           "durationSec": 3,
@@ -219,7 +219,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -327,7 +327,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-kaede",
-  "modelKey": "version.body.12d315398cde2fe6298c11f3889201a0ca9077c01e320907",
+  "modelKey": "version.body.6240633d06d78d57bd168d8a6775e42915f3477448b0fbd5",
   "name": "楓",
   "origin": "法鬥",
   "passiveAbility": "b2-kaede.passive",
@@ -373,6 +373,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-474258-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.dcb2b25b905cfeca7bcf4acd0184171db8a4948ee58c0af1",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.474258",
+      "modelSha256": "ff7e98f7e0a5d63cf04f1bd057010ad5d7160e2525363da576de7cacee611f70",
+      "binarySha256": "66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06",
+      "registeredAt": "2026-09-10T14:45:39.502Z",
+      "source": {
+        "kind": "previous",
+        "character": "楓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.474258.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f6e33e6cd07961020df200e1dd883d671a164a376a6735de",
+      "label": "绯红女剑校服女（論壇相似模型）",
+      "sourceModelKey": "ou99.474258-standard",
+      "modelSha256": "f4f567bba0de527d65fdba4753826cdda1b1a88bbe27f871a70dccb1f846930c",
+      "binarySha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "registeredAt": "2026-09-10T14:45:39.516Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯红女剑校服女",
+        "work": "來源作品待核；論壇標題：绯红女剑校服女",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-474258-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a5b79ca7632788eb9e9c32f54b5c3c8fa3b6e06d2e865f1a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4823275304f57f71ffdb0a7cfdd26c821e2849b62f85fe8aeac4a7d0a2806f3d",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-10T14:45:39.591Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b2b7f6b11e2836248a4e98e76fd58d7c6745bb1e9cab1596",
+      "label": "绯红女剑校服女（論壇相似模型）",
+      "sourceModelKey": "ou99.474258-standard",
+      "modelSha256": "4b74aa038d2a76eb942e4775b9826dc2a0f71a2c6cc81b7690356e57ef6e4e32",
+      "binarySha256": "319db4f84bd4eb6e3db37c4342fe9f762abc80b0eebf928fc016c1fd816b2009",
+      "registeredAt": "2026-09-12T23:11:57.886Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯红女剑校服女",
+        "work": "來源作品待核；論壇標題：绯红女剑校服女",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-474258-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.0d143acac04986ba45298355c926aeed946b2e6e18464def",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "0d88c84e26e20f3ce7b5ea64c4d70582bbea533661c44185882e6b02aeb3611d",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-12T23:11:58.132Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.6240633d06d78d57bd168d8a6775e42915f3477448b0fbd5",
+      "label": "绯红女剑校服女（論壇相似模型）",
+      "sourceModelKey": "ou99.474258-standard",
+      "modelSha256": "526f1a46c1cd9354f012ae3cce4925625d924d3d5b973dcf830beaad52ed6b51",
+      "binarySha256": "319db4f84bd4eb6e3db37c4342fe9f762abc80b0eebf928fc016c1fd816b2009",
+      "registeredAt": "2026-09-13T00:09:01.855Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯红女剑校服女",
+        "work": "來源作品待核；論壇標題：绯红女剑校服女",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-474258-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.99c137bf0513caf89bf712bbd959e6867e8ec67b41360a8a",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "51e2bf1d70462122e69f801d827557d4fe1af1fc7bba492afe8f8a6bfe3893e8",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-13T00:09:02.105Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

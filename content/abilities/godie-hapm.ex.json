@@ -8,12 +8,12 @@
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    60
+    60.0
   ],
   "manaCost": [
-    300
+    300.0
   ],
-  "range": 6,
+  "range": 6.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -38,7 +38,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1
+                "coeff": 1.0
               }
             ]
           },
@@ -55,14 +55,14 @@
       "finalEffects": [
         {
           "kind": "knockback",
-          "distance": 3,
-          "speed": 15,
+          "distance": 3.0,
+          "speed": 15.0,
           "from": "caster"
         },
         {
           "kind": "applyStatus",
           "statusId": "fear",
-          "duration": 3,
+          "duration": 3.0,
           "feared": true
         }
       ]
@@ -72,7 +72,7 @@
   "vfxKey": "fx.prim.fire.explosion-lg",
   "cooldownTier": "極大",
   "manaCostTier": "中",
+  "castTimeTier": "極大",
   "rangeTier": "中",
-  "castTimeSec": 1,
-  "castTimeTier": "極大"
+  "castTimeSec": 1
 }

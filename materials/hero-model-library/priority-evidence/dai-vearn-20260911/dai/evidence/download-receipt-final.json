@@ -1,0 +1,22 @@
+{
+  "schema": "ggd.public-download-receipt.v1",
+  "sourceUrl": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+  "downloadUrl": "https://www.patreon.com/file?h=66623597&m=153675691",
+  "method": "GET /usr/bin/curl with normal system TLS verification; no authentication/cookies supplied",
+  "httpStatus": 200,
+  "mimeType": "application/zip",
+  "complete": true,
+  "downloadedBytes": 17352966,
+  "archive": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/original/Dai V2.zip",
+    "relativePath": "original/Dai V2.zip",
+    "bytes": 17352966,
+    "sha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434"
+  },
+  "earlierAttempt": {
+    "result": "local-python-ca-configuration-error",
+    "recordPath": "evidence/download-receipt.json",
+    "permissionRejected": false
+  },
+  "zipCrcAllMembersPassed": true
+}

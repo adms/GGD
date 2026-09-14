@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "法刺",
-  "modelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+  "modelKey": "version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -83,7 +83,7 @@
           }
         }
       ],
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-24-20260907.q.webp",
       "template": {
@@ -154,7 +154,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-24-20260907.w.webp",
       "template": {
@@ -217,7 +217,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-24-20260907.e.webp",
       "template": {
@@ -281,7 +281,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-24-20260907.r.webp",
       "template": {
@@ -326,5 +326,61 @@
   "tags": [
     "claw"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.e54c9ed50878a152ef561b8659ce4e97c3a78f44737e212c",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "modelSha256": "feb0ac03b7773e2400e19abd4550b386d8bc315b8322dd6105ed3ae08f17261f",
+      "binarySha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "registeredAt": "2026-09-12T23:02:33.420Z",
+      "source": {
+        "kind": "previous",
+        "character": "奇犽",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.197ac8f6e6186e2cbbfeb3caffa02c12308cf6e5e68ce637",
+      "label": "奇犽",
+      "sourceModelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "modelSha256": "8cf369f4b98843a60fad0c44126a450fe516724d2b0fbd6ef8f168f9fe460f4c",
+      "binarySha256": "0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2",
+      "registeredAt": "2026-09-12T23:02:33.422Z",
+      "source": {
+        "kind": "exact",
+        "character": "奇犽",
+        "work": "HUNTER×HUNTER 獵人",
+        "library": "300heroes",
+        "reference": "300heroes:37e03796cc2c9c2829f7e345",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f",
+      "label": "奇犽",
+      "sourceModelKey": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+      "modelSha256": "6117c85fd2dc83420b8181fa3f72edbf7896b2af2f4de75ce11e49f7178175f3",
+      "binarySha256": "0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2",
+      "registeredAt": "2026-09-13T00:08:49.310Z",
+      "source": {
+        "kind": "exact",
+        "character": "奇犽",
+        "work": "HUNTER×HUNTER 獵人",
+        "library": "300heroes",
+        "reference": "300heroes:37e03796cc2c9c2829f7e345",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

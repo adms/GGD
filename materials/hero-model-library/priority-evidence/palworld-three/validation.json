@@ -1,0 +1,134 @@
+{
+  "schema": "ggd-palworld-three-integration-validation@1",
+  "baseCommit": "384ba5838561af77caf6fa72cca6db23f572cd61",
+  "checks": [
+    {
+      "name": "skills:check",
+      "exitCode": 1,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-skills-check.log",
+      "sha256": "523780bd79e8c1e95aaa7d76de100e50303caa42378c758707aa0b7c6092d2c3",
+      "boundary": "Prior-day message ledger missing/unpaired rows."
+    },
+    {
+      "name": "editor:accept:release",
+      "exitCode": 1,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-editor-accept.log",
+      "sha256": "2acf1d086041216a879449da9193c88c5a0d94b496fb4ca3d3342e732bd52d59",
+      "boundary": "Two existing Skill Forge capability-only catalog mismatches."
+    },
+    {
+      "name": "coord:check",
+      "exitCode": 1,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-coord-check.log",
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb",
+      "boundary": "Existing claim.editor-form-receipts duplicate merged fingerprint; asset-library claim passes."
+    },
+    {
+      "name": "source/inventory/voice unit tests",
+      "exitCode": 0,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-python-tests.log",
+      "sha256": "fec9d90a1823c920beb4c1619637076223355b83df03ca337483cb34f49f339d",
+      "boundary": "67 tests: 66 pass and one optional real TAR fixture skip."
+    },
+    {
+      "name": "all hero mechanics analysis",
+      "exitCode": 0,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-ability-analysis.log",
+      "sha256": "b453191d4a870c6894fa71dda3fe84d4b851802a0d14188728dc475b40b1bb81",
+      "boundary": "907 abilities, schema/template expansion checked."
+    },
+    {
+      "name": "voice index",
+      "exitCode": 0,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-voice-index.log",
+      "sha256": "93d5fa2eccca4e99dea9d4987be289d61e653f0d2fdb6ddaa17a70ea11951b67",
+      "boundary": "278994 primary audio files; no missing/size-changed files."
+    },
+    {
+      "name": "final audio ownership/path helper tests",
+      "exitCode": 0,
+      "log": "priority-evidence/palworld-three/checks/ggd-palworld-voice-delivery-tests.log",
+      "sha256": "37a965053b48fa4707dcfed47c4e476852e8941d5012992b7d8a124bf8aa9edf",
+      "boundary": "9 tests pass after preserving report input pins."
+    }
+  ],
+  "sourceIdentities": 731,
+  "backlogCounts": {
+    "not-defined": 387,
+    "definitions-incomplete": 11,
+    "identity-review": 247,
+    "designed": 86,
+    "source-unavailable": 0
+  },
+  "palworld": {
+    "characterCount": 3,
+    "preservedModelFiles": 15,
+    "modelSources": 5,
+    "distinctCryCount": 18,
+    "centralAudioGroups": 3,
+    "allAudioSourceHashesAndLocalPathsMatch": true,
+    "allThreeQueryVoiceCommandsPassed": true,
+    "sourceArchiveReadbackVerified": true,
+    "all18ExcludedFromSpeechInput": true,
+    "all18EventLabelsPreserved": true,
+    "audioReportPinsRetained": true
+  },
+  "coverageSummary": {
+    "heroes": 153,
+    "abilityDocumentsAnalyzed": 907,
+    "declaredHeroAbilityReferences": 912,
+    "uniqueDirectHeroAbilityPaths": 906,
+    "abilityDocumentsNotDirectlyReferencedByCurrentHeroes": [
+      "godie-zombieking.passive"
+    ],
+    "heroesWithAllDeclaredMechanics": 153,
+    "heroesWithMissingRefs": 0,
+    "heroesWithExplicitSkillPlaceholderEvidence": 0,
+    "heroesWithUncertainty": 0,
+    "statusCounts": {
+      "mechanics-defined": 153
+    },
+    "schemaFailedAbilities": 0,
+    "templateExpansionFailedAbilities": 0,
+    "snapshotWhitelistedHeroes": 130,
+    "snapshotNotWhitelistedHeroes": 23,
+    "builtinFourSlotCharacters": [
+      "sela",
+      "thorne"
+    ],
+    "designCompletionVerified": false,
+    "sourceFilesStableDuringAudit": true
+  },
+  "voiceSummary": {
+    "groups": 969,
+    "audioFiles": 278994,
+    "bytes": 132954450061,
+    "missingOrSizeChanged": 0,
+    "confirmedVoiceCount": null,
+    "synthesisReadyGroups": 0,
+    "alternateFormatFiles": 168,
+    "prefetchAliases": 47
+  },
+  "priority81": {
+    "heroCount": 81,
+    "activeModelFilesAndMappingsPass": 81,
+    "activeModelsGitTracked": 81,
+    "activePlaceholderCount": 0,
+    "registeredCandidateCount": 283,
+    "perHeroAudioAudits": 81,
+    "heroesWithReportedGaps": 7,
+    "mainBaselineAudioFiles": 1016,
+    "currentBranchAudioAdditions": 2,
+    "currentBranchAudioFiles": 1018,
+    "mainMergedAudioAdditions": false,
+    "productionDeploymentVerified": false,
+    "all81NativeAudioOrMotionComplete": false
+  },
+  "allReleaseChecksPassed": false,
+  "productionDeployed": false,
+  "remaining": [
+    "GGD material/motion normalization and actual backend selection",
+    "Standalone VFX and skill-specific SFX acquisition",
+    "Main review/merge/deployment"
+  ]
+}

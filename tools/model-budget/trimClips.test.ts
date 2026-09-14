@@ -119,6 +119,15 @@ describe("the SHIPPED stand-ins still satisfy every derived requirement", () => 
 });
 
 describe("the prune moves animation bytes and NOTHING else", () => {
+  it("omits empty optional arrays for a vertex-colour-only animated GLB", () => {
+    const src = path.join(ROOT, "content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb");
+    const out = path.join(tmp, "tram-pruned.glb");
+    fs.writeFileSync(out, pruneAnimations(readGlb(src), clipNames(src)));
+    const json = readGlb(out).json;
+    expect(json.images).toBeUndefined();
+    expect(json.skins).toBeUndefined();
+  });
+
   it("a re-prune of a shipped file is geometry/rig/texture identical", () => {
     const src = path.join(CHAMPS, "blocky-knight.glb");
     const glb = readGlb(src);

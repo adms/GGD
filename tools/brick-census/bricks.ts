@@ -592,7 +592,7 @@ export function buildBricks(root: string): BricksDoc {
    * ⛔ 所以這裡**不是**「兩個住處」：量值只有一個來源（他們的收據），
    * ⭐ 而代理值是**收據還沒到**時的誠實退路（`editorFormSource` 會說出用的是哪一個）。
    */
-  const receiptName = "claim.editor-form-receipts-spawn-obstacle.json";
+  const receiptName = "claim.editor-form-receipts-spawn-obstacle-landed.json";
   const receiptPath = join(root, "docs/editor-contract/coordination", receiptName);
   const receipts = ((): Map<string, boolean> | null => {
     if (!existsSync(receiptPath)) return null;

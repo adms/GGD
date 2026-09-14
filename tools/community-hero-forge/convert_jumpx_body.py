@@ -152,7 +152,7 @@ def normalize_palette(count, ids, weights, bone_count):
     return [ids[j] if weights[j] > 0 else ids[live[0]] for j in range(4)], weights/sum(weights)
 
 
-def convert(raw, mesh_ids, clip_names, texture_rows, fps):
+def convert(raw, mesh_ids, clip_names, texture_rows, fps, flatten_hierarchy=False, repair_key_bones=()):
     version, fields, head, data = native(raw)
     if not 0 < fps <= 120 or len(set(mesh_ids)) != len(mesh_ids) or not 0 < len(mesh_ids) <= 5:
         raise ValueError("Choose 1-5 unique body meshes and an explicit frame rate")
@@ -217,7 +217,7 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
         if not mesh["name"] or mesh["name"] in used_names:
             mesh["name"] = f"native-mesh-{mesh['index']}"
         used_names.add(mesh["name"])
-    for joint in list(needed):
+    for joint in ([] if flatten_hierarchy is True else list(needed)):
         seen = set()
         parent = bones[joint]["parent"]
         while parent >= 0:
@@ -227,16 +227,41 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
     kept = sorted(needed)
     bone_map = {old: new for new, old in enumerate(kept)}
     bind_global = {i: basis @ np.linalg.inv(bones[i]["inverse"]) @ inverse_basis for i in kept}
+    detached = set(kept) if flatten_hierarchy is True else set()
+    if flatten_hierarchy == "repair":
+        def raw_key(bone, ci, ai, width, frame, default):
+            count, address = bone["keys"][ci], bone["keys"][ai]
+            if not count: return np.array(default, dtype=float)
+            if not address or (count != 1 and frame >= count):
+                raise ValueError("Unsupported native key layout during hierarchy repair")
+            return np.array(unpack("<"+"f"*width, data, address-BIAS+(0 if count==1 else frame)*width*4))
+        def mark_shear(poses):
+            for i in kept:
+                parent=bones[i]["parent"]
+                if parent<0 or i in detached: continue
+                try: decompose(np.linalg.inv(poses[parent]) @ poses[i])
+                except ValueError as error:
+                    if str(error) not in ("Native local transform contains shear", "Bone TRS round trip failed"): raise
+                    detached.add(i)
+        mark_shear(bind_global)
+        frames=sorted({frame for name in clip_names for frame in range(*clips[name])})
+        for frame in frames:
+            poses={}
+            for i in kept:
+                bone=bones[i];q=raw_key(bone,9,10,4,frame,[0,0,0,1]);q[:3]*=-1
+                m=np.eye(4);m[:3,:3]=rotation_matrix(q) @ np.diag(raw_key(bone,12,13,3,frame,[1,1,1]));m[:3,3]=raw_key(bone,6,7,3,frame,[0,0,0])
+                poses[i]=basis @ m @ inverse_basis
+            mark_shear(poses)
     nodes = []
     for i in kept:
-        parent = bones[i]["parent"]
+        parent = -1 if i in detached else bones[i]["parent"]
         local = np.linalg.inv(bind_global[parent]) @ bind_global[i] if parent >= 0 else bind_global[i]
         pos, rot, scale = decompose(local)
-        nodes.append({"name": bones[i]["name"], "translation": pos.tolist(), "rotation": rot.tolist(), "scale": scale.tolist(), "extras": {"jumpxBone": i}})
+        nodes.append({"name": bones[i]["name"], "translation": pos.tolist(), "rotation": rot.tolist(), "scale": scale.tolist(), "extras": {"jumpxBone": i, "nativeParent": bones[i]["parent"]}})
     for i in kept:
-        if bones[i]["parent"] >= 0:
+        if i not in detached and bones[i]["parent"] >= 0:
             nodes[bone_map[bones[i]["parent"]]].setdefault("children", []).append(bone_map[i])
-    roots = [bone_map[i] for i in kept if bones[i]["parent"] < 0]
+    roots = [bone_map[i] for i in kept if i in detached or bones[i]["parent"] < 0]
     scene_roots = roots.copy()
     if len(roots) > 1:
         scene_roots = [len(nodes)]
@@ -311,7 +336,25 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
             raise ValueError("Packed animation keys require a separate verified decoder")
         if count != 1 and frame >= count:
             raise ValueError("Animation frame outside native keys")
-        return np.array(unpack("<" + "f"*width, data, address-BIAS+(0 if count == 1 else frame)*width*4))
+        value = np.array(unpack("<" + "f"*width, data, address-BIAS+(0 if count == 1 else frame)*width*4))
+        if not np.all(np.isfinite(value)) and bone['name'] in repair_key_bones:
+            if count == 1: raise ValueError('Cannot reconstruct a non-finite constant track')
+            # Explicit derivative-only reconstruction. Never alter the native bytes.
+            # Interpolate only inside this selected clip; preserve every finite key.
+            def sample(at):
+                return np.array(unpack('<' + 'f'*width, data, address-BIAS+at*width*4))
+            left = next((j for j in range(frame-1, start-1, -1) if np.all(np.isfinite(sample(j)))), None)
+            right = next((j for j in range(frame+1, end) if np.all(np.isfinite(sample(j)))), None)
+            if left is None and right is None:
+                raise ValueError('No finite key in selected clip for '+bone['name'])
+            if left is None: value = sample(right)
+            elif right is None: value = sample(left)
+            else:
+                a, b = sample(left), sample(right)
+                if width == 4 and np.dot(a, b) < 0: b = -b
+                value = a + (b-a) * ((frame-left)/(right-left))
+            if width == 4: value /= np.linalg.norm(value)
+        return value
 
     # A rigid weapon's visibility can use its exclusive leaf joint. Refuse a
     # shared joint: hiding it would incorrectly collapse other body geometry.
@@ -366,7 +409,7 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
                         positions.append((basis @ deformed)[:3].tolist())
                     native_pose_samples.append({"clip": name, "nativeFrame": frame, "seconds": frame_offset/fps, "meshName": mesh["name"], "vertices": sample_vertices, "positions": positions})
             for i in kept:
-                parent = bones[i]["parent"]
+                parent = -1 if i in detached else bones[i]["parent"]
                 local = np.linalg.inv(global_pose[parent]) @ global_pose[i] if parent >= 0 else global_pose[i]
                 position, quaternion, scale = decompose(local)
                 if tracks[i][1] and np.dot(tracks[i][1][-1], quaternion) < 0:
@@ -396,6 +439,10 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
                 animation["channels"].append({"sampler": sampler, "target": {"node": bone_map[i], "path": path}})
         doc["animations"].append(animation)
     report = {"nativeVersion": version, "nativeInverseAffineMaxError": affine_error, "originalBoneCount": len(bones), "retainedBones": kept, "bodyMeshes": [{"index": m["index"], "name": m["name"], "sourceName": m["sourceName"]} for m in meshes], "excludedMeshIndices": [i for i in range(fields["ngeo"]) if i not in mesh_ids], "originalClipCount": fields["nact"], "nativeFrameRanges": {name: clips[name] for name in clip_names}, "fps": fps, "fpsBasis": "Explicit adaptation setting; bundled native viewer advances at 1/32 s", "coordinateConversion": "Max Z-up to glTF Y-up; 0.01 metres/native unit", "textures": texture_proof, "visibilityLeafBones": list(visibility), "adaptations": ["Selected body/weapon meshes only; native particles and other appearances excluded", "Original weighted joints and ancestors retained; global native poses converted into local glTF hierarchy", "Diffuse textures converted to embedded PNG with unlit double-sided materials"]}
+    report["hierarchyMode"] = "global-pose-sibling-joints" if flatten_hierarchy is True else "selective-shear-repair" if detached else "native-parent-hierarchy"
+    report["detachedNativeBones"] = sorted(detached)
+    if flatten_hierarchy:
+        report["adaptations"].append("Bake global joint poses under a common root to avoid local shear; preserve weighted joints, inverse binds and native parent metadata")
     report["nativePoseSamples"] = native_pose_samples
     report["staticChannelOptimization"] = {"before": len(kept)*3, "after": channel_count, "omitted": [{"bone": i, "path": path} for i, path in sorted(static_channels)], "tolerance": STATIC_CHANNEL_TOLERANCE, "policy": "Only values constant across ALL selected clips become node defaults; changing properties stay keyed in every clip to reset sequential playback"}
     return doc, bytes(binary), report
@@ -441,7 +488,7 @@ def main():
         raise ValueError("Source must be local and output must be separate")
     texture_rows = {mid: next(r for r in textures if r["id"] == identifier) for mid, identifier in config["textures"].items()}
     raw = source.read_bytes()
-    doc, binary, report = convert(raw, config["meshes"], list(dict.fromkeys(config["clips"].values())), texture_rows, config["fps"])
+    doc, binary, report = convert(raw, config["meshes"], list(dict.fromkeys(config["clips"].values())), texture_rows, config["fps"], config.get("flattenHierarchy", False))
     output = encode_glb(doc, binary)
     receipt_path = args.out.with_suffix(".receipt.json")
     if args.out.exists() or receipt_path.exists():

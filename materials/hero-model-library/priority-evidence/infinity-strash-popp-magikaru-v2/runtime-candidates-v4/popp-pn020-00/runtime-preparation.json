@@ -1,0 +1,500 @@
+{
+  "schema": "ggd.infinity-strash-runtime-candidate@1",
+  "candidateId": "popp-pn020-00",
+  "contract": {
+    "preparation": "prepareUploadedHeroModel",
+    "verification": "verifyUploadedHeroModel"
+  },
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-magikaru-v3/popp-pn020-00/popp-pn020-00-ggd-normalized.glb",
+    "bytes": 3990712,
+    "sha256": "b335041c9c5556fc9a57a84c7073be6a922da54f5e6f385dec8458ed389349b4",
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_native_idle",
+        "duration": 2.5,
+        "channels": 217
+      },
+      {
+        "index": 1,
+        "name": "GGD_native_run",
+        "duration": 0.75,
+        "channels": 274
+      },
+      {
+        "index": 2,
+        "name": "GGD_native_attack",
+        "duration": 1.6666666269302368,
+        "channels": 275
+      },
+      {
+        "index": 3,
+        "name": "GGD_native_down",
+        "duration": 2.9166667461395264,
+        "channels": 216
+      },
+      {
+        "index": 4,
+        "name": "GGD_native_special01",
+        "duration": 5,
+        "channels": 279
+      },
+      {
+        "index": 5,
+        "name": "GGD_native_special02",
+        "duration": 5.416666507720947,
+        "channels": 321
+      },
+      {
+        "index": 6,
+        "name": "GGD_native_special03",
+        "duration": 6.25,
+        "channels": 308
+      }
+    ]
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v4/popp-pn020-00/body.glb",
+    "bytes": 2367208,
+    "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+    "document": {
+      "id": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+      "schema": "model@1",
+      "glbPath": "assets/models/community/97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe.glb",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    },
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "byteSize": 2367208,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    }
+  },
+  "roleMapping": [
+    {
+      "state": "idle",
+      "sourceName": "GGD_native_idle",
+      "sourceIndex": 0,
+      "origin": "Infinity Strash native battle idle loop"
+    },
+    {
+      "state": "run",
+      "sourceName": "GGD_native_run",
+      "sourceIndex": 1,
+      "origin": "Infinity Strash native forward battle run"
+    },
+    {
+      "state": "attack",
+      "sourceName": "GGD_native_attack",
+      "sourceIndex": 2,
+      "origin": "Infinity Strash native attack"
+    },
+    {
+      "state": "cast",
+      "sourceName": "GGD_native_special03",
+      "sourceIndex": 6,
+      "origin": "Infinity Strash native Special03 phase 01; provisional GGD cast mapping"
+    },
+    {
+      "state": "hurt",
+      "sourceName": "GGD_native_down",
+      "sourceIndex": 3,
+      "origin": "Native down loop reused as hurt"
+    },
+    {
+      "state": "death",
+      "sourceName": "GGD_native_down",
+      "sourceIndex": 3,
+      "origin": "Native down loop reused as death; no distinct PN020 death AnimSequence was acquired"
+    }
+  ],
+  "inspection": {
+    "triangles": 15766,
+    "meshes": 4,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 18961,
+        "sha256": "58e5b9b77285e1c9a4af8296fba80fcb9821bfc92ba496a46a3fd726052221af"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 7571,
+        "sha256": "b033a0fe5d1604931b11bb85a3ef57d308f7c073a40fef7a616d84c0661e0f09"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 14445,
+        "sha256": "79099c502006010b39e869ea3eeeeddb77b118e7af2b30b88b4bb0b03787e7b4"
+      },
+      {
+        "width": 8,
+        "height": 8,
+        "bytes": 79,
+        "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 9270,
+        "sha256": "753e9170e98e0663533d666323c93cfde60249221282facc8864a356685cf5f3"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_native_idle",
+        "duration": 2.5,
+        "channels": 217
+      },
+      {
+        "index": 1,
+        "name": "GGD_native_run",
+        "duration": 0.75,
+        "channels": 274
+      },
+      {
+        "index": 2,
+        "name": "GGD_native_attack",
+        "duration": 1.6666666269302368,
+        "channels": 275
+      },
+      {
+        "index": 3,
+        "name": "GGD_native_special03",
+        "duration": 6.25,
+        "channels": 308
+      },
+      {
+        "index": 4,
+        "name": "GGD_native_down",
+        "duration": 2.9166667461395264,
+        "channels": 216
+      }
+    ],
+    "report": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 3,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/331"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/332"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.2.40",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1992804
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/3",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 8,
+              "height": 8,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/4",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 5,
+        "materialCount": 4,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 4,
+        "totalVertexCount": 11777,
+        "totalTriangleCount": 15766,
+        "maxUVs": 2,
+        "maxInfluences": 4,
+        "maxAttributes": 8
+      }
+    }
+  },
+  "normalization": {
+    "drawCalls": {
+      "before": 4,
+      "after": 4
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": false
+  },
+  "budget": {
+    "errors": [],
+    "warnings": [
+      "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+      "單段動作通道 308 高於警戒值 300，送審時需檢查演出負載。"
+    ]
+  },
+  "warnings": [
+    "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+    "單段動作通道 308 高於警戒值 300，送審時需檢查演出負載。"
+  ],
+  "khronos": {
+    "uri": "body.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 3,
+      "numInfos": 3,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+          "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+          "severity": 1,
+          "pointer": "/meshes/0/primitives/0/material"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/2/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "NODE_SKINNED_MESH_NON_ROOT",
+          "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/nodes/331"
+        },
+        {
+          "code": "NODE_SKINNED_MESH_NON_ROOT",
+          "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/nodes/332"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1992804
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/3",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 8,
+            "height": 8,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/4",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 4,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 4,
+      "totalVertexCount": 11777,
+      "totalTriangleCount": 15766,
+      "maxUVs": 2,
+      "maxInfluences": 4,
+      "maxAttributes": 8
+    }
+  },
+  "limitations": [
+    "GGD hurt and death both reuse the acquired native down loop because PN020 has no distinct death AnimSequence in the extracted package set.",
+    "Native Special01 and Special02 remain embedded and preserved but are not referenced by the six-state runtime document.",
+    "The original 8x8 hair base texture relies on game shader parameters; the runtime candidate preserves the exported texture and simplified PBR material, so toon shader and hair-colour parity require visual review.",
+    "The PN020/00 Magikaru staff is rigid-skinned to the source-configured Weapon1_R socket; alternate Mahouno and Kagayaki staff switching remains pending.",
+    "Animation events, original effects, gameplay acceptance and deployment remain pending."
+  ],
+  "result": {
+    "currentGgdContractAccepted": true,
+    "runtimeRegistered": false,
+    "backendSelectable": false,
+    "deployed": false
+  }
+}

@@ -1,0 +1,475 @@
+{
+  "schema": "ggd.infinity-strash-babylon-webgl-motion@1",
+  "babylonVersion": "7.54.3",
+  "method": "Actual Babylon WebGL glTF loader; three rendered samples for each source clip or each of six mapped runtime states",
+  "meshCount": 6,
+  "bones": [
+    429
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "size": {
+        "width": 1720,
+        "height": 1
+      }
+    },
+    {
+      "name": "GGD_body (Normal)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_body (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_weapon (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_faceDecal1 (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_faceDecal2 (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_face (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_hair (Normal)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "GGD_hair (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 8,
+        "height": 8
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "ggd-state-idle-0.png",
+      "state": "idle",
+      "clip": "GGD_native_idle",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -32.91400909423828,
+          -0.017858009785413742,
+          -23.73342514038086
+        ],
+        "max": [
+          32.1768684387207,
+          160.87750244140625,
+          23.473628997802734
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-idle-50.png",
+      "state": "idle",
+      "clip": "GGD_native_idle",
+      "fraction": 0.5,
+      "frame": 75,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -32.91135787963867,
+          -0.026071937754750252,
+          -23.681657791137695
+        ],
+        "max": [
+          32.181610107421875,
+          160.35382080078125,
+          23.87194061279297
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-idle-100.png",
+      "state": "idle",
+      "clip": "GGD_native_idle",
+      "fraction": 1,
+      "frame": 150,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -32.91400909423828,
+          -0.017858009785413742,
+          -23.73342514038086
+        ],
+        "max": [
+          32.1768684387207,
+          160.87750244140625,
+          23.473628997802734
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-run-0.png",
+      "state": "run",
+      "clip": "GGD_native_run",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -29.55232810974121,
+          4.469839572906494,
+          -65.94917297363281
+        ],
+        "max": [
+          43.65787124633789,
+          137.81216430664062,
+          64.31486511230469
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-run-50.png",
+      "state": "run",
+      "clip": "GGD_native_run",
+      "fraction": 0.5,
+      "frame": 17.499999403953552,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -43.675254821777344,
+          5.588348388671875,
+          285.4806213378906
+        ],
+        "max": [
+          22.360658645629883,
+          138.0969696044922,
+          413.48468017578125
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-run-100.png",
+      "state": "run",
+      "clip": "GGD_native_run",
+      "fraction": 1,
+      "frame": 34.999998807907104,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -29.5523624420166,
+          4.4697980880737305,
+          307.3841857910156
+        ],
+        "max": [
+          43.65785217285156,
+          137.8120880126953,
+          437.6482849121094
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-attack-0.png",
+      "state": "attack",
+      "clip": "GGD_native_attack",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -46.89851379394531,
+          -0.5574815273284912,
+          -36.298973083496094
+        ],
+        "max": [
+          40.72633361816406,
+          143.50900268554688,
+          47.506980895996094
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-attack-50.png",
+      "state": "attack",
+      "clip": "GGD_native_attack",
+      "fraction": 0.5,
+      "frame": 37.5,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -47.15645980834961,
+          -0.5584688782691956,
+          149.77149963378906
+        ],
+        "max": [
+          40.665531158447266,
+          128.31105041503906,
+          265.5438232421875
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-attack-100.png",
+      "state": "attack",
+      "clip": "GGD_native_attack",
+      "fraction": 1,
+      "frame": 75,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -46.89850997924805,
+          -0.5576838254928589,
+          167.6596221923828
+        ],
+        "max": [
+          40.72573471069336,
+          143.5089569091797,
+          251.4652862548828
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-cast-0.png",
+      "state": "cast",
+      "clip": "GGD_native_special02",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -43.871795654296875,
+          -1.5147448778152466,
+          -30.977941513061523
+        ],
+        "max": [
+          40.83772277832031,
+          157.69491577148438,
+          20.522842407226562
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-cast-50.png",
+      "state": "cast",
+      "clip": "GGD_native_special02",
+      "fraction": 0.5,
+      "frame": 124.99999523162842,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -55.12099075317383,
+          -2.55308198928833,
+          -62.72917938232422
+        ],
+        "max": [
+          49.638919830322266,
+          107.41461181640625,
+          41.02646255493164
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-cast-100.png",
+      "state": "cast",
+      "clip": "GGD_native_special02",
+      "fraction": 1,
+      "frame": 249.99999046325684,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -43.871795654296875,
+          -1.5148593187332153,
+          587.9349975585938
+        ],
+        "max": [
+          40.83772277832031,
+          157.69479370117188,
+          639.4358520507812
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-hurt-0.png",
+      "state": "hurt",
+      "clip": "GGD_native_down",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -70.37151336669922,
+          -6.614933013916016,
+          532.1934814453125
+        ],
+        "max": [
+          36.003387451171875,
+          36.321041107177734,
+          701.6832885742188
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-hurt-50.png",
+      "state": "hurt",
+      "clip": "GGD_native_down",
+      "fraction": 0.5,
+      "frame": 1.250000037252903,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -70.37151336669922,
+          -6.614933013916016,
+          532.1934814453125
+        ],
+        "max": [
+          36.003387451171875,
+          36.321041107177734,
+          701.6832885742188
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-hurt-100.png",
+      "state": "hurt",
+      "clip": "GGD_native_down",
+      "fraction": 1,
+      "frame": 2.500000074505806,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -70.37151336669922,
+          -6.614933013916016,
+          532.1934814453125
+        ],
+        "max": [
+          36.003387451171875,
+          36.321041107177734,
+          701.6832885742188
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-death-0.png",
+      "state": "death",
+      "clip": "GGD_native_down",
+      "fraction": 0,
+      "frame": 0,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -70.37151336669922,
+          -6.614933013916016,
+          532.1934814453125
+        ],
+        "max": [
+          36.003387451171875,
+          36.321041107177734,
+          701.6832885742188
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-death-50.png",
+      "state": "death",
+      "clip": "GGD_native_down",
+      "fraction": 0.5,
+      "frame": 1.250000037252903,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -70.37151336669922,
+          -6.614933013916016,
+          532.1934814453125
+        ],
+        "max": [
+          36.003387451171875,
+          36.321041107177734,
+          701.6832885742188
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-state-death-100.png",
+      "state": "death",
+      "clip": "GGD_native_down",
+      "fraction": 1,
+      "frame": 2.500000074505806,
+      "vertexCount": 13662,
+      "bounds": {
+        "min": [
+          -70.37151336669922,
+          -6.614933013916016,
+          532.1934814453125
+        ],
+        "max": [
+          36.003387451171875,
+          36.321041107177734,
+          701.6832885742188
+        ]
+      },
+      "finite": true
+    }
+  ],
+  "nativeMotion": true,
+  "humanReview": "pending",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

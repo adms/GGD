@@ -75,7 +75,7 @@
       "effects": [],
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -94,7 +94,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "radiusTier": "中",
@@ -127,7 +127,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "cooldownTier": "極小",
       "passive": {
         "name": "58-02 鋼鐵尾巴",
@@ -339,7 +339,7 @@
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-lg",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -357,7 +357,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

@@ -1,0 +1,809 @@
+{
+  "schema": "ggd.immutable-source-backup@1",
+  "sourceRoot": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon",
+  "archivePath": "/private/tmp/ggd-jetragon-s3/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+  "archiveBytes": 41944536,
+  "archiveSha256": "42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89",
+  "memberCount": 65,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1722,
+      "sha256": "118e69768dfd04e29a981ee60395048cdb1da45a0f9a4f439b9daf88c83b74cb"
+    },
+    {
+      "path": "acquisition.json",
+      "bytes": 8923,
+      "sha256": "ad766ce3833e653b17c8872fe022157a0abf3b462960644d3fd399fce60eb92f"
+    },
+    {
+      "path": "analysis/audio-probe.json",
+      "bytes": 17853,
+      "sha256": "3a94b7aa52cdac816b89a8346c20da4de0cf3ab37fbe4e412a2520768ebd8418"
+    },
+    {
+      "path": "analysis/opgg-declared-khronos.json",
+      "bytes": 1968,
+      "sha256": "b089a6cf6b7061142189d2871823c65afc1301d95828125b34bf2e8b5420f763"
+    },
+    {
+      "path": "analysis/opgg-decoded-khronos.json",
+      "bytes": 2596,
+      "sha256": "65557bffd75236cfe25218bfa98db257628ce1c41370f67940dd1c68850dc788"
+    },
+    {
+      "path": "analysis/opgg-original-khronos.json",
+      "bytes": 3202,
+      "sha256": "8e056871204701c8464a2a25752c3926b93d0ecbfda4840543dacf5ef3f4a232"
+    },
+    {
+      "path": "analysis/opgg-static-analysis.json",
+      "bytes": 2467993,
+      "sha256": "79b76c9d6f114a36b0ca50bcc0bb5f7a1132b7e34adfe9c215647edae49cfda7"
+    },
+    {
+      "path": "analysis/opgg-textures.json",
+      "bytes": 6178,
+      "sha256": "612291b4a75af27c9d1b4e1dacdd34b302214ce19a3df5c5786adb0108427730"
+    },
+    {
+      "path": "analysis/quantization-declaration.json",
+      "bytes": 938,
+      "sha256": "387a72c8d7d21a78e69e61fcb386c677d414aa8dcf424229104da00eb25b7a86"
+    },
+    {
+      "path": "analysis/static-analysis.json",
+      "bytes": 138198,
+      "sha256": "4659ad3297678cfbc6beca35cbd1695a6c0d7420974c4021a857df19ee9424a5"
+    },
+    {
+      "path": "animation-index.json",
+      "bytes": 12618,
+      "sha256": "96605eb99ee0a573eac16ef7a0a4760fbec995b3eb11d2ed862b8a317da44399"
+    },
+    {
+      "path": "audio-index.json",
+      "bytes": 9736,
+      "sha256": "da05773ac9b055ab640aa0587b39b9f859450ed5a4f64e0ee2251115df19b3ba"
+    },
+    {
+      "path": "converted-assimp-v1/body.glb",
+      "bytes": 8941408,
+      "sha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa"
+    },
+    {
+      "path": "converted-assimp-v1/export.log",
+      "bytes": 637,
+      "sha256": "a2026944a87690f8737014c0a18b8a353429b65e3f744312fcdfa17861aac30d"
+    },
+    {
+      "path": "converted-assimp-v1/khronos.json",
+      "bytes": 9858,
+      "sha256": "4cfa27e2174dc491646ef317d116d005824e175ea76cc42597d6a206c775c7c1"
+    },
+    {
+      "path": "converted-reserve-v2/body.glb",
+      "bytes": 8941604,
+      "sha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c"
+    },
+    {
+      "path": "converted-reserve-v2/khronos.json",
+      "bytes": 5529,
+      "sha256": "c7936a4f36688112a53a114b1133b680c12176da782189575b1e3c7bcf4087d9"
+    },
+    {
+      "path": "converted-reserve-v2/normalization-receipt.json",
+      "bytes": 7533,
+      "sha256": "fd6a7c67e63605913aed2b8317ade3f922f51f509afd79d42b978c1a4a3cd312"
+    },
+    {
+      "path": "decoded/jetragon-meshopt-decoded.glb",
+      "bytes": 3783312,
+      "sha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3"
+    },
+    {
+      "path": "decoded/jetragon-quantization-declared.glb",
+      "bytes": 3783400,
+      "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203"
+    },
+    {
+      "path": "design-backlog-entry.json",
+      "bytes": 6827,
+      "sha256": "056d5ebf7be373a539b127ce47bcd7a42e0dfd427f6fd366716418d0a4dbd78b"
+    },
+    {
+      "path": "evidence/assimp-info.txt",
+      "bytes": 18190,
+      "sha256": "edd63ab7d8ca9554de880f642a577fcf77eb18ad643e62b047001a492c0f437e"
+    },
+    {
+      "path": "evidence/audio-download-results.json",
+      "bytes": 2127,
+      "sha256": "4df471d10efaddfca9426385aa6b3727cdbca0dbcc3c0a9e50b56f7bbb671cc8"
+    },
+    {
+      "path": "evidence/author-root-folders.json",
+      "bytes": 1221,
+      "sha256": "cc2fad8e8b6204b2cd66bd430ad771cca0b3c8a771808f5939b550ab93006cd1"
+    },
+    {
+      "path": "evidence/download-config.json",
+      "bytes": 434,
+      "sha256": "f0ed2c3ccc93ec4a909608514ef7cf6e0dd8e88bfd2aeb4b076da404d2c60e21"
+    },
+    {
+      "path": "evidence/download-page.html",
+      "bytes": 332163,
+      "sha256": "98c3fdb2eaab4a1fb5efbe4c2349334e252d66cef659005d9396766f6d35b3f5"
+    },
+    {
+      "path": "evidence/gamevault-page.html",
+      "bytes": 54460,
+      "sha256": "0ccd30ae3d786447b817b144aa749ae04d2c0b64369fb071ee5a915faa18e114"
+    },
+    {
+      "path": "evidence/gamevault-viewer.js",
+      "bytes": 4144,
+      "sha256": "9703725f907882c5b8337c27f8aadf0689ef7ea7655beb68cdf35f1a865463f0"
+    },
+    {
+      "path": "evidence/opgg-base.json",
+      "bytes": 374,
+      "sha256": "90c4fc52cf95f518d2bcfafb6da494f7c5eb339e146a90a51aaf8a01375dac35"
+    },
+    {
+      "path": "evidence/opgg-download-results.json",
+      "bytes": 3976,
+      "sha256": "66eea7687ee5e1799839027d958cf9f29e3efac5dc57d6a78ef8435a213e3357"
+    },
+    {
+      "path": "evidence/opgg-page.html",
+      "bytes": 633186,
+      "sha256": "4b5b5eb7f34624af63f09487d4178ba760c642974ad6c1fdf90de1bd2095ef68"
+    },
+    {
+      "path": "evidence/public-pals-list.json",
+      "bytes": 23139,
+      "sha256": "0adceaccd4fbae98d6ece16c3c3a8d513184ffe97e4d25dff747b5dee993bcba"
+    },
+    {
+      "path": "evidence/upstream-file.json",
+      "bytes": 693,
+      "sha256": "9004392de4e20b78deff662267d231e07deab401310c5cf6ccded511646a350f"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Body_B.png",
+      "bytes": 1773525,
+      "sha256": "7cfcd676fdc56c91336c7e31bfb1149f2ea64c4dd3f3280f24684b39b20e5e36"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Body_M.png",
+      "bytes": 1516711,
+      "sha256": "b600e3ee8e11bfbb33bc820e17b4188d26833840ec171f6920b005bf97da97e9"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Body_N.png",
+      "bytes": 3428262,
+      "sha256": "4ab80c4d096803d932f8ef0ff4b366f3b932ea68cf0ffac19b7e7e3dbb541ad6"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Extra_B.png",
+      "bytes": 55482,
+      "sha256": "42cf21c4cb1871c00fe46270d0e386c511fbefda99a48fa3c945bf4b320332f0"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Extra_Emissive.png",
+      "bytes": 329914,
+      "sha256": "f5d4bed006eb14ad6abe598501d3807073c6ad2a437ca85630ad2e2b26926424"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Extra_N.png",
+      "bytes": 1291100,
+      "sha256": "75a9a04939f11d8a763033820197b4e20248a4ef78c17ae21a04c8df8fba0582"
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Eyes_B.png",
+      "bytes": 75183,
+      "sha256": "ad856255b471fdae281e1ed4bdd613f4e17a91886b48d6fa8e934d41838498c2"
+    },
+    {
+      "path": "files-sha256.json",
+      "bytes": 10947,
+      "sha256": "a8c9fdce7871bc7a1d864b4b814548c491e2cc47933cb2e37be5d5422aef0993"
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 22764,
+      "sha256": "1fc24ac98ac8fb34bcd0a6fac9733e571a3dc5b5e9d1805673ea56975ef103e8"
+    },
+    {
+      "path": "original/audio/144271513.mp3",
+      "bytes": 10283,
+      "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143"
+    },
+    {
+      "path": "original/audio/474464904.mp3",
+      "bytes": 11745,
+      "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099"
+    },
+    {
+      "path": "original/audio/53353968.mp3",
+      "bytes": 13417,
+      "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec"
+    },
+    {
+      "path": "original/audio/543820472.mp3",
+      "bytes": 10074,
+      "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c"
+    },
+    {
+      "path": "original/audio/93212890.mp3",
+      "bytes": 9447,
+      "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae"
+    },
+    {
+      "path": "original/audio/977109776.mp3",
+      "bytes": 14462,
+      "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358"
+    },
+    {
+      "path": "original/jetdragon.fbx",
+      "bytes": 8907804,
+      "sha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Body.webp",
+      "bytes": 129222,
+      "sha256": "ece251c3365ffc783d7982fb43c0170e2300cc7e6ce1b7f3932af4d75672f50a"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Body_MetallicRoughness.webp",
+      "bytes": 1402182,
+      "sha256": "38a623b2293bfb3bf1b3f3ce97281733537ddf6902e572d0ca2594d00f5b0dd4"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Body_Normal.webp",
+      "bytes": 197642,
+      "sha256": "b63a33bc688d617442ae485988b34e4abf22f7ef30120935b443c587f457f31e"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Extra.webp",
+      "bytes": 19500,
+      "sha256": "c64cc87f3f2c0108961553d43844cb1038851a7aa2740cabc05b58b9be113c52"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Extra_Emissive.webp",
+      "bytes": 46272,
+      "sha256": "b7fab009c82d0453b5db6a7a0309e684783b9ec36f69a29247ea8eea0a6b3d97"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Extra_Normal.webp",
+      "bytes": 165984,
+      "sha256": "f585c1bb2c1f44bc37093d84f5060c4015047997626c3c07df6772b3c9d77b09"
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Eye.webp",
+      "bytes": 22750,
+      "sha256": "21bbafa5392e4c341c9bf34374577439a9deef23c462ff983035a2bf1bde9cb0"
+    },
+    {
+      "path": "original/opgg/materials/T_JetDragon_Body_SSS.webp",
+      "bytes": 59858,
+      "sha256": "d69cb072307d1d4ff2e6d1d7a4decf4ace325623fa27a56b49332cdd30095089"
+    },
+    {
+      "path": "original/opgg/materials.json",
+      "bytes": 4605,
+      "sha256": "88a14372518bfceaed3bb8362fa098a6f97eb45f74bdd365676f1fd4a6f17e5f"
+    },
+    {
+      "path": "original/opgg/model.glb",
+      "bytes": 2740172,
+      "sha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f"
+    },
+    {
+      "path": "source-entries.json",
+      "bytes": 60996,
+      "sha256": "934c7bbecde7c4f4b73ab0f6c618384a28b98cd7936d5c9abc262346de231ff8"
+    },
+    {
+      "path": "tools/build-delivery.py",
+      "bytes": 17591,
+      "sha256": "85127a59da09b0e3b1c74c330cba81d834dcd9d21d5dc8038751e0dd3ed42ddd"
+    },
+    {
+      "path": "tools/declare_quantization.py",
+      "bytes": 1612,
+      "sha256": "8a7d89e0aafbca2c384e664af7f756c1a91ebd84951195639a64a4d6ca9c2c2c"
+    },
+    {
+      "path": "tools/inspect_opgg_glb.py",
+      "bytes": 6641,
+      "sha256": "9323ceb2a100b89a2e3c33e03ef0b5d22ac70c68593641aa0211b6064f4f3bf4"
+    },
+    {
+      "path": "tools/prepare_fbx_reserve.py",
+      "bytes": 5912,
+      "sha256": "e477d666aa3acca24e5f06943bc3b5e9407dc6d6f2617c960938155da6f62c9a"
+    },
+    {
+      "path": "tools/static-analysis.py",
+      "bytes": 8790,
+      "sha256": "1a6b145f556aaf9f61eb772799344ac957e9c9acb3ff5358dad781bc07854bdc"
+    }
+  ],
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-20260911/42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89.tar.gz",
+  "identityVerified": true,
+  "expectedRoleSubstring": "assumed-role/vibe-coding-s3-role/",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true,
+  "frozen": true,
+  "status": "s3-full-get-and-every-member-verified",
+  "uploaded": true,
+  "fullGetReadback": true,
+  "excludedFiles": [],
+  "verifiedAt": "2026-09-10T17:53:58.890511+00:00",
+  "readbackPath": "/private/tmp/ggd-jetragon-s3/full-get.tar.gz",
+  "readbackArchiveSha256": "42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89",
+  "allMembersVerified": true,
+  "memberChecks": [
+    {
+      "path": "README.md",
+      "archiveBytes": 1722,
+      "archiveSha256": "118e69768dfd04e29a981ee60395048cdb1da45a0f9a4f439b9daf88c83b74cb",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "acquisition.json",
+      "archiveBytes": 8923,
+      "archiveSha256": "ad766ce3833e653b17c8872fe022157a0abf3b462960644d3fd399fce60eb92f",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/audio-probe.json",
+      "archiveBytes": 17853,
+      "archiveSha256": "3a94b7aa52cdac816b89a8346c20da4de0cf3ab37fbe4e412a2520768ebd8418",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/opgg-declared-khronos.json",
+      "archiveBytes": 1968,
+      "archiveSha256": "b089a6cf6b7061142189d2871823c65afc1301d95828125b34bf2e8b5420f763",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/opgg-decoded-khronos.json",
+      "archiveBytes": 2596,
+      "archiveSha256": "65557bffd75236cfe25218bfa98db257628ce1c41370f67940dd1c68850dc788",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/opgg-original-khronos.json",
+      "archiveBytes": 3202,
+      "archiveSha256": "8e056871204701c8464a2a25752c3926b93d0ecbfda4840543dacf5ef3f4a232",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/opgg-static-analysis.json",
+      "archiveBytes": 2467993,
+      "archiveSha256": "79b76c9d6f114a36b0ca50bcc0bb5f7a1132b7e34adfe9c215647edae49cfda7",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/opgg-textures.json",
+      "archiveBytes": 6178,
+      "archiveSha256": "612291b4a75af27c9d1b4e1dacdd34b302214ce19a3df5c5786adb0108427730",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/quantization-declaration.json",
+      "archiveBytes": 938,
+      "archiveSha256": "387a72c8d7d21a78e69e61fcb386c677d414aa8dcf424229104da00eb25b7a86",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "analysis/static-analysis.json",
+      "archiveBytes": 138198,
+      "archiveSha256": "4659ad3297678cfbc6beca35cbd1695a6c0d7420974c4021a857df19ee9424a5",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "animation-index.json",
+      "archiveBytes": 12618,
+      "archiveSha256": "96605eb99ee0a573eac16ef7a0a4760fbec995b3eb11d2ed862b8a317da44399",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "audio-index.json",
+      "archiveBytes": 9736,
+      "archiveSha256": "da05773ac9b055ab640aa0587b39b9f859450ed5a4f64e0ee2251115df19b3ba",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "converted-assimp-v1/body.glb",
+      "archiveBytes": 8941408,
+      "archiveSha256": "40b9552633c99c21feb808935ab7b79d03766846c6f842e3d69c666024973faa",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "converted-assimp-v1/export.log",
+      "archiveBytes": 637,
+      "archiveSha256": "a2026944a87690f8737014c0a18b8a353429b65e3f744312fcdfa17861aac30d",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "converted-assimp-v1/khronos.json",
+      "archiveBytes": 9858,
+      "archiveSha256": "4cfa27e2174dc491646ef317d116d005824e175ea76cc42597d6a206c775c7c1",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "converted-reserve-v2/body.glb",
+      "archiveBytes": 8941604,
+      "archiveSha256": "efff1469066765d5a5757f7678cca9e95c4ffe11a1352106ff95f7e7b9aa6a5c",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "converted-reserve-v2/khronos.json",
+      "archiveBytes": 5529,
+      "archiveSha256": "c7936a4f36688112a53a114b1133b680c12176da782189575b1e3c7bcf4087d9",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "converted-reserve-v2/normalization-receipt.json",
+      "archiveBytes": 7533,
+      "archiveSha256": "fd6a7c67e63605913aed2b8317ade3f922f51f509afd79d42b978c1a4a3cd312",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "decoded/jetragon-meshopt-decoded.glb",
+      "archiveBytes": 3783312,
+      "archiveSha256": "88e089964fb3143a5dc89b986d9d77d7d7bbf19bc4e3cb641715d59958aa64a3",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "decoded/jetragon-quantization-declared.glb",
+      "archiveBytes": 3783400,
+      "archiveSha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "design-backlog-entry.json",
+      "archiveBytes": 6827,
+      "archiveSha256": "056d5ebf7be373a539b127ce47bcd7a42e0dfd427f6fd366716418d0a4dbd78b",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/assimp-info.txt",
+      "archiveBytes": 18190,
+      "archiveSha256": "edd63ab7d8ca9554de880f642a577fcf77eb18ad643e62b047001a492c0f437e",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/audio-download-results.json",
+      "archiveBytes": 2127,
+      "archiveSha256": "4df471d10efaddfca9426385aa6b3727cdbca0dbcc3c0a9e50b56f7bbb671cc8",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/author-root-folders.json",
+      "archiveBytes": 1221,
+      "archiveSha256": "cc2fad8e8b6204b2cd66bd430ad771cca0b3c8a771808f5939b550ab93006cd1",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/download-config.json",
+      "archiveBytes": 434,
+      "archiveSha256": "f0ed2c3ccc93ec4a909608514ef7cf6e0dd8e88bfd2aeb4b076da404d2c60e21",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/download-page.html",
+      "archiveBytes": 332163,
+      "archiveSha256": "98c3fdb2eaab4a1fb5efbe4c2349334e252d66cef659005d9396766f6d35b3f5",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/gamevault-page.html",
+      "archiveBytes": 54460,
+      "archiveSha256": "0ccd30ae3d786447b817b144aa749ae04d2c0b64369fb071ee5a915faa18e114",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/gamevault-viewer.js",
+      "archiveBytes": 4144,
+      "archiveSha256": "9703725f907882c5b8337c27f8aadf0689ef7ea7655beb68cdf35f1a865463f0",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/opgg-base.json",
+      "archiveBytes": 374,
+      "archiveSha256": "90c4fc52cf95f518d2bcfafb6da494f7c5eb339e146a90a51aaf8a01375dac35",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/opgg-download-results.json",
+      "archiveBytes": 3976,
+      "archiveSha256": "66eea7687ee5e1799839027d958cf9f29e3efac5dc57d6a78ef8435a213e3357",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/opgg-page.html",
+      "archiveBytes": 633186,
+      "archiveSha256": "4b5b5eb7f34624af63f09487d4178ba760c642974ad6c1fdf90de1bd2095ef68",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/public-pals-list.json",
+      "archiveBytes": 23139,
+      "archiveSha256": "0adceaccd4fbae98d6ece16c3c3a8d513184ffe97e4d25dff747b5dee993bcba",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "evidence/upstream-file.json",
+      "archiveBytes": 693,
+      "archiveSha256": "9004392de4e20b78deff662267d231e07deab401310c5cf6ccded511646a350f",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Body_B.png",
+      "archiveBytes": 1773525,
+      "archiveSha256": "7cfcd676fdc56c91336c7e31bfb1149f2ea64c4dd3f3280f24684b39b20e5e36",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Body_M.png",
+      "archiveBytes": 1516711,
+      "archiveSha256": "b600e3ee8e11bfbb33bc820e17b4188d26833840ec171f6920b005bf97da97e9",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Body_N.png",
+      "archiveBytes": 3428262,
+      "archiveSha256": "4ab80c4d096803d932f8ef0ff4b366f3b932ea68cf0ffac19b7e7e3dbb541ad6",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Extra_B.png",
+      "archiveBytes": 55482,
+      "archiveSha256": "42cf21c4cb1871c00fe46270d0e386c511fbefda99a48fa3c945bf4b320332f0",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Extra_Emissive.png",
+      "archiveBytes": 329914,
+      "archiveSha256": "f5d4bed006eb14ad6abe598501d3807073c6ad2a437ca85630ad2e2b26926424",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Extra_N.png",
+      "archiveBytes": 1291100,
+      "archiveSha256": "75a9a04939f11d8a763033820197b4e20248a4ef78c17ae21a04c8df8fba0582",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "extracted/textures/T_JetDragon_Eyes_B.png",
+      "archiveBytes": 75183,
+      "archiveSha256": "ad856255b471fdae281e1ed4bdd613f4e17a91886b48d6fa8e934d41838498c2",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "files-sha256.json",
+      "archiveBytes": 10947,
+      "archiveSha256": "a8c9fdce7871bc7a1d864b4b814548c491e2cc47933cb2e37be5d5422aef0993",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "model-candidates.json",
+      "archiveBytes": 22764,
+      "archiveSha256": "1fc24ac98ac8fb34bcd0a6fac9733e571a3dc5b5e9d1805673ea56975ef103e8",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/audio/144271513.mp3",
+      "archiveBytes": 10283,
+      "archiveSha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/audio/474464904.mp3",
+      "archiveBytes": 11745,
+      "archiveSha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/audio/53353968.mp3",
+      "archiveBytes": 13417,
+      "archiveSha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/audio/543820472.mp3",
+      "archiveBytes": 10074,
+      "archiveSha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/audio/93212890.mp3",
+      "archiveBytes": 9447,
+      "archiveSha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/audio/977109776.mp3",
+      "archiveBytes": 14462,
+      "archiveSha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/jetdragon.fbx",
+      "archiveBytes": 8907804,
+      "archiveSha256": "d88b1553e5318de0f34ddb40e6d4785ed44a525c43a05a5b81dc1275679d3bf3",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Body.webp",
+      "archiveBytes": 129222,
+      "archiveSha256": "ece251c3365ffc783d7982fb43c0170e2300cc7e6ce1b7f3932af4d75672f50a",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Body_MetallicRoughness.webp",
+      "archiveBytes": 1402182,
+      "archiveSha256": "38a623b2293bfb3bf1b3f3ce97281733537ddf6902e572d0ca2594d00f5b0dd4",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Body_Normal.webp",
+      "archiveBytes": 197642,
+      "archiveSha256": "b63a33bc688d617442ae485988b34e4abf22f7ef30120935b443c587f457f31e",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Extra.webp",
+      "archiveBytes": 19500,
+      "archiveSha256": "c64cc87f3f2c0108961553d43844cb1038851a7aa2740cabc05b58b9be113c52",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Extra_Emissive.webp",
+      "archiveBytes": 46272,
+      "archiveSha256": "b7fab009c82d0453b5db6a7a0309e684783b9ec36f69a29247ea8eea0a6b3d97",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Extra_Normal.webp",
+      "archiveBytes": 165984,
+      "archiveSha256": "f585c1bb2c1f44bc37093d84f5060c4015047997626c3c07df6772b3c9d77b09",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/MI_JetDragon_Eye.webp",
+      "archiveBytes": 22750,
+      "archiveSha256": "21bbafa5392e4c341c9bf34374577439a9deef23c462ff983035a2bf1bde9cb0",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials/T_JetDragon_Body_SSS.webp",
+      "archiveBytes": 59858,
+      "archiveSha256": "d69cb072307d1d4ff2e6d1d7a4decf4ace325623fa27a56b49332cdd30095089",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/materials.json",
+      "archiveBytes": 4605,
+      "archiveSha256": "88a14372518bfceaed3bb8362fa098a6f97eb45f74bdd365676f1fd4a6f17e5f",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "original/opgg/model.glb",
+      "archiveBytes": 2740172,
+      "archiveSha256": "d5b0c17dfef500ab5a34dea4fb3c1a99a244e8341986e998c709d92269b05c2f",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "source-entries.json",
+      "archiveBytes": 60996,
+      "archiveSha256": "934c7bbecde7c4f4b73ab0f6c618384a28b98cd7936d5c9abc262346de231ff8",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "tools/build-delivery.py",
+      "archiveBytes": 17591,
+      "archiveSha256": "85127a59da09b0e3b1c74c330cba81d834dcd9d21d5dc8038751e0dd3ed42ddd",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "tools/declare_quantization.py",
+      "archiveBytes": 1612,
+      "archiveSha256": "8a7d89e0aafbca2c384e664af7f756c1a91ebd84951195639a64a4d6ca9c2c2c",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "tools/inspect_opgg_glb.py",
+      "archiveBytes": 6641,
+      "archiveSha256": "9323ceb2a100b89a2e3c33e03ef0b5d22ac70c68593641aa0211b6064f4f3bf4",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "tools/prepare_fbx_reserve.py",
+      "archiveBytes": 5912,
+      "archiveSha256": "e477d666aa3acca24e5f06943bc3b5e9407dc6d6f2617c960938155da6f62c9a",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    },
+    {
+      "path": "tools/static-analysis.py",
+      "archiveBytes": 8790,
+      "archiveSha256": "1a6b145f556aaf9f61eb772799344ac957e9c9acb3ff5358dad781bc07854bdc",
+      "archiveMemberMatchesFrozenLocal": true,
+      "localAfterReadbackUnchanged": true
+    }
+  ],
+  "localUnchangedBeforeAfter": true,
+  "deterministicSecondArchiveSha256": "42ba330c9b14f7f11e1ad813ba171ec615e536e775b87e7c6c1ae237c6afca89"
+}

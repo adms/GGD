@@ -1,0 +1,82 @@
+<!doctype html><meta charset="utf-8"><title>shot34</title>
+<style>body{font:13px system-ui;background:#202329;color:#ddd;margin:0;padding:8px}
+#log{white-space:pre-wrap;font:12px ui-monospace,Menlo,monospace;max-height:70vh;overflow:auto}
+canvas{border:1px solid #444;margin:2px}</style>
+<div id="log">booting…</div><div id="stage"></div>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+const log = (m) => { document.getElementById("log").textContent += "\n" + m; console.log(m); };
+const S = 384;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setSize(S, S); renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.getElementById("stage").appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.add(new THREE.HemisphereLight(0xffffff, 0x556070, 2.2));
+const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(3, 5, 4); scene.add(key);
+const fill = new THREE.DirectionalLight(0xbfd4ff, 0.9); fill.position.set(-4, 2, -3); scene.add(fill);
+const camera = new THREE.PerspectiveCamera(28, 1, 0.01, 5000);
+
+const loader = new GLTFLoader();
+const models = await (await fetch("/render/models.json")).json();
+window.__shot = { done: 0, failed: [], total: models.length };
+
+// ⭐ 三檔保險：等貼圖解完、把相機**照 bounding box 算**（⛔ 不是固定距離 —— 26 顆尺寸差 100 倍）
+function frame(obj) {
+  // ⛔⛔ 先更新世界矩陣再算 box —— ⛔ 不然拿到的是**局部座標**的框：
+  //    多數模型的根節點是單位矩陣所以看起來沒事，⭐ 而有階層變換的那一顆
+  //    （lord-nightmares）相機就框到空的地方，渲出一張**全透明**的圖而回報「✓」。
+  obj.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(obj);
+  const size = box.getSize(new THREE.Vector3());
+  const c = box.getCenter(new THREE.Vector3());
+  const r = Math.max(size.x, size.y, size.z) * 0.5 || 1;
+  const dist = r / Math.sin((camera.fov * Math.PI) / 360) * 1.35;
+  const dir = new THREE.Vector3(0.72, 0.42, 1).normalize();
+  camera.position.copy(c).addScaledVector(dir, dist);
+  camera.near = Math.max(dist / 500, 0.01); camera.far = dist * 8;
+  camera.updateProjectionMatrix(); camera.lookAt(c);
+  return { r, size };
+}
+
+for (const m of models) {
+  try {
+    const gltf = await loader.loadAsync("/" + m.glb);
+    const root = gltf.scene;
+    scene.add(root);
+    const { size } = frame(root);
+    // 兩幀：第一幀讓材質/貼圖 compile，第二幀才是要留的那張
+    // ⛔ 不要用 requestAnimationFrame —— 這個分頁多半是**背景分頁**，rAF 根本不會觸發
+    //    （第一版就卡在這裡：glb 與貼圖都載完了，而迴圈一步都沒動）。⭐ 用 setTimeout。
+    renderer.render(scene, camera);
+    await new Promise((r) => setTimeout(r, 40));
+    renderer.render(scene, camera);
+    // ⭐ 量尺內建：數一下非透明像素，⛔ 「渲染成功」不等於「圖上有東西」
+    const gl = renderer.getContext();
+    const px = new Uint8Array(S * S * 4);
+    gl.readPixels(0, 0, S, S, gl.RGBA, gl.UNSIGNED_BYTE, px);
+    let lit = 0;
+    for (let i = 3; i < px.length; i += 4) if (px[i] > 16) lit += 1;
+    const cover = lit / (S * S);
+    if (cover < 0.01) { window.__shot.failed.push(`${m.id}: 渲出來是空的（覆蓋 ${(cover * 100).toFixed(2)}%）`); }
+    const blob = await new Promise((r) => renderer.domElement.toBlob(r, "image/png"));
+    const resp = await fetch("/save?name=" + encodeURIComponent(m.id + ".png"), { method: "POST", body: blob });
+    if (!resp.ok) throw new Error("save " + resp.status);
+    scene.remove(root);
+    root.traverse((o) => { if (o.geometry) o.geometry.dispose(); });
+    window.__shot.done += 1;
+    log(`${cover < 0.01 ? "⛔空" : "✓"} ${m.id}  ${Math.round(blob.size / 1024)}KB  覆蓋 ${(cover * 100).toFixed(1)}%  size=${size.x.toFixed(1)}×${size.y.toFixed(1)}×${size.z.toFixed(1)}`);
+  } catch (e) {
+    window.__shot.failed.push(m.id + ": " + e.message);
+    log(`⛔ ${m.id} — ${e.message}`);
+  }
+}
+window.__shot.finished = true;
+log(`=== 完成 ${window.__shot.done}/${models.length} · 失敗 ${window.__shot.failed.length} ===`);
+</script>

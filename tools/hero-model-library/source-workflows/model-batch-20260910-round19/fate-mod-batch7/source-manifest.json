@@ -1,0 +1,85 @@
+{
+  "schema": "ggd.source-manifest.intake@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7",
+  "sources": [
+    {
+      "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
+      "sourceUrl": "https://gamebanana.com/mods/291438",
+      "sourceGame": "Fate/unlimited codes",
+      "sourcePlatform": "unknown",
+      "targetModGame": "Sven Co-op / GoldSrc",
+      "authors": [
+        "NicholaiParadox",
+        "Type-Moon (credited original)"
+      ],
+      "class": "mod-community-port",
+      "status": "acquired-extracted-standard-candidates-verified",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
+      "originalArchives": [
+        {
+          "checkedAt": "2026-09-10T13:40:14.530110+00:00",
+          "url": "https://gamebanana.com/dl/582713",
+          "httpStatus": "200",
+          "curlExitCode": 0,
+          "stderr": "",
+          "declaredBytes": 1105055,
+          "declaredMd5": "1dfc722f1f9fa4d45d9eb3184d753b19",
+          "path": "original/kotomine_kirei_-_fate_unlimited_cod.rar",
+          "bytes": 1105055,
+          "sha256": "8f9434471e43d6b10b826b41d154ae66e948841b99e02385ab979210ddbc63ef",
+          "md5": "1dfc722f1f9fa4d45d9eb3184d753b19",
+          "sizeMatch": true,
+          "md5Match": true
+        }
+      ],
+      "sourcePage": "receipts/kotomine-kirei-source-page.json",
+      "extractionManifest": "extraction.json",
+      "candidateManifest": "candidate-manifest.json",
+      "audioFileIndex": "audioFileIndex.json",
+      "fateNativePlatformVerified": false,
+      "nativeFucPackages": 0,
+      "licenseStatus": "credit and permissions require source-specific review; no broader grant assumed"
+    },
+    {
+      "sourceId": "gamebanana-fuc-dark-sakura-492607",
+      "sourceUrl": "https://gamebanana.com/mods/492607",
+      "sourceGame": "Fate/unlimited codes",
+      "sourcePlatform": "unknown",
+      "targetModGame": "Bomb Rush Cyberfunk / Unity CrewBoom",
+      "authors": [
+        "7Negative_Creep",
+        "MEKMKII",
+        "anonymous credited contributor"
+      ],
+      "class": "mod-community-port",
+      "status": "acquired-extracted-standard-candidates-verified",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+      "originalArchives": [
+        {
+          "checkedAt": "2026-09-10T13:41:10.057444+00:00",
+          "url": "https://gamebanana.com/dl/1129461",
+          "httpStatus": "200",
+          "curlExitCode": 0,
+          "stderr": "",
+          "declaredBytes": 598429,
+          "declaredMd5": "9ea69248b422f8efddcafe4a23595c41",
+          "path": "original/dark_sakura_695a0.7z",
+          "bytes": 598429,
+          "sha256": "890b71eae085035e68dd3bcb60437acdc74c602e1fa3f2ba955f8939da5a3ecc",
+          "md5": "9ea69248b422f8efddcafe4a23595c41",
+          "sizeMatch": true,
+          "md5Match": true
+        }
+      ],
+      "sourcePage": "receipts/dark-sakura-source-page.json",
+      "extractionManifest": "extraction.json",
+      "candidateManifest": "candidate-manifest.json",
+      "audioFileIndex": "audioFileIndex-frozen-v1.json",
+      "fateNativePlatformVerified": false,
+      "nativeFucPackages": 0,
+      "licenseStatus": "credit and permissions require source-specific review; no broader grant assumed"
+    }
+  ],
+  "newCompletePublicArchives": 2,
+  "nativeFucPspPackages": 0
+}

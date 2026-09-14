@@ -90,12 +90,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -124,7 +124,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -176,12 +176,12 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -212,7 +212,7 @@
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
       "radius": 3,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -228,7 +228,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }

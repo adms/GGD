@@ -36,7 +36,7 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.0,
+      "castTimeSec": 1,
       "statusId": "burnstun",
       "statusDurationSec": 0.8
     }
@@ -45,7 +45,7 @@
   "targetsEnemies": true,
   "radius": 3,
   "schema": "ability@1",
-  "castTimeSec": 1.0,
+  "castTimeSec": 1,
   "radiusTier": "極小",
   "castTimeTier": "極大"
 }

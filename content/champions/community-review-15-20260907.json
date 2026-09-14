@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "version.body.c574cdb9cfe55750d8acef037f8463288a5078a121e5db71",
+  "modelKey": "version.body.f41861e9ba552a2fb6b8702cf7c0b171a67b5fd32508e345",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-15-20260907.q.webp",
       "template": {
@@ -156,7 +156,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-15-20260907.w.webp",
       "template": {
@@ -224,7 +224,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-15-20260907.e.webp",
       "template": {
@@ -294,7 +294,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-15-20260907.r.webp",
       "template": {
@@ -366,6 +366,118 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457123-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.b4ff5a804c418807cf914810d3a45d9989f1c847069f7aec",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457123",
+      "modelSha256": "26077ba090de3f0e9ed2022f50ac6af3b48485876d5f2051f85e6cd613ba9ac7",
+      "binarySha256": "d2d209a8b5e566738d087a709add08bc6d4ad452b17ac8f17bd5a57b68662119",
+      "registeredAt": "2026-09-10T14:45:30.645Z",
+      "source": {
+        "kind": "previous",
+        "character": "比利海靈頓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457123.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.312ae63bf3a0833504025a5bb4e5166834c6b1260d5c77b7",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "d30106f875e8982a4b852553a678df079affaaa8cc460c27d7cbe83680e89275",
+      "binarySha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "registeredAt": "2026-09-10T14:45:30.652Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.ace5fe2980e0143e98a171e9000e01d508575a8e73f2b4eb",
+      "label": "比利海靈頓（論壇模型）",
+      "sourceModelKey": "ou99.457123-standard-v2",
+      "modelSha256": "b03385fed8793f3815e9f51133d7a118b86a2ba9209fa215b0a5a1869cd5a8c0",
+      "binarySha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+      "registeredAt": "2026-09-10T14:48:47.915Z",
+      "source": {
+        "kind": "exact",
+        "character": "比利海靈頓",
+        "work": "摔角與網路迷因形象。",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457123-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.5898afbe835a9e285c1276ecbd011e196c98844e0ee55a29",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "39137e71adafba901e3dacdcbf91652a06b47dba307a50107ee719f30d917d48",
+      "binarySha256": "8c1d09b629e7cc3eb64456bbf7df941a81a3813023dfad0e949830d325eecb52",
+      "registeredAt": "2026-09-12T23:02:31.296Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.6437a62a3a82014f440bb1a8361fc704fc87836129f9fdb1",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "a6e18f87290f016bdd98110a014505e1d2f9f2d038ec6de0d4f85de2885d4111",
+      "binarySha256": "8c1d09b629e7cc3eb64456bbf7df941a81a3813023dfad0e949830d325eecb52",
+      "registeredAt": "2026-09-13T00:08:47.398Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.f41861e9ba552a2fb6b8702cf7c0b171a67b5fd32508e345",
+      "label": "比利海靈頓（論壇模型）",
+      "sourceModelKey": "ou99.457123-standard-v2",
+      "modelSha256": "a8b7b77136a7b526275b9a7fb1d6c0bfed03bb6fffc8fe47b14f1c3675ff4d25",
+      "binarySha256": "788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4",
+      "registeredAt": "2026-09-13T00:08:47.429Z",
+      "source": {
+        "kind": "exact",
+        "character": "比利海靈頓",
+        "work": "摔角與網路迷因形象。",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457123-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

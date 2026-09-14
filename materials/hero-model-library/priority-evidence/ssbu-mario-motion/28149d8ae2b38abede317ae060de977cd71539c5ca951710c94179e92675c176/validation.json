@@ -1,0 +1,245 @@
+{
+  "schema": "ggd-ssbu-mario-ultimate14-motion-validation@1",
+  "candidateId": "ssbu-mario-c00-ultimate14-motion-v1",
+  "sourceIds": [
+    "gitlab-ssbu-models",
+    "parallel-ns-ultimate14"
+  ],
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+    "bytes": 1148100,
+    "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526"
+  },
+  "blenderReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/conversion.json",
+    "sha256": "3eacdff64d2d96e60ba46bd46b15f907c10034b7f973623ea13a3c736502b103"
+  },
+  "importReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/import-01/import-receipt.json",
+    "sha256": "224e9f48ccf2097ffc69a8031daadd9d5e8fcf88e233d8453b227de1cba0353f"
+  },
+  "normalizationReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/normalization.json",
+    "sha256": "8407ac840a2ff6d0792fae59ea2a746b78c1954116abd38614e1238d647b6d82"
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 3,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_2"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/3/primitives/0/attributes/TEXCOORD_0"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 7189,
+    "drawPrimitives": 6,
+    "skinnedPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 98,
+    "textureCount": 5,
+    "textures": [
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 54479,
+        "sha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 43735,
+        "sha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 16971,
+        "sha256": "6370eb1f915094a9ea89c2830390c965d59e8c771f82a995eb11409ac3b6c999"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 878,
+        "sha256": "6c5c9633b5e93d51bda32f90601afc5b2bcf31c53d0aded73a58c03a1b4f52b5"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 52861,
+        "sha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "d01specialairsdash",
+        "duration": 2.2916667461395264,
+        "channels": 294
+      },
+      {
+        "index": 1,
+        "name": "d01specialairsend",
+        "duration": 1.625,
+        "channels": 294
+      },
+      {
+        "index": 2,
+        "name": "d01specialairsjump",
+        "duration": 1.2916666269302368,
+        "channels": 294
+      },
+      {
+        "index": 3,
+        "name": "d01specialsdash",
+        "duration": 3.1666667461395264,
+        "channels": 294
+      },
+      {
+        "index": 4,
+        "name": "d01specialsend",
+        "duration": 1.625,
+        "channels": 294
+      }
+    ],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    }
+  },
+  "animationChecks": [
+    {
+      "name": "d01specialairsdash",
+      "channelCount": 294,
+      "targetedJointCount": 98,
+      "timeAccessors": [
+        {
+          "accessor": 50,
+          "count": 55,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.2916667461395264
+        },
+        {
+          "accessor": 52,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.2916667461395264
+        }
+      ]
+    },
+    {
+      "name": "d01specialairsend",
+      "channelCount": 294,
+      "targetedJointCount": 98,
+      "timeAccessors": [
+        {
+          "accessor": 326,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 1.625
+        },
+        {
+          "accessor": 329,
+          "count": 39,
+          "minimum": 0.0416666679084301,
+          "maximum": 1.625
+        }
+      ]
+    },
+    {
+      "name": "d01specialairsjump",
+      "channelCount": 294,
+      "targetedJointCount": 98,
+      "timeAccessors": [
+        {
+          "accessor": 596,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 1.2916666269302368
+        },
+        {
+          "accessor": 599,
+          "count": 31,
+          "minimum": 0.0416666679084301,
+          "maximum": 1.2916666269302368
+        }
+      ]
+    },
+    {
+      "name": "d01specialsdash",
+      "channelCount": 294,
+      "targetedJointCount": 98,
+      "timeAccessors": [
+        {
+          "accessor": 865,
+          "count": 76,
+          "minimum": 0.0416666679084301,
+          "maximum": 3.1666667461395264
+        },
+        {
+          "accessor": 867,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 3.1666667461395264
+        }
+      ]
+    },
+    {
+      "name": "d01specialsend",
+      "channelCount": 294,
+      "targetedJointCount": 98,
+      "timeAccessors": [
+        {
+          "accessor": 326,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 1.625
+        },
+        {
+          "accessor": 329,
+          "count": 39,
+          "minimum": 0.0416666679084301,
+          "maximum": 1.625
+        }
+      ]
+    }
+  ],
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 1369,
+    "valueCount": 131472
+  },
+  "structuralValidationPassed": true,
+  "visualPlaybackValidationPassed": false,
+  "completeGameplayActionSet": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "Five Ultimate14 community MOD body motions are preserved; this is not Mario's complete original action set.",
+    "TRS channels target all 98 skin joints and pass structural checks, but visual playback acceptance is separate.",
+    "Visibility and material tracks were not imported into this body-motion GLB.",
+    "No GGD semantic action mapping, hero definition, backend registration, runtime switching or deployment was performed."
+  ]
+}

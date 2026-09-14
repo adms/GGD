@@ -79,7 +79,7 @@
       "effects": [],
       "vfxKey": "fx.prim.holy.slash",
       "targetsEnemies": true,
-      "castTimeSec": 1.7,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -107,7 +107,7 @@
             "durationSec": 10,
             "stacking": "refresh"
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -135,7 +135,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.prim.arcane.dash",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -190,7 +190,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 0.267,
+      "castTimeSec": 1,
       "cooldownTier": "中",
       "castTimeTier": "極大"
     },
@@ -265,7 +265,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -295,7 +295,7 @@
           "length": 14,
           "width": 2,
           "aim": "facing",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

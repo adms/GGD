@@ -89,13 +89,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.sound.nova",
       "targetsEnemies": true,
       "radius": 8,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -127,7 +127,7 @@
       "effects": [],
       "vfxKey": "fx.prim.sound.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -178,7 +178,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.sound.explosion",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -255,7 +255,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "中",
       "castTimeTier": "小"
     }

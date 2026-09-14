@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+  "sourceModel": {
+    "id": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_attack_attcom_1",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    63
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 4845,
+      "maxDelta": 0.04761162446292947,
+      "vertices": 7485
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 5085,
+      "maxDelta": 0.6506317416747023,
+      "vertices": 7485
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 5085,
+      "maxDelta": 1.352789338355618,
+      "vertices": 7485
+    },
+    {
+      "state": "cast",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 5085,
+      "maxDelta": 1.352789338355618,
+      "vertices": 7485
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 4845,
+      "maxDelta": 0.04761162446292947,
+      "vertices": 7485
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 5085,
+      "maxDelta": 0.6539830713648882,
+      "vertices": 7485
+    }
+  ],
+  "nativePoseComparison": null,
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

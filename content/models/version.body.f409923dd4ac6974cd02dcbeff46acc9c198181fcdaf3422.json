@@ -1,0 +1,20 @@
+{
+  "id": "version.body.f409923dd4ac6974cd02dcbeff46acc9c198181fcdaf3422",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_attack_attcom_1",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

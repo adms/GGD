@@ -1,0 +1,232 @@
+{
+  "schema": "ggd.explicit-character-source-mapping@1",
+  "checkedAt": "2026-09-10T17:05:12.955099+00:00",
+  "inventory": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/inventory.json",
+    "sha256": "83097facad51362a6aa3b3a4b69b632ac8e734c9f3532eaf85744bc4710fc3f5"
+  },
+  "existingSources": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
+    "sha256": "4cbc90ba7aafa4f5fd89ddcef116b4aded98adbdb9f470c2d56bae10ada53595"
+  },
+  "authorLocalizedNames": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/generated/resources/assets/fateubw/lang/en_us.json",
+    "sha256": "30ee82a6b869742c2e35e00a026f3232474a54ef3e5a152772bfc0b0e2f39358"
+  },
+  "servantCount": 14,
+  "matchedCharacters": 4,
+  "matchedHeroIds": [
+    "community-review-18-20260907",
+    "godie-e002",
+    "godie-e00l",
+    "godie-hapm",
+    "godie-hvsh"
+  ],
+  "unmappedServants": 10,
+  "mappings": [
+    {
+      "sourceCharacterId": "artoria_pendragon_saber",
+      "authorLabel": "Artoria Pendragon (Saber)",
+      "authorLabelKey": "entity.fateubw.artoria_pendragon_saber",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/artoria_pendragon_saber.geo.json",
+      "heroIds": [
+        "godie-e002",
+        "godie-e00l"
+      ],
+      "inventoryHeroes": [
+        {
+          "id": "godie-e002",
+          "runtimeHeroId": "godie-e002",
+          "name": "亞瑟王 - Saber",
+          "work": "Fate/stay night",
+          "status": "正式機白名單可選"
+        },
+        {
+          "id": "godie-e00l",
+          "runtimeHeroId": "godie-e00l",
+          "name": "亞瑟王 - Saber",
+          "work": "Fate/stay night",
+          "status": "變身／替代形態；不在白名單"
+        }
+      ],
+      "basis": "Author entity ID and English localization identify same named Fate character as inventory; visual form not verified.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "cu_chulainn_lancer",
+      "authorLabel": "Cu Chulainn (Lancer)",
+      "authorLabelKey": "entity.fateubw.cu_chulainn_lancer",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/cu_chulainn_lancer.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "diarmuid_ua_duibhne_lancer",
+      "authorLabel": "Diarmuid Ua Duibhne (Lancer)",
+      "authorLabelKey": "entity.fateubw.diarmuid_ua_duibhne_lancer",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "emiya_archer",
+      "authorLabel": "Emiya (Archer)",
+      "authorLabelKey": "entity.fateubw.emiya_archer",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/emiya_archer.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "Author identifies Emiya (Archer), whereas current hero community-review-12-20260907 is 衛宮士郎. Existing spritedatabase-fate-ps2-archer source also has heroIds=[]; do not collapse this Archer into Shirou.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "gilgamesh_archer",
+      "authorLabel": "Gilgamesh (Archer)",
+      "authorLabelKey": "entity.fateubw.gilgamesh_archer",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilgamesh_archer.geo.json",
+      "heroIds": [
+        "community-review-18-20260907"
+      ],
+      "inventoryHeroes": [
+        {
+          "id": "community-review-18-20260907",
+          "runtimeHeroId": "community-review-18-20260907",
+          "name": "吉爾伽美什",
+          "work": "Fate",
+          "status": "正式機白名單可選"
+        }
+      ],
+      "basis": "Author entity ID and English localization identify same named Fate character as inventory; visual form not verified.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "gilles_de_rais_caster",
+      "authorLabel": "Gilles de Rais (Caster)",
+      "authorLabelKey": "entity.fateubw.gilles_de_rais_caster",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilles_de_rais_caster.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "hassan-i-sabbah_assassin",
+      "authorLabel": "Hassan-i-Sabbah (Assassin)",
+      "authorLabelKey": "entity.fateubw.hassan-i-sabbah_assassin",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/hassan-i-sabbah_assassin.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No Hassan hero in current inventory. Approved source-model borrowing by SUN樂 is not Hassan character identity.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "heracles_berserker",
+      "authorLabel": "Heracles (Berserker)",
+      "authorLabelKey": "entity.fateubw.heracles_berserker",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
+      "heroIds": [
+        "godie-hapm"
+      ],
+      "inventoryHeroes": [
+        {
+          "id": "godie-hapm",
+          "runtimeHeroId": "godie-hapm",
+          "name": "海克力斯 - Berserker",
+          "work": "Fate/stay night",
+          "status": "正式機白名單可選"
+        }
+      ],
+      "basis": "Author entity ID and English localization identify same named Fate character as inventory; visual form not verified.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "iskander_rider",
+      "authorLabel": "Iskander (Rider)",
+      "authorLabelKey": "entity.fateubw.iskander_rider",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/iskander_rider.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "lancelot_berserker",
+      "authorLabel": "Lancelot (Berserker)",
+      "authorLabelKey": "entity.fateubw.lancelot_berserker",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/lancelot_berserker.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "medea_caster",
+      "authorLabel": "Medea (Caster)",
+      "authorLabelKey": "entity.fateubw.medea_caster",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "medusa_rider",
+      "authorLabel": "Medusa (Rider)",
+      "authorLabelKey": "entity.fateubw.medusa_rider",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medusa_rider.geo.json",
+      "heroIds": [
+        "godie-hvsh"
+      ],
+      "inventoryHeroes": [
+        {
+          "id": "godie-hvsh",
+          "runtimeHeroId": "godie-hvsh",
+          "name": "梅杜莎 - Rider",
+          "work": "Fate/stay night",
+          "status": "正式機白名單可選"
+        }
+      ],
+      "basis": "Author entity ID and English localization identify same named Fate character as inventory; visual form not verified.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "nero_claudius_saber",
+      "authorLabel": "Nero Claudius (Saber)",
+      "authorLabelKey": "entity.fateubw.nero_claudius_saber",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/nero_claudius_saber.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    },
+    {
+      "sourceCharacterId": "sasaki_kojiro_assassin",
+      "authorLabel": "Sasaki Kojiro (Assassin)",
+      "authorLabelKey": "entity.fateubw.sasaki_kojiro_assassin",
+      "modelPath": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/sasaki_kojiro_assassin.geo.json",
+      "heroIds": [],
+      "inventoryHeroes": [],
+      "basis": "No explicitly corresponding same-character hero in current inventory.",
+      "identityMappingOnly": true,
+      "visualIdentityVerified": false
+    }
+  ],
+  "noDefaultChanges": true,
+  "centralWrites": false
+}

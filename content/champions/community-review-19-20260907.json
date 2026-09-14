@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+  "modelKey": "version.body.e5f1ccacdc408d8fbd0e3958a8ac0e871fe6c828a991c558",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -126,7 +126,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.1,
       "vfxKey": "fx.prim.physical.slash",
       "vfxLayers": [
         {
@@ -175,7 +175,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-19-20260907.w.webp",
       "template": {
@@ -241,7 +241,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-19-20260907.e.webp",
       "template": {
@@ -346,7 +346,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 1.6,
+      "castTimeSec": 0.5,
       "vfxKey": "fx.prim.physical.slash",
       "vfxLayers": [
         {
@@ -368,5 +368,61 @@
   "tags": [
     "sword"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.1e263ee96d6472a5e4d91f6fbb4b92b1155f7a63a4f9130a",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "79aeb9662c4593388a9a6d1a11e8099861e48aa98b6f6d5c730fce85ff58a43e",
+      "binarySha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "registeredAt": "2026-09-12T23:02:32.171Z",
+      "source": {
+        "kind": "previous",
+        "character": "桐谷和人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.a83288f32461b18b3df4a5d72b4f5c854cb5f8eecbb68c54",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "faa3df43871b70fdcf9a2874a3de6d23edcda029beee87339b08433d158a5fba",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-12T23:02:32.175Z",
+      "source": {
+        "kind": "exact",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e5f1ccacdc408d8fbd0e3958a8ac0e871fe6c828a991c558",
+      "label": "黑衣剑士",
+      "sourceModelKey": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+      "modelSha256": "4b43af7ec9c386fe52c464bf885180be65e8efe65069e7542ea9c15fe9225e1f",
+      "binarySha256": "07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b",
+      "registeredAt": "2026-09-13T00:08:48.084Z",
+      "source": {
+        "kind": "exact",
+        "character": "黑衣剑士",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:0a857c33be1b779ffac18f74",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

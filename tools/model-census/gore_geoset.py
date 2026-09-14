@@ -565,6 +565,39 @@ def scan() -> list[dict]:
 #: 在 `_overlay-hidden-geometry.json`、`hero-turtle` 在它自己的 model doc）。
 #: 空表 = 這條閘現在真的攔得住下一顆帶血泥的新模型，⛔ 不是「先放著」。
 EXEMPT: dict[tuple[str, int], str] = {
+    # ⭐ PR #1152 合併準備（2026-09-14）—— 同一兩顆模型 GH#1218 已經審過（下面 ou99.458777／ou99.474258 那四列），
+    #   ⚠️ 而 PR 重新凍結出**新位元組**，這張表用檔名當鍵 ⇒ 舊豁免對不上新副本。⛔ 不是新的放行。
+    #   ⭐ 這一次多了幾何量測當證據（誰都可以重量）：
+    ("dc9feac3209d03e7a1d0d180c747a7de3d6d5f1d1636cc316ac61e0f750a5ff7.glb", 0): (
+        "ou99.458777（b2-keyaru）的 PR #1152 凍結副本，與下面 bb6bd9fd／d7a771d9 同一塊 1789 頂點。"
+        "量到：尺寸 0.14×0.30×0.14、中心 y=1.22（手部高度）、只占全身 14.5% —— 是**持有物／配件**，⛔ 不是貼地血泥。"
+        "反駁方式：實拍後若看到它是屍體或飛天分身，就移進 hiddenPrimitives。"
+    ),
+    ("319db4f84bd4eb6e3db37c4342fe9f762abc80b0eebf928fc016c1fd816b2009.glb", 1): (
+        "ou99.474258（b2-kaede）的 PR #1152 凍結副本，與下面 57dd13ab／66971613 同一塊 597 頂點（正規化合併後編號由 3 變 1）。"
+        "量到：尺寸 0.24×1.47×0.13、直立、位於身前 0.75 —— 是**長柄武器**，⛔ 不是扁平貼地的板子。"
+        "反駁方式：同上，實拍確認是屍體或分身才移入 hiddenPrimitives。"
+    ),
+    # GH#1218 follow-up: the asset-library merge exposes the normalized and
+    # versioned copies to this reverse gate.  These six findings still have
+    # only the single second-skeleton signal, so hiding them before visual
+    # review would violate the conservative rule documented above.
+    ("bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb", 0): (
+        "ou99.458777 的標準化副本及其 bodyVersion 同位元組副本；1789 頂點只命中 second-skeleton 單一訊號。"
+        "視覺審查確認是屍體或分身後才能移入 hiddenPrimitives；若是武器或演出則改寫本理由。"
+    ),
+    ("57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb", 3): (
+        "ou99.474258 的標準化副本及其 bodyVersion 同位元組副本；597 頂點只命中 second-skeleton 單一訊號。"
+        "視覺審查確認是屍體或分身後才能移入 hiddenPrimitives；若是武器或演出則改寫本理由。"
+    ),
+    ("d7a771d971cf00a56478978e2d40738bfbabc2645bef66ae892d09a912765b7f.glb", 0): (
+        "ou99.458777 的 legacy bodyVersion；1789 頂點只命中 second-skeleton 單一訊號。"
+        "與標準化副本同批視覺審查，不可在未確認是否為武器或演出前隱藏。"
+    ),
+    ("66971613b4ade0929a97c176ff2eb268c5aa3c1f1435dd129072312ac6f85a06.glb", 3): (
+        "ou99.474258 的 legacy bodyVersion；597 頂點只命中 second-skeleton 單一訊號。"
+        "與標準化副本同批視覺審查，不可在未確認是否為武器或演出前隱藏。"
+    ),
     # ⭐ GH#1218（2026-09-11）—— ou99 模型批次帶進來的 7 處 `suspect`。
     #   ⚠️ 這張表在此之前是**空的**。這 7 列⛔ 不是「還沒收」：⭐ 它們是**單一訊號**的判定，
     #   而本工具的檔頭自己說單訊號只給 `suspect`、⛔ 不自動填進出貨文件。

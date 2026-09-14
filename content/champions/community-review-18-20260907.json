@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "砲手",
-  "modelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+  "modelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -86,7 +86,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-18-20260907.q.webp",
       "template": {
@@ -157,7 +157,7 @@
           "root": true
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-18-20260907.w.webp",
       "template": {
@@ -220,7 +220,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-18-20260907.e.webp",
       "template": {
@@ -291,7 +291,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-18-20260907.r.webp",
       "template": {
@@ -330,5 +330,61 @@
   "tags": [
     "thrown"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.56c031e042065020d3698fcef045bd9eda3bfd973fa01670",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+      "modelSha256": "be89aebc4e3599c18fe88619c1cc7b08bff22f67ac79895670ff6a3cfc9fd9f1",
+      "binarySha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "registeredAt": "2026-09-12T23:02:31.911Z",
+      "source": {
+        "kind": "previous",
+        "character": "吉爾伽美什",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.6789fae462831b1bc3569f6b152a6fcb95059d7f4850466b",
+      "label": "吉尔伽美什",
+      "sourceModelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+      "modelSha256": "b11eac4b10f2e9188c1e2463fbf5c7612b2685027759e92008714811d3482066",
+      "binarySha256": "5d25c46a8fcc90ca7a2f7482c9dfe76f0e3513d9158911743d083bf2a8c981d8",
+      "registeredAt": "2026-09-12T23:02:31.915Z",
+      "source": {
+        "kind": "exact",
+        "character": "吉尔伽美什",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:d568447cc4f61f5d9a44f07a",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+      "label": "吉尔伽美什",
+      "sourceModelKey": "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c",
+      "modelSha256": "0f6fe94ba21ef8681b68684dec4283ec7702408dd503326fa46da21e9ec128e8",
+      "binarySha256": "5d25c46a8fcc90ca7a2f7482c9dfe76f0e3513d9158911743d083bf2a8c981d8",
+      "registeredAt": "2026-09-13T00:08:47.838Z",
+      "source": {
+        "kind": "exact",
+        "character": "吉尔伽美什",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:d568447cc4f61f5d9a44f07a",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

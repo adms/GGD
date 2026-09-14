@@ -1,0 +1,326 @@
+{
+  "schema": "ggd.kaiji-source-s3-backup@1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-kaiji-source-audit",
+  "localBackupRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kaiji-holya-20260911",
+  "sourceSourceManifestSha256": "6529a96cd2a62eca191ab2e49f80ff88547f34ee7937ca8ccdf411646f19875f",
+  "frozenManifestMembersVerified": 28,
+  "archivedMembers": 30,
+  "archivedUncompressedBytes": 5980240,
+  "excludedPaths": [],
+  "exclusionPolicy": [
+    "conversions-20260911/**",
+    "GIT_SOURCE*",
+    "symlinks (not followed)"
+  ],
+  "archive": {
+    "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kaiji-holya-20260911/0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764.tar.gz",
+    "sha256": "0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764",
+    "bytes": 5560719,
+    "format": "gzip-compressed POSIX pax tar",
+    "deterministicSettings": {
+      "memberOrder": "relative path lexical",
+      "mtime": 0,
+      "uid": 0,
+      "gid": 0,
+      "uname": "",
+      "gname": "",
+      "mode": "0644",
+      "gzipFilename": "",
+      "gzipMtime": 0,
+      "gzipCompression": 9
+    }
+  },
+  "localArchiveMembersVerifiedBeforeUpload": true,
+  "sourceFilesUnchangedAfterArchive": true,
+  "files": [
+    {
+      "path": "README.md",
+      "archivePath": "parallel-kaiji-source-audit/README.md",
+      "bytes": 1896,
+      "sha256": "3b97159b6964c1e86d38ce4c577daee6779b6deb23cbad388ef7a5e75a38a848",
+      "fullGetReadbackSha256": "3b97159b6964c1e86d38ce4c577daee6779b6deb23cbad388ef7a5e75a38a848",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/checks.json",
+      "archivePath": "parallel-kaiji-source-audit/analysis/checks.json",
+      "bytes": 1251,
+      "sha256": "fdbf898e572f02c931d7b222c9a281d65057c2a3797a0207d22edd8a9132d96c",
+      "fullGetReadbackSha256": "fdbf898e572f02c931d7b222c9a281d65057c2a3797a0207d22edd8a9132d96c",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/materials.json",
+      "archivePath": "parallel-kaiji-source-audit/analysis/materials.json",
+      "bytes": 19433,
+      "sha256": "627066ccdf1b2155074ccbbd8320608ca45a394dc39b12ecffe38c72e0d69334",
+      "fullGetReadbackSha256": "627066ccdf1b2155074ccbbd8320608ca45a394dc39b12ecffe38c72e0d69334",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/mesh-metadata.json",
+      "archivePath": "parallel-kaiji-source-audit/analysis/mesh-metadata.json",
+      "bytes": 18296,
+      "sha256": "9a303b0fb70cee3ce3efa1f1b197c69cd1c31b2af265032db6f14bc24650d7ce",
+      "fullGetReadbackSha256": "9a303b0fb70cee3ce3efa1f1b197c69cd1c31b2af265032db6f14bc24650d7ce",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/mesh-native.npz",
+      "archivePath": "parallel-kaiji-source-audit/analysis/mesh-native.npz",
+      "bytes": 71868,
+      "sha256": "dee9ebf2618cbc98574ca4aed4f15599e33dcbb65cd79a14dd3f0d11b91902d1",
+      "fullGetReadbackSha256": "dee9ebf2618cbc98574ca4aed4f15599e33dcbb65cd79a14dd3f0d11b91902d1",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/native-scene.json",
+      "archivePath": "parallel-kaiji-source-audit/analysis/native-scene.json",
+      "bytes": 272286,
+      "sha256": "ab678f5338c60ee7c678b68a8426c9b31be48372cab2e3e844287e5d09bef8a1",
+      "fullGetReadbackSha256": "ab678f5338c60ee7c678b68a8426c9b31be48372cab2e3e844287e5d09bef8a1",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/skeleton.json",
+      "archivePath": "parallel-kaiji-source-audit/analysis/skeleton.json",
+      "bytes": 19221,
+      "sha256": "c3e441a73acf372431947dba6b27b84ca5bfa78e352c2519249c091b1540f35d",
+      "fullGetReadbackSha256": "c3e441a73acf372431947dba6b27b84ca5bfa78e352c2519249c091b1540f35d",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/textures.json",
+      "archivePath": "parallel-kaiji-source-audit/analysis/textures.json",
+      "bytes": 1178,
+      "sha256": "e8f428b104c436c4026c00b9386318a6af1ea29e7d14a2cedb9ea6b8d0b24d78",
+      "fullGetReadbackSha256": "e8f428b104c436c4026c00b9386318a6af1ea29e7d14a2cedb9ea6b8d0b24d78",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/textures/Baked-kaiji-2.-4092671177842900150.png",
+      "archivePath": "parallel-kaiji-source-audit/analysis/textures/Baked-kaiji-2.-4092671177842900150.png",
+      "bytes": 249046,
+      "sha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc",
+      "fullGetReadbackSha256": "871696374ec2bf31f80212289695a789737bdf0b076b6ba8edaf1f009bc7bccc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/textures/Baked-kaiji-4.8619384907673432593.png",
+      "archivePath": "parallel-kaiji-source-audit/analysis/textures/Baked-kaiji-4.8619384907673432593.png",
+      "bytes": 81779,
+      "sha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f",
+      "fullGetReadbackSha256": "1a2b6b66381f4564b6c18a5898956c91d90147df0c7e8f8e81fc43b4b69a0a7f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "analysis/textures/Shirt-kaiji.001.-1962654042311310318.png",
+      "archivePath": "parallel-kaiji-source-audit/analysis/textures/Shirt-kaiji.001.-1962654042311310318.png",
+      "bytes": 1795718,
+      "sha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b",
+      "fullGetReadbackSha256": "081d2ad8be83202588868dbdac7c2fd51eca7dba5135814673dfc9f1220fcd7b",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "archive-manifest.json",
+      "archivePath": "parallel-kaiji-source-audit/archive-manifest.json",
+      "bytes": 1129,
+      "sha256": "f74fe0533a257c6b3b9c2a217917b1684ccb33316f7912cae810476433f7ad82",
+      "fullGetReadbackSha256": "f74fe0533a257c6b3b9c2a217917b1684ccb33316f7912cae810476433f7ad82",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "audio-file-index.json",
+      "archivePath": "parallel-kaiji-source-audit/audio-file-index.json",
+      "bytes": 314,
+      "sha256": "07951fbe1a0b9fcc79c33e1e046d546eda0067d3c133fd773d8a8ce20db54e2d",
+      "fullGetReadbackSha256": "07951fbe1a0b9fcc79c33e1e046d546eda0067d3c133fd773d8a8ce20db54e2d",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "delivery-receipt.json",
+      "archivePath": "parallel-kaiji-source-audit/delivery-receipt.json",
+      "bytes": 2673,
+      "sha256": "6156d24de0491e32c48b1caa49bd4aa21690c0caec4195832408456b8045e880",
+      "fullGetReadbackSha256": "6156d24de0491e32c48b1caa49bd4aa21690c0caec4195832408456b8045e880",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "embedded/kaiji-unityfs.bundle",
+      "archivePath": "parallel-kaiji-source-audit/embedded/kaiji-unityfs.bundle",
+      "bytes": 879249,
+      "sha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8",
+      "fullGetReadbackSha256": "d533dd72b727c86063b10c4c6c012148e434f54078a67d0f7eff51d5caf636a8",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "extracted/BepInEx/plugins/moresuits/!less-suits.txt.txt",
+      "archivePath": "parallel-kaiji-source-audit/extracted/BepInEx/plugins/moresuits/!less-suits.txt.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fullGetReadbackSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "extracted/BepInEx/plugins/moresuits/kaijis2.png",
+      "archivePath": "parallel-kaiji-source-audit/extracted/BepInEx/plugins/moresuits/kaijis2.png",
+      "bytes": 285547,
+      "sha256": "53c732543efe12f59592fb349f311eed7985564f204ecdb9d940ab68f8a2dfce",
+      "fullGetReadbackSha256": "53c732543efe12f59592fb349f311eed7985564f204ecdb9d940ab68f8a2dfce",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "extracted/README.md",
+      "archivePath": "parallel-kaiji-source-audit/extracted/README.md",
+      "bytes": 205,
+      "sha256": "f1b57aad5d847809919c0afa3fcff82e9ac244f4a1c316933c4d4613efc79e53",
+      "fullGetReadbackSha256": "f1b57aad5d847809919c0afa3fcff82e9ac244f4a1c316933c4d4613efc79e53",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "extracted/icon.png",
+      "archivePath": "parallel-kaiji-source-audit/extracted/icon.png",
+      "bytes": 57461,
+      "sha256": "c4c5c614850c93aea531dec6fd2e32b7f0f5164577c4455faeec22a7e8e6742a",
+      "fullGetReadbackSha256": "c4c5c614850c93aea531dec6fd2e32b7f0f5164577c4455faeec22a7e8e6742a",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "extracted/kaiji.dll",
+      "archivePath": "parallel-kaiji-source-audit/extracted/kaiji.dll",
+      "bytes": 888320,
+      "sha256": "079f98cc7f32c43bdd313e0b5350b7a5646fe4b903ad3aa751cd83e1cd1bc9cf",
+      "fullGetReadbackSha256": "079f98cc7f32c43bdd313e0b5350b7a5646fe4b903ad3aa751cd83e1cd1bc9cf",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "extracted/manifest.json",
+      "archivePath": "parallel-kaiji-source-audit/extracted/manifest.json",
+      "bytes": 303,
+      "sha256": "1ff70be1c0d7054336a43d4b7921598cf4cb1632ee1610e30d08efcea18f8b28",
+      "fullGetReadbackSha256": "1ff70be1c0d7054336a43d4b7921598cf4cb1632ee1610e30d08efcea18f8b28",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "file-manifest.json",
+      "archivePath": "parallel-kaiji-source-audit/file-manifest.json",
+      "bytes": 4909,
+      "sha256": "6529a96cd2a62eca191ab2e49f80ff88547f34ee7937ca8ccdf411646f19875f",
+      "fullGetReadbackSha256": "6529a96cd2a62eca191ab2e49f80ff88547f34ee7937ca8ccdf411646f19875f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "local-existing-evidence.json",
+      "archivePath": "parallel-kaiji-source-audit/local-existing-evidence.json",
+      "bytes": 3834,
+      "sha256": "4431adb3f4d8d914cd7812a6360b4e2e21668f065d1c22ed07932c47aab326f0",
+      "fullGetReadbackSha256": "4431adb3f4d8d914cd7812a6360b4e2e21668f065d1c22ed07932c47aab326f0",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "model-candidates.json",
+      "archivePath": "parallel-kaiji-source-audit/model-candidates.json",
+      "bytes": 4170,
+      "sha256": "8424510d4dd9706720da02777ebbdf6f31e45e08ea92590ce430f9366ab6fc68",
+      "fullGetReadbackSha256": "8424510d4dd9706720da02777ebbdf6f31e45e08ea92590ce430f9366ab6fc68",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "original/holya-kaiji_suit_2-0.1.1.zip",
+      "archivePath": "parallel-kaiji-source-audit/original/holya-kaiji_suit_2-0.1.1.zip",
+      "bytes": 1216760,
+      "sha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc",
+      "fullGetReadbackSha256": "f8a004728be6cdc4f65af8c163cd56eba7132e908c053888c82e197cd39c48cc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "public-source-entry.json",
+      "archivePath": "parallel-kaiji-source-audit/public-source-entry.json",
+      "bytes": 9861,
+      "sha256": "77d34c199502fbc3a92eab8408510f32f775f03a8881a2bba5445c305333cfaf",
+      "fullGetReadbackSha256": "77d34c199502fbc3a92eab8408510f32f775f03a8881a2bba5445c305333cfaf",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "research/thunderstore-kaiji-suit2.html",
+      "archivePath": "parallel-kaiji-source-audit/research/thunderstore-kaiji-suit2.html",
+      "bytes": 77511,
+      "sha256": "38e90f752be5a381b91ea3dcbf857abdb943b5a5ac97f0ecddfe9d028d4c2371",
+      "fullGetReadbackSha256": "38e90f752be5a381b91ea3dcbf857abdb943b5a5ac97f0ecddfe9d028d4c2371",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "source.json",
+      "archivePath": "parallel-kaiji-source-audit/source.json",
+      "bytes": 2268,
+      "sha256": "bf9342317edb65d0f5cb57edd2503bc2f2eacdea2d05f46a6d05b7c342d14961",
+      "fullGetReadbackSha256": "bf9342317edb65d0f5cb57edd2503bc2f2eacdea2d05f46a6d05b7c342d14961",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "tools/kaiji-static-analysis.py",
+      "archivePath": "parallel-kaiji-source-audit/tools/kaiji-static-analysis.py",
+      "bytes": 5268,
+      "sha256": "c1d3f7048f7530b6dee56bdf9ea65bc1258b57fe2c6fe373f8e64351d38d0d74",
+      "fullGetReadbackSha256": "c1d3f7048f7530b6dee56bdf9ea65bc1258b57fe2c6fe373f8e64351d38d0d74",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "unity-preflight.json",
+      "archivePath": "parallel-kaiji-source-audit/unity-preflight.json",
+      "bytes": 8486,
+      "sha256": "10af49f2af744940d95239925e65bb5708d7f7e79013afff6417fc9ce41f04f1",
+      "fullGetReadbackSha256": "10af49f2af744940d95239925e65bb5708d7f7e79013afff6417fc9ce41f04f1",
+      "localUnchangedAfterReadback": true
+    }
+  ],
+  "aws": {
+    "profile": "vibe-coding",
+    "region": "ap-east-2",
+    "bucket": "ggd-390630837668-ap-east-2-an",
+    "objectKey": "legacy/character-models/kaiji-holya-20260911/0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764.tar.gz",
+    "status": "uploaded-full-readback-verified",
+    "identityArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789056687",
+    "expectedRoleMatched": true,
+    "actionsPerformed": [
+      "sts:GetCallerIdentity",
+      "s3:PutObject",
+      "s3:GetObject"
+    ],
+    "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/kaiji-holya-20260911/0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764.tar.gz",
+    "upload": {
+      "etag": "69d667fd0dce9105342b6788049b956b",
+      "serverSideEncryption": "AES256",
+      "checksumCRC64NVME": "YCk7OA+Afww=",
+      "checksumType": "FULL_OBJECT"
+    },
+    "readback": {
+      "localPath": "/private/tmp/ggd-kaiji-source-s3-readback-0d4a8677.tar.gz",
+      "bytes": 5560719,
+      "sha256": "0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764",
+      "contentType": "application/gzip",
+      "metadataSha256": "0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764",
+      "lastModified": "2026-09-10T16:51:48+00:00",
+      "getObjectWasFullNotRange": true,
+      "allArchiveMembersVerified": true,
+      "verifiedMemberCount": 30
+    },
+    "security": {
+      "onlyConfiguredProfileUsed": true,
+      "credentialsNotReadPrintedModifiedOrCopied": true,
+      "iamNotModified": true,
+      "manualStsCredentialsNotObtained": true,
+      "accessDeniedOccurred": false,
+      "initialSandboxEndpointFailure": "STS sandbox endpoint connection failed; same authorized profile succeeded in approved network execution."
+    }
+  },
+  "localPreserved": true,
+  "centralOrGitMutations": false,
+  "scopeNote": "Only frozen source intake; external conversion preflight receipt in /private/tmp and active conversion products are not archived.",
+  "deterministicRebuildVerified": {
+    "secondBuildSha256": "0d4a8677448911f39d6bce1fee77fd6e196d2eb7caf741aa7ad782411dc23764",
+    "identicalBytes": true
+  },
+  "sourceFilesUnchangedAfterFullReadback": true,
+  "frozenAt": "2026-09-10T16:52:37.135949+00:00"
+}

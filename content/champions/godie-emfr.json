@@ -62,18 +62,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30,
-        30,
-        30,
-        30
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 6,
+      "range": 6.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -102,7 +102,7 @@
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 1,
+              "duration": 1.0,
               "moveSpeedMult": 0.5
             }
           ]
@@ -119,9 +119,9 @@
       ],
       "cooldownTier": "中",
       "manaCostTier": "小",
+      "castTimeTier": "大",
       "rangeTier": "中",
-      "castTimeSec": 0.467,
-      "castTimeTier": "大"
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-emfr.w",
@@ -132,18 +132,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -160,7 +160,7 @@
               "value": 0.3
             }
           ],
-          "duration": 12,
+          "duration": 12.0,
           "exclusiveGroup": "emfr-form",
           "perRank": [
             {
@@ -176,7 +176,7 @@
                   "value": 0.3
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -191,7 +191,7 @@
                   "value": 0.6
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -206,7 +206,7 @@
                   "value": 0.9
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
@@ -221,7 +221,7 @@
                   "value": 1.2
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             }
           ],
           "hooks": [
@@ -252,8 +252,8 @@
       "sfxKey": "wc3.akamapissed8",
       "cooldownTier": "極大",
       "manaCostTier": "小",
-      "castTimeSec": 0.267,
-      "castTimeTier": "中"
+      "castTimeTier": "中",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-emfr.e",
@@ -264,18 +264,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        150,
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -287,7 +287,7 @@
               "value": -0.5
             }
           ],
-          "duration": 12,
+          "duration": 12.0,
           "exclusiveGroup": "emfr-form",
           "hooks": [
             {
@@ -330,7 +330,7 @@
                 {
                   "kind": "applyStatus",
                   "statusId": "burn",
-                  "duration": 3
+                  "duration": 3.0
                 }
               ],
               "target": "event",
@@ -352,21 +352,21 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 3,
+          "scale": 3.0,
           "tint": [
             0.5882,
             0.5882,
-            1
+            1.0
           ],
-          "lifeSec": 2
+          "lifeSec": 2.0
         }
       ],
       "vfxKey": "fx.prim.fire.nova",
       "icon": "assets/icons/abilities/godie-emfr.e.webp",
       "cooldownTier": "小",
       "manaCostTier": "小",
-      "castTimeSec": 0.267,
-      "castTimeTier": "中"
+      "castTimeTier": "中",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-emfr.r",
@@ -377,16 +377,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        150,
-        150,
-        150
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -400,15 +400,15 @@
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 1
+              "value": 1.0
             },
             {
               "stat": "as",
               "op": "capRaise",
-              "value": 10
+              "value": 10.0
             }
           ],
-          "duration": 12,
+          "duration": 12.0,
           "exclusiveGroup": "emfr-form",
           "perRank": [
             {
@@ -416,27 +416,27 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10
+                  "value": 10.0
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
@@ -446,30 +446,30 @@
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10
+                  "value": 10.0
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1
+                  "value": 1.0
                 },
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 2
+                  "value": 2.0
                 },
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10
+                  "value": 10.0
                 }
               ],
-              "duration": 12
+              "duration": 12.0
             }
           ],
           "hooks": [
@@ -479,7 +479,7 @@
                 {
                   "kind": "applyBuff",
                   "modifiers": [],
-                  "duration": 3,
+                  "duration": 3.0,
                   "stackKey": "emfr-thunder-arm",
                   "maxStacks": 1,
                   "hooks": [
@@ -531,11 +531,11 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 2,
+          "scale": 2.0,
           "tint": [
-            1,
-            0,
-            1
+            1.0,
+            0.0,
+            1.0
           ]
         }
       ],
@@ -543,8 +543,8 @@
       "vfxKey": "fx.prim.lightning.beam-lg",
       "cooldownTier": "極大",
       "manaCostTier": "小",
-      "castTimeSec": 0.667,
-      "castTimeTier": "大"
+      "castTimeTier": "大",
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

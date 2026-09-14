@@ -1,0 +1,4 @@
+const fs=require('fs'),path=require('path');
+const validator=require('/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/node_modules/.pnpm/gltf-validator@2.0.0-dev.3.10/node_modules/gltf-validator');
+const root='/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-native-format-batch3/gmoloader';
+(async()=>{let results=[];for(const n of ['cloud','sephiroth','squall']){const file='converted/'+n+'/body.glb';const r=await validator.validateBytes(new Uint8Array(fs.readFileSync(path.join(root,file))),{uri:file,maxIssues:200});results.push({path:file,report:r});console.log(n,r.issues.numErrors,r.issues.numWarnings);if(r.issues.numErrors)process.exitCode=1;}fs.writeFileSync(path.join(root,'analysis/khronos-validation.json'),JSON.stringify({validator:'gltf-validator@2.0.0-dev.3.10',results},null,2)+'\n');})();

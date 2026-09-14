@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+  "modelKey": "version.body.a2517c2e9cc3e09d66f8a4186195f4fc2b61cd7ed7766586",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-17-20260907.q.webp",
       "template": {
@@ -141,7 +141,7 @@
           "damageMult": 0.25
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-17-20260907.w.webp",
       "template": {
@@ -216,7 +216,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-17-20260907.e.webp",
       "template": {
@@ -276,7 +276,7 @@
           }
         }
       ],
-      "castTimeSec": 3.367,
+      "castTimeSec": 1,
       "castTimeTier": "極大",
       "icon": "assets/icons/abilities/community-review-17-20260907.r.webp",
       "template": {
@@ -288,7 +288,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         },
         "inheritDefaults": true
       },
@@ -315,5 +315,61 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.9f5fbeb8f8872262f5013b8a4a54388415b79c8fda05ba66",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+      "modelSha256": "0f0badbdc5db89157c927aa9704a75778c8d4f3e7d1d080656c2a983df1c24ce",
+      "binarySha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "registeredAt": "2026-09-12T23:02:31.789Z",
+      "source": {
+        "kind": "previous",
+        "character": "安茲·烏爾·恭",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.c45722d6d33e89b28e067f43ca08260e163e5cc7cee9da80",
+      "label": "安兹乌尔恭",
+      "sourceModelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+      "modelSha256": "35457accf7bdffebf3ada778c4b07787a83cec177b9a8c6a757292e01341e947",
+      "binarySha256": "f587ad6c42e18456baa77d7a0f758270effea0e0248ab0ec0873fc58b08f9f89",
+      "registeredAt": "2026-09-12T23:02:31.795Z",
+      "source": {
+        "kind": "exact",
+        "character": "安兹乌尔恭",
+        "work": "OVERLORD",
+        "library": "300heroes",
+        "reference": "300heroes:db4f9d278de0736a7541d18c",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a2517c2e9cc3e09d66f8a4186195f4fc2b61cd7ed7766586",
+      "label": "安兹乌尔恭",
+      "sourceModelKey": "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e",
+      "modelSha256": "f18c99fb932046e83bd7276312bb9328fdd13137366cdc0538f57f592e666d16",
+      "binarySha256": "f587ad6c42e18456baa77d7a0f758270effea0e0248ab0ec0873fc58b08f9f89",
+      "registeredAt": "2026-09-13T00:08:47.720Z",
+      "source": {
+        "kind": "exact",
+        "character": "安兹乌尔恭",
+        "work": "OVERLORD",
+        "library": "300heroes",
+        "reference": "300heroes:db4f9d278de0736a7541d18c",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -93,7 +93,7 @@
       },
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.3,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "極小",
@@ -192,7 +192,7 @@
       },
       "vfxKey": "fx.prim.arcane.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -220,7 +220,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 2.267,
+      "castTimeSec": 1,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極大",
@@ -258,7 +258,7 @@
             "duration": 5,
             "moveSpeedMult": 0.65
           },
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"

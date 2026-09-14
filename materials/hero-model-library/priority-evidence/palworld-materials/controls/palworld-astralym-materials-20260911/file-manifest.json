@@ -1,0 +1,324 @@
+{
+  "schema": "ggd.frozen-source-file-manifest@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3367,
+      "sha256": "fcdaf7b4be943aee26c593840bb3cf5e958edee9ad4118c9607164fe1cd32812"
+    },
+    {
+      "path": "astralym-material-bound.glb",
+      "bytes": 25503732,
+      "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf"
+    },
+    {
+      "path": "conversion-receipt.json",
+      "bytes": 3523,
+      "sha256": "3fa6bd72328ef8d8a033d2c1b5697c99714aab3451449b149ac98e9bbecd1792"
+    },
+    {
+      "path": "delivery.json",
+      "bytes": 3055,
+      "sha256": "eadc2cc4e950f7e6a28baf9e52824ed579b0e8f7a0aab97b20a9f5aee63c052e"
+    },
+    {
+      "path": "idle-walk/astralym-idle-walk.glb",
+      "bytes": 21162960,
+      "sha256": "4ee29eb0d345df2a843c5981a4bc26596610c0676327fecf30cc217d50b19b16"
+    },
+    {
+      "path": "idle-walk/ggd-inspect-budget.json",
+      "bytes": 3008,
+      "sha256": "f8f9462beaa6678eec44a8ca928aaa4670e7a3871697c44ef944cbbc6e48efb1"
+    },
+    {
+      "path": "idle-walk/khronos-full.json",
+      "bytes": 4506,
+      "sha256": "93b12b6e14e2fb443eccf2fc46b1fb39ee0b2333696931785c714dca83463f80"
+    },
+    {
+      "path": "idle-walk/receipt.json",
+      "bytes": 2046,
+      "sha256": "83759b1cc934ef82353c9b44d4a6752851bbd8b8ccc97c03a1dbde1bac71abf7"
+    },
+    {
+      "path": "idle-walk-256/astralym-idle-walk-256.glb",
+      "bytes": 13224512,
+      "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09"
+    },
+    {
+      "path": "idle-walk-256/khronos-full.json",
+      "bytes": 4329,
+      "sha256": "385edb27d674876584388ed38e607b974db716699b06744943ebd85ecc41068b"
+    },
+    {
+      "path": "idle-walk-256/receipt.json",
+      "bytes": 4008,
+      "sha256": "06a5d77a8db5a3676ebbc5b4fadfabe46c930d0ed5d11339dadd53f5a2687a59"
+    },
+    {
+      "path": "material-binding-map.json",
+      "bytes": 13705,
+      "sha256": "bd7f6f80ab270ecee39e9c1d30bf11f6ea493faafa615bea00b5d7663567351f"
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 5408,
+      "sha256": "b27ffb22ccd5ce84f1e2cb4d04820cd045345f6a6aa0f0e1c95a7fb3f7ba56da"
+    },
+    {
+      "path": "motion-library.json",
+      "bytes": 48133,
+      "sha256": "ce90ca5f8b8c1ef34a50c56f66e083b7ad8a89a29294c0e967d0d8d38427e604"
+    },
+    {
+      "path": "shared-toolchain.json",
+      "bytes": 1959,
+      "sha256": "a068de72bca946c1153506894d64fcfea2e88288b3937087cea34e8457ff9ad8"
+    },
+    {
+      "path": "source-unchanged-proof.json",
+      "bytes": 375,
+      "sha256": "f5a097319d5339f5b046c60e3b71bc362bce9461ee7269274e8cc041eece73e8"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Body.png",
+      "bytes": 1290138,
+      "sha256": "b166ddf3b6f51b9e13a6b1e8e731d91a84ffb35dc2e59628c6ab54ffb442f55a"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Body_Emissive.png",
+      "bytes": 338520,
+      "sha256": "85a4352d9ac48800c9db6e0cb2f984f8ba80cb2d1650ddc51ef0742e2a3592b0"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Body_MetallicRoughness.png",
+      "bytes": 1278260,
+      "sha256": "3dd7fe6ad9b3a1de7c35d3b5d2c881327e71cf3f4542e39acc14cfaadfa91122"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Body_Normal.png",
+      "bytes": 4176516,
+      "sha256": "9cfd7eeb70089859a80c7d27d7fa602c614cc9973c361d8ea5ad8bd2839003ba"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Extra.png",
+      "bytes": 219486,
+      "sha256": "e9428e65dea64148145a9c822e01c9e39c672e3375a2bc3d905ac24d80008c15"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Extra_Emissive.png",
+      "bytes": 219486,
+      "sha256": "e9428e65dea64148145a9c822e01c9e39c672e3375a2bc3d905ac24d80008c15"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Eye.png",
+      "bytes": 302737,
+      "sha256": "6d549d8c360822023c2cef03327b81c5a26f67a959679b4a174349236b751e23"
+    },
+    {
+      "path": "textures/MI_WorldTreeDragon_Eye_Emissive.png",
+      "bytes": 302737,
+      "sha256": "6d549d8c360822023c2cef03327b81c5a26f67a959679b4a174349236b751e23"
+    },
+    {
+      "path": "textures/T_WorldTreeDragon_Body_SSS.png",
+      "bytes": 126264,
+      "sha256": "f17c3dd57b52de73cc6c29bb3cc13cf33a9db9f4865f0a55017de7b96310e3c9"
+    },
+    {
+      "path": "tools/bind_materials.py",
+      "bytes": 7753,
+      "sha256": "613422a3dc80e83fd3a61a9f5c08e8b2df0f1f4e31ecd264c2319c11749dc3a9"
+    },
+    {
+      "path": "tools/bundle-render.mjs",
+      "bytes": 769,
+      "sha256": "3bb0a20759125bcca5bda8042162f4eb715f64762e9a516d66977cac909044e8"
+    },
+    {
+      "path": "tools/finalize_delivery.py",
+      "bytes": 6189,
+      "sha256": "0c578144fe6398c4a92bf0d693cd3e9de6b2e0c263dd5f45ef5d56d7033b2c97"
+    },
+    {
+      "path": "tools/freeze-intake.py",
+      "bytes": 2576,
+      "sha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c"
+    },
+    {
+      "path": "tools/make_idle_walk.py",
+      "bytes": 5291,
+      "sha256": "ec345a18f684ee540ce6a0f2ff97b169ff32266411ab1a6a3bbf1e6bed787db8"
+    },
+    {
+      "path": "tools/normalize_subset.mts",
+      "bytes": 3822,
+      "sha256": "7d69710e309e1760fc64b7015dbf60ee5a61e83b3bd2acb6fa2d98d02197d95b"
+    },
+    {
+      "path": "tools/render.mjs",
+      "bytes": 4167,
+      "sha256": "e13ca084de5e3fa364ebb49d94d5de2c74b8a8eefeec2ae87e2524d9614d49f3"
+    },
+    {
+      "path": "tools/render_server.py",
+      "bytes": 3038,
+      "sha256": "5e50fe0900439c00092937524f3348d448ea52e871545efe98a6d80fe400d0b1"
+    },
+    {
+      "path": "tools/validate.mts",
+      "bytes": 1334,
+      "sha256": "7a7bc5db72b3b23b65085a7857e8e23a171f8e8eff1c55b8c34d63be95b27b83"
+    },
+    {
+      "path": "tools/validate_subset.mts",
+      "bytes": 1792,
+      "sha256": "47429a453c9d00fbb36661747462478ec82e4998c393dd43d7f2d44f5dd2e73e"
+    },
+    {
+      "path": "validation/babylon/chrome-process.log",
+      "bytes": 14431,
+      "sha256": "86c05990f2fc509f878863af9605c9d25b30a35d417789ed99dcc4ed9779482f"
+    },
+    {
+      "path": "validation/babylon/damage-front.png",
+      "bytes": 210092,
+      "sha256": "540e1b53b4c440fc7b6b2579a2224294421d989ed7184d01618e3437a86e4589"
+    },
+    {
+      "path": "validation/babylon/halocutter-front.png",
+      "bytes": 149484,
+      "sha256": "e400f4e3fa04eef3d623534e7e98940c63cc137a61197c0ec8ebd99e4e0629d5"
+    },
+    {
+      "path": "validation/babylon/idle-front.png",
+      "bytes": 158825,
+      "sha256": "01ad39f157d35be071a71dc9d4dbec141b730c52a38e18d6be26c2a28895c5c5"
+    },
+    {
+      "path": "validation/babylon/paldiumcannon-attack-front.png",
+      "bytes": 154414,
+      "sha256": "655dab5e41bd0f363cf06a4ac405b54bcb88265f12d8bced9bc227263a3c6805"
+    },
+    {
+      "path": "validation/babylon/process-receipt.json",
+      "bytes": 183,
+      "sha256": "85344d8e2a4ef126402c45051f4c3804e2206ffd8f89614f441facb72e179c8f"
+    },
+    {
+      "path": "validation/babylon/render-proof.json",
+      "bytes": 76130,
+      "sha256": "2da429da3a2bb176933202b8b85eb98b9b386f76e6ae4a54bc58f02b7a5e9c26"
+    },
+    {
+      "path": "validation/babylon/supernova-start-front.png",
+      "bytes": 155704,
+      "sha256": "d3ba051e5b1859a5aa10291a2cc41ff53876f84c426ec55e31a91807fd98df88"
+    },
+    {
+      "path": "validation/babylon/walk-front.png",
+      "bytes": 202196,
+      "sha256": "52fd6fd6781bd8fde8a4e8d09a544cb8be42c966f8f610b29d53745b18017371"
+    },
+    {
+      "path": "validation/babylon-idle-walk/chrome-process.log",
+      "bytes": 14281,
+      "sha256": "2a52644297115a2afc2d970919b75e5e02c139adc484225e054f5e1eb3a40f85"
+    },
+    {
+      "path": "validation/babylon-idle-walk/idle-front.png",
+      "bytes": 166295,
+      "sha256": "d44672ad6a6c744fa64b6672c500959682b15886145e97bf75519093273313ae"
+    },
+    {
+      "path": "validation/babylon-idle-walk/process-receipt.json",
+      "bytes": 183,
+      "sha256": "49189913fa55f841f3863bf7cc38272db2454f0a5931abc3e7b45f1d66974e64"
+    },
+    {
+      "path": "validation/babylon-idle-walk/render-proof.json",
+      "bytes": 5599,
+      "sha256": "5b9c961f56a681116b7f00f429c0db84f5a4bb0a2e132cda288ba4cb709642f5"
+    },
+    {
+      "path": "validation/babylon-idle-walk/walk-front.png",
+      "bytes": 202336,
+      "sha256": "b77aef5a3742bff8b1b3bf7b9384f6fa842054a4c2e1c90bcad6fb45ffb65612"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256/chrome-process.log",
+      "bytes": 14281,
+      "sha256": "ae011786c6998c6b102b2a556817fcf85d36d97a54dc8a91e84cf27bef67de61"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256/idle-front.png",
+      "bytes": 162226,
+      "sha256": "f5e56c706e4ed3d86a18f74cb811c6e3c6aff7708f4268db01a4f915a27d9bf1"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256/process-receipt.json",
+      "bytes": 183,
+      "sha256": "10ed4365544f0df49064fda861011bcc572a7dc5a11dcea5caab109af8342c6f"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256/render-proof.json",
+      "bytes": 5581,
+      "sha256": "4769cb2fac1b81ed574ae3dd803d60fd4956f8d5496f03f08c0212a505dea792"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256/walk-front.png",
+      "bytes": 194842,
+      "sha256": "792ff9283b33fcb2a6cbb4a37867cd91ffeda52b9402fa59f3c9367d8f549fac"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256-final/chrome-process.log",
+      "bytes": 14281,
+      "sha256": "6350fc05c03e0d6791971a22b82d5649d06819256f0530db45b1fa6ec3735f00"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256-final/idle-front.png",
+      "bytes": 162226,
+      "sha256": "f5e56c706e4ed3d86a18f74cb811c6e3c6aff7708f4268db01a4f915a27d9bf1"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256-final/process-receipt.json",
+      "bytes": 183,
+      "sha256": "14e2895431039512f28788a43144555a4bf382d88122c02c52cd91e654613a36"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256-final/render-proof.json",
+      "bytes": 6046,
+      "sha256": "02a88d58de518c0baaa9b9b7f49e26f8c29b32560c3c5ed7a3b4a88cbd681484"
+    },
+    {
+      "path": "validation/babylon-idle-walk-256-final/walk-front.png",
+      "bytes": 194842,
+      "sha256": "792ff9283b33fcb2a6cbb4a37867cd91ffeda52b9402fa59f3c9367d8f549fac"
+    },
+    {
+      "path": "validation/ggd-inspect.json",
+      "bytes": 676,
+      "sha256": "415f298662b7564307e53c74aeb365d0ee168e0f89b6f58148b194ac3ff28735"
+    },
+    {
+      "path": "validation/khronos-full.json",
+      "bytes": 4598,
+      "sha256": "2810b1f0f08be3024c247f7d4cdf4a442257fa781cc1f895618e11281516a501"
+    },
+    {
+      "path": "validation/render-bundle.js",
+      "bytes": 11551692,
+      "sha256": "96794170cf9561886fa35a1efbb1b0cd76f87a725f33e0a8933c91bee6721e24"
+    },
+    {
+      "path": "visual-review.json",
+      "bytes": 1249,
+      "sha256": "1b7cbacebf8ecb3a8c1a48e5d1d2f7156924f074fdc9e844202f235beae5748f"
+    }
+  ],
+  "fileCount": 63,
+  "bytes": 82102560,
+  "policy": "Immutable intake; manifest lists all other files; no automatic source/default use."
+}

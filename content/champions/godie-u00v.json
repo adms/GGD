@@ -134,7 +134,7 @@
       "effects": [],
       "vfxKey": "fx.prim.earth.shockwave",
       "sfxKey": "wc3.gluescreenmeteorhit1",
-      "castTimeSec": 1.433,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -147,7 +147,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -195,7 +195,7 @@
       "sfxKey": "wc3.dragonyes2",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -211,7 +211,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
@@ -291,7 +291,7 @@
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,

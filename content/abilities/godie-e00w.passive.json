@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    30
+    30.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -50,11 +50,11 @@
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
-                "duration": 2,
+                "duration": 2.0,
                 "stun": true
               }
             ],
-            "internalCooldown": 30,
+            "internalCooldown": 30.0,
             "target": "event"
           }
         ]
@@ -64,6 +64,5 @@
   "icon": "assets/icons/abilities/godie-e00w.passive.webp",
   "vfxKey": "fx.prim.wind.tornado",
   "cooldownTier": "極小",
-  "castTimeTier": "大",
-  "castTimeSec": 0.5
+  "castTimeTier": "大"
 }

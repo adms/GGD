@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+  "modelKey": "version.body.83f01042a132f529913ae4590a0b506ca5837604bcf41e47",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -126,7 +126,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 1.067,
+      "castTimeSec": 0.1,
       "vfxKey": "fx.prim.physical.slash",
       "vfxLayers": [
         {
@@ -187,7 +187,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-04-20260907.w.webp",
       "template": {
@@ -253,7 +253,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-04-20260907.e.webp",
       "template": {
@@ -313,7 +313,7 @@
           "stun": true
         }
       ],
-      "castTimeSec": 0.8,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-04-20260907.r.webp",
       "template": {
@@ -349,5 +349,61 @@
   "tags": [
     "fist"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.99d99c5474f4557be9d98233f28120d4166edaa627a75796",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+      "modelSha256": "e08ce68777f5db725f29bfb5f6762ce4bdfbd16ba655e0110ef19f67f4466a3b",
+      "binarySha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "registeredAt": "2026-09-12T23:02:28.044Z",
+      "source": {
+        "kind": "previous",
+        "character": "空條承太郎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.c716a48fb10e7e7fcc236fee38a571f261b8f8067bf3b1ef",
+      "label": "空条承太郎",
+      "sourceModelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+      "modelSha256": "fb6b3badcd3a9b5be2a96bd5e7ab85039f06f13742a38dafc357f36e498383e2",
+      "binarySha256": "46e2cf6860d7bf16258e90af87f192b44fb7377d064f076e0b44ff90f34511b0",
+      "registeredAt": "2026-09-12T23:02:28.047Z",
+      "source": {
+        "kind": "exact",
+        "character": "空条承太郎",
+        "work": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+        "library": "300heroes",
+        "reference": "300heroes:53fd11c0026fe928567b7760",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.83f01042a132f529913ae4590a0b506ca5837604bcf41e47",
+      "label": "空条承太郎",
+      "sourceModelKey": "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c",
+      "modelSha256": "22c445a1a721c280b840a82dcde9e56518e708497f6f8b9cbd956f66d8ec3d7e",
+      "binarySha256": "46e2cf6860d7bf16258e90af87f192b44fb7377d064f076e0b44ff90f34511b0",
+      "registeredAt": "2026-09-13T00:08:44.158Z",
+      "source": {
+        "kind": "exact",
+        "character": "空条承太郎",
+        "work": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+        "library": "300heroes",
+        "reference": "300heroes:53fd11c0026fe928567b7760",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

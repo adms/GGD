@@ -1,0 +1,47 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-mewtwo-c00-static-skinned-v1",
+  "modelSha256": "cd4eac9c479678e02373f2dda182d5043d2dc2ae6aef3fbd1255157121d74dd0",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Mewtwo head, eyes, torso, arms, hands, legs, feet and tail.",
+    "No detached body part, missing primary material, opaque facial card or obvious bind-pose collapse is visible.",
+    "Review covers the static bind pose only because source and output contain no clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/front.png",
+      "bytes": 117167,
+      "sha256": "613b26116dffab65ee7efd95df8290f60267406021d3804c97297a764f7f25ba"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/back.png",
+      "bytes": 108339,
+      "sha256": "5410641adaea990945ee48e5c6a9e608ea1594ad7f83df464472300ef2cc7486"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/isometric.png",
+      "bytes": 142939,
+      "sha256": "061b6049991881301e8347ba08636abc902b027e1da498fc54a64c15ade31b6c"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/contact-sheet.png",
+      "bytes": 215662,
+      "sha256": "cf7f193e05031d3fa7c7fef5dd09b4a592fcd415309280a9f6f7e6e50e2938ea"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mewtwo/e43dafe8f8e646a866c212e190e5d3c33d25a3284ce4d218065b908cac1dd66c/webgl-proof.json",
+    "bytes": 4479,
+    "sha256": "d055832f66d4c56a1a563f938b0ff7b701791bd2d6edcd807dd44534ddef5e1a"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

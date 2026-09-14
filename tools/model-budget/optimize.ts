@@ -61,6 +61,7 @@ import {
 } from "./glb";
 import { CONTENT, ROOT, ROLE_NAMES, contentUrl, gateFor, roleFromReport, type Role } from "./roles";
 import { checkRig, type RigCheck } from "./rig";
+import { HERO_MODEL_ADOPTION_POLICY } from "../../packages/shared/src/content/modelUpload/budget";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const VENDOR = path.join(HERE, ".optvendor");
@@ -232,11 +233,18 @@ function planFile(file: string, args: Args): Plan {
     }
   }
 
-  // geometry target: only when asked; --tris-target, else the role's warn tris
+  // geometry target: only when asked. Hero adoption has its own owner-set
+  // trigger (>10k) and target (<=8k), independent of the wider runtime budget.
   let geo: GeoAction | null = null;
   if (args.geometry) {
-    const trisTarget = args.trisTarget ?? (gate ? gate.tris.warn : 0);
-    if (trisTarget > 0 && metrics.triangles > trisTarget && metrics.skins >= 0) {
+    const heroAdoption = role === "champion" && args.trisTarget === null;
+    const trisTarget = args.trisTarget ?? (heroAdoption
+      ? HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax
+      : (gate ? gate.tris.warn : 0));
+    const trigger = heroAdoption
+      ? HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove
+      : trisTarget;
+    if (trisTarget > 0 && metrics.triangles > trigger && metrics.skins >= 0) {
       geo = { fromTris: metrics.triangles, targetTris: trisTarget, ratio: trisTarget / metrics.triangles };
     }
   }
@@ -286,7 +294,7 @@ function planKey(file: string, plan: Plan): string {
   };
   return sha256(Buffer.from(JSON.stringify(shape)));
 }
-const TOOL_VERSION = "model-budget/optimize@1";
+const TOOL_VERSION = "model-budget/optimize@2";
 
 // ---- texture resize (ffmpeg) ------------------------------------------------
 
@@ -423,7 +431,7 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
         { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
       );
       void raw;
-      res.rig = checkRig(plan.file, geoOut);
+      res.rig = checkRig(plan.file, geoOut, "fewer");
       if (!res.rig.ok) {
         res.rejected = `geometry decimation broke the rig (${res.rig.reasons.join("; ")}) — candidate rejected, not written`;
         return res;
@@ -650,7 +658,7 @@ function main(): void {
     process.stdout.write("\nrunning the repo's Babylon loader on the output (validate_glb.mts)…\n");
     try {
       const w3x = path.dirname(VALIDATE_GLB);
-      execFileSync("npx", ["tsx", VALIDATE_GLB, args.out], { cwd: w3x, stdio: "inherit" });
+      execFileSync(process.execPath, ["--import", "tsx", VALIDATE_GLB, args.out], { cwd: w3x, stdio: "inherit" });
     } catch {
       process.stderr.write("optimize: Babylon validation reported a failure — inspect the output above.\n");
       process.exit(1);

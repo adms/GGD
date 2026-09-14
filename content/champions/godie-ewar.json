@@ -61,16 +61,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        6,
-        6,
-        6,
-        6
+        6.0,
+        6.0,
+        6.0,
+        6.0
       ],
       "manaCost": [
-        75,
-        75,
-        75,
-        75
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 4.5,
       "targetsEnemies": true,
@@ -91,7 +91,7 @@
         {
           "kind": "applyStatus",
           "statusId": "confusion",
-          "duration": 1,
+          "duration": 1.0,
           "berserk": true,
           "targetsAllies": true
         }
@@ -100,9 +100,9 @@
       "vfxKey": "fx.prim.ki.nova",
       "cooldownTier": "極小",
       "manaCostTier": "極小",
+      "castTimeTier": "中",
       "rangeTier": "小",
-      "castTimeSec": 0.233,
-      "castTimeTier": "中"
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-ewar.w",
@@ -113,18 +113,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60,
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -150,8 +150,8 @@
       "icon": "assets/icons/abilities/godie-ewar.w.webp",
       "vfxKey": "fx.prim.ki.pulse-sm",
       "cooldownTier": "極大",
-      "castTimeSec": 0.067,
-      "castTimeTier": "小"
+      "castTimeTier": "小",
+      "castTimeSec": 0.1
     },
     "E": {
       "id": "godie-ewar.e",
@@ -162,18 +162,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        0,
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -203,7 +203,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -242,7 +242,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -281,7 +281,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -320,7 +320,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1
+                          "coeff": 1.0
                         }
                       ]
                     }
@@ -350,16 +350,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60,
-        60,
-        60
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        300,
-        300,
-        300
+        300.0,
+        300.0,
+        300.0
       ],
-      "range": 0,
+      "range": 0.0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -375,18 +375,18 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 2
+                "coeff": 2.0
               }
             ]
           },
-          "radius": 6,
+          "radius": 6.0,
           "radiusTier": "中",
           "includeOrigin": true
         },
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 8,
+          "radius": 8.0,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {
@@ -406,7 +406,7 @@
         "shakeStyle": "omni",
         "sparkKind": "magic",
         "flashColor": [
-          1.0,
+          1,
           0.92,
           0.6
         ],
@@ -415,8 +415,8 @@
       },
       "cooldownTier": "中",
       "manaCostTier": "中",
-      "castTimeSec": 1,
-      "castTimeTier": "極大"
+      "castTimeTier": "極大",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

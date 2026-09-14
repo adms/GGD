@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+  "modelKey": "version.body.7164669136e4906c9c2c897034171f6c2bf14990b24c604f",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-13-20260907.q.webp",
       "template": {
@@ -160,7 +160,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-13-20260907.w.webp",
       "template": {
@@ -232,7 +232,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-13-20260907.e.webp",
       "template": {
@@ -311,7 +311,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-13-20260907.r.webp",
       "template": {
@@ -350,5 +350,61 @@
   "tags": [
     "gun"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.8881cba87b158af82872f23d747301edc770b825adabe9bc",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "modelSha256": "eb9ef0862c96c7b14c62ca5fa77a783912c2c5e7c4f02e3a09247a1b16e8e634",
+      "binarySha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "registeredAt": "2026-09-12T23:02:31.001Z",
+      "source": {
+        "kind": "previous",
+        "character": "朝田詩乃",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.cae2a428424425a308163d968767d64e519b055a44291a47",
+      "label": "冰之狙击手",
+      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "modelSha256": "f27b44a76f217bbc4062e968b9a4ed96814039847731a60b6160ad3db5425c07",
+      "binarySha256": "3ef2b3bae25e503327475832603544ba7fbd7badbd3bcf02e92b47a3253fc113",
+      "registeredAt": "2026-09-12T23:02:31.004Z",
+      "source": {
+        "kind": "exact",
+        "character": "冰之狙击手",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:d4ce2cfc061185921d1cb222",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7164669136e4906c9c2c897034171f6c2bf14990b24c604f",
+      "label": "冰之狙击手",
+      "sourceModelKey": "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782",
+      "modelSha256": "523cc783c743721d4b525214131ff80db6d23bb64ea5c0c7020a0bcda352a1ed",
+      "binarySha256": "3ef2b3bae25e503327475832603544ba7fbd7badbd3bcf02e92b47a3253fc113",
+      "registeredAt": "2026-09-13T00:08:47.091Z",
+      "source": {
+        "kind": "exact",
+        "character": "冰之狙击手",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "300heroes:d4ce2cfc061185921d1cb222",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -50,7 +50,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -127,7 +127,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -167,7 +167,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中"
           },
@@ -188,7 +188,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -307,7 +307,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-sinbad",
-  "modelKey": "version.body.50475cd0a71c5c569d77fe67d9450a189662424ade9a6933",
+  "modelKey": "version.body.3f9cdcb4f0a29ad12e19d5506a02f38ff10e862948a1f534",
   "name": "辛巴達",
   "origin": "鬥士",
   "passiveAbility": "b2-sinbad.passive",
@@ -353,6 +353,192 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-491497-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.2edcd3ab07695536fe0c8086ebe02a9a1a3d67a464a0c31d",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.491497",
+      "modelSha256": "474641230a6bfb0c5fd6564c996688028d2428ade0b135ac79eecf4d54f97a8f",
+      "binarySha256": "292f550ffcb4515f004801f88532c59c061c92ed768d2f01c3c9f830a848ed99",
+      "registeredAt": "2026-09-10T14:45:40.456Z",
+      "source": {
+        "kind": "previous",
+        "character": "辛巴達",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.491497.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.897c9bef5847f35d96263ab5674047aacf0dc68d669d4ee9",
+      "label": "遥远救世主拳皇（論壇相似模型）",
+      "sourceModelKey": "ou99.491497-standard",
+      "modelSha256": "0547b8b59b804f0819b9f104973c52638f8a595bdc10efa2da97a0b28cbae4ed",
+      "binarySha256": "9ba1604ce007031793b58b1c69a4655d05873976931f4d4cbb37e8e3a9264378",
+      "registeredAt": "2026-09-10T14:45:40.503Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "遥远救世主拳皇",
+        "work": "來源作品待核；論壇標題：遥远救世主拳皇",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-491497-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7da832c5037fe5f5815ef5c781fbfe19479b057a834252e0",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "9d44e111a8af68107355d492d814248ec1d834cf3316f6f675203b05957caf02",
+      "binarySha256": "9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74",
+      "registeredAt": "2026-09-10T14:45:40.572Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.13063e8d383a27393f450ce42513055159cd403f630ad107",
+      "label": "辛巴達｜巴力魔裝兼用一般形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+      "modelSha256": "8e31ada65e72aa26ba53a6442cc634aa83954b993fadfa9b9225c4b01103b273",
+      "binarySha256": "535fc84062ca8844687cfa663a196835021b5f8453e9b2801c39d16c4636bde5",
+      "registeredAt": "2026-09-10T14:45:40.674Z",
+      "source": {
+        "kind": "alternate",
+        "character": "辛巴達（巴力魔裝）",
+        "work": "魔奇少年 Magi",
+        "library": "3DS Magi／The Models Resource",
+        "reference": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d03b9fdc5017d06d28da0a234adbd4dc3ff54003658c339b",
+      "label": "遥远救世主拳皇（論壇相似模型）",
+      "sourceModelKey": "ou99.491497-standard",
+      "modelSha256": "c15170de1592763e1e67096a51bbc9e5c266a69b495435d88db277495d7bb0d8",
+      "binarySha256": "750f4f65d8f3a18b6e6e9dbc74d40ecc97dd8363d8c4f9351aa04b43c0d7b659",
+      "registeredAt": "2026-09-12T23:11:58.894Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "遥远救世主拳皇",
+        "work": "來源作品待核；論壇標題：遥远救世主拳皇",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-491497-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.0611eb17f77555e72b8653cc1140f5c790362d2c9e5917f2",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "5527502646d75fc4ba32a5ba97d264dbe198fa9ffe93c779f86a35a7bbfdbc72",
+      "binarySha256": "10103e86f153db14b8051369c775a9c8291fd241fb7ca8c8adfc4d571bd10930",
+      "registeredAt": "2026-09-12T23:11:59.008Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.6cc43e44fc7e8242581e8288b664572b851c1fba1f77e2a8",
+      "label": "辛巴達｜巴力魔裝兼用一般形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+      "modelSha256": "bf48dcbf6d3297c4b6412a6da32b2f5e18616eab8470ec9576dba6d094b9682e",
+      "binarySha256": "8ceb588f8309374326aee986facfdfb240676925140fc1aaf8bd8fb0c5b0da93",
+      "registeredAt": "2026-09-12T23:11:59.101Z",
+      "source": {
+        "kind": "alternate",
+        "character": "辛巴達（巴力魔裝）",
+        "work": "魔奇少年 Magi",
+        "library": "3DS Magi／The Models Resource",
+        "reference": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.42d19a2676eb2f2573ec6aa46659193ed4554f548f68c046",
+      "label": "遥远救世主拳皇（論壇相似模型）",
+      "sourceModelKey": "ou99.491497-standard",
+      "modelSha256": "c42197f0e2eb7094a42f12fa94bc15b2381d390b610dfe1047e1841491c21894",
+      "binarySha256": "750f4f65d8f3a18b6e6e9dbc74d40ecc97dd8363d8c4f9351aa04b43c0d7b659",
+      "registeredAt": "2026-09-13T00:09:02.904Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "遥远救世主拳皇",
+        "work": "來源作品待核；論壇標題：遥远救世主拳皇",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-491497-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.86516ac998518eb930a1c738986b8b1519983eb5ad82df73",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "313860034c73731bfe0f85577fb8599f4e1ed4b714ea5c848c1b35193d436e64",
+      "binarySha256": "10103e86f153db14b8051369c775a9c8291fd241fb7ca8c8adfc4d571bd10930",
+      "registeredAt": "2026-09-13T00:09:03.028Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.3f9cdcb4f0a29ad12e19d5506a02f38ff10e862948a1f534",
+      "label": "辛巴達｜巴力魔裝兼用一般形態（GGD 程序化動作）",
+      "sourceModelKey": "community.body.648065d1bc0e8cc392e7999b5963c4a5a156da99da671201",
+      "modelSha256": "838fc20e39a6df90c17865667bf63ce1a45a8005c46391b67dc9d087f1c299eb",
+      "binarySha256": "8ceb588f8309374326aee986facfdfb240676925140fc1aaf8bd8fb0c5b0da93",
+      "registeredAt": "2026-09-13T00:09:03.130Z",
+      "source": {
+        "kind": "alternate",
+        "character": "辛巴達（巴力魔裝）",
+        "work": "魔奇少年 Magi",
+        "library": "3DS Magi／The Models Resource",
+        "reference": "https://models.spriters-resource.com/3ds/magiaratanarusekai/asset/309579/",
+        "tier": "original",
+        "selectionClass": "manual",
+        "sourceGame": "3DS Magi",
+        "sourcePlatform": "Nintendo 3DS"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

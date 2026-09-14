@@ -181,7 +181,7 @@ generated truth is:
 
 ```text
 editor coverage fingerprint     270193f6df6c
-capability fingerprint          e9023124
+capability fingerprint          fb8d3eb8
 required cells                  5189
 ```
 

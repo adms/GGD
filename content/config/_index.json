@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "305ec8546762",
+  "hash": "3b8dc72cd85b",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -341,8 +341,8 @@
     {
       "id": "model-lod",
       "path": "config/model-lod.json",
-      "hash": "e3a1aa269cfa",
-      "size": 1129
+      "hash": "2d6f356593b7",
+      "size": 1016
     },
     {
       "id": "move-speed-tiers",
@@ -557,8 +557,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "be6e790c73cf",
-      "size": 29852
+      "hash": "c7a38d6f8dca",
+      "size": 29899
     },
     {
       "id": "vfx-scripts",

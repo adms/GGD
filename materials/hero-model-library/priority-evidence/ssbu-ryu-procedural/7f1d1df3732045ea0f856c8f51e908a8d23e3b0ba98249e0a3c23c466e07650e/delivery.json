@@ -1,0 +1,105 @@
+{
+  "schema": "ggd.ssbu-ryu-procedural-six-state-delivery@1",
+  "deliveryId": "ssbu-ryu-c00-procedural-six-state-v1",
+  "sourceIds": [
+    "gitlab-ssbu-models"
+  ],
+  "sourceComponentId": "ssbu-ryu-c00-static-skinned-v1",
+  "character": {
+    "name": "Ryu",
+    "nameZh": "隆／Ryu",
+    "nativeId": "fighter/ryu/body/c00",
+    "variant": "c00",
+    "workZh": "任天堂明星大亂鬥 特別版（原作：Street Fighter）",
+    "platform": "Nintendo Switch"
+  },
+  "source": {
+    "absolutePath": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+    "bytes": 1005808,
+    "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+    "bytes": 1069196,
+    "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf"
+  },
+  "metrics": {
+    "triangles": 14621,
+    "drawPrimitives": 5,
+    "skinCount": 1,
+    "jointCount": 154,
+    "textureCount": 5,
+    "nativeMotionCount": 0,
+    "proceduralMotionCount": 6,
+    "animationChannelCountPerClip": 12
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "ggdBudgetWarnings": [
+      "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+    ],
+    "finiteFloatValuesChecked": 129228,
+    "webglSamplesReviewed": 60,
+    "cameraViews": [
+      "front",
+      "side"
+    ],
+    "visualPlaybackAccepted": true,
+    "deathEndMinimumY": -0.004954680928241087
+  },
+  "status": {
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "sixStateFallbackComplete": true,
+    "completeNativeActionSet": false,
+    "completeGameplayActionSet": false,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/ggd-procedural-six-state.py",
+      "sha256": "4fe882fe5bbc2e1d10dd6c31881c68a3881805f91ec96f9996664605a00fbf06"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/configs/ssbu-ryu-c00-v1.json",
+      "sha256": "a22e1f6e8a6e0e595ea97e3b46b08a8fefdeea7145ac64fbe4f9925a8464f2d1"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/render_motion_glb.py",
+      "sha256": "056f6417d482d4da33ccde2647d2eeb3bc1ce159940f2a17aba5af3f0df87b08"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/render_motion_glb.mjs",
+      "sha256": "8f409a8f088523619f1d8fa8c8f89bb9ee5cd974709eb5d46c57ffc959900901"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/make_contact_sheet.py",
+      "sha256": "5d560196afba74d0c52d74733cabcb7921744ef755712062d34d8b6ea3a36a0b"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/validate_procedural_component.mts",
+      "sha256": "31d17546e30768d5668387b4d75246ad05b006d3e7ce955929ae9c41addeb841"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/test_procedural_six_state.py",
+      "sha256": "856169e7fa73499c8bdf906db04f3782e07fb4eeb95485e30b0c0172436a96d8"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/procedural-six-state/integrate_ryu.py",
+      "sha256": "75aa29bfb4016d538ee62c0fdd33507915b3528f09bd523b51cae164b5d450f8"
+    }
+  ],
+  "gaps": [
+    "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
+    "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
+    "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+    "No source VFX, SFX or voice was created or inferred by this motion conversion.",
+    "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+  ]
+}

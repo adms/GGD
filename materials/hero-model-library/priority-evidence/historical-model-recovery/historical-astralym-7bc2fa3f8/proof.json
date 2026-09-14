@@ -1,0 +1,268 @@
+{
+  "schema": "ggd-historical-model-webgl-proof@1",
+  "candidateId": "historical-astralym-7bc2fa3f8",
+  "modelSha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+  "renderer": "Babylon WebGL glTF loader in a right-handed scene; idle or first native clip at 20 percent; CPU-skinned bounds frame three views",
+  "idleClipRequested": "Idle",
+  "clipRendered": "Idle",
+  "animationGroups": [
+    "Idle",
+    "Walk",
+    "FarSkill_Action",
+    "HaloBeam_Loop",
+    "Damage"
+  ],
+  "worldSkinnedBounds": {
+    "min": [
+      -9.664230741018855,
+      0.443457402807681,
+      -14.686939368986941
+    ],
+    "max": [
+      9.904499900687483,
+      18.809750556131803,
+      3.2200368542960973
+    ],
+    "extent": [
+      19.56873064170634,
+      18.366293153324122,
+      17.90697622328304
+    ]
+  },
+  "geometry": [
+    {
+      "name": "SK_WorldTreeDragon.001_primitive0",
+      "vertices": 13921,
+      "indices": 61782,
+      "worldBounds": {
+        "min": [
+          -9.663449491036317,
+          0.443457402807681,
+          -14.686939368986941
+        ],
+        "max": [
+          9.903698509103833,
+          18.809750556131803,
+          3.219057240060181
+        ]
+      },
+      "skeleton": "SK_WorldTreeDragon",
+      "bones": 145
+    },
+    {
+      "name": "SK_WorldTreeDragon.001_primitive1",
+      "vertices": 1928,
+      "indices": 8934,
+      "worldBounds": {
+        "min": [
+          -9.664230741018855,
+          2.248907573024013,
+          -14.570335367686994
+        ],
+        "max": [
+          9.904499900687483,
+          17.372494728881975,
+          3.2200368542960973
+        ]
+      },
+      "skeleton": "SK_WorldTreeDragon",
+      "bones": 145
+    },
+    {
+      "name": "SK_WorldTreeDragon.001_primitive2",
+      "vertices": 248,
+      "indices": 1068,
+      "worldBounds": {
+        "min": [
+          -1.197440006194114,
+          5.407787965064017,
+          1.1748643993989134
+        ],
+        "max": [
+          1.351527679751939,
+          10.908307861649064,
+          3.017946099535834
+        ]
+      },
+      "skeleton": "SK_WorldTreeDragon",
+      "bones": 145
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "SK_WorldTreeDragon",
+      "bones": 145
+    }
+  ],
+  "materials": [
+    {
+      "name": "MI_WorldTreeDragon_Body",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "MI_WorldTreeDragon_Body (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "MI_WorldTreeDragon_Body (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Extra",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "MI_WorldTreeDragon_Extra (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_WorldTreeDragon_Eye",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "MI_WorldTreeDragon_Eye (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 584,
+        "height": 1
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Body (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Body (Emissive)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Body (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Body (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Extra (Emissive)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Extra (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Eye (Emissive)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_WorldTreeDragon_Eye (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.2822827157509358
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "visualIdentityAcceptance": "pending-human-review",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

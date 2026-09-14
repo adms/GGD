@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -93,7 +93,7 @@
       "castTimeTier": "小"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -156,7 +156,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 2.433,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         90.0,
@@ -210,7 +210,7 @@
       "template": {
         "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中"
           },
@@ -233,7 +233,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -368,7 +368,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-guts",
-  "modelKey": "version.body.b22da33d3a1f45da541bf59fc3081027a13f5650b26639ab",
+  "modelKey": "version.body.25f498ed0c7fb2f75164d585c89eb24a73fd7b9e52dbb5ad",
   "name": "凱茲",
   "origin": "狂戰",
   "passiveAbility": "b2-guts.passive",
@@ -414,6 +414,124 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-460977-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.b063e512a3346de9ea34bb8e79528e84e7d46ea3266e2bcb",
+      "label": "Cloud 克勞德模型",
+      "sourceModelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
+      "modelSha256": "01ddd312a521c2a4b7c8ade3e0b28f9b381346bd0be5dda4f7ae6e8dd3208271",
+      "binarySha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
+      "registeredAt": "2026-09-12T23:11:56.957Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "Cloud 克勞德模型",
+        "work": "Final Fantasy VII；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:cloud",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.5898afbe835a9e285c1276ecbd011e196c98844e0ee55a29",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "39137e71adafba901e3dacdcbf91652a06b47dba307a50107ee719f30d917d48",
+      "binarySha256": "8c1d09b629e7cc3eb64456bbf7df941a81a3813023dfad0e949830d325eecb52",
+      "registeredAt": "2026-09-12T23:11:57.073Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.9f7b9c7966eca5b7c066ffe2d95a1660edf91a9f7d1bcd02",
+      "label": "凱茲｜狂戰士鎧甲（GGD 程序化動作）",
+      "sourceModelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+      "modelSha256": "376904b22051c8446d8d21e150563c5cab0b36d5c31d6dc257a499f8580eafa9",
+      "binarySha256": "d479729eac7f78640e9d9e5304b803dca05c25c9a91d1185a48c72a52101aae4",
+      "registeredAt": "2026-09-12T23:11:57.390Z",
+      "source": {
+        "kind": "exact",
+        "character": "凱茲｜狂戰士鎧甲",
+        "work": "烙印勇士 Berserk",
+        "library": "Lethal Company MOD／RRoD",
+        "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.330e2eb071303107c419c55110bd4386458e6620cd40b169",
+      "label": "Cloud 克勞德模型",
+      "sourceModelKey": "community.body.ce714a1593a1fc12d874256d29c987a59ca7a9164db07362",
+      "modelSha256": "a36f820292da66940129034560e48ba8a18b9bdf1340af9b41f43e225219ab79",
+      "binarySha256": "595aaa5d929c9ed65cf231990e21770c69ee1ab24879678249129d37636d05ea",
+      "registeredAt": "2026-09-13T00:09:00.860Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "Cloud 克勞德模型",
+        "work": "Final Fantasy VII；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:cloud",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.6437a62a3a82014f440bb1a8361fc704fc87836129f9fdb1",
+      "label": "赫拉克勒斯",
+      "sourceModelKey": "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938",
+      "modelSha256": "a6e18f87290f016bdd98110a014505e1d2f9f2d038ec6de0d4f85de2885d4111",
+      "binarySha256": "8c1d09b629e7cc3eb64456bbf7df941a81a3813023dfad0e949830d325eecb52",
+      "registeredAt": "2026-09-13T00:09:00.975Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "赫拉克勒斯",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:cb2c63b8a72af4572f8e8550",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.25f498ed0c7fb2f75164d585c89eb24a73fd7b9e52dbb5ad",
+      "label": "凱茲｜狂戰士鎧甲（GGD 程序化動作）",
+      "sourceModelKey": "community.body.b1b34acae6fcd904efd4a4fe118e1301525ee377890a0f9d",
+      "modelSha256": "6771628b7c23667eba4bf05f54eb93c0010ac5f47c0f8200083e2971a0034173",
+      "binarySha256": "d479729eac7f78640e9d9e5304b803dca05c25c9a91d1185a48c72a52101aae4",
+      "registeredAt": "2026-09-13T00:09:01.307Z",
+      "source": {
+        "kind": "exact",
+        "character": "凱茲｜狂戰士鎧甲",
+        "work": "烙印勇士 Berserk",
+        "library": "Lethal Company MOD／RRoD",
+        "reference": "https://thunderstore.io/c/lethal-company/p/RRoD/GutsPlayerModel/",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Lethal Company",
+        "sourcePlatform": "Windows",
+        "sourceGameReleasedAt": "2023-10-23",
+        "sourceGameReleaseReference": "https://store.steampowered.com/app/1966720/Lethal_Company/"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

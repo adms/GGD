@@ -1,0 +1,11 @@
+{
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-kofxiv-priority-mai-ior-kyo-build-local-v126/8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227.zip",
+  "bytes": 283879018,
+  "sha256": "8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227",
+  "readbackVerified": true,
+  "reusedExisting": false,
+  "id": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+  "type": "zip",
+  "originalLocalArchive": "outputs/model-source-backups/steam-kofxiv-priority-mai-ior-kyo-build-local-v126/8c37b1ebf9d763788c1f5d5c8a9ae4365dcc4077decb088f7e36e2fbfc2e7227.zip",
+  "contentKind": "complete-intake"
+}

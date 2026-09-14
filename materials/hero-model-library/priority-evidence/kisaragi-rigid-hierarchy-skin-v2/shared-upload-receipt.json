@@ -1,0 +1,162 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "existing:tram-rigid-skin-v2",
+    "source": {
+      "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+      "bytes": 78876,
+      "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443"
+    },
+    "output": {
+      "path": "/private/tmp/kisaragi-skinned-c.glb",
+      "bytes": 178172,
+      "sha256": "c15d1f6b76c8d74134970d7130f75ea5dad0243027586e28978e4af4e2e771b6"
+    },
+    "stateClips": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0,
+    "limitations": [
+      "GGD 原創如月電車；不是原作遊戲擷取模型。",
+      "六段既有 GGD 節點動畫保留，車體五個元件改為剛性蒙皮；沒有杜撰骨骼變形。",
+      "無貼圖，外觀由原始頂點色材質構成。"
+    ],
+    "materialNormalization": {
+      "opaqueAlphaImages": [],
+      "rgbAndGeometryUnchanged": true
+    }
+  },
+  "selectedClips": {
+    "idle": "idle",
+    "run": "run",
+    "attack": "attack",
+    "cast": "cast",
+    "hurt": "hurt",
+    "death": "death"
+  },
+  "originalClipCount": 6,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "idle",
+      "duration": 2,
+      "channels": 1
+    },
+    {
+      "index": 1,
+      "name": "run",
+      "duration": 0.800000011920929,
+      "channels": 3
+    },
+    {
+      "index": 2,
+      "name": "attack",
+      "duration": 0.5,
+      "channels": 1
+    },
+    {
+      "index": 3,
+      "name": "cast",
+      "duration": 1.2000000476837158,
+      "channels": 2
+    },
+    {
+      "index": 4,
+      "name": "hurt",
+      "duration": 0.44999998807907104,
+      "channels": 1
+    },
+    {
+      "index": 5,
+      "name": "death",
+      "duration": 1.7999999523162842,
+      "channels": 2
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+    "byteSize": 129044,
+    "clipMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 660,
+    "drawPrimitives": 5,
+    "textures": []
+  },
+  "warnings": [
+    "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD batch2 original Kisaragi tram v2",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 120004
+        }
+      ],
+      "animationCount": 6,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": false,
+      "hasDefaultScene": true,
+      "drawCallCount": 5,
+      "totalVertexCount": 1980,
+      "totalTriangleCount": 660,
+      "maxUVs": 0,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

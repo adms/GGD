@@ -1,0 +1,460 @@
+{
+  "schema": "ggd.infinity-strash-current-upload-validation@1",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/animated-candidates-psk-blender-popp-magikaru-v3/popp-pn020-00/popp-pn020-00.glb",
+    "bytes": 4115452,
+    "sha256": "85a020edc508129b10cb801abebcd67c1ffd9d5d71934c698940a80cd2f6c6e8"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-popp-magikaru-v3/popp-pn020-00/popp-pn020-00-ggd-normalized.glb",
+    "bytes": 3990712,
+    "sha256": "b335041c9c5556fc9a57a84c7073be6a922da54f5e6f385dec8458ed389349b4"
+  },
+  "inputInspection": {
+    "meshes": 4,
+    "triangles": 15766,
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_native_idle",
+        "duration": 2.5,
+        "channels": 217
+      },
+      {
+        "index": 1,
+        "name": "GGD_native_run",
+        "duration": 0.75,
+        "channels": 274
+      },
+      {
+        "index": 2,
+        "name": "GGD_native_attack",
+        "duration": 1.6666666269302368,
+        "channels": 275
+      },
+      {
+        "index": 3,
+        "name": "GGD_native_down",
+        "duration": 2.9166667461395264,
+        "channels": 216
+      },
+      {
+        "index": 4,
+        "name": "GGD_native_special01",
+        "duration": 5,
+        "channels": 279
+      },
+      {
+        "index": 5,
+        "name": "GGD_native_special02",
+        "duration": 5.416666507720947,
+        "channels": 321
+      },
+      {
+        "index": 6,
+        "name": "GGD_native_special03",
+        "duration": 6.25,
+        "channels": 308
+      }
+    ],
+    "textures": [
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 61612,
+        "sha256": "6d8d427767a515a2e333fc514ab79fa60ce77158ac258dc039299e7cbb11dc2f"
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 14144,
+        "sha256": "19f8d206f9146d05b07694eb05f385f2554aaf5c429188e06fcfd9fba1e8c258"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 63541,
+        "sha256": "159bbe4c1dbdb45d608e6cac0e38d3dbbfa63ae78cec49b25f227a0f10c60cd6"
+      },
+      {
+        "width": 8,
+        "height": 8,
+        "bytes": 79,
+        "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 35022,
+        "sha256": "d0145e0c9000d836ee615d387f45b9f00a188b72511cda2810c6d8d458e39fb9"
+      }
+    ],
+    "report": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 3,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/331"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/332"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.2.40",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 3206356
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 512,
+              "height": 512,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/3",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 8,
+              "height": 8,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/4",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 1024,
+              "height": 1024,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 7,
+        "materialCount": 4,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 4,
+        "totalVertexCount": 11777,
+        "totalTriangleCount": 15766,
+        "maxUVs": 2,
+        "maxInfluences": 4,
+        "maxAttributes": 8
+      }
+    }
+  },
+  "outputInspection": {
+    "meshes": 4,
+    "triangles": 15766,
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_native_idle",
+        "duration": 2.5,
+        "channels": 217
+      },
+      {
+        "index": 1,
+        "name": "GGD_native_run",
+        "duration": 0.75,
+        "channels": 274
+      },
+      {
+        "index": 2,
+        "name": "GGD_native_attack",
+        "duration": 1.6666666269302368,
+        "channels": 275
+      },
+      {
+        "index": 3,
+        "name": "GGD_native_down",
+        "duration": 2.9166667461395264,
+        "channels": 216
+      },
+      {
+        "index": 4,
+        "name": "GGD_native_special01",
+        "duration": 5,
+        "channels": 279
+      },
+      {
+        "index": 5,
+        "name": "GGD_native_special02",
+        "duration": 5.416666507720947,
+        "channels": 321
+      },
+      {
+        "index": 6,
+        "name": "GGD_native_special03",
+        "duration": 6.25,
+        "channels": 308
+      }
+    ],
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 18961,
+        "sha256": "58e5b9b77285e1c9a4af8296fba80fcb9821bfc92ba496a46a3fd726052221af"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 7571,
+        "sha256": "b033a0fe5d1604931b11bb85a3ef57d308f7c073a40fef7a616d84c0661e0f09"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 14445,
+        "sha256": "79099c502006010b39e869ea3eeeeddb77b118e7af2b30b88b4bb0b03787e7b4"
+      },
+      {
+        "width": 8,
+        "height": 8,
+        "bytes": 79,
+        "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 9270,
+        "sha256": "753e9170e98e0663533d666323c93cfde60249221282facc8864a356685cf5f3"
+      }
+    ],
+    "report": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 3,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/331"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/332"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.2.40",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 3082288
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/3",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 8,
+              "height": 8,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/4",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 7,
+        "materialCount": 4,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 4,
+        "totalVertexCount": 11777,
+        "totalTriangleCount": 15766,
+        "maxUVs": 2,
+        "maxInfluences": 4,
+        "maxAttributes": 8
+      }
+    }
+  },
+  "normalization": {
+    "drawCalls": {
+      "before": 4,
+      "after": 4
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "resizedTextures": [
+      [
+        512,
+        256
+      ],
+      [
+        512,
+        256
+      ],
+      [
+        1024,
+        256
+      ],
+      [
+        1024,
+        256
+      ]
+    ],
+    "texturesOverCap": [],
+    "changed": true
+  },
+  "heroBudget": {
+    "errors": [],
+    "warnings": [
+      "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+      "單段動作通道 321 高於警戒值 300，送審時需檢查演出負載。"
+    ]
+  },
+  "staticCandidateOnly": false,
+  "nativeAnimationEmbedded": true,
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

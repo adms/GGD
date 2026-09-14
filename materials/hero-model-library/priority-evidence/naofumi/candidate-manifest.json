@@ -1,0 +1,246 @@
+{
+  "schema": "ggd-naofumi-canonical-v2-handoff@1",
+  "heroId": "b2-naofumi",
+  "candidateId": "naofumi-dff-community-opaque-corrected-v2-20260910",
+  "resourceRole": "character-body",
+  "sourceClass": "community-mod",
+  "source": {
+    "id": "gtainside-naofumi",
+    "url": "https://www.gtainside.com/en/sanandreas/skins/168735-naofumi-iwatani-rising-of-the-shield-hero/",
+    "uploader": "carinhaqualquer；原包署名 justarandomfaggot",
+    "format": "GTA RenderWare DFF + TXD → 原生 JSON／PNG",
+    "reuseTerms": "原頁面與包內作者署名保留；公開下載不代表已核實跨遊戲轉換或再散布授權。"
+  },
+  "nativeOriginals": {
+    "dff": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi/extracted/Naofumi.dff",
+      "bytes": 4397243,
+      "sha256": "b8cd4c49ba315efb81e36caf2dbfbdc05171ac07a5206ff5f3996e71dd23f0fc"
+    },
+    "txd": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi/extracted/Naofumi.txd",
+      "bytes": 1311272,
+      "sha256": "37bf59722e9cf91de6ace2cf91b09937929e9e7b10eb549533108d8193a012fe"
+    },
+    "packages": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gtainside-naofumi/raw/gtainside-naofumi.rar",
+        "bytes": 1804687,
+        "sha256": "13cbb515c76771f0d58bfa821e9e88f682bdd70314a374bfb41f897642d2eff6"
+      }
+    ]
+  },
+  "originalLOD": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-20260910/naofumi-lod26000.glb",
+    "bytes": 2681576,
+    "sha256": "60fc4a4e0da3695ca83db6bddbde824a56eb5a2ff77eccf81c342dddba2a7afe"
+  },
+  "supersedesReviewBlock": {
+    "report": {
+      "path": "/private/tmp/ggd-priority-naofumi-canonical-report.json",
+      "bytes": 1955,
+      "sha256": "730e30fb8aa977e921668057c178f60fb7ea2c77f25a616f4d234dd8c3c38740"
+    },
+    "oldRuntime": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-20260910/runtime-v1",
+    "retained": true
+  },
+  "runtimeDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2",
+  "runtimeReady": true,
+  "selectionEligibility": "ready-for-parent-registration; this report does not change a default",
+  "files": {
+    "body.glb": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/body.glb",
+      "bytes": 2741368,
+      "sha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11"
+    },
+    "khronos-unlimited.json": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/khronos-unlimited.json",
+      "bytes": 2350,
+      "sha256": "0c5d709fbae4d5339ca81eeca4967fcf9fe1b9602d94a998b26bc29e644cb0f8"
+    },
+    "model.json": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/model.json",
+      "bytes": 504,
+      "sha256": "770e5c2c88f7604f9be0e14864073314ed5ddb44a2fac1886984e72d654e120a"
+    },
+    "motion.json": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/motion.json",
+      "bytes": 1968,
+      "sha256": "baa96fe3cc3cc73ff695640241b9b77540f1141eecd35c1da0a35a3eea5cdc27"
+    },
+    "quality-gate.json": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/quality-gate.json",
+      "bytes": 1892,
+      "sha256": "f9b3783985b4c8c7bdb4dc260b4686e2a8b533a1f00d44684dfb991f977afa95"
+    },
+    "receipt.json": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/receipt.json",
+      "bytes": 12034,
+      "sha256": "b64e46acc8e3b33091c707e90266358fd841c5166e30c87115b36f2322724600"
+    },
+    "uploaded-model.json": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/uploaded-model.json",
+      "bytes": 401,
+      "sha256": "85b1af29422c6e33866848ac0d8a1c76f5407b228f5699e2ce549aed04bec815"
+    }
+  },
+  "modelDoc": {
+    "id": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "GGD_procedural_idle",
+      "run": "GGD_procedural_run",
+      "attack": "GGD_procedural_attack",
+      "cast": "GGD_procedural_cast",
+      "hurt": "GGD_procedural_hurt",
+      "death": "GGD_procedural_death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "nativeAnimationCount": 0,
+  "proceduralAnimationCount": 6,
+  "animationProvenance": "Preserved six GGD authored procedural fallback clips from v1; no native game motion claimed",
+  "clipDetails": [
+    {
+      "state": "idle",
+      "clip": "GGD_procedural_idle",
+      "seconds": 2.4,
+      "sampleKeys": 73,
+      "channels": 12,
+      "varyingChannels": 3,
+      "loopIntent": true,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "run",
+      "clip": "GGD_procedural_run",
+      "seconds": 0.8,
+      "sampleKeys": 25,
+      "channels": 12,
+      "varyingChannels": 10,
+      "loopIntent": true,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "attack",
+      "clip": "GGD_procedural_attack",
+      "seconds": 1,
+      "sampleKeys": 31,
+      "channels": 12,
+      "varyingChannels": 5,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "cast",
+      "clip": "GGD_procedural_cast",
+      "seconds": 1.6,
+      "sampleKeys": 49,
+      "channels": 12,
+      "varyingChannels": 6,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "hurt",
+      "clip": "GGD_procedural_hurt",
+      "seconds": 0.55,
+      "sampleKeys": 18,
+      "channels": 12,
+      "varyingChannels": 5,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "death",
+      "clip": "GGD_procedural_death",
+      "seconds": 1.25,
+      "sampleKeys": 39,
+      "channels": 12,
+      "varyingChannels": 6,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    }
+  ],
+  "bones": [
+    32
+  ],
+  "triangles": 26000,
+  "drawPrimitives": 4,
+  "textureCount": 4,
+  "maxAnimationChannels": 12,
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 1,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/34"
+      }
+    ],
+    "truncated": false
+  },
+  "sharedPrepareAndVerifyPassed": true,
+  "stationaryClips": [],
+  "all8InfluencesPreserved": true,
+  "all4TextureRGBAAndSpecularPreserved": true,
+  "alphaOnlyDiff": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/alpha-only-diff.json",
+    "bytes": 1090,
+    "sha256": "73b2609732e1d9dd5e064052c4ef88bc1256dfc5d00b4ef4d186f61082b25eb2"
+  },
+  "sourceMaterialIndexAudit": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/native-audit/dragonff-mode-comparison.json",
+    "bytes": 3556,
+    "sha256": "42d4533a37bdf380984fc5a9dac57120299db888aea98a077a9dc581b759eb4d"
+  },
+  "independentNativeDecoderAudit": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/native-audit/native-structure-and-decoder.json",
+    "bytes": 4776,
+    "sha256": "7eb95cf1f70852415faa01b4752d650b0d822a30213476aec63b4ddd7d577a2c"
+  },
+  "rootCauseDocument": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/ROOT_CAUSE.md",
+    "bytes": 1794,
+    "sha256": "c3e2fcd4ede155a08703de14efc733c3878a4934fe7a39fc440f0178064f3c83"
+  },
+  "visualEvidence": {
+    "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/render-runtime-v2",
+    "pngCount": 14,
+    "proof": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/render-runtime-v2/render-proof.json",
+      "bytes": 7305,
+      "sha256": "94b7d061bd3fbc699c2acd945277db869b2d8b5a77aed4f0ab783aff53c5bcc0"
+    },
+    "allTexturesReady": true,
+    "sampledVisualAcceptance": "pass"
+  },
+  "warnings": [
+    "三角面 26000 高於警戒值 16000，送審時需檢查演出負載。",
+    "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+    "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+  ],
+  "limitations": [
+    "Six procedural fallbacks, no native source motions.",
+    "Run amplitude0.7; no original timing, root velocity, foot IK or cloth physics.",
+    "Authored floor correction at30Hz keys does not prove zero interpolation penetration or zero foot sliding.",
+    "Native RenderWare reflection plugins are not fully reproduced; inherited KHR_materials_specular values are preserved.",
+    "Backend modelVersions registration, production deployment and gameplay mechanics acceptance remain parent integration tasks."
+  ],
+  "noCentralMutation": true,
+  "noGitMutation": true,
+  "noS3Mutation": true
+}

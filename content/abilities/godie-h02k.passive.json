@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0
+    0.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
@@ -29,13 +29,13 @@
                 "kind": "damage",
                 "damageType": "true",
                 "amount": {
-                  "flat": 999
+                  "flat": 999.0
                 }
               },
               {
                 "kind": "applyStatus",
                 "statusId": "burn",
-                "duration": 5
+                "duration": 5.0
               },
               {
                 "kind": "applyStatus",
@@ -45,7 +45,7 @@
                   "tag": "stun"
                 },
                 "statusId": "blind",
-                "duration": 5,
+                "duration": 5.0,
                 "missChance": 0.5
               }
             ],
@@ -57,6 +57,5 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-h02k.passive.webp",
-  "castTimeTier": "極小",
-  "castTimeSec": 0
+  "castTimeTier": "極小"
 }

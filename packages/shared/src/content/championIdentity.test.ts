@@ -441,7 +441,19 @@ describe("numberless champions each stay distinct (champion-identity-no-number)"
     }
     // …and never merged into a NUMBERED hero either, however similar the name.
     // godie-u01q 測試英雄-索隆 shares 索隆 AND its mesh with hero 11's 三刀流劍士.
-    expect(meshOf(champ("godie-u01q"))).toBe(meshOf(champ("godie-udre")));
+    // ⚠️ PR #1152 起 udre 的作用中模型是**凍結版本**（label「原上線模型」），它的 sourceModelKey
+    //    正是 u01q 那顆 `imported.heromusashimiyamoto` —— 同一顆模型的血緣；⛔ 但凍結的是當時的位元組，
+    //    來源檔之後被入庫檢查正規化過 ⇒ 逐位元組的 mesh 雜湊不再相等。
+    // ⇒ ⭐ 前提改驗**出貨資料裡寫著的血緣**；壓力測試仍讓 udre 站在同一顆 mesh 上（＝main 今天出貨的狀態）。
+    const udreDoc = JSON.parse(readFileSync(join(CONTENT_DIR, "champions/godie-udre.json"), "utf8")) as {
+      modelKey: string;
+      modelVersions?: { modelKey: string; sourceModelKey?: string }[];
+    };
+    const udreActive = udreDoc.modelVersions?.find((v) => v.modelKey === udreDoc.modelKey);
+    expect(udreActive?.sourceModelKey, "godie-udre 的作用中版本要追得回 u01q 那顆模型").toBe(champ("godie-u01q").modelKey);
+    const udreOnSharedMesh = { ...champ("godie-udre"), modelKey: champ("godie-u01q").modelKey };
+    expect(meshOf(champ("godie-u01q"))).toBe(meshOf(udreOnSharedMesh));
+    expect(isSameCharacter(champ("godie-u01q"), udreOnSharedMesh)).toBe(false);
     expect(isSameCharacter(champ("godie-u01q"), champ("godie-udre"))).toBe(false);
     // 黑化張飛 vs 十六夜Sakuya: both numberless — still two heroes, not one.
     expect(isSameCharacter(champ("godie-u01f"), champ("godie-e00u"))).toBe(false);

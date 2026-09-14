@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -50,7 +50,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -117,7 +117,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -157,7 +157,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中"
           },
@@ -178,7 +178,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -232,7 +232,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -321,7 +321,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-popp",
-  "modelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+  "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
   "name": "何布",
   "origin": "法師",
   "passiveAbility": "b2-popp.passive",
@@ -336,5 +336,200 @@
   "tags": [
     "magic"
   ],
-  "icon": "assets/icons/champions/b2-popp.webp"
+  "icon": "assets/icons/champions/b2-popp.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.19cac64b23e771710b951b12b35a4fee74ddcd256de2cb86",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "modelSha256": "f784ca701072c5e7356836b77579c3ae240f954833b18af12c54b7f73ef2d88a",
+      "binarySha256": "c560983f22b84d13329520c61ff4be1363db83de6d5c779a85b8890df2bf5e29",
+      "registeredAt": "2026-09-12T23:02:37.592Z",
+      "source": {
+        "kind": "previous",
+        "character": "何布",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.78d209fa79b12a8039e407aa0ce6b08f048962f5cf8c34e1",
+      "label": "李小狼",
+      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+      "modelSha256": "cf3a4841ea39ead45f22c5f8a429b119730dd96011f9e7bb35fa2157ab5802cc",
+      "binarySha256": "006c5ac88d04d71cc30e2bb7769e3e5ad0be0bf67af84ea5cdb367335a1d56dc",
+      "registeredAt": "2026-09-12T23:02:37.595Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "李小狼",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "300heroes:f1660efeba7e0630c361c814",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.e0c3fd1d3fd7eb9beebb3726c459123029d78e3c6dd822d5",
+      "label": "何布（獨立副本／李小狼）",
+      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "modelSha256": "74988775ddf220b759bafb8fd148f851e95ba343c8ae332a16f1871f5943bbdc",
+      "binarySha256": "7e08dcd47c6ea86f052d0a492ab86f9a8f24d5be2b735d5c2445de3a160ce44e",
+      "registeredAt": "2026-09-12T23:02:37.698Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "何布（獨立副本／李小狼）",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "derivative:popp",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e4719d30e3ce41754cc3f6ecde045caade836529ea6c1e3f",
+      "label": "李小狼",
+      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+      "modelSha256": "2284aebc3a7d8b2ed2cf615ca9a05015da228d3047e65e23e50c1601ea473009",
+      "binarySha256": "006c5ac88d04d71cc30e2bb7769e3e5ad0be0bf67af84ea5cdb367335a1d56dc",
+      "registeredAt": "2026-09-13T00:08:53.445Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "李小狼",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "300heroes:f1660efeba7e0630c361c814",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
+      "label": "何布（獨立副本／李小狼）",
+      "sourceModelKey": "community.body.f1d63fd7d3d0ca1b2d3ba95820cc6010300be3c4d1603878",
+      "modelSha256": "54d00ac8ca55c04f80ba0906ee52387ceee196b84e42fe5d38ef1733c6c6d762",
+      "binarySha256": "7e08dcd47c6ea86f052d0a492ab86f9a8f24d5be2b735d5c2445de3a160ce44e",
+      "registeredAt": "2026-09-13T00:08:53.556Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "何布（獨立副本／李小狼）",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "derivative:popp",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.945c767c7f6997f9436f13dbc013a20a99ad22b5a0c5de4e",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00（原生動作）",
+      "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+      "modelSha256": "2c80366e6d5ffbd81c2801d6e16a111128341486c17a9fc98ab4fef685014f4f",
+      "binarySha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
+      "registeredAt": "2026-09-13T12:06:59.725Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.3892078e9d1f55abd9689b0be45a37afc79afa4f73f89881",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00（原生動作）",
+      "sourceModelKey": "community.body.a0834bb8f2cf3f30a0558f0d649f415732056023049e8cd0",
+      "modelSha256": "78859bbd397c0014c4598ed977b4f8e2ee46ccb206fa7e848e7c8dd8726b7ffc",
+      "binarySha256": "7359e955ba755c005e2bc537d22eea91b6142e4250bf4e533619e6ec4bb343e1",
+      "registeredAt": "2026-09-13T12:09:41.268Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9837a873a8d48788daf25a2c3c027fe950e39a1ae8f6461e",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/00＋Magikaru 法杖（原生動作）",
+      "sourceModelKey": "community.body.2be061b799c20dc6b3746af0eacb010aa578100be56c6d9c",
+      "modelSha256": "1e48818b07c990cc591a562ee4a24493d7c3b1d051b42f8bc5e01956af49495f",
+      "binarySha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe",
+      "registeredAt": "2026-09-13T12:41:54.158Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/00）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/01＋Mahouno 法杖（原生動作）",
+      "sourceModelKey": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+      "modelSha256": "f9531198615ea1f1b0a8dc5e386e43711bd25ddbd373cef4a28c1e8fcc437979",
+      "binarySha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "registeredAt": "2026-09-13T12:58:00.283Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/01，Mahouno）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/01; CB_PN020_01; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）",
+      "sourceModelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+      "modelSha256": "926505585f56f8a78f0a7e81c9f3001209b3355043778549f79eb7ba530b484e",
+      "binarySha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27",
+      "registeredAt": "2026-09-13T12:58:02.104Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/02，Kagayaki）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/02; CB_PN020_02; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

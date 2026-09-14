@@ -1,0 +1,32 @@
+{
+  "schema": "ggd.zero-lancer-current-contract-refresh@1",
+  "contractSet": "7eca5b1fa95b9aa98dfc31e16d8a316a348b1da28bfca74b7a17960e9e5f3cc5",
+  "generator": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/validate.mts",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/current-contract-7eca5b1fa95b9aa9-v2",
+  "modelsChanged": false,
+  "validationOnly": true,
+  "results": [
+    {
+      "candidateId": "zero-lancer-p1-static-skinned-v1",
+      "validationPath": "materials/hero-model-library/priority-evidence/zero-lancer/current-contract-7eca5b1fa95b9aa9/zero-lancer-p1-static-skinned-v1-validation.json",
+      "validationBytes": 4104,
+      "validationSha256": "f2ab9670671598c2c4d4db71c04662b30af468293eb34d9959f96291e085cc80",
+      "modelSha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+      "modelBytes": 336732,
+      "uploadErrors": 0,
+      "uploadWarnings": 0,
+      "budgetErrors": []
+    },
+    {
+      "candidateId": "zero-lancer-p2-static-skinned-v1",
+      "validationPath": "materials/hero-model-library/priority-evidence/zero-lancer/current-contract-7eca5b1fa95b9aa9/zero-lancer-p2-static-skinned-v1-validation.json",
+      "validationBytes": 4104,
+      "validationSha256": "9692dad176eb0487b23cf7496a3757ac358e84cf793935dc9fa33931c0fd0407",
+      "modelSha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+      "modelBytes": 337856,
+      "uploadErrors": 0,
+      "uploadWarnings": 0,
+      "budgetErrors": []
+    }
+  ]
+}

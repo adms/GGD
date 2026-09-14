@@ -424,6 +424,10 @@ def main() -> None:
             m = {"state": "not-in-inventory", "why": "⛔ 盤點表裡找不到這一名"}
             placeholders.append({"field": "modelKey", "state": m["state"], "why": m["why"]})
         # ── ② 圖示 ────────────────────────────────────────────────
+        from model_map import preserve_model_history
+        previous_path = OUT_CH / f"{hid}.json"
+        if previous_path.exists():
+            preserve_model_history(c, json.loads(previous_path.read_text(encoding='utf-8')))
         # ⭐ 兩個住處都認：`ICONS`（第一批那次的產出）與**已經出貨的那一份**
         #   （`content/assets/icons/`，icon-gen 的 local batch 直接寫在那裡）。
         # ⚠️ ⭐ 這是為了讓**誰先跑都一樣**：⛔ 沒有這一段，先跑 icon-gen 再跑這一支
@@ -476,7 +480,7 @@ def main() -> None:
             missing_tpl = sorted(want_tpl - set(tpl))
             print(f"⭐ 技能模板：引用 {len(want_tpl)} · 搬進來 {len(tpl)}"
                   + (f" · ⛔ 缺 {missing_tpl}" if missing_tpl else ""), file=sys.stderr)
-        needed = {r["doc"].get("modelKey") for r in rows if str(r["doc"].get("modelKey", "")).startswith("community.body.")}
+        needed = {r["doc"].get("modelKey") for r in rows if str(r["doc"].get("modelKey", "")).startswith("community.body.") and not (OUT_MODELS / (r["doc"]["modelKey"] + '.json')).exists()}
         copied = copy_model_docs(args.catalog, needed)
         missing_models = sorted(needed - set(copied))
         if missing_models:

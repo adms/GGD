@@ -1,0 +1,20 @@
+{
+  "id": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+  "schema": "model@1",
+  "glbPath": "assets/models/ou99/versions/045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "walk",
+    "attack": "attack 1",
+    "cast": "spell two",
+    "hurt": "stand ready",
+    "death": "death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "ou99.459257",
+    "legacyAppearance": true
+  },
+  "yawOffsetDeg": 0
+}

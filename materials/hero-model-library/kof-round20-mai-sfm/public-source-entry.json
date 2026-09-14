@@ -1,0 +1,99 @@
+{
+  "id": "kof-xv-mai-sfmlab-lordscrub-v1",
+  "target": "KOF XV／不知火舞／SFM 完整原包（頭身合一個角色來源）",
+  "heroIds": [
+    "community-review-03-20260907"
+  ],
+  "ownerEntryIds": [],
+  "url": "https://sfmlab.com/project/96ca7f93-ac69-4a4e-a8ec-1f6617a7c40c/",
+  "downloadUrl": "https://sfmlab.com/project/mirror/download/559bf8e7-81fa-4871-b958-e528bcd92d6b/",
+  "upstreamUrl": "https://www.deviantart.com/enlightendshadow/art/KOFXV-Mai-EnlightendShadow-907248683",
+  "uploader": "lordscrub; original XPS port credited to EnlightendShadow",
+  "format": "Source MDL49/VVD/VTX + 9 PNG + 9 VTF + 6 VMT",
+  "accessStatus": "public-direct-download",
+  "acquisitionStatus": "downloaded-verified",
+  "readiness": "pending-standardization",
+  "purchaseDecision": "hold-purchase-review-free-source",
+  "defaultEligible": false,
+  "resourceRole": "character-model-collection",
+  "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-sfm",
+  "sourceGame": "The King of Fighters XV",
+  "platform": "unknown-original-platform",
+  "selectionClass": "community-mod",
+  "discoveryChannel": "author-public-model-library-free-mirror",
+  "assetKinds": [
+    "model",
+    "texture",
+    "skeleton"
+  ],
+  "modelCandidates": [
+    {
+      "candidateId": "kof-xv-mai-lordscrub-sfm",
+      "sourceId": "kof-xv-mai-sfmlab-lordscrub-v1",
+      "character": "Mai Shiranui",
+      "heroIds": [
+        "community-review-03-20260907"
+      ],
+      "sourceGame": "The King of Fighters XV",
+      "sourceClass": "mod-community-port",
+      "sourceUrl": "https://sfmlab.com/project/96ca7f93-ac69-4a4e-a8ec-1f6617a7c40c/",
+      "parts": [
+        "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.mdl",
+        "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.mdl"
+      ],
+      "partCount": 2,
+      "completeCharacterCandidateCount": 1,
+      "boneCountsByPart": {
+        "body": 152,
+        "head": 80
+      },
+      "vertexCountsLOD0ByPart": {
+        "body": 42059,
+        "head": 26034
+      },
+      "animationCount": 0,
+      "sourceStaticPoseActions": 2,
+      "readyStage": "pending-standardization",
+      "runtimeReady": false,
+      "backendSelectionVerified": false,
+      "defaultChanged": false,
+      "candidateMustBeRetained": true,
+      "originalBytesPreserved": true,
+      "limitations": [
+        "Publisher says fan is absent.",
+        "Publisher says back-of-outfit flower pattern is missing in the SFM setup.",
+        "Publisher warns jaw is two parts.",
+        "No native gameplay animations, VFX, SFX or voice included.",
+        "No GGD runtime/visual acceptance performed."
+      ]
+    }
+  ],
+  "candidateManifest": {
+    "path": "source-manifest.json",
+    "sha256": "d0579e1fc37b113b2755639a03d56a79a29d4737878ffefe7cd876c5138a5756"
+  },
+  "filesManifest": {
+    "path": "delivery-20260910T151016200104Z.json",
+    "sha256": "936ec1e1e4ccb3c92918d463fb9cbfe3a9441a82db03ab89c85603c58abff349"
+  },
+  "files": [
+    {
+      "path": "raw/KOFVX_Mai_OFHXLWK.zip",
+      "bytes": 90764853,
+      "sha256": "2284c0ca7eb9b0201acb3497702154c7b1ea182f51b03072378f1e8fd2087b3e"
+    }
+  ],
+  "sourceLicense": "CC0 selected on SFMLab; site warns license unverified and fan-art rights may apply",
+  "publicationStatus": "local-only-not-uploaded",
+  "backendIntegration": {
+    "required": true,
+    "state": "pending-standardization",
+    "selectionVerified": false
+  },
+  "verification": "完整 90764853-byte ZIP、安全解出30實檔。body/head 是同一不知火舞的兩部件，不是兩個完整角色；各僅一個1-frame @idle pose，0原作動作、0音訊、0VFX。扇子及背部花紋缺口與jaw兩段限制照作者描述保留。未轉GLB、未後台驗收；既有核准11支加工預設不改。",
+  "backup": {
+    "status": "not-uploaded",
+    "readbackVerified": false
+  },
+  "audioFileIndex": null
+}

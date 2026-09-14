@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-10T13:39:28.193794+00:00",
+  "receipts": [
+    {
+      "sourcePage": "https://gamebanana.com/mods/291438",
+      "url": "https://gamebanana.com/apiv11/Mod/291438?_csvProperties=_sName,_sText,_aCredits,_aFiles",
+      "httpStatus": "200",
+      "curlExitCode": 0,
+      "stderr": "",
+      "path": "receipts/kotomine-kirei-source-page.json",
+      "bytes": 1247,
+      "sha256": "2ce3fec025197e7c9f489691920774489cab9496fb5e5c1756516fd897a21926"
+    },
+    {
+      "sourcePage": "https://gamebanana.com/mods/492607",
+      "url": "https://gamebanana.com/apiv11/Mod/492607?_csvProperties=_sName,_sText,_aCredits,_aFiles",
+      "httpStatus": "200",
+      "curlExitCode": 0,
+      "stderr": "",
+      "path": "receipts/dark-sakura-source-page.json",
+      "bytes": 2280,
+      "sha256": "becdd3b35db859983235ece47a248adf6b0fed3ea482beff79d94075a064c6ca"
+    }
+  ]
+}

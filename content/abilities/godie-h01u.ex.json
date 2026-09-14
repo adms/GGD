@@ -8,12 +8,12 @@
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0
+    0.0
   ],
   "manaCost": [
-    0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "targetsEnemies": false,
   "effects": [],
   "passive": {
@@ -24,7 +24,7 @@
           {
             "stat": "as",
             "op": "capRaise",
-            "value": 10
+            "value": 10.0
           },
           {
             "stat": "lifesteal",
@@ -47,6 +47,5 @@
   },
   "icon": "assets/icons/abilities/godie-h01u.ex.webp",
   "vfxKey": "fx.prim.physical.pulse-lg",
-  "castTimeTier": "極小",
-  "castTimeSec": 0
+  "castTimeTier": "極小"
 }

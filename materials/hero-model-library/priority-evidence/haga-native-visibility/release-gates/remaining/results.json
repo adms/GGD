@@ -1,0 +1,308 @@
+[
+  {
+    "command": "pnpm contract:numbers:check",
+    "exit": 1,
+    "seconds": 1.4,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/contract-numbers-check.log"
+  },
+  {
+    "command": "pnpm atlas:check",
+    "exit": 0,
+    "seconds": 7.2,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/atlas-check.log"
+  },
+  {
+    "command": "pnpm treasure:csv:check",
+    "exit": 0,
+    "seconds": 1.12,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/treasure-csv-check.log"
+  },
+  {
+    "command": "pnpm docs:readme:check",
+    "exit": 1,
+    "seconds": 1.83,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/docs-readme-check.log"
+  },
+  {
+    "command": "pnpm docs:status:check",
+    "exit": 0,
+    "seconds": 1.17,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/docs-status-check.log"
+  },
+  {
+    "command": "pnpm roster:check",
+    "exit": 0,
+    "seconds": 2.68,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/roster-check.log"
+  },
+  {
+    "command": "pnpm pitch:check",
+    "exit": 0,
+    "seconds": 5.31,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/pitch-check.log"
+  },
+  {
+    "command": "pnpm newhero:check",
+    "exit": 0,
+    "seconds": 3.61,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/newhero-check.log"
+  },
+  {
+    "command": "pnpm lowdmg:check",
+    "exit": 0,
+    "seconds": 2.92,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/lowdmg-check.log"
+  },
+  {
+    "command": "pnpm anchors:check",
+    "exit": 0,
+    "seconds": 2.78,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/anchors-check.log"
+  },
+  {
+    "command": "pnpm statcaps:check",
+    "exit": 0,
+    "seconds": 2.75,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/statcaps-check.log"
+  },
+  {
+    "command": "pnpm apconv:plan:check",
+    "exit": 0,
+    "seconds": 1.98,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apconv-plan-check.log"
+  },
+  {
+    "command": "pnpm apconv:check",
+    "exit": 0,
+    "seconds": 1.52,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apconv-check.log"
+  },
+  {
+    "command": "pnpm apdmg:check",
+    "exit": 0,
+    "seconds": 3.9,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apdmg-check.log"
+  },
+  {
+    "command": "pnpm board:check",
+    "exit": 1,
+    "seconds": 1.46,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/board-check.log"
+  },
+  {
+    "command": "pnpm msgledger:check",
+    "exit": 0,
+    "seconds": 21.77,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/msgledger-check.log"
+  },
+  {
+    "command": "pnpm skillnorm:check",
+    "exit": 0,
+    "seconds": 7.21,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/skillnorm-check.log"
+  },
+  {
+    "command": "pnpm speedtiers:check",
+    "exit": 0,
+    "seconds": 2.83,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/speedtiers-check.log"
+  },
+  {
+    "command": "pnpm jasscombo:check",
+    "exit": 0,
+    "seconds": 1.48,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/jasscombo-check.log"
+  },
+  {
+    "command": "pnpm vfxbind:check",
+    "exit": 0,
+    "seconds": 1.34,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/vfxbind-check.log"
+  },
+  {
+    "command": "pnpm models:check",
+    "exit": 1,
+    "seconds": 21.99,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/models-check.log"
+  },
+  {
+    "command": "pnpm lod:check",
+    "exit": 0,
+    "seconds": 1.73,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/lod-check.log"
+  },
+  {
+    "command": "pnpm audit:check",
+    "exit": 0,
+    "seconds": 2.68,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/audit-check.log"
+  },
+  {
+    "command": "pnpm echoloop:check",
+    "exit": 0,
+    "seconds": 3.33,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/echoloop-check.log"
+  },
+  {
+    "command": "pnpm templates:check",
+    "exit": 0,
+    "seconds": 1.23,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/templates-check.log"
+  },
+  {
+    "command": "pnpm prose:check",
+    "exit": 0,
+    "seconds": 7.0,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/prose-check.log"
+  },
+  {
+    "command": "pnpm sfxbind:check",
+    "exit": 0,
+    "seconds": 1.27,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/sfxbind-check.log"
+  },
+  {
+    "command": "pnpm shapes:check",
+    "exit": 1,
+    "seconds": 1.46,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/shapes-check.log"
+  },
+  {
+    "command": "pnpm iconplan:check",
+    "exit": 0,
+    "seconds": 1.37,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/iconplan-check.log"
+  },
+  {
+    "command": "pnpm formreceipts:check",
+    "exit": 0,
+    "seconds": 57.36,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/formreceipts-check.log"
+  },
+  {
+    "command": "pnpm beam:check",
+    "exit": 0,
+    "seconds": 8.18,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/beam-check.log"
+  },
+  {
+    "command": "pnpm archetypes:check",
+    "exit": 0,
+    "seconds": 3.2,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/archetypes-check.log"
+  },
+  {
+    "command": "pnpm enableaudit:check",
+    "exit": 0,
+    "seconds": 2.05,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/enableaudit-check.log"
+  },
+  {
+    "command": "pnpm review:check",
+    "exit": 0,
+    "seconds": 5.07,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/review-check.log"
+  },
+  {
+    "command": "pnpm declshape:check",
+    "exit": 0,
+    "seconds": 3.11,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/declshape-check.log"
+  },
+  {
+    "command": "pnpm decor:check",
+    "exit": 1,
+    "seconds": 7.29,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/decor-check.log"
+  },
+  {
+    "command": "pnpm speedlists:check",
+    "exit": 0,
+    "seconds": 5.67,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/speedlists-check.log"
+  },
+  {
+    "command": "pnpm locust:check",
+    "exit": 0,
+    "seconds": 1.64,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/locust-check.log"
+  },
+  {
+    "command": "pnpm w3a:check",
+    "exit": 0,
+    "seconds": 4.06,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/w3a-check.log"
+  },
+  {
+    "command": "pnpm board:roll:check",
+    "exit": 0,
+    "seconds": 1.32,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/board-roll-check.log"
+  },
+  {
+    "command": "pnpm ruleslip:check",
+    "exit": 0,
+    "seconds": 1.07,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/ruleslip-check.log"
+  },
+  {
+    "command": "pnpm receipt:check",
+    "exit": 0,
+    "seconds": 2.76,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/receipt-check.log"
+  },
+  {
+    "command": "pnpm handback:check",
+    "exit": 0,
+    "seconds": 2.6,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/handback-check.log"
+  },
+  {
+    "command": "pnpm clipdeg:check",
+    "exit": 1,
+    "seconds": 4.05,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/clipdeg-check.log"
+  },
+  {
+    "command": "pnpm apcoeffdiff:check",
+    "exit": 0,
+    "seconds": 3.46,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apcoeffdiff-check.log"
+  },
+  {
+    "command": "pnpm decor:check",
+    "exit": 1,
+    "seconds": 8.05,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/decor-check.log"
+  },
+  {
+    "command": "pnpm appearance:check",
+    "exit": 1,
+    "seconds": 4.58,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/appearance-check.log"
+  },
+  {
+    "command": "pnpm ptokens:check",
+    "exit": 0,
+    "seconds": 3.92,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/ptokens-check.log"
+  },
+  {
+    "command": "pnpm coord:check",
+    "exit": 1,
+    "seconds": 6.39,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/coord-check.log"
+  },
+  {
+    "command": "pnpm voices:check",
+    "exit": 0,
+    "seconds": 7.87,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/voices-check.log"
+  },
+  {
+    "command": "pnpm combat:check",
+    "exit": 1,
+    "seconds": 1.58,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/combat-check.log"
+  }
+]

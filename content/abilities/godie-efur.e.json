@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60,
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    150,
-    150,
-    150,
-    150
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
-  "range": 0,
+  "range": 0.0,
   "radiusTier": "小",
   "targetsEnemies": true,
   "effects": [
@@ -88,6 +88,6 @@
   ],
   "cooldownTier": "中",
   "manaCostTier": "小",
-  "castTimeSec": 0.5,
-  "castTimeTier": "大"
+  "castTimeTier": "大",
+  "castTimeSec": 0.5
 }

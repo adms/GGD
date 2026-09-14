@@ -8,18 +8,18 @@
   "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    60,
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    300,
-    300,
-    300,
-    300
+    300.0,
+    300.0,
+    300.0,
+    300.0
   ],
-  "range": 12,
+  "range": 12.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -35,12 +35,12 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1
+            "coeff": 1.0
           }
         ]
       },
       "length": 14,
-      "width": 2,
+      "width": 2.0,
       "aim": "target",
       "fromCaster": true,
       "includeOrigin": true
@@ -55,7 +55,7 @@
         120
       ],
       "sizeScale": 1.4,
-      "riseSpeed": 2,
+      "riseSpeed": 2.0,
       "durationSec": 2.8,
       "applyTo": "self"
     },
@@ -131,7 +131,7 @@
   ],
   "cooldownTier": "極大",
   "manaCostTier": "中",
+  "castTimeTier": "極大",
   "rangeTier": "極大",
-  "castTimeSec": 1,
-  "castTimeTier": "極大"
+  "castTimeSec": 1
 }

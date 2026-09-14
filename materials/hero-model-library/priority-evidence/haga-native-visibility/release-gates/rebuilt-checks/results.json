@@ -1,0 +1,50 @@
+[
+  {
+    "command": "pnpm contract:numbers:check",
+    "exit": 0,
+    "seconds": 1.39,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/contract-numbers-check.log"
+  },
+  {
+    "command": "pnpm docs:readme:check",
+    "exit": 0,
+    "seconds": 1.69,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/docs-readme-check.log"
+  },
+  {
+    "command": "pnpm board:check",
+    "exit": 0,
+    "seconds": 1.24,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/board-check.log"
+  },
+  {
+    "command": "pnpm decor:check",
+    "exit": 0,
+    "seconds": 7.78,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/decor-check.log"
+  },
+  {
+    "command": "pnpm appearance:check",
+    "exit": 0,
+    "seconds": 3.94,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/appearance-check.log"
+  },
+  {
+    "command": "pnpm clipdeg:check",
+    "exit": 0,
+    "seconds": 3.76,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/clipdeg-check.log"
+  },
+  {
+    "command": "pnpm receipt:check",
+    "exit": 0,
+    "seconds": 2.81,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/receipt-check.log"
+  },
+  {
+    "command": "pnpm handback:check",
+    "exit": 0,
+    "seconds": 2.54,
+    "log": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/handback-check.log"
+  }
+]

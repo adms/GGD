@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-scoped-tar-s3-receipt@1",
+  "id": "blender-io-scene-psk-psa-9c1c8ba6",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/blender-io-scene-psk-psa-9c1c8ba6/a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/blender-io-scene-psk-psa-9c1c8ba6/a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273.files.json",
+  "sha256": "a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273",
+  "bytes": 21381791,
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "fileCount": 157,
+  "manifestSha256": "cd5cbd25610821fdf64292add1032a52ad77b2353925404c5cc3ae366c8ab7f6",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-macos-native-export-v1/blender-addon/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-macos-native-export-v1/blender-addon/s3-full-readback.tar.gz",
+  "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-macos-native-export-v1/blender-addon/scoped-manifest.json",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true
+}

@@ -44,7 +44,8 @@
     <code>&amp;champion=godie-n00b</code>（GH#368：走 overlay + 尺寸倍率，＝玩家看到的那一具）·
     <code>&amp;cam=combat</code>（真 <code>CameraRig</code>：68°、dolly 10、fov 0.8、真地板）
     或 <code>&amp;cam=select</code>（真 <code>StorePreview</code>，就是選角側欄與商店掛的那一顆）·
-    <code>&amp;clip=idle</code> · <code>&amp;step=600</code> · <code>&amp;hud=0</code>
+    <code>&amp;clip=idle</code> · <code>&amp;step=600</code> ·
+    <code>&amp;live=1</code>（不凍結，供逐項動作審查）· <code>&amp;hud=0</code>
   </p>
   <p>
     <code>headroomAboveHeadJoint</code> 是這頁的重點：骨架說「頭在這裡」，
@@ -237,9 +238,16 @@
         clip: q.get("clip") ?? "idle",
         offsetZ: num("offsetZ", 0),
       });
-      handle.stepTo(num("step", 600));
+      const live = q.get("live") === "1";
+      if (!live) handle.stepTo(num("step", 600));
       window.__audition = handle;
-      Object.defineProperty(window, "__settled", { get: () => handle.settled });
+      Object.defineProperty(window, "__settled", {
+        get: () => {
+          if (!live) return handle.settled;
+          const probe = handle.probe();
+          return typeof probe.glbPath === "string" || typeof probe.error === "string";
+        },
+      });
       window.__probe = () => handle.probe();
       if (q.get("hud") !== "0") {
         setInterval(() => { stats.textContent = JSON.stringify(handle.probe(), null, 1); }, 250);

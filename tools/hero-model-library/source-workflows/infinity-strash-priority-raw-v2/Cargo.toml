@@ -1,0 +1,8 @@
+[package]
+name = "ggd-infinity-strash-prefix-extractor"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+repak = { git = "https://github.com/trumank/repak.git", rev = "e215472c51db69328b1ce77be2db24d24c1d646b" }

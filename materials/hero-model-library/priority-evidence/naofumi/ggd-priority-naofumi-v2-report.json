@@ -1,0 +1,35 @@
+{
+  "schema": "ggd-priority-naofumi-v2-report@1",
+  "frozen": true,
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910",
+  "candidateManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/candidate-manifest.json",
+    "bytes": 10154,
+    "sha256": "a4d2931212a4413ff9eef0219f252d489889762441b42ff58776cee1a7994f2e"
+  },
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/file-manifest.json",
+    "bytes": 21836,
+    "sha256": "f856cdadcdd5365e7a6ed70d03cc0104f8873c0e693e7b1f3f0da8479cb413ad"
+  },
+  "runtimeDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2",
+  "body": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/body.glb",
+    "bytes": 2741368,
+    "sha256": "cdb44ac0559485133dd0df571d8e5a4fa17b661f22797e6575d3b06657f12e11"
+  },
+  "model": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-naofumi-canonical-v2-20260910/runtime-v2/model.json",
+    "bytes": 504,
+    "sha256": "770e5c2c88f7604f9be0e14864073314ed5ddb44a2fac1886984e72d654e120a"
+  },
+  "sharedContractPassed": true,
+  "khronosErrors": 0,
+  "khronosWarnings": 0,
+  "sampledVisualAcceptance": "pass",
+  "resolvedRootCause": "Natively opaque materials were incorrectly exported BLEND; only four alphaMode values changed, BIN unchanged",
+  "nativeClips": 0,
+  "proceduralClips": 6,
+  "allFileCount": 61,
+  "allBytes": 11873021
+}

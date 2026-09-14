@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-verified-rigid-hierarchy-skin@1",
+  "source": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+    "bytes": 78876,
+    "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443"
+  },
+  "output": {
+    "path": "/private/tmp/kisaragi-skinned-c.glb",
+    "bytes": 178172,
+    "sha256": "c15d1f6b76c8d74134970d7130f75ea5dad0243027586e28978e4af4e2e771b6"
+  },
+  "animations": 6,
+  "animationDefinitionsUnchanged": true,
+  "skin": {
+    "joints": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "jointCount": 6,
+    "inverseBindMatrices": 31
+  },
+  "convertedMeshes": [
+    {
+      "sourceNode": 1,
+      "jointSlot": 1,
+      "meshNode": 6,
+      "name": "TramCarriage",
+      "mesh": 0,
+      "primitives": 1
+    },
+    {
+      "sourceNode": 2,
+      "jointSlot": 2,
+      "meshNode": 7,
+      "name": "LeftPassengerDoor",
+      "mesh": 1,
+      "primitives": 1
+    },
+    {
+      "sourceNode": 3,
+      "jointSlot": 3,
+      "meshNode": 8,
+      "name": "RightPassengerDoor",
+      "mesh": 2,
+      "primitives": 1
+    },
+    {
+      "sourceNode": 4,
+      "jointSlot": 4,
+      "meshNode": 9,
+      "name": "RearWheelPair",
+      "mesh": 3,
+      "primitives": 1
+    },
+    {
+      "sourceNode": 5,
+      "jointSlot": 5,
+      "meshNode": 10,
+      "name": "FrontWheelPair",
+      "mesh": 4,
+      "primitives": 1
+    }
+  ],
+  "allVerticesRigidWeightOne": true,
+  "originalBinaryPreservedAsExactPrefix": true,
+  "sourceModified": false
+}

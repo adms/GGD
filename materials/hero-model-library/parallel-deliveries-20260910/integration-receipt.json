@@ -1,0 +1,34 @@
+{
+  "schema": "ggd-parallel-delivery-integration@1",
+  "newAcquiredSourceIds": [
+    "kof-xv-iori-audio-float32-v1"
+  ],
+  "newPrimaryAudioFiles": 97,
+  "newSourceModels": 0,
+  "newNativeMotions": 0,
+  "newResearchLeadIds": [
+    "lead-vearn-mmd-sketchfab-a264ddd",
+    "lead-dai-popp-shindai-mmd",
+    "lead-dai-jumpforce-l4d2-2298782931",
+    "lead-dai-jumpforce-sword-l4d2-2318399292",
+    "lead-popp-dragonquest-tact-modelsresource",
+    "lead-popp-summerforce-cgtrader-3827837"
+  ],
+  "ioriFullFilesRehashed": 204,
+  "audioReadyForLocalReview": true,
+  "languageVerified": false,
+  "synthesisReady": false,
+  "kofBodyConversionPending": true,
+  "roles": {
+    "acquisition": "independent source workflows",
+    "conversionAndMerge": "this workflow",
+    "deployment": "Main after review"
+  },
+  "fateAudit": {
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-bounded-audit-batch9",
+    "newDownloads": 0,
+    "deliveryFilesRehashed": 5
+  },
+  "allModelDefaultsUnchangedByThisAudioIntake": true,
+  "productionDeployed": false
+}

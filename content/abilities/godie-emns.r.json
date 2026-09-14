@@ -8,16 +8,16 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    30,
-    30,
-    30
+    30.0,
+    30.0,
+    30.0
   ],
   "manaCost": [
-    150,
-    150,
-    150
+    150.0,
+    150.0,
+    150.0
   ],
-  "range": 12,
+  "range": 12.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -55,7 +55,7 @@
         "statusId": "curse"
       },
       "statusId": "slow50",
-      "duration": 5,
+      "duration": 5.0,
       "moveSpeedMult": 0.5
     }
   ],
@@ -64,7 +64,7 @@
   "sfxKey": "wc3.gruntyesattack3",
   "cooldownTier": "中",
   "manaCostTier": "小",
+  "castTimeTier": "極大",
   "rangeTier": "極大",
-  "castTimeSec": 1.0,
-  "castTimeTier": "極大"
+  "castTimeSec": 1
 }

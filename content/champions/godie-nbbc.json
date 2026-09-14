@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法鬥",
-  "modelKey": "imported.sd2",
+  "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -77,7 +77,7 @@
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": false,
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -154,12 +154,12 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.lightning.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
@@ -209,7 +209,7 @@
       ],
       "vfxKey": "fx.prim.fire.beam",
       "sfxKey": "wc3.thunderclapcaster",
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -222,7 +222,7 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.0
+          "castTimeSec": 1
         }
       },
       "castTimeTier": "極大"
@@ -326,7 +326,7 @@
       ],
       "vfxKey": "fx.prim.nature.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
@@ -377,5 +377,64 @@
     "位移",
     "變身"
   ],
-  "pitch": "用魔法劍技快速接近敵人，在技能與近戰間交錯，變身後打一波完整爆發。"
+  "pitch": "用魔法劍技快速接近敵人，在技能與近戰間交錯，變身後打一波完整爆發。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.14352709df09b4c59702f49915dd4a4f9f4bec26b8705603",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.sd2",
+      "modelSha256": "e98111ed72f73ad18066d04bad97d88310f0d2aa1c4cefba47f3b313e59edb74",
+      "binarySha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
+      "registeredAt": "2026-09-13T11:29:17.616Z",
+      "source": {
+        "kind": "previous",
+        "character": "傳說的龍騎士 - 勇者小呆",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.sd2.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+      "sourceModelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+      "modelSha256": "f251fecbf05daf1601460ffa7ddc6bdd70261038432ed36450dd0bfe7a402229",
+      "binarySha256": "450c0a54c8d074ad3a68aa5b561f873ee1164755282d19e5a98902e7abbcdc59",
+      "registeredAt": "2026-09-13T11:29:17.630Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/02）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash Steam 原作擷取",
+        "sourcePlatform": "unknown (source record does not specify platform)"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ee41ff0f3493c18f09be26f95480f958cc964c17c7a2a1eb",
+      "label": "小呆／達伊｜Infinity Strash 原作 PN010/05＋達伊之劍（原生動作）",
+      "sourceModelKey": "community.body.260c96887bfdee4dd0a73eca5e49eb25a59bde430e661785",
+      "modelSha256": "d3521dfbaaf5697631f0cd58b2770d7a3c11df3730540a4543da6f2eab9fad91",
+      "binarySha256": "82b646921e3645038e7e8c8173638461fa14bfbd10086f8354554a4c0e29f151",
+      "registeredAt": "2026-09-13T14:33:42.246Z",
+      "source": {
+        "kind": "exact",
+        "character": "小呆／達伊（PN010/05，達伊之劍）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN010/05; CB_PN010_05; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

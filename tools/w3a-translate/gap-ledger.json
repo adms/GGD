@@ -136,7 +136,7 @@
     },
     {
       "key": "mana:tier",
-      "max": 159,
+      "max": 153,
       "layer": "GGD-tier-table",
       "reason": "owner 的五級距魔耗表(`content/config/mana-tiers.json`)取代原作值;出貨文件帶著 `manaCostTier` ⇒ 有主。",
       "bumps": [

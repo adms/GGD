@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-scoped-tar-s3-receipt@1",
+  "id": "infinity-strash-popp-pn020-00-delivery-v1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-delivery-v1/5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540.files.json",
+  "sha256": "5437b9fa63ba359142fb4d75f20a160679ee6473f7adff248a2b59df74b54540",
+  "bytes": 23352148,
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "fileCount": 115,
+  "manifestSha256": "b22bbabbd726bd6566ca92ad46e10f3e549fbe5e6de94c5cd56e05377ec49dbc",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-delivery-v1/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-delivery-v1/s3-full-readback.tar.gz",
+  "localManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-delivery-v1/scoped-manifest.json",
+  "readbackVerified": true,
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "localPreserved": true
+}

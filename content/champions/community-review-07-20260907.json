@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "法刺",
-  "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
+  "modelKey": "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -86,7 +86,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-07-20260907.q.webp",
       "template": {
@@ -157,7 +157,7 @@
           "root": true
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-07-20260907.w.webp",
       "template": {
@@ -231,7 +231,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-07-20260907.e.webp",
       "template": {
@@ -292,7 +292,7 @@
           }
         }
       ],
-      "castTimeSec": 2.233,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-07-20260907.r.webp",
       "template": {
@@ -362,6 +362,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-497211-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.6fb9f6d8bbe5c0bbc7bd7f373a3b8591e3e27b7111d68b3b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.497211",
+      "modelSha256": "82fddcdc9a5c15764edb826fa69c4f4593eb1258709b9b8f1e9c8e20cecd16f0",
+      "binarySha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
+      "registeredAt": "2026-09-10T14:45:28.766Z",
+      "source": {
+        "kind": "previous",
+        "character": "西索",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.497211.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.4f73010d41762bbd09643127b948ef8688b79097a51fbd2b",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "04d86d34220dfcc63a74b79e6e29c2993e869054aca6d5c3e2e1ea07ad52eac3",
+      "binarySha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "registeredAt": "2026-09-10T14:45:28.774Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "8535c15a6cff530cad1b93cd634b04394e829ad346ed539dd72e712ce49636d4",
+      "binarySha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+      "registeredAt": "2026-09-10T14:48:46.653Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7bf10233f8e26c4cd2bec4248f9c8dea0672f7af335e57b9",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "7a09bd0fdd47ae211eca845777f691bfcc39b39be09875314ad06ead4206693d",
+      "binarySha256": "cff361d7df1cf8c17714c7f05cf3ec4934cabdba1f80eaadb9a92d1d499c7287",
+      "registeredAt": "2026-09-12T23:02:28.523Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.c8e413cef2dd43a380237f6dd055565443ddcf8278e4483c",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "87fcf4d3d41f7daac2eab0cf91c4a80a5fe559c39735688adb0070f575448dcc",
+      "binarySha256": "b8c31fe5755371cb9e6137d6d2807943caa95f0b135f5772c9e061264ea8b56d",
+      "registeredAt": "2026-09-12T23:02:29.147Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.3bd13bc6bdffbd53fb0310fdabd9b97ddd8561f4616ef21a",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "ce4933b536f0ae49aa9e9e47669b73188ee4b32e9e95ba3af84ab3758ddc4582",
+      "binarySha256": "cff361d7df1cf8c17714c7f05cf3ec4934cabdba1f80eaadb9a92d1d499c7287",
+      "registeredAt": "2026-09-13T00:08:44.651Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "90bd285e21035be1a4a7aa32bc4ccd4e071619020ea543a1f45db707a67f15e6",
+      "binarySha256": "b8c31fe5755371cb9e6137d6d2807943caa95f0b135f5772c9e061264ea8b56d",
+      "registeredAt": "2026-09-13T00:08:45.221Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

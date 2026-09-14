@@ -22,6 +22,7 @@ import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { cover } from "../../testkit/cover";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -34,6 +35,8 @@ interface Img {
   width: number;
   height: number;
   bytes: number;
+  /** 內嵌 PNG 位元組的 sha256 —— 只給 {@link ORIGINAL_TINY_TEXTURE} 逐位元組比對用 */
+  sha256: string;
 }
 interface Glb {
   images: Img[];
@@ -62,7 +65,12 @@ function readGlb(path: string): Glb {
     const bv = views[im.bufferView]!;
     const at = binOffset + (bv.byteOffset ?? 0);
     // PNG: 8B signature + 4B length + "IHDR" then width/height (big-endian)
-    return { width: buf.readUInt32BE(at + 16), height: buf.readUInt32BE(at + 20), bytes: bv.byteLength };
+    return {
+      width: buf.readUInt32BE(at + 16),
+      height: buf.readUInt32BE(at + 20),
+      bytes: bv.byteLength,
+      sha256: createHash("sha256").update(buf.subarray(at, at + bv.byteLength)).digest("hex"),
+    };
   });
   const materialImages = (json.materials ?? []).map((m) => {
     const ti = m.pbrMetallicRoughness?.baseColorTexture?.index;
@@ -143,6 +151,24 @@ const KNOWN_PLACEHOLDER: ReadonlySet<string> = new Set([
   "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
 ]);
 
+/**
+ * ⭐ **原作本身就是極小單色的貼圖** —— 以內嵌 PNG 的**逐位元組 sha256** 為鍵（⛔ 不是以模型或尺寸）。
+ *
+ * ⚠️ 這條閘的判準是尺寸（≤ 8×8 ＝ 查不到 .blp 時退回的佔位），⛔ 而 Unreal 來源的卡通材質會把
+ * **單色底色**存成 8×8 —— 那不是查不到，是原作就長這樣。⇒ 只放行**證據指得到的那一張位元組**：
+ * 換了任何一個位元組、或另一顆模型帶進別的 8×8，照樣紅。
+ * ⭐ 每一列要寫得出**原件在哪、怎麼比過**；名單上的位元組不再出現在任何作用中模型 ⇒ 下面那條會紅（幽靈列）。
+ */
+const ORIGINAL_TINY_TEXTURE: Readonly<Record<string, string>> = {
+  // PR #1152 合併準備（2026-09-14）—— b2-popp 作用中的 Infinity Strash PN020/02＋Kagayaki（owner 裁決的手動預設）
+  "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40":
+    "Infinity Strash `T_PN020_00_Hair_Base`（波普髮色底色）原作就是 8×8 單色 (70,73,78)：" +
+    "UModel 匯出的 `GGD-Asset-Library/conversions/infinity-strash-popp-pn020-00-delivery-v1/textures-v1/" +
+    "Strash/Chara/Player/PN020/Hair/T_PN020_00_Hair_Base.png` 與內嵌這一張 sha256 相同（2026-09-14 實比）。" +
+    "髮絲明暗在原作由 `T_PN020_00_Hair_Bundle`（1024²，G 通道遮罩）＋ `_Shade`（8×8）在卡通材質裡合成 —— " +
+    "⚠️ GGD 的 PBR 材質只取了底色，那是**保真度缺口**（要補的是烘焙 Bundle），⛔ 不是換掉這一張。",
+};
+
 const skippedOffdisk: string[] = [];
 const models = activeModelKeys().flatMap((modelKey) => {
   const doc = JSON.parse(
@@ -197,13 +223,18 @@ describe("no champion ships untextured (model-body-texture)", () => {
     // tools/w3x-import/rebake_textures.py.
     for (const { modelKey, glb } of painted) {
       if (KNOWN_PLACEHOLDER.has(modelKey)) continue;
-      const grey = glb.images.filter((im) => !isReal(im));
+      const grey = glb.images.filter((im) => !isReal(im) && !(im.sha256 in ORIGINAL_TINY_TEXTURE));
       expect(
         grey.length,
         `${modelKey} embeds ${grey.length}/${glb.images.length} ` +
           `${PLACEHOLDER_MAX}x${PLACEHOLDER_MAX} grey placeholder image(s)`,
       ).toBe(0);
     }
+  });
+
+  it("⭐ 原作極小貼圖的名單沒有幽靈列（⛔ 那張位元組已經不在任何作用中模型上 ⇒ 刪掉那一列）", () => {
+    const embedded = new Set(painted.flatMap((m) => m.glb.images.map((im) => im.sha256)));
+    expect(Object.keys(ORIGINAL_TINY_TEXTURE).filter((sha) => !embedded.has(sha))).toEqual([]);
   });
 
   it("⭐ 豁免名單只能變短（⛔ 修好了卻留在名單上 ⇒ 紅）", () => {

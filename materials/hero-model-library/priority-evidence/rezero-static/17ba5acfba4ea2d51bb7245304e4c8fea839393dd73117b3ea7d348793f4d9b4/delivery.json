@@ -1,0 +1,115 @@
+{
+  "schema": "ggd.rezero-static-component-delivery@1",
+  "deliveryId": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+  "sourceId": "thunderstore-rezero",
+  "sourceVersion": "0.1.1",
+  "character": {
+    "name": "Rem",
+    "nameZh": "蕾姆",
+    "nativeId": "remPrefab",
+    "sourceWork": "Re:Zero",
+    "sourcePlatform": "PC Lethal Company community mod / Unity bundle"
+  },
+  "sourceArchiveSha256": "e846f2bf183ae9234c9ab675debfe62025e08e3aa2d8fa6871573185f9164a27",
+  "sourceBundle": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/staging/rezero-ram-beatrice-thunderstore-0.1.1-v1-backup/source/bundles/ReZeroModelReplacements.mbundle.bundle",
+    "sha256": "3134f5564701006542038ffe2aacdf98cef42cc30df1a0c796afec04c3e9ef88"
+  },
+  "sourceConversion": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/source-conversion/rem/body.glb",
+    "bytes": 1340004,
+    "sha256": "5a10171729cbe1949b80c2507d9c513574eb525ac20407aad5f0e83365ed8758"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "bytes": 1173224,
+    "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93"
+  },
+  "finalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem",
+  "rebuildRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem",
+  "rebuildReceipt": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/rebuilds/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/rebuild.json",
+    "bytes": 12863,
+    "sha256": "ef16205a0709cda7becb77560bd11cfc9e80a50e06314d22a9dcbee23e683dcf"
+  },
+  "metrics": {
+    "triangles": 18328,
+    "drawPrimitives": 1,
+    "skinCount": 1,
+    "jointCounts": [
+      151
+    ],
+    "jointCount": 151,
+    "textureCount": 1,
+    "nativeAnimationCount": 0,
+    "proceduralAnimationCount": 0,
+    "sourceAnimatorComponentCount": 6,
+    "sourceAnimationClipCount": 0,
+    "worldHeightMeters": 1.8000005144460074
+  },
+  "validation": {
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": 0,
+    "finiteFloatValuesChecked": 184720,
+    "webglLoadComplete": true,
+    "visualViewsReviewed": [
+      "front",
+      "back",
+      "isometric"
+    ]
+  },
+  "backup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/f0e9be404365675d4e09db549a9d37eaae1d29c89deb7478ca6d29fb65fd9bed.tar.gz",
+    "s3ArchiveMember": "conversion/final/rem/body.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-v1-backup/s3-verified-receipt.json",
+    "backupReceiptSha256": "7870c49cb9a5a1c0f9a2f2f33d8c45c06ecae0a8aec2dd36f6b9f1fe386149fd"
+  },
+  "backupFileCount": 135,
+  "conversionStageBackup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/rezero-static-receipt-correction-v2/28b6417a3af1e8c4779da512fe6ee3358e2eb8bc852191d6662bad7fdb8d641f.tar.gz",
+    "s3ArchiveMember": "conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "s3Use": "backup-only-not-runtime-entry",
+    "backupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/rezero-static-receipt-correction-v2/acd92cd404f4cb19fc8dc0bd3101cbf23d003539f545032bb0b861547deaa639/receipt.json",
+    "backupReceiptSha256": "7a62ebd57e746b4656489bda4a44732b90e668aa64597c2a15683e294bf62799"
+  },
+  "conversionStageBackupFileCount": 202,
+  "status": {
+    "downloaded": true,
+    "extracted": true,
+    "converted": true,
+    "structurallyValidated": true,
+    "visuallyAcceptedIndependentComponent": true,
+    "completeHero": false,
+    "heroBound": false,
+    "runtimeSelectable": false,
+    "deployed": false
+  },
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab.py",
+      "sha256": "1050488df70b0a79b783a1b4b3cf8e11db3bdb7c9563761c72c92e035e404db8"
+    },
+    {
+      "path": "tools/hero-model-library/convert_unity_prefab_mixed.py",
+      "sha256": "9389e532e38af6f65c497a063b0fb26cfa19633348a20e78244b0c3010ed39e6"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v1/normalize_validate.mts",
+      "sha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/rezero-static-components-v2/normalize_validate.mts",
+      "sha256": "a068d6ca5be4cb35e598385479b29ce6f226f492f4f6b0c752172cb719dd972b"
+    }
+  ],
+  "gaps": [
+    "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+    "Exact identity maps to existing GGD hero definitions, but this static component remains intentionally unbound to a runtime model key.",
+    "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+    "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+    "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+    "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+  ]
+}

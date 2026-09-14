@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "marksman",
   "origin": "射手",
-  "modelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+  "modelKey": "version.body.75b0f70143afadc8a37a785e0706d60ad24c8b41159ff03c",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -112,7 +112,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-26-20260907.q.webp",
       "template": {
@@ -180,7 +180,7 @@
           "stun": true
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-26-20260907.w.webp",
       "template": {
@@ -237,7 +237,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-26-20260907.e.webp",
       "template": {
@@ -303,7 +303,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-26-20260907.r.webp",
       "template": {
@@ -339,5 +339,61 @@
   "tags": [
     "thrown"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.729e337f18d7ebbbdba8402692ee1d291f7b20a9d600bafe",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+      "modelSha256": "cdbf65f4938a4b073e575a471414e3c0d3ddc6cd465e9d65b3ab63669880657c",
+      "binarySha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "registeredAt": "2026-09-12T23:02:33.655Z",
+      "source": {
+        "kind": "previous",
+        "character": "名偵探柯南",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.c54708dd70ec45403b14799482a047406f9261c35662b4c7",
+      "label": "万年小学生",
+      "sourceModelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+      "modelSha256": "a5be0785e11cbeb44b0bf786310be94ce43156802560992e4979e9bab9537b19",
+      "binarySha256": "a8e89599b26c580eaea5b267965ea8a54ae2763d38a74f12d9506c8e2156279d",
+      "registeredAt": "2026-09-12T23:02:33.658Z",
+      "source": {
+        "kind": "exact",
+        "character": "万年小学生",
+        "work": "名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:48546d36bb328cf6b78a6e9b",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.75b0f70143afadc8a37a785e0706d60ad24c8b41159ff03c",
+      "label": "万年小学生",
+      "sourceModelKey": "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df",
+      "modelSha256": "e737ae6ca5eaa33c87a0823c0b53f63803dcd47cfb4c03432735adcefca0fdeb",
+      "binarySha256": "a8e89599b26c580eaea5b267965ea8a54ae2763d38a74f12d9506c8e2156279d",
+      "registeredAt": "2026-09-13T00:08:49.544Z",
+      "source": {
+        "kind": "exact",
+        "character": "万年小学生",
+        "work": "名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:48546d36bb328cf6b78a6e9b",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

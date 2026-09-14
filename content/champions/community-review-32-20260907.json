@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+  "modelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-32-20260907.q.webp",
       "template": {
@@ -143,7 +143,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.9,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-32-20260907.w.webp",
       "template": {
@@ -213,7 +213,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-32-20260907.e.webp",
       "template": {
@@ -266,7 +266,7 @@
           }
         }
       ],
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-32-20260907.r.webp",
       "template": {
@@ -302,5 +302,100 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.98677c47a7a0e4f1aca2de4beb349b0e4ed296f8891bfd01",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "modelSha256": "fe2320f2ff771a5a712747012cde0c1e68f14dd11e3486f5a8bd134fa0c6c66a",
+      "binarySha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+      "registeredAt": "2026-09-12T23:02:35.238Z",
+      "source": {
+        "kind": "previous",
+        "character": "阿薩謝爾",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.9e6e074251ce5a123abe1923b89800d395c97015007a83f4",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "a99bbb9843af7ec2437b1845b64205c55c9b12ef2234929495b8f34cde11008b",
+      "binarySha256": "ae89f7f129203e2964934c508571318b5a81c877dd172cbbe6369c652ba85d3a",
+      "registeredAt": "2026-09-12T23:02:35.240Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.41a8ce3fd84240b6384dc791b7508380839119c4f26d0a31",
+      "label": "阿薩謝爾（獨立副本／喜羊羊）",
+      "sourceModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "modelSha256": "8a1754afdee207015052823ff9acd0350040416637784b57535cc7b84a3ec8ae",
+      "binarySha256": "f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968",
+      "registeredAt": "2026-09-12T23:02:35.361Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿薩謝爾（獨立副本／喜羊羊）",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "derivative:azazel",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.fa4d88f2a0f6e6ec59eb106438c3c1647a08f38dcb07a16f",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "45b474dd62ebf04ffef06af4ef8561d2872b106e0a86960f09ce5680433f88d5",
+      "binarySha256": "ae89f7f129203e2964934c508571318b5a81c877dd172cbbe6369c652ba85d3a",
+      "registeredAt": "2026-09-13T00:08:51.049Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
+      "label": "阿薩謝爾（獨立副本／喜羊羊）",
+      "sourceModelKey": "community.body.c7f8ce9ba6f76ca367e105860000d23f06b2b3498a4f655b",
+      "modelSha256": "831538a2ddc55845445d0f46f78b6b933bb46cc2d0cfe806807b03c077c98b38",
+      "binarySha256": "f5764804e0832a30502277cc0b0f65d2d3ebc4d891c17bc7b72877df1c021968",
+      "registeredAt": "2026-09-13T00:08:51.148Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿薩謝爾（獨立副本／喜羊羊）",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "derivative:azazel",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

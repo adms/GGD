@@ -1,0 +1,94 @@
+{
+  "schema": "ggd.source-file-manifest@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+  "files": [
+    {
+      "path": "audio-file-index.json",
+      "bytes": 156,
+      "sha256": "1a65e3b4385def498bc2a760c7f661a1f75399f0e809edf77fe796102dcf403d"
+    },
+    {
+      "path": "evidence/dqtact-repository-tree.json",
+      "bytes": 1866155,
+      "sha256": "825597d4d5919f184d2c019a143d827b5e6650c8fa88b555a91d3044b9550029"
+    },
+    {
+      "path": "evidence/dqtact-repository.json",
+      "bytes": 5764,
+      "sha256": "a9c0a4baf9675aa8b3db77849415de17e566866cc56f8137785e3f45d8eb037e"
+    },
+    {
+      "path": "evidence/dqtact-true-vearn.html",
+      "bytes": 13302,
+      "sha256": "def991f9d252acbaee8486bf3f15c0329191407fdad2ff152132077c65aa72d1"
+    },
+    {
+      "path": "evidence/dragonquest-fan-vearn-boss.jpg",
+      "bytes": 146796,
+      "sha256": "dd10069e58be2745732b3ba8856db73c4763d3028de0d6babc511dd9b87b6d8f"
+    },
+    {
+      "path": "evidence/official-hoshidora-vearn-event.html",
+      "bytes": 25189,
+      "sha256": "35cee29f6cf018f21c220064f8d56581097564433a4e247df184fe49b8fa4a59"
+    },
+    {
+      "path": "evidence/square-enix-story-coverage.html",
+      "bytes": 25166,
+      "sha256": "1f281735631b5d9cafef5cf18fb6b77e0e0aa4318429f0b079506ca4e01ac98b"
+    },
+    {
+      "path": "evidence/steam-official-news.html",
+      "bytes": 61235,
+      "sha256": "e9a6d7db4deaaadd7bb3412750add83cd977d3038a5bb3d51a2d111abf52cc57"
+    },
+    {
+      "path": "evidence/steam-tgs-20230927-1.jpg",
+      "bytes": 141373,
+      "sha256": "f777d7a3506d5ca9db9382148a8cfdf5fddfef6861de44f995ce75fa605cc0f3"
+    },
+    {
+      "path": "evidence/steam-tgs-20230927-2.jpg",
+      "bytes": 76666,
+      "sha256": "32d4c9e56caac4a028db15a9fbb24be6b53308e97faf43129ac178f67ee017c1"
+    },
+    {
+      "path": "evidence-fetch-python-tls-failure.json",
+      "bytes": 2216,
+      "sha256": "0629f533160cf7a789246484fdc441ff3641d4b2844cc20b7a1cc84c22245c20"
+    },
+    {
+      "path": "evidence-fetch-receipt.json",
+      "bytes": 2324,
+      "sha256": "eec0cb7933ddf9890823805266bd83c8b211922f5d7521f87ca7d6758a597454"
+    },
+    {
+      "path": "model-candidates.json",
+      "bytes": 260,
+      "sha256": "66ee7d1f45eb7279c75c9980265bc6d576273b1e80c62c5b53663f1d3f615b52"
+    },
+    {
+      "path": "public-source-entry.json",
+      "bytes": 1097,
+      "sha256": "51a0033686e87cbf6321439c8e115b1d74d2c6caefba9adaa12d90b20214c246"
+    },
+    {
+      "path": "scripts/build_report.py",
+      "bytes": 11680,
+      "sha256": "4da2dece54d380103e592d48f2e76fed8970b148b8eaea3a92881d4433e73090"
+    },
+    {
+      "path": "scripts/fetch_public_evidence.py",
+      "bytes": 1877,
+      "sha256": "02e1079d6083e1984162d683948ed68603a0436d823e1c2aa3efff11417b1c81"
+    },
+    {
+      "path": "source-report.json",
+      "bytes": 13643,
+      "sha256": "7e447c10ec12f2b0b07aaad3b40f345f483ce7e1013536ab410ddb1c4ba095a7"
+    }
+  ],
+  "fileCount": 17,
+  "bytes": 2394899,
+  "note": "All files in this delivery are research/evidence/scripts. Zero downloaded game asset packages."
+}

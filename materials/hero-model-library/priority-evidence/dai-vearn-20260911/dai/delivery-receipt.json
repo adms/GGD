@@ -1,0 +1,39 @@
+{
+  "schema": "ggd.dai-source-delivery.v1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911",
+  "status": "acquired-components-with-explicit-body-dependency-gap",
+  "sourceEntry": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/public-source-entry.json",
+    "relativePath": "public-source-entry.json",
+    "bytes": 3362,
+    "sha256": "33129493a89bfd1fc91c01c66d3368fa2f678fd643c01b8de525a238c5d4eefa"
+  },
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/file-manifest.json",
+    "relativePath": "file-manifest.json",
+    "bytes": 71443,
+    "sha256": "ccb5c4be635968a197170541eb4b2b7f8d36bbc14b5a1dedd2a5a79aafaec610"
+  },
+  "archive": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/original/Dai V2.zip",
+    "relativePath": "original/Dai V2.zip",
+    "bytes": 17352966,
+    "sha256": "b2f64413b3abe50773bc57b08ff19f7dbf28d76257801edd13524f9e0cb44434"
+  },
+  "sourceMemberCount": 117,
+  "completeZipCrcVerified": true,
+  "nativePresetCandidates": 2,
+  "independentBodyModels": 0,
+  "nativeDsfComponents": 14,
+  "sourceTextures": 35,
+  "previewImages": 22,
+  "nativeAnimations": 0,
+  "newAudio": 0,
+  "standaloneVfx": 0,
+  "centralChanged": false,
+  "gitChanged": false,
+  "s3Changed": false,
+  "originalPackagePreserved": true,
+  "remainingBlocker": "Complete character requires Genesis8Male.dsf or Genesis8_1Male.dsf, not in source archive or targeted current asset/output trees. No login/DRM/paid download attempted for missing bases.",
+  "noNewSearchAfterFreeze": true
+}

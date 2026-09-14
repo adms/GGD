@@ -1,0 +1,1796 @@
+{
+  "schema": "ggd.priority81.audio-groups@1",
+  "groups": [
+    {
+      "groupId": "kof-xv-iori-audio-float32-v1:XV_Iori-voice-label-unreviewed",
+      "name": "The King of Fighters XV / Iori Yagami / source-labelled voice",
+      "sourceId": "kof-xv-iori-audio-float32-v1",
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "library": "公開來源",
+      "sourceWork": "The King of Fighters XV",
+      "indexHeroIds": [
+        "community-review-02-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "kof-xv-iori-audio-float32-v1:XV_Iori-voice-label-unreviewed"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "kof-xv-iori-audio-float32-v1:XV_Iori-voice-label-unreviewed"
+        },
+        "firstJsonlLine": 278875,
+        "lastJsonlLine": 278971
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/deliveries/local-audio-delivery-20260910T152930028503Z.json",
+        "bytes": 156009,
+        "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+      },
+      "indexedRows": 97,
+      "uniquePaths": 97,
+      "localShaVerifiedFiles": 97,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 26045356,
+      "knownSeconds": 133.350667,
+      "classificationCounts": {
+        "voice-source-labelled-unreviewed": 97
+      },
+      "originalIndexCategoryCounts": {
+        "voice-label-unreviewed": 97
+      },
+      "verifiedFileSetSha256": "868aa9fc3de478d436a69dcfe46854cc9dd789eda4f9112425d55d67bb2a0897",
+      "examplesByClass": {
+        "voice-source-labelled-unreviewed": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mai-iori-audio-motion-round21/iori-xv-audio/decoded-audio/XV_Iori/1029033053.wav",
+          "bytes": 53548,
+          "sha256": "4b25af272a88997cbd8c9280b2c1d7352a9c31bb6589759dcd8b5f4cd2d80405",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "kof-xiv-mai-audio:Mai_Shiranui_XIV-sfx-label-unreviewed",
+      "name": "The King of Fighters XIV / Mai Shiranui / sfx-label-unreviewed",
+      "sourceId": "kof-xiv-mai-audio",
+      "sourceUrl": "https://sfmlab.com/project/5b875aaf-6fda-4a05-8672-7bc8b0d1261c/",
+      "library": "公開來源",
+      "sourceWork": "The King of Fighters XIV",
+      "indexHeroIds": [
+        "community-review-03-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "ja",
+      "languageEvidence": "Japanese only, according to uploader; per-clip language unreviewed",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "kof-xiv-mai-audio:Mai_Shiranui_XIV-sfx-label-unreviewed"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "kof-xiv-mai-audio:Mai_Shiranui_XIV-sfx-label-unreviewed"
+        },
+        "firstJsonlLine": 257776,
+        "lastJsonlLine": 257802
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/deliveries/local-audio-delivery-20260910T123743857192Z.json",
+        "bytes": 185526,
+        "sha256": "ce28e47821b11bf73c985bec4584498ffb0623250f6932c6e6d8a07cd6825df0"
+      },
+      "indexedRows": 27,
+      "uniquePaths": 27,
+      "localShaVerifiedFiles": 27,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 5826842,
+      "knownSeconds": 33.020045,
+      "classificationCounts": {
+        "sfx-source-labelled": 27
+      },
+      "originalIndexCategoryCounts": {
+        "sound-effect": 27
+      },
+      "verifiedFileSetSha256": "1e95e1668da313c5fefefeab443da2ebd97a28229d5b52b88dccd55599e6a25b",
+      "examplesByClass": {
+        "sfx-source-labelled": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/se/s_022_mai_401_fire.wav",
+          "bytes": 260234,
+          "sha256": "3bd7ca5a0c460d84fcab72749b23401d5caeb7ca9f535b4705257d43b0e890e6",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed",
+      "name": "The King of Fighters XIV / Mai Shiranui / voice-label-unreviewed",
+      "sourceId": "kof-xiv-mai-audio",
+      "sourceUrl": "https://sfmlab.com/project/5b875aaf-6fda-4a05-8672-7bc8b0d1261c/",
+      "library": "公開來源",
+      "sourceWork": "The King of Fighters XIV",
+      "indexHeroIds": [
+        "community-review-03-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "ja",
+      "languageEvidence": "Japanese only, according to uploader; per-clip language unreviewed",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "kof-xiv-mai-audio:Mai_Shiranui_XIV-voice-label-unreviewed"
+        },
+        "firstJsonlLine": 257803,
+        "lastJsonlLine": 257920
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/deliveries/local-audio-delivery-20260910T123743857192Z.json",
+        "bytes": 185526,
+        "sha256": "ce28e47821b11bf73c985bec4584498ffb0623250f6932c6e6d8a07cd6825df0"
+      },
+      "indexedRows": 118,
+      "uniquePaths": 118,
+      "localShaVerifiedFiles": 118,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 54701860,
+      "knownSeconds": 310.04907,
+      "classificationCounts": {
+        "voice-source-labelled-unreviewed": 118
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 118
+      },
+      "verifiedFileSetSha256": "166106795754c72eec37b2d603148d6f7dddba9e4db3dcac0c51f2479eab599a",
+      "examplesByClass": {
+        "voice-source-labelled-unreviewed": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-sfmlab-mai-xiv-audio/decoded-audio/Mai Shiranui-King of Fighters XIV-Sounds/Mai Shiranui/voice/1_mai_101_1.wav",
+          "bytes": 63846,
+          "sha256": "c553f349790dc8f2a6915e07b42948419583aacfd2bf0305eaab8c3ee187d6bb",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "kof-xv-mai-audio:XV_Mai-unclassified-audio",
+      "name": "The King of Fighters XV / Mai Shiranui / unclassified-audio",
+      "sourceId": "kof-xv-mai-audio-float32-v1",
+      "sourceUrl": "https://mugenfreeforall.com/topic/47510-some-game-soundrips/",
+      "library": "公開來源",
+      "sourceWork": "The King of Fighters XV",
+      "indexHeroIds": [
+        "community-review-03-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "Not explicitly stated in source post; per-clip language unreviewed",
+      "languageEvidence": "source description or package label; per-clip listening not verified",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "kof-xv-mai-audio:XV_Mai-unclassified-audio"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "kof-xv-mai-audio:XV_Mai-unclassified-audio"
+        },
+        "firstJsonlLine": 278770,
+        "lastJsonlLine": 278851
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/deliveries/local-audio-delivery-20260910T130507939980Z.json",
+        "bytes": 114546,
+        "sha256": "cfad6cd0c25f1b9a5eb04d5bcc733b76d55120bd51c30f7aa8661e57cce20ebf"
+      },
+      "indexedRows": 82,
+      "uniquePaths": 82,
+      "localShaVerifiedFiles": 82,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 18511640,
+      "knownSeconds": 96.396,
+      "classificationCounts": {
+        "unclassified": 82
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 82
+      },
+      "verifiedFileSetSha256": "ec52083ac3949092fb20d43cc1ae7ca94a2bbb29cceb7c76aaa0828704956bd1",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-mffa-miner600-xv-mai-audio-float32-v1/decoded-audio/XV_Mai/1002383309.wav",
+          "bytes": 138284,
+          "sha256": "6355251755dbfc2d5c497d41d8df931d7de2a93f8f10b309978dd5dc8308475b",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "parallel-voice-ssbm-kirby",
+      "name": "卡比 Kirby（Melee 語音／音效）",
+      "sourceId": "parallel-voice-ssbm-kirby",
+      "sourceUrl": "https://www.mariomayhem.com/downloads/sounds/super_smash_bros_melee_sound_effects.php",
+      "library": "公開來源",
+      "sourceWork": "Super Smash Bros. Melee",
+      "indexHeroIds": [
+        "community-review-06-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "parallel-voice-ssbm-kirby"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "parallel-voice-ssbm-kirby"
+        },
+        "firstJsonlLine": 71800,
+        "lastJsonlLine": 71900
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extraction-validation.json",
+        "bytes": 42876,
+        "sha256": "273e82184f30075c846f694808518a7eb96e1b7790a4460b7daf2265626c53d2"
+      },
+      "indexedRows": 101,
+      "uniquePaths": 101,
+      "localShaVerifiedFiles": 101,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 4093370,
+      "knownSeconds": 67.762558,
+      "classificationCounts": {
+        "unclassified": 101
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 101
+      },
+      "verifiedFileSetSha256": "2476bdad6007da645d08e7ab7d4235a9862f6fcca147f6c6314f93cca6d1fa43",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbm-kirby/extracted/Kirby/Kirby Character Specials Sound Effects/kirbytm00.dsp.wav",
+          "bytes": 142120,
+          "sha256": "889c1d3d38b7f095d334b93fb1a53a4891cbc52d5a595102e76a691771494866",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "thunderstore-rimuru-ror2",
+      "name": "利姆路（人形／史萊姆候選）",
+      "sourceId": "thunderstore-rimuru-ror2",
+      "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/PopcornFactory/Rimuru_Tempest_Mod/",
+      "library": "公開來源",
+      "sourceWork": "見來源頁",
+      "indexHeroIds": [
+        "community-review-11-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "thunderstore-rimuru-ror2"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "thunderstore-rimuru-ror2"
+        },
+        "firstJsonlLine": 71054,
+        "lastJsonlLine": 71066
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/audio-index.json",
+        "bytes": 21117,
+        "sha256": "e69e1b006699938a210f05a098fdc980fa6052e79f79a5049fffa2ea070262de"
+      },
+      "indexedRows": 13,
+      "uniquePaths": 13,
+      "localShaVerifiedFiles": 13,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 8903280,
+      "knownSeconds": 0,
+      "classificationCounts": {
+        "unclassified": 13
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 13
+      },
+      "verifiedFileSetSha256": "83fa97c6cce28a27d863200db0e321255f8eaae3615349b6fa2cfb74d0e0ca93",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/thunderstore-rimuru-ror2/decoded-audio-float/wav/1001475546.wav",
+          "bytes": 388868,
+          "sha256": "c9802a0aea79c2ccbbe04811a6ed3e0a1be5d3bed439055a59b9fe71226525a5",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "spritedatabase-fate-ps2-shirou:shirou-character-audio",
+      "name": "Emiya Shirou",
+      "sourceId": "spritedatabase-fate-ps2-shirou",
+      "sourceUrl": "https://spritedatabase.net/file/4520",
+      "library": "公開來源",
+      "sourceWork": "Fate/unlimited codes",
+      "indexHeroIds": [
+        "community-review-12-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "spritedatabase-fate-ps2-shirou:shirou-character-audio"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "spritedatabase-fate-ps2-shirou:shirou-character-audio"
+        },
+        "firstJsonlLine": 247617,
+        "lastJsonlLine": 247838
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/audioFileIndex.json",
+        "bytes": 136850,
+        "sha256": "1982f7b0637c7a857dd1eca422c812533bfa793445948f18fbbec05efef5082f"
+      },
+      "indexedRows": 222,
+      "uniquePaths": 222,
+      "localShaVerifiedFiles": 222,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 59130572,
+      "knownSeconds": 635.876032,
+      "classificationCounts": {
+        "unclassified": 53,
+        "voice-source-labelled-unreviewed": 169
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 222
+      },
+      "verifiedFileSetSha256": "133f4969e5f0401a3a5640afeb7fe1dec3b87635a4c2168f64f91acfb70034e8",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/DATA_0729.wav",
+          "bytes": 35074,
+          "sha256": "dc4bbe3f0c43dea4622a403ca893f85b3065d514d62ea83f1b43cbe55755b1be",
+          "localShaVerified": true
+        },
+        "voice-source-labelled-unreviewed": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-ps2-first-batch/spritedatabase-shirou/extracted/shirou_sounds/VOICE_0470.wav",
+          "bytes": 84106,
+          "sha256": "fb508646e7075ebfa8a2b7f360eccd71e73e3e739342dc6b77c51ceefb530898",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "gamebanana-fuc-shirou-473819:shirou-voice",
+      "name": "Shirou Emiya / 衛宮士郎",
+      "sourceId": "gamebanana-fuc-shirou-473819",
+      "sourceUrl": "https://gamebanana.com/mods/473819",
+      "library": "公開來源",
+      "sourceWork": "Fate/unlimited codes",
+      "indexHeroIds": [
+        "community-review-12-20260907"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "gamebanana-fuc-shirou-473819:shirou-voice"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "gamebanana-fuc-shirou-473819:shirou-voice"
+        },
+        "firstJsonlLine": 257921,
+        "lastJsonlLine": 257936
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/audioFileIndex.json",
+        "bytes": 11056,
+        "sha256": "7320e71bdaaee262856859d3e53e2966481a815eac4480b573b70f08fc62d034"
+      },
+      "indexedRows": 16,
+      "uniquePaths": 16,
+      "localShaVerifiedFiles": 16,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 1490522,
+      "knownSeconds": 14.890014,
+      "classificationCounts": {
+        "voice-source-labelled-unreviewed": 16
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 16
+      },
+      "verifiedFileSetSha256": "e32cdabe44437489a35e677910016c823fa17a7cf76c6dd8a21526faccf5aa5b",
+      "examplesByClass": {
+        "voice-source-labelled-unreviewed": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-shirou/converted/voice-pcm/-1164302356178838169_Pain4.wav",
+          "bytes": 56940,
+          "sha256": "5bbb7b5f80dae9ac5516254e5f0e460c21cfa26971026069bb71d970bd50f2e2",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "300heroes:137",
+      "name": "坂田银时",
+      "sourceId": "300heroes:137",
+      "sourceUrl": null,
+      "library": "300英雄",
+      "sourceWork": "銀魂",
+      "indexHeroIds": [
+        "community-review-23-20260907"
+      ],
+      "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "300heroes:137"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "300heroes:137"
+        },
+        "firstJsonlLine": 10162,
+        "lastJsonlLine": 10368
+      },
+      "sourceAudioIndex": null,
+      "indexedRows": 207,
+      "uniquePaths": 207,
+      "localShaVerifiedFiles": 207,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 18351803,
+      "knownSeconds": 572.559908,
+      "classificationCounts": {
+        "unclassified": 207
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 207
+      },
+      "verifiedFileSetSha256": "6b478f8395f5ae2a82b284d2800c4e16c57ee8e5fe4e3640941028642ab42efc",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/137/00-0000-137_skill_a_fire_old_1.wav",
+          "bytes": 71724,
+          "sha256": "1e1dc5ad71d13a882f2a5d0e3c63f734513c4b9d4da3aa24df337cef8f5a4b02",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "300heroes:310",
+      "name": "蕾姆",
+      "sourceId": "300heroes:310",
+      "sourceUrl": null,
+      "library": "300英雄",
+      "sourceWork": "Re:從零開始的異世界生活",
+      "indexHeroIds": [
+        "b2-rem"
+      ],
+      "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "300heroes:310"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "300heroes:310"
+        },
+        "firstJsonlLine": 50817,
+        "lastJsonlLine": 51005
+      },
+      "sourceAudioIndex": null,
+      "indexedRows": 189,
+      "uniquePaths": 189,
+      "localShaVerifiedFiles": 189,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 21327297,
+      "knownSeconds": 378.61251,
+      "classificationCounts": {
+        "unclassified": 189
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 189
+      },
+      "verifiedFileSetSha256": "b316fdbfb6febb1c11403d9cce9ff1854eae66d08d8e1b3856bd533f02f6c84c",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/310/00-0000-310_skill_a_fire_1.wav",
+          "bytes": 114732,
+          "sha256": "0fee75711f348dd35e2458a56b581d2e712d3e639495e9e18f6683586edf8c1a",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "300heroes:332",
+      "name": "我妻善逸",
+      "sourceId": "300heroes:332",
+      "sourceUrl": null,
+      "library": "300英雄",
+      "sourceWork": "鬼滅之刃",
+      "indexHeroIds": [
+        "b2-zenitsu"
+      ],
+      "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "300heroes:332"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "300heroes:332"
+        },
+        "firstJsonlLine": 53826,
+        "lastJsonlLine": 53926
+      },
+      "sourceAudioIndex": null,
+      "indexedRows": 101,
+      "uniquePaths": 101,
+      "localShaVerifiedFiles": 101,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 6475803,
+      "knownSeconds": 177.340976,
+      "classificationCounts": {
+        "unclassified": 101
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 101
+      },
+      "verifiedFileSetSha256": "68240dbcb976fdb766af4f5dce247168c8c90847f0e2e884394a60495b54e03e",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/332/00-0000-332_act_relive_1.wav",
+          "bytes": 92204,
+          "sha256": "5211b59c5336290a0b0e1aee91ed911eb8bdd434aeef60e6dfcb015c5e930edc",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "300heroes:160",
+      "name": "远坂凛",
+      "sourceId": "300heroes:160",
+      "sourceUrl": null,
+      "library": "300英雄",
+      "sourceWork": "Fate/stay night",
+      "indexHeroIds": [
+        "b2-rin"
+      ],
+      "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "300heroes:160"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "300heroes:160"
+        },
+        "firstJsonlLine": 17297,
+        "lastJsonlLine": 17559
+      },
+      "sourceAudioIndex": null,
+      "indexedRows": 263,
+      "uniquePaths": 263,
+      "localShaVerifiedFiles": 263,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 23735852,
+      "knownSeconds": 602.803763,
+      "classificationCounts": {
+        "unclassified": 263
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 263
+      },
+      "verifiedFileSetSha256": "826e7766c74d11c0e9001434d1e11204d411cabbc2c59b6dc6f99c0f654b1d97",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/160/00-0000-160_skill_q1_3.wav",
+          "bytes": 67628,
+          "sha256": "b7011fff551f5a7e951787b6f58ad05c537b17f67580f10db438f84fd6f7a7db",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "gamebanana-fuc-rin-474593:rin-voice",
+      "name": "Rin Tohsaka / 遠坂凜",
+      "sourceId": "gamebanana-fuc-rin-474593",
+      "sourceUrl": "https://gamebanana.com/mods/474593",
+      "library": "公開來源",
+      "sourceWork": "Fate/unlimited codes",
+      "indexHeroIds": [
+        "b2-rin"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "gamebanana-fuc-rin-474593:rin-voice"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "gamebanana-fuc-rin-474593:rin-voice"
+        },
+        "firstJsonlLine": 257937,
+        "lastJsonlLine": 257948
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/audioFileIndex.json",
+        "bytes": 8414,
+        "sha256": "4b3edc2f8433d9ffe89b81df2f43eec28d75c5f5b744f6731572e8fb393ea537"
+      },
+      "indexedRows": 12,
+      "uniquePaths": 12,
+      "localShaVerifiedFiles": 12,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 1164084,
+      "knownSeconds": 9.806848,
+      "classificationCounts": {
+        "voice-source-labelled-unreviewed": 12
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 12
+      },
+      "verifiedFileSetSha256": "c0e72a2b7abcebbb474bbc35cb277079e34ab55b0dcbb79012ff2b9667ca71d8",
+      "examplesByClass": {
+        "voice-source-labelled-unreviewed": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-psp-second-batch/gamebanana-rin/converted/voice-pcm/-4269005274659385791_Combo1.wav",
+          "bytes": 131116,
+          "sha256": "cdd5bd6040a1c269959650a9ea1d323ba56431dbef7d63c49dbc9d82bd8daaf3",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "gamebanana-shadow",
+      "name": "闇影／席德・卡蓋諾（Shadow）",
+      "sourceId": "gamebanana-shadow",
+      "sourceUrl": "https://gamebanana.com/mods/662449",
+      "library": "公開來源",
+      "sourceWork": "見來源頁",
+      "indexHeroIds": [
+        "b2-shadow"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "gamebanana-shadow"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "gamebanana-shadow"
+        },
+        "firstJsonlLine": 71088,
+        "lastJsonlLine": 71233
+      },
+      "sourceAudioIndex": null,
+      "indexedRows": 146,
+      "uniquePaths": 146,
+      "localShaVerifiedFiles": 146,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 23907290,
+      "knownSeconds": 0,
+      "classificationCounts": {
+        "unclassified": 146
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 146
+      },
+      "verifiedFileSetSha256": "a99c113beca49ceb40c558dbf2f5a890d3b926f36ce35f9131f84cb16b67d838",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gamebanana-shadow/decompiled/sounds/abilities/fencer/super_slash/fencer_super_slash_cast.mp3",
+          "bytes": 119434,
+          "sha256": "a8c6eaaca271eda500c04e92dd4be05c8d2094f7a976297b5a8ac990fa99c4e1",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "parallel-community-goblin-slayer-ssbu",
+      "name": "Goblin Slayer — SSBU MOD",
+      "sourceId": "parallel-community-goblin-slayer-ssbu",
+      "sourceUrl": "https://gamebanana.com/mods/342215",
+      "library": "公開來源",
+      "sourceWork": "Super Smash Bros. Ultimate",
+      "indexHeroIds": [
+        "b2-goblin"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "parallel-community-goblin-slayer-ssbu"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "parallel-community-goblin-slayer-ssbu"
+        },
+        "firstJsonlLine": 79391,
+        "lastJsonlLine": 79424
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/nus3audio-decoding.json",
+        "bytes": 27293,
+        "sha256": "79be93677c92412b550ed12b0a2a93d6fd734b6feea637fe1a3a6e1f7f489878"
+      },
+      "indexedRows": 34,
+      "uniquePaths": 34,
+      "localShaVerifiedFiles": 34,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 2293880,
+      "knownSeconds": 49.845163,
+      "classificationCounts": {
+        "unclassified": 34
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 34
+      },
+      "verifiedFileSetSha256": "491f3ce2bd074cc2db6a8fb678fa810a06a641681f0202eeff47704ee3c5ef48",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-community-goblin-slayer-ssbu/decoded-audio-nus3/001-vc_link_c04/0001-vc_link_attack01.wav",
+          "bytes": 65804,
+          "sha256": "16eebe0be3b0a1c53699eb7807e7c2396eaad00357c22a20d4ea88774f904f94",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "300heroes:272",
+      "name": "梅普露",
+      "sourceId": "300heroes:272",
+      "sourceUrl": null,
+      "library": "300英雄",
+      "sourceWork": "怕痛的我，把防禦力點滿就對了",
+      "indexHeroIds": [
+        "b2-maple"
+      ],
+      "mappingEvidence": "來源 bank 數字 ID 對照遊戲角色索引；音檔說話者／語言尚未聽審",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "300heroes:272"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "300heroes:272"
+        },
+        "firstJsonlLine": 45044,
+        "lastJsonlLine": 45150
+      },
+      "sourceAudioIndex": null,
+      "indexedRows": 107,
+      "uniquePaths": 107,
+      "localShaVerifiedFiles": 107,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 7924521,
+      "knownSeconds": 333.70186,
+      "classificationCounts": {
+        "unclassified": 107
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 107
+      },
+      "verifiedFileSetSha256": "b05f53491fc0c66d12de50ebf807433184d62db1b99154218ef7b11555d085c0",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/272/00-0000-272_skill_a_hit_2.wav",
+          "bytes": 93228,
+          "sha256": "22890fbcd19bf661ad94a729437144dc8529e7868e1be3e995c2f4f6b7400571",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Karthus",
+      "name": "LOL／卡爾瑟斯／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:karthus"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Karthus"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Karthus"
+        },
+        "firstJsonlLine": 145469,
+        "lastJsonlLine": 145663
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 195,
+      "uniquePaths": 195,
+      "localShaVerifiedFiles": 195,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 101280108,
+      "knownSeconds": 520.691339,
+      "classificationCounts": {
+        "unclassified": 195
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 195
+      },
+      "verifiedFileSetSha256": "b0d853edea184faf2f1b7b5c378edf15cc616dabc6d54024073d665b3b9239b4",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Karthus/wav/27d17cc7e345892f/00000-25553134.wav",
+          "bytes": 691100,
+          "sha256": "a9a50b408e9ce8d5245ba8e9639c16ecd7a8729bd22990f0fa2c62931135e6e7",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Karthus.zh_TW",
+      "name": "LOL／卡爾瑟斯／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:karthus"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Karthus.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Karthus.zh_TW"
+        },
+        "firstJsonlLine": 145664,
+        "lastJsonlLine": 145862
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 199,
+      "uniquePaths": 199,
+      "localShaVerifiedFiles": 199,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 269845452,
+      "knownSeconds": 973.553537,
+      "classificationCounts": {
+        "unclassified": 199
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 199
+      },
+      "verifiedFileSetSha256": "77e31ca133216396b711d60c55b1da5d12f8f31dd7a30e8aa144fd91db0efc36",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Karthus.zh_TW/wav/45bfe8b8a03ea625/00000-28023983.wav",
+          "bytes": 1037748,
+          "sha256": "fbb865d27b2be5e6d19ddb56852eaa2a5ff807c66cfad4a82f50ced94ae89b65",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717",
+      "name": "League of Legends / Karthus / ja_JP / 16.18.8159717",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "library": "公開來源",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "lol-riot-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "lol-riot-ja-jp-16.18.8159717:lol-karthus-ja-jp-16-18-8159717"
+        },
+        "firstJsonlLine": 266259,
+        "lastJsonlLine": 266483
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T134434656597Z.json",
+        "bytes": 33095165,
+        "sha256": "0e2a0526ea23fdadcce9be74273f82b2fc57fa4aa7b8d5dd0bd4142933bfbdc9"
+      },
+      "indexedRows": 225,
+      "uniquePaths": 225,
+      "localShaVerifiedFiles": 225,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 311303080,
+      "knownSeconds": 1102.489592,
+      "classificationCounts": {
+        "unclassified": 225
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 225
+      },
+      "verifiedFileSetSha256": "2b4a24e9dc8a826cd796d2a04c7df64841c3afc6abff8e1f23c706c488d1e2d0",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Karthus.ja_JP/wav/45bfe8b8a03ea625/00000-7588378.wav",
+          "bytes": 1820132,
+          "sha256": "63ccd52417e04336579fc3b1accbefaf955f1ab7db9f511176b82f11547116c7",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:LeeSin",
+      "name": "LOL／LeeSin／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:LeeSin"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:LeeSin"
+        },
+        "firstJsonlLine": 156238,
+        "lastJsonlLine": 157319
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 1082,
+      "uniquePaths": 1082,
+      "localShaVerifiedFiles": 1082,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 418305552,
+      "knownSeconds": 2288.835374,
+      "classificationCounts": {
+        "unclassified": 1082
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 1082
+      },
+      "verifiedFileSetSha256": "498e45a694e5761603fceb5d4315b090a3a36f58f593df4da655bff0ad83e328",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/LeeSin/wav/0e113e279ded7dbe/00000-7641985.wav",
+          "bytes": 338332,
+          "sha256": "2f7117dcda166ac45e4ae9aa048d1044620f0631539149fe610b2d7947fca8b2",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:LeeSin.zh_TW",
+      "name": "LOL／LeeSin／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:LeeSin.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:LeeSin.zh_TW"
+        },
+        "firstJsonlLine": 157320,
+        "lastJsonlLine": 158187
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 868,
+      "uniquePaths": 868,
+      "localShaVerifiedFiles": 868,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 969059864,
+      "knownSeconds": 3761.012381,
+      "classificationCounts": {
+        "unclassified": 868
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 868
+      },
+      "verifiedFileSetSha256": "60e99e9da99d19d51512b73dcb26530ba9b9100227bbdf7d66ee05e02cf20906",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/LeeSin.zh_TW/wav/52019db2b9bf26f3/00000-24551596.wav",
+          "bytes": 474204,
+          "sha256": "c664d1a96ab8005a2a0daf54517d4b5ad7947d20bb4ba2ff858e4dd0b2e94be8",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Lux",
+      "name": "LOL／拉克絲／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:lux"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Lux"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Lux"
+        },
+        "firstJsonlLine": 162535,
+        "lastJsonlLine": 163545
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 1011,
+      "uniquePaths": 1011,
+      "localShaVerifiedFiles": 1011,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 433174684,
+      "knownSeconds": 2283.633673,
+      "classificationCounts": {
+        "unclassified": 1011
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 1011
+      },
+      "verifiedFileSetSha256": "d76c53eca0063c38c6b23dfa856cd4b8c0c714b2dae55c9e797679af36bd50e0",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Lux/wav/05248a92d0390340/00000-178772.wav",
+          "bytes": 3123492,
+          "sha256": "db6a74b17171f55b9168d664f275fd43b51bfccf1440856bbb86480dc51f16cb",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Lux.zh_TW",
+      "name": "LOL／拉克絲／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:lux"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Lux.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Lux.zh_TW"
+        },
+        "firstJsonlLine": 163546,
+        "lastJsonlLine": 164687
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 1142,
+      "uniquePaths": 1142,
+      "localShaVerifiedFiles": 1142,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 810312412,
+      "knownSeconds": 2938.760635,
+      "classificationCounts": {
+        "unclassified": 1142
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 1142
+      },
+      "verifiedFileSetSha256": "d7a6d3b437472dde99be8c39b49474b5676e6140c8d4cc3908d767859be1a879",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Lux.zh_TW/wav/116b2f04c2025b70/00000-495426629.wav",
+          "bytes": 905260,
+          "sha256": "2b98a0963f099b77e47aa61a94fcdb7a2b00f3d18c7909e087f8d14066f30b88",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:MissFortune",
+      "name": "LOL／好運姐／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:missfortune"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:MissFortune"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:MissFortune"
+        },
+        "firstJsonlLine": 168665,
+        "lastJsonlLine": 169864
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 1200,
+      "uniquePaths": 1200,
+      "localShaVerifiedFiles": 1200,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 435905680,
+      "knownSeconds": 2184.016032,
+      "classificationCounts": {
+        "unclassified": 1200
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 1200
+      },
+      "verifiedFileSetSha256": "74c2396806bf3765202ea103e753e281b25c7986b65fdb0eb07e09818faf9891",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/MissFortune/wav/0527b23d6635bde6/00000-3866179.wav",
+          "bytes": 79424,
+          "sha256": "502d9450d6c55ff10cd2a402925da73aa09218e89003dce3fb3975b33d653771",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:MissFortune.zh_TW",
+      "name": "LOL／好運姐／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:missfortune"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:MissFortune.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:MissFortune.zh_TW"
+        },
+        "firstJsonlLine": 169865,
+        "lastJsonlLine": 170390
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 526,
+      "uniquePaths": 526,
+      "localShaVerifiedFiles": 526,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 349253620,
+      "knownSeconds": 1460.939864,
+      "classificationCounts": {
+        "unclassified": 526
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 526
+      },
+      "verifiedFileSetSha256": "82cd91e79b7840a23a0050a381568ac4c71f5a8eade91e68f7e2b35e86fe11a7",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/MissFortune.zh_TW/wav/546cb2124b55a426/00000-81689384.wav",
+          "bytes": 921080,
+          "sha256": "cb11586e10c72838537418a783f2bcce350a537e25a7d70c03e0b51c0cfd5401",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Warwick",
+      "name": "LOL／Warwick／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Warwick"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Warwick"
+        },
+        "firstJsonlLine": 237432,
+        "lastJsonlLine": 238159
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 728,
+      "uniquePaths": 728,
+      "localShaVerifiedFiles": 728,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 473098704,
+      "knownSeconds": 1901.788617,
+      "classificationCounts": {
+        "unclassified": 728
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 728
+      },
+      "verifiedFileSetSha256": "1842ccaa7f1fc5554f6c90c4097819614bcc4432166ad28adb4956894cf037a1",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Warwick/wav/0245df81e697201a/00000-13941118.wav",
+          "bytes": 683244,
+          "sha256": "8b55148d7c82b867dac29ae04d0f995c74ad223c9cd66c1fb6d4b57a84144929",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Warwick.zh_TW",
+      "name": "LOL／Warwick／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Warwick.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Warwick.zh_TW"
+        },
+        "firstJsonlLine": 238160,
+        "lastJsonlLine": 238664
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 505,
+      "uniquePaths": 505,
+      "localShaVerifiedFiles": 505,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 523886644,
+      "knownSeconds": 1493.097324,
+      "classificationCounts": {
+        "unclassified": 505
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 505
+      },
+      "verifiedFileSetSha256": "e903125395dc8c4bca159cf2a9eada5dc0091a119d5e3bfea12ebecce65a2a90",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Warwick.zh_TW/wav/77d52fbfa5aa38cd/00000-39917643.wav",
+          "bytes": 838980,
+          "sha256": "df387c3048f13d3f6cf41b51f7959016e54faca0f6029812af889c13bcda0359",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Xerath",
+      "name": "LOL／齊勒斯／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:xerath"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Xerath"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Xerath"
+        },
+        "firstJsonlLine": 240878,
+        "lastJsonlLine": 241419
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 542,
+      "uniquePaths": 542,
+      "localShaVerifiedFiles": 542,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 208472052,
+      "knownSeconds": 1056.249184,
+      "classificationCounts": {
+        "unclassified": 542
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 542
+      },
+      "verifiedFileSetSha256": "eb9d3139036f427751add5cdefb2ffa25695ab5e2cfad89530dca4529ecf9493",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Xerath/wav/482f334c02b1c907/00000-4444365.wav",
+          "bytes": 1703288,
+          "sha256": "a22069c7a98c37704edfcfa14b62db1fd2c1ec2babbb2743d255b65b0fbbc3bc",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Xerath.zh_TW",
+      "name": "LOL／齊勒斯／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [
+        "example:xerath"
+      ],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Xerath.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Xerath.zh_TW"
+        },
+        "firstJsonlLine": 241420,
+        "lastJsonlLine": 241642
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 223,
+      "uniquePaths": 223,
+      "localShaVerifiedFiles": 223,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 260327992,
+      "knownSeconds": 1046.826485,
+      "classificationCounts": {
+        "unclassified": 223
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 223
+      },
+      "verifiedFileSetSha256": "8b509b262039c6341488a401c8adcdbedc863567a2fa80a586a7324fb77abe03",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Xerath.zh_TW/wav/51d14684dec89d21/00000-27133411.wav",
+          "bytes": 2222844,
+          "sha256": "e667398a77d63d0b461790c1aa2ff51b0c977eea3cca15d3b0ecb188913ade20",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "lol-riot-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717",
+      "name": "League of Legends / Xerath / ja_JP / 16.18.8159717",
+      "sourceId": "lol-riot-ja-jp-16.18.8159717",
+      "sourceUrl": "https://lol.secure.dyn.riotcdn.net/channels/public/releases/7CAC3C60C863BF12.manifest",
+      "library": "公開來源",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "ja_JP",
+      "languageEvidence": "官方 patch manifest 明列 ja_JP flags；逐段語言尚未聽審。",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "lol-riot-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "lol-riot-ja-jp-16.18.8159717:lol-xerath-ja-jp-16-18-8159717"
+        },
+        "firstJsonlLine": 277023,
+        "lastJsonlLine": 277245
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/deliveries/local-audio-delivery-20260910T134434656597Z.json",
+        "bytes": 33095165,
+        "sha256": "0e2a0526ea23fdadcce9be74273f82b2fc57fa4aa7b8d5dd0bd4142933bfbdc9"
+      },
+      "indexedRows": 223,
+      "uniquePaths": 223,
+      "localShaVerifiedFiles": 223,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 261625636,
+      "knownSeconds": 1060.212721,
+      "classificationCounts": {
+        "unclassified": 223
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 223
+      },
+      "verifiedFileSetSha256": "3923b19f450b3e23da9cf79c3a551a45833aef50cb3e6230285e5dc24083be9b",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/51d14684dec89d21/00000-11875451.wav",
+          "bytes": 402032,
+          "sha256": "950ec4ec12c7753485f29beaf84108773ca3f00a75a0a5e68479d1fcbf87b8ce",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Yasuo",
+      "name": "LOL／Yasuo／共用音效包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "unreviewed",
+      "languageEvidence": null,
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Yasuo"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Yasuo"
+        },
+        "firstJsonlLine": 242218,
+        "lastJsonlLine": 243570
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 1353,
+      "uniquePaths": 1353,
+      "localShaVerifiedFiles": 1353,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 559824868,
+      "knownSeconds": 3087.717664,
+      "classificationCounts": {
+        "unclassified": 1353
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 1353
+      },
+      "verifiedFileSetSha256": "3def8e53be0a689723faa1f0483f8f5c198fdf22943ca1ce60f76ee780c4b837",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Yasuo/wav/0a775a053e042452/00000-2223623.wav",
+          "bytes": 262180,
+          "sha256": "e0104a6e09d18d1ca6bc858bddc15eb622c413f7ee956c57d71fb2b0270eb7b2",
+          "localShaVerified": true
+        }
+      }
+    },
+    {
+      "groupId": "local-lol-decoded-audio:Yasuo.zh_TW",
+      "name": "LOL／Yasuo／繁中命名語系包",
+      "sourceId": "local-lol-decoded-audio",
+      "sourceUrl": "https://www.leagueoflegends.com/",
+      "library": "本機遊戲",
+      "sourceWork": "League of Legends",
+      "indexHeroIds": [],
+      "mappingEvidence": "來源包／原生目錄對應；不把檔名或包名當成逐段說話者已確認",
+      "reportedLanguage": "zh-TW",
+      "languageEvidence": "installed WAD locale suffix is a source hint only; internal en_us paths may not match actual audio",
+      "speakerVerified": false,
+      "listeningReviewComplete": false,
+      "confirmedVoiceCount": null,
+      "synthesisReady": false,
+      "mainIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json",
+        "groupId": "local-lol-decoded-audio:Yasuo.zh_TW"
+      },
+      "fileIndexPointer": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-files.jsonl.gz",
+        "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286",
+        "filter": {
+          "groupId": "local-lol-decoded-audio:Yasuo.zh_TW"
+        },
+        "firstJsonlLine": 243571,
+        "lastJsonlLine": 244612
+      },
+      "sourceAudioIndex": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/deliveries/decoded-20260910T140018Z.json",
+        "bytes": 95608292,
+        "sha256": "c21c7a37c9bb89392960051974a606d8d3767da88e25204e081d2407b2846513"
+      },
+      "indexedRows": 1042,
+      "uniquePaths": 1042,
+      "localShaVerifiedFiles": 1042,
+      "localUnavailableOrMismatch": 0,
+      "bytes": 952741836,
+      "knownSeconds": 3734.912404,
+      "classificationCounts": {
+        "unclassified": 1042
+      },
+      "originalIndexCategoryCounts": {
+        "unclassified": 1042
+      },
+      "verifiedFileSetSha256": "67aae6f9f286ecd765824ac23d12dd1d7398458c85c00e7d8d52f55096cb3a9c",
+      "examplesByClass": {
+        "unclassified": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/local-lol-audio-20260910/decoded/Yasuo.zh_TW/wav/105e6d198746cfbe/00000-6554886.wav",
+          "bytes": 768792,
+          "sha256": "9178976a3d6a8d7258cede25356f94ca3b4b4eefd965d4e9f593046ad3a6c3e5",
+          "localShaVerified": true
+        }
+      }
+    }
+  ]
+}

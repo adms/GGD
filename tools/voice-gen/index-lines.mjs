@@ -242,7 +242,7 @@ function main() {
       // ⭐ owner 2026-09-10「每個角色可以支援最多三個口頭禪經典台詞 可被隨機播放」:
       // a category may carry extra takes as `<cat>.2`, `<cat>.3`, … (status key + mp3
       // name); they ride along in the same array and the client picks at random.
-      for (let n = 2; n <= 9; n++) {
+      for (let n = 2; ; n++) {
         const key = `${cat}.${n}`;
         const mp3 = join(dir, `${key}.mp3`);
         const entry = statusLines[key];

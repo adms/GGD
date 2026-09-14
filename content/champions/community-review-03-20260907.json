@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+  "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -112,7 +112,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-03-20260907.q.webp",
       "template": {
@@ -191,7 +191,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-03-20260907.w.webp",
       "template": {
@@ -270,7 +270,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-03-20260907.e.webp",
       "template": {
@@ -378,7 +378,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.733,
+      "castTimeSec": 0.5,
       "vfxKey": "fx.prim.fire.slash",
       "vfxLayers": [
         {
@@ -400,5 +400,100 @@
   "tags": [
     "fist"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.fb11308ea2781d7b07e6d9da520863007e29d892d8b71293",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "modelSha256": "5526548daa1642246b2728b8c0408ff3e0dd50b32704a632d92ec39ac38a00ce",
+      "binarySha256": "7627155536b28da0c6486b7f91e76c79ec713bb1cee86a8388a45492a73c562d",
+      "registeredAt": "2026-09-12T23:02:27.736Z",
+      "source": {
+        "kind": "previous",
+        "character": "不知火舞",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.ac0107fcbea7d603323adc116c0824e82a83c26d2b9a8d11",
+      "label": "真田幸村",
+      "sourceModelKey": "community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9",
+      "modelSha256": "e41393f068acbfe3f80038dbbc76eed74dec6265d960b036773a21bac92ea73e",
+      "binarySha256": "2b3dd4d4cc350130eb793ef2ac325b190eb301444f31db3ba3b2624f609336fd",
+      "registeredAt": "2026-09-12T23:02:27.742Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "真田幸村",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "300heroes:1d306928d4f084b4b4a1a79a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.ab0df952c44c09dbe6e02451edb7d5a52eb3dee573801f80",
+      "label": "不知火舞（獨立副本／真田幸村）",
+      "sourceModelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "modelSha256": "f01aed1026770be6b5270e455bcf03018efbc636fce89dea07e8a355b4d35205",
+      "binarySha256": "7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2",
+      "registeredAt": "2026-09-12T23:02:27.902Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "不知火舞（獨立副本／真田幸村）",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "derivative:mai",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.120933e256d86989a72c3104a9c413a5ea6bac6ac82a4141",
+      "label": "真田幸村",
+      "sourceModelKey": "community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9",
+      "modelSha256": "0d4c494c09fbfe4707445587fd5d214c1f9dd2ade235c1fcb174b9cd4343743d",
+      "binarySha256": "2b3dd4d4cc350130eb793ef2ac325b190eb301444f31db3ba3b2624f609336fd",
+      "registeredAt": "2026-09-13T00:08:43.849Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "真田幸村",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "300heroes:1d306928d4f084b4b4a1a79a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.a63e35bea97e44f1001c68c6a4dce3f5c61dcfc6bf75d9c5",
+      "label": "不知火舞（獨立副本／真田幸村）",
+      "sourceModelKey": "community.body.0a93dbe5a9f7caba19f47b258e53d604a6fc88e4df446e1c",
+      "modelSha256": "b8de5fd535495b94be2ecbb97d8bd8590ae7d0ae0906c9d70cb7abf0fd090ae8",
+      "binarySha256": "7f919fec29b8fd6e050c2598dda9e228e77525165bf1e53861eac017ab83baa2",
+      "registeredAt": "2026-09-13T00:08:44.000Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "不知火舞（獨立副本／真田幸村）",
+        "work": "百花繚亂 SAMURAI GIRLS",
+        "library": "300heroes",
+        "reference": "derivative:mai",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

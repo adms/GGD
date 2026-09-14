@@ -124,12 +124,6 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   // 不是「有人畫了 form-visuals」。⚠️ 這一格由下面「the ledger is exact」把關：
   // 12 的變身若哪天重新接上入口，它會立刻要求把這個 id 放回來。
   "godie-h02u", // 92 草泥馬 臥草
-  // ⭐ GH#1217（2026-09-11）—— 梅普露變身態原本穿 `champ.thorne`（**一個陌生人的骨架**）。
-  //   照 owner 2026-08-23 的常設指令自己判斷：改成**沿用本體的身體**，
-  //   ⭐ 判準是「穿自己的身體嚴格優於穿一個陌生人的骨架」，⛔ 不是「她變身後長這樣」。
-  //   ⚠️ 代價就是這一筆美術債：**變身在身體這一軸上看不出來**。
-  //   ⭐ 還債的方式是給她一顆專屬模型（#1154 英雄外觀商店）或加演出，⛔ 不是換回骨架。
-  "b2-maple-alt-9769eb88b85b",
   // ⭐ GH#1211 —— 傑・富力士（`godie-ucrl`）的變身與本體共用一顆 mesh。
   //   ⚠️ 這是**既有**的債（⛔ 不是這一輪造成的）：v0.43.4 把她從佔位骨架換成同角色
   //   另一張卡的模型時，變身那一半沒有跟著給第二顆 ⇒ 玩家看到數值變了而畫面沒變。
@@ -140,7 +134,9 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   //   ⇒ 帳本上這一列被下面「the ledger is exact」逐字要求刪掉：
   //   「these ids are on ART_DEBT but are already visible — delete them from the list」。
   // "godie-n01g", // 42 依文潔琳 —— 債還完了
-  "godie-n01c", // 08 勇者小呆 龍魔人
+  // ⭐ PR #1152（2026-09-14）—— 08 小呆 龍魔人**已經看得見了**（Infinity Strash 達伊的原作身體進來了）
+  //   ⇒ 下面「the ledger is exact」逐字要求刪掉這一列。
+  // "godie-n01c", // 08 勇者小呆 龍魔人 —— 債還完了
   "godie-o030", // 30 臭作 變態紳士
   "godie-u00o", // 76 魯夫 二檔
   "godie-u01u", // 11 索隆 武裝色霸氣

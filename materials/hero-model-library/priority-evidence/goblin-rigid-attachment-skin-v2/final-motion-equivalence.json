@@ -1,0 +1,249 @@
+{
+  "schema": "ggd-rigid-attachment-skin-motion-equivalence@1",
+  "before": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+    "bytes": 2361292,
+    "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130"
+  },
+  "after": {
+    "path": "/private/tmp/goblin-finalized-v2/body.glb",
+    "bytes": 1008048,
+    "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7"
+  },
+  "method": "Babylon NullEngine glTF loader; CPU skinning plus node world matrix; every retained animation at 0%, 20%, 60%, and 100%",
+  "meshes": [
+    "goblin-right-small-sword",
+    "goblin-left-small-shield"
+  ],
+  "animationCount": 4,
+  "samples": 32,
+  "maxWorldPositionDeltaMetres": 1.5425065184449945e-7,
+  "toleranceMetres": 0.0002,
+  "passed": true,
+  "rows": [
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "bat_idle",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 9.39444164802084e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "bat_idle",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 9.69369243529232e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "bat_idle",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 9.937236725862106e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "bat_idle",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 9.3880075184961e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_run",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 1.0200362257024485e-7
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_run",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 1.1061095229533687e-7
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_run",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 8.831423638382044e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_run",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 1.0894450135437581e-7
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_attack_attcom_1",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 9.39444164802084e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_attack_attcom_1",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 9.869225556681016e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_attack_attcom_1",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 8.708333253912726e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "single_attack_attcom_1",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 9.497729997096411e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "dead",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 9.39444164802084e-8
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "dead",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 1.0599912872586778e-7
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "dead",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 1.0770904485943249e-7
+    },
+    {
+      "mesh": "goblin-right-small-sword",
+      "clip": "dead",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 9.953756740777982e-8
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "bat_idle",
+      "fraction": 0,
+      "vertices": 72,
+      "maxDeltaMetres": 1.4503350882277505e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "bat_idle",
+      "fraction": 0.2,
+      "vertices": 72,
+      "maxDeltaMetres": 1.418027847406357e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "bat_idle",
+      "fraction": 0.6,
+      "vertices": 72,
+      "maxDeltaMetres": 1.461456364706875e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "bat_idle",
+      "fraction": 1,
+      "vertices": 72,
+      "maxDeltaMetres": 1.533967025466905e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_run",
+      "fraction": 0,
+      "vertices": 72,
+      "maxDeltaMetres": 1.5425065184449945e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_run",
+      "fraction": 0.2,
+      "vertices": 72,
+      "maxDeltaMetres": 1.4792635630462456e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_run",
+      "fraction": 0.6,
+      "vertices": 72,
+      "maxDeltaMetres": 1.3981256155487837e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_run",
+      "fraction": 1,
+      "vertices": 72,
+      "maxDeltaMetres": 1.3982012412624252e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_attack_attcom_1",
+      "fraction": 0,
+      "vertices": 72,
+      "maxDeltaMetres": 1.4503350882277505e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_attack_attcom_1",
+      "fraction": 0.2,
+      "vertices": 72,
+      "maxDeltaMetres": 1.3889770256900223e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_attack_attcom_1",
+      "fraction": 0.6,
+      "vertices": 72,
+      "maxDeltaMetres": 1.2483760179171903e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "single_attack_attcom_1",
+      "fraction": 1,
+      "vertices": 72,
+      "maxDeltaMetres": 1.214928338569167e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "dead",
+      "fraction": 0,
+      "vertices": 72,
+      "maxDeltaMetres": 1.4503350882277505e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "dead",
+      "fraction": 0.2,
+      "vertices": 72,
+      "maxDeltaMetres": 1.0736296528103829e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "dead",
+      "fraction": 0.6,
+      "vertices": 72,
+      "maxDeltaMetres": 1.325704242447163e-7
+    },
+    {
+      "mesh": "goblin-left-small-shield",
+      "clip": "dead",
+      "fraction": 1,
+      "vertices": 72,
+      "maxDeltaMetres": 1.3081989904897286e-7
+    }
+  ]
+}

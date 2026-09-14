@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -65,7 +65,7 @@
       "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -129,7 +129,7 @@
       "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -199,7 +199,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.0,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -263,7 +263,7 @@
       "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -364,7 +364,7 @@
   },
   "msGrowthTier": "極小",
   "id": "b2-luckyman",
-  "modelKey": "version.body.b8be3f8e0cd209b963b401038bcb66bb47fe52d73adf3837",
+  "modelKey": "version.body.58e636bc24dc82f29b5d6d0bf706ba3cfd4c61b1e8df71e1",
   "name": "幸運超人",
   "origin": "坦克",
   "passiveAbility": "b2-luckyman.passive",
@@ -410,6 +410,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457594-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.09c536c10feffc8537a2fad2d376fd18aef6885a0b7ef472",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.457594",
+      "modelSha256": "823cb9466028cdbdc32a99163fd5554497915150de7587689a58e00a36921d90",
+      "binarySha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b",
+      "registeredAt": "2026-09-10T14:45:42.126Z",
+      "source": {
+        "kind": "previous",
+        "character": "幸運超人",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.457594.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.bd10ca5bb86915328b51bb601e4c8a82996e69678bda1255",
+      "label": "埼玉",
+      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "modelSha256": "a138dbe68ddb41ea1999e5ce4c410f9cd2b6a8572541e20b1f958f25faa3ed1a",
+      "binarySha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "registeredAt": "2026-09-10T14:45:42.134Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "埼玉",
+        "work": "一拳超人 ONE-PUNCH MAN",
+        "library": "300heroes",
+        "reference": "300heroes:8ab9713ac0d4058884378c3a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.26ebfc5fa5595104268ac7b8a5af938e65d02d6ced87f2ad",
+      "label": "雷欧·凹凸曼无披风版（論壇相似模型）",
+      "sourceModelKey": "ou99.457594-standard-v2",
+      "modelSha256": "e71274ef5fa4328df3892add83a9a7a2b7fec33487254796eb6ee0c40aedd952",
+      "binarySha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+      "registeredAt": "2026-09-10T14:48:57.391Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "雷欧·凹凸曼无披风版",
+        "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457594-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7162c132cb0869e1d61bad2096b5b6663ca4abb3a199cab1",
+      "label": "雷欧·凹凸曼无披风版（論壇相似模型）",
+      "sourceModelKey": "ou99.457594-standard-v2",
+      "modelSha256": "492e8175167ab88af22d9addc236523fe34316a9cd2d5a9aa91c37e616925fc2",
+      "binarySha256": "082a33c3666efe8a0aab97ea4c7d64db2627937f9fafca7f619c48e811723c10",
+      "registeredAt": "2026-09-12T23:12:01.742Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "雷欧·凹凸曼无披风版",
+        "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457594-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ecc9abd74c958bee63f23c24281582dfda9019f15483caf6",
+      "label": "埼玉",
+      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "modelSha256": "b1b7d3cfc9da3dfb3a784d065a96a5a614c3baf5f7a815c28dfb27136fbabf9d",
+      "binarySha256": "da62e201a55037f568c2ec533b5812422aa1d8588e81c690d4b46926c5001dc9",
+      "registeredAt": "2026-09-12T23:12:01.848Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "埼玉",
+        "work": "一拳超人 ONE-PUNCH MAN",
+        "library": "300heroes",
+        "reference": "300heroes:8ab9713ac0d4058884378c3a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.58e636bc24dc82f29b5d6d0bf706ba3cfd4c61b1e8df71e1",
+      "label": "雷欧·凹凸曼无披风版（論壇相似模型）",
+      "sourceModelKey": "ou99.457594-standard-v2",
+      "modelSha256": "5a9db44ffd6862efd28bdbaad334e859a97133f1396262a4493f930cd35929e9",
+      "binarySha256": "082a33c3666efe8a0aab97ea4c7d64db2627937f9fafca7f619c48e811723c10",
+      "registeredAt": "2026-09-13T00:09:05.747Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "雷欧·凹凸曼无披风版",
+        "work": "來源作品待核；論壇標題：雷欧·凹凸曼无披风版",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-457594-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.5b21f2de8e071ad37b4fb11baa13bf10dd2a4dfd94356b4a",
+      "label": "埼玉",
+      "sourceModelKey": "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58",
+      "modelSha256": "d9f91a09fd2d8c1f0bc6250913157e0427523f666820440cc4262c5ff3d213d1",
+      "binarySha256": "da62e201a55037f568c2ec533b5812422aa1d8588e81c690d4b46926c5001dc9",
+      "registeredAt": "2026-09-13T00:09:05.849Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "埼玉",
+        "work": "一拳超人 ONE-PUNCH MAN",
+        "library": "300heroes",
+        "reference": "300heroes:8ab9713ac0d4058884378c3a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

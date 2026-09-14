@@ -20,7 +20,7 @@
           "duration": 5.0,
           "moveSpeedMult": 0.4
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -46,7 +46,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -105,7 +105,7 @@
           ],
           "duration": 4.0
         },
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -146,7 +146,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -236,7 +236,7 @@
             "duration": 45.0
           }
         ],
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "self",
@@ -306,7 +306,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -340,7 +340,7 @@
           }
         ],
         "buffDurationSec": 7,
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "self",
@@ -363,7 +363,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -561,7 +561,7 @@
             "duration": 18.0
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -611,7 +611,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "order": [
         "id",
@@ -650,7 +650,7 @@
           "duration": 5.0,
           "moveSpeedMult": 0.4
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -676,7 +676,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -712,7 +712,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -730,7 +730,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -785,7 +785,7 @@
           ],
           "duration": 4.0
         },
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -826,7 +826,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -864,7 +864,7 @@
             "msBonusTier": "大"
           }
         ],
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "self",
@@ -882,7 +882,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -914,7 +914,7 @@
             "value": 55
           }
         ],
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "self",
@@ -932,7 +932,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -975,7 +975,7 @@
         "damageType": "physical",
         "statusId": "burnstun",
         "statusDurationSec": 0.8,
-        "castTimeSec": 0.8
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -1014,7 +1014,7 @@
         ],
         "radius": 6.0,
         "range": 0.0,
-        "castTimeSec": 0.8,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -1058,7 +1058,7 @@
           ]
         },
         "damageType": "physical",
-        "castTimeSec": 1.233
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -1094,7 +1094,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.233,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -1133,7 +1133,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -1154,7 +1154,7 @@
         ],
         "radius": 6.0,
         "range": 8,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -1200,7 +1200,7 @@
             }
           ]
         },
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "self",
@@ -1232,7 +1232,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -1264,7 +1264,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -1282,7 +1282,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -1322,7 +1322,7 @@
           "duration": 1.5,
           "stun": true
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -1348,7 +1348,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -1401,7 +1401,7 @@
           "duration": 2.0,
           "moveSpeedMult": 0.6
         },
-        "castTimeSec": 2
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -1447,7 +1447,7 @@
           }
         ],
         "range": 4.5,
-        "castTimeSec": 2,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -1485,7 +1485,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.233
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -1505,7 +1505,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.233,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -1541,7 +1541,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -1559,7 +1559,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -1590,7 +1590,7 @@
         "intervalSec": 1.0,
         "durationSec": 5.0,
         "stacking": "refresh",
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -1633,7 +1633,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.7,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -1670,7 +1670,7 @@
         "length": 11.67,
         "width": 1.4,
         "aim": "facing",
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -1707,7 +1707,8 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0,
+        "targetsEnemies": true
       },
       "order": [
         "id",
@@ -1740,7 +1741,7 @@
           "moveSpeedMult": 0.4
         },
         "radius": 327.27,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -1754,7 +1755,7 @@
         ],
         "radius": 6.0,
         "range": 0.0,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -1802,7 +1803,7 @@
           "duration": 1.5,
           "moveSpeedMult": 0.6
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -1853,7 +1854,7 @@
         ],
         "radius": 4.58,
         "range": 8,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -1892,7 +1893,7 @@
           }
         ],
         "buffDurationSec": 6.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -1915,7 +1916,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -1946,7 +1947,7 @@
         "intervalSec": 1.0,
         "durationSec": 5.0,
         "stacking": "refresh",
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -1989,7 +1990,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.7,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -2026,7 +2027,7 @@
         "length": 11.67,
         "width": 1.4,
         "aim": "facing",
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -2063,7 +2064,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -2098,7 +2099,7 @@
           "moveSpeedMult": 0.4
         },
         "radius": 327.27,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -2112,7 +2113,7 @@
         ],
         "radius": 6.0,
         "range": 0.0,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -2150,7 +2151,7 @@
           }
         ],
         "buffDurationSec": 6.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -2173,7 +2174,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -2213,7 +2214,7 @@
           "duration": 1.5,
           "stun": true
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -2239,7 +2240,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -2292,7 +2293,7 @@
           "duration": 2.0,
           "moveSpeedMult": 0.6
         },
-        "castTimeSec": 2
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -2338,7 +2339,7 @@
           }
         ],
         "range": 4.5,
-        "castTimeSec": 2,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -2406,7 +2407,7 @@
             "duration": 16.0
           }
         ],
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "self",
@@ -2456,7 +2457,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -2669,7 +2670,7 @@
           "duration": 5.0,
           "moveSpeedMult": 0.65
         },
-        "castTimeSec": 2.267
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -2711,7 +2712,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 2.267,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -2815,7 +2816,7 @@
           "stun": true
         },
         "radius": 245.45,
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -2844,7 +2845,7 @@
         ],
         "radius": 4.5,
         "range": 0.0,
-        "castTimeSec": 1.7,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -2889,7 +2890,7 @@
           "duration": 3.0,
           "moveSpeedMult": 0.6
         },
-        "castTimeSec": 1.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -2926,7 +2927,7 @@
           }
         ],
         "range": 6,
-        "castTimeSec": 1.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -2959,7 +2960,7 @@
           "duration": 4.0,
           "root": true
         },
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -2972,7 +2973,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true,
         "innateKind": "active"
       },
@@ -3011,7 +3012,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -3047,7 +3048,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -3080,7 +3081,7 @@
           "damageTier": "大"
         },
         "damageType": "magic",
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -3100,7 +3101,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -3136,7 +3137,7 @@
           }
         ],
         "buffDurationSec": 6.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -3159,7 +3160,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -3191,7 +3192,7 @@
             "value": 10.0
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -3209,7 +3210,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -3246,7 +3247,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -3287,7 +3288,7 @@
           {
             "kind": "delayed",
             "shape": "single",
-            "delaySec": 0.35,
+            "delaySec": 0.3,
             "effects": [
               {
                 "kind": "floatingText",
@@ -3308,7 +3309,7 @@
           {
             "kind": "delayed",
             "shape": "single",
-            "delaySec": 0.7,
+            "delaySec": 0.6,
             "effects": [
               {
                 "kind": "floatingText",
@@ -3329,7 +3330,7 @@
           {
             "kind": "delayed",
             "shape": "single",
-            "delaySec": 1.05,
+            "delaySec": 0.9,
             "effects": [
               {
                 "kind": "floatingText",
@@ -3385,7 +3386,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -3429,7 +3430,7 @@
             }
           ]
         },
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "self",
@@ -3453,7 +3454,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -3477,7 +3478,7 @@
     "godie-n00b.e": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -3490,7 +3491,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -3594,7 +3595,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -3614,7 +3615,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -3651,7 +3652,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -3669,7 +3670,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -3703,7 +3704,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -3723,7 +3724,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -3771,7 +3772,7 @@
           "durationSec": 2.0,
           "stacking": "refresh"
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -3808,7 +3809,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -3840,7 +3841,7 @@
           "damageTier": "小"
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -3878,7 +3879,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -3915,7 +3916,7 @@
           }
         ],
         "buffDurationSec": 20,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -3938,7 +3939,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -3977,7 +3978,7 @@
             }
           ]
         },
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "targeted",
@@ -4001,7 +4002,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.067,
+        "castTimeSec": 0.1,
         "targetsEnemies": false
       },
       "order": [
@@ -4041,7 +4042,7 @@
         },
         "damageType": "physical",
         "arriveVfxId": "fx.prim.lightning.slash",
-        "castTimeSec": 0.267
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -4075,7 +4076,7 @@
           }
         ],
         "range": 6,
-        "castTimeSec": 0.267,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -4108,7 +4109,7 @@
           "damageTier": "大"
         },
         "damageType": "magic",
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -4128,7 +4129,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4162,7 +4163,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -4180,7 +4181,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4212,7 +4213,7 @@
             "value": 10.0
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -4230,7 +4231,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -4267,7 +4268,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -4308,7 +4309,7 @@
           {
             "kind": "delayed",
             "shape": "single",
-            "delaySec": 0.35,
+            "delaySec": 0.3,
             "effects": [
               {
                 "kind": "floatingText",
@@ -4329,7 +4330,7 @@
           {
             "kind": "delayed",
             "shape": "single",
-            "delaySec": 0.7,
+            "delaySec": 0.6,
             "effects": [
               {
                 "kind": "floatingText",
@@ -4350,7 +4351,7 @@
           {
             "kind": "delayed",
             "shape": "single",
-            "delaySec": 1.05,
+            "delaySec": 0.9,
             "effects": [
               {
                 "kind": "floatingText",
@@ -4406,7 +4407,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -4450,7 +4451,7 @@
             }
           ]
         },
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "self",
@@ -4474,7 +4475,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -4503,7 +4504,7 @@
           "damageTier": "小"
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -4541,7 +4542,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4578,7 +4579,7 @@
           }
         ],
         "buffDurationSec": 20,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -4601,7 +4602,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4640,7 +4641,7 @@
             }
           ]
         },
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "targeted",
@@ -4664,7 +4665,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.067,
+        "castTimeSec": 0.1,
         "targetsEnemies": false
       },
       "order": [
@@ -4693,7 +4694,7 @@
       "params": {
         "to": "alternate",
         "durationSec": 8,
-        "castTimeSec": 0.267
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -4705,7 +4706,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4750,7 +4751,7 @@
           "durationSec": 2.0,
           "stacking": "refresh"
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -4787,7 +4788,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4813,7 +4814,7 @@
     "godie-o00k.w": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -4826,7 +4827,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -4862,7 +4863,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -4888,7 +4889,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4922,7 +4923,7 @@
             "value": 0.25
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -4940,7 +4941,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -4985,7 +4986,7 @@
           "durationSec": 10.0,
           "stacking": "refresh"
         },
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -5016,7 +5017,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.7,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -5066,7 +5067,7 @@
         "length": 14,
         "width": 2.0,
         "aim": "facing",
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -5148,7 +5149,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -5174,7 +5175,7 @@
     "godie-o00x.w": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -5187,7 +5188,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -5289,7 +5290,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -5307,7 +5308,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -5331,7 +5332,7 @@
     "godie-o02l.passive": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -5344,7 +5345,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467,
+        "castTimeSec": 0.5,
         "innateKind": "active"
       },
       "order": [
@@ -5381,7 +5382,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -5401,7 +5402,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -5437,7 +5438,7 @@
             "value": 0.25
           }
         ],
-        "castTimeSec": 0.233
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -5455,7 +5456,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.233,
+        "castTimeSec": 0.3,
         "passive": {
           "name": "58-02 鋼鐵尾巴",
           "ranks": [
@@ -5615,7 +5616,7 @@
             }
           ]
         },
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "targeted",
@@ -5639,7 +5640,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.067,
+        "castTimeSec": 0.1,
         "targetsEnemies": false
       },
       "order": [
@@ -5672,7 +5673,7 @@
         "intervalSec": 1.0,
         "durationSec": 7.0,
         "stacking": "refresh",
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -5708,7 +5709,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -5744,7 +5745,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -5762,7 +5763,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033,
+        "castTimeSec": 1.0,
         "targetsEnemies": false,
         "passive": {
           "name": "30-002 變態紳士",
@@ -5829,7 +5830,7 @@
           "duration": 1.0,
           "root": true
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -5842,7 +5843,7 @@
           }
         ],
         "range": 6.0,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -5880,7 +5881,7 @@
           "duration": 1.2,
           "stun": true
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -5906,7 +5907,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -5947,7 +5948,7 @@
           "duration": 8.0,
           "moveSpeedMult": 0.9
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -5973,7 +5974,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -6070,7 +6071,7 @@
     "godie-ofar.passive": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -6083,7 +6084,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467,
+        "castTimeSec": 0.5,
         "innateKind": "active"
       },
       "order": [
@@ -6112,7 +6113,7 @@
       "params": {
         "to": "alternate",
         "durationSec": 6,
-        "castTimeSec": 0.667
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -6124,7 +6125,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.667
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -6156,7 +6157,7 @@
             "value": 0.25
           }
         ],
-        "castTimeSec": 0.233
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -6174,7 +6175,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.233,
+        "castTimeSec": 0.3,
         "passive": {
           "name": "58-02 鋼鐵尾巴",
           "ranks": [
@@ -6325,7 +6326,7 @@
         "intervalSec": 1.0,
         "durationSec": 10.0,
         "stacking": "refresh",
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -6361,7 +6362,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -6397,7 +6398,7 @@
             "value": 0.25
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -6415,7 +6416,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -6460,7 +6461,7 @@
           "durationSec": 10.0,
           "stacking": "refresh"
         },
-        "castTimeSec": 1.7
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -6491,7 +6492,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.7,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -6541,7 +6542,7 @@
         "length": 14,
         "width": 2.0,
         "aim": "facing",
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -6623,7 +6624,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.833
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -6649,7 +6650,7 @@
     "godie-ogrh.w": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -6662,7 +6663,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -6693,7 +6694,7 @@
         "intervalSec": 1.0,
         "durationSec": 7.0,
         "stacking": "refresh",
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -6729,7 +6730,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -6759,7 +6760,7 @@
       "params": {
         "to": "alternate",
         "durationSec": 15.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -6771,7 +6772,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033,
+        "castTimeSec": 1.0,
         "targetsEnemies": false,
         "passive": {
           "name": "30-002 變態紳士",
@@ -6838,7 +6839,7 @@
           "duration": 1.0,
           "root": true
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -6851,7 +6852,7 @@
           }
         ],
         "range": 6.0,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -6889,7 +6890,7 @@
           "duration": 1.2,
           "stun": true
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -6915,7 +6916,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -6956,7 +6957,7 @@
           "duration": 8.0,
           "moveSpeedMult": 0.9
         },
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -6982,7 +6983,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -7018,7 +7019,7 @@
             "value": 200.0
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -7036,7 +7037,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -7078,7 +7079,7 @@
           "duration": 1.2,
           "stun": true
         },
-        "castTimeSec": 1.2
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -7110,7 +7111,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.2
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -7155,7 +7156,7 @@
             "value": 12.0
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -7183,7 +7184,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -7224,7 +7225,7 @@
           "duration": 1.0,
           "moveSpeedMult": 0.6
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -7250,7 +7251,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -7289,7 +7290,7 @@
           ]
         },
         "damageType": "physical",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -7310,7 +7311,7 @@
         ],
         "radius": 6.0,
         "range": 3,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -7348,7 +7349,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -7366,7 +7367,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -7399,7 +7400,7 @@
             "msBonusTier": "大"
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -7417,7 +7418,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -7454,7 +7455,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -7480,7 +7481,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -7527,7 +7528,7 @@
           }
         ],
         "buffDurationSec": 20.0,
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -7560,7 +7561,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -7678,7 +7679,7 @@
           "duration": 2.0,
           "stun": true
         },
-        "castTimeSec": 2
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -7723,7 +7724,7 @@
         ],
         "radius": 6.97,
         "range": 0.0,
-        "castTimeSec": 2,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -7766,7 +7767,7 @@
           "duration": 1.0,
           "stun": true
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -7792,7 +7793,7 @@
           }
         ],
         "range": 6,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -7825,7 +7826,7 @@
           "damageTier": "小"
         },
         "damageType": "magic",
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -7845,7 +7846,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -7880,7 +7881,7 @@
             "value": 0.35
           }
         ],
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -7898,7 +7899,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -7940,7 +7941,7 @@
             "value": -10.0
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -7968,7 +7969,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -8086,7 +8087,7 @@
           "duration": 2.0,
           "stun": true
         },
-        "castTimeSec": 2
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -8131,7 +8132,7 @@
         ],
         "radius": 6.97,
         "range": 0.0,
-        "castTimeSec": 2,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -8174,7 +8175,7 @@
           "duration": 1.0,
           "stun": true
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -8200,7 +8201,7 @@
           }
         ],
         "range": 6,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -8233,7 +8234,7 @@
           "damageTier": "小"
         },
         "damageType": "magic",
-        "castTimeSec": 1.433
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "skillshot",
@@ -8253,7 +8254,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.433
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -8291,7 +8292,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 2.233
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -8358,7 +8359,7 @@
         ],
         "radius": 6.0,
         "range": 0,
-        "castTimeSec": 2.233,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -8407,7 +8408,7 @@
         },
         "damageType": "magic",
         "invulnerableSec": 0.24,
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -8444,7 +8445,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -8486,7 +8487,7 @@
             "value": -10
           }
         ],
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "self",
@@ -8509,7 +8510,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.667
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -8558,7 +8559,7 @@
         "damageType": "magic",
         "statusId": "slow40",
         "statusDurationSec": 1.5,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -8594,7 +8595,7 @@
         ],
         "radius": 6.0,
         "range": 8,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -8733,7 +8734,7 @@
           }
         ],
         "buffDurationSec": 15,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -8756,7 +8757,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -8794,7 +8795,7 @@
           }
         ],
         "statusId": "three-sword-style",
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -8818,7 +8819,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -8852,7 +8853,7 @@
             "value": 0.25
           }
         ],
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "self",
@@ -8870,7 +8871,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.067
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -8911,7 +8912,7 @@
           "duration": 0.8,
           "stun": true
         },
-        "castTimeSec": 0.8
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -8938,7 +8939,7 @@
         ],
         "radius": 3.0,
         "range": 0.0,
-        "castTimeSec": 0.8,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -8982,7 +8983,7 @@
           "duration": 1.0,
           "moveSpeedMult": 0.6
         },
-        "castTimeSec": 0.567
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "targeted",
@@ -9008,7 +9009,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.567,
+        "castTimeSec": 0.5,
         "targetsEnemies": true
       },
       "order": [
@@ -9037,7 +9038,7 @@
     "godie-udea.q": {
       "ref": "tpl-blink",
       "params": {
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "before": {
         "castType": "ground",
@@ -9050,7 +9051,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.467
+        "castTimeSec": 0.5
       },
       "order": [
         "id",
@@ -9182,7 +9183,7 @@
           }
         ],
         "buffDurationSec": 15,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "self",
@@ -9205,7 +9206,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 1.033
+        "castTimeSec": 1.0
       },
       "order": [
         "id",
@@ -9243,7 +9244,7 @@
           }
         ],
         "statusId": "three-sword-style",
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -9267,7 +9268,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -9301,7 +9302,7 @@
             "msBonusTier": "大"
           }
         ],
-        "castTimeSec": 0.267
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "self",
@@ -9319,7 +9320,7 @@
           }
         ],
         "range": 0.0,
-        "castTimeSec": 0.267,
+        "castTimeSec": 0.3,
         "innateKind": "active"
       },
       "order": [
@@ -9356,7 +9357,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 2.233
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -9423,7 +9424,7 @@
         ],
         "radius": 6.0,
         "range": 0,
-        "castTimeSec": 2.233,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -9472,7 +9473,7 @@
         },
         "damageType": "magic",
         "invulnerableSec": 0.24,
-        "castTimeSec": 1.633
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "targeted",
@@ -9509,7 +9510,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 1.633,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -9561,7 +9562,7 @@
         "damageType": "magic",
         "statusId": "slow40",
         "statusDurationSec": 1.5,
-        "castTimeSec": 1.133
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -9597,7 +9598,7 @@
         ],
         "radius": 6.0,
         "range": 8,
-        "castTimeSec": 1.133,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -9728,7 +9729,7 @@
           ]
         },
         "damageType": "magic",
-        "castTimeSec": 0.167
+        "castTimeSec": 0.1
       },
       "before": {
         "castType": "skillshot",
@@ -9761,7 +9762,7 @@
           }
         ],
         "range": 12,
-        "castTimeSec": 0.167
+        "castTimeSec": 0.1
       },
       "order": [
         "id",
@@ -9802,7 +9803,7 @@
         "damageType": "magic",
         "statusId": "burnstun",
         "statusDurationSec": 0.75,
-        "castTimeSec": 0.767
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -9833,7 +9834,7 @@
         ],
         "radius": 5,
         "range": 8,
-        "castTimeSec": 0.767,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [
@@ -9882,7 +9883,7 @@
           "duration": 1.25,
           "root": true
         },
-        "castTimeSec": 0.333
+        "castTimeSec": 0.3
       },
       "before": {
         "castType": "skillshot",
@@ -9921,7 +9922,7 @@
           }
         ],
         "range": 8,
-        "castTimeSec": 0.333
+        "castTimeSec": 0.3
       },
       "order": [
         "id",
@@ -9962,7 +9963,7 @@
         "damageType": "physical",
         "statusId": "slow40",
         "statusDurationSec": 2,
-        "castTimeSec": 1.833
+        "castTimeSec": 1.0
       },
       "before": {
         "castType": "ground",
@@ -9993,7 +9994,7 @@
         ],
         "radius": 4.5,
         "range": 1,
-        "castTimeSec": 1.833,
+        "castTimeSec": 1.0,
         "targetsEnemies": true
       },
       "order": [

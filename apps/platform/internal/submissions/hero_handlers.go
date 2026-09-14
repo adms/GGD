@@ -175,7 +175,10 @@ func (h *HeroHandlers) build(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(200)
+	// #nosec G705 -- result is a binary ZIP returned under an explicit application/zip
+	// content type with sniffing disabled; it is never rendered as HTML.
 	_, _ = w.Write(result)
 }
 
@@ -196,7 +199,10 @@ func (h *HeroHandlers) buildTakeover(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(200)
+	// #nosec G705 -- result is a binary ZIP returned under an explicit application/zip
+	// content type with sniffing disabled; it is never rendered as HTML.
 	_, _ = w.Write(result)
 }
 func (h *HeroHandlers) inspect(w http.ResponseWriter, r *http.Request) {

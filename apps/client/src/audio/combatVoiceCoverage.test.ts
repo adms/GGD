@@ -130,7 +130,9 @@ const VOICE_GAP: readonly string[] = [
   // built from ORIGINAL clips only (owner 2026-09-10「LOL7個角色應該有自己語音檔 可以排除」
   // excludes them from synthesis, ⛔ not from shipping). They are audible, so they are not
   // a gap; they are incomplete, so they are pinned in ORIGINALS_ONLY below instead.
-  "b2-kisaragi",
+  // ⭐ 2026-09-14（PR #1152 合併準備）: b2-kisaragi LEFT this list — the train's ORIGINAL clips
+  // landed (3c85197b8: 「ドアが閉まります」 announcement as select/taunt, JR departure melody as
+  // victory), which is the "or an original clip" exit the note above named. It is audible now.
 ];
 
 /**

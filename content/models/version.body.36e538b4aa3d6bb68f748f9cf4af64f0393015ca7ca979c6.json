@@ -1,0 +1,20 @@
+{
+  "id": "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/d66169544a7ab5104e5b41954c7f77ce414a79bd37fd4cdfc104a7840d396972.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "karthus_idle01",
+    "run": "karthus_run",
+    "attack": "karthus_attack1",
+    "cast": "karthus_spell1a",
+    "hurt": "karthus_idle01",
+    "death": "karthus_death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.70cf6a6025b1d6f6de4c2dc660ad90a84ef2c4013ac2315d",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

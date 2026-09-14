@@ -1,0 +1,49 @@
+{
+  "schema": "ggd-backlog-localization-resource-validation@1",
+  "baseCommit": "45d9d782a23edf5b8845a1b706d345c5b9588b0f",
+  "sourceIdentityRows": 731,
+  "originalRowFieldsPreserved": true,
+  "modelCandidatesPreserved": 4126,
+  "allNamesAndWorksHaveChinese": true,
+  "sourceFamilies": 16,
+  "resourceReserveRows": 65,
+  "localMirrorsIdentical": true,
+  "sourceAndReserveLinksExist": true,
+  "unassignedAudioNotClaimedAsCharacter": true,
+  "counts": {
+    "not-defined": 387,
+    "definitions-incomplete": 11,
+    "identity-review": 247,
+    "designed": 86,
+    "source-unavailable": 0
+  },
+  "reviewFixes": [
+    "combinedAudioCountVisible",
+    "300retainedIdentityCountNotEveryBodyClaim",
+    "goku48Motion60ParticleSourceVisible",
+    "mdxSequenceSourcePreserved"
+  ],
+  "jsonSha256": "00a7691657ae6d723d861529519ea42fe3865c8c95bde0ef1966a39eb16c639a",
+  "markdownSha256": "fc9c0977bd3d0b2b9de6bd99b7390210f7e2da611802038b0341512c4d0beafe",
+  "parallelReleaseChecks": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "log": "materials/hero-model-library/priority-evidence/backlog-source-coverage/checks/skills.txt",
+      "sha256": "394854eadd75e60d29a349fb7fcf7a1243b02584e71a8bc9c9b107a9bf3f469b"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 1,
+      "log": "materials/hero-model-library/priority-evidence/backlog-source-coverage/checks/editor.txt",
+      "sha256": "0bc55aed0a01ce0d0b23b708a9c1d3c5ebca567d63c9d2d1bafbc274f577984d"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 1,
+      "log": "materials/hero-model-library/priority-evidence/backlog-source-coverage/checks/coord.txt",
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    }
+  ],
+  "releaseReady": false
+}

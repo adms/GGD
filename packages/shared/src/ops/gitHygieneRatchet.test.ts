@@ -15,7 +15,7 @@ import { describe, it, expect } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { REPO_ROOT, hasGit } from "./gitTreeExport";
-import { HYGIENE_CATS, isFinishedAssetPath, measureHygiene, treeBlobs, type HygieneCat as Cat } from "./gitHygiene";
+import { categoryOf, HYGIENE_CATS, isFinishedAssetPath, measureHygiene, treeBlobs, type HygieneCat as Cat } from "./gitHygiene";
 
 interface Baseline {
   bigBlobBytes: number;
@@ -33,6 +33,11 @@ const SKIP = !hasGit() || !existsSync(BASELINE_PATH);
 
 describe("GH#1160 git 衛生棘輪（⭐ 只讀 commit 進去的樹）", () => {
   const base = SKIP ? null : (JSON.parse(readFileSync(BASELINE_PATH, "utf8")) as Baseline);
+
+  it("固定中央索引屬於正式 Git 查詢入口，不算準備材料", () => {
+    expect(categoryOf("materials/hero-model-library/inventory.json", 8 * 1024 * 1024)).toBeNull();
+    expect(categoryOf("materials/hero-model-library/source-dump.json", 8 * 1024 * 1024)).toBe("materials");
+  });
 
   it("★ 每一類（materials / legacy-overwrites / archives / logs）的 files 與 bytes **只准變少**", (ctx) => {
     if (!base) { console.warn("⚠️ 沒有 .git 或 baseline ⇒ 這條閘**沒驗到**（不是綠）"); ctx.skip(); return; }

@@ -288,6 +288,19 @@ export default tseslint.config(
     rules: { "@typescript-eslint/no-require-imports": "off" },
   },
 
+  // Frozen meshoptimizer v0.25 decoder; source-files.json pins its unchanged
+  // upstream bytes (SHA-256 05e1d7b12b8fe408b07690d701328671d026c4ace808684c942f398b1f0801d5).
+  // Its ES5 loops deliberately reuse function-scoped `var i`; the guarded AMD
+  // branch uses a loader-provided `define`. Keep every other rule, including
+  // no-undef, active; this exception does not apply to our replay adapters.
+  {
+    files: [
+      "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/meshopt_decoder.cjs",
+    ],
+    languageOptions: { globals: { define: "readonly" } },
+    rules: { "no-redeclare": "off" },
+  },
+
   // ══════════════════════════════════════════════════════════════════════
   // 型別感知（TYPE-AWARE）—— 只有這一塊要跑 TS program，也只有這三條
   // ══════════════════════════════════════════════════════════════════════

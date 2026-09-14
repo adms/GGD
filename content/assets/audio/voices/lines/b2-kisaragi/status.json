@@ -250,6 +250,26 @@
    },
    "lastError": null
   },
+  "victory": {
+   "takes": [],
+   "text": "（原檔）JR_Melody",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:public-railway:yamanote-app/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/JR_Melody.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "public-railway:yamanote-app",
+    "stub": false,
+    "bytes": 161376,
+    "seconds": 10.03102,
+    "lufs": null,
+    "hash": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc",
+    "at": 1789127989980
+   },
+   "lastError": null
+  },
   "defeat": {
    "takes": [
     {
@@ -364,6 +384,26 @@
     "hash": "a60051c327cd0ecc40764c40b9923f68c9aa42a15483b7870f5c09fef1d57751",
     "maxDb": -5,
     "at": 1789054897295
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "takes": [],
+   "text": "（原檔）doaShimarimasuFemale",
+   "lang": "ja",
+   "textSource": "original",
+   "origin": "original:public-railway:yamanote-app/GGD-Asset-Library/intake/public-audio-20260911/yamanote-kisaragi/originals/doaShimarimasuFemale.mp3",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "public-railway:yamanote-app",
+    "stub": false,
+    "bytes": 116654,
+    "seconds": 7.218821,
+    "lufs": null,
+    "hash": "1147b0801dc05a44b5d6c51af3ff34d74f334febf6bb31a91b4668f6415adc45",
+    "at": 1789127990037
    },
    "lastError": null
   },

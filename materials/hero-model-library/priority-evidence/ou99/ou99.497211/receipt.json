@@ -1,0 +1,274 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "ou99:497211",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_497211.glb",
+      "bytes": 8415368,
+      "sha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.497211/lod-26000-attempt4/body.glb",
+      "bytes": 12183312,
+      "sha256": "c17c9e06fcc74daf2bba2b36bfa984746c59b991d578f228704bda9ffa4c9fff"
+    },
+    "stateClips": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack",
+      "cast": "spell one",
+      "death": "death",
+      "hurt": "stand"
+    },
+    "yawOffsetDeg": 0,
+    "nativeAnimation": true,
+    "nativeClipProof": "../control/standardization.json",
+    "limitations": [
+      "Merged transparent primitives can alter per-primitive depth-sort granularity; no triangles or alpha pixels discarded.",
+      "Only existing clipMap-referenced native clips are in runtime; all source clips retained in original/source.glb.",
+      "No animation channel was removed or resampled.",
+      "Derived budget LOD: full native geometry and resolution retained in original; not a lossless appearance conversion."
+    ]
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+    "byteSize": 6370760,
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack",
+      "cast": "spell one",
+      "hurt": "stand",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "ou99.497211-standard-v2",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
+    "scale": 1,
+    "collisionRadius": 0.55,
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack",
+      "cast": "spell one",
+      "hurt": "stand",
+      "death": "death"
+    }
+  },
+  "uploadedDocument": {
+    "id": "community.body.d1279f3fc9ec599f932f389b97c60630c0bd775b2ec228b4",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack",
+      "cast": "spell one",
+      "hurt": "stand",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "selectedClips": {
+    "idle": "stand",
+    "run": "walk",
+    "attack": "attack",
+    "cast": "spell one",
+    "death": "death",
+    "hurt": "stand"
+  },
+  "metrics": {
+    "triangles": 25995,
+    "drawPrimitives": 5,
+    "textures": [
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 692370,
+        "sha256": "aac0218292da637f223c1dedae5ea3eba338176ec1fe19196a62e8657448715f"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1184783,
+        "sha256": "d6b0a6c68a13c7e875c2a59d1b985782bd7320d2ac1c4d299281748e9e1484e4"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1077398,
+        "sha256": "58f32ee4f8469fff438ebe4e75b49feb6ee30b0785801b8351a7e28b7c4d2558"
+      },
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 241602,
+        "sha256": "887d4213be2c14f9762ba2e80a23dd72373919e06869c2a919850203b9e2fa8c"
+      },
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 1443071,
+        "sha256": "ec4d03fb569d9eae5a0019733f6d43a32cc992405d7e95f338a75199add12a29"
+      }
+    ]
+  },
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "stand",
+      "duration": 2.3329999446868896,
+      "channels": 82
+    },
+    {
+      "index": 1,
+      "name": "walk",
+      "duration": 0.800000011920929,
+      "channels": 82
+    },
+    {
+      "index": 2,
+      "name": "attack",
+      "duration": 1.3329999446868896,
+      "channels": 82
+    },
+    {
+      "index": 3,
+      "name": "spell one",
+      "duration": 2.3329999446868896,
+      "channels": 82
+    },
+    {
+      "index": 4,
+      "name": "death",
+      "duration": 1.6670000553131104,
+      "channels": 82
+    }
+  ],
+  "warnings": [
+    "三角面 25995 高於警戒值 16000，送審時需檢查演出負載。",
+    "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。",
+    "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "ACCESSOR_INDEX_TRIANGLE_DEGENERATE",
+          "message": "Indices accessor contains 1 degenerate triangles (out of 2942).",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/indices"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "ggd-w3x-import",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 6199952
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/3",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/4",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 5,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 5,
+      "totalVertexCount": 16772,
+      "totalTriangleCount": 25995,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "sharedPrepareAndVerify": true,
+    "originalModelBindingPreservedExceptIdAndPath": true,
+    "nativeMotionNotResampled": true,
+    "visualAcceptance": "pending"
+  }
+}

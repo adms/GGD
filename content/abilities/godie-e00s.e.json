@@ -8,18 +8,18 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    45,
-    45,
-    45,
-    45
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
-    0,
-    0,
-    0,
-    0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
   "radiusTier": "小",
   "targetsEnemies": true,
   "effects": [
@@ -27,7 +27,7 @@
       "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "flat": 1
+        "flat": 1.0
       },
       "radius": 4.5,
       "radiusTier": "小",
@@ -50,6 +50,6 @@
   "icon": "assets/icons/abilities/godie-e00s.e.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
   "cooldownTier": "小",
-  "castTimeSec": 1.0,
-  "castTimeTier": "極大"
+  "castTimeTier": "極大",
+  "castTimeSec": 1
 }

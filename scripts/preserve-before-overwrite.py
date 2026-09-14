@@ -1262,7 +1262,7 @@ def main() -> int:
             continue
         why = needs_backup(p)
         if why is None:
-            lines.append(f"{stamp}\t{tool}\tSKIP(git 有)\t{p}\t")
+            lines.append(f"{stamp}\t{tool}\tSKIP(git 有)\t{p}")
             continue
         where = preserve(p, why, stamp, tool)
         lines.append(f"{stamp}\t{tool}\t{why}\t{p}\t{where}")

@@ -1,0 +1,1718 @@
+{
+  "schema": "ggd-historical-model-recovery-validation@1",
+  "historicalCommit": "7bc2fa3f8",
+  "historicalDeliveryReport": {
+    "gitPath": "docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+    "gitObject": "7bc2fa3f8:docs/_reports/community-acquired-heroes/model-delivery-summary.json",
+    "sha256": "65c85ce0d31aafaa7aa0b080eee7640573952f8783c48ec81bd7711020c4c866",
+    "bytes": 39409
+  },
+  "currentContractPins": [
+    {
+      "path": "packages/shared/src/content/modelUpload/normalize.ts",
+      "sha256": "6fecf94e6fd034afd6ae95d69fb2f55f87ce8b422121f4101896116026d12141",
+      "bytes": 15995
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/inspect.ts",
+      "sha256": "95f15b3098d4baaad45e282f927978476b685a1a2116dc032838eb7c8215e0ad",
+      "bytes": 4325
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/glb.ts",
+      "sha256": "daaa10f7e0d9caa47fbb394bb920af9ad6bca8aa53dcc5f7f96eddc4a816598a",
+      "bytes": 9926
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/heroModel.ts",
+      "sha256": "be545dddd055d1674bfec7123ce923951105170984a511d4f467474b2791b38c",
+      "bytes": 6641
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/budget.ts",
+      "sha256": "9601a77659df93610d8c047f811b0cf065f5ebf935aab399e7d7eccf8635e25f",
+      "bytes": 6355
+    },
+    {
+      "path": "apps/content-api/src/resizeImage.node.ts",
+      "sha256": "a14c240d751e0c2b32f2d359e51000222b90f33f5d4719854785cd9d906dbc57",
+      "bytes": 1894
+    }
+  ],
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "records": [
+    {
+      "id": "historical-astralym-7bc2fa3f8",
+      "character": "astralym",
+      "nameZh": "枯星龍",
+      "identityIds": [
+        "community:palworld-astralym"
+      ],
+      "historicalAcceptanceId": "acquired-astralym",
+      "historicalModelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+      "gitPath": "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+      "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+      "bytes": 3889188,
+      "byteIdenticalToHistoricalGitBlob": true,
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "FarSkill_Action",
+        "cast": "HaloBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "fallbacks": [
+        {
+          "state": "death",
+          "clip": "Damage",
+          "reason": "Source contains no native Death clip; explicitly authorized shared hurt/death fallback, not generated animation"
+        },
+        {
+          "state": "run",
+          "clip": "Walk",
+          "reason": "Source provides Walk; no Run clip"
+        }
+      ],
+      "khronosIssues": {
+        "numErrors": 0,
+        "numWarnings": 10,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/145"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/0"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/1"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/2"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/3"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/4"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/5"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/6"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/7"
+          }
+        ],
+        "truncated": false
+      },
+      "ggdInspection": {
+        "triangles": 23928,
+        "drawPrimitives": 3,
+        "textureCount": 8,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Idle",
+            "duration": 7.666666507720947,
+            "channels": 435
+          },
+          {
+            "index": 1,
+            "name": "Walk",
+            "duration": 4.333333492279053,
+            "channels": 435
+          },
+          {
+            "index": 2,
+            "name": "FarSkill_Action",
+            "duration": 0.4166666567325592,
+            "channels": 435
+          },
+          {
+            "index": 3,
+            "name": "HaloBeam_Loop",
+            "duration": 1.6666666269302368,
+            "channels": 435
+          },
+          {
+            "index": 4,
+            "name": "Damage",
+            "duration": 1.875,
+            "channels": 435
+          }
+        ],
+        "clipCount": 5,
+        "skinCount": 1,
+        "joints": [
+          145
+        ],
+        "budget": {
+          "errors": [],
+          "warnings": [
+            "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+            "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+          ]
+        },
+        "uploadReport": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 10,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [
+              {
+                "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+                "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+                "severity": 1,
+                "pointer": "/meshes/0/primitives/0/material"
+              },
+              {
+                "code": "NODE_SKINNED_MESH_NON_ROOT",
+                "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/145"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/0"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/1"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/2"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/3"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/4"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/5"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/6"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/7"
+              }
+            ],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "glTF-Transform v4.4.1",
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 3447424
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/1",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/2",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/3",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/4",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/5",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/6",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/7",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 5,
+            "materialCount": 3,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 3,
+            "totalVertexCount": 16097,
+            "totalTriangleCount": 23928,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        }
+      },
+      "historicalMetrics": {
+        "triangles": 23928,
+        "drawPrimitives": 3,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 58740,
+            "sha256": "76d2cb4504d8d3a9c7d069cf715a6c2005801113837cd2a99801589cc7e463f2"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 78518,
+            "sha256": "2d0e34c6b8e81c89944f2564c6382fceacff6df4944ed831953468b238f3f0ec"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 115516,
+            "sha256": "543d95ad12a1e0c88038c9bc674f6b028d524b2c3f11df0544f9f0ee4623e67a"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 22529,
+            "sha256": "64c5915d1ed731772075679670a658e8c2b1b19e9a677bacc76a4a06963b57d0"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 28378,
+            "sha256": "1b2df6654c29d5a256da5263502097720d2fec49488575253a0653d38ad1266d"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 28378,
+            "sha256": "1b2df6654c29d5a256da5263502097720d2fec49488575253a0653d38ad1266d"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 39305,
+            "sha256": "06bd38f03db98e1d34a0244d0442c51a35dbed278e951fedce5153bc9c66d40a"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 39305,
+            "sha256": "06bd38f03db98e1d34a0244d0442c51a35dbed278e951fedce5153bc9c66d40a"
+          }
+        ]
+      },
+      "historicalWarnings": [
+        "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+        "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+      ],
+      "historicalMaterialLimitations": [
+        "Source PBR texture bindings included. Unreal PalLit color corrections, subsurface, jewel and clearcoat shader behaviour not recreated.",
+        "No geometry decimation; original full-resolution sources and all original motions retained in intake/tmp; runtime contains selected clips and textures resized by existing optimizer."
+      ],
+      "currentReplacement": {
+        "modelDocumentGitPath": "content/models/community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59.json",
+        "modelDocumentSha256": "48d5fdee4d9b5f2d3126da0263c3e30de76a0f1c8cd6e5f612dd3aa8814601f1",
+        "glbGitPath": "content/assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+        "glbSha256": "39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398",
+        "glbBytes": 3876004
+      },
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "heroDefinitionInvented": false,
+      "deploymentVerified": false
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8",
+      "character": "jetragon",
+      "nameZh": "空渦龍",
+      "identityIds": [
+        "community:palworld-jetragon"
+      ],
+      "historicalAcceptanceId": "acquired-jetragon",
+      "historicalModelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+      "gitPath": "content/assets/models/community/0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6.glb",
+      "sha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+      "bytes": 3224424,
+      "byteIdenticalToHistoricalGitBlob": true,
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "FarSkill_Action",
+        "cast": "JumpBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "fallbacks": [
+        {
+          "state": "death",
+          "clip": "Damage",
+          "reason": "Source contains no native Death clip; explicitly authorized shared hurt/death fallback, not generated animation"
+        }
+      ],
+      "khronosIssues": {
+        "numErrors": 0,
+        "numWarnings": 10,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/2/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/75"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/0"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/1"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/2"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/3"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/4"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/5"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/6"
+          }
+        ],
+        "truncated": false
+      },
+      "ggdInspection": {
+        "triangles": 8468,
+        "drawPrimitives": 3,
+        "textureCount": 7,
+        "clips": [
+          {
+            "index": 0,
+            "name": "Idle",
+            "duration": 7.5,
+            "channels": 225
+          },
+          {
+            "index": 1,
+            "name": "Run",
+            "duration": 1,
+            "channels": 225
+          },
+          {
+            "index": 2,
+            "name": "FarSkill_Action",
+            "duration": 0.4166666567325592,
+            "channels": 225
+          },
+          {
+            "index": 3,
+            "name": "JumpBeam_Loop",
+            "duration": 1,
+            "channels": 225
+          },
+          {
+            "index": 4,
+            "name": "Damage",
+            "duration": 1.875,
+            "channels": 225
+          }
+        ],
+        "clipCount": 5,
+        "skinCount": 1,
+        "joints": [
+          75
+        ],
+        "budget": {
+          "errors": [],
+          "warnings": []
+        },
+        "uploadReport": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 10,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [
+              {
+                "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+                "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+                "severity": 1,
+                "pointer": "/meshes/0/primitives/0/material"
+              },
+              {
+                "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+                "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+                "severity": 1,
+                "pointer": "/meshes/0/primitives/2/material"
+              },
+              {
+                "code": "NODE_SKINNED_MESH_NON_ROOT",
+                "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/75"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/0"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/1"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/2"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/3"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/4"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/5"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/6"
+              }
+            ],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "glTF-Transform v4.4.1",
+            "extensionsUsed": [
+              "KHR_materials_emissive_strength"
+            ],
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 3006836
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/1",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/2",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/3",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/4",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/5",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              },
+              {
+                "pointer": "/images/6",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgb",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 5,
+            "materialCount": 3,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 3,
+            "totalVertexCount": 5193,
+            "totalTriangleCount": 8468,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        }
+      },
+      "historicalMetrics": {
+        "triangles": 8468,
+        "drawPrimitives": 3,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 72319,
+            "sha256": "c69a683ff2e5592b6ee1ff07a92a51810be95fe06f2eed2875819122d6761184"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 86551,
+            "sha256": "c61c95bfa8dd2a386752076391e22caf07837c7e218f4b798039845ff5ac8b49"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 85507,
+            "sha256": "488398be607f3105ca84fc8dbb24a5f6bbc463b464b7b1e40c6cec63c4a8933a"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 27277,
+            "sha256": "5e99ec74bfa1c988bee53c3d25a9b8c88b2e113f51fcd50fc98a196cd8c240a6"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 9006,
+            "sha256": "295039d2a0f86657c71b94eafcd528dc4f6f7ab186f4f13a942145c0e5a33b72"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 70417,
+            "sha256": "780f4d1fe390af97d8707d46b31bd6cc1a082c65fac36398c1e036af17e33bc8"
+          },
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 25242,
+            "sha256": "2c349da8adcedfe7efa14cc2389017ae616e3457185ba66b31dc7d70f07c1f8b"
+          }
+        ]
+      },
+      "historicalWarnings": [],
+      "historicalMaterialLimitations": [
+        "Source PBR texture bindings included. Unreal PalLit color corrections, subsurface, jewel and clearcoat shader behaviour not recreated.",
+        "No geometry decimation; original full-resolution sources and all original motions retained in intake/tmp; runtime contains selected clips and textures resized by existing optimizer."
+      ],
+      "currentReplacement": {
+        "modelDocumentGitPath": "content/models/community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb.json",
+        "modelDocumentSha256": "03306a9ea0e4bf00ad912d32616a9edc7cdb15d4699a25d9dc9b58744b437ed7",
+        "glbGitPath": "content/assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+        "glbSha256": "deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a",
+        "glbBytes": 3221852
+      },
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "heroDefinitionInvented": false,
+      "deploymentVerified": false
+    },
+    {
+      "id": "historical-kita-kita-7bc2fa3f8",
+      "character": "oyaji",
+      "nameZh": "吉他吉他老伯",
+      "identityIds": [
+        "mba:Chara14"
+      ],
+      "historicalAcceptanceId": "acquired-kita-kita",
+      "historicalModelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+      "gitPath": "content/assets/models/community/2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c.glb",
+      "sha256": "2bbff051c41157f9c9abdf9e9ca6c0b930e15687380f109eefdf208af5d4eb8c",
+      "bytes": 373464,
+      "byteIdenticalToHistoricalGitBlob": true,
+      "selectedClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "fallbacks": [
+        {
+          "state": "death",
+          "sourceClip": "D-Down",
+          "reason": "Existing native knockdown animation fallback; not a native death clip"
+        }
+      ],
+      "khronosIssues": {
+        "numErrors": 0,
+        "numWarnings": 21,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/0/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/0/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/0/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/1/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/1/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/1/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/2/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/2/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/2/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/3/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/3/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/3/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/4/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/4/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/4/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/5/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/5/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/5/channels/2/target/path"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/1"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+            "message": "Local transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/1"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/0"
+          }
+        ],
+        "truncated": false
+      },
+      "ggdInspection": {
+        "triangles": 1202,
+        "drawPrimitives": 1,
+        "textureCount": 1,
+        "clips": [
+          {
+            "index": 0,
+            "name": "wait",
+            "duration": 0.800000011920929,
+            "channels": 54
+          },
+          {
+            "index": 1,
+            "name": "F-Move",
+            "duration": 0.5333333611488342,
+            "channels": 54
+          },
+          {
+            "index": 2,
+            "name": "attack_01",
+            "duration": 0.2666666805744171,
+            "channels": 54
+          },
+          {
+            "index": 3,
+            "name": "sp01_01",
+            "duration": 0.2666666805744171,
+            "channels": 54
+          },
+          {
+            "index": 4,
+            "name": "Damage-1",
+            "duration": 0.5333333611488342,
+            "channels": 54
+          },
+          {
+            "index": 5,
+            "name": "D-Down",
+            "duration": 0.800000011920929,
+            "channels": 54
+          }
+        ],
+        "clipCount": 6,
+        "skinCount": 1,
+        "joints": [
+          17
+        ],
+        "budget": {
+          "errors": [],
+          "warnings": []
+        },
+        "uploadReport": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 21,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/0/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/0/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/0/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/1/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/1/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/1/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/2/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/2/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/2/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/3/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/3/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/3/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/4/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/4/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/4/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/5/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/5/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/5/channels/2/target/path"
+              },
+              {
+                "code": "NODE_SKINNED_MESH_NON_ROOT",
+                "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/1"
+              },
+              {
+                "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+                "message": "Local transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/1"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/0"
+              }
+            ],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "Open Asset Import Library (assimp v6.0.0)",
+            "extensionsUsed": [
+              "KHR_materials_unlit"
+            ],
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 197516
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 6,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 929,
+            "totalTriangleCount": 1202,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        }
+      },
+      "historicalMetrics": {
+        "triangles": 1202,
+        "drawPrimitives": 1,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 12041,
+            "sha256": "6cc0cb6d1c625e08212ec2bdea0009efb1439eaae65eebbbc94e6cf91e674545"
+          }
+        ]
+      },
+      "historicalWarnings": [],
+      "historicalMaterialLimitations": null,
+      "currentReplacement": {
+        "modelDocumentGitPath": "content/models/community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e.json",
+        "modelDocumentSha256": "ca50eea4640a18c81718812b04a83def8da08192a72f43f88e096c15feadce92",
+        "glbGitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+        "glbSha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
+        "glbBytes": 373212
+      },
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "heroDefinitionInvented": false,
+      "deploymentVerified": false
+    },
+    {
+      "id": "historical-lord-nightmares-7bc2fa3f8",
+      "character": "lord-of-nightmares",
+      "nameZh": "金色魔王／惡夢之王",
+      "identityIds": [
+        "mba:Chara13"
+      ],
+      "historicalAcceptanceId": "acquired-lord-nightmares",
+      "historicalModelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+      "gitPath": "content/assets/models/community/d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8.glb",
+      "sha256": "d5cf4ff0969a21787bfcdd1fabf787339e91c37e266231602004fc2edb5993c8",
+      "bytes": 695600,
+      "byteIdenticalToHistoricalGitBlob": true,
+      "selectedClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "maryokudan_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "fallbacks": [
+        {
+          "state": "death",
+          "sourceClip": "D-Down",
+          "reason": "Existing native knockdown animation fallback; not a native death clip"
+        }
+      ],
+      "khronosIssues": {
+        "numErrors": 0,
+        "numWarnings": 21,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/0/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/0/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/0/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/1/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/1/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/1/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/2/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/2/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/2/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/3/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/3/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/3/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/4/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/4/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/4/channels/2/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/5/channels/0/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/5/channels/1/target/path"
+          },
+          {
+            "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+            "message": "Animated TRS properties will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/animations/5/channels/2/target/path"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/1"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+            "message": "Local transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/1"
+          },
+          {
+            "code": "IMAGE_FEATURES_UNSUPPORTED",
+            "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+            "severity": 1,
+            "pointer": "/images/0"
+          }
+        ],
+        "truncated": false
+      },
+      "ggdInspection": {
+        "triangles": 3274,
+        "drawPrimitives": 1,
+        "textureCount": 1,
+        "clips": [
+          {
+            "index": 0,
+            "name": "wait",
+            "duration": 1.0666667222976685,
+            "channels": 96
+          },
+          {
+            "index": 1,
+            "name": "F-Move",
+            "duration": 0.5333333611488342,
+            "channels": 72
+          },
+          {
+            "index": 2,
+            "name": "maryokudan_01",
+            "duration": 0.2666666805744171,
+            "channels": 72
+          },
+          {
+            "index": 3,
+            "name": "sp01_01",
+            "duration": 0.800000011920929,
+            "channels": 72
+          },
+          {
+            "index": 4,
+            "name": "Damage-1",
+            "duration": 0.5333333611488342,
+            "channels": 72
+          },
+          {
+            "index": 5,
+            "name": "D-Down",
+            "duration": 0.800000011920929,
+            "channels": 72
+          }
+        ],
+        "clipCount": 6,
+        "skinCount": 1,
+        "joints": [
+          31
+        ],
+        "budget": {
+          "errors": [],
+          "warnings": []
+        },
+        "uploadReport": {
+          "mimeType": "model/gltf-binary",
+          "validatorVersion": "2.0.0-dev.3.10",
+          "issues": {
+            "numErrors": 0,
+            "numWarnings": 21,
+            "numInfos": 0,
+            "numHints": 0,
+            "messages": [
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/0/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/0/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/0/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/1/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/1/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/1/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/2/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/2/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/2/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/3/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/3/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/3/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/4/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/4/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/4/channels/2/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/5/channels/0/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/5/channels/1/target/path"
+              },
+              {
+                "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+                "message": "Animated TRS properties will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/animations/5/channels/2/target/path"
+              },
+              {
+                "code": "NODE_SKINNED_MESH_NON_ROOT",
+                "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/1"
+              },
+              {
+                "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+                "message": "Local transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/1"
+              },
+              {
+                "code": "IMAGE_FEATURES_UNSUPPORTED",
+                "message": "Image contains unsupported features like non-default colorspace information, non-square pixels, or animation.",
+                "severity": 1,
+                "pointer": "/images/0"
+              }
+            ],
+            "truncated": false
+          },
+          "info": {
+            "version": "2.0",
+            "generator": "Open Asset Import Library (assimp v6.0.0)",
+            "extensionsUsed": [
+              "KHR_materials_unlit"
+            ],
+            "resources": [
+              {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 438640
+              },
+              {
+                "pointer": "/images/0",
+                "mimeType": "image/png",
+                "storage": "buffer-view",
+                "image": {
+                  "width": 256,
+                  "height": 256,
+                  "format": "rgba",
+                  "primaries": "srgb",
+                  "transfer": "srgb",
+                  "bits": 8
+                }
+              }
+            ],
+            "animationCount": 6,
+            "materialCount": 1,
+            "hasMorphTargets": false,
+            "hasSkins": true,
+            "hasTextures": true,
+            "hasDefaultScene": true,
+            "drawCallCount": 1,
+            "totalVertexCount": 2740,
+            "totalTriangleCount": 3274,
+            "maxUVs": 1,
+            "maxInfluences": 4,
+            "maxAttributes": 5
+          }
+        }
+      },
+      "historicalMetrics": {
+        "triangles": 3274,
+        "drawPrimitives": 1,
+        "textures": [
+          {
+            "width": 256,
+            "height": 256,
+            "bytes": 32182,
+            "sha256": "42c39fb097d0463d113056a9ceb272bf2b3d7644f19c4081247eaa4f99cde6a7"
+          }
+        ]
+      },
+      "historicalWarnings": [],
+      "historicalMaterialLimitations": null,
+      "currentReplacement": {
+        "modelDocumentGitPath": "content/models/community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223.json",
+        "modelDocumentSha256": "04370d24e5e62d1a50af2e0f15e62752a022eecd4f5cb52566512022d400e43e",
+        "glbGitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+        "glbSha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
+        "glbBytes": 695020
+      },
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "heroDefinitionInvented": false,
+      "deploymentVerified": false
+    }
+  ],
+  "allRecoveredBytesMatchHistoricalGit": true,
+  "allKhronosErrorsZero": true,
+  "allCurrentGgdBudgetErrorsZero": true,
+  "scope": "Exact historical GLB recovery plus current structural and budget validation. Models remain independent historical body components until a real GGD hero definition, immutable option registration, runtime switching, visual review and deployment are completed."
+}

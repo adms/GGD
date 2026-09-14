@@ -90,7 +90,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "大",
       "castTimeTier": "小"
     },
@@ -267,7 +267,7 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
@@ -296,7 +296,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "cooldownTier": "大",
       "template": {
         "ref": "tpl-buff-self",

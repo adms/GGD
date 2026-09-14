@@ -552,6 +552,7 @@ lines too, and `imported` had two passing mentions about unrelated props.
 | `assets/models/ou99/` | 129 | 2 | Third-party WC3 models obtained from the **ou99.com** forum. Per-thread provenance (149 threads: thread id, title, preview, upload date) is recorded in `docs/ou99模組metadata.md`. |
 | `assets/models/ou99/versions/` | 54 | 47 | Pinned/frozen copies of the above, kept so a hero can roll back to the exact model it shipped with. |
 | `assets/models/community/` | 75 | 45 | Models contributed through the community hero forge and uploaded via the editor. Each is content-addressed (`community.body.<sha>`). |
+| `assets/models/community/versions/` | 180 | 36 | Frozen rollback copies of community and integrated-library bodies. The 180 model docs resolve to 126 distinct files; 36 are current bodies and 97 occur in rollback lists. Source site, author, acquisition route and known rights status are recorded per candidate in `materials/asset-library/current-resources.json` and the hero-model-library indexes. |
 | `assets/models/imported/` | 140 | 54 | Assets extracted from the original GoGoDie Warcraft III custom map — the same provenance as the rest of the w3x import. |
 | `assets/models/imported/versions/` | 2 | 0 | Frozen copies of the above. |
 | `models/champions/versions/` | 3 | 0 | Frozen copies of the first-party champion models credited under **Characters** above — same rights, pinned bytes. |
@@ -561,6 +562,14 @@ stated them.** The models were obtained by the repo owner from a forum that char
 in site currency (元宝). Writing a licence claim we cannot support would be worse
 than writing nothing — this file's job is to record provenance truthfully, and an
 invented terms line would be a claim this project cannot stand behind.
+
+The `community/versions/` directory is likewise a **mixed-provenance archive**, not a
+single licensed pack. Files arrived through owner-provided submissions, editor uploads,
+and individually recorded public/community source workflows. Rights-holder permission
+or redistribution terms are retained where a source record states them; an unstated
+licence remains **unknown** and is not upgraded to CC0, CC-BY, or original-game status.
+The per-candidate indexes name the associated hero or leave it pending identity/design,
+so a frozen file is never treated as a newly approved default model by this directory row.
 
 ⇒ **Pending:** one sentence from the owner (the purchaser) on how this batch may be
 used and redistributed. Until then this section states only what is measurable:

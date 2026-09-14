@@ -8,16 +8,16 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    150,
-    150,
-    150
+    150.0,
+    150.0,
+    150.0
   ],
-  "range": 12,
+  "range": 12.0,
   "radiusTier": "極小",
   "targetsEnemies": true,
   "effects": [
@@ -37,7 +37,7 @@
           }
         ]
       },
-      "radius": 3,
+      "radius": 3.0,
       "radiusTier": "極小",
       "includeOrigin": true
     },
@@ -66,7 +66,7 @@
           }
         ]
       },
-      "radius": 3,
+      "radius": 3.0,
       "radiusTier": "極小",
       "includeOrigin": true,
       "modelFx": {
@@ -74,14 +74,14 @@
         "preset": "tpl-locust-strike",
         "modelKey": "w3x.stock.monsoonbolttarget"
       },
-      "castTimeSec": 1.0
+      "castTimeSec": 1
     }
   },
   "icon": "assets/icons/abilities/godie-e00w.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "cooldownTier": "中",
   "manaCostTier": "小",
+  "castTimeTier": "極大",
   "rangeTier": "極大",
-  "castTimeSec": 1.0,
-  "castTimeTier": "極大"
+  "castTimeSec": 1
 }

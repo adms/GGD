@@ -1,0 +1,232 @@
+{
+  "schema": "ggd-jump-force-dai-extraction@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "sourceGame": "JUMP FORCE",
+  "platform": "Windows (Steam)",
+  "nativeCharacterId": "chr0430",
+  "characterNameZh": "小呆／達伊",
+  "originalName": "Dai",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1",
+  "counts": {
+    "nativePackages": 1942,
+    "modelGltf": 11,
+    "modelFiles": 22,
+    "texturePng": 36,
+    "textureFiles": 36,
+    "allFrozenFiles": 2000
+  },
+  "bytes": {
+    "nativePackages": 217380432,
+    "modelExports": 5811795,
+    "textureExports": 75828502,
+    "allFrozenFiles": 299020729
+  },
+  "extensions": {
+    ".uasset": 971,
+    ".uexp": 971
+  },
+  "modelEvidence": {
+    "modelCount": 11,
+    "allSkinned": true,
+    "jointCounts": [
+      159
+    ],
+    "totalAnimationCount": 0,
+    "models": [
+      {
+        "path": "Character/chr0430/chr0430_damage_A.gltf",
+        "bytes": 31574,
+        "sha256": "6e74c740da690fbe73f57916f40d8e7b3e54bc16637ec0eece0b5f91bd4fdffb",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 2,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 2
+      },
+      {
+        "path": "Character/chr0430/chr0430_damage_AB.gltf",
+        "bytes": 35642,
+        "sha256": "f0fbe85eaa4f5c1b693d713c4575b8f388ab9edd0ced36f70b53ad8ce8ec80ed",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 4,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 4
+      },
+      {
+        "path": "Character/chr0430/chr0430_damage_B.gltf",
+        "bytes": 33607,
+        "sha256": "3148e912e8f991d7b33396530fb33e2890a52efa2e998a8d4b257f76a3dd3d4d",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 3,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 3
+      },
+      {
+        "path": "Character/chr0430/chr0430_damage_C.gltf",
+        "bytes": 39688,
+        "sha256": "5259f98cabc67310b9f1b7dbbfa93a1e3a24f8a7bb1b5b9e9f9e0f3a9bc781c9",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 6,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 6
+      },
+      {
+        "path": "Character/chr0430/chr0430_equipment1.gltf",
+        "bytes": 29612,
+        "sha256": "53cb05562ca8aa1ccef3d405f136359f7ee5643b69e3c47606282636bf9356d6",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 1,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 1
+      },
+      {
+        "path": "Character/chr0430/chr0430_equipment2.gltf",
+        "bytes": 31602,
+        "sha256": "8da573ff4b0d539d07c4d9981d87b2def5b1e69c1ea4f43c20c592ea6300a964",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 2,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 2
+      },
+      {
+        "path": "Character/chr0430/chr0430_form0.gltf",
+        "bytes": 37617,
+        "sha256": "57e1ed285b0d8e6e99d49d9815b357336b98f9fa6dbf8270300a2bca9252e506",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 5,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 5
+      },
+      {
+        "path": "Character/chr0430/chr0430_form0_damage_AB.gltf",
+        "bytes": 33594,
+        "sha256": "8ab795dc0a9d789de1230cc13f414157bd5698fb8f3a4e236d110ea924a7d1df",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 3,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 3
+      },
+      {
+        "path": "Character/chr0430/chr0430_form0_damage_C.gltf",
+        "bytes": 29619,
+        "sha256": "df149c05a4fd9011a30ffe3167257c795d35c7daf1ebd91a9f0cc28b87bd540d",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 1,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 1
+      },
+      {
+        "path": "Character/chr0430/chr0430_form0_head.gltf",
+        "bytes": 37692,
+        "sha256": "ce2eb948fcc5784286ab08acbc545bc7da207e591f4699d8ab2e8d3e0eccd427",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 5,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 5
+      },
+      {
+        "path": "Character/chr0430/chr0430_form1_head.gltf",
+        "bytes": 41724,
+        "sha256": "d0791d00f5fc7a81d44d07cedebf447afb46d60ac8f9849ec623d595afccb0de",
+        "sceneCount": 1,
+        "nodeCount": 160,
+        "meshCount": 1,
+        "primitiveCount": 7,
+        "skinCount": 1,
+        "jointCounts": [
+          159
+        ],
+        "animationCount": 0,
+        "materialCount": 7
+      }
+    ]
+  },
+  "filesIndex": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/files.jsonl.gz",
+    "bytes": 98644,
+    "sha256": "16eaf9ce10789a454eab83bf7af066f3772e09e699e773292c8df72b610e15f0"
+  },
+  "states": {
+    "sourceFound": true,
+    "downloaded": true,
+    "extracted": true,
+    "gameConfigurationPathsIndexed": true,
+    "gameConfigurationPackagesExtracted": false,
+    "gameConfigurationPackagesParsed": false,
+    "convertedToGgd": false,
+    "visuallyAccepted": false,
+    "registered": false,
+    "backendSelectable": false,
+    "productionDeployed": false
+  },
+  "gaps": [
+    "GGD GLB composition and material binding are not complete.",
+    "No native animation clips are present in the current model export.",
+    "Character and skill configuration paths are indexed separately, but their 40 patch-selected files are absent from this frozen extraction.",
+    "VFX and audio packages are extracted but not decoded or event-bound.",
+    "Backend registration and production switch verification are pending."
+  ]
+}

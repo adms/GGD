@@ -1,0 +1,288 @@
+{
+  "schema": "ggd.vearn-priority-source-audit@1",
+  "generatedAt": "2026-09-10T18:37:47.050974+00:00",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-vearn-priority-source-audit",
+  "scope": "Vearn old + young true body; bounded normal public-source round; read-only central repo",
+  "character": {
+    "nameZh": "巴恩大魔王",
+    "name": "Vearn",
+    "nameJa": "バーン",
+    "workZh": "勇者鬥惡龍 達伊的大冒險／神龍之謎",
+    "heroIds": [
+      "godie-ubal"
+    ],
+    "notAliases": [
+      "Baran",
+      "巴蘭",
+      "バラン"
+    ],
+    "forms": [
+      {
+        "form": "elderly",
+        "nameZh": "老年巴恩",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "gameInclusion": "Infinity Strash official Vearn announcement plus actual old-form gameplay screenshot",
+        "acquiredNativeModel": false,
+        "acquiredNativeMotion": false,
+        "acquiredNativeAudio": false,
+        "sourceLeads": [
+          "infinity-strash-official-tgs-vearn",
+          "infinity-strash-vearn-gameplay-guide"
+        ]
+      },
+      {
+        "form": "young-true-body",
+        "nameZh": "年輕真身巴恩",
+        "heroIds": [
+          "godie-ubal"
+        ],
+        "gameInclusion": "Not established for Infinity Strash. DQ Tact public data page confirms character listing only, no mesh.",
+        "acquiredNativeModel": false,
+        "acquiredNativeMotion": false,
+        "acquiredNativeAudio": false,
+        "sourceLeads": [
+          "dqtact-public-repository-vearn",
+          "lead-vearn-mmd-sketchfab-a264ddd"
+        ]
+      }
+    ]
+  },
+  "heroDefinitionEvidence": {
+    "file": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-ubal.json",
+      "bytes": 8370,
+      "sha256": "8f3262619025857b943d73548b0bea3fa06f1d9b8a54c29a1a6092b386104713"
+    },
+    "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
+    "transform": null,
+    "QDescription": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n召喚魔界火焰形成像鷹一樣的灼熱衝擊波重創敵人，是巴恩的得意技，但是在老年姿態施展會有些慢，威力也相當程度的下降，造成一直線敵人{{dmg}}點傷害。",
+    "RDescription": "[輔助]\n{{cd}}秒冷卻時間\n\n召喚巴恩大魔王封印的年輕肉體並將靈魂合而為一，隨著技能等級提升可以使用的招式也將變多，變身後各方面的能力也會隨著技能等級提升而上升，持續35秒。",
+    "note": "R prose explicitly requires sealed youthful body, but champion transform metadata is null. No new heroId invented; skill prose is not proof of implemented model swap."
+  },
+  "existingModelProxies": [
+    {
+      "sourceId": "ou99:457883",
+      "sourceCharacter": "牛魔角仙人男",
+      "identityStatus": "intentional-similar-proxy",
+      "evidence": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_457883.glb",
+        "bytes": 1265860,
+        "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912"
+      },
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack - 1",
+        "death": "Death",
+        "hurt": "Stand Ready",
+        "cast": "Attack Slam"
+      },
+      "notVearnExactIdentity": true
+    },
+    {
+      "sourceId": "ou99:472035",
+      "sourceCharacter": "WOW兽人祭祀法师",
+      "identityStatus": "intentional-similar-proxy",
+      "evidence": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_472035.glb",
+        "bytes": 2096040,
+        "sha256": "7724a3039a62b00df4754f0fb67fb932b419cd2f750ca7101d5bd0a9ce40ce84"
+      },
+      "clipMap": {
+        "idle": "Stand",
+        "run": "Walk",
+        "attack": "Attack Spell",
+        "death": "Death",
+        "hurt": "Stand Ready",
+        "cast": "Attack Spell"
+      },
+      "notVearnExactIdentity": true
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/champions/godie-ubal.json",
+      "bytes": 8370,
+      "sha256": "8f3262619025857b943d73548b0bea3fa06f1d9b8a54c29a1a6092b386104713"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/workflow-model-options.json",
+      "bytes": 145496,
+      "sha256": "3c27a528725cad7bd67476382af14d0200043c90a5f0769d5f5c2665fc3a20e9"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/download-sources.json",
+      "bytes": 1880279,
+      "sha256": "ba82e2f827981368f46ebf07b69e71975958d542a4242ae03d7d3de009d72271"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-body-source-audit-20260910/source-report.json",
+      "bytes": 14901,
+      "sha256": "88757d33b455fcdfe55a2d1b03edb9e8e62f4796084aef5ab496600efa8f3521"
+    }
+  ],
+  "sourceRoutes": [
+    {
+      "id": "infinity-strash-official-tgs-vearn",
+      "urls": [
+        "https://steamcommunity.com/app/1895810/allnews/",
+        "https://steamcommunity.com/gid/103582791473687350/announcements/detail/3703704711972736125",
+        "https://www.square-enix-games.com/en_US/home/infinity-strash-dragon-quest-adventure-dai-out-now"
+      ],
+      "status": "official-inclusion-evidence-only",
+      "findings": "Publisher announcement dated 2023-09-27 names Vearn among TGS game reveals. Story coverage alone cannot imply absence of a Temple of Recollection bonus boss. Public pages provide no character package. Individual Steam announcement web open was non-retryable URL-safety rejection; not retried via shell/alternate endpoint. All-news page independently read successfully before that rejection.",
+      "evidencePaths": [
+        "evidence/steam-official-news.html",
+        "evidence/square-enix-story-coverage.html"
+      ],
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "infinity-strash-vearn-gameplay-guide",
+      "urls": [
+        "https://www.dragonquest-fan.com/forum/index.php?subjectID=14968",
+        "https://www.dragonquest-fan.com/imgs/userfiles/1/Infinity%20Strash_vearn.jpg"
+      ],
+      "status": "screenshot-only",
+      "author": "Poppu, Dragon Quest Fan administrator",
+      "published": "2023-10-08",
+      "findings": "Guide explains Vearn as Temple of Recollection boss. Downloaded and visually inspected screenshot: old man with wrinkles, long white hair/beard, horned crown, blue robe and staff. Confirms elderly Vearn presentation, not young true-body mesh. Screenshot is evidence only, not reusable model texture.",
+      "evidencePaths": [
+        "evidence/dragonquest-fan-vearn-boss.jpg"
+      ],
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "gematsu-tgs-vearn-announcement",
+      "urls": [
+        "https://www.gematsu.com/2023/09/infinity-strash-dragon-quest-the-adventure-of-dai-adds-dark-king-vearn-boss-battle"
+      ],
+      "status": "article-only-image-403",
+      "published": "2023-09-23",
+      "author": "Sal Romano",
+      "findings": "Reports official TGS announcement placing Vearn in deepest Temple of Recollection. Public image URL returned actual HTTP403; stopped with no alternate image size/host attempt. No game/stream downloaded.",
+      "blockedResource": "https://www.gematsu.com/wp-content/uploads/2023/09/Infinity-Strash-TGS-Stage_09-23-23_001-320x180.jpg",
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "dqtact-public-repository-vearn",
+      "urls": [
+        "https://dq-tact.github.io/units/truedarkkingvearn.html",
+        "https://api.github.com/repos/DQ-Tact/DQ-Tact.github.io/git/trees/main?recursive=1"
+      ],
+      "status": "complete-tree-has-no-vearn-asset-package",
+      "repositoryTreeSha": "ca3cfd630543f4c62990bcbde727b0e10126f2ef",
+      "truncated": false,
+      "treeEntryCount": 6185,
+      "characterPaths": [
+        "images/DarkKingVearn.png",
+        "images/Killvearn.png",
+        "images/Mystvearn.png",
+        "images/TrueDarkKingVearn.png",
+        "units/darkkingvearn.html",
+        "units/killvearn.html",
+        "units/mystvearn.html",
+        "units/truedarkkingvearn.html",
+        "unitscripts/darkkingvearn.js",
+        "unitscripts/killvearn.js",
+        "unitscripts/mystvearn.js",
+        "unitscripts/truedarkkingvearn.js"
+      ],
+      "findings": "Old and True Dark King Vearn appear as data pages, JavaScript stats and PNG portraits. No model, native skeleton/motion, VFX or audio candidate in this tree. Fifteen .clip files are named under images backgrounds/attack icons; they were not downloaded or parsed and are not counted as animation clips. Source directory/file names alone do not prove native 3D game data.",
+      "evidencePaths": [
+        "evidence/dqtact-repository-tree.json",
+        "evidence/dqtact-repository.json",
+        "evidence/dqtact-true-vearn.html"
+      ],
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "cults-vearn-duongkhuong-2254947",
+      "urls": [
+        "https://cults3d.com/en/3d-model/art/vearn-dragon-quest-the-adventure-of-dai-3d-print"
+      ],
+      "status": "paid-not-acquired",
+      "author": "DuongKhuong",
+      "advertised": "US$11; DAU AN RONG THIENG.zip containing 7 STL pieces; no advertised rig or native motion/audio. Form not visually established in this audit.",
+      "findings": "No purchase or download attempted; not a free source.",
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "cults-vearn-thelegend-4601945",
+      "urls": [
+        "https://cults3d.com/en/3d-model/game/vearn-thelegend"
+      ],
+      "status": "paid-ai-sculpt-not-acquired",
+      "author": "theLEGEND",
+      "advertised": "US$1.75; 1 STL, AI assisted design. Form and resemblance unverified.",
+      "findings": "No purchase; not a native game resource and no rig/motion evidence.",
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "creality-vearn-khuongtainang",
+      "urls": [
+        "https://www.crealitycloud.com/es/model-detail/66d70beed164d01a74e934ca"
+      ],
+      "status": "paid-sculpt-no-free-package-established",
+      "author": "KHUONGTAINANG",
+      "findings": "Search listing describes Vearn 3D print; same sculpt author family as DuongKhuong route. No normal free asset URL established; no account/paywall attempt.",
+      "acquiredAssetPayloadCount": 0
+    },
+    {
+      "id": "official-hoshidora-vearn-army-event",
+      "urls": [
+        "https://www.dragonquest.jp/hoshidora/raid_event3/"
+      ],
+      "status": "official-event-page-only",
+      "author": "Square Enix",
+      "published": "2017-12-25 event start",
+      "findings": "Official event page for Vearn army and Sovereign Rock Castle. Page has campaign images, not downloadable character model or sound package. Does not prove both Vearn bodies in this intake.",
+      "evidencePaths": [
+        "evidence/official-hoshidora-vearn-event.html"
+      ],
+      "acquiredAssetPayloadCount": 0
+    }
+  ],
+  "previousBlockedRoutesNotRetried": [
+    {
+      "id": "lead-vearn-mmd-sketchfab-a264ddd",
+      "url": "https://sketchfab.com/3d-models/dragon-quest-mmd-a264ddd01e1a416abd6ec2fd17ab7bf2",
+      "status": "prior-research-only-not-retried",
+      "note": "鯖缶 v0.87, secondary uploader tellgamestory. Author distribution bowlroll.net/up/dl37061 previously non-retryable URL-safety blocked; no bypass. Sketchfab download requires normal author/account route; no public asset archive obtained. Form remains unverified."
+    }
+  ],
+  "actualNewAcquisition": {
+    "acquiredAssetPayloadCount": 0,
+    "assetCounts": {
+      "model": 0,
+      "skeleton": 0,
+      "motion": 0,
+      "vfx": 0,
+      "sfx": 0,
+      "voice": 0,
+      "textures": 0
+    },
+    "modelCandidates": [],
+    "audioFileIndex": [],
+    "defaultEligible": false,
+    "acquisitionStatus": "research-only-no-model-or-audio-package-obtained"
+  },
+  "gameInclusionConclusion": "Infinity Strash contains an elderly Vearn boss despite main-story arc limit. Young true-body inclusion remains unproven. No Vearn body/animation/VFX/audio package acquired this round.",
+  "nextFeasibleAcquisition": "Obtain an author-public unencrypted Infinity Strash Vearn skeletal mesh package and its dependencies, or reuse a user-provided local installation/extraction with authorization. For youthful Vearn, obtain an explicitly identified author model or extracted original-game source; do not reinterpret the two existing unrelated OU99 proxies as exact bodies. No purchase or game-image acquisition performed.",
+  "handoffToOtherAgent": {
+    "target": "ns_models_motion_sources",
+    "daiPublicAttachment": "https://www.patreon.com/file?h=66623597&m=153675691",
+    "page": "https://www.patreon.com/posts/dai-for-g8m-and-66623597",
+    "status": "handed-off-without-download; original web fetch cache-miss only; separate agent owns acquisition"
+  },
+  "restrictionsHonored": [
+    "no central/content/Git/S3 edit",
+    "no paid purchase",
+    "no login,403,URL-safety or DRM bypass",
+    "no unauthorized full game images",
+    "no downloaded game/program executed",
+    "all evidence files distinguished from acquired game assets"
+  ]
+}

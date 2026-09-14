@@ -1,0 +1,856 @@
+{
+  "schema": "ggd.kaiji-conversions-s3-backup@1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1",
+  "includedScopes": [
+    "native-glb",
+    "animated-v1",
+    "runtime-v1",
+    "runtime-v2",
+    "static-webgl-v1",
+    "animated-webgl-v1",
+    "animated-webgl-v2"
+  ],
+  "excludedToolArtifacts": [
+    "animated-webgl-v1/bundle.js",
+    "animated-webgl-v1/chrome-profile/**",
+    "animated-webgl-v1/chrome.log",
+    "animated-webgl-v2/bundle.js",
+    "animated-webgl-v2/chrome.log",
+    "static-webgl-v1/bundle.js",
+    "static-webgl-v1/chrome-profile/**",
+    "static-webgl-v1/chrome.log"
+  ],
+  "outOfScopeRootEntries": [
+    "registration-release"
+  ],
+  "exclusionPolicy": [
+    "chrome-profile/**",
+    "bundle.js",
+    "chrome.log"
+  ],
+  "archive": {
+    "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/kaiji-conversions-20260911/e38d242533e53453e61a8f21b5ed3812af8b2b10754cb84fe3880bd0c40ba0e9.tar.gz",
+    "bytes": 14021399,
+    "sha256": "e38d242533e53453e61a8f21b5ed3812af8b2b10754cb84fe3880bd0c40ba0e9",
+    "memberCount": 92,
+    "uncompressedBytes": 14972061,
+    "format": "gzip-compressed POSIX pax tar",
+    "deterministicSettings": {
+      "sortedMemberPaths": true,
+      "gzipMtime": 0,
+      "gzipFilename": "",
+      "gzipCompression": 9,
+      "memberMtime": 0,
+      "uid": 0,
+      "gid": 0,
+      "mode": "0644",
+      "ownerNames": ""
+    }
+  },
+  "files": [
+    {
+      "path": "animated-v1/animation.json",
+      "archivePath": "kaiji-community-body-v1/animated-v1/animation.json",
+      "bytes": 2721,
+      "sha256": "0ff2f4763888fca07dc2e860e16c63ee9d183d323e42921df78357545bcd973d",
+      "fullGetReadbackSha256": "0ff2f4763888fca07dc2e860e16c63ee9d183d323e42921df78357545bcd973d",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-v1/body.glb",
+      "archivePath": "kaiji-community-body-v1/animated-v1/body.glb",
+      "bytes": 2341236,
+      "sha256": "fd3a30074df4ee1c5a5db9f47c97a21de2db5b6bf4891703fa12ad8beab0fc85",
+      "fullGetReadbackSha256": "fd3a30074df4ee1c5a5db9f47c97a21de2db5b6bf4891703fa12ad8beab0fc85",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-attack-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-attack-0-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-attack-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-attack-100-0.png",
+      "bytes": 135656,
+      "sha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "fullGetReadbackSha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-attack-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-attack-25-0.png",
+      "bytes": 135873,
+      "sha256": "2d9c2c3791e7d4d0dcec5d498e19b459de0901588cc8fd45612146e2970598bf",
+      "fullGetReadbackSha256": "2d9c2c3791e7d4d0dcec5d498e19b459de0901588cc8fd45612146e2970598bf",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-attack-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-attack-50-0.png",
+      "bytes": 129121,
+      "sha256": "fcedcac7a3214ddd991c77d1f38a8e0f2a38fe5c803253e597e1d54cda338e16",
+      "fullGetReadbackSha256": "fcedcac7a3214ddd991c77d1f38a8e0f2a38fe5c803253e597e1d54cda338e16",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-attack-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-attack-75-0.png",
+      "bytes": 134551,
+      "sha256": "264dfaae411c8b40d49428cd82d89cba64c98881946a2d81233f43de0a094248",
+      "fullGetReadbackSha256": "264dfaae411c8b40d49428cd82d89cba64c98881946a2d81233f43de0a094248",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-cast-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-cast-0-0.png",
+      "bytes": 135656,
+      "sha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "fullGetReadbackSha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-cast-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-cast-100-0.png",
+      "bytes": 135656,
+      "sha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "fullGetReadbackSha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-cast-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-cast-25-0.png",
+      "bytes": 141068,
+      "sha256": "c9b282fd45bd69086dfc1605040ab2a1350905eb49f758e13b6da33be9f47069",
+      "fullGetReadbackSha256": "c9b282fd45bd69086dfc1605040ab2a1350905eb49f758e13b6da33be9f47069",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-cast-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-cast-50-0.png",
+      "bytes": 143123,
+      "sha256": "ded1d5a46b097a4f5331924a9b0a320dd335b96b0eec57c4d8e334807e8c86e4",
+      "fullGetReadbackSha256": "ded1d5a46b097a4f5331924a9b0a320dd335b96b0eec57c4d8e334807e8c86e4",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-cast-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-cast-75-0.png",
+      "bytes": 141068,
+      "sha256": "c9b282fd45bd69086dfc1605040ab2a1350905eb49f758e13b6da33be9f47069",
+      "fullGetReadbackSha256": "c9b282fd45bd69086dfc1605040ab2a1350905eb49f758e13b6da33be9f47069",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-death-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-death-0-0.png",
+      "bytes": 135709,
+      "sha256": "78db27cb6af61654f18fb8c352debfc82689d2084f23973f5c9de6bf097c8105",
+      "fullGetReadbackSha256": "78db27cb6af61654f18fb8c352debfc82689d2084f23973f5c9de6bf097c8105",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-death-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-death-100-0.png",
+      "bytes": 154528,
+      "sha256": "be818d3bfe18a800c671e0177273aaa51ce679784540f7d998013ddcf1df1695",
+      "fullGetReadbackSha256": "be818d3bfe18a800c671e0177273aaa51ce679784540f7d998013ddcf1df1695",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-death-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-death-25-0.png",
+      "bytes": 158805,
+      "sha256": "ebe09037636009924e05a818d557c8b44e87ef4dc3e7132e67353a2415149199",
+      "fullGetReadbackSha256": "ebe09037636009924e05a818d557c8b44e87ef4dc3e7132e67353a2415149199",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-death-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-death-50-0.png",
+      "bytes": 168784,
+      "sha256": "5118aa5798c3a9f14ea8ceaf52af82031b1123d7c63499b41da36da95c36ee05",
+      "fullGetReadbackSha256": "5118aa5798c3a9f14ea8ceaf52af82031b1123d7c63499b41da36da95c36ee05",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-death-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-death-75-0.png",
+      "bytes": 159984,
+      "sha256": "d1dd06501ac7aa16b7af46a91de21f6197a7c1e4d0f1201715e33524b4a71f53",
+      "fullGetReadbackSha256": "d1dd06501ac7aa16b7af46a91de21f6197a7c1e4d0f1201715e33524b4a71f53",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-hurt-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-hurt-0-0.png",
+      "bytes": 135656,
+      "sha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "fullGetReadbackSha256": "8253dbfff240aebf626f730b70b5dec1abb449a7b28a2d95da72775a7210f9f5",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-hurt-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-hurt-100-0.png",
+      "bytes": 135709,
+      "sha256": "78db27cb6af61654f18fb8c352debfc82689d2084f23973f5c9de6bf097c8105",
+      "fullGetReadbackSha256": "78db27cb6af61654f18fb8c352debfc82689d2084f23973f5c9de6bf097c8105",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-hurt-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-hurt-25-0.png",
+      "bytes": 139916,
+      "sha256": "b1c143c8e1fdf0d80d488d2833bc1645f08a1848820631ff4ff78fbd16ac2a8f",
+      "fullGetReadbackSha256": "b1c143c8e1fdf0d80d488d2833bc1645f08a1848820631ff4ff78fbd16ac2a8f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-hurt-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-hurt-50-0.png",
+      "bytes": 138372,
+      "sha256": "d124fead3d7641d0526f123bccdd56db0bb813a3fbd1583a99b687393f0821e6",
+      "fullGetReadbackSha256": "d124fead3d7641d0526f123bccdd56db0bb813a3fbd1583a99b687393f0821e6",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-hurt-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-hurt-75-0.png",
+      "bytes": 136744,
+      "sha256": "9d72a6c71af0c94f3f708e37572a989a21b2619ace89227aea5bcda4420a34be",
+      "fullGetReadbackSha256": "9d72a6c71af0c94f3f708e37572a989a21b2619ace89227aea5bcda4420a34be",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-idle-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-idle-0-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-idle-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-idle-100-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-idle-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-idle-25-0.png",
+      "bytes": 135881,
+      "sha256": "17653049f962b9797696eb7b8ecd15c52b68a27af90fc01aff6507fece3e4792",
+      "fullGetReadbackSha256": "17653049f962b9797696eb7b8ecd15c52b68a27af90fc01aff6507fece3e4792",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-idle-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-idle-50-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-idle-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-idle-75-0.png",
+      "bytes": 136292,
+      "sha256": "da52cc18c4c01e320ec94da9cccff0c9bf6cfe02deb770af7403634adf740d90",
+      "fullGetReadbackSha256": "da52cc18c4c01e320ec94da9cccff0c9bf6cfe02deb770af7403634adf740d90",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-run-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-run-0-0.png",
+      "bytes": 136462,
+      "sha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "fullGetReadbackSha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-run-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-run-100-0.png",
+      "bytes": 136462,
+      "sha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "fullGetReadbackSha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-run-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-run-25-0.png",
+      "bytes": 137852,
+      "sha256": "48d03f0cd9c79b70a549dbffade0f5c4df85656c5d16f6cb45bfe5d412a36f7f",
+      "fullGetReadbackSha256": "48d03f0cd9c79b70a549dbffade0f5c4df85656c5d16f6cb45bfe5d412a36f7f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-run-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-run-50-0.png",
+      "bytes": 136462,
+      "sha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "fullGetReadbackSha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/ggd-procedural-run-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/ggd-procedural-run-75-0.png",
+      "bytes": 137629,
+      "sha256": "4ab17daa6863a8f3f9790a36ec11deb337caaf489030a0fe59d824dd0d5aaa17",
+      "fullGetReadbackSha256": "4ab17daa6863a8f3f9790a36ec11deb337caaf489030a0fe59d824dd0d5aaa17",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/proof.json",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/proof.json",
+      "bytes": 13806,
+      "sha256": "55fc5e86b53462b7b4bd5aaba1402123bb2193d764854059de96ba2bf1338900",
+      "fullGetReadbackSha256": "55fc5e86b53462b7b4bd5aaba1402123bb2193d764854059de96ba2bf1338900",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/run.json",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/run.json",
+      "bytes": 353,
+      "sha256": "e7f19b3dce83c2b5ea0d4b0b52884917b2afc789273ec5318b5d3a37601b3605",
+      "fullGetReadbackSha256": "e7f19b3dce83c2b5ea0d4b0b52884917b2afc789273ec5318b5d3a37601b3605",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v1/six-states-contact.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v1/six-states-contact.png",
+      "bytes": 128476,
+      "sha256": "1add6e720e333ccd87a1caf9d12d0892f473bc489094eb8e35ffccce51843688",
+      "fullGetReadbackSha256": "1add6e720e333ccd87a1caf9d12d0892f473bc489094eb8e35ffccce51843688",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/contact.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/contact.png",
+      "bytes": 162701,
+      "sha256": "2e7bdc0dfafc7d69e618ff4bb0a5d43935a662e80d9e63a16a0e5a04a41d269e",
+      "fullGetReadbackSha256": "2e7bdc0dfafc7d69e618ff4bb0a5d43935a662e80d9e63a16a0e5a04a41d269e",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-attack-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-attack-0-0.png",
+      "bytes": 135727,
+      "sha256": "4fac4ead967c32220097f9d1cd21330cb6531810ade534b21a0c0f52365607e0",
+      "fullGetReadbackSha256": "4fac4ead967c32220097f9d1cd21330cb6531810ade534b21a0c0f52365607e0",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-attack-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-attack-100-0.png",
+      "bytes": 135726,
+      "sha256": "91e5486a1c207fc578f9e84d3555471cfe38c8a59faac2389367021417e29d72",
+      "fullGetReadbackSha256": "91e5486a1c207fc578f9e84d3555471cfe38c8a59faac2389367021417e29d72",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-attack-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-attack-25-0.png",
+      "bytes": 135882,
+      "sha256": "5bf2e450df7cee3c2ec28faa9593d61254ab445b36615911b9107326c8a7500c",
+      "fullGetReadbackSha256": "5bf2e450df7cee3c2ec28faa9593d61254ab445b36615911b9107326c8a7500c",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-attack-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-attack-50-0.png",
+      "bytes": 129174,
+      "sha256": "95c27ee3e3ead6837a74657111a115af89c8d219c898fbcc298033368b0665fa",
+      "fullGetReadbackSha256": "95c27ee3e3ead6837a74657111a115af89c8d219c898fbcc298033368b0665fa",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-attack-50-1.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-attack-50-1.png",
+      "bytes": 91678,
+      "sha256": "2fac663143e8870c85f997e6a2fea2773c5a1f04ca31ebfbc0d704bdcac766db",
+      "fullGetReadbackSha256": "2fac663143e8870c85f997e6a2fea2773c5a1f04ca31ebfbc0d704bdcac766db",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-attack-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-attack-75-0.png",
+      "bytes": 134569,
+      "sha256": "368f1af1bec25ce6b5f721f3743925c020599e0ab2539dbf302701cd34eab23b",
+      "fullGetReadbackSha256": "368f1af1bec25ce6b5f721f3743925c020599e0ab2539dbf302701cd34eab23b",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-cast-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-cast-0-0.png",
+      "bytes": 135726,
+      "sha256": "91e5486a1c207fc578f9e84d3555471cfe38c8a59faac2389367021417e29d72",
+      "fullGetReadbackSha256": "91e5486a1c207fc578f9e84d3555471cfe38c8a59faac2389367021417e29d72",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-cast-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-cast-100-0.png",
+      "bytes": 135729,
+      "sha256": "c11b9d14c446b69860f4b6ee824603305dfdb026540e8c6925daa52d0edbc083",
+      "fullGetReadbackSha256": "c11b9d14c446b69860f4b6ee824603305dfdb026540e8c6925daa52d0edbc083",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-cast-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-cast-25-0.png",
+      "bytes": 140963,
+      "sha256": "bb96a3d64282ef7cd07d6fd5ca42b538994a218b47e1af8a88e9e5f15107ee5b",
+      "fullGetReadbackSha256": "bb96a3d64282ef7cd07d6fd5ca42b538994a218b47e1af8a88e9e5f15107ee5b",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-cast-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-cast-50-0.png",
+      "bytes": 143162,
+      "sha256": "09b90c6e4b094ec65bd6bae4adae3e622ccd8cc66aa09c6aca7c63089042dbbd",
+      "fullGetReadbackSha256": "09b90c6e4b094ec65bd6bae4adae3e622ccd8cc66aa09c6aca7c63089042dbbd",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-cast-50-1.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-cast-50-1.png",
+      "bytes": 76442,
+      "sha256": "6a2be0d0db1dafd44e9d0eaa9cbf0dd871b54bac42e819c798568a6accb51305",
+      "fullGetReadbackSha256": "6a2be0d0db1dafd44e9d0eaa9cbf0dd871b54bac42e819c798568a6accb51305",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-cast-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-cast-75-0.png",
+      "bytes": 141049,
+      "sha256": "31e965b17358b28bb9c15e598774a5b798981b2287f97b28bb6d623a10a5867f",
+      "fullGetReadbackSha256": "31e965b17358b28bb9c15e598774a5b798981b2287f97b28bb6d623a10a5867f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-death-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-death-0-0.png",
+      "bytes": 135768,
+      "sha256": "8b941b70a9240107afeac9c92977d98eb7a8ae139c24e30cd8ffc5b55f8635e1",
+      "fullGetReadbackSha256": "8b941b70a9240107afeac9c92977d98eb7a8ae139c24e30cd8ffc5b55f8635e1",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-death-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-death-100-0.png",
+      "bytes": 154473,
+      "sha256": "312a28b6b796270d4d92c857ba4e4ca37801a40e492fa59413034fe472578959",
+      "fullGetReadbackSha256": "312a28b6b796270d4d92c857ba4e4ca37801a40e492fa59413034fe472578959",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-death-100-1.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-death-100-1.png",
+      "bytes": 65235,
+      "sha256": "e4048c6c01a369f2bbac6820d6968ddc37e900fad85052c155248e9873bfc435",
+      "fullGetReadbackSha256": "e4048c6c01a369f2bbac6820d6968ddc37e900fad85052c155248e9873bfc435",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-death-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-death-25-0.png",
+      "bytes": 158985,
+      "sha256": "a5f72374efb3ebdff68d073ab1131aa103439bb3128c79df6fa5e7de9b0ba99c",
+      "fullGetReadbackSha256": "a5f72374efb3ebdff68d073ab1131aa103439bb3128c79df6fa5e7de9b0ba99c",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-death-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-death-50-0.png",
+      "bytes": 168903,
+      "sha256": "bf2854dcc19e610f0c258acea47b3e25008808c1cda2a07e48fc544cad538c8e",
+      "fullGetReadbackSha256": "bf2854dcc19e610f0c258acea47b3e25008808c1cda2a07e48fc544cad538c8e",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-death-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-death-75-0.png",
+      "bytes": 159909,
+      "sha256": "4b53aa22c1c8940692603b70ffe76dc2cdbf862f47112d6c94d1e446ea7570d0",
+      "fullGetReadbackSha256": "4b53aa22c1c8940692603b70ffe76dc2cdbf862f47112d6c94d1e446ea7570d0",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-hurt-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-hurt-0-0.png",
+      "bytes": 135729,
+      "sha256": "c11b9d14c446b69860f4b6ee824603305dfdb026540e8c6925daa52d0edbc083",
+      "fullGetReadbackSha256": "c11b9d14c446b69860f4b6ee824603305dfdb026540e8c6925daa52d0edbc083",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-hurt-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-hurt-100-0.png",
+      "bytes": 135768,
+      "sha256": "8b941b70a9240107afeac9c92977d98eb7a8ae139c24e30cd8ffc5b55f8635e1",
+      "fullGetReadbackSha256": "8b941b70a9240107afeac9c92977d98eb7a8ae139c24e30cd8ffc5b55f8635e1",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-hurt-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-hurt-25-0.png",
+      "bytes": 139830,
+      "sha256": "ec26e53334b6f858a9a5d02b23fe66b088b2216d5eecdda4953b5067128d7e11",
+      "fullGetReadbackSha256": "ec26e53334b6f858a9a5d02b23fe66b088b2216d5eecdda4953b5067128d7e11",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-hurt-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-hurt-50-0.png",
+      "bytes": 138222,
+      "sha256": "9274c7429b75e24a619ddd2015d9bf9365a310eb35654c64dcd2d24a52739f93",
+      "fullGetReadbackSha256": "9274c7429b75e24a619ddd2015d9bf9365a310eb35654c64dcd2d24a52739f93",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-hurt-50-1.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-hurt-50-1.png",
+      "bytes": 74163,
+      "sha256": "766b057bc550d5a2ef75ce22b205f7e8cadaa44530dcf858e36efde9b8200496",
+      "fullGetReadbackSha256": "766b057bc550d5a2ef75ce22b205f7e8cadaa44530dcf858e36efde9b8200496",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-hurt-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-hurt-75-0.png",
+      "bytes": 136812,
+      "sha256": "a4225f7c76737e1da462c34d488154e550ac657e420251ca42c25b59b7bf6bc8",
+      "fullGetReadbackSha256": "a4225f7c76737e1da462c34d488154e550ac657e420251ca42c25b59b7bf6bc8",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-idle-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-idle-0-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-idle-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-idle-100-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-idle-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-idle-25-0.png",
+      "bytes": 135881,
+      "sha256": "17653049f962b9797696eb7b8ecd15c52b68a27af90fc01aff6507fece3e4792",
+      "fullGetReadbackSha256": "17653049f962b9797696eb7b8ecd15c52b68a27af90fc01aff6507fece3e4792",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-idle-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-idle-50-0.png",
+      "bytes": 135649,
+      "sha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "fullGetReadbackSha256": "7b2db91ef955f1a17930679dab46996ee1eefb4e1e6f46125218ba99b664bcfc",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-idle-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-idle-75-0.png",
+      "bytes": 136292,
+      "sha256": "da52cc18c4c01e320ec94da9cccff0c9bf6cfe02deb770af7403634adf740d90",
+      "fullGetReadbackSha256": "da52cc18c4c01e320ec94da9cccff0c9bf6cfe02deb770af7403634adf740d90",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-0-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-0-0.png",
+      "bytes": 136462,
+      "sha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "fullGetReadbackSha256": "26d013aedaa44634ad4a5159a9b05b5157ac607f2de39d11fce2975bfbd51d89",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-100-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-100-0.png",
+      "bytes": 136638,
+      "sha256": "c1a8798c3aa1313eda40aa1709bf85ace66417280fa03df4a0d3f1227389623f",
+      "fullGetReadbackSha256": "c1a8798c3aa1313eda40aa1709bf85ace66417280fa03df4a0d3f1227389623f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-25-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-25-0.png",
+      "bytes": 137852,
+      "sha256": "48d03f0cd9c79b70a549dbffade0f5c4df85656c5d16f6cb45bfe5d412a36f7f",
+      "fullGetReadbackSha256": "48d03f0cd9c79b70a549dbffade0f5c4df85656c5d16f6cb45bfe5d412a36f7f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-25-1.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-25-1.png",
+      "bytes": 109862,
+      "sha256": "c06b622820e07ca7122e1af05ee25096efc2e0bd5ce2dbec463f784c48d57cf6",
+      "fullGetReadbackSha256": "c06b622820e07ca7122e1af05ee25096efc2e0bd5ce2dbec463f784c48d57cf6",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-50-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-50-0.png",
+      "bytes": 136479,
+      "sha256": "81b2a7fc5e0a21366c3db607045cf797d532ee85c724e92d741d56b75423fe12",
+      "fullGetReadbackSha256": "81b2a7fc5e0a21366c3db607045cf797d532ee85c724e92d741d56b75423fe12",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-75-0.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-75-0.png",
+      "bytes": 137592,
+      "sha256": "79d6b11ef999f3cd3923ef0c7641646de85020e35d4a04b4fd491d6bdd564450",
+      "fullGetReadbackSha256": "79d6b11ef999f3cd3923ef0c7641646de85020e35d4a04b4fd491d6bdd564450",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/ggd-procedural-run-75-1.png",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/ggd-procedural-run-75-1.png",
+      "bytes": 108610,
+      "sha256": "fbc53a6cd77e9a045ea8879dc12d9bb4dbd3f0ee5b09fe632cbf084e0dc95bfa",
+      "fullGetReadbackSha256": "fbc53a6cd77e9a045ea8879dc12d9bb4dbd3f0ee5b09fe632cbf084e0dc95bfa",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/proof.json",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/proof.json",
+      "bytes": 16359,
+      "sha256": "719170716de9c5a36aaa016c9d835dec6dad4b23284db5ed22ee9455c6d21f66",
+      "fullGetReadbackSha256": "719170716de9c5a36aaa016c9d835dec6dad4b23284db5ed22ee9455c6d21f66",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "animated-webgl-v2/run.json",
+      "archivePath": "kaiji-community-body-v1/animated-webgl-v2/run.json",
+      "bytes": 353,
+      "sha256": "51eb832e6e7dfd2a6f5d4f71056bd525d9d5b7555acd82480528e45a5abbd44b",
+      "fullGetReadbackSha256": "51eb832e6e7dfd2a6f5d4f71056bd525d9d5b7555acd82480528e45a5abbd44b",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "native-glb/body.glb",
+      "archivePath": "kaiji-community-body-v1/native-glb/body.glb",
+      "bytes": 2268184,
+      "sha256": "a96fee2daa503cca8d228201f11ffe7ba58cf06003df848bbe87edf253b9f76f",
+      "fullGetReadbackSha256": "a96fee2daa503cca8d228201f11ffe7ba58cf06003df848bbe87edf253b9f76f",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "native-glb/conversion.json",
+      "archivePath": "kaiji-community-body-v1/native-glb/conversion.json",
+      "bytes": 2126,
+      "sha256": "3839dffe3efc1c755101006345e787efa7df400de54e4f75d19fac8f3b1750ac",
+      "fullGetReadbackSha256": "3839dffe3efc1c755101006345e787efa7df400de54e4f75d19fac8f3b1750ac",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v1/body.glb",
+      "archivePath": "kaiji-community-body-v1/runtime-v1/body.glb",
+      "bytes": 319724,
+      "sha256": "2b2406ba2477699213ae80245f2e2285b2f5eb42f6048f3bd2c712847bb1b8e1",
+      "fullGetReadbackSha256": "2b2406ba2477699213ae80245f2e2285b2f5eb42f6048f3bd2c712847bb1b8e1",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v1/khronos.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v1/khronos.json",
+      "bytes": 2469,
+      "sha256": "bbb8268989558d7eb95f30f787e19b98b155e5c3cf279d7facb84fd54226bfea",
+      "fullGetReadbackSha256": "bbb8268989558d7eb95f30f787e19b98b155e5c3cf279d7facb84fd54226bfea",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v1/model.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v1/model.json",
+      "bytes": 504,
+      "sha256": "79c02b4e02ca6e95ce91a0f957727a723b52d5cd5c18b74f58a90c8d7ee27baa",
+      "fullGetReadbackSha256": "79c02b4e02ca6e95ce91a0f957727a723b52d5cd5c18b74f58a90c8d7ee27baa",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v1/receipt.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v1/receipt.json",
+      "bytes": 3242,
+      "sha256": "b4b38f674e2c93256c704b12ba99afc64d53101d1c78c8ebc3dd4f9a9eee2d04",
+      "fullGetReadbackSha256": "b4b38f674e2c93256c704b12ba99afc64d53101d1c78c8ebc3dd4f9a9eee2d04",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v1/uploaded-model.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v1/uploaded-model.json",
+      "bytes": 400,
+      "sha256": "c07eb30ce04e08350132ece1bef7c840b5b0662b0f5dbaa78f459b9f2ac6c156",
+      "fullGetReadbackSha256": "c07eb30ce04e08350132ece1bef7c840b5b0662b0f5dbaa78f459b9f2ac6c156",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v2/body.glb",
+      "archivePath": "kaiji-community-body-v1/runtime-v2/body.glb",
+      "bytes": 319724,
+      "sha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "fullGetReadbackSha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v2/khronos.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v2/khronos.json",
+      "bytes": 1718,
+      "sha256": "4c56db4ad28a5ab240808fa4fadb3bbca290e14a7b52b47aacbe0e6ff5d35f8c",
+      "fullGetReadbackSha256": "4c56db4ad28a5ab240808fa4fadb3bbca290e14a7b52b47aacbe0e6ff5d35f8c",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v2/model.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v2/model.json",
+      "bytes": 504,
+      "sha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8",
+      "fullGetReadbackSha256": "43782a6a729a7552a0ac183f618c5ebda922fec85202447d6c9e68e54ed29de8",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v2/receipt.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v2/receipt.json",
+      "bytes": 3242,
+      "sha256": "05e0f3521f3cc7c03a17261406d36d871983347197f7e87fb3caca355cb2bc35",
+      "fullGetReadbackSha256": "05e0f3521f3cc7c03a17261406d36d871983347197f7e87fb3caca355cb2bc35",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "runtime-v2/uploaded-model.json",
+      "archivePath": "kaiji-community-body-v1/runtime-v2/uploaded-model.json",
+      "bytes": 400,
+      "sha256": "7edec66f8f273f9dbd4a9d6eb8c1241bd1660a234fa7052a5bad8d0dda5c8db5",
+      "fullGetReadbackSha256": "7edec66f8f273f9dbd4a9d6eb8c1241bd1660a234fa7052a5bad8d0dda5c8db5",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "static-webgl-v1/proof.json",
+      "archivePath": "kaiji-community-body-v1/static-webgl-v1/proof.json",
+      "bytes": 2631,
+      "sha256": "3427faafaf0136f0a95c0ac3e55fd9cdf23c83aa132b03847e8b67aea9e6412b",
+      "fullGetReadbackSha256": "3427faafaf0136f0a95c0ac3e55fd9cdf23c83aa132b03847e8b67aea9e6412b",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "static-webgl-v1/run.json",
+      "archivePath": "kaiji-community-body-v1/static-webgl-v1/run.json",
+      "bytes": 352,
+      "sha256": "aac15646435d63be85ac0bd3231eeaa936e2f07a31d5f83131a0c79d2f891a56",
+      "fullGetReadbackSha256": "aac15646435d63be85ac0bd3231eeaa936e2f07a31d5f83131a0c79d2f891a56",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "static-webgl-v1/static-0-0.png",
+      "archivePath": "kaiji-community-body-v1/static-webgl-v1/static-0-0.png",
+      "bytes": 147288,
+      "sha256": "a0c65c02f878274e5e3d282b05f23e1bf03fd8d825499e6b04f19d3d1930a2c7",
+      "fullGetReadbackSha256": "a0c65c02f878274e5e3d282b05f23e1bf03fd8d825499e6b04f19d3d1930a2c7",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "static-webgl-v1/static-0-1.png",
+      "archivePath": "kaiji-community-body-v1/static-webgl-v1/static-0-1.png",
+      "bytes": 80719,
+      "sha256": "0f968719bffca9849c20d465e04886b520830f696e2f1ed09522bbc1343c04e0",
+      "fullGetReadbackSha256": "0f968719bffca9849c20d465e04886b520830f696e2f1ed09522bbc1343c04e0",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "static-webgl-v1/static-0-2.png",
+      "archivePath": "kaiji-community-body-v1/static-webgl-v1/static-0-2.png",
+      "bytes": 154765,
+      "sha256": "55fe8e39cdda9ce3f8444f04661ddf559f9960bcdb4e68dba003e0b081af3d02",
+      "fullGetReadbackSha256": "55fe8e39cdda9ce3f8444f04661ddf559f9960bcdb4e68dba003e0b081af3d02",
+      "localUnchangedAfterReadback": true
+    },
+    {
+      "path": "static-webgl-v1/static-0-3.png",
+      "archivePath": "kaiji-community-body-v1/static-webgl-v1/static-0-3.png",
+      "bytes": 80210,
+      "sha256": "fd650c38da1e018b63f368294297726f22ab0ee2ea58eaaf363ff2c94f9960c1",
+      "fullGetReadbackSha256": "fd650c38da1e018b63f368294297726f22ab0ee2ea58eaaf363ff2c94f9960c1",
+      "localUnchangedAfterReadback": true
+    }
+  ],
+  "memberTypeCounts": {
+    ".json": 16,
+    ".glb": 4,
+    ".png": 72
+  },
+  "localArchiveAndUnchangedSourceMembersVerifiedBeforeUpload": true,
+  "renderCompletionEvidence": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/animated-webgl-v2/run.json",
+    "sha256": "51eb832e6e7dfd2a6f5d4f71056bd525d9d5b7555acd82480528e45a5abbd44b",
+    "run": {
+      "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/runtime-v2/body.glb",
+      "sourceSha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "complete": true,
+      "proofExists": true,
+      "errorExists": false,
+      "images": 36
+    },
+    "latestContact": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/kaiji-community-body-v1/animated-webgl-v2/contact.png",
+      "sha256": "2e7bdc0dfafc7d69e618ff4bb0a5d43935a662e80d9e63a16a0e5a04a41d269e"
+    }
+  },
+  "aws": {
+    "profile": "vibe-coding",
+    "region": "ap-east-2",
+    "bucket": "ggd-390630837668-ap-east-2-an",
+    "objectKey": "legacy/character-models/kaiji-holya-20260911/conversions/e38d242533e53453e61a8f21b5ed3812af8b2b10754cb84fe3880bd0c40ba0e9.tar.gz",
+    "status": "uploaded-full-get-readback-verified",
+    "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/kaiji-holya-20260911/conversions/e38d242533e53453e61a8f21b5ed3812af8b2b10754cb84fe3880bd0c40ba0e9.tar.gz",
+    "identityArn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1789059405",
+    "expectedRoleMatched": true,
+    "actionsPerformed": [
+      "sts:GetCallerIdentity",
+      "s3:PutObject",
+      "s3:GetObject"
+    ],
+    "upload": {
+      "etag": "f18462d0d77c19c706492e70d7cb9e89",
+      "checksumCRC64NVME": "WCVRC0qW2DY=",
+      "checksumType": "FULL_OBJECT",
+      "serverSideEncryption": "AES256"
+    },
+    "readback": {
+      "path": "/private/tmp/ggd-kaiji-conversions-s3-readback-e38d2425.tar.gz",
+      "sha256": "e38d242533e53453e61a8f21b5ed3812af8b2b10754cb84fe3880bd0c40ba0e9",
+      "bytes": 14021399,
+      "fullObjectNotRange": true,
+      "verifiedArchiveMembers": 92,
+      "everyMemberMatchesPreUploadLocalSource": true
+    },
+    "security": {
+      "onlyConfiguredProfileUsed": true,
+      "credentialsNotReadOrPrintedOrModified": true,
+      "noIamChanges": true,
+      "noManualStsCredentials": true,
+      "accessDeniedOccurred": false
+    }
+  },
+  "localPreserved": true,
+  "centralOrGitMutations": false,
+  "prototypesPreserved": true,
+  "scopeNote": "Seven explicitly delegated frozen folders; active registration-release is outside the enumerated scope.",
+  "deterministicSecondBuild": {
+    "sha256": "e38d242533e53453e61a8f21b5ed3812af8b2b10754cb84fe3880bd0c40ba0e9",
+    "bytesIdentical": true
+  },
+  "allLocalMembersUnchangedAfterReadback": true,
+  "frozenAt": "2026-09-10T17:06:06.913391+00:00"
+}

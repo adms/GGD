@@ -1,0 +1,203 @@
+{
+  "schema": "ggd-kisaragi-rigid-hierarchy-skin-acceptance@1",
+  "source": {
+    "id": "existing:tram",
+    "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+    "glbPath": "content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+    "bytes": 78876,
+    "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+    "preserved": true,
+    "generator": "GGD batch2 original Kisaragi tram v2"
+  },
+  "convertedCandidate": {
+    "bytes": 178172,
+    "sha256": "c15d1f6b76c8d74134970d7130f75ea5dad0243027586e28978e4af4e2e771b6",
+    "deterministicBuilds": 2,
+    "byteIdentical": true,
+    "originalBinaryPreservedAsExactPrefix": true,
+    "animationDefinitionsUnchanged": true
+  },
+  "acceptedSource": {
+    "modelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+    "modelDocumentPath": "content/models/community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c.json",
+    "modelDocumentSha256": "a35601726f9ec613b5aa68e75db0e2bc32ae9b40145ab32f28c8875cbd7f956d",
+    "glbPath": "content/assets/models/community/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+    "bytes": 129044,
+    "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+    "triangles": 660,
+    "drawPrimitives": 5,
+    "drawWarning": 3,
+    "drawHardLimit": 6,
+    "textures": 0,
+    "skins": 1,
+    "joints": 6,
+    "allPrimitivesSkinned": true,
+    "retainedNamedAnimations": 6,
+    "ggdStateBindings": 6
+  },
+  "bindings": [
+    {
+      "mesh": "TramCarriage",
+      "joint": "TramCarriage.joint",
+      "weight": 1
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "joint": "LeftPassengerDoor.joint",
+      "weight": 1
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "joint": "RightPassengerDoor.joint",
+      "weight": 1
+    },
+    {
+      "mesh": "RearWheelPair",
+      "joint": "RearWheelPair.joint",
+      "weight": 1
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "joint": "FrontWheelPair.joint",
+      "weight": 1
+    }
+  ],
+  "animationProvenance": {
+    "kind": "existing-ggd-node-animation",
+    "clips": [
+      "idle",
+      "run",
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "proceduralClipsAdded": 0,
+    "claim": "Existing GGD-authored node motions retained; not original-game native motion."
+  },
+  "validation": {
+    "khronos": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "hints": 0,
+      "truncated": false
+    },
+    "sharedUploadPrepare": true,
+    "sharedUploadVerify": true,
+    "runtimeMotion": {
+      "babylonVersion": "7.54.3",
+      "stateSamples": 6,
+      "stationaryClips": []
+    },
+    "equivalence": {
+      "animationCount": 6,
+      "meshCount": 5,
+      "samples": 120,
+      "maxWorldPositionDeltaMetres": 1.9234635962506765e-07,
+      "toleranceMetres": 0.0002,
+      "passed": true
+    },
+    "webgl": {
+      "views": [
+        "front.png",
+        "back.png",
+        "isometric.png"
+      ],
+      "complete": true,
+      "manualInspection": "complete tram body, doors, wheels, vertex colours and lights visible; no missing component or gross skin corruption observed"
+    }
+  },
+  "limitations": [
+    "GGD original proxy, not an original-game extraction.",
+    "No texture images exist; appearance is vertex-colour material by design.",
+    "Five draw primitives exceed warning 3 but remain below hard limit 6.",
+    "Backend registration is performed by the batch integration step and recorded separately.",
+    "Production deployment is not verified."
+  ],
+  "tools": [
+    "tools/hero-model-library/prepare-existing.mts",
+    "tools/w3x-import/skin_verified_rigid_hierarchy.py",
+    "tools/w3x-import/compare_rigid_attachment_skin.mjs",
+    "tools/community-hero-forge/finalize-library-body.mts",
+    "tools/model-budget/trimClips.ts",
+    "tools/hero-model-library/render_historical_model.py"
+  ],
+  "files": [
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/back.png",
+      "bytes": 19133,
+      "sha256": "750f49965ba15423918705efb2e4333faa18a35a5823d8d8824dce6f7db3103a"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/final-motion-equivalence.json",
+      "bytes": 19683,
+      "sha256": "06474ec714eb73a7d03cfd136ed9fa9d5f6bdf1522625378e6b9a8442897f0df"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/front.png",
+      "bytes": 19773,
+      "sha256": "f77d298b872a49f9f76813f6c3ddd50988760a86b7424549f7750b839997f71c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/isometric.png",
+      "bytes": 43893,
+      "sha256": "45326645f1782942e493a15bc9f9809d4008a13278d987806516d90881a0117b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/khronos.json",
+      "bytes": 829,
+      "sha256": "33996bdd7c360e48991ed93e6c091fa3e71d08ada8cdce9f2744c20042406311"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/pre-final-motion-equivalence.json",
+      "bytes": 19675,
+      "sha256": "5fcf6424a391dd6de28a91b49017762bf33287b693c162b5e9aafeeb8a0f97bb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/rigid-hierarchy-conversion.json",
+      "bytes": 1596,
+      "sha256": "0892ce7f35717811f9d5648633a7effd05dc456ba9af144b8a8b56f2a9edd229"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/runtime-motion.json",
+      "bytes": 1774,
+      "sha256": "c38e00b254373e7115b1015137d5115b6c0c33b5922c7571362b3b6267b73bcd"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/shared-upload-receipt.json",
+      "bytes": 4062,
+      "sha256": "3f8e4ed9f3f8d5f43cb12d9716994d1175df9f0ef851451982c151c71d4ddaef"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/kisaragi-rigid-hierarchy-skin-v2/webgl-proof.json",
+      "bytes": 4042,
+      "sha256": "c157c92dc7ee4c4944d872c4d1391e61f3c4194547401b4e72b3a9ada0117205"
+    }
+  ],
+  "status": {
+    "converted": true,
+    "validated": true,
+    "registered": true,
+    "selectable": true,
+    "productionDeployed": false,
+    "active": true
+  },
+  "registration": {
+    "heroId": "b2-kisaragi",
+    "activeModelKey": "version.body.e934a767de2b7cd47af4cdff17b3e5fe30d2e848cde241f4",
+    "modelSelectionMode": "automatic",
+    "versionModelKey": "version.body.e934a767de2b7cd47af4cdff17b3e5fe30d2e848cde241f4",
+    "sourceModelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+    "modelSha256": "b115af28ce63f5e69e2a06f3e561e169f8b5eb32e3e02489b1da3d700a816e56",
+    "binarySha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+    "registeredAt": "2026-09-12T23:34:58.590Z",
+    "versionDocumentPath": "content/models/version.body.e934a767de2b7cd47af4cdff17b3e5fe30d2e848cde241f4.json",
+    "versionDocumentSha256": "2b811f228f75b7afd08dc1eaa2423f238dec895d2a451a0f0872121aeae00bbf",
+    "frozenGlbPath": "content/assets/models/community/versions/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+    "frozenGlbBytes": 129044,
+    "automaticEligible": true,
+    "retainedVersionCount": 1,
+    "oldVersionsPreserved": true
+  }
+}

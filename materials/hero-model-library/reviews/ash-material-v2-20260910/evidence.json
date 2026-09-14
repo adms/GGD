@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "path": "left-hair-source-baseline-repair.png",
+      "bytes": 1767466,
+      "sha256": "8593acbeb192aa9fdaa9b0b27c676927b11c8d3860284051002ab913dfff398b",
+      "sourcePath": "comparisons/left-hair-source-baseline-repair.png"
+    },
+    {
+      "path": "right-hair-source-baseline-repair.png",
+      "bytes": 1767503,
+      "sha256": "0b68f5586e429cbfeda89261bf4fa181831b98eacc023d6bc15183a597a4b258",
+      "sourcePath": "comparisons/right-hair-source-baseline-repair.png"
+    }
+  ],
+  "sourceId": "kof-open3dlab-ash-xv-material-repair-v2",
+  "deliverySha256": "64e0af66d0bdeefefa6847bacb1632d258c8454bc7d041a357be63a8d760801b",
+  "runtimeReady": false
+}

@@ -21,7 +21,11 @@ import { ContentLoadError } from "../src/content/errors";
 import { FsContentSource, rebuildAllIndexes, bundlePath } from "../src/content/node/index";
 import { Abilities as AbilitiesRegistry } from "../src/sim/content/registry";
 import { isPassiveOnly } from "../src/sim/abilities/abilityPassives";
-import { deriveCastTime } from "../src/content/castTimeFormula";
+import {
+  DEFAULT_CAST_TIME_TIERS,
+  resolveCastTimeTier,
+  type CastTimeTiers,
+} from "../src/content/castTimeTiers";
 
 const CONTENT_DIR = process.env.GGD_CONTENT_DIR ?? join(__dirname, "../../../content");
 
@@ -137,50 +141,28 @@ async function main(): Promise<void> {
     }
   }
 
-  // 3d) CAST-TIME COVERAGE (the owner's telegraph rule, LANE A — REVISED).
-  //     The rule is no longer a flat 0.6 s. The owner revised it after the flat
-  //     value was A/B'd in a real 12-bot match and lost:
-  //
-  //       「castTimeSec 0.3 - 0.6 s，依技能有多兇殘決定，最兇的封頂 0.9 s」
-  //
-  //     So the gate is no longer "is the field present"; it is "does the field
-  //     equal what `src/content/castTimeFormula.ts` derives". Content is
-  //     DERIVED data — regenerate with `scripts/deriveCastTimes.ts --write`
-  //     rather than hand-editing a number here. That also makes the two
-  //     deliberate ABSENCES self-documenting instead of looking like holes:
-  //
-  //       passive-only  `activateAbility` returns "passive" before the cast
-  //                     branch, so a value is unreachable in the sim and a lie
-  //                     in the codex — the field must be absent, not 0.
-  //       rapid-fire    the ability's own post-`combatEnv.cooldown` cooldown is
-  //                     shorter than 0.3 s / CD_CEILING_FRACTION, i.e. it comes
-  //                     up faster than the floor it would impose. A cast time
-  //                     there is incoherent by construction — that is exactly
-  //                     what turned 7 champions into statues under the flat rule.
-  //
-  //     This is a gate rather than a one-off script because the sibling failure
-  //     mode (#79: content edited, runtime unchanged) has bitten this repo five
-  //     times. Read from the POST-registration registry, never the raw JSON.
+  // 3d) CAST-TIME COVERAGE. The 907/907 migration is complete: `castTimeTier`
+  //     is the authoring source and the runtime resolver materialises seconds.
+  //     Damage/cooldown/shape must never be used to reconstruct another value.
   const envDoc = result.store.tryGet<{ multipliers: Record<string, number> }>(
     "config",
     "combat-env",
   );
   const cdMult = envDoc?.multipliers.cooldown ?? 1;
+  const castTimeTiers =
+    result.store.tryGet<CastTimeTiers>("config", "cast-time-tiers") ?? DEFAULT_CAST_TIME_TIERS;
   const ctWrong: string[] = [];
   for (const def of AbilitiesRegistry.all()) {
-    const want = deriveCastTime(def, cdMult).castTimeSec;
-    if (def.castTimeSec !== want) {
-      ctWrong.push(
-        `${def.id}: content ${String(def.castTimeSec)} != formula ${String(want)} ` +
-          `[${deriveCastTime(def, cdMult).cls}]`,
-      );
+    const want = resolveCastTimeTier(def.castTimeTier, castTimeTiers);
+    if (want === null || def.castTimeSec !== want) {
+      ctWrong.push(`${def.id}: tier ${String(def.castTimeTier)} -> ${String(want)}, runtime ${String(def.castTimeSec)}`);
     }
   }
   if (ctWrong.length > 0) {
-    console.error("cast-time coverage FAILED — content disagrees with castTimeFormula.ts:");
+    console.error("cast-time coverage FAILED — runtime disagrees with castTimeTier:");
     for (const line of ctWrong.slice(0, 20)) console.error(`  ✗ ${line}`);
     if (ctWrong.length > 20) console.error(`  ✗ …and ${ctWrong.length - 20} more`);
-    console.error("  fix: pnpm --filter @ggd/shared exec tsx scripts/deriveCastTimes.ts --write");
+    console.error("  fix: set a valid castTimeTier, then run `pnpm castderive:build`");
     process.exit(1);
   }
 

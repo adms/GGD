@@ -114,6 +114,10 @@ def main() -> None:
     for pack in packs:
         placeholders: list[dict] = []
         champion = drop_baked_values(pack["champion"])
+        from model_map import preserve_model_history
+        previous_path = OUT_CH / f"{champion['id']}.json"
+        if previous_path.exists():
+            preserve_model_history(champion, json.loads(previous_path.read_text(encoding='utf-8')))
         attach_champion_icon(champion, placeholders)
         abilities = [attach_ability_icon(drop_baked_values(backfill_status_mechanics(a, status_mech) or a))
                      for a in pack["abilities"]]

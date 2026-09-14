@@ -1,0 +1,185 @@
+{
+  "schema": "ggd.ssbu-mario-ultimate14-motion-visual-review@1",
+  "componentId": "ssbu-mario-c00-ultimate14-motion-v1",
+  "modelSha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+  "accepted": true,
+  "reviewedAt": "2026-09-12",
+  "scope": "independent-skinned-model-motion-component",
+  "reviewedSamples": [
+    {
+      "motion": "d01specialairsdash",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialairsdash-start.png"
+    },
+    {
+      "motion": "d01specialairsdash",
+      "sample": "middle",
+      "frame": 68.75000238418579,
+      "file": "d01specialairsdash-middle.png"
+    },
+    {
+      "motion": "d01specialairsdash",
+      "sample": "end",
+      "frame": 137.50000476837158,
+      "file": "d01specialairsdash-end.png"
+    },
+    {
+      "motion": "d01specialairsend",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialairsend-start.png"
+    },
+    {
+      "motion": "d01specialairsend",
+      "sample": "middle",
+      "frame": 48.75,
+      "file": "d01specialairsend-middle.png"
+    },
+    {
+      "motion": "d01specialairsend",
+      "sample": "end",
+      "frame": 97.5,
+      "file": "d01specialairsend-end.png"
+    },
+    {
+      "motion": "d01specialairsjump",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialairsjump-start.png"
+    },
+    {
+      "motion": "d01specialairsjump",
+      "sample": "middle",
+      "frame": 38.749998807907104,
+      "file": "d01specialairsjump-middle.png"
+    },
+    {
+      "motion": "d01specialairsjump",
+      "sample": "end",
+      "frame": 77.49999761581421,
+      "file": "d01specialairsjump-end.png"
+    },
+    {
+      "motion": "d01specialsdash",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialsdash-start.png"
+    },
+    {
+      "motion": "d01specialsdash",
+      "sample": "middle",
+      "frame": 95.00000238418579,
+      "file": "d01specialsdash-middle.png"
+    },
+    {
+      "motion": "d01specialsdash",
+      "sample": "end",
+      "frame": 190.00000476837158,
+      "file": "d01specialsdash-end.png"
+    },
+    {
+      "motion": "d01specialsend",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialsend-start.png"
+    },
+    {
+      "motion": "d01specialsend",
+      "sample": "middle",
+      "frame": 48.75,
+      "file": "d01specialsend-middle.png"
+    },
+    {
+      "motion": "d01specialsend",
+      "sample": "end",
+      "frame": 97.5,
+      "file": "d01specialsend-end.png"
+    }
+  ],
+  "findings": [
+    "All five animation groups were rendered through Babylon WebGL at start, middle and end for 15 visible samples.",
+    "The reviewed samples show the complete Mario body without detached limbs, collapsed skinning, transparent eye-card rectangles or non-finite deformation.",
+    "Root-motion bounds are preserved; the front-axis review camera follows depth so dash middle/end samples remain visible.",
+    "Visual acceptance applies only to this independent five-motion component and does not establish gameplay event mapping or complete hero readiness."
+  ],
+  "screenshots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsdash-end.png",
+      "bytes": 218057,
+      "sha256": "2435ff0a62574441130a10080ec8ff1c9e4f460b7c94e2d5f3afd28ffc9849bd"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsdash-middle.png",
+      "bytes": 94635,
+      "sha256": "388d0bca1c2b7a1583a2f55d12adf8eb7400e5ffbed0d9f0f0f9f31142b68fdd"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsdash-start.png",
+      "bytes": 210968,
+      "sha256": "3879edd82788d4326e3c61a56ae6df8bb7087e4d8d3a872571d8c845a9d87648"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsend-end.png",
+      "bytes": 211185,
+      "sha256": "32d157241d39b5da419acebbd7e9dc973dc8328ae92fd38e48cb9bd909bc0670"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsend-middle.png",
+      "bytes": 225728,
+      "sha256": "9676eb74aac95cdf5fd474c9ec2eedcdcdc7388cfc70b66109fa2457ca55712d"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsend-start.png",
+      "bytes": 137394,
+      "sha256": "4bb7c268cb53f2fbabbf5f44783bdd3b163236ca3bb023ed4622f2f02843e883"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsjump-end.png",
+      "bytes": 207615,
+      "sha256": "e5558b8777efc5c593de4ea39faa0e32d9042ba9fab291e233f27206a0d4317d"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsjump-middle.png",
+      "bytes": 130435,
+      "sha256": "aca8491ad122815e8e63227b4e2181ff68201cb3bfa8b8f2a3af8c04488d020d"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialairsjump-start.png",
+      "bytes": 204697,
+      "sha256": "0a933ad36329ed28291420a6e373b6300d8be96032a8c212324af25152b8200a"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialsdash-end.png",
+      "bytes": 159644,
+      "sha256": "fffeece80de2fd7f7c1f5a013e6de71efdc8c610e3b0015ef38a9b23164a9c77"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialsdash-middle.png",
+      "bytes": 241838,
+      "sha256": "2c27eb88aff0d75f42caf0bdff2452e0dfc6180ab4cbe3ac9cb655b7c702ea9b"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialsdash-start.png",
+      "bytes": 234902,
+      "sha256": "74c045f24e30e7760a27c1c3937a040177ed546f58f87ec77c2a0c9c86b74d53"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialsend-end.png",
+      "bytes": 165891,
+      "sha256": "d3af69df65a9a7d6a41c9cb458119bf335e48dfbbcc4b134c9f2a1ce5de7db78"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialsend-middle.png",
+      "bytes": 266945,
+      "sha256": "7a3c01a9fa252e64a978a543200c6a0159c44055da710853fda3859ae56ba06b"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario-motion/28149d8ae2b38abede317ae060de977cd71539c5ca951710c94179e92675c176/d01specialsend-start.png",
+      "bytes": 137820,
+      "sha256": "63b1ae22dc376405653b2c21a58aa0aebc2bd687babf5859f579033296c36729"
+    }
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

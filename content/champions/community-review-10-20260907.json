@@ -6,7 +6,7 @@
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+  "modelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-10-20260907.q.webp",
       "template": {
@@ -146,7 +146,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-10-20260907.w.webp",
       "template": {
@@ -203,7 +203,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-10-20260907.e.webp",
       "template": {
@@ -269,7 +269,7 @@
           "stun": true
         }
       ],
-      "castTimeSec": 0.8,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-10-20260907.r.webp",
       "template": {
@@ -305,5 +305,61 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.ddbb44714e45ba5420d77fe15af26a0bb18224f3e47ae68e",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "modelSha256": "75e377bde6d84af327602de1f079a2dfd5ad8b0bd8d268bdcf6a3a83ad17b450",
+      "binarySha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "registeredAt": "2026-09-12T23:02:30.355Z",
+      "source": {
+        "kind": "previous",
+        "character": "魯路修",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.fd4f76adddc93ce19df5c6ca906f6f177cd527fb848687e3",
+      "label": "鲁路修",
+      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "modelSha256": "20185450b04b328274667f9e18f2862ccc6ca7f7adc4df0230bb97be09235a30",
+      "binarySha256": "ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071",
+      "registeredAt": "2026-09-12T23:02:30.359Z",
+      "source": {
+        "kind": "exact",
+        "character": "鲁路修",
+        "work": "Code Geass 反叛的魯路修",
+        "library": "300heroes",
+        "reference": "300heroes:33317960eca2c46de312fce2",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
+      "label": "鲁路修",
+      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "modelSha256": "1cc874dbf0b6023b974638a6645a41def217ab1cfac357e79dbb720fcba285e9",
+      "binarySha256": "ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071",
+      "registeredAt": "2026-09-13T00:08:46.406Z",
+      "source": {
+        "kind": "exact",
+        "character": "鲁路修",
+        "work": "Code Geass 反叛的魯路修",
+        "library": "300heroes",
+        "reference": "300heroes:33317960eca2c46de312fce2",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

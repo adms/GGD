@@ -1,4 +1,14 @@
-/** Shared with tools/model-budget/limits.ts: iPad mini A17 Pro at 30 fps, estimated. */
+/** Shared with tools/model-budget/limits.ts: current tablet target is read from model-lod.json. */
+import adoptionPolicy from "./adoptionPolicy.json" with { type: "json" };
+
+/**
+ * Formal asset-library adoption policy. This is intentionally separate from
+ * the wider scene-capacity budget below: a model can fit the renderer's
+ * absolute safety ceiling and still require decimation before it is accepted
+ * into the selectable hero library.
+ */
+export const HERO_MODEL_ADOPTION_POLICY = adoptionPolicy.hero;
+
 export const C_CHAN_MS = 2.19 / 1476;
 /**
  * ms／每個常駐 mesh —— **量到的**（task #80 的 A/B：同一個場景 279 vs 713 個
@@ -86,7 +96,8 @@ const CHAMPION_MESH_SHARE = 0.25;
  * **256² 與 512² 的平均每通道差 0.10 / 255**（192² 是 0.19）——
  * ⚠️ 而那是在實拍台的 ~300 像素，**比遊戲裡最近的 217 像素更嚴苛**。
  *
- * ⇒ 警戒 **256**（設計目標）／上限 **512**（真的需要細節的角色的硬天花板）。
+ * ⇒ 一般英雄的警戒與硬上限都採 **256**；可量測的大型場景例外只在
+ * `tools/model-budget/limits.ts::TEX_EDGE_EXEMPT` 逐路徑登記，不能由英雄自行放寬。
  *
  * ⛔⛔ 而「壓縮」對這一格**沒有用**：`emit_report.ts` 的 `vramOf` 逐字是
  * 「RGBA8（Babylon 把每一種壓縮來源都解成 RGBA8）× 4/3 給 mip」
