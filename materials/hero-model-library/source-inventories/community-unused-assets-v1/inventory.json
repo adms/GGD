@@ -3,18 +3,18 @@
   "generatedFrom": {
     "downloadSources": {
       "gitPath": "materials/hero-model-library/download-sources.json",
-      "bytes": 3092685,
-      "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526"
+      "bytes": 3127436,
+      "sha256": "9650a1081c1c9f8fc3493ebee40f9fdc61f7b5da7b07498c53fe16003ce2a044"
     },
     "publicSourceFiles": {
       "gitPath": "materials/hero-model-library/public-source-files.json",
       "bytes": 35213925,
       "sha256": "d6d8b065fa5097cb6ba3c8235585910c512fc33f68e171826fb810dbe0b181af"
     },
-    "currentResources": {
-      "gitPath": "materials/asset-library/current-resources.json",
-      "schema": "ggd-current-resource-index@1",
-      "note": "No digest is embedded because current-resources content-addresses this generated inventory."
+    "unused300MbaIndex": {
+      "gitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+      "bytes": 455807,
+      "sha256": "74491ea536cfdf1e2ab279ef0a6bbc2adb59a0463fd229b58df4f43d52209d54"
     }
   },
   "scope": {
@@ -42,16 +42,20 @@
   "externalAuthorities": {
     "unused300Mba": {
       "gitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
-      "sha256": "1e2f90adb4c4fb5085f8645866e7c4cccf29ca7cd9d238815815926e545b4af4",
+      "bytes": 455807,
+      "sha256": "74491ea536cfdf1e2ab279ef0a6bbc2adb59a0463fd229b58df4f43d52209d54",
       "documentGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.md",
-      "documentSha256": "9f1628628b0dfa91f3ec134fd0719b939badcc490308d7dff10a7840afde703a",
+      "documentSha256": "36f08e1b07bb9e6eb5fae04834d0822fe8343f72474c6ed3e79b6006c399c9cb",
       "filesGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
-      "filesSha256": "82177db2b7cca73320704e77ecfd29104a7351be11c6787f1fbbdb5a5eee5adb",
+      "filesSha256": "c3fc6883512a5e3fd6ee45c2bacc4bbe07a58f6f7e3b52cc7203a37021f132d6",
       "animationClipsGitPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
-      "animationClipsSha256": "0c70d752d0e21744dfb79387630cf64e07157d3fc04eaabf516955bc23545519",
+      "animationClipsSha256": "191c7d24c3655ca971e784a451414eb701b11ca7d75fc205ff35202c4fec1c34",
       "status": "existing-local-sources-indexed; unused reserves remain pending standardization/acceptance/registration",
       "summary": {
         "physicalFiles": 73852,
+        "contentObjectsBySha256": 68669,
+        "duplicateHashGroups": 3651,
+        "duplicatePathRows": 5183,
         "physicalBytes": 17034245346,
         "unusedPhysicalFiles": 73791,
         "runtimeSourceUsedPhysicalFiles": 61,
@@ -59,7 +63,19 @@
         "freshLiveSha256VerifiedCharacterBodies": 311,
         "native300VfxRecords": 58922,
         "sourceCharactersIndexed": 291,
+        "sourceDefinitionsCatalog": 297,
+        "sourceDefinitionsExcludedFromHeroBacklog": 6,
         "missingDeclaredBodyPaths": 5,
+        "pipelineStageCounts": {
+          "acquired": 73852,
+          "extracted": 73852,
+          "convertedCandidate": 223,
+          "ggdAccepted": 0,
+          "runtimeRegisteredAsSourceFile": 0,
+          "runtimeSelectableAsSourceFile": 0,
+          "productionDeployed": 0,
+          "referencedByRuntimeDerivedOption": 61
+        },
         "registryAssetRecords": {
           "300heroes": {
             "model": 34378,
@@ -109,7 +125,7 @@
   },
   "summary": {
     "sourceRecords": 59,
-    "componentRecords": 37,
+    "componentRecords": 41,
     "excludedPublicSourceRecords": 57,
     "excludedReasons": {
       "outside-four-kind-community-scope": 57
@@ -153,9 +169,9 @@
       "verifiedBytes": 26424809517,
       "missingFiles": 39,
       "mismatchedFiles": 1,
-      "componentFilesExpected": 37,
-      "componentFilesVerified": 37,
-      "componentVerifiedBytes": 40441740,
+      "componentFilesExpected": 41,
+      "componentFilesVerified": 41,
+      "componentVerifiedBytes": 47515376,
       "componentMissingFiles": 0,
       "componentMismatchedFiles": 0
     }
@@ -177,7 +193,7 @@
   "localVerificationReceipt": {
     "gitPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/local-verification.json",
     "bytes": 55757,
-    "sha256": "d7cd244b6654de9a68ff72428e7f7569ab70685c486e7e6e6abe222c7b649c70"
+    "sha256": "72fcd9a4168ca00576d9cf94db6635799cea9d66338038235b59d25cfe4b4817"
   },
   "sources": [
     {
@@ -1015,7 +1031,9 @@
         "ssbu-daisy-c00-static-skinned-v1",
         "ssbu-peach-c00-static-skinned-v1",
         "ssbu-toonlink-c00-static-skinned-v1",
-        "ssbu-sonic-c00-static-skinned-v2"
+        "ssbu-sonic-c00-static-skinned-v2",
+        "ssbu-ptrainer-male-c00-formal-decimated-v1",
+        "ssbu-ptrainer-female-c01-formal-decimated-v1"
       ]
     },
     {
@@ -1884,7 +1902,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 0,
-        "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526",
+        "sha256": "9650a1081c1c9f8fc3493ebee40f9fdc61f7b5da7b07498c53fe16003ce2a044",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
         "sourceRecordIndexes": [
@@ -1950,7 +1968,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 90764853,
-        "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526",
+        "sha256": "9650a1081c1c9f8fc3493ebee40f9fdc61f7b5da7b07498c53fe16003ce2a044",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "kof-xv-mai-sfmlab-lordscrub-v1",
         "sourceRecordIndexes": [
@@ -2787,7 +2805,9 @@
       "gaps": [],
       "componentIds": [
         "ssbu-mario-c00-ultimate14-motion-v1",
-        "ssbu-sonic-c00-ultimate14-motion-v1"
+        "ssbu-sonic-c00-ultimate14-motion-v1",
+        "ssbu-chrom-c00-ultimate14-motion-v1",
+        "ssbu-lucina-c00-ultimate14-motion-v1"
       ]
     },
     {
@@ -3544,7 +3564,7 @@
       "authoritativeFileManifest": {
         "gitPath": "materials/hero-model-library/download-sources.json",
         "bytes": 2984329,
-        "sha256": "c3dbe99086759c6b818c4aa0643a3468c9cbdc5f15acd39a051de19deeb5d526",
+        "sha256": "9650a1081c1c9f8fc3493ebee40f9fdc61f7b5da7b07498c53fe16003ce2a044",
         "authorityKind": "download-sources-public-source-row",
         "sourceRecordId": "thunderstore-holya-kaiji-suit2",
         "sourceRecordIndexes": [
@@ -4802,6 +4822,42 @@
       ]
     },
     {
+      "id": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "nameZh": "寶可夢訓練家（女）",
+      "originalName": "Pokémon Trainer (Female)",
+      "nativeId": "fighter/ptrainer/model/ptrainer/c01",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model"
+      ],
+      "kindEvidence": [
+        "explicit asset kind: model-component",
+        "explicit model-like asset kind: independent-static-skinned-model-component"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/female-c01/candidate.glb",
+      "gitPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "s3Uri": null,
+      "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+      "bytes": 1221592,
+      "acquired": true,
+      "extracted": true,
+      "converted": true,
+      "validated": true,
+      "registered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "unusedForRuntime": true,
+      "readiness": "accepted-independent-static-skinned-formal-decimation-actions-missing",
+      "limitations": [
+        "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+        "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+        "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+        "Main merge and production deployment are not verified."
+      ]
+    },
+    {
       "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
       "sourceId": "gitlab-ssbu-models",
       "nameZh": "寶可夢訓練家（女）",
@@ -4836,6 +4892,42 @@
         "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
         "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
         "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    },
+    {
+      "id": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "nameZh": "寶可夢訓練家（男）",
+      "originalName": "Pokémon Trainer (Male)",
+      "nativeId": "fighter/ptrainer/model/ptrainer/c00",
+      "resourceRole": "independent-static-skinned-model-component",
+      "assetKinds": [
+        "model"
+      ],
+      "kindEvidence": [
+        "explicit asset kind: model-component",
+        "explicit model-like asset kind: independent-static-skinned-model-component"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/male-c00/candidate.glb",
+      "gitPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "s3Uri": null,
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "bytes": 1178320,
+      "acquired": true,
+      "extracted": true,
+      "converted": true,
+      "validated": true,
+      "registered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "unusedForRuntime": true,
+      "readiness": "accepted-independent-static-skinned-formal-decimation-actions-missing",
+      "limitations": [
+        "The fixed Worldblender source and this candidate contain zero actions; idle, run, attack, cast, hurt and death remain missing.",
+        "The model is an accepted independent component and formal-geometry candidate, not a complete hero or a runtime dropdown option.",
+        "No model@1 or semantic clip map is created; the existing manual default remains unchanged.",
+        "The new decimation stage has not been uploaded to S3; the already verified source-conversion backup remains recorded separately.",
+        "Main merge and production deployment are not verified."
       ]
     },
     {
@@ -5096,6 +5188,84 @@
         "Original SSBU shader parity is incomplete; only source-connected Blender materials were exported.",
         "Hidden damage mesh remains preserved only in the original Blender source and is excluded from c00 visible appearance.",
         "Exporter emitted NumPy overflow/divide warnings for one mesh transform; all 64,788 exported float values were finite in both validations and the WebGL render was visually intact."
+      ]
+    },
+    {
+      "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "nameZh": "庫洛姆",
+      "originalName": "Chrom",
+      "nativeId": "fighter/chrom/body/c00 + fighter/chrom/motion/body/c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model",
+        "motion"
+      ],
+      "kindEvidence": [
+        "explicit asset kind: animation",
+        "explicit asset kind: model-component",
+        "explicit model-like asset kind: independent-skinned-model-motion-component"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.tar.gz",
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "bytes": 1942664,
+      "acquired": true,
+      "extracted": true,
+      "converted": true,
+      "validated": true,
+      "registered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "unusedForRuntime": true,
+      "readiness": "accepted-independent-native-motion-9-clips-incomplete-action-set",
+      "limitations": [
+        "The 9 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+        "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+        "Visibility and material tracks were not imported into this body-motion GLB.",
+        "No hero binding, backend registration, runtime switching or deployment was performed.",
+        "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+        "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
+      ]
+    },
+    {
+      "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "nameZh": "露琪娜",
+      "originalName": "Lucina",
+      "nativeId": "fighter/lucina/body/c00 + fighter/lucina/motion/body/c00",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "assetKinds": [
+        "model",
+        "motion"
+      ],
+      "kindEvidence": [
+        "explicit asset kind: animation",
+        "explicit asset kind: model-component",
+        "explicit model-like asset kind: independent-skinned-model-motion-component"
+      ],
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-01/body.glb",
+      "gitPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-lucina-ultimate14-motion-v1/26607f4792d2918a1b7bd150c5326600166c3a53041e989d6cef546860a62d4f.tar.gz",
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "bytes": 2731060,
+      "acquired": true,
+      "extracted": true,
+      "converted": true,
+      "validated": true,
+      "registered": false,
+      "runtimeSelectable": false,
+      "productionDeployed": false,
+      "unusedForRuntime": true,
+      "readiness": "accepted-independent-native-motion-13-clips-incomplete-action-set",
+      "limitations": [
+        "The 13 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+        "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+        "Visibility and material tracks were not imported into this body-motion GLB.",
+        "No hero binding, backend registration, runtime switching or deployment was performed.",
+        "Draw primitives and per-clip animation channels exceed warning thresholds and still require runtime load review.",
+        "WebGL sampling found connected textured geometry; native root orientation varies and semantic action selection is unreviewed."
       ]
     },
     {

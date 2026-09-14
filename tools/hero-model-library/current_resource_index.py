@@ -185,7 +185,16 @@ def build(git_link_root=ROOT):
     if (unused_300_mba.get('schema')!='ggd.300-mba-unused-assets-index@1'
         or unused_300_mba.get('newDownloads') is not False
         or unused_300_mba.get('conversionPerformed') is not False
-        or unused_300_mba.get('runtimeRegistrationPerformed') is not False):
+        or unused_300_mba.get('runtimeRegistrationPerformed') is not False
+        or unused_300_mba.get('approvedProcessedCopyAuthorizationsChanged') is not False
+        or unused_300_mba.get('summary',{}).get('contentObjectsBySha256')!=68669
+        or unused_300_mba.get('summary',{}).get('duplicatePathRows')!=5183
+        or unused_300_mba.get('summary',{}).get('sourceDefinitionsCatalog')!=297
+        or unused_300_mba.get('summary',{}).get('sourceDefinitionsExcludedFromHeroBacklog')!=6
+        or unused_300_mba.get('summary',{}).get('pipelineStageCounts',{}).get('convertedCandidate')!=223
+        or unused_300_mba.get('summary',{}).get('pipelineStageCounts',{}).get('ggdAccepted')!=0
+        or unused_300_mba.get('summary',{}).get('pipelineStageCounts',{}).get('runtimeSelectableAsSourceFile')!=0
+        or unused_300_mba.get('summary',{}).get('pipelineStageCounts',{}).get('productionDeployed')!=0):
         raise ValueError('300/MBA unused asset inventory is absent or overclaims readiness')
     for key in ('files','animationClips'):
         entry=unused_300_mba[key]

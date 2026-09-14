@@ -17,10 +17,18 @@ def main() -> None:
     parser.add_argument("--unused-only", action="store_true")
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--clips", action="store_true", help="Query logical animation clips instead of physical files")
+    parser.add_argument(
+        "--dedupe-sha256",
+        action="store_true",
+        help="Return one canonical path per byte-identical content object; provenance rows remain in the committed index",
+    )
     args = parser.parse_args()
+    if args.clips and args.dedupe_sha256:
+        parser.error("--dedupe-sha256 applies to physical files; logical clips sharing one container must remain separate")
     path = DEFAULT.with_name("animation-clips.jsonl.gz") if args.clips else DEFAULT
     needle = args.term.casefold()
     found = 0
+    seen_content = set()
     with gzip.open(path, "rt") as stream:
         for line in stream:
             row = json.loads(line)
@@ -32,6 +40,10 @@ def main() -> None:
                 continue
             if needle and needle not in json.dumps(row, ensure_ascii=False).casefold():
                 continue
+            content_id = row.get("contentObjectId", "sha256:" + row["sha256"])
+            if args.dedupe_sha256 and content_id in seen_content:
+                continue
+            seen_content.add(content_id)
             print(json.dumps(row, ensure_ascii=False))
             found += 1
             if found >= args.limit:

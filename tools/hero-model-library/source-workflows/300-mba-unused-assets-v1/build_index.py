@@ -195,6 +195,12 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "library": row["library"],
             "name": row["name"],
             "work": row["origin"],
+            "aliases": row.get("aliases", []),
+            "originStatus": row.get("origin_status"),
+            "sourceIndex": row.get("source_index"),
+            "sourceReadiness": row.get("readiness"),
+            "declaredModelFiles": row.get("model_files", 0),
+            "declaredAnimationClips": row.get("animation_clips", 0),
             "declaredBodies": declared,
         })
 
@@ -334,6 +340,7 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "name": row["name"],
             "bytes": evidence["bytes"],
             "sha256": evidence["sha256"],
+            "contentObjectId": "sha256:" + evidence["sha256"],
             "sha256Evidence": f"read-back-verified backup snapshot {SNAPSHOT} per-file manifest",
             "freshLiveSha256Verified": rel in body_hashes,
             "existsLocal": True,
@@ -351,6 +358,16 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "resourceRole": role,
             "usageStatus": usage,
             "conversionStatus": conversion,
+            "pipelineStages": {
+                "acquisition": "acquired",
+                "extraction": "extracted-and-locally-present",
+                "conversion": conversion,
+                "ggdFinalAcceptance": "not-accepted",
+                "runtimeRegistration": "not-registered-as-this-source-file",
+                "runtimeSelectability": "not-selectable-as-this-source-file",
+                "productionDeployment": "not-verified",
+                "downstreamDerivedUse": "referenced-by-current-runtime-option" if runtime_used else "not-referenced",
+            },
             "defaultEligible": False,
             "runtimeSelectable": False,
             "productionDeploymentVerified": False,
@@ -377,11 +394,27 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
         roles[(row["library"], role)] += 1
         status_counts[(row["library"], usage)] += 1
 
+    # Keep one provenance row per path/version while exposing a stable SHA-256
+    # content identity for consumers that want to avoid processing byte-identical
+    # copies twice.  The canonical flag is deterministic and does not discard any
+    # source, path, version, character link or S3 member relationship.
+    content_paths: dict[str, list[str]] = collections.defaultdict(list)
+    for row in output_rows:
+        content_paths[row["sha256"]].append(row["workspaceRelativePath"])
+    for paths in content_paths.values():
+        paths.sort()
+    for row in output_rows:
+        paths = content_paths[row["sha256"]]
+        row["sameContentPathCount"] = len(paths)
+        row["canonicalContentPath"] = paths[0]
+        row["isCanonicalContentPath"] = row["workspaceRelativePath"] == paths[0]
+
     for clip in clips:
         evidence = path_to_sha[clip["workspaceRelativePath"]]
         clip["bytes"] = evidence["bytes"]
         clip["sha256"] = evidence["sha256"]
         clip["sha256Evidence"] = f"read-back-verified backup snapshot {SNAPSHOT} per-file manifest"
+        clip["contentObjectId"] = "sha256:" + evidence["sha256"]
         clip["mappedGgdHeroIds"] = sorted({hero for source_id in clip["linkedSourceCharacterIds"] for hero in (group_by_source.get(source_id) or {}).get("mappedHeroIds", [])})
         clip["usageStatus"] = "runtime-source-used" if clip.pop("runtimeSourceUsed") else "unused-motion-reserve"
         clip["runtimeSelectable"] = False
@@ -396,6 +429,8 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             by_source_counts[source_id]["unusedFiles"] += row["usageStatus"].startswith("unused-")
             for kind in row["assetKinds"]:
                 by_source_counts[source_id][kind] += 1
+            by_source_counts[source_id]["convertedCandidateFiles"] += row["pipelineStages"]["conversion"].startswith("converted-")
+            by_source_counts[source_id]["runtimeSourceUsedFiles"] += row["usageStatus"] == "runtime-source-used"
             by_source_bytes[source_id].add(row["workspaceRelativePath"])
     characters = []
     definitions_by_id = {row["sourceCharacterId"]: row for row in character_definitions}
@@ -414,15 +449,58 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "identityHeroIds": group["identityHeroIds"],
             "proxyUseHeroIds": group["proxyUseHeroIds"],
             "assetCounts": counts,
+            "pipelineStageCounts": {
+                "acquired": counts.get("physicalFiles", 0),
+                "extracted": counts.get("physicalFiles", 0),
+                "convertedCandidate": counts.get("convertedCandidateFiles", 0),
+                "ggdAccepted": 0,
+                "runtimeRegisteredAsSourceFile": 0,
+                "runtimeSelectableAsSourceFile": 0,
+                "productionDeployed": 0,
+                "referencedByRuntimeDerivedOption": counts.get("runtimeSourceUsedFiles", 0),
+            },
             "indexedBytes": sum(path_to_sha[p]["bytes"] for p in by_source_bytes[source_id]),
             "declaredBodies": definition.get("declaredBodies", []),
             "runtimeDropdownCoverage": "separate model option registry; this source inventory does not claim every variant is selectable",
+        })
+
+    # The catalog has six source definitions which intentionally do not belong
+    # in the acquired-character design backlog: three have no acquired body and
+    # three identify skill/prop models rather than character bodies.  Retain them
+    # here so the source/prop relationship remains queryable without inventing a
+    # GGD hero ID or treating a prop as a complete hero.
+    catalog_only = []
+    for source_id in sorted(set(definitions_by_id) - set(group_by_source)):
+        definition = definitions_by_id[source_id]
+        existing_bodies = [row for row in definition["declaredBodies"] if row["existsLocal"]]
+        classification = (
+            "acquired-prop-or-skill-model-not-character-body"
+            if existing_bodies and any("/magic/skill/" in row["workspaceRelativePath"] for row in existing_bodies)
+            else "source-definition-without-acquired-character-body"
+        )
+        counts = dict(sorted(by_source_counts[source_id].items()))
+        catalog_only.append({
+            **definition,
+            "classification": classification,
+            "mappedHeroIds": [],
+            "ggdHeroIdInvented": False,
+            "assetCounts": counts,
+            "indexedBytes": sum(path_to_sha[p]["bytes"] for p in by_source_bytes[source_id]),
+            "designBacklogIncluded": False,
+            "designBacklogExclusionReason": (
+                "skill-or-prop-model-is-not-a-character-body"
+                if classification.startswith("acquired-prop")
+                else "no-acquired-character-body"
+            ),
         })
 
     files_gz = encode_jsonl(output_rows)
     clips_gz = encode_jsonl(clips)
     summary = {
         "physicalFiles": len(output_rows),
+        "contentObjectsBySha256": len(content_paths),
+        "duplicateHashGroups": sum(len(paths) > 1 for paths in content_paths.values()),
+        "duplicatePathRows": sum(len(paths) - 1 for paths in content_paths.values()),
         "physicalBytes": live_bytes,
         "unusedPhysicalFiles": sum(row["usageStatus"].startswith("unused-") for row in output_rows),
         "runtimeSourceUsedPhysicalFiles": sum(row["usageStatus"] == "runtime-source-used" for row in output_rows),
@@ -430,7 +508,19 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
         "freshLiveSha256VerifiedCharacterBodies": len(body_hashes),
         "native300VfxRecords": native_vfx_count,
         "sourceCharactersIndexed": len(characters),
+        "sourceDefinitionsCatalog": len(character_definitions),
+        "sourceDefinitionsExcludedFromHeroBacklog": len(catalog_only),
         "missingDeclaredBodyPaths": len(missing_declared_paths),
+        "pipelineStageCounts": {
+            "acquired": len(output_rows),
+            "extracted": len(output_rows),
+            "convertedCandidate": sum(row["pipelineStages"]["conversion"].startswith("converted-") for row in output_rows),
+            "ggdAccepted": 0,
+            "runtimeRegisteredAsSourceFile": 0,
+            "runtimeSelectableAsSourceFile": 0,
+            "productionDeployed": 0,
+            "referencedByRuntimeDerivedOption": sum(row["usageStatus"] == "runtime-source-used" for row in output_rows),
+        },
         "registryAssetRecords": {
             library: {kind: registry_asset_counts[(library, kind)] for kind in ("model", "animation", "vfx")}
             for library in ("300heroes", "mba")
@@ -463,6 +553,7 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "recordCount": len(clips),
         },
         "characters": characters,
+        "catalogOnlySourceDefinitions": catalog_only,
         "missingDeclaredBodyPaths": missing_declared_paths,
         "backupEvidence": backup,
         "inputFingerprints": [
@@ -491,11 +582,14 @@ def build() -> tuple[dict[str, Any], bytes, bytes, str]:
             "S3 僅是 backup_only，不是正式程式自動取用入口。",
             "300 名冊是下載官方用戶端的當期表，不是歷來刪除角色全集。",
             "MBA 本機只取得 Complete Form 1.60+；1.70 內容尚未取得。",
+            "SHA-256 contentObjectId 只用來避免重複處理同一位元組；每個來源、版本、路徑、角色關係與 S3 member 仍保留獨立列。",
+            "技能道具模型及未取得角色本體的名冊定義不會被寫成 GGD 英雄，也不會擴大 11 組已核准加工副本。",
         ],
         "newDownloads": False,
         "paymentPerformed": False,
         "conversionPerformed": False,
         "runtimeRegistrationPerformed": False,
+        "approvedProcessedCopyAuthorizationsChanged": False,
         "productionDeploymentVerified": False,
     }
     md = render_markdown(index)
@@ -513,9 +607,18 @@ def render_markdown(index: dict[str, Any]) -> str:
         "## 範圍與證據",
         "",
         f"- 已建索 `{summary['physicalFiles']:,}` 個不同實體檔，共 `{summary['physicalBytes']:,}` bytes；其中 `{summary['unusedPhysicalFiles']:,}` 個精確檔尚未被目前 runtime 成品引用。",
+        f"- 以 SHA-256 去重後為 `{summary['contentObjectsBySha256']:,}` 個位元組對象；`{summary['duplicateHashGroups']:,}` 組有重複路徑，共包含 `{summary['duplicatePathRows']:,}` 個額外路徑列。每列來源、版本、角色關係與 S3 member 仍保留。",
         f"- 動作邏輯紀錄 `{summary['animationClipRecords']:,}` 筆；300 原生 VFX 紀錄 `{summary['native300VfxRecords']:,}` 筆。",
-        f"- 中央角色來源 ID `{summary['sourceCharactersIndexed']:,}` 筆。重新 SHA-256 核對 `{summary['freshLiveSha256VerifiedCharacterBodies']:,}` 個已存在的來源宣告角色 body。",
+        f"- 角色目錄定義 `{summary['sourceDefinitionsCatalog']:,}` 筆；中央待設計索引 `{summary['sourceCharactersIndexed']:,}` 筆，另 `{summary['sourceDefinitionsExcludedFromHeroBacklog']:,}` 筆因缺角色本體或實為技能道具而不杜撰 GGD 英雄 ID。重新 SHA-256 核對 `{summary['freshLiveSha256VerifiedCharacterBodies']:,}` 個已存在的來源宣告 body。",
         f"- 備份快照已讀回驗證；逐檔 SHA 來自 `{index['snapshot']}` 清單，本批另對每個索引檔做存在與 bytes 核對。",
+        "",
+        "## 處理階段",
+        "",
+        "| 已取得 | 已解包 | 已轉換候選 | 已通過 GGD 最終驗收 | 原始檔已註冊 | 原始檔可切換 | 已部署 | 已被 runtime 衍生選項引用 |",
+        "|---:|---:|---:|---:|---:|---:|---:|---:|",
+        f"| {summary['pipelineStageCounts']['acquired']:,} | {summary['pipelineStageCounts']['extracted']:,} | {summary['pipelineStageCounts']['convertedCandidate']:,} | {summary['pipelineStageCounts']['ggdAccepted']:,} | {summary['pipelineStageCounts']['runtimeRegisteredAsSourceFile']:,} | {summary['pipelineStageCounts']['runtimeSelectableAsSourceFile']:,} | {summary['pipelineStageCounts']['productionDeployed']:,} | {summary['pipelineStageCounts']['referencedByRuntimeDerivedOption']:,} |",
+        "",
+        "`runtime 衍生選項引用` 表示這個來源 asset ID 已被 Git 成品使用；原始檔本身仍不是後台可切換選項。",
         "",
         "## 來源與使用狀態",
         "",
@@ -534,6 +637,7 @@ def render_markdown(index: dict[str, Any]) -> str:
         "## 目前缺口",
         "",
         f"- 來源定義宣告但本機不存在的 body 路徑 `{summary['missingDeclaredBodyPaths']}` 個；精確路徑可查 `index.json → missingDeclaredBodyPaths`。這些不等於整個角色沒有其他形態或替代容器。",
+        "- `index.json → catalogOnlySourceDefinitions` 保留未進待設計英雄清單的 6 筆定義及原因；技能道具仍可由逐檔索引查詢。",
         "- MBA `1.70` 未取得；本批不從網路重複下載或購買。",
         "- 原生特效設定、原生動作與道具候選仍需 GGD 轉換、視覺及播放驗收後，才能登記成後台獨立選項。",
         "",
@@ -542,6 +646,7 @@ def render_markdown(index: dict[str, Any]) -> str:
         "```sh",
         "python3 tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/query.py 300heroes:135",
         "python3 tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/query.py --library mba --kind vfx --unused-only --limit 20",
+        "python3 tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/query.py --kind model --dedupe-sha256 --unused-only --limit 20",
         "```",
         "",
         "`files.jsonl.gz` 是逐實體檔索引；`animation-clips.jsonl.gz` 另保留同一容器內的每個動作邏輯紀錄。S3 位置只是備份證據，不是正式 runtime 取用入口。",

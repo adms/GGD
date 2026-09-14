@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[4]
 WORKSPACE = ROOT.parent
 DOWNLOAD_SOURCES = ROOT / "materials/hero-model-library/download-sources.json"
 PUBLIC_FILES = ROOT / "materials/hero-model-library/public-source-files.json"
-CURRENT_RESOURCES = ROOT / "materials/asset-library/current-resources.json"
+UNUSED_300_MBA = ROOT / "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json"
 OUT_DIR = ROOT / "materials/hero-model-library/source-inventories/community-unused-assets-v1"
 OUT_JSON = OUT_DIR / "inventory.json"
 OUT_MD = OUT_DIR / "README.md"
@@ -274,7 +274,7 @@ def next_blockers(row: dict, kinds: list[str], stages: dict) -> list[str]:
 def build() -> dict:
     downloads = load(DOWNLOAD_SOURCES)
     public_files = load(PUBLIC_FILES)
-    current = load(CURRENT_RESOURCES)
+    unused_300_mba = load(UNUSED_300_MBA)
     manifests = public_manifest_by_id(public_files)
     file_authority = file_ref(PUBLIC_FILES)
     records = []
@@ -340,7 +340,20 @@ def build() -> dict:
     for row in records:
         for key in ("acquired", "extracted", "converted", "validated", "registered", "runtimeSelectable", "productionDeployed", "unusedForRuntime"):
             by_stage[key] += int(row["pipeline"][key])
-    authority_300 = current["unused300MbaAssetIndex"]
+    authority_300 = {
+        **file_ref(UNUSED_300_MBA),
+        "documentGitPath": UNUSED_300_MBA.with_name("index.md").relative_to(ROOT).as_posix(),
+        "documentSha256": sha(UNUSED_300_MBA.with_name("index.md")),
+        "filesGitPath": unused_300_mba["files"]["gitPath"],
+        "filesSha256": unused_300_mba["files"]["sha256"],
+        "animationClipsGitPath": unused_300_mba["animationClips"]["gitPath"],
+        "animationClipsSha256": unused_300_mba["animationClips"]["sha256"],
+        "status": "existing-local-sources-indexed; unused reserves remain pending standardization/acceptance/registration",
+        "summary": unused_300_mba["summary"],
+        "newDownloads": False,
+        "runtimeSelectable": False,
+        "productionDeploymentVerified": False,
+    }
     receipt = load(LOCAL_RECEIPT) if LOCAL_RECEIPT.exists() else None
     if receipt:
         if receipt.get("schema") != RECEIPT_SCHEMA or receipt.get("inputSha256", {}).get("downloadSources") != sha(DOWNLOAD_SOURCES) or receipt.get("inputSha256", {}).get("publicSourceFiles") != sha(PUBLIC_FILES):
@@ -350,11 +363,7 @@ def build() -> dict:
         "generatedFrom": {
             "downloadSources": file_ref(DOWNLOAD_SOURCES),
             "publicSourceFiles": file_authority,
-            "currentResources": {
-                "gitPath": CURRENT_RESOURCES.relative_to(ROOT).as_posix(),
-                "schema": current.get("schema"),
-                "note": "No digest is embedded because current-resources content-addresses this generated inventory.",
-            },
+            "unused300MbaIndex": file_ref(UNUSED_300_MBA),
         },
         "scope": {
             "included": ["MOD", "Steam Workshop", "Warcraft custom maps/models", "game resource forums", "community and author public shares"],
